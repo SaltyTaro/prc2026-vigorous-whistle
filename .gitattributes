@@ -1,0 +1,17 @@
+# Everything in this repo that executes, executes on Linux.
+#
+# core.autocrlf is true on this machine, so without these lines a fresh clone or
+# any `git checkout` of these paths rewrites them with CRLF -- and SkyPilot
+# uploads the working tree verbatim. The box then runs `bash phase0.sh` and dies
+# on `$'\r': command not found`, which reads like a missing interpreter and is
+# not one. The YAML fails more quietly still.
+*.sh   text eol=lf
+*.py   text eol=lf
+*.yaml text eol=lf
+*.yml  text eol=lf
+
+# Binary, so git never tries to "fix" line endings inside them.
+*.png  binary
+*.jpg  binary
+*.pt   binary
+*.xlsx binary
