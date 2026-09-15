@@ -26,7 +26,7 @@ from prc2026_adsb.features import DEPARTURE_COLUMNS
 from prc2026_lirf_mixture.model import apply_candidate
 from prc2026_submission.contract import validate_submission
 from export_adsb_v11 import feature_columns, ranking_table
-from run_adsb_v11 import check_parents, matches_dir, prepare_matrix, scope_mask
+from run_adsb_v11 import candidate_values, check_parents, matches_dir, prepare_matrix, scope_mask
 from run_lirf_mixture import MOVEMENT_COLUMNS, fit_population_model, movements, score_population
 
 SURFACE = ROOT / "data/external/adsblol/surface"
@@ -75,8 +75,9 @@ def main():
     scope = receipt["provenance"].get("scope", "matched")
     feature_set = receipt["provenance"].get("feature_set")
     candidate = config["candidates"][receipt["provenance"]["selected_candidate"]]
-    if scope != candidate.get("scope", "matched") or feature_set != candidate.get("features"):
-        raise ValueError("Exported scope or feature set differs from the selected candidate's declaration.")
+    if scope != candidate.get("scope", "matched") or feature_set != candidate.get("features") or receipt["provenance"].get("blend_with") != candidate.get("blend_with"):
+        raise ValueError("Exported scope, feature set or blend differs from the selected candidate's declaration.")
+    item = {"weight": weight, "scope": scope, "blend_with": candidate.get("blend_with")}
     mixture_config = read_json(ROOT / "configs/lirf_mixture_v1.json")
     fitting = movements(config["refit_months"])
     v9_model, v9_component, v9_summary = fit_population_model(fitting, mixture_config)
@@ -107,7 +108,7 @@ def main():
     if list(x.columns) != saved["features"] or booster.feature_name() != saved["features"]:
         raise ValueError("Feature list differs between the declaration, the saved model record and the booster.")
     residual[inside] = booster.predict(x)
-    expected = np.maximum(v9 + weight * residual, floor)
+    expected, inside = candidate_values(table, v9, residual, item, floor)
     exported = pd.read_parquet(output).set_index(ID)[TARGET].reindex(ids).to_numpy()
     if not np.array_equal(np.rint(expected).astype(np.int32), exported):
         raise ValueError("Independent recomputation differs from the export.")

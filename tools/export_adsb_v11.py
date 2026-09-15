@@ -27,7 +27,7 @@ from prc2026_adsb.features import DEPARTURE_COLUMNS, FEATURE_NAMES, NEIGHBOUR_NA
 from prc2026_lirf_mixture.model import apply_candidate
 from prc2026_postprocess.rules import row_context
 from prc2026_submission.contract import export_submission
-from run_adsb_v11 import attach_extra, check_parents, extra_tables, feature_list, matches_dir, model_code_receipt, month_table, predict_residual, prepare_matrix, scope_mask
+from run_adsb_v11 import attach_extra, candidate_values, check_parents, extra_tables, feature_list, matches_dir, model_code_receipt, month_table, predict_residual, prepare_matrix, scope_mask
 from run_lirf_mixture import MOVEMENT_COLUMNS, fit_population_model, movements, score_population
 import lightgbm as lgb
 
@@ -73,6 +73,7 @@ def main():
         raise ValueError("No candidate was selected; nothing to export.")
     candidate = config["candidates"][selection["selected_candidate"]]
     weight, scope, feature_set = candidate["weight"], candidate.get("scope", "matched"), candidate.get("features")
+    item = {"weight": weight, "scope": scope, "blend_with": candidate.get("blend_with")}
     neighbours = bool(config["residual_model"].get("neighbour_features", False))
     check_parents(config)
     mixture_config = read_json(ROOT / "configs/lirf_mixture_v1.json")
@@ -108,22 +109,21 @@ def main():
     # Ranking ADS-B features and residual.
     table, _ = ranking_table(config, departures, stands, v9)
     residual = predict_residual(model, table, config, scope)
-    inside = scope_mask(table, scope)
     matched = table["adsb_matched"].eq(1).to_numpy()
-    values = np.maximum(v9 + weight * residual, floor)
+    values, inside = candidate_values(table, v9, residual, item, floor)
     if not np.array_equal(np.rint(values[~inside]).astype(np.int32), uploaded_v9[~inside]):
         raise ValueError("Rows outside the scope differ from the uploaded v9 export.")
     run_dir = ROOT / args.selection.parent / f"export_v{args.version}"
     run_dir.mkdir(parents=True, exist_ok=True)
     booster.save_model(str(run_dir / "residual_model.txt"), num_iteration=rounds)
-    write_json(run_dir / "residual_model.json", {"categories": categories, "rounds": rounds, "training_rows": int(len(scoped_train)), "scope": scope, "feature_set": feature_set, "features": feature_list(config, feature_set),
+    write_json(run_dir / "residual_model.json", {"categories": categories, "rounds": rounds, "training_rows": int(len(scoped_train)), "scope": scope, "feature_set": feature_set, "blend_with": candidate.get("blend_with"), "features": feature_list(config, feature_set),
                                                   "weight": weight, "floor_seconds": floor, "feature_importance_gain": dict(zip(booster.feature_name(), map(float, booster.feature_importance("gain"))))})
     detail = table[[ID, "airport", *feature_columns(config)]].copy()
     detail["v9"] = v9; detail["residual"] = residual; detail["in_scope"] = inside; detail[f"v{args.version}"] = values
     detail.to_parquet(run_dir / "ranking_features.parquet", index=False, compression="zstd")
     output = ROOT / "runs/submissions" / f"vigorous-whistle_v{args.version}.parquet"
     provenance = {"policy": config["prediction_postprocess"], "experiment_id": config["experiment_id"], "config_sha256": object_hash(config),
-                  "selection_sha256": sha256_file(ROOT / args.selection), "selected_candidate": selection["selected_candidate"], "weight": weight, "scope": scope, "feature_set": feature_set,
+                  "selection_sha256": sha256_file(ROOT / args.selection), "selected_candidate": selection["selected_candidate"], "weight": weight, "scope": scope, "feature_set": feature_set, "blend_with": candidate.get("blend_with"),
                   "residual_model_sha256": sha256_file(run_dir / "residual_model.txt"), "rounds": rounds, "training_rows": int(len(scoped_train)),
                   "ranking_rows_in_scope": int(inside.sum()), "ranking_matched_rows": int(matched.sum()), "stands": int(len(stands)), "external_data": config["external_data"],
                   "parents": config["parents"], "incumbent": config["incumbent"], "model_code_sha256": selection["model_code"]["sha256"],

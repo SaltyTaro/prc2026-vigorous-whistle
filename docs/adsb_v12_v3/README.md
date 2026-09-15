@@ -16,3 +16,21 @@ row), weights 1.0 and 0.75. Baseline for selection: the recorded v12 development
 predictions (332.993 / 274.585 / 198.544); rule: not worse on any month and at
 least 0.3% better on average. Inputs are hash-bound (v12 matches snapshot, the
 learner's run records and predictions, the v12 residuals and export).
+
+## Result: null — nothing selected ([`development_results.json`](development_results.json))
+
+| Candidate | Jan | Jul | Nov |
+| --- | ---: | ---: | ---: |
+| v12 baseline | 332.993 | 274.585 | 198.544 |
+| `full_matched_no_lirf_100` | 332.778 (−0.06%) | 274.280 (−0.11%) | 198.185 (−0.18%) |
+| `full_matched_no_lirf_75` | +0.05% | +0.07% | +0.01% |
+| `full_all_no_lirf_100` | +0.13% | +0.32% | −0.47% |
+| `full_all_no_lirf_75` | +0.17% | +0.45% | +0.18% |
+
+Feeding the learner's out-of-sample prediction to the residual model as a
+feature adds almost nothing, and per airport it is mixed (Nov: LEMD −6.4% but
+EDDM +1.8%, EGLL +2.0%, LSZH +2.0%): the residual model over-trusts the
+fold-specific prediction of the months it is trained on. A fixed blend of the
+same predictions with the v12 development predictions is much better
+(Nov non-LIRF rows: 160.3 vs 164.5), which motivates
+[`../adsb_v12_v4/`](../adsb_v12_v4/README.md): a declared post-hoc blend.

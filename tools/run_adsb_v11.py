@@ -148,6 +148,23 @@ def rmse(a: np.ndarray, b: np.ndarray) -> float:
     return float(np.sqrt(np.mean((a - b) ** 2)))
 
 
+def candidate_values(table: pd.DataFrame, v9: np.ndarray, residual: np.ndarray, item: dict, floor: float) -> tuple[np.ndarray, np.ndarray]:
+    """v9 + weight * residual on the residual scope, then the declared blend with an extra table on the blend scope; floored.
+
+    Returns the values and the mask of rows that may differ from v9 (residual scope or blend scope with a finite blend value).
+    """
+    inside = scope_mask(table, item["scope"])
+    values = np.where(inside, v9 + item["weight"] * residual, v9)
+    touched = inside.copy()
+    blend = item.get("blend_with")
+    if blend:
+        partner = table[blend["name"]].to_numpy(dtype=float)
+        where = scope_mask(table, blend.get("scope", item["scope"])) & np.isfinite(partner)
+        values = np.where(where, (1 - blend["weight"]) * values + blend["weight"] * partner, values)
+        touched |= where
+    return np.maximum(values, floor), touched
+
+
 def paired_days(days: np.ndarray, label: np.ndarray, candidate: np.ndarray, reference: np.ndarray, seed: int) -> dict:
     """Descriptive paired-day bootstrap of RMSE(candidate) - RMSE(reference) on the same rows."""
     frame = pd.DataFrame({"day": days, "c": (candidate - label) ** 2, "r": (reference - label) ** 2})
@@ -189,7 +206,8 @@ def main():
     if baseline_spec:
         parent = config["parents"][baseline_spec.get("parent", "v11_development_residuals")]["path"]
         baseline_residual = pd.read_parquet(ROOT / parent).set_index(ID)[baseline_spec.get("column", "residual")]
-    candidates = {name: {"weight": item["weight"], "scope": item.get("scope", "matched"), "feature_set": item.get("features"), "months": {}} for name, item in config["candidates"].items()}
+    candidates = {name: {"weight": item["weight"], "scope": item.get("scope", "matched"), "feature_set": item.get("features"), "blend_with": item.get("blend_with"), "months": {}}
+                  for name, item in config["candidates"].items()}
     variants = sorted({(item["scope"], item["feature_set"]) for item in candidates.values()}, key=lambda v: (v[0], v[1] or ""))
     key_of = lambda scope, feature_set: scope + (f"|{feature_set}" if feature_set else "")
     months_report, residuals = {}, {m: {} for m in config["development_months"]}
@@ -217,7 +235,7 @@ def main():
                                                   "training_rows": models[key]["rows"], "rounds": models[key]["rounds"], "inner_best_iterations": models[key]["inner_best_iterations"]}
         for item in candidates.values():
             residual = residuals[held][key_of(item["scope"], item["feature_set"])]
-            values = np.maximum(v9 + item["weight"] * residual, floor)
+            values, _ = candidate_values(test, v9, residual, item, floor)
             score = rmse(label, values)
             entry = {"rmse": score, "ratio_to_v9": score / months_report[held]["v9_rmse"], "ratio_to_baseline": score / months_report[held]["baseline_rmse"],
                      "paired_days_vs_baseline": paired_days(days, label, values, baseline, config["seed"]), "airports": {}}
