@@ -19,6 +19,9 @@ DEPARTURE_COLUMNS = [ID, PHASE, TIME, "ADEP_mvt", "CALLSIGN_flt", "FLIGHT_mvt", 
 FEATURE_NAMES = ["adsb_matched", "adsb_gate", "adsb_first_point_s", "adsb_motion_s", "adsb_first_gs_kt", "adsb_first_dist_stand_m",
                  "adsb_stop_seconds", "adsb_taxi_path_m", "adsb_taxi_stops", "adsb_taxi_stopped_s", "adsb_slow_start_s", "adsb_gap_before_s",
                  "adsb_turnaround_s", "adsb_anchor_dist_stand_m", "adsb_last_ground_s", "adsb_points"]
+NEIGHBOUR_NAMES = ["nb_runway_10m_count", "nb_runway_10m_median_taxi_s", "nb_runway_10m_max_taxi_s", "nb_runway_10m_median_stopped_s",
+                   "nb_airport_10m_count", "nb_airport_10m_median_taxi_s", "nb_runway_30m_count", "nb_runway_30m_median_taxi_s",
+                   "nb_runway_30m_median_first_point_s", "nb_runway_prev_taxi_s", "nb_runway_next_taxi_s"]
 
 
 def metres(lat1, lon1, lat2, lon2):
@@ -182,3 +185,57 @@ def departure_features(departures: pd.DataFrame, matches: pd.DataFrame, stands: 
     out["adsb_last_ground_s"] = takeoff - col("last_ground")
     out["adsb_points"] = col("points")
     return out[[ID, *FEATURE_NAMES]]
+
+
+def neighbour_features(departures: pd.DataFrame, matches: pd.DataFrame) -> pd.DataFrame:
+    """Taxi-out statistics of matched neighbours (same airport / runway, takeoff within a window), for every departure.
+
+    Uses only other aircraft's surface segments and supplied takeoff times; the departure's own match (if any) is excluded.
+    """
+    out = departures[[ID]].copy()
+    takeoff = (departures[TIME] - EPOCH).dt.total_seconds().to_numpy()
+    airport = departures["ADEP_mvt"].to_numpy(); runway = departures["RUNWAY_mvt"].fillna("?").astype(str).to_numpy()
+    values = {name: np.full(len(out), np.nan) for name in NEIGHBOUR_NAMES}
+    if len(matches):
+        m = matches.merge(departures[[ID, "RUNWAY_mvt"]], on=ID, how="inner")
+        m["runway"] = m["RUNWAY_mvt"].fillna("?").astype(str)
+        m["taxi"] = m["takeoff"] - m["motion_start"]; m["first_point"] = m["takeoff"] - m["segment_start"]
+        m = m.sort_values("takeoff")
+        for key_airport, group in m.groupby("airport"):
+            rows_airport = np.flatnonzero(airport == key_airport)
+            if len(rows_airport) == 0:
+                continue
+            t_all = group["takeoff"].to_numpy(); taxi_all = group["taxi"].to_numpy(); id_all = group[ID].to_numpy()
+            for i in rows_airport:
+                lo, hi = np.searchsorted(t_all, takeoff[i] - 600), np.searchsorted(t_all, takeoff[i] + 600)
+                sel = [k for k in range(lo, hi) if id_all[k] != departures[ID].iat[i]]
+                values["nb_airport_10m_count"][i] = len(sel)
+                if sel:
+                    values["nb_airport_10m_median_taxi_s"][i] = np.median(taxi_all[sel])
+            for key_runway, sub in group.groupby("runway"):
+                rows = rows_airport[runway[rows_airport] == key_runway]
+                if len(rows) == 0:
+                    continue
+                t = sub["takeoff"].to_numpy(); taxi = sub["taxi"].to_numpy(); stopped = sub["taxi_stopped_s"].to_numpy()
+                first = sub["first_point"].to_numpy(); ids = sub[ID].to_numpy()
+                for i in rows:
+                    own = departures[ID].iat[i]
+                    for window, prefix in [(600, "nb_runway_10m"), (1800, "nb_runway_30m")]:
+                        lo, hi = np.searchsorted(t, takeoff[i] - window), np.searchsorted(t, takeoff[i] + window)
+                        sel = [k for k in range(lo, hi) if ids[k] != own]
+                        values[prefix + "_count"][i] = len(sel)
+                        if sel:
+                            values[prefix + "_median_taxi_s"][i] = np.median(taxi[sel])
+                            if window == 600:
+                                values["nb_runway_10m_max_taxi_s"][i] = np.max(taxi[sel]); values["nb_runway_10m_median_stopped_s"][i] = np.median(stopped[sel])
+                            else:
+                                values["nb_runway_30m_median_first_point_s"][i] = np.median(first[sel])
+                    before = [k for k in range(np.searchsorted(t, takeoff[i]) - 1, -1, -1) if ids[k] != own][:1]
+                    after = [k for k in range(np.searchsorted(t, takeoff[i], side="right"), len(t)) if ids[k] != own][:1]
+                    if before and takeoff[i] - t[before[0]] <= 1800:
+                        values["nb_runway_prev_taxi_s"][i] = taxi[before[0]]
+                    if after and t[after[0]] - takeoff[i] <= 1800:
+                        values["nb_runway_next_taxi_s"][i] = taxi[after[0]]
+    for name in NEIGHBOUR_NAMES:
+        out[name] = values[name]
+    return out
