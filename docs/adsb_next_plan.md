@@ -1,43 +1,39 @@
-# After v12 (246.4831, 3rd of 144; 2nd 245.2932, 1st 245.0207): plan updated 15 September 2026 ~10:25 UTC
+# After v12 (246.4831, 3rd of 144; 2nd 245.2932, 1st 245.0207): plan updated 15 September 2026 ~12:10 UTC
 
-Gap to 2nd: 1.19 s (0.48%); to 1st: 1.46 s (0.59%).
+## Ready to upload (needs the user's approval; allowance reopens 00:00 UTC 16 Sep, `--calendar-day`)
+
+**v14** (`configs/adsb_v12_v5.json`, `ens_all_60`): v12's residual, then 60% of the
+mean of two full-data learners (LightGBM and CatBoost on the timeline bundle's
+276 model features + 27 ADS-B features, fitted without LIRF) on every non-LIRF
+row. Development −0.51 / −0.52 / −2.18% vs v12 (mean −1.07%); expected ≈243.8
+(first is 245.02). SHA-256 80903141…0e8f, verified. v13 (`adsb_v12_v4`,
+LightGBM alone at 30%, −0.67% mean) is the superseded fallback, never uploaded.
 
 ## Done today
 
-- v11 (`configs/adsb_v11_v1.json`): v9 + ADS-B residual on matched rows → 248.4368 (4th).
-- v12_v1 (`configs/adsb_v12_v1.json`): neighbour features on matched/context scopes → null.
-- v12_v2 (`configs/adsb_v12_v2.json`): LIRF excluded, neighbour features, weight 1.0 →
-  **246.4831 (3rd)**; the development mean (−0.78%) predicted the ranking gain (−0.79%).
-- Extraction complete for every available day (no adsb.lol release 28 May–10 Jun 2025);
-  pass-2 matches with 1,332 stands for all months on the workstation
-  (`data/external/adsblol/matches/`); v11/v12 inputs frozen in `matches_v11/`.
+- v11 248.4368 (4th) → v12 246.4831 (3rd): ADS-B residual, LIRF excluded, neighbour features.
+- v12_v1 (neighbour scopes) and v12_v3 (learner as residual feature) were null results;
+  fixed post-hoc blends (v12_v4, v12_v5) work. Learner tooling: `tools/run_adsb_full.py`,
+  `run_adsb_full_nm.py`, `run_adsb_learner.py` (--kind lightgbm|catboost, --target
+  label|nm_residual, --exclude-airports), `ensemble_adsb_full.py`.
+- All 382 surface days on the workstation (`data/external/adsblol/surface/`, 3.6 GB);
+  pass-2 matches for every month with 1,332 stands; v11/v12 inputs frozen in `matches_v11/`.
+- All six Azure VMs deallocated (arcw0 cleared of the user's finished poker project).
 
-## Step 2 (in progress) — full-data learner stacked into the residual
+## Where the remaining error is (Nov-2025 error levels × ranking rows)
 
-`tools/run_adsb_full.py`: LightGBM on the timeline bundle's 276 model features plus
-the 27 ADS-B features, target = label, seasonal and forward folds (arcw1/arcw2),
-then a refit on the eleven months at the median best iteration. Its out-of-sample
-prediction (`adsb_full`) becomes an extra residual feature in a v12_v3
-declaration (`extra_feature_tables`, `attach_extra` in `run_adsb_v11.py`;
-scopes `matched_no_lirf` and `all_no_lirf`; baseline = v12 development
-predictions, column `residual_matched_no_lirf|nb`, weight 1.0). Rationale: the
-residual model sees only 2–3 months of matched rows; per-airport/stand offset
-distributions (LEMD/EGLL/EDDM have months with zero coverage) need all eleven.
+LIRF 40%, LFPG 19%, LTFM 15% of the squared error — no ADS-B coverage or a label
+that is not a taxi time; the seven covered airports hold 27%. Practical floor
+with this data ≈ 238–241; hard floor ≈ 211.
 
-## Step 3 — pushback timing failure modes (measured, not yet modelled)
+## Next levers (in order of expected value)
 
-- Gate rows: 12–24% have the block time 200–400 s before the first received
-  movement (transponder switched on late, or "ready but waiting"); the model
-  hedges. Signature: `adsb_first_gs_kt` 2–3 kt, no slow start, no taxi stop.
-- Dark rows: offset grows with `adsb_first_dist_stand_m` (EDDF 37 s at < 50 m →
-  460 s at 1–3 km); stands unknown for 41% (LEMD) / 36% (LSZH) of dark rows —
-  name-based stand imputation would fill most of them.
-- Segments whose motion start is hours before takeoff (a separate earlier
-  movement): EHAM/LSZH 1–3 km bins with offsets of −4,000 s; a "last long stop"
-  boundary would fix them but risks legitimate long holds.
+1. Learner diversity/strength: seed bagging of the LightGBM learner (4 min per fit),
+   a CatBoost NM-residual variant, learners on the matched subset only.
+2. Pushback failure modes (docs/adsb_v12/README.md): transponder-on late and
+   "ready but waiting" gate rows; dark-segment geometry (name-based stand
+   imputation for LEMD/LSZH/LEBL unknown stands).
+3. Coverage for LFPG/LTFM/LIRF needs another data source (not adsb.lol).
 
-## Housekeeping
-
-arcw3–arcw5 are idle; deallocate once `pull_surface` has copied their surface
-files. arcw0 is
-idle (disk 99% full: other projects' data; do not touch).
+Rules: declare before running; baseline = the incumbent's development
+predictions; never re-upload v1–v14; the user decides on organiser contact.
