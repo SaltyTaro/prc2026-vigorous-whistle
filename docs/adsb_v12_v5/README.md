@@ -42,8 +42,8 @@ learners' refit ranking predictions averaged and blended at w = 0.6 on every
 non-LIRF row (317,942 rows touched; the 26,899 LIRF rows keep v9). Output
 `runs/submissions/vigorous-whistle_v14.parquet`, SHA-256
 **`8090314133572d0dde60e372097b43d8557af16740ae918d054b4923b1130e8f`**, 344,841
-rows, min −12, max 120,549 (inherited). Versus v12: 313,566 rows differ, RMS of
-the change 51 s, median absolute change 15 s, 99th percentile 184 s.
+rows, min −12, max 120,549 (inherited). Versus v12: 312,010 rows differ, RMS of
+the change 50 s, median absolute change 14 s, 99th percentile 174 s.
 
 Verification (`tools/verify_adsb_v11.py --version 14 --config
 configs/adsb_v12_v5.json --run-root runs/adsb_v12_v5`): receipts and parents
