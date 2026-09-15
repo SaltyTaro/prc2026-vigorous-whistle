@@ -53,3 +53,13 @@ LIRF rows revert to v9. Model and features under `runs/adsb_v12_v2/export_v12/`.
 
 Honest expectation for the official score: **−0.5% to −1.0% versus v11
 (≈ 246.0–247.2)**; third place is 247.0109.
+
+## Verification ([`verification.json`](verification.json))
+
+`tools/verify_adsb_v11.py --version 12 --config configs/adsb_v12_v2.json
+--run-root runs/adsb_v12_v2`: receipts and parents re-checked, v9 reproduced
+from scratch, the 27 ADS-B features reproduced from the saved matches, the
+residual recomputed from the saved booster (difference 0.0), the feature list
+identical between declaration, saved record and booster, rows outside the scope
+equal the uploaded v9, and the independent per-row segment re-derivation agrees
+on **300/300** sampled matched departures. Not uploaded at the time of writing.
