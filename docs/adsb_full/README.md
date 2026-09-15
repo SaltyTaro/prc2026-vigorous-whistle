@@ -21,6 +21,8 @@ model (v12 recipe, LIRF excluded) decides row by row how much to trust it.
 | all airports fitted | forward (Nov) | 226 | 261.6 | 159.9 | 414.9 |
 | without LIRF (`--exclude-airports LIRF`) | seasonal (Jan / Jul) | 1,419 | 569.8 (460.5 / 644.5; LIRF 1,230 / 2,157) | 415.9 | 700.7 |
 | without LIRF | forward (Nov) | 1,194 | 389.0 (LIRF 1,344) | 204.9 | 645.2 |
+| without LIRF, NM-residual target (`run_adsb_full_nm.py`) | seasonal / forward | 1,891 / 1,891 | clock rows only: 236.6 (201.2 / 262.0) / 185.6 | 220.4 / 158.9 | 253.4 / 239.2 |
+| without LIRF, CatBoost (`run_adsb_learner.py --kind catboost`) | forward (Nov) | 5,996 | 390.4 (LIRF) | 205.1 | 647.8 |
 
 Per airport the learner alone beats v9 at the well-covered airports in Jan/Jul
 2025 (Jan: EDDF 148 vs 178, EDDM 120 vs 168, LEBL 107 vs 144, EHAM 174 vs 198,
@@ -48,3 +50,16 @@ matched rows 126.9 vs 132.2, unmatched rows 222.2 vs 225.3; per airport EDDF
 LEMD 131 vs 143 (the learner alone 130), LFPG 253 vs 261, LSZH 112 vs 112, LTFM
 207 vs 208. Refit: eleven months without LIRF at the median best iteration
 (1,306 = median of 1,419 / 1,194); `runs/adsb_full_nolirf/refit/`.
+
+Blend partners compared on Nov 2025 non-LIRF rows (v12 development
+predictions 164.54; a fixed blend value = (1 − w)·v12 + w·partner):
+
+| Partner | alone | w = 0.3 | w = 0.4 | w = 0.5 |
+| --- | ---: | ---: | ---: | ---: |
+| LightGBM (label) | 164.98 | 160.93 | 160.43 | 160.29 |
+| CatBoost (label) | 164.51 | 160.62 | 160.06 | 159.86 |
+| mean of LightGBM and CatBoost | 160.94 | 160.43 | 159.62 | **159.11** |
+| mean of LightGBM, NM-residual and CatBoost | 160.45 | 160.63 | 159.82 | 159.28 |
+
+The two label learners correlate at 0.982; their mean is the better partner
+and tolerates a higher weight, which is what v12_v5 declares.
