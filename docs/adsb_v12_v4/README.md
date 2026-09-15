@@ -35,3 +35,14 @@ Jul [−1.10, −0.34] s, Nov [−4.25, −1.83] s. Per airport on Nov 2025 vers
 v12: LEMD −6.2%, EHAM −3.1%, EDDM −3.0%, LEBL −2.9%, LFPG −2.5%, EGLL −2.0%,
 EDDF −1.5%, LSZH −0.7%, LTFM −0.6% (every airport improves; LIRF unchanged).
 Residual refit rounds 1,173 (as v12). Exported as **v13**.
+
+## Export ([`export.json`](export.json))
+
+`tools/export_adsb_v11.py --config configs/adsb_v12_v4.json --selection
+runs/adsb_v12_v4/selection.json --version 13`: v9 rebuilt from scratch, the
+v12 residual refitted on the 271,115 in-scope rows of the three months (1,173
+rounds), the learner's refit ranking predictions attached and blended at
+w = 0.3 on every non-LIRF row: **317,942 rows touched** (LIRF 26,899 keep v9).
+Output `runs/submissions/vigorous-whistle_v13.parquet`, SHA-256
+**`c3985c532c1f9ca70cdfd699fe4a97e5037604d15d387cb2e596abd087a85ad2`**, 344,841
+rows, min −12, max 120,549 (inherited).

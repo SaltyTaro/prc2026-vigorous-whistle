@@ -1,0 +1,282 @@
+{
+  "absolute_change_quantiles_seconds": {
+    "0.5": 30.164258889410803,
+    "0.9": 160.58431167219396,
+    "0.99": 386.74994132481885,
+    "0.999": 721.1063309501641
+  },
+  "by_airport": {
+    "EDDF": {
+      "gate_share": 0.07108617689876788,
+      "in_scope": 36317,
+      "matched": 28163,
+      "rows": 36317
+    },
+    "EDDM": {
+      "gate_share": 0.6580463194692726,
+      "in_scope": 25966,
+      "matched": 25173,
+      "rows": 25966
+    },
+    "EGLL": {
+      "gate_share": 0.3897769617108603,
+      "in_scope": 39840,
+      "matched": 37034,
+      "rows": 39840
+    },
+    "EHAM": {
+      "gate_share": 0.6529134295227524,
+      "in_scope": 38182,
+      "matched": 36040,
+      "rows": 38182
+    },
+    "LEBL": {
+      "gate_share": 0.341946448390677,
+      "in_scope": 30080,
+      "matched": 28832,
+      "rows": 30080
+    },
+    "LEMD": {
+      "gate_share": 0.24555880368787947,
+      "in_scope": 36954,
+      "matched": 31129,
+      "rows": 36954
+    },
+    "LFPG": {
+      "gate_share": 0.010222489476849068,
+      "in_scope": 39872,
+      "matched": 8315,
+      "rows": 39872
+    },
+    "LIRF": {
+      "gate_share": 0.16035282144068755,
+      "in_scope": 0,
+      "matched": 8843,
+      "rows": 26899
+    },
+    "LSZH": {
+      "gate_share": 0.27645192440336597,
+      "in_scope": 23150,
+      "matched": 21747,
+      "rows": 23150
+    },
+    "LTFM": {
+      "gate_share": 0.0,
+      "in_scope": 47581,
+      "matched": 2,
+      "rows": 47581
+    }
+  },
+  "changed_rows_vs_v9": 313583,
+  "created_at_utc": "2026-09-15T11:08:02.632826+00:00",
+  "matched_rows": 225278,
+  "output": "runs/submissions/vigorous-whistle_v13.parquet",
+  "ranking_ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+  "ranking_rows": 344841,
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v13.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 120549,
+    "maximum_rounding_change_seconds": 0.49999700754506193,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 26,
+    "provenance": {
+      "audit_used": false,
+      "blend_with": {
+        "name": "adsb_full",
+        "scope": "all_no_lirf",
+        "weight": 0.3
+      },
+      "config_sha256": "bcecdd16c8944e9f0fce2fbeed03de83e1b9fd759927da00b755fc01f186abce",
+      "experiment_id": "prc2026-adsb-surface-residual-v12-v4",
+      "external_data": {
+        "extraction": "tools/adsb_extract_day.py keeps positions inside the ten aerodrome boxes that are on the ground or below 3,000 ft; per-day parquet with archive part hashes under data/external/adsblol/surface/ (the tool now skips and counts a corrupt archive member instead of aborting the day; the surface files used here predate that change and are unaffected)",
+        "labels_used_in_features": false,
+        "license": "Open Database License (ODbL) 1.0; feeder data CC0; licence files are inside every archive",
+        "matching": "tools/build_adsb_features.py: ICAO callsign (CALLSIGN_flt, else FLIGHT_mvt) and takeoff within the track's ground-to-air transition; stand positions learned label-free from covered segments of Jan/Mar/Apr/Jul/Nov 2025 (1,111 stands); the pass-2 matches and stands are exactly the v11 inputs, snapshotted under data/external/adsblol/matches_v11/ and hash-bound below",
+        "source": "adsb.lol globe_history daily archives (GitHub releases adsblol/globe_history_2025 and globe_history_2026, tags vYYYY.MM.DD-planes-readsb-prod-0)"
+      },
+      "feature_set": "nb",
+      "incumbent": {
+        "official_rmse_seconds": 246.4831,
+        "recipe": "v12 = v9 + 1.0 * ADS-B surface residual with neighbour features on matched rows outside LIRF (configs/adsb_v12_v2.json, nb_no_lirf_100)",
+        "submission": "vigorous-whistle_v12.parquet",
+        "submission_sha256": "f3ae96a47a3f9c417d11d93285a393ccd5e7411c9d99b65849867980914471e6"
+      },
+      "model_code_sha256": "d1b181aacb6da2a0d2dfad83c2b074e30b9e37aa93e267eac62fb10d9aeb392c",
+      "native_fit_count": 2,
+      "parents": {
+        "adsb_extract_code": {
+          "path": "tools/adsb_extract_day.py",
+          "sha256": "b737b62c9dac421a0ca5c6662ec8a3eabd0801f012211bd48ab3a87af7d5c796"
+        },
+        "adsb_feature_code": {
+          "path": "src/prc2026_adsb/features.py",
+          "sha256": "cff4c56ae3a70fa8dee35453c42d26dd07f1bb6783ff0c18023aa4d3e46469b5"
+        },
+        "adsb_full_code": {
+          "path": "tools/run_adsb_full.py",
+          "sha256": "bf84441b5eccbb616e006a6fb7a5da7725f8847dc4fea58a20105cc7a527fc65"
+        },
+        "adsb_full_forward_predictions": {
+          "path": "runs/adsb_full_nolirf/forward/predictions.parquet",
+          "sha256": "fa6354b702d9a448f59fbab705d6ba0562831e337ed961c632776c0e58a30e55"
+        },
+        "adsb_full_forward_run": {
+          "path": "runs/adsb_full_nolirf/forward/run.json",
+          "sha256": "4aaeab1923ce29839401c6487c301936b3a9e667b67e5e34335f1e80a643723a"
+        },
+        "adsb_full_refit_predictions": {
+          "path": "runs/adsb_full_nolirf/refit/ranking_predictions.parquet",
+          "sha256": "219c1beac964455f35453c0339776fe15cc72d7ed52697e6ac7a9bf0ab5dccf6"
+        },
+        "adsb_full_refit_run": {
+          "path": "runs/adsb_full_nolirf/refit/run.json",
+          "sha256": "e39f2ab4a2742ea52586426ad9a8ad63185dfc5d77367f82a7e51d1e5948c285"
+        },
+        "adsb_full_seasonal_predictions": {
+          "path": "runs/adsb_full_nolirf/seasonal/predictions.parquet",
+          "sha256": "ba654faa732f85f9690b061f9b3d60cf10ad6eac3f370f6c9b284bbe2186cc98"
+        },
+        "adsb_full_seasonal_run": {
+          "path": "runs/adsb_full_nolirf/seasonal/run.json",
+          "sha256": "1c468d303224bd09273e99b66a32e80fd8505ab528c14741e05083a612c28043"
+        },
+        "adsb_match_code": {
+          "path": "tools/build_adsb_features.py",
+          "sha256": "a5f678a0426e28828b642ae9322e097b518dda235c3de42cbaa415e975def585"
+        },
+        "incumbent_ranking_predictions": {
+          "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/ranking_predictions.parquet",
+          "sha256": "cf0c62b5288de74a8262dbb07705e75792bc92059b1e0bb8d66ac0681ec875be"
+        },
+        "lirf_mixture_selection": {
+          "path": "runs/lirf_mixture/selection.json",
+          "sha256": "67c95f9e89e57d9c8b759b95d82916533684c8969a2655968d7401b874b10aa7"
+        },
+        "matches_2025-01": {
+          "path": "data/external/adsblol/matches_v11/matches2_2025-01.parquet",
+          "sha256": "4a275586729c00bf676e3f3184669ce0f06df40d31fedd2b14eb5ebbc127075f"
+        },
+        "matches_2025-07": {
+          "path": "data/external/adsblol/matches_v11/matches2_2025-07.parquet",
+          "sha256": "6dbf3693870ccdcb25a87789e634aa95226fd06b6d57d0fa5113b264ac8cc9d7"
+        },
+        "matches_2025-11": {
+          "path": "data/external/adsblol/matches_v11/matches2_2025-11.parquet",
+          "sha256": "8d1cd1017659feb9c88bccf34b16ab166d2bb4aef8c2d823f87ecff50212b2e6"
+        },
+        "matches_2026-01": {
+          "path": "data/external/adsblol/matches_v11/matches2_2026-01.parquet",
+          "sha256": "6bf7cfa259bc26e048d1ba60a60fd9520aade34b72d64824ff8306d25c6ff2cb"
+        },
+        "matches_2026-07": {
+          "path": "data/external/adsblol/matches_v11/matches2_2026-07.parquet",
+          "sha256": "1947f2002dcaa765ed5f2b82f73cfe0f248e18e8f4b45098fe7a060dc56c026d"
+        },
+        "stands": {
+          "path": "data/external/adsblol/matches_v11/stands.parquet",
+          "sha256": "63502c9465e3742d537fca30bd3c03622623a3be047eb01ba068292a249d995d"
+        },
+        "v11_export": {
+          "path": "runs/submissions/vigorous-whistle_v11.parquet",
+          "sha256": "98af50be5fb49d6cc42c8390b26be3220ba2ae24b693fc97c437ceb695c66b09"
+        },
+        "v11_receipt": {
+          "path": "runs/submissions/vigorous-whistle_v11.receipt.json",
+          "sha256": "681099293bb027e608105f8ead47f4596ec5e0b1ccd37a7a36c896235b56c52b"
+        },
+        "v12_development_residuals": {
+          "path": "runs/adsb_v12_v2/development_residuals.parquet",
+          "sha256": "4c174aea141e796b693f8e066d02344460c0e524bf05901440c8e300c580b8ca"
+        },
+        "v12_export": {
+          "path": "runs/submissions/vigorous-whistle_v12.parquet",
+          "sha256": "f3ae96a47a3f9c417d11d93285a393ccd5e7411c9d99b65849867980914471e6"
+        },
+        "v12_receipt": {
+          "path": "runs/submissions/vigorous-whistle_v12.receipt.json",
+          "sha256": "c0ad739b72797a619ffbcc08065ee95bd56970d44c14e2debb28c2800910b844"
+        },
+        "v12_selection": {
+          "path": "runs/adsb_v12_v2/selection.json",
+          "sha256": "918631283768c182450f2672402999412112ff8777b3b4765bd8e1772ad20f27"
+        },
+        "v9_export": {
+          "path": "runs/submissions/vigorous-whistle_v9.parquet",
+          "sha256": "25d3b296a2753852144f53a2c36a1e539031dbd6ef35b8be928d9e1fa7363521"
+        },
+        "v9_receipt": {
+          "path": "runs/submissions/vigorous-whistle_v9.receipt.json",
+          "sha256": "8b0bc7d79f24c839138787ebab8d45f5dc839b89807d6a2e7c1318729dc7ae67"
+        }
+      },
+      "policy": "adsb-surface-residual-v12-v4",
+      "ranking_matched_rows": 225278,
+      "ranking_rows_in_scope": 317942,
+      "refit_months": [
+        "2025-01",
+        "2025-02",
+        "2025-03",
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11"
+      ],
+      "residual_model_sha256": "026080e1e7d39235060677fbecb3fdd3b661c39e267a9093f0c404bab518a432",
+      "rounds": 1173,
+      "scope": "matched_no_lirf",
+      "selected_candidate": "blend_all_30",
+      "selection_sha256": "7a17113572d569d12084866fd3d041f43fdc4b0ed20afe91e6c53b10eecec663",
+      "stands": 1111,
+      "training_rows": 271115,
+      "weight": 1.0
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "c3985c532c1f9ca70cdfd699fe4a97e5037604d15d387cb2e596abd087a85ad2",
+    "size_bytes": 1353461,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-15T11:08:02.595190+00:00",
+    "version": 13
+  },
+  "residual_quantiles_in_scope": {
+    "0.01": -277.3116190690651,
+    "0.1": -108.394454298431,
+    "0.25": -37.3470184512925,
+    "0.5": 0.0,
+    "0.75": 28.551471097722,
+    "0.9": 120.12372312825222,
+    "0.99": 377.5133544490584
+  },
+  "rounds": 1173,
+  "rows_in_scope": 317942,
+  "rows_outside_scope_match_v9_export": true,
+  "scope": "matched_no_lirf",
+  "training_rows": 271115,
+  "v9_reproduced_from_scratch": true,
+  "versus_v11": {
+    "absolute_change_quantiles_seconds": {
+      "0.5": 15.0,
+      "0.9": 57.0,
+      "0.99": 166.0,
+      "0.999": 410.0
+    },
+    "changed_rows": 320500,
+    "changed_rows_outside_matched": 98124,
+    "rmse_of_change_seconds": 46.18525630187303
+  }
+}
