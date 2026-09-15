@@ -1,4 +1,4 @@
-# v11: ADS-B surface residual on v9 (15 September 2026; built and verified, awaiting upload approval)
+# v11: ADS-B surface residual on v9 (15 September 2026; scored 248.4368, official best, 4th of 142)
 
 Declared at **08:21 UTC** in [`../../configs/adsb_v11_v1.json`](../../configs/adsb_v11_v1.json)
 after the exploratory work recorded in [`../opensky/README.md`](../opensky/README.md).
@@ -56,3 +56,10 @@ Honest expectation for the official score: between the Jul and Nov figures,
 about **−5% to −7%** (≈ 250–254), which would be fourth place; third is 247.0.
 The ranking has the artifact rows of a seasonal set but 2026 coverage. Nothing
 has been sent to the organisers; the external data is openly licensed (ODbL).
+
+## Official result: 248.4368 — new best, 4th place
+
+Standing at 09:08 UTC: **4th of 142**, 1.43 s behind third (247.0109;
+245.0207 / 245.2932 above) — [`leaderboard_snapshot.json`](leaderboard_snapshot.json).
+The development months predicted −2.9% / −3.6% / −8.9%; the ranking year gave
+−7.1%, consistent with its 2026 coverage. Never re-upload v1–v11.

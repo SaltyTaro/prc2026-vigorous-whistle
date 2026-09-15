@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LEADERBOARD = "https://datacomp.opensky-network.org/api/competitions/bb3693e1-26bc-4a9e-8619-4fe78b4eab0c/leaderboard"
 
 
-def upload(path: Path, expected_sha256: str):
+def upload(path: Path, expected_sha256: str, calendar_day: bool = False):
     template = ROOT / "data/raw/submitting.parquet"
     validation = validate_submission(path, template)
     receipt = read_json(path.with_suffix(".receipt.json"))
@@ -42,7 +42,7 @@ def upload(path: Path, expected_sha256: str):
         if current["ETag"].strip('"') != source["etag"] or current["ContentLength"] != source["size_bytes"]:
             raise ValueError("Organizer ranking/template data changed; refresh before submitting.")
     objects = list_team_objects(client)
-    limits = check_upload_window(objects, path.name, path.stat().st_size)
+    limits = check_upload_window(objects, path.name, path.stat().st_size, calendar_day=calendar_day)
     log_path = path.with_suffix(".upload.json")
     provenance = receipt["provenance"]
     # Post-processing exports carry no refit of their own; identify them by declaration and candidate.
@@ -128,6 +128,7 @@ def main():
     sending = sub.add_parser("upload")
     sending.add_argument("--file", type=Path, required=True)
     sending.add_argument("--expected-sha256", required=True)
+    sending.add_argument("--calendar-day", action="store_true", help="Count the five-per-day allowance by UTC calendar day instead of a rolling 24 hours (user-directed)")
     checking = sub.add_parser("status")
     checking.add_argument("--filename", required=True)
     checking.add_argument("--report-dir", type=Path,
@@ -135,7 +136,7 @@ def main():
     args = parser.parse_args()
     try:
         if args.command == "upload":
-            upload(ROOT / args.file, args.expected_sha256)
+            upload(ROOT / args.file, args.expected_sha256, args.calendar_day)
         else:
             status(args.filename, ROOT / args.report_dir if args.report_dir else None)
     except ClientError as exc:
