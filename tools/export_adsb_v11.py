@@ -27,7 +27,7 @@ from prc2026_adsb.features import DEPARTURE_COLUMNS, FEATURE_NAMES, NEIGHBOUR_NA
 from prc2026_lirf_mixture.model import apply_candidate
 from prc2026_postprocess.rules import row_context
 from prc2026_submission.contract import export_submission
-from run_adsb_v11 import check_parents, feature_list, matches_dir, model_code_receipt, month_table, predict_residual, prepare_matrix, scope_mask
+from run_adsb_v11 import attach_extra, check_parents, extra_tables, feature_list, matches_dir, model_code_receipt, month_table, predict_residual, prepare_matrix, scope_mask
 from run_lirf_mixture import MOVEMENT_COLUMNS, fit_population_model, movements, score_population
 import lightgbm as lgb
 
@@ -47,11 +47,12 @@ def ranking_table(config: dict, departures: pd.DataFrame, stands: pd.DataFrame, 
     table["proxy_s"] = context["proxy_s"].to_numpy()
     table["schedule_interval_s"] = context["schedule_interval_s"].to_numpy()
     table["hour"] = departures[TIME].dt.hour + departures[TIME].dt.minute / 60
-    return table, matches
+    return attach_extra(table, extra_tables(config, "ranking")), matches
 
 
 def feature_columns(config: dict) -> list[str]:
-    return [*FEATURE_NAMES, *(NEIGHBOUR_NAMES if config["residual_model"].get("neighbour_features", False) else [])]
+    extra = [name for name in config.get("extra_feature_tables", {})]
+    return [*FEATURE_NAMES, *(NEIGHBOUR_NAMES if config["residual_model"].get("neighbour_features", False) else []), *extra, *[f"{n}_minus_v9" for n in extra]]
 
 
 def main():
@@ -94,7 +95,8 @@ def main():
     stands = pd.read_parquet(matches_dir(config) / "stands.parquet")
     seasonal = pd.read_parquet(ROOT / args.scratch / "seasonal.parquet")
     forward = pd.read_parquet(ROOT / args.scratch / "forward.parquet")
-    tables = [month_table(month, seasonal if month in ["2025-01", "2025-07"] else forward, stands, matches_dir(config), neighbours) for month in config["development_months"]]
+    extra = extra_tables(config, "development")
+    tables = [month_table(month, seasonal if month in ["2025-01", "2025-07"] else forward, stands, matches_dir(config), neighbours, extra) for month in config["development_months"]]
     train = pd.concat(tables, ignore_index=True)
     scoped_train = train[scope_mask(train, scope)].reset_index(drop=True)
     spec = config["residual_model"]

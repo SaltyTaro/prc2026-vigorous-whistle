@@ -30,7 +30,8 @@ from prc2026_adsb.features import DEPARTURE_COLUMNS, departure_features, neighbo
 MATCHES = ROOT / "data/external/adsblol/matches"
 SCOPES = {"matched": lambda t: t["adsb_matched"].eq(1),
           "context": lambda t: t["adsb_matched"].eq(1) | t["nb_runway_30m_count"].fillna(0).gt(0),
-          "matched_no_lirf": lambda t: t["adsb_matched"].eq(1) & t["airport"].ne("LIRF")}
+          "matched_no_lirf": lambda t: t["adsb_matched"].eq(1) & t["airport"].ne("LIRF"),
+          "all_no_lirf": lambda t: t["airport"].ne("LIRF")}
 
 
 def model_code_receipt(root: Path) -> dict:
@@ -49,7 +50,31 @@ def matches_dir(config: dict) -> Path:
     return ROOT / config.get("matches_dir", MATCHES.relative_to(ROOT).as_posix())
 
 
-def month_table(month: str, fold_frame: pd.DataFrame, stands: pd.DataFrame, matches_root: Path = MATCHES, neighbours: bool = False) -> pd.DataFrame:
+def extra_tables(config: dict, stage: str) -> list[pd.DataFrame]:
+    """Declared ID-aligned extra feature tables (e.g. the full-data learner's out-of-sample predictions), one column each."""
+    frames = []
+    for name, spec in config.get("extra_feature_tables", {}).items():
+        paths = spec["development"] if stage == "development" else [spec["ranking"]]
+        frame = pd.concat([pd.read_parquet(ROOT / path, columns=[ID, spec["column"]]) for path in paths], ignore_index=True)
+        if frame[ID].duplicated().any():
+            raise ValueError(f"Extra feature table {name} has duplicate identities.")
+        frames.append(frame.rename(columns={spec["column"]: name}))
+    return frames
+
+
+def attach_extra(table: pd.DataFrame, frames: list[pd.DataFrame]) -> pd.DataFrame:
+    """Merge the extra tables one-to-one and add the declared derived differences to v9."""
+    for frame in frames:
+        name = [c for c in frame.columns if c != ID][0]
+        table = table.merge(frame, on=ID, how="left", validate="one_to_one")
+        if table[name].isna().any():
+            raise ValueError(f"Extra feature table {name} does not cover every row.")
+        table[f"{name}_minus_v9"] = table[name] - table["v9"]
+    return table
+
+
+def month_table(month: str, fold_frame: pd.DataFrame, stands: pd.DataFrame, matches_root: Path = MATCHES, neighbours: bool = False,
+                extra: list[pd.DataFrame] | None = None) -> pd.DataFrame:
     """Fold rows of the month (with v9 and label) joined to ADS-B features; label-free features only."""
     y, m = int(month[:4]), int(month[5:7])
     raw = pd.read_parquet(ROOT / "data/raw" / f"training_{y}-{m:02}-01_{y + (m == 12)}-{(m % 12) + 1:02}-01.parquet", columns=DEPARTURE_COLUMNS + ["RUNWAY_mvt"])
@@ -65,7 +90,7 @@ def month_table(month: str, fold_frame: pd.DataFrame, stands: pd.DataFrame, matc
     table["month"] = month
     table["hour"] = table[TIME].dt.hour + table[TIME].dt.minute / 60
     table = table.rename(columns={"STAND_mvt": "stand", "RUNWAY_mvt": "runway"})
-    return table
+    return attach_extra(table, extra or [])
 
 
 def scope_mask(table: pd.DataFrame, scope: str) -> np.ndarray:
@@ -154,14 +179,16 @@ def main():
     seasonal = pd.read_parquet(ROOT / args.scratch / "seasonal.parquet")
     forward = pd.read_parquet(ROOT / args.scratch / "forward.parquet")
     floor = float(min(seasonal["floor"].iloc[0], forward["floor"].iloc[0]))
+    extra = extra_tables(config, "development")
     tables = {}
     for month in config["development_months"]:
         fold = seasonal if month in ["2025-01", "2025-07"] else forward
-        tables[month] = month_table(month, fold, stands, matches_dir(config), neighbours)
+        tables[month] = month_table(month, fold, stands, matches_dir(config), neighbours, extra)
     baseline_spec = config.get("development_baseline")
     baseline_residual = None
     if baseline_spec:
-        baseline_residual = pd.read_parquet(ROOT / config["parents"]["v11_development_residuals"]["path"]).set_index(ID)["residual"]
+        parent = config["parents"][baseline_spec.get("parent", "v11_development_residuals")]["path"]
+        baseline_residual = pd.read_parquet(ROOT / parent).set_index(ID)[baseline_spec.get("column", "residual")]
     candidates = {name: {"weight": item["weight"], "scope": item.get("scope", "matched"), "feature_set": item.get("features"), "months": {}} for name, item in config["candidates"].items()}
     variants = sorted({(item["scope"], item["feature_set"]) for item in candidates.values()}, key=lambda v: (v[0], v[1] or ""))
     key_of = lambda scope, feature_set: scope + (f"|{feature_set}" if feature_set else "")

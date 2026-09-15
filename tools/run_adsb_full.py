@@ -1,4 +1,4 @@
-"""Full-data ADS-B learner: LightGBM on the timeline bundle features plus the ADS-B surface and neighbour features.
+"""Full-data ADS-B learner: LightGBM on the timeline bundle model features (the combined contract) plus the ADS-B surface and neighbour features.
 
 `--fold seasonal|forward`: fit on the fold's fit partition (early stopping on its
 early-stop partition), predict the fold's score partition, and save the
@@ -31,9 +31,10 @@ from prc2026_adsb.features import DEPARTURE_COLUMNS, FEATURE_NAMES, NEIGHBOUR_NA
 from prc2026_phase3.bundle import load_partition
 from prc2026_phase5r.baseline import aligned_truth
 from prc2026_timeline.bundle import load_bundle
-from prc2026_timeline.features import CATEGORICAL_COLUMNS, FEATURE_NAMES as BUNDLE_NAMES
+from prc2026_timeline.features import CATEGORICAL_COLUMNS, CORE_NAMES, FLOWN_NAMES, SURFACE_NAMES
 
 MISSING = "__MISSING__"
+BUNDLE_NAMES = [*CORE_NAMES, *FLOWN_NAMES, *SURFACE_NAMES]  # the timeline campaign's 'combined' model contract (276 features)
 ADSB_NAMES = [*FEATURE_NAMES, *NEIGHBOUR_NAMES]
 TRAINING_MONTHS = [f"2025-{m:02}" for m in range(1, 12)]
 RANKING_MONTHS = ["2026-01", "2026-07"]
@@ -158,7 +159,8 @@ def main():
         score = parts["score"]
         matched = score["adsb_matched"].eq(1).to_numpy()
         rmse = lambda k: float(np.sqrt(np.mean((truths["score"][k] - prediction[k]) ** 2)))
-        by_month = {m: rmse(score[TIME].dt.strftime("%Y-%m").eq(m).to_numpy()) for m in sorted(score[TIME].dt.strftime("%Y-%m").unique())}
+        months = catalog.set_index(ID)[TIME].reindex(score[ID]).dt.strftime("%Y-%m").to_numpy()
+        by_month = {m: rmse(months == m) for m in sorted(set(months))}
         record = {"created_at_utc": utc_now(), "fold": args.fold, "stage": "development", "best_iteration": best, "rows": {r: int(len(p)) for r, p in parts.items()},
                   "score_ids_sha256": identity_hash(score[ID]), "score_rmse": rmse(np.ones(len(score), dtype=bool)), "score_rmse_by_month": by_month,
                   "score_rmse_matched": rmse(matched), "score_rmse_unmatched": rmse(~matched), "matched_share": float(matched.mean()),
