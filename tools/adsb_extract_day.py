@@ -17,6 +17,7 @@ import subprocess
 import sys
 import tarfile
 import time
+import zlib
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -37,9 +38,13 @@ def airport_of(lat: float, lon: float) -> str | None:
     return None
 
 
-def decode(name: str, payload: bytes) -> list[list]:
+def decode(name: str, payload: bytes) -> list[list] | None:
+    """Rows inside the aerodrome boxes; None when the member's gzip stream is corrupt (skipped and counted)."""
     if payload[:2] == b"\x1f\x8b":
-        payload = gzip.decompress(payload)
+        try:
+            payload = gzip.decompress(payload)
+        except (OSError, EOFError, zlib.error):
+            return None
     try:
         record = json.loads(payload)
     except Exception:
@@ -74,11 +79,15 @@ def decode(name: str, payload: bytes) -> list[list]:
     return out
 
 
-def worker(batch: list[tuple[str, bytes]]) -> list[list]:
-    rows = []
+def worker(batch: list[tuple[str, bytes]]) -> tuple[list[list], list[str]]:
+    rows, corrupt = [], []
     for name, payload in batch:
-        rows.extend(decode(name, payload))
-    return rows
+        decoded = decode(name, payload)
+        if decoded is None:
+            corrupt.append(name)
+        else:
+            rows.extend(decoded)
+    return rows, corrupt
 
 
 def release_assets(day: str) -> list[dict]:
@@ -141,7 +150,13 @@ def main():
     started = time.time()
     assets = release_assets(args.day)
     stream = HashingStream(assets)
-    rows, members, batch, pending = [], 0, [], []
+    rows, corrupt, members, batch, pending = [], [], 0, [], []
+
+    def collect(job) -> None:
+        got_rows, got_corrupt = job.get()
+        rows.extend(got_rows)
+        corrupt.extend(got_corrupt)
+
     with mp.Pool(args.workers) as pool, tarfile.open(fileobj=stream, mode="r|") as archive:
         for member in archive:
             if not member.isfile() or "/traces/" not in member.name:
@@ -153,24 +168,24 @@ def main():
                 pending.append(pool.apply_async(worker, (batch,)))
                 batch = []
             if len(pending) >= args.workers * 4:
-                rows.extend(pending.pop(0).get())
+                collect(pending.pop(0))
         if batch:
             pending.append(pool.apply_async(worker, (batch,)))
         for job in pending:
-            rows.extend(job.get())
+            collect(job)
     stream.read()  # drain to finish hashing
     frame = pd.DataFrame(rows, columns=COLUMNS)
     frame["time"] = frame["time"].astype(float)
     frame = frame.sort_values(["airport", "icao", "time"]).reset_index(drop=True)
     frame.to_parquet(target, index=False, compression="zstd")
     manifest = {"day": args.day, "created_at_utc": datetime.now(timezone.utc).isoformat(), "source": "adsb.lol globe_history (ODbL)",
-                "release": f"v{args.day}-planes-readsb-prod-0", "assets": assets, "part_sha256": stream.hashes, "trace_members": members,
+                "release": f"v{args.day}-planes-readsb-prod-0", "assets": assets, "part_sha256": stream.hashes, "trace_members": members, "corrupt_members": corrupt,
                 "rows": int(len(frame)), "aircraft": int(frame["icao"].nunique()) if len(frame) else 0,
                 "rows_by_airport": {k: int(v) for k, v in frame["airport"].value_counts().sort_index().items()} if len(frame) else {},
                 "ground_rows_by_airport": {k: int(v) for k, v in frame[frame["ground"]]["airport"].value_counts().sort_index().items()} if len(frame) else {},
                 "seconds": round(time.time() - started, 1), "boxes": BOXES}
     manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(json.dumps({k: manifest[k] for k in ["day", "trace_members", "rows", "aircraft", "ground_rows_by_airport", "seconds"]}))
+    print(json.dumps({k: manifest[k] for k in ["day", "trace_members", "corrupt_members", "rows", "aircraft", "ground_rows_by_airport", "seconds"]}))
 
 
 if __name__ == "__main__":

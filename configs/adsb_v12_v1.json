@@ -1,0 +1,84 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "nb_matched_100": {"weight": 1.0, "scope": "matched"},
+    "nb_matched_75": {"weight": 0.75, "scope": "matched"},
+    "nb_matched_50": {"weight": 0.5, "scope": "matched"},
+    "nb_context_100": {"weight": 1.0, "scope": "context"},
+    "nb_context_75": {"weight": 0.75, "scope": "context"},
+    "nb_context_50": {"weight": 0.5, "scope": "context"}
+  },
+  "declared_at_utc": "2026-09-15T09:34:00+00:00",
+  "development_months": ["2025-01", "2025-07", "2025-11"],
+  "development_scheme": "leave-one-month-out over the three scoring months that hold out-of-sample v9 predictions (Jan and Jul 2025 from the seasonal fold, Nov 2025 from the forward fold); for each scope the residual model is fitted on the other two months' in-scope rows and applied to the held-out month's in-scope rows; every other row keeps v9",
+  "development_baseline": {
+    "name": "v11 development predictions",
+    "recipe": "v9 + 0.75 * v11 development residual (runs/adsb_v11/development_residuals.parquet, leave-one-month-out), floored; reproduces 333.914 / 277.689 / 200.421 on Jan / Jul / Nov 2025",
+    "weight": 0.75
+  },
+  "execution": {"automatic_submission": false, "azure_only": true, "development_host": "workstation", "workers_used": ["arcw1", "arcw2", "arcw3", "arcw4", "arcw5"]},
+  "experiment_id": "prc2026-adsb-surface-residual-v12-v1",
+  "external_data": {
+    "source": "adsb.lol globe_history daily archives (GitHub releases adsblol/globe_history_2025 and globe_history_2026, tags vYYYY.MM.DD-planes-readsb-prod-0)",
+    "license": "Open Database License (ODbL) 1.0; feeder data CC0; licence files are inside every archive",
+    "extraction": "tools/adsb_extract_day.py keeps positions inside the ten aerodrome boxes that are on the ground or below 3,000 ft; per-day parquet with archive part hashes under data/external/adsblol/surface/ (the tool now skips and counts a corrupt archive member instead of aborting the day; the surface files used here predate that change and are unaffected)",
+    "matching": "tools/build_adsb_features.py: ICAO callsign (CALLSIGN_flt, else FLIGHT_mvt) and takeoff within the track's ground-to-air transition; stand positions learned label-free from covered segments of Jan/Mar/Apr/Jul/Nov 2025 (1,111 stands); the pass-2 matches and stands are exactly the v11 inputs, snapshotted under data/external/adsblol/matches_v11/ and hash-bound below",
+    "labels_used_in_features": false
+  },
+  "floor_seconds_rule": "minimum departure label over the refit months (-12), applied after the residual",
+  "incumbent": {
+    "official_rmse_seconds": 248.4368,
+    "recipe": "v11 = v9 + 0.75 * ADS-B surface residual on matched rows (configs/adsb_v11_v1.json, residual_matched_75)",
+    "submission": "vigorous-whistle_v11.parquet",
+    "submission_sha256": "98af50be5fb49d6cc42c8390b26be3220ba2ae24b693fc97c437ceb695c66b09"
+  },
+  "matches_dir": "data/external/adsblol/matches_v11",
+  "minimum_improvement_fraction_each_month": 0.002,
+  "parents": {
+    "incumbent_ranking_predictions": {"path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/ranking_predictions.parquet", "sha256": "cf0c62b5288de74a8262dbb07705e75792bc92059b1e0bb8d66ac0681ec875be"},
+    "lirf_mixture_selection": {"path": "runs/lirf_mixture/selection.json", "sha256": "67c95f9e89e57d9c8b759b95d82916533684c8969a2655968d7401b874b10aa7"},
+    "v9_export": {"path": "runs/submissions/vigorous-whistle_v9.parquet", "sha256": "25d3b296a2753852144f53a2c36a1e539031dbd6ef35b8be928d9e1fa7363521"},
+    "v9_receipt": {"path": "runs/submissions/vigorous-whistle_v9.receipt.json", "sha256": "8b0bc7d79f24c839138787ebab8d45f5dc839b89807d6a2e7c1318729dc7ae67"},
+    "v11_export": {"path": "runs/submissions/vigorous-whistle_v11.parquet", "sha256": "98af50be5fb49d6cc42c8390b26be3220ba2ae24b693fc97c437ceb695c66b09"},
+    "v11_receipt": {"path": "runs/submissions/vigorous-whistle_v11.receipt.json", "sha256": "681099293bb027e608105f8ead47f4596ec5e0b1ccd37a7a36c896235b56c52b"},
+    "v11_selection": {"path": "runs/adsb_v11/selection.json", "sha256": "cbf9cce51de233467aa58388effdccf218c355888d3dba4268f86ac333aad275"},
+    "v11_development_residuals": {"path": "runs/adsb_v11/development_residuals.parquet", "sha256": "2f4ffee578dda5cf442c3bbc02acc8e5ccac74208584ffdfaf88a9a77c42ffdb"},
+    "adsb_feature_code": {"path": "src/prc2026_adsb/features.py", "sha256": "cff4c56ae3a70fa8dee35453c42d26dd07f1bb6783ff0c18023aa4d3e46469b5"},
+    "adsb_extract_code": {"path": "tools/adsb_extract_day.py", "sha256": "b737b62c9dac421a0ca5c6662ec8a3eabd0801f012211bd48ab3a87af7d5c796"},
+    "adsb_match_code": {"path": "tools/build_adsb_features.py", "sha256": "a5f678a0426e28828b642ae9322e097b518dda235c3de42cbaa415e975def585"},
+    "stands": {"path": "data/external/adsblol/matches_v11/stands.parquet", "sha256": "63502c9465e3742d537fca30bd3c03622623a3be047eb01ba068292a249d995d"},
+    "matches_2025-01": {"path": "data/external/adsblol/matches_v11/matches2_2025-01.parquet", "sha256": "4a275586729c00bf676e3f3184669ce0f06df40d31fedd2b14eb5ebbc127075f"},
+    "matches_2025-07": {"path": "data/external/adsblol/matches_v11/matches2_2025-07.parquet", "sha256": "6dbf3693870ccdcb25a87789e634aa95226fd06b6d57d0fa5113b264ac8cc9d7"},
+    "matches_2025-11": {"path": "data/external/adsblol/matches_v11/matches2_2025-11.parquet", "sha256": "8d1cd1017659feb9c88bccf34b16ab166d2bb4aef8c2d823f87ecff50212b2e6"},
+    "matches_2026-01": {"path": "data/external/adsblol/matches_v11/matches2_2026-01.parquet", "sha256": "6bf7cfa259bc26e048d1ba60a60fd9520aade34b72d64824ff8306d25c6ff2cb"},
+    "matches_2026-07": {"path": "data/external/adsblol/matches_v11/matches2_2026-07.parquet", "sha256": "1947f2002dcaa765ed5f2b82f73cfe0f248e18e8f4b45098fe7a060dc56c026d"}
+  },
+  "prediction_postprocess": "adsb-surface-residual-v12-v1",
+  "prior_evidence": "Declared after v11 scored 248.4368 officially (4th of 142; third 247.0109). v11's leave-one-month-out development gave -2.90% / -3.62% / -8.85% versus v9 on Jan / Jul / Nov 2025. The neighbour features (nb_*) were written and timed (81 s per month) but never scored against any label before this declaration; a post-v11 decomposition (no new model) showed unmatched rows at covered airports at 180-300 s RMSE versus 76-142 s for matched rows, and that 55-80% of the remaining squared error sits at LIRF, LFPG, LTFM and EGLL. Expected size of this step: 0.3-1% on the ranking.",
+  "refit_months": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11"],
+  "residual_model": {
+    "scopes": {
+      "matched": "departures with a matched ADS-B surface segment (adsb_matched == 1)",
+      "context": "departures with a matched segment OR at least one matched neighbour on the same runway within 30 minutes (adsb_matched == 1 or nb_runway_30m_count > 0)"
+    },
+    "applies_to": "the candidate's scope, for training and prediction alike; every row outside the scope keeps the v9 prediction exactly",
+    "neighbour_features": true,
+    "features": ["airport", "v9", "proxy_s", "schedule_interval_s", "hour", "stand", "runway",
+                 "adsb_matched", "adsb_gate", "adsb_first_point_s", "adsb_motion_s", "adsb_first_gs_kt", "adsb_first_dist_stand_m", "adsb_stop_seconds",
+                 "adsb_taxi_path_m", "adsb_taxi_stops", "adsb_taxi_stopped_s", "adsb_slow_start_s", "adsb_gap_before_s", "adsb_turnaround_s",
+                 "adsb_anchor_dist_stand_m", "adsb_last_ground_s", "adsb_points",
+                 "nb_runway_10m_count", "nb_runway_10m_median_taxi_s", "nb_runway_10m_max_taxi_s", "nb_runway_10m_median_stopped_s",
+                 "nb_airport_10m_count", "nb_airport_10m_median_taxi_s", "nb_runway_30m_count", "nb_runway_30m_median_taxi_s",
+                 "nb_runway_30m_median_first_point_s", "nb_runway_prev_taxi_s", "nb_runway_next_taxi_s"],
+    "categorical": ["airport", "stand", "runway"],
+    "kind": "lightgbm",
+    "params": {"objective": "regression", "learning_rate": 0.03, "num_leaves": 63, "min_data_in_leaf": 100, "feature_fraction": 0.9, "bagging_fraction": 0.8, "bagging_freq": 1, "lambda_l2": 10.0, "verbose": -1, "num_threads": 8, "seed": 20260915, "deterministic": true, "force_row_wise": true},
+    "rounds_rule": "development: rounds per held-out month and scope come from a 5-fold day-grouped inner split of the two training months (median best iteration, 200 rounds patience, at most 4000); the held-out month is never used for rounds; export: median of the selected scope's three development round counts",
+    "target": "label minus v9 prediction",
+    "prediction": "v9 + weight * residual on in-scope rows, then floor"
+  },
+  "selection": "For each candidate (scope, weight), RMSE of (v9 + weight * residual on the scope) on each held-out month versus the v11 development prediction on the same rows (all departures of the month). A candidate is eligible when it is at least 0.2% lower than the v11 development RMSE on EACH of the three months. Choose the eligible candidate with the lowest mean ratio to v11; otherwise select nothing. Ratios to v9, per-airport tables and the paired-day bootstrap interval of the RMSE difference to v11 are descriptive only.",
+  "seed": 20260915,
+  "target_filter": "none",
+  "threads": 8
+}
