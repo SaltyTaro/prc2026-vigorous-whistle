@@ -1,0 +1,685 @@
+{
+  "created_at_utc": "2026-09-13T18:10:33.873513+00:00",
+  "export": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v3.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 115075,
+    "maximum_rounding_change_seconds": 0.49999823905329777,
+    "minimum_prediction_seconds": -843,
+    "negative_predictions": 28,
+    "provenance": {
+      "audit_used": false,
+      "bundle_id": "2ceb3449c26767a9731121bdd4988cff7d57f6e9310b84ac680657a131ae9cff",
+      "config_sha256": "2854bb7045cd74396573dda074c24ab7eeae592c242e55c0e3827b25161cb23a",
+      "iterations": 8023,
+      "model_code_sha256": "124b752ecc6717ec9ed9f5fcd32237716a637decc41200c3ed411d6122c788c4",
+      "model_kind": "lightgbm",
+      "refit_run_id": "20260913T175343734071Z_refit_airport_blend_lightgbm",
+      "refit_run_sha256": "e6d338b43c1f608adf7b8e3b9b4e69079deea5645011e78c39914cc60dc81797"
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "c445bc304ea3f548890fae74825a55ec3d2be6d4f7404e65d4b40ef8883cf7f5",
+    "size_bytes": 1338167,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-13T18:07:15.184561+00:00",
+    "version": 3
+  },
+  "leaderboard_snapshot": {
+    "created_at_utc": "2026-09-13T18:10:33.818406+00:00",
+    "pages": [
+      {
+        "path": "runs/phase4/leaderboard_20260913T181023_674785+0000/page_1.json",
+        "sha256": "2434f9112b9ee3a3878e88d1c0f6ca5b91a1372a4b1ef99e08918b6ad53c31c6",
+        "size_bytes": 65489
+      },
+      {
+        "path": "runs/phase4/leaderboard_20260913T181023_674785+0000/page_2.json",
+        "sha256": "8596f8e59c6df4142411a1d8199e0cab6b5b6665f88cf19eb3a891d956c722fa",
+        "size_bytes": 65449
+      },
+      {
+        "path": "runs/phase4/leaderboard_20260913T181023_674785+0000/page_3.json",
+        "sha256": "beb9b3169fc2adefd80499853b24dd45d8515715450c3c7ddd6d4d569f7d2048",
+        "size_bytes": 65600
+      },
+      {
+        "path": "runs/phase4/leaderboard_20260913T181023_674785+0000/page_4.json",
+        "sha256": "1e02bb06c1fd606e3ffe36f799994f6efa88a8e6ff768bc2cd10142c2e1e2ea3",
+        "size_bytes": 65504
+      },
+      {
+        "path": "runs/phase4/leaderboard_20260913T181023_674785+0000/page_5.json",
+        "sha256": "a01c363152cbf703a7aaa97b472a262330deaecdc1e647a44b299c674d3b27d6",
+        "size_bytes": 65774
+      },
+      {
+        "path": "runs/phase4/leaderboard_20260913T181023_674785+0000/page_6.json",
+        "sha256": "1273f9b1e3f14352ba49720d0c05192ddecba6e784db1a1313823cf58cd7c926",
+        "size_bytes": 65788
+      },
+      {
+        "path": "runs/phase4/leaderboard_20260913T181023_674785+0000/page_7.json",
+        "sha256": "4769c450ef69a2be45aab1fef0cfe09578a932586045d26e013366048960f921",
+        "size_bytes": 374
+      }
+    ],
+    "retrieval_end_utc": "2026-09-13T18:10:33.818414+00:00",
+    "retrieval_start_utc": "2026-09-13T18:10:23.675236+00:00",
+    "rmse_reduction_fraction_to_third": 0.210913909056482,
+    "scored_teams": 131,
+    "source": "https://datacomp.opensky-network.org/api/competitions/bb3693e1-26bc-4a9e-8619-4fe78b4eab0c/leaderboard",
+    "successful_submissions": 1201,
+    "team_best": {
+      "filename": "vigorous-whistle_v3.parquet",
+      "processedAt": "2026-09-13T18:08:27.124251Z",
+      "score": 331.9269,
+      "submissionId": "ff1225ea-b929-4b4b-bac3-0ff6e379c672",
+      "teamId": "64cf67d0-5b26-49db-bd82-7b12ca4411ce",
+      "teamName": "vigorous-whistle",
+      "usedPairs": 344841
+    },
+    "team_rank": 74,
+    "top_three": []
+  },
+  "local_verification": {
+    "audit_used": false,
+    "bundle_id": "2ceb3449c26767a9731121bdd4988cff7d57f6e9310b84ac680657a131ae9cff",
+    "checked_at_utc": "2026-09-13T18:04:24.188204+00:00",
+    "code_sha256": "4d07addb8a07a6092ab2f8712683f6de6013afde63d916acb4ba5eca17a7f2e3",
+    "declared_configuration_sha256": "2854bb7045cd74396573dda074c24ab7eeae592c242e55c0e3827b25161cb23a",
+    "development_runs_rescored": 14,
+    "feature_artifacts_verified": 12,
+    "gated_rows_including_ranking": 1782,
+    "parent_artifacts_verified": 43,
+    "parent_scientific_sha256": "2966ab723abd073a34dc547e9ea4fdf34294508bea71378001b8858b3a97299d",
+    "previous_artifacts_verified": 12,
+    "reload_samples_include": "all gated LIRF scoring/ranking rows plus deterministic random rows, 1,000 per fold",
+    "rows_with_all_86_prior_predictors_exactly_unchanged": 2264211,
+    "rows_with_independently_verified_offset": 2264211,
+    "runs_verified": [
+      {
+        "components": 1,
+        "development_rmse_seconds": 404.3643678694014,
+        "reload_difference_seconds": 0.0,
+        "reload_sample_rows": 1000,
+        "run_id": "20260913T174342477332Z_seasonal_schedule_gate_lightgbm",
+        "stage": "development"
+      },
+      {
+        "components": 1,
+        "development_rmse_seconds": 458.8165904182885,
+        "reload_difference_seconds": 0.0,
+        "reload_sample_rows": 1000,
+        "run_id": "20260913T174351158366Z_seasonal_clock_features_lightgbm",
+        "stage": "development"
+      },
+      {
+        "components": 1,
+        "development_rmse_seconds": 378.8971790559172,
+        "reload_difference_seconds": 0.0,
+        "reload_sample_rows": 1000,
+        "run_id": "20260913T174417808227Z_seasonal_conditional_offset_lightgbm",
+        "stage": "development"
+      },
+      {
+        "components": 1,
+        "development_rmse_seconds": 379.4142204191457,
+        "reload_difference_seconds": 0.0,
+        "reload_sample_rows": 1000,
+        "run_id": "20260913T174535170985Z_seasonal_conditional_offset_fine_lightgbm",
+        "stage": "development"
+      },
+      {
+        "components": 2,
+        "development_rmse_seconds": 375.43859770412587,
+        "reload_difference_seconds": 0.0,
+        "reload_sample_rows": 1000,
+        "run_id": "20260913T174618651113Z_seasonal_missing_record_specialist_lightgbm",
+        "stage": "development"
+      },
+      {
+        "components": 11,
+        "development_rmse_seconds": 373.9143666035315,
+        "reload_difference_seconds": 0.0,
+        "reload_sample_rows": 1000,
+        "run_id": "20260913T174630850210Z_seasonal_airport_specialists_lightgbm",
+        "stage": "development"
+      },
+      {
+        "components": 11,
+        "development_rmse_seconds": 372.85504880990305,
+        "reload_difference_seconds": 0.0,
+        "reload_sample_rows": 1000,
+        "run_id": "20260913T174726137061Z_seasonal_airport_blend_lightgbm",
+        "stage": "development"
+      },
+      {
+        "components": 1,
+        "development_rmse_seconds": 263.8872322662219,
+        "reload_difference_seconds": 0.0,
+        "reload_sample_rows": 1000,
+        "run_id": "20260913T174748607989Z_forward_schedule_gate_lightgbm",
+        "stage": "development"
+      },
+      {
+        "components": 1,
+        "development_rmse_seconds": 299.29285217926247,
+        "reload_difference_seconds": 0.0,
+        "reload_sample_rows": 1000,
+        "run_id": "20260913T174751219404Z_forward_clock_features_lightgbm",
+        "stage": "development"
+      },
+      {
+        "components": 1,
+        "development_rmse_seconds": 249.17754747417098,
+        "reload_difference_seconds": 0.0,
+        "reload_sample_rows": 1000,
+        "run_id": "20260913T174817868636Z_forward_conditional_offset_lightgbm",
+        "stage": "development"
+      },
+      {
+        "components": 1,
+        "development_rmse_seconds": 249.04695731239963,
+        "reload_difference_seconds": 0.0,
+        "reload_sample_rows": 1000,
+        "run_id": "20260913T174933708115Z_forward_conditional_offset_fine_lightgbm",
+        "stage": "development"
+      },
+      {
+        "components": 2,
+        "development_rmse_seconds": 247.98054510095696,
+        "reload_difference_seconds": 0.0,
+        "reload_sample_rows": 1000,
+        "run_id": "20260913T175041877548Z_forward_missing_record_specialist_lightgbm",
+        "stage": "development"
+      },
+      {
+        "components": 11,
+        "development_rmse_seconds": 249.35461475752592,
+        "reload_difference_seconds": 0.0,
+        "reload_sample_rows": 1000,
+        "run_id": "20260913T175046869785Z_forward_airport_specialists_lightgbm",
+        "stage": "development"
+      },
+      {
+        "components": 11,
+        "development_rmse_seconds": 245.86268533987743,
+        "reload_difference_seconds": 0.0,
+        "reload_sample_rows": 1000,
+        "run_id": "20260913T175141158334Z_forward_airport_blend_lightgbm",
+        "stage": "development"
+      },
+      {
+        "components": 11,
+        "development_rmse_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "reload_sample_rows": 1000,
+        "run_id": "20260913T175343734071Z_refit_airport_blend_lightgbm",
+        "stage": "refit"
+      }
+    ]
+  },
+  "official": {
+    "bucket": "prc-2026-vigorous-whistle",
+    "checked_at_utc": "2026-09-13T18:09:44.056156+00:00",
+    "filename": "vigorous-whistle_v3.parquet",
+    "objects": [
+      {
+        "key": "vigorous-whistle_v1.parquet",
+        "last_modified_utc": "2026-09-13T14:49:05.379000+00:00",
+        "size_bytes": 1336139
+      },
+      {
+        "key": "vigorous-whistle_v1.parquet_persist.json",
+        "last_modified_utc": "2026-09-13T14:49:42.922000+00:00",
+        "size_bytes": 147
+      },
+      {
+        "key": "vigorous-whistle_v1.parquet_result.json",
+        "last_modified_utc": "2026-09-13T14:49:24.545000+00:00",
+        "size_bytes": 279
+      },
+      {
+        "key": "vigorous-whistle_v2.parquet",
+        "last_modified_utc": "2026-09-13T16:40:23.930000+00:00",
+        "size_bytes": 1338296
+      },
+      {
+        "key": "vigorous-whistle_v2.parquet_persist.json",
+        "last_modified_utc": "2026-09-13T16:41:00.751000+00:00",
+        "size_bytes": 147
+      },
+      {
+        "key": "vigorous-whistle_v2.parquet_result.json",
+        "last_modified_utc": "2026-09-13T16:40:42.830000+00:00",
+        "size_bytes": 279
+      },
+      {
+        "key": "vigorous-whistle_v3.parquet",
+        "last_modified_utc": "2026-09-13T18:07:57.190000+00:00",
+        "size_bytes": 1338167
+      },
+      {
+        "key": "vigorous-whistle_v3.parquet_persist.json",
+        "last_modified_utc": "2026-09-13T18:08:28.033000+00:00",
+        "size_bytes": 147
+      },
+      {
+        "key": "vigorous-whistle_v3.parquet_result.json",
+        "last_modified_utc": "2026-09-13T18:08:16.534000+00:00",
+        "size_bytes": 279
+      }
+    ],
+    "official_results": [
+      {
+        "filename": "vigorous-whistle_v3.parquet",
+        "processedAt": "2026-09-13T18:08:27.124251Z",
+        "score": 331.9269,
+        "submissionId": "ff1225ea-b929-4b4b-bac3-0ff6e379c672",
+        "teamId": "64cf67d0-5b26-49db-bd82-7b12ca4411ce",
+        "teamName": "vigorous-whistle",
+        "usedPairs": 344841
+      }
+    ],
+    "scored": true
+  },
+  "official_rmse_improvement_fraction": 0.212145271581352,
+  "official_rmse_improvement_seconds": 89.37780000000004,
+  "previous_official_rmse_seconds": 421.3047,
+  "refit": {
+    "artifacts": [
+      {
+        "path": "config.json",
+        "sha256": "d666f1a1dc0749cb74188864580ddcd87e70b1f29c57d633a15b8652a8534111",
+        "size_bytes": 3327
+      },
+      {
+        "path": "global_encoder.json",
+        "sha256": "aac208ffb60d3bb32a51875b16ba543d4ae1c1c5313064fdef4a7dbf23d5b104",
+        "size_bytes": 151912
+      },
+      {
+        "path": "global_history.json",
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "size_bytes": 3
+      },
+      {
+        "path": "global_importance.json",
+        "sha256": "13fb5c175a3f280a2e668a281983f1456bf1f01b67477197f086a150d0afc52c",
+        "size_bytes": 4164
+      },
+      {
+        "path": "global_model.txt",
+        "sha256": "f7dec55d450ea63919a9047501cc93697ca44be537b92dabc238db0a8efc056f",
+        "size_bytes": 17403689
+      },
+      {
+        "path": "pipeline.json",
+        "sha256": "07c63cf952f49c94f1a737170f71c79eeb9ada148c2ea0560aa98abe52a8af89",
+        "size_bytes": 27721
+      },
+      {
+        "path": "ranking_predictions.parquet",
+        "sha256": "2740024b7ef8c6302b1125e50cb11740f1afe6921fb403b70eadedd41c85902a",
+        "size_bytes": 3664542
+      },
+      {
+        "path": "selection.json",
+        "sha256": "11ae702261c99554dfbc78b8d7bd4e58452ace57dc2ad25c0e26a7012082d466",
+        "size_bytes": 354551
+      },
+      {
+        "path": "specialist_airport_EDDF_encoder.json",
+        "sha256": "d5d24613d81fdcdd2569af66cfe993d1d9554e19f4ac791ee2b4e0900040bbd6",
+        "size_bytes": 60215
+      },
+      {
+        "path": "specialist_airport_EDDF_history.json",
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "size_bytes": 3
+      },
+      {
+        "path": "specialist_airport_EDDF_importance.json",
+        "sha256": "5f68db8698d6c1bc1fa9c50370300be6aba917d70a4d2f3d028ef852f61c0f84",
+        "size_bytes": 3887
+      },
+      {
+        "path": "specialist_airport_EDDF_model.txt",
+        "sha256": "9b623c4f87fc36aa3ad538dbe7232a3020a024735632ff92028ddc01fa9332a2",
+        "size_bytes": 2702021
+      },
+      {
+        "path": "specialist_airport_EDDM_encoder.json",
+        "sha256": "5e93b281170ebe5dca85dacb21e8583f1bb155e9af695209b8c060732eba0f7f",
+        "size_bytes": 67806
+      },
+      {
+        "path": "specialist_airport_EDDM_history.json",
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "size_bytes": 3
+      },
+      {
+        "path": "specialist_airport_EDDM_importance.json",
+        "sha256": "6732693f4bc6b786529b645e862e883fcde3f7b01e89fda7085f4863e91a12a2",
+        "size_bytes": 3890
+      },
+      {
+        "path": "specialist_airport_EDDM_model.txt",
+        "sha256": "30ea007aff56a4d48897fc480982143a364d948b805edf5460e8f9e588308e59",
+        "size_bytes": 2174972
+      },
+      {
+        "path": "specialist_airport_EGLL_encoder.json",
+        "sha256": "860fda5996656d354b3a0c1141e76560a282c4a1c0b93fb2aac86e62c31ca2a1",
+        "size_bytes": 23584
+      },
+      {
+        "path": "specialist_airport_EGLL_history.json",
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "size_bytes": 3
+      },
+      {
+        "path": "specialist_airport_EGLL_importance.json",
+        "sha256": "eb9bcab8a4820269e475e66892a15c5bebbaa7fa01f73a4aacff04be9f39fedf",
+        "size_bytes": 3911
+      },
+      {
+        "path": "specialist_airport_EGLL_model.txt",
+        "sha256": "37a81e229e32c8d9c90d929d56faa734f09529b147b340a0dc478c3a10d1a77f",
+        "size_bytes": 2527702
+      },
+      {
+        "path": "specialist_airport_EHAM_encoder.json",
+        "sha256": "55cdb344e5cf56eed813db68b93c1272fc912dff321838528866ff9ed53b2955",
+        "size_bytes": 67513
+      },
+      {
+        "path": "specialist_airport_EHAM_history.json",
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "size_bytes": 3
+      },
+      {
+        "path": "specialist_airport_EHAM_importance.json",
+        "sha256": "c29d028abffe93e82cfa987dfe1a7f6f7c484607d4208fcb3fdcc9f8f0aa80b0",
+        "size_bytes": 3914
+      },
+      {
+        "path": "specialist_airport_EHAM_model.txt",
+        "sha256": "058aff88af3bdc900522d8475f24cebd9c198b9be3e20e2d9ed82166006063c8",
+        "size_bytes": 2455840
+      },
+      {
+        "path": "specialist_airport_LEBL_encoder.json",
+        "sha256": "bd9c9c37603879d6f445f576e245b3cc41a95df1c0682aabc3aa81eb1bf4fd53",
+        "size_bytes": 63939
+      },
+      {
+        "path": "specialist_airport_LEBL_history.json",
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "size_bytes": 3
+      },
+      {
+        "path": "specialist_airport_LEBL_importance.json",
+        "sha256": "592507ab2ab84d23e4a260cbb09a16442c68f72f3783334df46f80011eabceb2",
+        "size_bytes": 3919
+      },
+      {
+        "path": "specialist_airport_LEBL_model.txt",
+        "sha256": "c5c35aa6ce1dd76bf1e57084fdc76aa75fd5e8424f77354c75db7216ceed6bc7",
+        "size_bytes": 2497671
+      },
+      {
+        "path": "specialist_airport_LEMD_encoder.json",
+        "sha256": "c33896f1316fe34b5059976a809f7dfd24eef1d11d25c802040c22b0061c7625",
+        "size_bytes": 73710
+      },
+      {
+        "path": "specialist_airport_LEMD_history.json",
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "size_bytes": 3
+      },
+      {
+        "path": "specialist_airport_LEMD_importance.json",
+        "sha256": "9cd7db9458fab3d81b1bdfcc9cdb549d7bea82b157593d9ac45ea4bb8c6fdd8f",
+        "size_bytes": 3855
+      },
+      {
+        "path": "specialist_airport_LEMD_model.txt",
+        "sha256": "6b56fd03f00896bbc8d8624a70354b37efaff7b90ca2d19305dc963f6cee1273",
+        "size_bytes": 2653900
+      },
+      {
+        "path": "specialist_airport_LFPG_encoder.json",
+        "sha256": "d2e70f126ac0ca7fff33c7db3eb16dc0aed3a4e41d247c7a7e0d825279ac82f5",
+        "size_bytes": 54451
+      },
+      {
+        "path": "specialist_airport_LFPG_history.json",
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "size_bytes": 3
+      },
+      {
+        "path": "specialist_airport_LFPG_importance.json",
+        "sha256": "477071cc1da54c9db61adcbf752e8e9f196523491f21ec522096f70f770ff373",
+        "size_bytes": 3980
+      },
+      {
+        "path": "specialist_airport_LFPG_model.txt",
+        "sha256": "bbaea0328b6e8a599e2f7b2f64bc81dc9aecc318313071bb06ef08a1bdaa0afe",
+        "size_bytes": 2493675
+      },
+      {
+        "path": "specialist_airport_LIRF_encoder.json",
+        "sha256": "c7bec081d4254a3ecd6d02121ca330febcb3479dd2589fcdfd68198a247edd68",
+        "size_bytes": 34647
+      },
+      {
+        "path": "specialist_airport_LIRF_history.json",
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "size_bytes": 3
+      },
+      {
+        "path": "specialist_airport_LIRF_importance.json",
+        "sha256": "a8024137e1909477bfc13597198da8bffc40b21d7c5365aa2a13ce278bda0474",
+        "size_bytes": 4072
+      },
+      {
+        "path": "specialist_airport_LIRF_model.txt",
+        "sha256": "d329c532fa44b111e2fc9774ad2aafdd8a73fa6c2f9637c1594ae9a26f30e51f",
+        "size_bytes": 2226605
+      },
+      {
+        "path": "specialist_airport_LSZH_encoder.json",
+        "sha256": "e4c6666ebc38f05ca49dcd5fe2609c6f302c49c53b38537255f7f972e663929c",
+        "size_bytes": 73337
+      },
+      {
+        "path": "specialist_airport_LSZH_history.json",
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "size_bytes": 3
+      },
+      {
+        "path": "specialist_airport_LSZH_importance.json",
+        "sha256": "a76056281f02b8ce23bf997803bef293853267cb7b670029eebc4a25985977ee",
+        "size_bytes": 3918
+      },
+      {
+        "path": "specialist_airport_LSZH_model.txt",
+        "sha256": "8538700cda87123fac2cc534984d422e27dc9116a978d13a9ff7051cf9948142",
+        "size_bytes": 1303546
+      },
+      {
+        "path": "specialist_airport_LTFM_encoder.json",
+        "sha256": "76a9c8d904e26471d58bf269ffeb2408cf07e191ab91855bb6221e62ffda0c0f",
+        "size_bytes": 58405
+      },
+      {
+        "path": "specialist_airport_LTFM_history.json",
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "size_bytes": 3
+      },
+      {
+        "path": "specialist_airport_LTFM_importance.json",
+        "sha256": "b6e6cad0bb3c2e4e178777a42704ca5e056746b8c7196f61d7a8c415205ae25a",
+        "size_bytes": 3970
+      },
+      {
+        "path": "specialist_airport_LTFM_model.txt",
+        "sha256": "616a8b2fd825aae9573297876b312268b1b7a15f272e1eefb4b673be989f487a",
+        "size_bytes": 3558259
+      }
+    ],
+    "audit_used": false,
+    "bundle_id": "2ceb3449c26767a9731121bdd4988cff7d57f6e9310b84ac680657a131ae9cff",
+    "component_iterations": {
+      "global": 1601,
+      "specialist_airport_EDDF": 692,
+      "specialist_airport_EDDM": 574,
+      "specialist_airport_EGLL": 717,
+      "specialist_airport_EHAM": 616,
+      "specialist_airport_LEBL": 668,
+      "specialist_airport_LEMD": 616,
+      "specialist_airport_LFPG": 650,
+      "specialist_airport_LIRF": 680,
+      "specialist_airport_LSZH": 332,
+      "specialist_airport_LTFM": 877
+    },
+    "config_sha256": "2854bb7045cd74396573dda074c24ab7eeae592c242e55c0e3827b25161cb23a",
+    "created_at_utc": "2026-09-13T17:56:11.193061+00:00",
+    "environment": {
+      "disk_available_bytes": 8818397184,
+      "logical_cpus": 16,
+      "memory_total_bytes": 67419996160,
+      "packages": {
+        "catboost": "1.2.10",
+        "lightgbm": "4.7.0",
+        "numpy": "2.4.2",
+        "pandas": "3.0.0",
+        "psutil": "7.2.2",
+        "pyarrow": "23.0.1",
+        "scipy": "1.18.1",
+        "tzdata": "2025.3"
+      },
+      "physical_cpus_reported": 8,
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "python": "3.12.3"
+    },
+    "feature_code": {
+      "files": {
+        "requirements-phase4.txt": "c675d471ae3a5dfa6f2dcb6c22977ccdb980c265f729239e3519180f8c4afa8f",
+        "src/prc2026_phase4/__init__.py": "9b61cf321b62eb7f8c7f9a8f17c6ac8fa8227aebc3cc9712a52fc31f952602a4",
+        "src/prc2026_phase4/bundle.py": "1599cfc01f011994a16f41e1a5b32d3f3a6a02b5a32c61d6c52d3607306efdec",
+        "src/prc2026_phase4/features.py": "50ba225f588b4d8f4082d934a13df495af622e5efbe17fee4d9cb028738c5d9a",
+        "tools/prepare_phase4.py": "999d6c49221adf51dcc087fa7abe488079a86a989ede955afe6b10c6f48bb4df"
+      },
+      "sha256": "f716918b13745185e3531ad0b9f9dbea05c1d74c3cbaec359b2395afd5ecd9ef"
+    },
+    "fit_ids_sha256": "ba1c387b134605f2fa6ad6a7ab4097a5f1d8efe9e5e583ff6476fb1c6562d4c8",
+    "fit_rows": 1919370,
+    "iterations": 8023,
+    "max_model_reload_difference_seconds": 0.0,
+    "model_code": {
+      "files": {
+        "requirements-phase2.txt": "b5e77a692442298b7ff4c19348ad01af4eb6fb00497a33aef10daa5647ef69f0",
+        "requirements-phase3.txt": "7a9a653b3db21f8f0c52d7d90863d62f5d095b0c715cc44deb73921237b3347b",
+        "requirements-phase4.txt": "c675d471ae3a5dfa6f2dcb6c22977ccdb980c265f729239e3519180f8c4afa8f",
+        "src/prc2026_models/__init__.py": "64ac385d71b84688c00efd31d760b65508bde1268eadd8d2f517e7d94ccff335",
+        "src/prc2026_models/encoding.py": "1c3614a92f756c17f758683d3446f0a4e27abebc45cc1198fbcda437aa86592b",
+        "src/prc2026_models/experiments.py": "553c5e7f9c38d4203a994a0f41b3eb3526f3b81910e1944bf9a3dae5df893207",
+        "src/prc2026_phase3/bundle.py": "36212f2fffa104d6bebcc95f656e63ec913a477531077fb3617c5e9741587bc3",
+        "src/prc2026_phase3/training.py": "fa4c3372e82ee78ff5564d2ee8f2e973b50e0c6e9670a18297c31d3f824d0bd5",
+        "src/prc2026_phase4/__init__.py": "9b61cf321b62eb7f8c7f9a8f17c6ac8fa8227aebc3cc9712a52fc31f952602a4",
+        "src/prc2026_phase4/bundle.py": "1599cfc01f011994a16f41e1a5b32d3f3a6a02b5a32c61d6c52d3607306efdec",
+        "src/prc2026_phase4/encoding.py": "eaa375ef774cc00b07dbe84c033da3123caaca9f394804343234e040b1a86413",
+        "src/prc2026_phase4/features.py": "50ba225f588b4d8f4082d934a13df495af622e5efbe17fee4d9cb028738c5d9a",
+        "src/prc2026_phase4/training.py": "caf23225acf0b872d9b4764b8f3a5a3fc2478db0f208793ea158c79e881f8c34",
+        "tools/run_phase4.py": "c99e3c7cd437add00ccc3b68b901c6ba97f7304b5a8aa35991733ed6a795b302"
+      },
+      "sha256": "124b752ecc6717ec9ed9f5fcd32237716a637decc41200c3ed411d6122c788c4"
+    },
+    "model_kind": "lightgbm",
+    "parent_bundle_id": "58d621b245de3f5e12dd3b50b0a90a87ea8ac3dc96aa2c274ffa7ea0af96b2e0",
+    "ranking_ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "ranking_rows": 344841,
+    "refit_months": [
+      "2025-01",
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11"
+    ],
+    "resources": {
+      "cpu_seconds": 1899.8400000000001,
+      "mean_active_cpu_cores": 12.88388015037993,
+      "peak_process_rss_bytes_sampled": 4286455808,
+      "rss_sample_interval_seconds": 0.05,
+      "wall_seconds": 147.4586830850003
+    },
+    "run_id": "20260913T175343734071Z_refit_airport_blend_lightgbm",
+    "stage": "refit",
+    "variant": "airport_blend"
+  },
+  "stage": "phase4_complete",
+  "tests": {
+    "azure": "71 passed, 1 pre-existing pandas warning",
+    "windows": "71 passed, 1 pre-existing pandas warning"
+  },
+  "upload_event": {
+    "bucket": "prc-2026-vigorous-whistle",
+    "created_at_utc": "2026-09-13T18:07:54.648726+00:00",
+    "endpoint": "https://s3.opensky-network.org",
+    "etag": "8e4c55430c7f66806f87e252c7e5b507",
+    "filename": "vigorous-whistle_v3.parquet",
+    "limits": {
+      "bucket_bytes_after_upload": 4013454,
+      "bucket_bytes_before": 2675287,
+      "daily_count_policy": "conservative rolling 24 hours while reset timezone is unspecified",
+      "existing_submission_versions": 2,
+      "highest_existing_version": 2,
+      "submissions_in_previous_24h": 2
+    },
+    "refit_run_id": "20260913T175343734071Z_refit_airport_blend_lightgbm",
+    "response_http_status": 200,
+    "sha256": "c445bc304ea3f548890fae74825a55ec3d2be6d4f7404e65d4b40ef8883cf7f5",
+    "status": "uploaded_processing_not_yet_confirmed",
+    "uploaded_at_utc": "2026-09-13T18:07:57.504748+00:00",
+    "validation": {
+      "columns": [
+        "MVT_ID_mvt",
+        "TAXITIME_SEC_mvt"
+      ],
+      "exact_template_order": true,
+      "filename": "vigorous-whistle_v3.parquet",
+      "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+      "maximum_prediction_seconds": 115075,
+      "minimum_prediction_seconds": -843,
+      "negative_predictions": 28,
+      "rows": 344841,
+      "sha256": "c445bc304ea3f548890fae74825a55ec3d2be6d4f7404e65d4b40ef8883cf7f5",
+      "size_bytes": 1338167,
+      "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+      "types": {
+        "MVT_ID_mvt": "double",
+        "TAXITIME_SEC_mvt": "int32"
+      },
+      "validated_at_utc": "2026-09-13T18:07:52.654650+00:00",
+      "version": 3
+    }
+  }
+}

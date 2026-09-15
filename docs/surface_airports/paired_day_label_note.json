@@ -1,0 +1,9 @@
+{
+  "actual_comparison": "selected surface recipe minus v6",
+  "audit_used": false,
+  "basis": "tools/select_surface_airports.py calls the frozen paired_days helper with the selected predictions and the hash-verified v6 reference arrays. That inherited helper hard-codes an obsolete Phase-3 label; no score or interval calculation uses that string.",
+  "created_at_utc": "2026-09-14T18:51:12.135292+00:00",
+  "selection_or_numbers_changed": false,
+  "selection_sha256": "3a6edb7beb178744acca53c92e269f2ee92fa1524115adbda74bf876cdd4d042",
+  "unchanged_inherited_label": "candidate minus Phase-3 timing_traffic"
+}

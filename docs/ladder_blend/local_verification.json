@@ -1,0 +1,57 @@
+{
+  "audit_used": false,
+  "candidate_count": 8,
+  "complete_scoring_populations": {
+    "forward": {
+      "ids_sha256": "7dc46218c228a5675e8fae283c4c4d51577a0bcab8e124a2d7be8eca131cc70f",
+      "rows": 162332
+    },
+    "seasonal": {
+      "ids_sha256": "19afdfc7fedf88eafca9662868862723b1d6c003b67142ad63f0839e8b37ba79",
+      "rows": 344419
+    }
+  },
+  "created_at_utc": "2026-09-14T16:38:39.724221+00:00",
+  "model_code_sha256": "c064573f92c623ffa9dbb6f9fd23e6365aa3ad51eed06d4d6fb0df27bd367e51",
+  "native_parent_checks": {
+    "forward": {
+      "ladder": {
+        "cat_missing_ground": {
+          "maximum_difference_seconds": 0.0,
+          "rows": 1356
+        }
+      },
+      "scale": {
+        "clock_scale300": {
+          "maximum_difference_seconds": 0.0,
+          "rows": 1283
+        },
+        "missing_scale300": {
+          "maximum_difference_seconds": 0.0,
+          "rows": 1356
+        }
+      }
+    },
+    "seasonal": {
+      "ladder": {
+        "cat_missing_ground": {
+          "maximum_difference_seconds": 0.0,
+          "rows": 5373
+        }
+      },
+      "scale": {
+        "clock_scale300": {
+          "maximum_difference_seconds": 0.0,
+          "rows": 2243
+        },
+        "missing_scale300": {
+          "maximum_difference_seconds": 0.0,
+          "rows": 5373
+        }
+      }
+    }
+  },
+  "passed": true,
+  "selected_candidate": null,
+  "selection_sha256": "4e5bc238b4f69136ff449a5a73cc09e500ad50b299cdf488f35d764bedfed2eb"
+}

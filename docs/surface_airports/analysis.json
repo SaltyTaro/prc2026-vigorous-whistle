@@ -1,0 +1,1453 @@
+{
+  "audit_used": false,
+  "candidate_count": 4,
+  "candidates_by_mean_relative_rmse": [
+    {
+      "eligible": true,
+      "improvement_fraction": {
+        "forward": 0.009801687112665936,
+        "seasonal": 0.00645624563034064
+      },
+      "name": "full_timeline_v6_100",
+      "rmse_seconds": {
+        "forward": 221.13815634167557,
+        "seasonal": 322.8193230817628
+      }
+    },
+    {
+      "eligible": true,
+      "improvement_fraction": {
+        "forward": 0.008511639285439743,
+        "seasonal": 0.005498496566319733
+      },
+      "name": "full_timeline_v6_50",
+      "rmse_seconds": {
+        "forward": 221.42625903220988,
+        "seasonal": 323.1305120990251
+      }
+    },
+    {
+      "eligible": false,
+      "improvement_fraction": {
+        "forward": 0.007274552314278093,
+        "seasonal": 0.0040694983333426915
+      },
+      "name": "airport_only_v6_100",
+      "rmse_seconds": {
+        "forward": 221.70253412627594,
+        "seasonal": 323.59481801431656
+      }
+    },
+    {
+      "eligible": false,
+      "improvement_fraction": {
+        "forward": 0.004782686270066505,
+        "seasonal": 0.0027441174216542574
+      },
+      "name": "airport_only_v6_50",
+      "rmse_seconds": {
+        "forward": 222.2590354409071,
+        "seasonal": 324.02545689343486
+      }
+    }
+  ],
+  "code_sha256": "4e623dc19da46f2a2e09b5dc445e77c054c655edce18e26865a05ecbbd2051d1",
+  "created_at_utc": "2026-09-14T18:46:47.965160+00:00",
+  "decision": "Proceed with the declared eligible refit.",
+  "eligible_candidates": [
+    "full_timeline_v6_100",
+    "full_timeline_v6_50"
+  ],
+  "fold_resources": {
+    "maximum_sampled_rss_bytes": 9303793664,
+    "total_cpu_seconds": 2914.99,
+    "total_wall_seconds": 227.27295299099933
+  },
+  "interpretation": "Matched original airport settings with the frozen combined timeline features. Complete reused development scores; no official-score claim or December audit.",
+  "leading_candidate_diagnostics": {
+    "forward": {
+      "airports_improved": 10,
+      "by_airport": {
+        "EDDF": {
+          "rmse_delta_seconds": -1.4793462633780905,
+          "rmse_seconds": 181.79874733038181,
+          "rows": 18122,
+          "sse_delta": -9787240.24578309,
+          "sse_fraction": 0.07544950425016686
+        },
+        "EDDM": {
+          "rmse_delta_seconds": -1.4995075235778472,
+          "rmse_seconds": 158.96443116914236,
+          "rows": 12562,
+          "sse_delta": -6017012.633269787,
+          "sse_fraction": 0.03998777145972726
+        },
+        "EGLL": {
+          "rmse_delta_seconds": -5.193090692520144,
+          "rmse_seconds": 200.4601468864704,
+          "rows": 19423,
+          "sse_delta": -40962789.18097401,
+          "sse_fraction": 0.09831977822984056
+        },
+        "EHAM": {
+          "rmse_delta_seconds": -3.8287860514086276,
+          "rmse_seconds": 157.0980768364563,
+          "rows": 19232,
+          "sse_delta": -23417834.28426069,
+          "sse_fraction": 0.05979084332307606
+        },
+        "LEBL": {
+          "rmse_delta_seconds": -1.6989634773683235,
+          "rmse_seconds": 161.93258057667416,
+          "rows": 13332,
+          "sse_delta": -7374216.6017766595,
+          "sse_fraction": 0.04403847489363593
+        },
+        "LEMD": {
+          "rmse_delta_seconds": -1.3161593827757656,
+          "rmse_seconds": 170.98534224434866,
+          "rows": 17419,
+          "sse_delta": -7870256.073291898,
+          "sse_fraction": 0.06415189280415041
+        },
+        "LFPG": {
+          "rmse_delta_seconds": -2.5414308614062406,
+          "rmse_seconds": 264.4432960692415,
+          "rows": 18646,
+          "sse_delta": -25183055.98438549,
+          "sse_fraction": 0.1642552633247289
+        },
+        "LIRF": {
+          "rmse_delta_seconds": -0.6038218603914061,
+          "rmse_seconds": 458.67870602386824,
+          "rows": 11328,
+          "sse_delta": -6278941.1599702835,
+          "sse_fraction": 0.3002194944300909
+        },
+        "LSZH": {
+          "rmse_delta_seconds": -1.2428201911408223,
+          "rmse_seconds": 157.51004146199438,
+          "rows": 10078,
+          "sse_delta": -3961237.734895617,
+          "sse_fraction": 0.03149628541284666
+        },
+        "LTFM": {
+          "rmse_delta_seconds": -2.89769749881566,
+          "rmse_seconds": 209.16249038982613,
+          "rows": 22190,
+          "sse_delta": -27084579.24966848,
+          "sse_fraction": 0.12229069187173647
+        }
+      },
+      "by_month": {
+        "2025-11": {
+          "rmse_delta_seconds": -2.188982741055753,
+          "rmse_seconds": 221.13815634167557,
+          "rows": 162332,
+          "sse_delta": -157937163.14827538,
+          "sse_fraction": 1.0
+        }
+      },
+      "by_nm_missing": {
+        "False": {
+          "rmse_delta_seconds": -2.4904587391334303,
+          "rmse_seconds": 195.73101590612237,
+          "rows": 160976,
+          "sse_delta": -157937163.14827728,
+          "sse_fraction": 0.7768710248171197
+        },
+        "True": {
+          "rmse_delta_seconds": 0.0,
+          "rmse_seconds": 1142.9149005832548,
+          "rows": 1356,
+          "sse_delta": 0.0,
+          "sse_fraction": 0.22312897518288016
+        }
+      },
+      "by_target_band": {
+        "0_to_1h": {
+          "rmse_delta_seconds": -2.4475587910815477,
+          "rmse_seconds": 191.88344184936904,
+          "rows": 162092,
+          "sse_delta": -153222739.73626232,
+          "sse_fraction": 0.7518047620892857
+        },
+        "1h_to_3h": {
+          "rmse_delta_seconds": -5.916396932520001,
+          "rmse_seconds": 1866.1719902892391,
+          "rows": 216,
+          "sse_delta": -4777278.961781025,
+          "sse_fraction": 0.09476011437537195
+        },
+        "negative": {
+          "rmse_delta_seconds": 3.7554901009682453,
+          "rmse_seconds": 466.7937604238132,
+          "rows": 18,
+          "sse_delta": 62855.549766580574,
+          "sse_fraction": 0.0004940729544031905
+        },
+        "over_3h": {
+          "rmse_delta_seconds": 0.0,
+          "rmse_seconds": 14224.996347523604,
+          "rows": 6,
+          "sse_delta": 0.0,
+          "sse_fraction": 0.15294105058093904
+        }
+      },
+      "improvement_fraction": 0.009801687112665936,
+      "improvement_seconds": 2.188982741055753,
+      "rmse_seconds": 221.13815634167557,
+      "rows": 162332
+    },
+    "seasonal": {
+      "airports_improved": 10,
+      "by_airport": {
+        "EDDF": {
+          "rmse_delta_seconds": -2.3718710996595576,
+          "rmse_seconds": 188.29626675610294,
+          "rows": 36830,
+          "sse_delta": -33104819.304400682,
+          "sse_fraction": 0.03638136517969337
+        },
+        "EDDM": {
+          "rmse_delta_seconds": -2.4376500953218283,
+          "rmse_seconds": 174.07233008081883,
+          "rows": 27091,
+          "sse_delta": -23151887.381616235,
+          "sse_fraction": 0.022870643020272457
+        },
+        "EGLL": {
+          "rmse_delta_seconds": -3.5564608802065436,
+          "rmse_seconds": 272.59053852139044,
+          "rows": 40210,
+          "sse_delta": -78472371.83825493,
+          "sse_fraction": 0.08324333705609697
+        },
+        "EHAM": {
+          "rmse_delta_seconds": -5.35726138022423,
+          "rmse_seconds": 182.94582045433225,
+          "rows": 40949,
+          "sse_delta": -81442540.92625833,
+          "sse_fraction": 0.038184063031899834
+        },
+        "LEBL": {
+          "rmse_delta_seconds": -1.7657359084030873,
+          "rmse_seconds": 224.33502917143343,
+          "rows": 28986,
+          "sse_delta": -23054034.12465763,
+          "sse_fraction": 0.040642117438836035
+        },
+        "LEMD": {
+          "rmse_delta_seconds": -1.3106549623825856,
+          "rmse_seconds": 178.41180961682858,
+          "rows": 35328,
+          "sse_delta": -16582626.300686836,
+          "sse_fraction": 0.031329978853661025
+        },
+        "LFPG": {
+          "rmse_delta_seconds": -0.9065035606927268,
+          "rmse_seconds": 570.6526032162085,
+          "rows": 39612,
+          "sse_delta": -41015016.721868515,
+          "sse_fraction": 0.3593885441683594
+        },
+        "LIRF": {
+          "rmse_delta_seconds": -1.4868118671852244,
+          "rmse_seconds": 612.0208244311681,
+          "rows": 26528,
+          "sse_delta": -48337471.5103817,
+          "sse_fraction": 0.2768412245157406
+        },
+        "LSZH": {
+          "rmse_delta_seconds": -3.4673070879053114,
+          "rmse_seconds": 205.8636383791461,
+          "rows": 22346,
+          "sse_delta": -32169460.780162573,
+          "sse_fraction": 0.026384747124237214
+        },
+        "LTFM": {
+          "rmse_delta_seconds": -3.782252048219817,
+          "rmse_seconds": 255.63678768684346,
+          "rows": 46539,
+          "sse_delta": -90661274.32432365,
+          "sse_fraction": 0.08473397961120305
+        }
+      },
+      "by_month": {
+        "2025-01": {
+          "rmse_delta_seconds": -1.647418150659007,
+          "rmse_seconds": 345.2928806675611,
+          "rows": 153706,
+          "sse_delta": -175285938.80719757,
+          "sse_fraction": 0.5105754424813204
+        },
+        "2025-07": {
+          "rmse_delta_seconds": -2.5180652484426105,
+          "rmse_seconds": 303.49797850839917,
+          "rows": 190713,
+          "sse_delta": -292705564.4054184,
+          "sse_fraction": 0.48942455751867947
+        }
+      },
+      "by_nm_missing": {
+        "False": {
+          "rmse_delta_seconds": -2.987976341691308,
+          "rmse_seconds": 229.4848502576615,
+          "rows": 339046,
+          "sse_delta": -467991503.2126045,
+          "sse_fraction": 0.49746269595000897
+        },
+        "True": {
+          "rmse_delta_seconds": 0.0,
+          "rmse_seconds": 1832.2250047055338,
+          "rows": 5373,
+          "sse_delta": 0.0,
+          "sse_fraction": 0.502537304049991
+        }
+      },
+      "by_target_band": {
+        "0_to_1h": {
+          "rmse_delta_seconds": -2.4746480713812673,
+          "rmse_seconds": 241.92064527849652,
+          "rows": 343355,
+          "sse_delta": -413214282.8496361,
+          "sse_fraction": 0.5598647107615262
+        },
+        "1h_to_3h": {
+          "rmse_delta_seconds": -17.081609837468477,
+          "rmse_seconds": 1978.3146046157522,
+          "rows": 921,
+          "sse_delta": -62515064.970620155,
+          "sse_fraction": 0.10042554515781597
+        },
+        "negative": {
+          "rmse_delta_seconds": 6.774932536006531,
+          "rmse_seconds": 668.4014735025933,
+          "rows": 80,
+          "sse_delta": 720868.0055221915,
+          "sse_fraction": 0.0009957690824678686
+        },
+        "over_3h": {
+          "rmse_delta_seconds": 4.088920898308061,
+          "rmse_seconds": 14234.169762459247,
+          "rows": 60,
+          "sse_delta": 6983284.148965836,
+          "sse_fraction": 0.33869546846878407
+        },
+        "zero": {
+          "rmse_delta_seconds": 12.089028106624198,
+          "rmse_seconds": 470.54908872390166,
+          "rows": 3,
+          "sse_delta": 33692.45315308962,
+          "sse_fraction": 1.850652940586187e-05
+        }
+      },
+      "improvement_fraction": 0.00645624563034064,
+      "improvement_seconds": 2.097744397133738,
+      "rmse_seconds": 322.8193230817628,
+      "rows": 344419
+    }
+  },
+  "leading_mean_ratio_candidate": "full_timeline_v6_100",
+  "native_fit_count": 20,
+  "native_fit_resources": {
+    "maximum_sampled_rss_bytes": 9303793664,
+    "total_cpu_seconds": 2834.6799999999994,
+    "total_wall_seconds": 215.19066219999513
+  },
+  "native_models": {
+    "forward": {
+      "EDDF": {
+        "iterations": 936,
+        "leading_new_features": [
+          [
+            "surface_offblock_stand_arr_last_s",
+            875059182.0
+          ],
+          [
+            "surface_takeoff_runway_push_count_30m",
+            846088757.0
+          ],
+          [
+            "surface_takeoff_runway_active",
+            676301132.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            674123119.0
+          ],
+          [
+            "surface_anchor_nm_used",
+            435390016.0
+          ],
+          [
+            "surface_offblock_runway_proxy_count_60m",
+            161238324.0
+          ],
+          [
+            "surface_interval_airport_dep_count",
+            152058823.0
+          ],
+          [
+            "surface_offblock_airport_proxy_count_60m",
+            147263897.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.0835590682840646
+      },
+      "EDDM": {
+        "iterations": 1129,
+        "leading_new_features": [
+          [
+            "surface_takeoff_runway_proxy_std_15m",
+            398182818.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            391269353.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_std_15m",
+            387114654.0
+          ],
+          [
+            "surface_offblock_stand_arr_last_s",
+            342222754.0
+          ],
+          [
+            "flight_duration_minus_plan_s",
+            320604332.0
+          ],
+          [
+            "surface_takeoff_runway_push_count_15m",
+            267899962.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_std_60m",
+            208577603.0
+          ],
+          [
+            "surface_anchor_lookback_s",
+            175426552.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.04596292267132914
+      },
+      "EGLL": {
+        "iterations": 1063,
+        "leading_new_features": [
+          [
+            "surface_interval_airport_dep_count",
+            4158578250.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_15m",
+            2215510308.0
+          ],
+          [
+            "surface_offblock_stand_arr_last_s",
+            2134598714.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_mean_15m",
+            1393122249.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            930019823.0
+          ],
+          [
+            "surface_offblock_runway_active",
+            550502776.0
+          ],
+          [
+            "flight_duration_minus_plan_s",
+            525434799.0
+          ],
+          [
+            "surface_interval_airport_arr_count",
+            461941768.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.06324088486489624
+      },
+      "EHAM": {
+        "iterations": 612,
+        "leading_new_features": [
+          [
+            "flight_duration_minus_plan_s",
+            17229995820.0
+          ],
+          [
+            "surface_anchor_lookback_s",
+            3112962488.0
+          ],
+          [
+            "flight_duration_minus_initial_s",
+            1202740572.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_15m",
+            1074992545.0
+          ],
+          [
+            "surface_interval_runway_dep_count",
+            420174001.0
+          ],
+          [
+            "surface_interval_airport_arr_count",
+            411738483.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_60m",
+            399916868.0
+          ],
+          [
+            "surface_interval_airport_dep_count",
+            365350986.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.19281256755284304
+      },
+      "LEBL": {
+        "iterations": 740,
+        "leading_new_features": [
+          [
+            "surface_offblock_stand_arr_last_s",
+            1320713406.0
+          ],
+          [
+            "surface_takeoff_airport_push_count_30m",
+            1096435726.0
+          ],
+          [
+            "surface_takeoff_runway_push_count_30m",
+            654844323.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            424265258.0
+          ],
+          [
+            "surface_takeoff_runway_active",
+            409263947.0
+          ],
+          [
+            "surface_offblock_runway_proxy_count_60m",
+            255060879.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_mean_15m",
+            222612119.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_60m",
+            186244422.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.0856766622521506
+      },
+      "LEMD": {
+        "iterations": 1001,
+        "leading_new_features": [
+          [
+            "surface_offblock_stand_arr_last_s",
+            559622438.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            432166495.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_last_s",
+            386177781.0
+          ],
+          [
+            "surface_takeoff_runway_active",
+            370945515.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_std_15m",
+            251614435.0
+          ],
+          [
+            "surface_offblock_runway_proxy_std_60m",
+            217364340.0
+          ],
+          [
+            "surface_offblock_runway_proxy_mean_60m",
+            213398532.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_std_60m",
+            203368905.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.05552122866325157
+      },
+      "LFPG": {
+        "iterations": 1657,
+        "leading_new_features": [
+          [
+            "surface_offblock_stand_arr_last_s",
+            2741221459.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            1302636010.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_15m",
+            1076057222.0
+          ],
+          [
+            "surface_takeoff_runway_active",
+            1069389548.0
+          ],
+          [
+            "surface_offblock_runway_active",
+            922766950.0
+          ],
+          [
+            "surface_interval_runway_dep_count",
+            900302971.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_mean_15m",
+            768284508.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_last_s",
+            436650495.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.07487363542775284
+      },
+      "LIRF": {
+        "iterations": 945,
+        "leading_new_features": [
+          [
+            "surface_offblock_stand_arr_last_s",
+            2112476954.0
+          ],
+          [
+            "surface_takeoff_airport_active",
+            1444817803.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            954190639.0
+          ],
+          [
+            "flight_arrival_hour_cos",
+            603624967.0
+          ],
+          [
+            "surface_takeoff_airport_push_count_30m",
+            531412383.0
+          ],
+          [
+            "surface_takeoff_stand_push_last_s",
+            488023347.0
+          ],
+          [
+            "flight_duration_minus_initial_s",
+            474305423.0
+          ],
+          [
+            "surface_offblock_stand_push_last_s",
+            439436669.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.06657730216200698
+      },
+      "LSZH": {
+        "iterations": 666,
+        "leading_new_features": [
+          [
+            "surface_takeoff_airport_push_count_30m",
+            640439452.0
+          ],
+          [
+            "surface_offblock_stand_arr_last_s",
+            347206213.0
+          ],
+          [
+            "surface_interval_airport_dep_count",
+            243336326.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            209067166.0
+          ],
+          [
+            "surface_takeoff_runway_active",
+            197408447.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_last_s",
+            181796623.0
+          ],
+          [
+            "surface_takeoff_airport_active",
+            173898969.0
+          ],
+          [
+            "surface_takeoff_airport_push_count_60m",
+            152762898.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.08883588794808998
+      },
+      "LTFM": {
+        "iterations": 1048,
+        "leading_new_features": [
+          [
+            "surface_offblock_stand_arr_last_s",
+            4982765509.0
+          ],
+          [
+            "surface_anchor_lookback_s",
+            2530071320.0
+          ],
+          [
+            "surface_takeoff_runway_push_count_30m",
+            1835954694.0
+          ],
+          [
+            "surface_takeoff_airport_push_count_60m",
+            787258538.0
+          ],
+          [
+            "surface_takeoff_airport_push_count_30m",
+            747105419.0
+          ],
+          [
+            "surface_takeoff_runway_push_count_60m",
+            709654158.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            534997613.0
+          ],
+          [
+            "flight_arrival_hour_sin",
+            406358670.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.04523486946275624
+      }
+    },
+    "seasonal": {
+      "EDDF": {
+        "iterations": 869,
+        "leading_new_features": [
+          [
+            "surface_takeoff_runway_push_count_30m",
+            933587388.0
+          ],
+          [
+            "surface_offblock_stand_arr_last_s",
+            662454328.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            516948031.0
+          ],
+          [
+            "surface_takeoff_runway_active",
+            500842403.0
+          ],
+          [
+            "surface_takeoff_runway_push_count_60m",
+            190084081.0
+          ],
+          [
+            "surface_offblock_runway_proxy_count_60m",
+            166259754.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_last_s",
+            147714293.0
+          ],
+          [
+            "surface_offblock_airport_proxy_count_60m",
+            134912409.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.09345459372490275
+      },
+      "EDDM": {
+        "iterations": 1156,
+        "leading_new_features": [
+          [
+            "surface_takeoff_runway_proxy_std_15m",
+            292417628.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_std_15m",
+            268159989.0
+          ],
+          [
+            "surface_offblock_stand_arr_last_s",
+            263435564.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            235476683.0
+          ],
+          [
+            "surface_takeoff_runway_push_count_15m",
+            221412435.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_std_60m",
+            203054661.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_std_60m",
+            180721284.0
+          ],
+          [
+            "flight_duration_lobt_s",
+            153029782.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.050474791893391734
+      },
+      "EGLL": {
+        "iterations": 1282,
+        "leading_new_features": [
+          [
+            "surface_interval_airport_dep_count",
+            3363007825.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_15m",
+            2201707007.0
+          ],
+          [
+            "surface_offblock_stand_arr_last_s",
+            1546401766.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_mean_15m",
+            765722952.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            756523483.0
+          ],
+          [
+            "surface_interval_airport_arr_count",
+            455158100.0
+          ],
+          [
+            "surface_offblock_runway_active",
+            448206944.0
+          ],
+          [
+            "flight_duration_minus_plan_s",
+            343910790.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.07350950434775089
+      },
+      "EHAM": {
+        "iterations": 875,
+        "leading_new_features": [
+          [
+            "flight_duration_minus_plan_s",
+            8993933310.0
+          ],
+          [
+            "flight_duration_minus_initial_s",
+            2041600385.0
+          ],
+          [
+            "surface_anchor_lookback_s",
+            1480871876.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_15m",
+            837453181.0
+          ],
+          [
+            "surface_interval_runway_dep_count",
+            585792675.0
+          ],
+          [
+            "surface_interval_airport_arr_count",
+            453999647.0
+          ],
+          [
+            "surface_interval_airport_dep_count",
+            352970522.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_60m",
+            347615523.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.15929424651363944
+      },
+      "LEBL": {
+        "iterations": 806,
+        "leading_new_features": [
+          [
+            "surface_offblock_stand_arr_last_s",
+            1065924214.0
+          ],
+          [
+            "surface_takeoff_airport_push_count_30m",
+            779738993.0
+          ],
+          [
+            "surface_takeoff_runway_push_count_30m",
+            549899205.0
+          ],
+          [
+            "surface_takeoff_runway_active",
+            339463705.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            336254262.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_60m",
+            226351466.0
+          ],
+          [
+            "surface_offblock_runway_proxy_count_60m",
+            187318313.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_15m",
+            157877167.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.09073535338271368
+      },
+      "LEMD": {
+        "iterations": 1028,
+        "leading_new_features": [
+          [
+            "surface_offblock_stand_arr_last_s",
+            421307951.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            413170024.0
+          ],
+          [
+            "surface_takeoff_runway_active",
+            258489529.0
+          ],
+          [
+            "surface_offblock_runway_proxy_mean_60m",
+            237433020.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_last_s",
+            232179141.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_std_15m",
+            167839524.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_std_60m",
+            159900824.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_std_15m",
+            155128615.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.05757946737016438
+      },
+      "LFPG": {
+        "iterations": 797,
+        "leading_new_features": [
+          [
+            "surface_offblock_stand_arr_last_s",
+            1805688241.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_15m",
+            874590651.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            776215903.0
+          ],
+          [
+            "surface_offblock_runway_active",
+            750553605.0
+          ],
+          [
+            "surface_takeoff_runway_active",
+            738824960.0
+          ],
+          [
+            "surface_interval_runway_dep_count",
+            561364985.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_mean_15m",
+            397993960.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_last_s",
+            230917016.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.06758201003494586
+      },
+      "LIRF": {
+        "iterations": 816,
+        "leading_new_features": [
+          [
+            "surface_offblock_stand_arr_last_s",
+            1588864831.0
+          ],
+          [
+            "surface_takeoff_airport_active",
+            1219759428.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            603682345.0
+          ],
+          [
+            "flight_arrival_hour_cos",
+            554591497.0
+          ],
+          [
+            "surface_offblock_runway_proxy_mean_15m",
+            419538176.0
+          ],
+          [
+            "surface_takeoff_airport_push_count_30m",
+            392563129.0
+          ],
+          [
+            "surface_takeoff_stand_push_last_s",
+            385392562.0
+          ],
+          [
+            "surface_offblock_stand_push_last_s",
+            347309102.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.06901969091151389
+      },
+      "LSZH": {
+        "iterations": 829,
+        "leading_new_features": [
+          [
+            "surface_takeoff_airport_push_count_30m",
+            564806874.0
+          ],
+          [
+            "surface_offblock_stand_arr_last_s",
+            272677404.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            218032693.0
+          ],
+          [
+            "surface_takeoff_airport_push_count_60m",
+            187374639.0
+          ],
+          [
+            "surface_takeoff_runway_active",
+            149348923.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_last_s",
+            131658180.0
+          ],
+          [
+            "surface_interval_airport_dep_count",
+            120574360.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_60m",
+            106925811.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.1019921075326168
+      },
+      "LTFM": {
+        "iterations": 956,
+        "leading_new_features": [
+          [
+            "surface_offblock_stand_arr_last_s",
+            3603151746.0
+          ],
+          [
+            "surface_anchor_lookback_s",
+            1453789805.0
+          ],
+          [
+            "surface_takeoff_runway_push_count_30m",
+            1160747046.0
+          ],
+          [
+            "surface_takeoff_airport_push_count_60m",
+            827294334.0
+          ],
+          [
+            "surface_takeoff_runway_push_count_60m",
+            567689321.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            487525265.0
+          ],
+          [
+            "surface_takeoff_airport_push_count_30m",
+            336561319.0
+          ],
+          [
+            "surface_offblock_runway_proxy_count_60m",
+            224534691.0
+          ]
+        ],
+        "new_feature_importance_fraction": 0.042023185766666755
+      }
+    }
+  },
+  "new_labels_read": false,
+  "refit_iterations": {
+    "airports": {
+      "EDDF": 902,
+      "EDDM": 1142,
+      "EGLL": 1172,
+      "EHAM": 744,
+      "LEBL": 773,
+      "LEMD": 1014,
+      "LFPG": 1227,
+      "LIRF": 880,
+      "LSZH": 748,
+      "LTFM": 1002
+    },
+    "globals": {
+      "cat_combined": 5971,
+      "lgb_combined": 1612
+    }
+  },
+  "selected_candidate": "full_timeline_v6_100",
+  "selected_diagnostics": {
+    "forward": {
+      "airports_improved": 10,
+      "by_airport": {
+        "EDDF": {
+          "rmse_delta_seconds": -1.4793462633780905,
+          "rmse_seconds": 181.79874733038181,
+          "rows": 18122,
+          "sse_delta": -9787240.24578309,
+          "sse_fraction": 0.07544950425016686
+        },
+        "EDDM": {
+          "rmse_delta_seconds": -1.4995075235778472,
+          "rmse_seconds": 158.96443116914236,
+          "rows": 12562,
+          "sse_delta": -6017012.633269787,
+          "sse_fraction": 0.03998777145972726
+        },
+        "EGLL": {
+          "rmse_delta_seconds": -5.193090692520144,
+          "rmse_seconds": 200.4601468864704,
+          "rows": 19423,
+          "sse_delta": -40962789.18097401,
+          "sse_fraction": 0.09831977822984056
+        },
+        "EHAM": {
+          "rmse_delta_seconds": -3.8287860514086276,
+          "rmse_seconds": 157.0980768364563,
+          "rows": 19232,
+          "sse_delta": -23417834.28426069,
+          "sse_fraction": 0.05979084332307606
+        },
+        "LEBL": {
+          "rmse_delta_seconds": -1.6989634773683235,
+          "rmse_seconds": 161.93258057667416,
+          "rows": 13332,
+          "sse_delta": -7374216.6017766595,
+          "sse_fraction": 0.04403847489363593
+        },
+        "LEMD": {
+          "rmse_delta_seconds": -1.3161593827757656,
+          "rmse_seconds": 170.98534224434866,
+          "rows": 17419,
+          "sse_delta": -7870256.073291898,
+          "sse_fraction": 0.06415189280415041
+        },
+        "LFPG": {
+          "rmse_delta_seconds": -2.5414308614062406,
+          "rmse_seconds": 264.4432960692415,
+          "rows": 18646,
+          "sse_delta": -25183055.98438549,
+          "sse_fraction": 0.1642552633247289
+        },
+        "LIRF": {
+          "rmse_delta_seconds": -0.6038218603914061,
+          "rmse_seconds": 458.67870602386824,
+          "rows": 11328,
+          "sse_delta": -6278941.1599702835,
+          "sse_fraction": 0.3002194944300909
+        },
+        "LSZH": {
+          "rmse_delta_seconds": -1.2428201911408223,
+          "rmse_seconds": 157.51004146199438,
+          "rows": 10078,
+          "sse_delta": -3961237.734895617,
+          "sse_fraction": 0.03149628541284666
+        },
+        "LTFM": {
+          "rmse_delta_seconds": -2.89769749881566,
+          "rmse_seconds": 209.16249038982613,
+          "rows": 22190,
+          "sse_delta": -27084579.24966848,
+          "sse_fraction": 0.12229069187173647
+        }
+      },
+      "by_month": {
+        "2025-11": {
+          "rmse_delta_seconds": -2.188982741055753,
+          "rmse_seconds": 221.13815634167557,
+          "rows": 162332,
+          "sse_delta": -157937163.14827538,
+          "sse_fraction": 1.0
+        }
+      },
+      "by_nm_missing": {
+        "False": {
+          "rmse_delta_seconds": -2.4904587391334303,
+          "rmse_seconds": 195.73101590612237,
+          "rows": 160976,
+          "sse_delta": -157937163.14827728,
+          "sse_fraction": 0.7768710248171197
+        },
+        "True": {
+          "rmse_delta_seconds": 0.0,
+          "rmse_seconds": 1142.9149005832548,
+          "rows": 1356,
+          "sse_delta": 0.0,
+          "sse_fraction": 0.22312897518288016
+        }
+      },
+      "by_target_band": {
+        "0_to_1h": {
+          "rmse_delta_seconds": -2.4475587910815477,
+          "rmse_seconds": 191.88344184936904,
+          "rows": 162092,
+          "sse_delta": -153222739.73626232,
+          "sse_fraction": 0.7518047620892857
+        },
+        "1h_to_3h": {
+          "rmse_delta_seconds": -5.916396932520001,
+          "rmse_seconds": 1866.1719902892391,
+          "rows": 216,
+          "sse_delta": -4777278.961781025,
+          "sse_fraction": 0.09476011437537195
+        },
+        "negative": {
+          "rmse_delta_seconds": 3.7554901009682453,
+          "rmse_seconds": 466.7937604238132,
+          "rows": 18,
+          "sse_delta": 62855.549766580574,
+          "sse_fraction": 0.0004940729544031905
+        },
+        "over_3h": {
+          "rmse_delta_seconds": 0.0,
+          "rmse_seconds": 14224.996347523604,
+          "rows": 6,
+          "sse_delta": 0.0,
+          "sse_fraction": 0.15294105058093904
+        }
+      },
+      "improvement_fraction": 0.009801687112665936,
+      "improvement_seconds": 2.188982741055753,
+      "rmse_seconds": 221.13815634167557,
+      "rows": 162332
+    },
+    "seasonal": {
+      "airports_improved": 10,
+      "by_airport": {
+        "EDDF": {
+          "rmse_delta_seconds": -2.3718710996595576,
+          "rmse_seconds": 188.29626675610294,
+          "rows": 36830,
+          "sse_delta": -33104819.304400682,
+          "sse_fraction": 0.03638136517969337
+        },
+        "EDDM": {
+          "rmse_delta_seconds": -2.4376500953218283,
+          "rmse_seconds": 174.07233008081883,
+          "rows": 27091,
+          "sse_delta": -23151887.381616235,
+          "sse_fraction": 0.022870643020272457
+        },
+        "EGLL": {
+          "rmse_delta_seconds": -3.5564608802065436,
+          "rmse_seconds": 272.59053852139044,
+          "rows": 40210,
+          "sse_delta": -78472371.83825493,
+          "sse_fraction": 0.08324333705609697
+        },
+        "EHAM": {
+          "rmse_delta_seconds": -5.35726138022423,
+          "rmse_seconds": 182.94582045433225,
+          "rows": 40949,
+          "sse_delta": -81442540.92625833,
+          "sse_fraction": 0.038184063031899834
+        },
+        "LEBL": {
+          "rmse_delta_seconds": -1.7657359084030873,
+          "rmse_seconds": 224.33502917143343,
+          "rows": 28986,
+          "sse_delta": -23054034.12465763,
+          "sse_fraction": 0.040642117438836035
+        },
+        "LEMD": {
+          "rmse_delta_seconds": -1.3106549623825856,
+          "rmse_seconds": 178.41180961682858,
+          "rows": 35328,
+          "sse_delta": -16582626.300686836,
+          "sse_fraction": 0.031329978853661025
+        },
+        "LFPG": {
+          "rmse_delta_seconds": -0.9065035606927268,
+          "rmse_seconds": 570.6526032162085,
+          "rows": 39612,
+          "sse_delta": -41015016.721868515,
+          "sse_fraction": 0.3593885441683594
+        },
+        "LIRF": {
+          "rmse_delta_seconds": -1.4868118671852244,
+          "rmse_seconds": 612.0208244311681,
+          "rows": 26528,
+          "sse_delta": -48337471.5103817,
+          "sse_fraction": 0.2768412245157406
+        },
+        "LSZH": {
+          "rmse_delta_seconds": -3.4673070879053114,
+          "rmse_seconds": 205.8636383791461,
+          "rows": 22346,
+          "sse_delta": -32169460.780162573,
+          "sse_fraction": 0.026384747124237214
+        },
+        "LTFM": {
+          "rmse_delta_seconds": -3.782252048219817,
+          "rmse_seconds": 255.63678768684346,
+          "rows": 46539,
+          "sse_delta": -90661274.32432365,
+          "sse_fraction": 0.08473397961120305
+        }
+      },
+      "by_month": {
+        "2025-01": {
+          "rmse_delta_seconds": -1.647418150659007,
+          "rmse_seconds": 345.2928806675611,
+          "rows": 153706,
+          "sse_delta": -175285938.80719757,
+          "sse_fraction": 0.5105754424813204
+        },
+        "2025-07": {
+          "rmse_delta_seconds": -2.5180652484426105,
+          "rmse_seconds": 303.49797850839917,
+          "rows": 190713,
+          "sse_delta": -292705564.4054184,
+          "sse_fraction": 0.48942455751867947
+        }
+      },
+      "by_nm_missing": {
+        "False": {
+          "rmse_delta_seconds": -2.987976341691308,
+          "rmse_seconds": 229.4848502576615,
+          "rows": 339046,
+          "sse_delta": -467991503.2126045,
+          "sse_fraction": 0.49746269595000897
+        },
+        "True": {
+          "rmse_delta_seconds": 0.0,
+          "rmse_seconds": 1832.2250047055338,
+          "rows": 5373,
+          "sse_delta": 0.0,
+          "sse_fraction": 0.502537304049991
+        }
+      },
+      "by_target_band": {
+        "0_to_1h": {
+          "rmse_delta_seconds": -2.4746480713812673,
+          "rmse_seconds": 241.92064527849652,
+          "rows": 343355,
+          "sse_delta": -413214282.8496361,
+          "sse_fraction": 0.5598647107615262
+        },
+        "1h_to_3h": {
+          "rmse_delta_seconds": -17.081609837468477,
+          "rmse_seconds": 1978.3146046157522,
+          "rows": 921,
+          "sse_delta": -62515064.970620155,
+          "sse_fraction": 0.10042554515781597
+        },
+        "negative": {
+          "rmse_delta_seconds": 6.774932536006531,
+          "rmse_seconds": 668.4014735025933,
+          "rows": 80,
+          "sse_delta": 720868.0055221915,
+          "sse_fraction": 0.0009957690824678686
+        },
+        "over_3h": {
+          "rmse_delta_seconds": 4.088920898308061,
+          "rmse_seconds": 14234.169762459247,
+          "rows": 60,
+          "sse_delta": 6983284.148965836,
+          "sse_fraction": 0.33869546846878407
+        },
+        "zero": {
+          "rmse_delta_seconds": 12.089028106624198,
+          "rmse_seconds": 470.54908872390166,
+          "rows": 3,
+          "sse_delta": 33692.45315308962,
+          "sse_fraction": 1.850652940586187e-05
+        }
+      },
+      "improvement_fraction": 0.00645624563034064,
+      "improvement_seconds": 2.097744397133738,
+      "rmse_seconds": 322.8193230817628,
+      "rows": 344419
+    }
+  },
+  "selected_paired_days": {
+    "forward": {
+      "comparison": "candidate minus Phase-3 timing_traffic",
+      "days": 30,
+      "days_with_lower_squared_error": 30,
+      "interpretation": "Descriptive on reused development data, not an independent audit",
+      "replicates": 2000,
+      "rmse_difference_95pct_interval_seconds": [
+        -2.694362678341347,
+        -1.76547105262704
+      ]
+    },
+    "seasonal": {
+      "comparison": "candidate minus Phase-3 timing_traffic",
+      "days": 62,
+      "days_with_lower_squared_error": 59,
+      "interpretation": "Descriptive on reused development data, not an independent audit",
+      "replicates": 2000,
+      "rmse_difference_95pct_interval_seconds": [
+        -2.663175738347074,
+        -1.66675425888793
+      ]
+    }
+  },
+  "selection_sha256": "3a6edb7beb178744acca53c92e269f2ee92fa1524115adbda74bf876cdd4d042"
+}

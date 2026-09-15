@@ -1,0 +1,47 @@
+{
+  "audit_used": false,
+  "created_at_utc": "2026-09-15T01:54:21.746835+00:00",
+  "feature_model_config_sha256": "9fd59fcc94d35c7d5712a07c25b94d531e8f1c6f5d25f2bb52c1b92fa2a9eee5",
+  "folds": {
+    "forward": {
+      "complete_rows": 162332,
+      "control_iterations_expected": 945,
+      "focal_clock_identities": {
+        "early_stop": {
+          "ids_sha256": "cf4222a2b4c0e10c73ff7f82307e9c54810cdcffd02818f77f7174c55493dad4",
+          "rows": 14027
+        },
+        "fit": {
+          "ids_sha256": "57d4c0f3bae9adbbe364a4dd94b8b62ba0ba4b1e85bafba595c20d95cb970cb4",
+          "rows": 121933
+        },
+        "score": {
+          "ids_sha256": "bdc3a3ea1b01bede336a970df7151723a0627651b64d83d549d02919bf30c8ef",
+          "rows": 11276
+        }
+      },
+      "v7_rmse_seconds": 221.13815634167557
+    },
+    "seasonal": {
+      "complete_rows": 344419,
+      "control_iterations_expected": 816,
+      "focal_clock_identities": {
+        "early_stop": {
+          "ids_sha256": "cf4222a2b4c0e10c73ff7f82307e9c54810cdcffd02818f77f7174c55493dad4",
+          "rows": 14027
+        },
+        "fit": {
+          "ids_sha256": "1ee11b762f30e51f097ac39b92c2767044fd5749fdbbaf49cd64784848185882",
+          "rows": 95802
+        },
+        "score": {
+          "ids_sha256": "a0be42b5d76bcb8f90d8c7ee47f2adfb58537ba347d4312ed9ebc39c8ee4d649",
+          "rows": 26131
+        }
+      },
+      "v7_rmse_seconds": 322.81932308176283
+    }
+  },
+  "native_models_fitted": 0,
+  "passed": true
+}

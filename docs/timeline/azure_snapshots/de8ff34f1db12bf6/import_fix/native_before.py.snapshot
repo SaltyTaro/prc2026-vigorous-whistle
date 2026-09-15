@@ -1,0 +1,90 @@
+"""Matched native learners with the frozen NM residual target."""
+from pathlib import Path
+import numpy as np
+from prc2026.artifacts import ResourceMonitor, write_json
+from prc2026.features import TARGET
+from prc2026.phase1 import emit
+from prc2026.validation import identity_hash
+from prc2026_models.experiments import predict
+from prc2026_phase5r.baseline import aligned_truth
+from prc2026_nmclock.features import route_mask, target_offset
+from .encoding import fit_encoder, transform
+from .inference import node_prediction
+
+
+def fit_node(run: Path, name: str, spec: dict, settings: dict, features, truth,
+             stop=None, stop_truth=None, iterations: int | None = None) -> dict:
+    if (stop is None) != (stop_truth is None) or (iterations is not None and stop is not None):
+        raise ValueError("A fixed refit cannot inspect stopping data.")
+    if iterations is not None and iterations < 1:
+        raise ValueError("Positive fixed iteration count required.")
+    if not route_mask(features).all() or (stop is not None and not route_mask(stop).all()):
+        raise ValueError("Training nodes require the declared clock-available route.")
+    kind = spec["kind"]
+    paths = {"model_path": name+("_model.txt" if kind == "lightgbm" else "_model.cbm"),
+             "encoder_path": name+"_encoder.json", "history_path": name+"_history.json", "importance_path": name+"_importance.json"}
+    if any((run/p).exists() for p in paths.values()):
+        raise ValueError("Fitted components cannot be overwritten.")
+    with ResourceMonitor() as monitor:
+        encoder = fit_encoder(features, spec)
+        x = transform(features, encoder)
+        y = aligned_truth(features, truth)[TARGET].to_numpy(dtype=float)-target_offset(features, spec["target"])
+        xs = ys = None
+        if stop is not None:
+            xs = transform(stop, encoder)
+            ys = aligned_truth(stop, stop_truth)[TARGET].to_numpy(dtype=float)-target_offset(stop, spec["target"])
+        native = settings[kind]
+        params = dict(native["parameters"])
+        rounds = native["rounds"] if iterations is None else iterations
+        emit("timeline_training", model=kind, component=name, rows=len(x), predictors=len(encoder["feature_names"]), maximum_iterations=rounds)
+        if kind == "lightgbm":
+            import lightgbm as lgb
+            params.update(num_threads=settings["threads"], seed=settings["seed"], feature_fraction_seed=settings["seed"],
+                          bagging_seed=settings["seed"], data_random_seed=settings["seed"], metric="rmse")
+            train = lgb.Dataset(x, label=y, categorical_feature=encoder["categorical_columns"])
+            history, kwargs = {}, {}
+            callbacks = [lgb.log_evaluation(period=100), lgb.record_evaluation(history)]
+            if xs is not None:
+                validation = lgb.Dataset(xs, label=ys, reference=train, categorical_feature=encoder["categorical_columns"])
+                kwargs = {"valid_sets": [validation], "valid_names": ["early_stop"]}
+                callbacks.append(lgb.early_stopping(native["early_stopping_rounds"], first_metric_only=True))
+            model = lgb.train(params, train, num_boost_round=rounds, callbacks=callbacks, **kwargs)
+            best = int(model.best_iteration or model.current_iteration())
+            model.save_model(str(run/paths["model_path"]), num_iteration=best)
+            importance = model.feature_importance(importance_type="gain")
+        elif kind == "catboost":
+            from catboost import CatBoostRegressor, Pool
+            if params.get("task_type") != "CPU":
+                raise ValueError("CPU CatBoost required.")
+            params.update(iterations=rounds, random_seed=settings["seed"], thread_count=settings["threads"])
+            model, kwargs = CatBoostRegressor(**params), {"verbose": 100}
+            if xs is not None:
+                kwargs.update(eval_set=Pool(xs, ys, cat_features=encoder["categorical_columns"]),
+                              early_stopping_rounds=native["early_stopping_rounds"], use_best_model=True)
+            model.fit(Pool(x, y, cat_features=encoder["categorical_columns"]), **kwargs)
+            best, history = int(model.tree_count_), model.get_evals_result()
+            model.save_model(str(run/paths["model_path"]), format="cbm")
+            importance = model.get_feature_importance()
+        else:
+            raise ValueError("Unknown model kind.")
+        if iterations is not None and best != iterations:
+            raise ValueError("Refit differs from the declared fixed iterations.")
+        write_json(run/paths["encoder_path"], encoder)
+        write_json(run/paths["history_path"], history)
+        write_json(run/paths["importance_path"], dict(zip(encoder["feature_names"], map(float, importance))))
+        card = {"model_kind": kind, "schema": "timeline", "spec": spec, "settings": settings, "parameters": params,
+                "iterations": best, **paths, "fit_rows": len(features), "fit_ids_sha256": identity_hash(features[ID]),
+                "early_stop_rows": 0 if stop is None else len(stop),
+                "early_stop_ids_sha256": None if stop is None else identity_hash(stop[ID]), "target_filter": "none"}
+        sample = (features if stop is None else stop).iloc[:1000]
+        before = predict(model, transform(sample, encoder), kind, settings["threads"])+target_offset(sample, spec["target"])
+        difference = float(np.max(np.abs(before-node_prediction(run, card, sample, settings["threads"]))))
+        if difference > 1e-9:
+            raise ValueError("Native timeline model does not reproduce after reload.")
+        card["max_model_reload_difference_seconds"] = difference
+        if stop is not None:
+            card["early_stop_rmse_seconds"] = float(np.sqrt(np.mean((predict(model, xs, kind, settings["threads"])-ys)**2)))
+    card["resources"] = monitor.stats
+    return card
+
+

@@ -9,3 +9,26 @@ data/raw/
 
 runs/
 
+
+# PRC 2026: downloaded evidence and data are reproducible from their manifests.
+docs/competition/sources/
+*.part
+
+# PRC feature bundles and local deployment packages.
+data/phase1/
+data/phase3/
+data/phase4/
+data/phase5r/
+data/weather/
+data/external/iem/
+data/external/ourairports/
+data/external/osm/
+data/nmclock/
+data/timeline/
+data/arrivalctx/
+data/nm_mask/
+data/nm_mask_jobs/
+data/rome_geometry/
+infra/azure/.local/
+*.egg-info/
+.pytest_cache/

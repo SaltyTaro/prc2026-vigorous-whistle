@@ -1,0 +1,39 @@
+{
+  "experiment_id": "prc2026-phase5-bounded-models-and-seeds-v1",
+  "declared_at_utc": "2026-09-13T18:35:00Z",
+  "feature_policy": "record-quality-conditional-schedule-v1",
+  "feature_bundle_id": "2ceb3449c26767a9731121bdd4988cff7d57f6e9310b84ac680657a131ae9cff",
+  "validation_protocol": "prc2026-validation-v1",
+  "reference_variant": "airport_blend",
+  "reference_model_code_sha256": "124b752ecc6717ec9ed9f5fcd32237716a637decc41200c3ed411d6122c788c4",
+  "development_folds": ["seasonal", "forward"],
+  "threads": 16,
+  "seed": 20260913,
+  "target_filter": "none",
+  "prediction_postprocess": "none",
+  "feature_changes": false,
+  "refit_months": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11"],
+  "variant_order": ["reference", "global_long", "global_capacity", "global_regularized", "airport_capacity", "catboost_global"],
+  "variants": {
+    "reference": {"replace": "none"},
+    "global_long": {"replace": "global", "kind": "lightgbm", "rounds": 4000, "early_stopping_rounds": 200, "parameters": {}},
+    "global_capacity": {"replace": "global", "kind": "lightgbm", "rounds": 3200, "early_stopping_rounds": 200, "parameters": {"num_leaves": 127, "min_data_in_leaf": 100, "lambda_l2": 20.0}},
+    "global_regularized": {"replace": "global", "kind": "lightgbm", "rounds": 4000, "early_stopping_rounds": 200, "parameters": {"num_leaves": 31, "min_data_in_leaf": 200, "lambda_l2": 50.0}},
+    "airport_capacity": {"replace": "airports", "kind": "lightgbm", "rounds": 3000, "early_stopping_rounds": 160, "parameters": {"num_leaves": 63, "min_data_in_leaf": 50, "lambda_l2": 20.0}},
+    "catboost_global": {"replace": "global", "kind": "catboost", "rounds": 3000, "early_stopping_rounds": 160, "parameters": {"loss_function": "RMSE", "eval_metric": "RMSE", "learning_rate": 0.055, "depth": 8, "l2_leaf_reg": 10.0, "bootstrap_type": "Bernoulli", "subsample": 0.8, "rsm": 0.9, "random_strength": 1.0, "max_ctr_complexity": 1, "one_hot_max_size": 10, "boosting_type": "Plain", "task_type": "CPU", "nan_mode": "Min", "allow_writing_files": false}}
+  },
+  "seed_replicas": [20260914, 20260915],
+  "seed_anchor_rule": "among initial candidates improving both complete folds and the reference, minimize mean RMSE ratio to reference; refit every component of that recipe with each declared seed",
+  "blend_policy": {
+    "weights": [0.25, 0.5, 0.75],
+    "top_initial_alternatives": 2,
+    "include_equal_three_seed_average": true,
+    "include_reference_seed_average_pairs": true,
+    "include_top_initial_pair": true,
+    "weights_shared_across_folds_and_airports": true
+  },
+  "minimum_improvement_fraction_each_fold": 0.005,
+  "selection": "require at least 0.5 percent RMSE improvement on each complete fold over v3; minimize mean relative RMSE among the declared candidates and blends",
+  "refit_iterations": "rounded median of October-selected iterations separately for each model component and seed",
+  "diagnostic_scope": "Any new tail analysis uses only the intersection of the two fitting partitions. No December or hidden ranking labels. New feature or offset hypotheses require a separately declared later batch."
+}

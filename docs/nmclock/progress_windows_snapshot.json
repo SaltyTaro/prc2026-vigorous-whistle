@@ -1,0 +1,85 @@
+{
+  "checked_at_utc": "2026-09-14T04:49:48.553075+00:00",
+  "batch_complete": false,
+  "completed_runs": [
+    {
+      "run_id": "20260914T035256709426Z_seasonal_lgb_direct",
+      "variant": "lgb_direct",
+      "fold": "seasonal",
+      "rows": 344419,
+      "rmse_seconds": 355.75415705955123,
+      "improvement_fraction": 0.02578786186751225,
+      "airports_improved": 9,
+      "ordinary_rmse_seconds": 243.6705465091195,
+      "reference_ordinary_rmse_seconds": 257.3423612259941
+    },
+    {
+      "run_id": "20260914T035605636710Z_seasonal_lgb_residual",
+      "variant": "lgb_residual",
+      "fold": "seasonal",
+      "rows": 344419,
+      "rmse_seconds": 325.66520535803284,
+      "improvement_fraction": 0.1081847120226449,
+      "airports_improved": 10,
+      "ordinary_rmse_seconds": 245.9205812640206,
+      "reference_ordinary_rmse_seconds": 257.3423612259941
+    },
+    {
+      "run_id": "20260914T035906971617Z_seasonal_cat_direct",
+      "variant": "cat_direct",
+      "fold": "seasonal",
+      "rows": 344419,
+      "rmse_seconds": 352.838392472192,
+      "improvement_fraction": 0.03377251418027971,
+      "airports_improved": 10,
+      "ordinary_rmse_seconds": 241.81927102621637,
+      "reference_ordinary_rmse_seconds": 257.3423612259941
+    },
+    {
+      "run_id": "20260914T041209460215Z_seasonal_cat_residual",
+      "variant": "cat_residual",
+      "fold": "seasonal",
+      "rows": 344419,
+      "rmse_seconds": 324.9170674788965,
+      "improvement_fraction": 0.1102334442395092,
+      "airports_improved": 10,
+      "ordinary_rmse_seconds": 244.3952933498778,
+      "reference_ordinary_rmse_seconds": 257.3423612259941
+    },
+    {
+      "run_id": "20260914T042520100916Z_forward_lgb_direct",
+      "variant": "lgb_direct",
+      "fold": "forward",
+      "rows": 162332,
+      "rmse_seconds": 223.86052340922362,
+      "improvement_fraction": 0.06977578277159491,
+      "airports_improved": 10,
+      "ordinary_rmse_seconds": 194.70226906355458,
+      "reference_ordinary_rmse_seconds": 212.25683506113492
+    },
+    {
+      "run_id": "20260914T042905954255Z_forward_lgb_residual",
+      "variant": "lgb_residual",
+      "fold": "forward",
+      "rows": 162332,
+      "rmse_seconds": 224.62094563798675,
+      "improvement_fraction": 0.06661594394989623,
+      "airports_improved": 9,
+      "ordinary_rmse_seconds": 195.92351776079443,
+      "reference_ordinary_rmse_seconds": 212.25683506113492
+    },
+    {
+      "run_id": "20260914T043254325126Z_forward_cat_direct",
+      "variant": "cat_direct",
+      "fold": "forward",
+      "rows": 162332,
+      "rmse_seconds": 222.96762286952145,
+      "improvement_fraction": 0.07348611853315712,
+      "airports_improved": 10,
+      "ordinary_rmse_seconds": 193.24248296638848,
+      "reference_ordinary_rmse_seconds": 212.25683506113492
+    }
+  ],
+  "free_disk_bytes": 4217434112,
+  "audit_used": false
+}

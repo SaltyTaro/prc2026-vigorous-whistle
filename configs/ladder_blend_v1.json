@@ -1,0 +1,89 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "missing_ground_v6_50__clock300_missing300_v6_25__left25": {
+      "ladder_candidate": "missing_ground_v6_50",
+      "ladder_weight": 0.25,
+      "scale_candidate": "clock300_missing300_v6_25"
+    },
+    "missing_ground_v6_50__clock300_missing300_v6_25__left50": {
+      "ladder_candidate": "missing_ground_v6_50",
+      "ladder_weight": 0.5,
+      "scale_candidate": "clock300_missing300_v6_25"
+    },
+    "missing_ground_v6_50__clock300_missing300_v6_50__left25": {
+      "ladder_candidate": "missing_ground_v6_50",
+      "ladder_weight": 0.25,
+      "scale_candidate": "clock300_missing300_v6_50"
+    },
+    "missing_ground_v6_50__clock300_missing300_v6_50__left50": {
+      "ladder_candidate": "missing_ground_v6_50",
+      "ladder_weight": 0.5,
+      "scale_candidate": "clock300_missing300_v6_50"
+    },
+    "missing_ground_v6_75__clock300_missing300_v6_25__left25": {
+      "ladder_candidate": "missing_ground_v6_75",
+      "ladder_weight": 0.25,
+      "scale_candidate": "clock300_missing300_v6_25"
+    },
+    "missing_ground_v6_75__clock300_missing300_v6_25__left50": {
+      "ladder_candidate": "missing_ground_v6_75",
+      "ladder_weight": 0.5,
+      "scale_candidate": "clock300_missing300_v6_25"
+    },
+    "missing_ground_v6_75__clock300_missing300_v6_50__left25": {
+      "ladder_candidate": "missing_ground_v6_75",
+      "ladder_weight": 0.25,
+      "scale_candidate": "clock300_missing300_v6_50"
+    },
+    "missing_ground_v6_75__clock300_missing300_v6_50__left50": {
+      "ladder_candidate": "missing_ground_v6_75",
+      "ladder_weight": 0.5,
+      "scale_candidate": "clock300_missing300_v6_50"
+    }
+  },
+  "declared_at_utc": "2026-09-14T16:25:25.466266+00:00",
+  "development_folds": [
+    "seasonal",
+    "forward"
+  ],
+  "development_native_fits": 0,
+  "execution": {
+    "automatic_submission": false,
+    "azure_only": true,
+    "host": "arcw0",
+    "new_workers": 0
+  },
+  "experiment_id": "prc2026-ladder-cross-campaign-blend-v1",
+  "feature_bundle_id": "72e86725e23367ede5b558027cfc8eeb7ef6cfbaed23980537766ef6a34a7f34",
+  "minimum_improvement_fraction_each_fold": 0.005,
+  "parent_selections": {
+    "ladder": {
+      "path": "docs/ladder/development_results.json",
+      "sha256": "274d811d51d692ee1fa357e237f9242fbb7f361bf23a64fcd92ac85f09c15d97"
+    },
+    "scale": {
+      "path": "docs/ladder_scale/development_results.json",
+      "sha256": "c23931559347114ec0b529050e1d51991afb439e781b7bfd2e5e431ec585ac19"
+    }
+  },
+  "prediction_postprocess": "none",
+  "prior_evidence": "Declared after both full batches and their Azure verifications. The missing-clock CatBoost improves forward but regresses seasonal; the scaled combination improves seasonal more strongly than forward. No cross-campaign mixture score has been computed. Test a bounded common-weight combination before closing these model branches.",
+  "refit_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11"
+  ],
+  "seed": 20260913,
+  "selection": "Evaluate all eight fixed combinations on both complete original folds. Require at least 0.5% lower complete RMSE than v6 on EACH fold, then lowest equally weighted mean ratio. Both preceding batches selected no candidate. No airport weights or altered thresholds. Otherwise retain v6.",
+  "target_filter": "none",
+  "threads": 16
+}

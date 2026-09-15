@@ -1,0 +1,42 @@
+{
+  "bucket": "prc-2026-vigorous-whistle",
+  "created_at_utc": "2026-09-14T03:12:07.572123+00:00",
+  "endpoint": "https://s3.opensky-network.org",
+  "etag": "cb78c7ac57c413f5d6afc320300f374b",
+  "filename": "vigorous-whistle_v5.parquet",
+  "limits": {
+    "bucket_bytes_after_upload": 6692906,
+    "bucket_bytes_before": 5352875,
+    "daily_count_policy": "conservative rolling 24 hours while reset timezone is unspecified",
+    "existing_submission_versions": 4,
+    "highest_existing_version": 4,
+    "submissions_in_previous_24h": 4
+  },
+  "refit_run_id": "20260914T024435836344Z_refit_cat_weather_v4_100",
+  "response_http_status": 200,
+  "sha256": "25ddc5554ce2fc059b920fbd43e58e149facc7e837c49b6e292ce434f66fa3bd",
+  "status": "uploaded_processing_not_yet_confirmed",
+  "uploaded_at_utc": "2026-09-14T03:12:10.510592+00:00",
+  "validation": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v5.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 120549,
+    "minimum_prediction_seconds": -106,
+    "negative_predictions": 19,
+    "rows": 344841,
+    "sha256": "25ddc5554ce2fc059b920fbd43e58e149facc7e837c49b6e292ce434f66fa3bd",
+    "size_bytes": 1340031,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-14T03:12:05.391268+00:00",
+    "version": 5
+  }
+}

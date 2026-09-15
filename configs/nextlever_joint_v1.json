@@ -1,0 +1,31 @@
+{
+  "arrival_configuration_sha256": "ef6a2ab4cfd37d58083a0b455418e2b09dcd02c2676530dc8322fd7f6c3b14d8",
+  "arrival_recipe": "arrival_mean_v6_100",
+  "audit_used": false,
+  "automatic_submission": false,
+  "blend_weights_new_candidate": [
+    0.5,
+    1.0
+  ],
+  "declared_at_utc": "2026-09-14T18:01:34.122361+00:00",
+  "development_folds": [
+    "seasonal",
+    "forward"
+  ],
+  "execution": {
+    "cloud": "Azure",
+    "new_workers": 0,
+    "worker": "arcw0"
+  },
+  "experiment_id": "prc2026-nextlever-joint-v1",
+  "feature_bundle_id": "72e86725e23367ede5b558027cfc8eeb7ef6cfbaed23980537766ef6a34a7f34",
+  "minimum_improvement_fraction_each_fold": 0.005,
+  "new_native_fits": 0,
+  "prior_information": "Seven timeline native component scores and the fitting-only arrival audit were observed. The complete timeline selection and all arrival model scores were still unavailable. Equal learner means were chosen without inspecting their complete results.",
+  "reference_selection": "docs/nmclock/development_results.json",
+  "reference_selection_sha256": "c3a3efc18a43484198b927f7a38fed431b64541f77a31ef60ce2f0b1ee1dfeb9",
+  "routing": "Use the unchanged clock-availability covariate. Clock-present rows use the predeclared equal mean of timeline LGB/CatBoost globals with 50% original v6 airports; missing-clock rows use the equal mean of the two new arrival-context experts. Apply each common blend weight against v6.",
+  "selection": "Require both preceding batches and their native verifications complete. Evaluate exactly two recipes on each original complete fold; require at least 0.5% lower complete RMSE on both folds, then choose the minimum equal-weight mean relative RMSE. No other weights or per-airport rules.",
+  "timeline_configuration_sha256": "0f3ccec8ae1e23d24eb8eef8c536eeeb8b1439b7e7fc248dccde37732ba8ddd3",
+  "timeline_recipe": "combined_mean_v6_100"
+}

@@ -1,0 +1,57 @@
+{
+  "checked_at_utc": "2026-09-14T05:33:44.043194+00:00",
+  "endpoint": "https://s3.opensky-network.org",
+  "bucket": "prc-2026-vigorous-whistle",
+  "inputs": {
+    "ranking.parquet": {
+      "etag": "838b6c57f7c3c6b491a169c0c1516d55-3",
+      "size_bytes": 43564605,
+      "matches_frozen_input": true,
+      "last_modified_utc": "2026-09-04T08:30:40+00:00"
+    },
+    "submitting.parquet": {
+      "etag": "03044267cf6c774914ae275dfd29d0e0",
+      "size_bytes": 1677097,
+      "matches_frozen_input": true,
+      "last_modified_utc": "2026-09-04T08:27:23+00:00"
+    }
+  },
+  "highest_existing_version": 5,
+  "next_version": 6,
+  "next_filename": "vigorous-whistle_v6.parquet",
+  "submission_objects": [
+    {
+      "filename": "vigorous-whistle_v1.parquet",
+      "bytes": 1336139,
+      "last_modified_utc": "2026-09-13T14:49:05.379000+00:00"
+    },
+    {
+      "filename": "vigorous-whistle_v2.parquet",
+      "bytes": 1338296,
+      "last_modified_utc": "2026-09-13T16:40:23.930000+00:00"
+    },
+    {
+      "filename": "vigorous-whistle_v3.parquet",
+      "bytes": 1338167,
+      "last_modified_utc": "2026-09-13T18:07:57.190000+00:00"
+    },
+    {
+      "filename": "vigorous-whistle_v4.parquet",
+      "bytes": 1338569,
+      "last_modified_utc": "2026-09-13T20:38:40.127000+00:00"
+    },
+    {
+      "filename": "vigorous-whistle_v5.parquet",
+      "bytes": 1340031,
+      "last_modified_utc": "2026-09-14T03:12:10.079000+00:00"
+    }
+  ],
+  "bucket_bytes": 6693332,
+  "rolling_24h_count": 5,
+  "upload_guard_permits": false,
+  "guard_reason": "Five submissions are present in the last 24 hours; wait for capacity.",
+  "earliest_guard_release_with_one_second_buffer_utc": "2026-09-14T14:49:06.379000+00:00",
+  "capacity_size_assumption_bytes": 2000000,
+  "policy": "Existing conservative rolling 24-hour guard; organizer reset timezone remains unverified. Recheck the actual export size and live bucket before upload.",
+  "upload_performed": false
+}

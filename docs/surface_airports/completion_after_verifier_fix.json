@@ -1,0 +1,40 @@
+{
+  "audit_used": false,
+  "correction_sha256": "aa7e24d6a6d207bd22d56dd5192c1a2f2d41058b216393453cc8d9b63dc48940",
+  "declared_batch_complete": true,
+  "finished_at_utc": "2026-09-14T18:46:47.983136+00:00",
+  "initial_completion_sha256": "e202a635fd24e9dcd0e3bb69e9d1986fcda0ee0e5ff96dd626d04511f852a2f1",
+  "models_retrained": 0,
+  "selection_sha256_unchanged": "3a6edb7beb178744acca53c92e269f2ee92fa1524115adbda74bf876cdd4d042",
+  "steps": [
+    {
+      "arguments": [
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_surface_verifier.py",
+        "--junitxml=docs/surface_airports/verifier_fix/tests_azure.xml"
+      ],
+      "finished_at_utc": "2026-09-14T18:45:40.465752+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T18:45:40.028678+00:00"
+    },
+    {
+      "arguments": [
+        "tools/verify_surface_airports.py"
+      ],
+      "finished_at_utc": "2026-09-14T18:46:47.808899+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T18:45:40.465773+00:00"
+    },
+    {
+      "arguments": [
+        "tools/summarize_surface_airports.py"
+      ],
+      "finished_at_utc": "2026-09-14T18:46:47.982892+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T18:46:47.808922+00:00"
+    }
+  ],
+  "submission_uploaded": false
+}

@@ -1,0 +1,128 @@
+{
+  "experiment_id": "prc2026-phase5r-new-signals-and-targets-v1",
+  "declared_at_utc": "2026-09-14T00:16:22.811212+00:00",
+  "context": "New development campaign authorized by continue after historical-methods research. Prior Phase-5 tuning is frozen. These reused development sets are not an independent audit.",
+  "feature_policy": "planned-demand-past-service-v1",
+  "validation_protocol": "prc2026-validation-v1",
+  "development_folds": [
+    "seasonal",
+    "forward"
+  ],
+  "threads": 16,
+  "seed": 20260913,
+  "target_filter": "none",
+  "prediction_postprocess": "none",
+  "refit_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11"
+  ],
+  "reference_selection": "docs/phase5/development_results.json",
+  "reference_selection_sha256": "4612946cb3f9200907e5297873b6c53c631b88f6e964f56dd649949ec26f2db3",
+  "reference_refit_run": "20260913T195813824072Z_refit_followup_catboost_long_three_seed_mean_75",
+  "reference_refit_sha256": "e8578b945792a157b6e27f276bb1265ef50406f4e168efed4bc4085d1b25d68b",
+  "variant_order": [
+    "missing_record",
+    "demand_service",
+    "baseline_residual",
+    "baseline_scaled",
+    "combined"
+  ],
+  "variants": {
+    "missing_record": {
+      "features": "ground",
+      "target": "none",
+      "route": "nm_missing",
+      "rounds": 1600,
+      "early_stopping_rounds": 160,
+      "parameters": {
+        "num_leaves": 15,
+        "min_data_in_leaf": 30,
+        "lambda_l2": 50.0,
+        "learning_rate": 0.025,
+        "bagging_fraction": 1.0
+      }
+    },
+    "demand_service": {
+      "features": "ground",
+      "target": "none",
+      "route": "all",
+      "parameters": {}
+    },
+    "baseline_residual": {
+      "features": "core",
+      "target": "baseline",
+      "route": "all",
+      "parameters": {}
+    },
+    "baseline_scaled": {
+      "features": "core",
+      "target": "baseline_scaled",
+      "route": "all",
+      "parameters": {}
+    },
+    "combined": {
+      "features": "ground",
+      "target": "baseline",
+      "route": "all",
+      "parameters": {}
+    }
+  },
+  "baseline": {
+    "inner_folds": 5,
+    "seed": 20260914,
+    "shrinkage": [
+      40,
+      80,
+      100,
+      100,
+      150
+    ],
+    "minimum_scale_seconds": 60,
+    "description": "Five flight-group folds. Global -> airport -> record quality -> runway -> stand -> stand/runway partial pooling of residual q20, mean and IQR. Every fitting label retained. Fit rows receive out-of-fold features; October/score/ranking use a full-fitting map."
+  },
+  "lightgbm": {
+    "rounds": 3200,
+    "early_stopping_rounds": 200,
+    "parameters": {
+      "objective": "regression",
+      "metric": "None",
+      "learning_rate": 0.04,
+      "num_leaves": 127,
+      "min_data_in_leaf": 100,
+      "lambda_l2": 20.0,
+      "feature_fraction": 0.9,
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1,
+      "max_bin": 255,
+      "cat_smooth": 20.0,
+      "cat_l2": 20.0,
+      "max_cat_to_onehot": 8,
+      "max_cat_threshold": 32,
+      "deterministic": true,
+      "force_col_wise": true,
+      "verbosity": -1
+    }
+  },
+  "target_loss": "For scaled residual z=(y-offset-baseline)/scale, sample weight=(scale/600)^2. Thus weighted squared error is original squared-seconds error divided by a common 600^2. October early stopping explicitly uses unweighted RMSE in seconds.",
+  "global_candidate": "50% new global model plus 50% frozen original-seed Phase-4 airport models, matching the Phase-5 global_capacity structure.",
+  "specialist_candidate": "Replace only missing-NM predictions with a new all-airport missing-record expert; other rows retain v4 exactly.",
+  "blend_weights_new_candidate": [
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "minimum_improvement_fraction_each_fold": 0.005,
+  "selection": "Evaluate the 20 declared candidate/v4 weights. Require at least 0.5% lower complete-set RMSE on BOTH folds than v4; minimize equally weighted mean RMSE ratio. No airport-specific or fold-specific blend weights.",
+  "refit_iterations": "Rounded median of the two October-selected counts for the selected new model. Retain frozen prior-model refits for the old components.",
+  "audit_used": false
+}

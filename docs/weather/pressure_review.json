@@ -1,0 +1,16 @@
+{
+  "additional_rounding_difference_bound_seconds": 0.011920338607817263,
+  "affected_ranking_rows": 49,
+  "created_at_utc": "2026-09-14T03:09:11.904396+00:00",
+  "decision": "Retain the unchanged validated recipe. The bounded sensitivity is documented; no source, feature, prediction, blend weight or submission was modified.",
+  "derivation": "Rounding each prediction to nearest integer changes the difference by at most one second per affected row; add sqrt(affected_rows / all_rows) to the original reverse-triangle bound.",
+  "limitation": "This measures prediction sensitivity, not the effect of retraining on pressure-filtered data. It uses no hidden labels.",
+  "observed_gain_minus_sensitivity_bound_seconds": 3.3429560629532147,
+  "observed_improvement_over_v4_seconds": 3.762900000000002,
+  "official_result_sha256": "4b8203148d63aea96cec61ab5a922c55e6b2acb43b07e8a9279150e63ae3a7ea",
+  "pressure_audit_sha256": "e9a612987c357b87e09202e0b151c9c20f81d3ed3f4275b5edea72c14fb42f1a",
+  "ranking_rows": 344841,
+  "refit_run_sha256": "507b653bd67b671309f5b7aa257f1b6231a91b6a1669088718af30d7c76663b3",
+  "rounded_submission_rmse_difference_bound_seconds": 0.41994393704678734,
+  "unrounded_rmse_difference_bound_seconds": 0.40802359843897007
+}

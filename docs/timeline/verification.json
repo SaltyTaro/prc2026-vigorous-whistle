@@ -1,0 +1,126 @@
+{
+  "audit_used": false,
+  "bundle_id": "ce42240e5e43eee1713f1f8dbc23cfa4511076e510bdc9aec6853fad30cf134c",
+  "candidate_count": 10,
+  "complete_scores": {
+    "forward": {
+      "cat_combined": 224.11233693836442,
+      "lgb_combined": 224.89041487683116,
+      "lgb_flown": 226.68887970444388,
+      "lgb_surface": 224.72724240685056
+    },
+    "seasonal": {
+      "cat_combined": 325.0507410341447,
+      "lgb_combined": 325.29899878508576,
+      "lgb_flown": 326.798249168119,
+      "lgb_surface": 325.51874203322365
+    }
+  },
+  "created_at_utc": "2026-09-14T18:16:50.944183+00:00",
+  "development_run_count": 8,
+  "feature_checks": {
+    "audit_used": false,
+    "bundle_id": "ce42240e5e43eee1713f1f8dbc23cfa4511076e510bdc9aec6853fad30cf134c",
+    "created_at_utc": "2026-09-14T17:20:46.550795+00:00",
+    "departure_labels_read": false,
+    "feature_oracle_code_sha256": "e75e602aee0f218dc7697a4da5a1c3298d05cf004e9f675d4c0fcd19d933d6d8",
+    "feature_values_reconstructed": 10656,
+    "inherited_rows_checked_exactly": 2264211,
+    "manifest_sha256": "a4491729d821f361fc4c5c5536fc0c8c4c1520dd7bd03dea17c9b71828880abc",
+    "maximum_absolute_numeric_difference": 0.0,
+    "maximum_count_flag_difference": 0.0,
+    "numerical_tolerance": {
+      "atol": 0.002,
+      "rtol": 2e-06
+    },
+    "passed": true,
+    "sample_rows": 144,
+    "verifier_code_sha256": "ce9aa8bd43561a5bf11d26f90138a704dd45741022dea57e776aac4ca220d931"
+  },
+  "model_code_sha256": "3f7f148faf5a4b4b33382b2b66837c007e5520b1abe3718e37f99487977ed584",
+  "native_prediction_checks": {
+    "forward": {
+      "cat_combined": {
+        "complete_unchanged_fallback_rows": 1356,
+        "fit_encoder_verified": true,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1285
+      },
+      "lgb_combined": {
+        "complete_unchanged_fallback_rows": 1356,
+        "fit_encoder_verified": true,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1285
+      },
+      "lgb_flown": {
+        "complete_unchanged_fallback_rows": 1356,
+        "fit_encoder_verified": true,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1285
+      },
+      "lgb_surface": {
+        "complete_unchanged_fallback_rows": 1356,
+        "fit_encoder_verified": true,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1285
+      }
+    },
+    "seasonal": {
+      "cat_combined": {
+        "complete_unchanged_fallback_rows": 5373,
+        "fit_encoder_verified": true,
+        "maximum_difference_seconds": 0.0,
+        "rows": 2247
+      },
+      "lgb_combined": {
+        "complete_unchanged_fallback_rows": 5373,
+        "fit_encoder_verified": true,
+        "maximum_difference_seconds": 0.0,
+        "rows": 2247
+      },
+      "lgb_flown": {
+        "complete_unchanged_fallback_rows": 5373,
+        "fit_encoder_verified": true,
+        "maximum_difference_seconds": 0.0,
+        "rows": 2247
+      },
+      "lgb_surface": {
+        "complete_unchanged_fallback_rows": 5373,
+        "fit_encoder_verified": true,
+        "maximum_difference_seconds": 0.0,
+        "rows": 2247
+      }
+    }
+  },
+  "passed": true,
+  "reference_checks": {
+    "forward": {
+      "maximum_airport_difference_seconds": 0.0,
+      "maximum_v6_difference_seconds": 0.0,
+      "rows": 1285
+    },
+    "seasonal": {
+      "maximum_airport_difference_seconds": 0.0,
+      "maximum_v6_difference_seconds": 0.0,
+      "rows": 2247
+    }
+  },
+  "refit_iterations": {},
+  "run_sha256": {
+    "forward": {
+      "cat_combined": "1ea8d58c9602db9213a8112491ec841fb283444a68388db6f2cd391ea596edff",
+      "lgb_combined": "489c625b4f08a30dfe892739faa22b0c1da676ffe97cec555850ee93b686849d",
+      "lgb_flown": "b7c617ee14fc5fb4fe7d2e5cc15ab91f2c45a8e84b3d46b031938e4ebe6bc21e",
+      "lgb_surface": "c2f2bcd959e90d0f5945c77eed91166e764ee120bf3377bfe57f6a219c54bcbd"
+    },
+    "seasonal": {
+      "cat_combined": "941c64b9fb1f8f77b5c501842162f5523c840f60b8ecffbaebb39d47c19af52e",
+      "lgb_combined": "358e8b2cd14d7f96ba8aa740e501ff380823ac4f2d48d8a47a59514a6b80289a",
+      "lgb_flown": "0ccd8c69c7cd369eed4687f7227f36153e598c8012029ffc94d93bbae4b791b0",
+      "lgb_surface": "ea69a5f667baffe8e6e0ea1801479e7e04de26b7c6f9cc4664460bc25d976440"
+    }
+  },
+  "selected_candidate": null,
+  "selection_sha256": "4a51746cab6da283662dbff4650b6b29492d6e165e34fce34001232c1e396780",
+  "verifier_code_sha256": "ce9aa8bd43561a5bf11d26f90138a704dd45741022dea57e776aac4ca220d931"
+}

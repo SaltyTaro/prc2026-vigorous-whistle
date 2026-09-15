@@ -1,0 +1,98 @@
+{
+  "audit_used": false,
+  "bundle_id": "ad97a0d16cb9cec6478255c8e133e4b7996fc5f541f95fdf4d8fee53dacd33ab",
+  "candidate_count": 6,
+  "complete_scores": {
+    "forward": {
+      "cat_arrival": 223.572625151547,
+      "lgb_arrival": 227.6220443965208
+    },
+    "seasonal": {
+      "cat_arrival": 334.9268877368122,
+      "lgb_arrival": 329.02955165946344
+    }
+  },
+  "created_at_utc": "2026-09-14T18:19:46.319399+00:00",
+  "development_run_count": 4,
+  "feature_checks": {
+    "arrival_context_rows": 2261572,
+    "audit_code_sha256": "e80451523506177414827544b0e8cc20c17edbc8a9fa7032fba4e195a184e049",
+    "audit_feature_artifact_sha256": "44433e6b6b4dbd60451b88c3601363d7169f52a130f4e6a0f0ddc0e492f0e31d",
+    "audit_used": false,
+    "bundle_id": "ad97a0d16cb9cec6478255c8e133e4b7996fc5f541f95fdf4d8fee53dacd33ab",
+    "created_at_utc": "2026-09-14T18:17:30.592106+00:00",
+    "departure_context_labels_read": false,
+    "feature_oracle_code_sha256": "aca156891e4cc89a9f8549b88def919e886c858135c1005b0d604bcaa8d11859",
+    "independent_direct_scan": {
+      "feature_values": 896,
+      "maximum_absolute_difference": 0.0,
+      "query_rows": 64
+    },
+    "manifest_sha256": "79d43db4d69262c30b39378a5d564aeb33de4f7971bc7375ac90b8833b157200",
+    "passed": true,
+    "prior_audit_reproduction_feature_values": 6384252,
+    "prior_audit_reproduction_maximum_difference": 0.0,
+    "prior_audit_reproduction_rows": 456018,
+    "verified_parent_feature_files": 12,
+    "verified_parent_rows": 2264211,
+    "verifier_code_sha256": "610e1b369febcfe2f2746bdbf243465bde58671a090ac5260c76f5ae92f380ca"
+  },
+  "model_code_sha256": "af910d80897bd0f07b5e5a312471ecbfdd3803b825f67d5b0736f96f730a1a13",
+  "native_prediction_checks": {
+    "forward": {
+      "cat_arrival": {
+        "complete_unchanged_clock_present_rows": 160976,
+        "fit_encoder_verified": true,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1356
+      },
+      "lgb_arrival": {
+        "complete_unchanged_clock_present_rows": 160976,
+        "fit_encoder_verified": true,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1356
+      }
+    },
+    "seasonal": {
+      "cat_arrival": {
+        "complete_unchanged_clock_present_rows": 339046,
+        "fit_encoder_verified": true,
+        "maximum_difference_seconds": 0.0,
+        "rows": 5373
+      },
+      "lgb_arrival": {
+        "complete_unchanged_clock_present_rows": 339046,
+        "fit_encoder_verified": true,
+        "maximum_difference_seconds": 0.0,
+        "rows": 5373
+      }
+    }
+  },
+  "passed": true,
+  "reference_checks": {
+    "forward": {
+      "maximum_airport_difference_seconds": 0.0,
+      "maximum_v6_difference_seconds": 0.0,
+      "rows": 1000
+    },
+    "seasonal": {
+      "maximum_airport_difference_seconds": 0.0,
+      "maximum_v6_difference_seconds": 0.0,
+      "rows": 1000
+    }
+  },
+  "refit_iterations": {},
+  "run_sha256": {
+    "forward": {
+      "cat_arrival": "e21cd7c4636a9e1b2b24e5b04bf3cd593bcb93b13e26400cdf3df1b7b829f938",
+      "lgb_arrival": "7b892a43b18b3ca4cf6fbbfcc243cedebc8fd03752b04326cf815fcbdfbde787"
+    },
+    "seasonal": {
+      "cat_arrival": "2f37601e1022602f9a5f6ff8ea22b259f0ad5cf5638c6ddd19becda936ac550b",
+      "lgb_arrival": "f588aec1f6a21af34747728a9bef672ccd62c63e3ba210672ff00c9b9b31f7ba"
+    }
+  },
+  "selected_candidate": null,
+  "selection_sha256": "6c3c852e78ff4b30bacc1491bc40cfa84a2c98ab0a7b212031feecae92f4aaad",
+  "verifier_code_sha256": "610e1b369febcfe2f2746bdbf243465bde58671a090ac5260c76f5ae92f380ca"
+}

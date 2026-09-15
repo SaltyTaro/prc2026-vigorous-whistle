@@ -1,0 +1,86 @@
+{
+  "audit_used": false,
+  "blend_scores_reproduced": 40,
+  "bundle_id": "d4decaaa6d8e7915d8210a0aaa644af5caa8bb6924c646d9a56f74b8a6f9e2cc",
+  "complete_development_scores_reproduced": 10,
+  "created_at_utc": "2026-09-14T00:49:32.240376+00:00",
+  "crossfit_checks": {
+    "forward": {
+      "assignment_sha256": "d9eaa2833d48998c23003289594d876465306187edb28bf812535c2dc2be6259",
+      "inner_folds": 5,
+      "max_feature_difference": 0.0,
+      "recreated_inner_fold": 0,
+      "recreated_rows": 1000,
+      "rows": 1571364
+    },
+    "seasonal": {
+      "assignment_sha256": "8d2cfba663e27fcf50307c15f9d797fa7d5644ba697976396d3af741dd6071b5",
+      "inner_folds": 5,
+      "max_feature_difference": 0.0,
+      "recreated_inner_fold": 0,
+      "recreated_rows": 1000,
+      "rows": 1226945
+    }
+  },
+  "development_runs": {
+    "20260914T001844141233Z_seasonal_missing_record": "8efa2054abdd37e74589757f8dcfd102d943a729bda8651d5511f485c8005838",
+    "20260914T001847717369Z_seasonal_demand_service": "665fd7a5128171ebdd2c2d1ce9cdcfaa730f6e84ff557aaf3fa710ea8f19c132",
+    "20260914T002032771955Z_seasonal_baseline_residual": "026098d5dd402559f6700c3ae9f418ba3541aba19e7a94d0e6e3ed9f7a74ad41",
+    "20260914T002202822201Z_seasonal_baseline_scaled": "112fb0af5e1757301ed31488baaabb3008d0122df4586d6ff6ed8e28215c335a",
+    "20260914T002338463555Z_seasonal_combined": "eb4f3c68791f448319f10f5812c0a0602487414cd868c39a43aad76851fc1bd4",
+    "20260914T002549579552Z_forward_missing_record": "405823f223605949cad03422c179aeac04b7e902369fa3004a8e5cb5a6c14fee",
+    "20260914T002551768747Z_forward_demand_service": "184e5b241a0fc8756df4ff4510739c014a15f503c6518d2edd9fa01f0571f81a",
+    "20260914T002815242068Z_forward_baseline_residual": "271c1dc872947a0f5935818ccd94ad831ce98209a0e8b60ef0e97f44d0e9ece0",
+    "20260914T003016465373Z_forward_baseline_scaled": "d9bc9269a2ccebbebf524f8c420f1ab952ef40898391e288568060209db28efd",
+    "20260914T003217186724Z_forward_combined": "75de6d7760f6239baf0783426a7f9b0710fc4abf61d67ee61da3df2302262e9a"
+  },
+  "feature_rows": 2264211,
+  "model_code_sha256": "7023c24353cdef70c42df2bfd051be2d9bdfb4b067dec50f9e02b2ff92616118",
+  "native_checks": {
+    "baseline_residual/forward": {
+      "max_difference_seconds": 0.0,
+      "rows": 1052
+    },
+    "baseline_residual/seasonal": {
+      "max_difference_seconds": 0.0,
+      "rows": 1396
+    },
+    "baseline_scaled/forward": {
+      "max_difference_seconds": 0.0,
+      "rows": 1052
+    },
+    "baseline_scaled/seasonal": {
+      "max_difference_seconds": 0.0,
+      "rows": 1396
+    },
+    "combined/forward": {
+      "max_difference_seconds": 0.0,
+      "rows": 1052
+    },
+    "combined/seasonal": {
+      "max_difference_seconds": 0.0,
+      "rows": 1396
+    },
+    "demand_service/forward": {
+      "max_difference_seconds": 0.0,
+      "rows": 1052
+    },
+    "demand_service/seasonal": {
+      "max_difference_seconds": 0.0,
+      "rows": 1396
+    },
+    "missing_record/forward": {
+      "max_difference_seconds": 0.0,
+      "rows": 1014
+    },
+    "missing_record/seasonal": {
+      "max_difference_seconds": 0.0,
+      "rows": 1324
+    }
+  },
+  "passed": true,
+  "refits": [],
+  "selected_candidate": null,
+  "selection_sha256": "4c3f466e5566df318df07a68764746549525b5ad47e6206ec602d3331acdf910",
+  "verification_code_sha256": "fdd16bf96834c036e993abd6e67e383c5b28acf759ef718e4241f1fec3efca64"
+}

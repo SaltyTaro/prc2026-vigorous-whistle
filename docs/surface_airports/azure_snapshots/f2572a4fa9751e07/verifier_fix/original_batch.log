@@ -1,0 +1,355 @@
+........................................................................ [ 39%]
+........................................................................ [ 78%]
+........................................                                 [100%]
+=============================== warnings summary ===============================
+tests/test_models.py::test_vocabularies_are_fit_only_and_unknowns_are_missing
+  /home/azureuser/prc-flight-2026/src/prc2026_models/encoding.py:55: Pandas4Warning: Constructing a Categorical with a dtype and values containing non-null entries not in that dtype's categories is deprecated and will raise in a future version.
+    out[name] = pd.Categorical(values, categories=encoder["vocabularies"][name])
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_EDDF", "rows": 135584, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 163.843
+[200]	early_stop's rmse: 160.042
+[300]	early_stop's rmse: 159.042
+[400]	early_stop's rmse: 158.649
+[500]	early_stop's rmse: 158.467
+[600]	early_stop's rmse: 158.194
+[700]	early_stop's rmse: 158.164
+[800]	early_stop's rmse: 158.101
+[900]	early_stop's rmse: 158.097
+Early stopping, best iteration is:
+[869]	early_stop's rmse: 158.075
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "seasonal", "airport": "EDDF", "iterations": 869, "resources": {"wall_seconds": 9.998355217991048, "cpu_seconds": 129.54, "mean_active_cpu_cores": 12.956131001117626, "peak_process_rss_bytes_sampled": 8318636032, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_EDDM", "rows": 99645, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 174.831
+[200]	early_stop's rmse: 168.15
+[300]	early_stop's rmse: 164.75
+[400]	early_stop's rmse: 162.819
+[500]	early_stop's rmse: 161.652
+[600]	early_stop's rmse: 160.763
+[700]	early_stop's rmse: 160.178
+[800]	early_stop's rmse: 159.91
+[900]	early_stop's rmse: 159.746
+[1000]	early_stop's rmse: 159.546
+[1100]	early_stop's rmse: 159.51
+[1200]	early_stop's rmse: 159.464
+Early stopping, best iteration is:
+[1156]	early_stop's rmse: 159.403
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "seasonal", "airport": "EDDM", "iterations": 1156, "resources": {"wall_seconds": 9.754327757007559, "cpu_seconds": 133.87, "mean_active_cpu_cores": 13.724164630804733, "peak_process_rss_bytes_sampled": 8012017664, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_EGLL", "rows": 138580, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 232.669
+[200]	early_stop's rmse: 223.181
+[300]	early_stop's rmse: 220.113
+[400]	early_stop's rmse: 218.33
+[500]	early_stop's rmse: 217.279
+[600]	early_stop's rmse: 216.882
+[700]	early_stop's rmse: 216.381
+[800]	early_stop's rmse: 216.008
+[900]	early_stop's rmse: 215.722
+[1000]	early_stop's rmse: 215.669
+[1100]	early_stop's rmse: 215.618
+[1200]	early_stop's rmse: 215.584
+[1300]	early_stop's rmse: 215.571
+[1400]	early_stop's rmse: 215.59
+Early stopping, best iteration is:
+[1282]	early_stop's rmse: 215.516
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "seasonal", "airport": "EGLL", "iterations": 1282, "resources": {"wall_seconds": 13.222885112991207, "cpu_seconds": 180.94, "mean_active_cpu_cores": 13.683851780745659, "peak_process_rss_bytes_sampled": 8361824256, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_EHAM", "rows": 144176, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 170.953
+[200]	early_stop's rmse: 165.299
+[300]	early_stop's rmse: 163.78
+[400]	early_stop's rmse: 163.021
+[500]	early_stop's rmse: 162.666
+[600]	early_stop's rmse: 162.554
+[700]	early_stop's rmse: 162.399
+[800]	early_stop's rmse: 162.3
+[900]	early_stop's rmse: 162.3
+Early stopping, best iteration is:
+[875]	early_stop's rmse: 162.242
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "seasonal", "airport": "EHAM", "iterations": 875, "resources": {"wall_seconds": 10.93685745500261, "cpu_seconds": 143.18999999999994, "mean_active_cpu_cores": 13.092426283246807, "peak_process_rss_bytes_sampled": 8411254784, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_LEBL", "rows": 106236, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 218.846
+[200]	early_stop's rmse: 213.449
+[300]	early_stop's rmse: 211.116
+[400]	early_stop's rmse: 210.51
+[500]	early_stop's rmse: 209.667
+[600]	early_stop's rmse: 209.47
+[700]	early_stop's rmse: 209.278
+[800]	early_stop's rmse: 209.167
+[900]	early_stop's rmse: 209.26
+Early stopping, best iteration is:
+[806]	early_stop's rmse: 209.152
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "seasonal", "airport": "LEBL", "iterations": 806, "resources": {"wall_seconds": 7.835336541000288, "cpu_seconds": 102.05000000000007, "mean_active_cpu_cores": 13.02432888057824, "peak_process_rss_bytes_sampled": 8064733184, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_LEMD", "rows": 122172, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 203.479
+[200]	early_stop's rmse: 200.261
+[300]	early_stop's rmse: 198.484
+[400]	early_stop's rmse: 197.427
+[500]	early_stop's rmse: 196.862
+[600]	early_stop's rmse: 196.499
+[700]	early_stop's rmse: 196.244
+[800]	early_stop's rmse: 196.186
+[900]	early_stop's rmse: 196.177
+[1000]	early_stop's rmse: 196.135
+[1100]	early_stop's rmse: 196.166
+Early stopping, best iteration is:
+[1028]	early_stop's rmse: 196.088
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "seasonal", "airport": "LEMD", "iterations": 1028, "resources": {"wall_seconds": 10.218733770991093, "cpu_seconds": 137.06000000000006, "mean_active_cpu_cores": 13.41262068976545, "peak_process_rss_bytes_sampled": 8154984448, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_LFPG", "rows": 138815, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 242.055
+[200]	early_stop's rmse: 235.734
+[300]	early_stop's rmse: 232.818
+[400]	early_stop's rmse: 231.283
+[500]	early_stop's rmse: 230.975
+[600]	early_stop's rmse: 230.741
+[700]	early_stop's rmse: 230.57
+[800]	early_stop's rmse: 230.259
+[900]	early_stop's rmse: 230.387
+Early stopping, best iteration is:
+[797]	early_stop's rmse: 230.239
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "seasonal", "airport": "LFPG", "iterations": 797, "resources": {"wall_seconds": 9.627970400004415, "cpu_seconds": 122.63, "mean_active_cpu_cores": 12.736848463923796, "peak_process_rss_bytes_sampled": 8393494528, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_LIRF", "rows": 95802, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 385.292
+[200]	early_stop's rmse: 373.605
+[300]	early_stop's rmse: 369.276
+[400]	early_stop's rmse: 367.734
+[500]	early_stop's rmse: 366.971
+[600]	early_stop's rmse: 366.449
+[700]	early_stop's rmse: 366.213
+[800]	early_stop's rmse: 365.875
+[900]	early_stop's rmse: 365.965
+Early stopping, best iteration is:
+[816]	early_stop's rmse: 365.729
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "seasonal", "airport": "LIRF", "iterations": 816, "resources": {"wall_seconds": 6.907611525006359, "cpu_seconds": 89.86999999999989, "mean_active_cpu_cores": 13.010285780354035, "peak_process_rss_bytes_sampled": 8024760320, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_LSZH", "rows": 78190, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 168.155
+[200]	early_stop's rmse: 162.216
+[300]	early_stop's rmse: 160.104
+[400]	early_stop's rmse: 158.672
+[500]	early_stop's rmse: 158.024
+[600]	early_stop's rmse: 157.627
+[700]	early_stop's rmse: 157.368
+[800]	early_stop's rmse: 157.29
+[900]	early_stop's rmse: 157.384
+Early stopping, best iteration is:
+[829]	early_stop's rmse: 157.241
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "seasonal", "airport": "LSZH", "iterations": 829, "resources": {"wall_seconds": 6.961032228995464, "cpu_seconds": 93.06999999999994, "mean_active_cpu_cores": 13.370143527324355, "peak_process_rss_bytes_sampled": 7932096512, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_LTFM", "rows": 155566, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 264.664
+[200]	early_stop's rmse: 253.246
+[300]	early_stop's rmse: 249.396
+[400]	early_stop's rmse: 246.983
+[500]	early_stop's rmse: 245.79
+[600]	early_stop's rmse: 245.101
+[700]	early_stop's rmse: 244.774
+[800]	early_stop's rmse: 244.497
+[900]	early_stop's rmse: 244.406
+[1000]	early_stop's rmse: 244.378
+Early stopping, best iteration is:
+[956]	early_stop's rmse: 244.326
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "seasonal", "airport": "LTFM", "iterations": 956, "resources": {"wall_seconds": 12.259968676997232, "cpu_seconds": 161.25, "mean_active_cpu_cores": 13.152562151528603, "peak_process_rss_bytes_sampled": 8505372672, "rss_sample_interval_seconds": 0.05}}
+{"event": "surface_airports_fold_complete", "fold": "seasonal", "component_metrics": {"rows": 344419, "sse": 37028122333.02431, "rmse_seconds": 327.8855625233873, "mae_seconds": 152.58826047286502, "max_absolute_error_seconds": 83383.72479681516}, "resources": {"wall_seconds": 105.1559557569999, "cpu_seconds": 1345.73, "mean_active_cpu_cores": 12.797468201513817, "peak_process_rss_bytes_sampled": 8505372672, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_EDDF", "rows": 171815, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 165.578
+[200]	early_stop's rmse: 161.559
+[300]	early_stop's rmse: 159.767
+[400]	early_stop's rmse: 158.963
+[500]	early_stop's rmse: 158.291
+[600]	early_stop's rmse: 157.986
+[700]	early_stop's rmse: 157.799
+[800]	early_stop's rmse: 157.757
+[900]	early_stop's rmse: 157.692
+[1000]	early_stop's rmse: 157.723
+Early stopping, best iteration is:
+[936]	early_stop's rmse: 157.672
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "forward", "airport": "EDDF", "iterations": 936, "resources": {"wall_seconds": 12.307851831996231, "cpu_seconds": 158.70000000000002, "mean_active_cpu_cores": 12.894207873662726, "peak_process_rss_bytes_sampled": 9083604992, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_EDDM", "rows": 126499, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 173.09
+[200]	early_stop's rmse: 165.522
+[300]	early_stop's rmse: 161.966
+[400]	early_stop's rmse: 159.558
+[500]	early_stop's rmse: 158.38
+[600]	early_stop's rmse: 157.615
+[700]	early_stop's rmse: 157.144
+[800]	early_stop's rmse: 156.966
+[900]	early_stop's rmse: 156.892
+[1000]	early_stop's rmse: 156.737
+[1100]	early_stop's rmse: 156.615
+[1200]	early_stop's rmse: 156.635
+Early stopping, best iteration is:
+[1129]	early_stop's rmse: 156.606
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "forward", "airport": "EDDM", "iterations": 1129, "resources": {"wall_seconds": 10.975431326005491, "cpu_seconds": 147.91999999999996, "mean_active_cpu_cores": 13.477374656749408, "peak_process_rss_bytes_sampled": 8708628480, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_EGLL", "rows": 178324, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 227.356
+[200]	early_stop's rmse: 217.937
+[300]	early_stop's rmse: 215.795
+[400]	early_stop's rmse: 214.811
+[500]	early_stop's rmse: 214.521
+[600]	early_stop's rmse: 214.037
+[700]	early_stop's rmse: 213.948
+[800]	early_stop's rmse: 213.846
+[900]	early_stop's rmse: 213.758
+[1000]	early_stop's rmse: 213.602
+[1100]	early_stop's rmse: 213.639
+Early stopping, best iteration is:
+[1063]	early_stop's rmse: 213.549
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "forward", "airport": "EGLL", "iterations": 1063, "resources": {"wall_seconds": 13.61174691800261, "cpu_seconds": 180.20999999999998, "mean_active_cpu_cores": 13.239299928626945, "peak_process_rss_bytes_sampled": 9140604928, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_EHAM", "rows": 184317, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 169.623
+[200]	early_stop's rmse: 164.515
+[300]	early_stop's rmse: 162.623
+[400]	early_stop's rmse: 161.569
+[500]	early_stop's rmse: 161.036
+[600]	early_stop's rmse: 160.82
+[700]	early_stop's rmse: 160.789
+Early stopping, best iteration is:
+[612]	early_stop's rmse: 160.75
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "forward", "airport": "EHAM", "iterations": 612, "resources": {"wall_seconds": 10.598616297997069, "cpu_seconds": 129.53999999999996, "mean_active_cpu_cores": 12.22235019721211, "peak_process_rss_bytes_sampled": 9181233152, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_LEBL", "rows": 134726, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 216.052
+[200]	early_stop's rmse: 208.697
+[300]	early_stop's rmse: 205.732
+[400]	early_stop's rmse: 204.586
+[500]	early_stop's rmse: 203.813
+[600]	early_stop's rmse: 203.536
+[700]	early_stop's rmse: 203.299
+[800]	early_stop's rmse: 203.405
+Early stopping, best iteration is:
+[740]	early_stop's rmse: 203.249
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "forward", "airport": "LEBL", "iterations": 740, "resources": {"wall_seconds": 8.671001631009858, "cpu_seconds": 108.42999999999995, "mean_active_cpu_cores": 12.504899043292163, "peak_process_rss_bytes_sampled": 8901922816, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_LEMD", "rows": 157191, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 201.226
+[200]	early_stop's rmse: 197.901
+[300]	early_stop's rmse: 196.184
+[400]	early_stop's rmse: 195.005
+[500]	early_stop's rmse: 194.443
+[600]	early_stop's rmse: 194.01
+[700]	early_stop's rmse: 193.883
+[800]	early_stop's rmse: 193.752
+[900]	early_stop's rmse: 193.775
+[1000]	early_stop's rmse: 193.67
+[1100]	early_stop's rmse: 193.745
+Early stopping, best iteration is:
+[1001]	early_stop's rmse: 193.67
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "forward", "airport": "LEMD", "iterations": 1001, "resources": {"wall_seconds": 12.429847919003805, "cpu_seconds": 163.6099999999999, "mean_active_cpu_cores": 13.162671101539308, "peak_process_rss_bytes_sampled": 9044783104, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_LFPG", "rows": 177547, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 237.896
+[200]	early_stop's rmse: 230.078
+[300]	early_stop's rmse: 227.534
+[400]	early_stop's rmse: 226.282
+[500]	early_stop's rmse: 225.577
+[600]	early_stop's rmse: 224.995
+[700]	early_stop's rmse: 224.668
+[800]	early_stop's rmse: 224.541
+[900]	early_stop's rmse: 224.401
+[1000]	early_stop's rmse: 224.241
+[1100]	early_stop's rmse: 224.122
+[1200]	early_stop's rmse: 224.06
+[1300]	early_stop's rmse: 223.944
+[1400]	early_stop's rmse: 223.932
+[1500]	early_stop's rmse: 223.796
+[1600]	early_stop's rmse: 223.805
+[1700]	early_stop's rmse: 223.792
+Early stopping, best iteration is:
+[1657]	early_stop's rmse: 223.778
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "forward", "airport": "LFPG", "iterations": 1657, "resources": {"wall_seconds": 18.692217841002275, "cpu_seconds": 259.9200000000001, "mean_active_cpu_cores": 13.905252025784394, "peak_process_rss_bytes_sampled": 9153331200, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_LIRF", "rows": 121933, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 380.702
+[200]	early_stop's rmse: 369.816
+[300]	early_stop's rmse: 367.037
+[400]	early_stop's rmse: 365.445
+[500]	early_stop's rmse: 364.812
+[600]	early_stop's rmse: 364.268
+[700]	early_stop's rmse: 364.062
+[800]	early_stop's rmse: 364.039
+[900]	early_stop's rmse: 363.73
+[1000]	early_stop's rmse: 363.866
+Early stopping, best iteration is:
+[945]	early_stop's rmse: 363.699
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "forward", "airport": "LIRF", "iterations": 945, "resources": {"wall_seconds": 8.79036570500466, "cpu_seconds": 114.74000000000001, "mean_active_cpu_cores": 13.052926789459345, "peak_process_rss_bytes_sampled": 8709017600, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_LSZH", "rows": 100012, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 164.683
+[200]	early_stop's rmse: 160.197
+[300]	early_stop's rmse: 158.514
+[400]	early_stop's rmse: 157.926
+[500]	early_stop's rmse: 157.462
+[600]	early_stop's rmse: 157.083
+[700]	early_stop's rmse: 156.959
+Early stopping, best iteration is:
+[666]	early_stop's rmse: 156.914
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "forward", "airport": "LSZH", "iterations": 666, "resources": {"wall_seconds": 6.730577764988993, "cpu_seconds": 86.16999999999985, "mean_active_cpu_cores": 12.802764191840634, "peak_process_rss_bytes_sampled": 8592736256, "rss_sample_interval_seconds": 0.05}}
+{"event": "timeline_training", "model": "lightgbm", "component": "airport_LTFM", "rows": 201448, "predictors": 276, "maximum_iterations": 1800}
+Training until validation scores don't improve for 120 rounds
+[100]	early_stop's rmse: 259.05
+[200]	early_stop's rmse: 247.55
+[300]	early_stop's rmse: 243.755
+[400]	early_stop's rmse: 241.685
+[500]	early_stop's rmse: 240.534
+[600]	early_stop's rmse: 239.587
+[700]	early_stop's rmse: 239.032
+[800]	early_stop's rmse: 238.562
+[900]	early_stop's rmse: 238.4
+[1000]	early_stop's rmse: 238.268
+[1100]	early_stop's rmse: 238.203
+Early stopping, best iteration is:
+[1048]	early_stop's rmse: 238.166
+Evaluated only: rmse
+{"event": "surface_airport_complete", "fold": "forward", "airport": "LTFM", "iterations": 1048, "resources": {"wall_seconds": 14.659926278996863, "cpu_seconds": 191.97000000000003, "mean_active_cpu_cores": 13.094881675839913, "peak_process_rss_bytes_sampled": 9303793664, "rss_sample_interval_seconds": 0.05}}
+{"event": "surface_airports_fold_complete", "fold": "forward", "component_metrics": {"rows": 162332, "sse": 8166118199.734527, "rmse_seconds": 224.2878568943397, "mae_seconds": 136.08658936471707, "max_absolute_error_seconds": 24134.241647128438}, "resources": {"wall_seconds": 122.11699723399943, "cpu_seconds": 1569.2599999999998, "mean_active_cpu_cores": 12.850463371556694, "peak_process_rss_bytes_sampled": 9303793664, "rss_sample_interval_seconds": 0.05}}
+{'selected': 'full_timeline_v6_100', 'candidates': {'airport_only_v6_50': {'seasonal': 324.02545689343486, 'forward': 222.2590354409071}, 'airport_only_v6_100': {'seasonal': 323.59481801431656, 'forward': 221.70253412627594}, 'full_timeline_v6_50': {'seasonal': 323.1305120990251, 'forward': 221.42625903220988}, 'full_timeline_v6_100': {'seasonal': 322.8193230817628, 'forward': 221.13815634167557}}, 'refit_iterations': {'airports': {'EDDF': 902, 'EDDM': 1142, 'EGLL': 1172, 'EHAM': 744, 'LEBL': 773, 'LEMD': 1014, 'LFPG': 1227, 'LIRF': 880, 'LSZH': 748, 'LTFM': 1002}, 'globals': {'lgb_combined': 1612, 'cat_combined': 5971}}}
+Traceback (most recent call last):
+  File "/home/azureuser/prc-flight-2026/tools/verify_surface_airports.py", line 111, in <module>
+    main()
+  File "/home/azureuser/prc-flight-2026/tools/verify_surface_airports.py", line 105, in main
+    report = verify(ROOT / "data/timeline/ce42240e5e43eee1713f", ROOT / args.runs, ROOT / args.timeline_runs, ROOT / args.feature_report)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/prc-flight-2026/tools/verify_surface_airports.py", line 41, in verify
+    same_metrics(saved[key], rebuilt[key])
+  File "/home/azureuser/prc-flight-2026/tools/verify_phase5.py", line 35, in same_metrics
+    same_metrics(observed[key], expected[key], location + "/" + str(key))
+  File "/home/azureuser/prc-flight-2026/tools/verify_phase5.py", line 35, in same_metrics
+    same_metrics(observed[key], expected[key], location + "/" + str(key))
+  File "/home/azureuser/prc-flight-2026/tools/verify_phase5.py", line 35, in same_metrics
+    same_metrics(observed[key], expected[key], location + "/" + str(key))
+  [Previous line repeated 2 more times]
+  File "/home/azureuser/prc-flight-2026/tools/verify_phase5.py", line 33, in same_metrics
+    raise ValueError(f"Metric keys differ at {location}.")
+ValueError: Metric keys differ at metrics/airport_only_v6_50/folds/seasonal/metrics/ranking_month_weights.

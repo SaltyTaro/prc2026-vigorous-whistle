@@ -1,0 +1,80 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "floor": ["floor"],
+    "floor_hedge": ["hedge_long_schedule", "floor"],
+    "floor_route": ["route_negative_proxy", "floor"],
+    "floor_route_hedge": ["route_negative_proxy", "hedge_long_schedule", "floor"]
+  },
+  "declared_at_utc": "2026-09-15T04:12:00+00:00",
+  "development_folds": ["seasonal", "forward"],
+  "development_native_fits": 0,
+  "execution": {
+    "automatic_submission": false,
+    "azure_only": true,
+    "host": "local-windows",
+    "new_workers": 0
+  },
+  "experiment_id": "prc2026-extreme-row-postprocess-v1",
+  "fallback_recipe": "cat_weather_v4_100",
+  "incumbent": {
+    "official_rmse_seconds": 275.057,
+    "recipe": "full_timeline_v6_100",
+    "submission": "vigorous-whistle_v7.parquet",
+    "submission_sha256": "534e1031a068a743515eeb44b4b8f13676c5626d6c18c9416da092d58b0b924e"
+  },
+  "parents": {
+    "fallback_ranking_predictions": {
+      "path": "runs/azure_arcw0_weather/20260914T024435836344Z_refit_cat_weather_v4_100/ranking_predictions.parquet",
+      "sha256": "0b745c873b4ee98a136fc518db5f8999010ced5fe23e22fd2f10f87849b669a5"
+    },
+    "fallback_refit_run": {
+      "path": "runs/azure_arcw0_weather/20260914T024435836344Z_refit_cat_weather_v4_100/run.json",
+      "sha256": "507b653bd67b671309f5b7aa257f1b6231a91b6a1669088718af30d7c76663b3"
+    },
+    "fallback_selection": {
+      "path": "runs/azure_arcw0_weather/selection.json",
+      "sha256": "1228b7b16d3bea90229da139fb51ee714cf323472f3796604d40b1a7178351f3"
+    },
+    "incumbent_ranking_predictions": {
+      "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/ranking_predictions.parquet",
+      "sha256": "cf0c62b5288de74a8262dbb07705e75792bc92059b1e0bb8d66ac0681ec875be"
+    },
+    "incumbent_refit_run": {
+      "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/run.json",
+      "sha256": "0c1a0fcd1c2aa6034e28eca1b56dadb567aff5269cac823067c4c097a84498e0"
+    },
+    "incumbent_selection": {
+      "path": "runs/azure_arcw0_surface_airports/selection.json",
+      "sha256": "3a6edb7beb178744acca53c92e269f2ee92fa1524115adbda74bf876cdd4d042"
+    },
+    "timeline_selection": {
+      "path": "runs/azure_arcw0_timeline/selection.json",
+      "sha256": "4a51746cab6da283662dbff4650b6b29492d6e165e34fce34001232c1e396780"
+    }
+  },
+  "prediction_postprocess": "declared-extreme-row-rules-v1",
+  "prior_evidence": "Declared after a same-day diagnostic review of v7 residuals on both complete development folds (docs/postprocess/README.md). That review already scored two exploratory variants on the folds: a floor at 100 seconds (seasonal 318.853, forward 220.876) and replacing negative-proxy rows with the no-clock recipe (seasonal 321.120, forward 220.782). It also counted the label modes of the LIRF long-schedule population on the folds (seasonal: 5 one-day rows; forward: 2) without scoring a hedge. The declared candidates below fix the floor at the fitting-period label minimum instead of 100 and fix the hedge weights from fitting rows only; none of them has been scored before this declaration.",
+  "refit_months": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11"],
+  "rules": {
+    "floor": {
+      "description": "Raise every prediction to at least the minimum departure label observed in the fitting rows of the fold (refit months for the export). Every fitting label is at or above this value, so for any evaluation label in the observed range the rule cannot increase squared error.",
+      "parameter": "floor_seconds = min(TAXITIME_SEC_mvt over fitting departures)"
+    },
+    "hedge_long_schedule": {
+      "description": "For LIRF departures with no Network Manager record (AOBT_3_flt and LOBT_flt both missing) and missing AIRCRAFT_TYPE_mvt whose schedule interval s = MVT_TIME_UTC_mvt - SCHED_TIME_UTC_mvt exceeds 43200 seconds, replace the prediction by (1 - p) * s + p * (86400 + m). Fitting rows of this population with s > 43200 are never ordinary taxi-outs: the label equals s (block time filled with the schedule) or 86400 plus an ordinary taxi-out (block date attributed to the scheduled date). p is the fitting-row share of the second mode inside the s > 43200 group and m is the fitting-row median of label minus 86400 over all one-day rows of the population.",
+      "one_day_label_interval_seconds": [82800, 90000],
+      "parameters": "p = one_day_rows / group_rows; m = median(label - 86400)",
+      "schedule_interval_threshold_seconds": 43200
+    },
+    "route_negative_proxy": {
+      "description": "Where a Network Manager clock is available (AOBT_3_flt, else LOBT_flt) but the implied taxi interval MVT_TIME_UTC_mvt minus that clock is negative, replace the incumbent prediction by the no-clock fallback recipe already used for missing-clock rows (cat_weather_v4_100, the v5 pipeline). Rows with a negative implied interval carry a clock that postdates takeoff.",
+      "threshold_seconds": 0
+    }
+  },
+  "rule_order": ["route_negative_proxy", "hedge_long_schedule", "floor"],
+  "seed": 20260913,
+  "selection": "Score all four fixed candidates on both complete original folds against the reconstructed v7 development predictions. The floor is mandatory in every candidate. Adopt the candidate with the lowest equally weighted mean relative RMSE among candidates whose complete RMSE is not higher than v7 on EITHER fold; otherwise adopt 'floor' alone. Report paired-day bootstrap intervals against v7 for every candidate. No parameter is tuned on scoring rows, no airport weights, no threshold search, no December labels.",
+  "target_filter": "none",
+  "threads": 8
+}

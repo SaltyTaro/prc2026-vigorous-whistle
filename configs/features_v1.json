@@ -1,0 +1,13 @@
+{
+  "feature_policy": "airport-timing-past-traffic-v1",
+  "parent_bundle_id": "58d621b245de3f5e12dd3b50b0a90a87ea8ac3dc96aa2c274ffa7ea0af96b2e0",
+  "training_months": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11"],
+  "ranking_months": ["2026-01", "2026-07"],
+  "windows": "[query_time - window, query_time); exclude all equal-time events",
+  "last_event_max_gap_seconds": 21600,
+  "arrival_statistics_available_at": "arrival_block_time_utc, strictly before query",
+  "arrival_statistic_eligibility": "finite supplied arrival taxi-in; in-block timestamp at or after landing",
+  "departure_labels_used_in_features": false,
+  "audit_features_materialized": false,
+  "external_data": []
+}

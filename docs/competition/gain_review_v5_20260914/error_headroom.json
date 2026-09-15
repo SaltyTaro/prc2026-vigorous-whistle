@@ -1,0 +1,392 @@
+{
+  "audit_used": false,
+  "code_sha256": "191afc87ad3e389aab58c38459bedf5dc438f807aba8a168a09fc09b47c0d432",
+  "created_at_utc": "2026-09-14T03:28:28.535897+00:00",
+  "dated_official_gap": {
+    "our_rmse_seconds": 322.9266,
+    "required_mse_reduction_fraction": 0.3696491706431366,
+    "required_rmse_reduction_fraction": 0.20605363571783808,
+    "snapshot_at_utc": "2026-09-14T03:13:54.029508+00:00",
+    "third_place_rmse_seconds": 256.3864
+  },
+  "field_use": {
+    "clock_model_development_gain": "Not yet measured",
+    "coverage_source": "docs/competition/DATA_SCHEMA.md",
+    "finding": "Fields are documented as supplied NM off-block times; rationale is post-operations analysis. No field-specific prohibition was found in these public pages.",
+    "nm_offblock_ranking_present_rows": 339551,
+    "prior_working_policy": "Keep the existing exclusion for the next campaign until reviewed; it is a project choice, not a verified organizer ban. Other experiments can proceed.",
+    "ranking_rows": 344841
+  },
+  "folds": {
+    "forward": {
+      "by_airport": {
+        "EDDF": {
+          "mae_seconds": 135.56719651653344,
+          "max_absolute_error_seconds": 5879.134869389557,
+          "rmse_seconds": 217.93365642319006,
+          "row_fraction": 0.11163541384323485,
+          "rows": 18122,
+          "sse": 860705814.4251006,
+          "sse_fraction": 0.09155263555865771
+        },
+        "EDDM": {
+          "mae_seconds": 130.82468041653485,
+          "max_absolute_error_seconds": 2883.7696482673873,
+          "rmse_seconds": 194.8958295120773,
+          "row_fraction": 0.07738461917551684,
+          "rows": 12562,
+          "sse": 477159836.3454033,
+          "sse_fraction": 0.050755135922183316
+        },
+        "EGLL": {
+          "mae_seconds": 168.03839050601258,
+          "max_absolute_error_seconds": 2696.5784981631723,
+          "rmse_seconds": 229.68890294203854,
+          "row_fraction": 0.11964985338688613,
+          "rows": 19423,
+          "sse": 1024699058.2326121,
+          "sse_fraction": 0.10899647459490225
+        },
+        "EHAM": {
+          "mae_seconds": 123.44595254473172,
+          "max_absolute_error_seconds": 2664.876586381982,
+          "rmse_seconds": 189.54265127908565,
+          "row_fraction": 0.11847325234704187,
+          "rows": 19232,
+          "sse": 690936845.0879022,
+          "sse_fraction": 0.07349443690540579
+        },
+        "LEBL": {
+          "mae_seconds": 116.4552493360938,
+          "max_absolute_error_seconds": 2472.0294208277237,
+          "rmse_seconds": 169.783576515496,
+          "row_fraction": 0.08212798462410369,
+          "rows": 13332,
+          "sse": 384314402.77477133,
+          "sse_fraction": 0.040879236398191736
+        },
+        "LEMD": {
+          "mae_seconds": 129.19229494966453,
+          "max_absolute_error_seconds": 2159.485428102168,
+          "rmse_seconds": 180.28548413751528,
+          "row_fraction": 0.10730478279082374,
+          "rows": 17419,
+          "sse": 566167245.0181732,
+          "sse_fraction": 0.06022278760022102
+        },
+        "LFPG": {
+          "mae_seconds": 184.57260810549164,
+          "max_absolute_error_seconds": 5492.6904165322885,
+          "rmse_seconds": 291.6782980667517,
+          "row_fraction": 0.11486336643422122,
+          "rows": 18646,
+          "sse": 1586331376.433877,
+          "sse_fraction": 0.16873688541179582
+        },
+        "LIRF": {
+          "mae_seconds": 199.48492774620732,
+          "max_absolute_error_seconds": 24134.241647128438,
+          "rmse_seconds": 461.9015399496452,
+          "row_fraction": 0.06978291402804129,
+          "rows": 11328,
+          "sse": 2416863153.381767,
+          "sse_fraction": 0.25707993110805727
+        },
+        "LSZH": {
+          "mae_seconds": 135.8246776971821,
+          "max_absolute_error_seconds": 2319.71271934019,
+          "rmse_seconds": 199.38871985043335,
+          "row_fraction": 0.06208264544267304,
+          "rows": 10078,
+          "sse": 400659573.2410263,
+          "sse_fraction": 0.04261785999031968
+        },
+        "LTFM": {
+          "mae_seconds": 148.90655864765213,
+          "max_absolute_error_seconds": 4385.272687465973,
+          "rmse_seconds": 211.581690322442,
+          "row_fraction": 0.1366951679274573,
+          "rows": 22190,
+          "sse": 993375551.1725818,
+          "sse_fraction": 0.10566461651026564
+        }
+      },
+      "by_nm_missing": {
+        "False": {
+          "mae_seconds": 145.49040741771762,
+          "max_absolute_error_seconds": 4455.942942460963,
+          "rmse_seconds": 217.71069391642095,
+          "row_fraction": 0.9916467486385925,
+          "rows": 160976,
+          "sse": 7629931794.8268,
+          "sse_fraction": 0.8115901545474931
+        },
+        "True": {
+          "mae_seconds": 365.03870551166796,
+          "max_absolute_error_seconds": 24134.241647128438,
+          "rmse_seconds": 1142.9149005832548,
+          "row_fraction": 0.008353251361407486,
+          "rows": 1356,
+          "sse": 1771281061.2864134,
+          "sse_fraction": 0.1884098454525071
+        }
+      },
+      "by_target_band": {
+        "0_to_1h": {
+          "mae_seconds": 144.8266199888421,
+          "max_absolute_error_seconds": 6795.01585305957,
+          "rmse_seconds": 212.25683506113492,
+          "row_fraction": 0.9985215484316093,
+          "rows": 162092,
+          "sse": 7302725045.578289,
+          "sse_fraction": 0.7767854166635143
+        },
+        "1h_to_3h": {
+          "mae_seconds": 1720.7132739278572,
+          "max_absolute_error_seconds": 5879.134869389557,
+          "rmse_seconds": 2017.6005027893373,
+          "row_fraction": 0.001330606411551635,
+          "rows": 216,
+          "sse": 879273746.3928499,
+          "sse_fraction": 0.09352769263394513
+        },
+        "negative": {
+          "mae_seconds": 432.3003064125396,
+          "max_absolute_error_seconds": 1186.7047854475309,
+          "rmse_seconds": 532.8611253160859,
+          "row_fraction": 0.0001108838676293029,
+          "rows": 18,
+          "sse": 5110937.619716257,
+          "sse_fraction": 0.0005436466228283332
+        },
+        "over_3h": {
+          "mae_seconds": 10127.3915388498,
+          "max_absolute_error_seconds": 24134.241647128438,
+          "rmse_seconds": 14224.996347523604,
+          "row_fraction": 3.696128920976764e-05,
+          "rows": 6,
+          "sse": 1214103126.5223594,
+          "sse_fraction": 0.12914324407971248
+        }
+      },
+      "evaluation_ids_sha256": "7dc46218c228a5675e8fae283c4c4d51577a0bcab8e124a2d7be8eca131cc70f",
+      "hypothetical_halving_lirf_lfpg_squared_error": {
+        "achievability_established": false,
+        "all_rows_rmse_seconds": 213.50227629842271,
+        "rmse_reduction_fraction": 0.11281817436329689
+      },
+      "lirf_lfpg_combined": {
+        "row_fraction": 0.18464628046226253,
+        "rows": 29974,
+        "sse_fraction": 0.4258168165198531,
+        "two_distinct_airport_maximum_errors_sse_fraction": 0.06516513106024252
+      },
+      "oracle_perfect_over_3h_only": {
+        "all_rows_rmse_seconds": 224.57594502658785,
+        "maximum_rmse_reduction_fraction": 0.06680293832423179
+      },
+      "overall": {
+        "mae_seconds": 147.32434953766563,
+        "max_absolute_error_seconds": 24134.241647128438,
+        "rmse_seconds": 240.6522204681083,
+        "rows": 162332,
+        "sse": 9401212856.113213
+      }
+    },
+    "seasonal": {
+      "by_airport": {
+        "EDDF": {
+          "mae_seconds": 139.16356602010384,
+          "max_absolute_error_seconds": 4296.938010063678,
+          "rmse_seconds": 215.63642947074337,
+          "row_fraction": 0.10693370574794074,
+          "rows": 36830,
+          "sse": 1712560737.599431,
+          "sse_fraction": 0.03728773359663448
+        },
+        "EDDM": {
+          "mae_seconds": 131.37143426610464,
+          "max_absolute_error_seconds": 5893.302851230856,
+          "rmse_seconds": 201.72278668556623,
+          "row_fraction": 0.07865710079873642,
+          "rows": 27091,
+          "sse": 1102389211.5639477,
+          "sse_fraction": 0.024002415995020336
+        },
+        "EGLL": {
+          "mae_seconds": 195.29599722476934,
+          "max_absolute_error_seconds": 9464.870646144826,
+          "rmse_seconds": 302.5273238465781,
+          "row_fraction": 0.11674733391595701,
+          "rows": 40210,
+          "sse": 3680131051.1023855,
+          "sse_fraction": 0.08012781282523185
+        },
+        "EHAM": {
+          "mae_seconds": 129.94801817401805,
+          "max_absolute_error_seconds": 10883.629678190422,
+          "rmse_seconds": 215.82563703761227,
+          "row_fraction": 0.11889297628760317,
+          "rows": 40949,
+          "sse": 1907433313.7246,
+          "sse_fraction": 0.041530711112299556
+        },
+        "LEBL": {
+          "mae_seconds": 146.5806988083528,
+          "max_absolute_error_seconds": 2604.3658984680387,
+          "rmse_seconds": 226.93136798644008,
+          "row_fraction": 0.08415912014145562,
+          "rows": 28986,
+          "sse": 1492716557.6688485,
+          "sse_fraction": 0.032501047183682547
+        },
+        "LEMD": {
+          "mae_seconds": 132.07089929616762,
+          "max_absolute_error_seconds": 2670.7524471301367,
+          "rmse_seconds": 186.7675689431744,
+          "row_fraction": 0.10257273843777492,
+          "rows": 35328,
+          "sse": 1232315705.2503529,
+          "sse_fraction": 0.026831316820175574
+        },
+        "LFPG": {
+          "mae_seconds": 189.88137286429793,
+          "max_absolute_error_seconds": 83383.72479681516,
+          "rmse_seconds": 582.3296354110969,
+          "row_fraction": 0.1150110766246926,
+          "rows": 39612,
+          "sse": 13432738343.06097,
+          "sse_fraction": 0.29247217795700164
+        },
+        "LIRF": {
+          "mae_seconds": 274.5453343877354,
+          "max_absolute_error_seconds": 83459.67338146709,
+          "rmse_seconds": 800.7524749033256,
+          "row_fraction": 0.07702246391749584,
+          "rows": 26528,
+          "sse": 17009873667.420517,
+          "sse_fraction": 0.370357455883435
+        },
+        "LSZH": {
+          "mae_seconds": 140.57673998589786,
+          "max_absolute_error_seconds": 8197.7985965629,
+          "rmse_seconds": 228.83710242306358,
+          "row_fraction": 0.06488027663979049,
+          "rows": 22346,
+          "sse": 1170180008.926544,
+          "sse_fraction": 0.025478430910499013
+        },
+        "LTFM": {
+          "mae_seconds": 174.01853399369855,
+          "max_absolute_error_seconds": 6038.492622598113,
+          "rmse_seconds": 261.725058203498,
+          "row_fraction": 0.1351232074885532,
+          "rows": 46539,
+          "sse": 3187921783.4981093,
+          "sse_fraction": 0.0694108977160197
+        }
+      },
+      "by_nm_missing": {
+        "False": {
+          "mae_seconds": 160.1700560695143,
+          "max_absolute_error_seconds": 83459.67338146709,
+          "rmse_seconds": 286.8147464037074,
+          "row_fraction": 0.9843998153411978,
+          "rows": 339046,
+          "sse": 27890838961.959896,
+          "sse_fraction": 0.6072696577512262
+        },
+        "True": {
+          "mae_seconds": 467.6603574324805,
+          "max_absolute_error_seconds": 83383.72479681516,
+          "rmse_seconds": 1832.2250047055338,
+          "row_fraction": 0.015600184658802215,
+          "rows": 5373,
+          "sse": 18037421417.855804,
+          "sse_fraction": 0.39273034224877335
+        }
+      },
+      "by_target_band": {
+        "0_to_1h": {
+          "mae_seconds": 159.48729950961848,
+          "max_absolute_error_seconds": 17760.982185489156,
+          "rmse_seconds": 257.3423612259941,
+          "row_fraction": 0.9969107395352753,
+          "rows": 343355,
+          "sse": 22738716079.572815,
+          "sse_fraction": 0.49509203900886023
+        },
+        "1h_to_3h": {
+          "mae_seconds": 1717.6442959852639,
+          "max_absolute_error_seconds": 8197.7985965629,
+          "rmse_seconds": 2080.676668243654,
+          "row_fraction": 0.002674068503770117,
+          "rows": 921,
+          "sse": 3987207381.349405,
+          "sse_fraction": 0.08681381241911089
+        },
+        "negative": {
+          "mae_seconds": 453.4147096357818,
+          "max_absolute_error_seconds": 1594.4044965172282,
+          "rmse_seconds": 627.7149691965533,
+          "row_fraction": 0.00023227522291162798,
+          "rows": 80,
+          "sse": 31522086.604274385,
+          "sse_fraction": 0.0006863331278736506
+        },
+        "over_3h": {
+          "mae_seconds": 7294.5583083501215,
+          "max_absolute_error_seconds": 83459.67338146709,
+          "rmse_seconds": 17874.63654325531,
+          "row_fraction": 0.000174206417183721,
+          "rows": 60,
+          "sse": 19170157893.208687,
+          "sse_fraction": 0.41739351185252976
+        },
+        "zero": {
+          "mae_seconds": 365.7118766330709,
+          "max_absolute_error_seconds": 729.092815578766,
+          "rmse_seconds": 467.95266160811474,
+          "row_fraction": 8.710320859186049e-06,
+          "rows": 3,
+          "sse": 656939.0805183562,
+          "sse_fraction": 1.4303591624973975e-05
+        }
+      },
+      "evaluation_ids_sha256": "19afdfc7fedf88eafca9662868862723b1d6c003b67142ad63f0839e8b37ba79",
+      "hypothetical_halving_lirf_lfpg_squared_error": {
+        "achievability_established": false,
+        "all_rows_rmse_seconds": 298.5896990916547,
+        "rmse_reduction_fraction": 0.18232941652534562
+      },
+      "lirf_lfpg_combined": {
+        "row_fraction": 0.19203354054218844,
+        "rows": 66140,
+        "sse_fraction": 0.6628296338404367,
+        "two_distinct_airport_maximum_errors_sse_fraction": 0.3030457179703879
+      },
+      "oracle_perfect_over_3h_only": {
+        "all_rows_rmse_seconds": 278.73025086472126,
+        "maximum_rmse_reduction_fraction": 0.23671336435944967
+      },
+      "overall": {
+        "mae_seconds": 164.9669615515673,
+        "max_absolute_error_seconds": 83459.67338146709,
+        "rmse_seconds": 365.17113997523455,
+        "rows": 344419,
+        "sse": 45928260379.81572
+      }
+    }
+  },
+  "input_sha256": {
+    "docs/competition/DATA_SCHEMA.md": "01e3f6051937567f17a7559254ef8c8342d32f00797ac383b83ab8f92f113450",
+    "docs/competition/field_use_review_20260914.json": "7b36f6fafa2b0a64b559695906d719cd94aa8ce9da9365dde04239559f7ff6b3",
+    "docs/phase5r/development_results.json": "4c3f466e5566df318df07a68764746549525b5ad47e6206ec602d3331acdf910",
+    "docs/weather/development_results.json": "1228b7b16d3bea90229da139fb51ee714cf323472f3796604d40b1a7178351f3",
+    "docs/weather/leaderboard_snapshot.json": "20ce51d81923a1936c0d1bfd8a996df1b78e690aa66bba609c44b69b60afbea1"
+  },
+  "interpretation": "Descriptive analysis of saved complete development metrics. Slices from different grouping families overlap and cannot be added. Error concentration does not establish predictability. Oracle values keep every row in the denominator and are not achievable forecasts.",
+  "new_labels_read": false,
+  "new_model_trained_or_scored": false,
+  "selected_candidate": "cat_weather_v4_100"
+}

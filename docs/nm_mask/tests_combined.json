@@ -1,0 +1,186 @@
+{
+  "campaign_test_identities": [
+    [
+      "tests.test_nm_mask_features",
+      "test_augmented_cohorts_have_equal_weight_and_preserve_control_total"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_blend_preserves_every_ineligible_value_exactly[0.5]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_blend_preserves_every_ineligible_value_exactly[1.0]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_declaration_guards[audit_used-True]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_declaration_guards[automatic_submission-True]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_declaration_guards[candidate_weights-value2]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_declaration_guards[minimum_improvement_fraction_each_fold-0.0]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_declaration_guards[native_fit_count-9]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_declaration_guards[target_filter-normal_only]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_invalid_feature_population_rejected[december]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_invalid_feature_population_rejected[duplicate]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_invalid_feature_population_rejected[missing_id]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_invalid_feature_population_rejected[missing_input]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_invalid_feature_population_rejected[missing_time]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_invalid_weighting_rejected[natural0-natural]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_invalid_weighting_rejected[natural1-augmented]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_invalid_weighting_rejected[natural2-augmented]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_invalid_weighting_rejected[natural3-unknown]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_nm_context_cannot_change_ground_features"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_nm_fields_and_outcomes_cannot_change_row_features"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_real_missing_record_offset_is_retained"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_routing_distinguishes_origin_and_clock_missingness"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_truth_population_guard[december]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_truth_population_guard[nonfinite]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_truth_population_guard[unmatched_id]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_undeclared_weight_rejected[0.0]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_undeclared_weight_rejected[0.75]"
+    ],
+    [
+      "tests.test_nm_mask_features",
+      "test_undeclared_weight_rejected[1.1]"
+    ],
+    [
+      "tests.test_nm_mask_native",
+      "test_invalid_native_weights_fail_before_fit[-1.0]"
+    ],
+    [
+      "tests.test_nm_mask_native",
+      "test_invalid_native_weights_fail_before_fit[0.0]"
+    ],
+    [
+      "tests.test_nm_mask_native",
+      "test_invalid_native_weights_fail_before_fit[inf]"
+    ],
+    [
+      "tests.test_nm_mask_native",
+      "test_invalid_native_weights_fail_before_fit[nan]"
+    ],
+    [
+      "tests.test_nm_mask_native",
+      "test_weighted_native_fit_uses_fit_only_vocab_and_reloads_exactly[catboost]"
+    ],
+    [
+      "tests.test_nm_mask_native",
+      "test_weighted_native_fit_uses_fit_only_vocab_and_reloads_exactly[lightgbm]"
+    ]
+  ],
+  "campaign_tests_local": 34,
+  "campaign_tests_per_worker": 34,
+  "created_at_utc": "2026-09-15T03:24:08.667219+00:00",
+  "passed": true,
+  "report_sha256": {
+    "docs/nm_mask/tests_local.xml": "cd23e85c94f143d9788b7b82219ae7354d95c7c02a3c4003b15c218e690848e4",
+    "docs/nm_mask/tests_verifier_azure.xml": "951d08651a66d449b13c2a01f91d8c6f4c0e2470f59558497ce3ab1bb50fc733",
+    "docs/nm_mask/tests_verifier_local.xml": "b512753bfee098ace22787fa6709e7d6974203c9524b231aa593ad8f67e4ef99",
+    "docs/nm_mask/worker_snapshots/arcw0/docs/nm_mask/tests_seasonal_lgb_natural.xml": "a371c40c1966cede8f4fd25c238eaab0b7557494ee7dab52b6d07d94753699b5",
+    "docs/nm_mask/worker_snapshots/arcw1/docs/nm_mask/tests_resumed_forward_lgb_natural.xml": "3b75e6dfd3c07c4ebe2ed36f844150de18cc5a015debe9d6b6588170f2223cc9",
+    "docs/nm_mask/worker_snapshots/arcw2/docs/nm_mask/tests_resumed_seasonal_cat_natural.xml": "958e4cc440eac47cd52b1b1f57d5f8601b68edbb0176342a8751c38d1daeef9f",
+    "docs/nm_mask/worker_snapshots/arcw3/docs/nm_mask/tests_resumed_forward_cat_natural.xml": "cb60f1c81993fcdfce9aed89cb1b9961e3f9a83f96e3b1720cad831538e046f9",
+    "docs/nm_mask/worker_snapshots/arcw4/docs/nm_mask/tests_resumed_seasonal_lgb_augmented.xml": "cfba98297733d3701e0e72d4e74cda4aaa7f225b031a2a8fff47308fcaf1ed06",
+    "docs/nm_mask/worker_snapshots/arcw5/docs/nm_mask/tests_resumed_forward_lgb_augmented.xml": "ae48e9681118a9809c9e657a5b638c8f94b3b262cb5062eb74826fb31b7bfd08",
+    "docs/nm_mask/worker_snapshots/arcw6/docs/nm_mask/tests_resumed_seasonal_cat_augmented.xml": "74efe8e0c877c119d7f3ba521cc6450820f2ee6bc4cb85b33a7d5930071cdd0f",
+    "docs/nm_mask/worker_snapshots/arcw7/docs/nm_mask/tests_resumed_forward_cat_augmented.xml": "a9075a41e125fe35259dba78d0f9928aa17516730f7b6ced265ff46d777c87af"
+  },
+  "verifier_regression_identities": [
+    [
+      "tests.test_nm_mask_verification",
+      "test_changed_metric_is_rejected"
+    ],
+    [
+      "tests.test_nm_mask_verification",
+      "test_colliding_month_keys_are_rejected"
+    ],
+    [
+      "tests.test_nm_mask_verification",
+      "test_missing_metric_is_rejected"
+    ],
+    [
+      "tests.test_nm_mask_verification",
+      "test_saved_json_month_keys_compare"
+    ]
+  ],
+  "verifier_regression_tests_windows_and_arcw4": 4,
+  "workers": [
+    "arcw0",
+    "arcw2",
+    "arcw4",
+    "arcw6",
+    "arcw1",
+    "arcw3",
+    "arcw5",
+    "arcw7"
+  ]
+}

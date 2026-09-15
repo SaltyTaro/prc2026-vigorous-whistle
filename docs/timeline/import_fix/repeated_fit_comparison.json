@@ -1,0 +1,37 @@
+{
+  "audit_used": false,
+  "checked_at_utc": "2026-09-14T17:26:52.222746+00:00",
+  "files": {
+    "runs/timeline/20260914T171225856179Z_seasonal_lgb_flown/component_encoder.json": {
+      "byte_identical": true,
+      "previous_sha256": "466669b6589c76600568567414de71c9ad5fce4a68aebae904d25b51fb818492",
+      "repeated_file": "runs/timeline/20260914T172059950031Z_seasonal_lgb_flown/component_encoder.json",
+      "repeated_sha256": "466669b6589c76600568567414de71c9ad5fce4a68aebae904d25b51fb818492"
+    },
+    "runs/timeline/20260914T171225856179Z_seasonal_lgb_flown/component_history.json": {
+      "byte_identical": false,
+      "maximum_absolute_numeric_difference_seconds": 5.684341886080802e-14,
+      "previous_sha256": "a6acb736b0b21a05c0b58b807c01341dd1040b641f5dbea074cbabcbf37b8b55",
+      "repeated_file": "runs/timeline/20260914T172059950031Z_seasonal_lgb_flown/component_history.json",
+      "repeated_sha256": "790056a06abf4e1ec4da267d493fe809fe58a16cc0976b8dcb8de8fae3ac95ff"
+    },
+    "runs/timeline/20260914T171225856179Z_seasonal_lgb_flown/component_importance.json": {
+      "byte_identical": true,
+      "previous_sha256": "31ce204c2ed879a6fd22cdf8d5b1edd2c04a3d7afb478f27fbd5104a316cf09d",
+      "repeated_file": "runs/timeline/20260914T172059950031Z_seasonal_lgb_flown/component_importance.json",
+      "repeated_sha256": "31ce204c2ed879a6fd22cdf8d5b1edd2c04a3d7afb478f27fbd5104a316cf09d"
+    },
+    "runs/timeline/20260914T171225856179Z_seasonal_lgb_flown/component_model.txt": {
+      "byte_identical": true,
+      "previous_sha256": "895087a8f68504391eb117f45fa327821f107863a57e0299358ed3f446999b4f",
+      "repeated_file": "runs/timeline/20260914T172059950031Z_seasonal_lgb_flown/component_model.txt",
+      "repeated_sha256": "895087a8f68504391eb117f45fa327821f107863a57e0299358ed3f446999b4f"
+    }
+  },
+  "interpretation": "The repeated fit has identical native model, encoder and importance bytes. October metric accumulation differs only at floating-point rounding; the selected count and trained predictions are unchanged.",
+  "iterations": 1184,
+  "maximum_october_curve_difference_seconds": 5.684341886080802e-14,
+  "model_encoder_and_importance_byte_identical": true,
+  "passed": true,
+  "repeated_run": "20260914T172059950031Z_seasonal_lgb_flown"
+}

@@ -1,0 +1,8 @@
+{
+  "recorded_at_utc": "2026-09-15T02:00:29.475695+00:00",
+  "stage": "local feature verification before model training",
+  "error": "ValueError: output array is read-only in independent_queue; pandas 3 returns a read-only boolean view.",
+  "fix": "Make an owned boolean mask before excluding same-flight peers. Feature producer, saved feature bundle and every prediction remain unchanged.",
+  "original_sha256": "a2224f11d49fa396e9e6d128dae118a4629c0326d5fef855842dd62a28439c5c",
+  "native_models_fitted": 0
+}

@@ -1,0 +1,667 @@
+{
+  "artifacts": [
+    {
+      "path": "features/training_2025-01-01_2025-02-01.parquet",
+      "rows": 153706,
+      "sha256": "48b10edc78a0cf47c17db34b7902ec2904399b6ab320fd063c4469108b90ec34",
+      "size_bytes": 19879838
+    },
+    {
+      "path": "features/training_2025-02-01_2025-03-01.parquet",
+      "rows": 143731,
+      "sha256": "1cb4c83b3ac7250e73079501c28603da6c9e1d2202cee1ed8621f4847632f19d",
+      "size_bytes": 18556829
+    },
+    {
+      "path": "features/training_2025-03-01_2025-04-01.parquet",
+      "rows": 164450,
+      "sha256": "e8c1d98abc4356c9aed87fc0e69d269319eaa48ff760bb132217a7883692c776",
+      "size_bytes": 21151338
+    },
+    {
+      "path": "features/training_2025-04-01_2025-05-01.parquet",
+      "rows": 175288,
+      "sha256": "b49300bda013c87a6f69c51c2cd6fefdac700c6594898832038f5a39880b3240",
+      "size_bytes": 22624546
+    },
+    {
+      "path": "features/training_2025-05-01_2025-06-01.parquet",
+      "rows": 185202,
+      "sha256": "906aa8deff0b41a4f8996d81f73925e810a24b3537625926d7ecc935b5adb93f",
+      "size_bytes": 23988714
+    },
+    {
+      "path": "features/training_2025-06-01_2025-07-01.parquet",
+      "rows": 183142,
+      "sha256": "2a88468b2dd51c3a0eedb75fc4c3f796f63f462a5b4a4cd493aa71a1d91763b7",
+      "size_bytes": 23904138
+    },
+    {
+      "path": "features/training_2025-07-01_2025-08-01.parquet",
+      "rows": 190713,
+      "sha256": "b32a4779fafdeeca46205b398536ee6d7e1c2193673a1450f38afdca3bf7b694",
+      "size_bytes": 24969923
+    },
+    {
+      "path": "features/training_2025-08-01_2025-09-01.parquet",
+      "rows": 191181,
+      "sha256": "846e5da498f6b24be4715987b23703e3bdf5068c2f9644dd797675a6fff491cc",
+      "size_bytes": 24834602
+    },
+    {
+      "path": "features/training_2025-09-01_2025-10-01.parquet",
+      "rows": 183951,
+      "sha256": "7a60160d818392f3237dbde5c7a649cb72601856e71375bdb2233c17eac638f0",
+      "size_bytes": 23984899
+    },
+    {
+      "path": "features/training_2025-10-01_2025-11-01.parquet",
+      "rows": 185674,
+      "sha256": "0ed23a22fba8e34e5a38079cdb7cddef148b00e216bc1652d872f5f6bab35212",
+      "size_bytes": 24164579
+    },
+    {
+      "path": "features/training_2025-11-01_2025-12-01.parquet",
+      "rows": 162332,
+      "sha256": "e4e5380ecf4180ca761fe2d935df9b965253c9c6cac835c660a9f5287e12380c",
+      "size_bytes": 21084841
+    },
+    {
+      "path": "features/ranking.parquet",
+      "rows": 344841,
+      "sha256": "37e5d016fa8b5b771849cf893e0fc4352a3eee5bd2f45b56040f7bad8bfacdf9",
+      "size_bytes": 43539509
+    }
+  ],
+  "audit_used": false,
+  "bundle_id": "410850c6cdc70bd5b987b93770a40b09b0e30c6acb4f4f28cbc4f86b05f12ae8",
+  "code": {
+    "files": {
+      "requirements-phase3.txt": "7a9a653b3db21f8f0c52d7d90863d62f5d095b0c715cc44deb73921237b3347b",
+      "src/prc2026_phase3/__init__.py": "62fe24c8c7406560ed59250a6a7e1834e730c7cd221e2f74d40ed4b30662cd2f",
+      "src/prc2026_phase3/bundle.py": "36212f2fffa104d6bebcc95f656e63ec913a477531077fb3617c5e9741587bc3",
+      "src/prc2026_phase3/features.py": "b3536837557bec3aefdc91ffc666cafd1968a345561671f7914d8717bb5064c3",
+      "tools/prepare_phase3.py": "dcfaaad461b4c847b2d52d6ba110fc97417e17623157cdd7d745d0dd73454418"
+    },
+    "sha256": "337d682757109ca7d3f59ae2a5314763cb359d707d84c41771090dc436cb30f7"
+  },
+  "context_rows": 4525784,
+  "created_at_utc": "2026-09-13T16:00:48.265908+00:00",
+  "descriptor": {
+    "code_sha256": "337d682757109ca7d3f59ae2a5314763cb359d707d84c41771090dc436cb30f7",
+    "config": {
+      "arrival_statistic_eligibility": "finite supplied arrival taxi-in; in-block timestamp at or after landing",
+      "arrival_statistics_available_at": "arrival_block_time_utc, strictly before query",
+      "audit_features_materialized": false,
+      "departure_labels_used_in_features": false,
+      "external_data": [],
+      "feature_policy": "airport-timing-past-traffic-v1",
+      "last_event_max_gap_seconds": 21600,
+      "parent_bundle_id": "58d621b245de3f5e12dd3b50b0a90a87ea8ac3dc96aa2c274ffa7ea0af96b2e0",
+      "ranking_months": [
+        "2026-01",
+        "2026-07"
+      ],
+      "training_months": [
+        "2025-01",
+        "2025-02",
+        "2025-03",
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11"
+      ],
+      "windows": "[query_time - window, query_time); exclude all equal-time events"
+    },
+    "input_files": [
+      {
+        "path": "ranking.parquet",
+        "sha256": "9db75e3a56fa09b87aab72e191a53da3fe763d9887ad2b23aea9cde6a6325f86",
+        "size_bytes": 43564605
+      },
+      {
+        "path": "submitting.parquet",
+        "sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+        "size_bytes": 1677097
+      },
+      {
+        "path": "training_2025-01-01_2025-02-01.parquet",
+        "sha256": "a4dc8f152c082c650cd7eb745fe9c641089f34f74df127e6944a188990a0ed94",
+        "size_bytes": 21218481
+      },
+      {
+        "path": "training_2025-02-01_2025-03-01.parquet",
+        "sha256": "b6f9ff2cdb1cfe07c5442f4e1f11bbcdbeafe52852dcb0b8175f62ab84c6a066",
+        "size_bytes": 19824510
+      },
+      {
+        "path": "training_2025-03-01_2025-04-01.parquet",
+        "sha256": "58fde7e5f8b539546af63b41d7f6ec0f2884fdc3d3dd9b6bfca7c59a420dcdd3",
+        "size_bytes": 22606072
+      },
+      {
+        "path": "training_2025-04-01_2025-05-01.parquet",
+        "sha256": "9ffe0cf5741c4863799c41be81475dfaecedabe0ba687b8f8e4eacba992f9390",
+        "size_bytes": 23840340
+      },
+      {
+        "path": "training_2025-05-01_2025-06-01.parquet",
+        "sha256": "5481c0642a8fbb4dc395f93bc713c57f4cc16854fb361d404967077e1fce2ff9",
+        "size_bytes": 25187756
+      },
+      {
+        "path": "training_2025-06-01_2025-07-01.parquet",
+        "sha256": "c3ef5080f2cc636c3416baf1555f7d0ee3519f9046e8043c1c0c8f017a244025",
+        "size_bytes": 24991697
+      },
+      {
+        "path": "training_2025-07-01_2025-08-01.parquet",
+        "sha256": "34d1c5bba7c8596a1c20c09edd3cb2f63277b5a684fa801911660fe0eaf63c9d",
+        "size_bytes": 26014977
+      },
+      {
+        "path": "training_2025-08-01_2025-09-01.parquet",
+        "sha256": "6c8d2aa7a1b6c9dff9a0305a37eb02de1e87a68d07557264f41b77738272c540",
+        "size_bytes": 25969246
+      },
+      {
+        "path": "training_2025-09-01_2025-10-01.parquet",
+        "sha256": "955308a4000947e32a00586d3ee13928949d2231b67f84f6dfb0631893f3754a",
+        "size_bytes": 25102673
+      },
+      {
+        "path": "training_2025-10-01_2025-11-01.parquet",
+        "sha256": "4a31a35601c1bdcd74b8cd6379231ba516a48324e4c2478bf1c9360cd23e687f",
+        "size_bytes": 25392098
+      },
+      {
+        "path": "training_2025-11-01_2025-12-01.parquet",
+        "sha256": "ac36b17db7a537e3baeb682fa4763dacaa1fcc5d9bfa6bf32b3ee5d9f91300b0",
+        "size_bytes": 22173840
+      },
+      {
+        "path": "training_2025-12-01_2026-01-01.parquet",
+        "sha256": "2d357f2f403a86778a69e93f72d8754effe77f1ac0942399b3d1b7728241f724",
+        "size_bytes": 22653598
+      }
+    ],
+    "parent_bundle_id": "58d621b245de3f5e12dd3b50b0a90a87ea8ac3dc96aa2c274ffa7ea0af96b2e0",
+    "parent_manifest_sha256": "7dea6171209256c6eccbc5bc8125ce58ff2cf1f476bbac2dd4031c4770ca9dba",
+    "transform_packages": {
+      "numpy": "2.4.2",
+      "pandas": "3.0.0",
+      "pyarrow": "23.0.1",
+      "tzdata": "2025.3"
+    }
+  },
+  "environment": {
+    "disk_available_bytes": 10127495168,
+    "logical_cpus": 16,
+    "memory_total_bytes": 67419996160,
+    "packages": {
+      "numpy": "2.4.2",
+      "pandas": "3.0.0",
+      "psutil": "7.2.2",
+      "pyarrow": "23.0.1",
+      "tzdata": "2025.3"
+    },
+    "physical_cpus_reported": 8,
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.3"
+  },
+  "families": {
+    "arrivals": {
+      "categorical": [],
+      "numeric": [
+        "completed_arrival_taxi_last_s",
+        "completed_arrival_taxi_count_30m",
+        "completed_arrival_taxi_mean_30m",
+        "completed_arrival_taxi_std_30m",
+        "completed_arrival_taxi_count_60m",
+        "completed_arrival_taxi_mean_60m",
+        "completed_arrival_taxi_std_60m",
+        "runway_completed_arrival_taxi_last_s",
+        "runway_completed_arrival_taxi_count_60m",
+        "runway_completed_arrival_taxi_mean_60m",
+        "runway_completed_arrival_taxi_std_60m"
+      ]
+    },
+    "layout": {
+      "categorical": [
+        "airport_runway",
+        "airport_stand",
+        "airport_stand_runway",
+        "airport_stand_area",
+        "airport_area_runway",
+        "runway_side",
+        "stand_suffix",
+        "airport_operator",
+        "airport_aircraft",
+        "airport_destination",
+        "airport_wake",
+        "flight_prefix",
+        "airport_flight_prefix"
+      ],
+      "numeric": [
+        "stand_number",
+        "stand_hundreds",
+        "stand_tens",
+        "runway_number",
+        "runway_heading_sin",
+        "runway_heading_cos"
+      ]
+    },
+    "timing": {
+      "categorical": [],
+      "numeric": [
+        "local_minute_of_day",
+        "local_time_sin",
+        "local_time_cos",
+        "local_weekday_sin",
+        "local_weekday_cos",
+        "local_weekend",
+        "utc_offset_hours",
+        "day_of_year_sin",
+        "day_of_year_cos",
+        "movement_second",
+        "scheduled_utc_minute",
+        "scheduled_weekday",
+        "eobt_utc_minute",
+        "eobt_weekday",
+        "iobt_utc_minute",
+        "iobt_weekday",
+        "eobt_minus_schedule_s",
+        "iobt_minus_schedule_s",
+        "eobt_minus_iobt_s",
+        "planned_duration_iobt_s",
+        "movement_minus_arvt1_s",
+        "schedule_missing",
+        "eobt_missing",
+        "iobt_missing",
+        "arvt1_missing",
+        "nm_destination_agrees",
+        "nm_aircraft_agrees",
+        "nm_rule_agrees",
+        "nm_filed_destination_agrees"
+      ]
+    },
+    "traffic": {
+      "categorical": [],
+      "numeric": [
+        "airport_dep_last_s",
+        "airport_dep_count_5m",
+        "airport_dep_count_15m",
+        "airport_dep_count_30m",
+        "airport_dep_count_60m",
+        "airport_arr_last_s",
+        "airport_arr_count_5m",
+        "airport_arr_count_15m",
+        "airport_arr_count_30m",
+        "airport_arr_count_60m",
+        "runway_dep_last_s",
+        "runway_dep_count_15m",
+        "runway_dep_count_60m",
+        "runway_arr_last_s",
+        "runway_arr_count_15m",
+        "runway_arr_count_60m",
+        "stand_arr_last_s",
+        "stand_arr_count_60m",
+        "dep_schedule_delay_last_s",
+        "dep_schedule_delay_count_30m",
+        "dep_schedule_delay_mean_30m",
+        "dep_schedule_delay_std_30m",
+        "dep_schedule_delay_count_60m",
+        "dep_schedule_delay_mean_60m",
+        "dep_schedule_delay_std_60m",
+        "arr_schedule_delay_last_s",
+        "arr_schedule_delay_count_30m",
+        "arr_schedule_delay_mean_30m",
+        "arr_schedule_delay_std_30m",
+        "arr_schedule_delay_count_60m",
+        "arr_schedule_delay_mean_60m",
+        "arr_schedule_delay_std_60m"
+      ]
+    }
+  },
+  "feature_names": [
+    "airport",
+    "destination",
+    "runway",
+    "stand",
+    "aircraft_type",
+    "movement_rule",
+    "nm_origin",
+    "nm_destination",
+    "nm_aircraft_type",
+    "market_segment",
+    "flight_type",
+    "wake_category",
+    "operator",
+    "utc_hour",
+    "utc_weekday",
+    "month",
+    "minute_of_day",
+    "local_hour",
+    "local_weekday",
+    "schedule_to_movement_s",
+    "movement_minus_eobt1_s",
+    "movement_minus_iobt_s",
+    "planned_duration_s",
+    "nm_missing",
+    "nm_origin_agrees",
+    "airport_runway",
+    "airport_stand",
+    "airport_stand_runway",
+    "airport_stand_area",
+    "airport_area_runway",
+    "runway_side",
+    "stand_suffix",
+    "airport_operator",
+    "airport_aircraft",
+    "airport_destination",
+    "airport_wake",
+    "flight_prefix",
+    "airport_flight_prefix",
+    "stand_number",
+    "stand_hundreds",
+    "stand_tens",
+    "runway_number",
+    "runway_heading_sin",
+    "runway_heading_cos",
+    "local_minute_of_day",
+    "local_time_sin",
+    "local_time_cos",
+    "local_weekday_sin",
+    "local_weekday_cos",
+    "local_weekend",
+    "utc_offset_hours",
+    "day_of_year_sin",
+    "day_of_year_cos",
+    "movement_second",
+    "scheduled_utc_minute",
+    "scheduled_weekday",
+    "eobt_utc_minute",
+    "eobt_weekday",
+    "iobt_utc_minute",
+    "iobt_weekday",
+    "eobt_minus_schedule_s",
+    "iobt_minus_schedule_s",
+    "eobt_minus_iobt_s",
+    "planned_duration_iobt_s",
+    "movement_minus_arvt1_s",
+    "schedule_missing",
+    "eobt_missing",
+    "iobt_missing",
+    "arvt1_missing",
+    "nm_destination_agrees",
+    "nm_aircraft_agrees",
+    "nm_rule_agrees",
+    "nm_filed_destination_agrees",
+    "airport_dep_last_s",
+    "airport_dep_count_5m",
+    "airport_dep_count_15m",
+    "airport_dep_count_30m",
+    "airport_dep_count_60m",
+    "airport_arr_last_s",
+    "airport_arr_count_5m",
+    "airport_arr_count_15m",
+    "airport_arr_count_30m",
+    "airport_arr_count_60m",
+    "runway_dep_last_s",
+    "runway_dep_count_15m",
+    "runway_dep_count_60m",
+    "runway_arr_last_s",
+    "runway_arr_count_15m",
+    "runway_arr_count_60m",
+    "stand_arr_last_s",
+    "stand_arr_count_60m",
+    "dep_schedule_delay_last_s",
+    "dep_schedule_delay_count_30m",
+    "dep_schedule_delay_mean_30m",
+    "dep_schedule_delay_std_30m",
+    "dep_schedule_delay_count_60m",
+    "dep_schedule_delay_mean_60m",
+    "dep_schedule_delay_std_60m",
+    "arr_schedule_delay_last_s",
+    "arr_schedule_delay_count_30m",
+    "arr_schedule_delay_mean_30m",
+    "arr_schedule_delay_std_30m",
+    "arr_schedule_delay_count_60m",
+    "arr_schedule_delay_mean_60m",
+    "arr_schedule_delay_std_60m",
+    "completed_arrival_taxi_last_s",
+    "completed_arrival_taxi_count_30m",
+    "completed_arrival_taxi_mean_30m",
+    "completed_arrival_taxi_std_30m",
+    "completed_arrival_taxi_count_60m",
+    "completed_arrival_taxi_mean_60m",
+    "completed_arrival_taxi_std_60m",
+    "runway_completed_arrival_taxi_last_s",
+    "runway_completed_arrival_taxi_count_60m",
+    "runway_completed_arrival_taxi_mean_60m",
+    "runway_completed_arrival_taxi_std_60m"
+  ],
+  "frozen_folds": {
+    "final_audit": {
+      "counts": {
+        "early_stop": 162332,
+        "fit": 1757038,
+        "score": 165677
+      },
+      "definition": {
+        "early_stop_months": [
+          "2025-11"
+        ],
+        "fit_months": [
+          "2025-01",
+          "2025-02",
+          "2025-03",
+          "2025-04",
+          "2025-05",
+          "2025-06",
+          "2025-07",
+          "2025-08",
+          "2025-09",
+          "2025-10"
+        ],
+        "purpose": "December audit after freezing the selected recipe; unavailable to phase-1 scoring",
+        "score_months": [
+          "2025-12"
+        ],
+        "sealed": true
+      },
+      "group_overlap_counts": {
+        "early_stop/score": 0,
+        "fit/early_stop": 0,
+        "fit/score": 0
+      },
+      "identity_sha256": {
+        "early_stop": "7dc46218c228a5675e8fae283c4c4d51577a0bcab8e124a2d7be8eca131cc70f",
+        "fit": "aaa43624e8f45ff1983e6ee31e1dbaf89d1c50ba52e246ad8025667b5d2e7e4c",
+        "score": "d198dea10625b0a75977f0f004a5cb47b99e239bc44d0bea06c60da8b3cbb4ab"
+      },
+      "movement_time_ranges_utc": {
+        "early_stop": {
+          "max": "2025-11-30T23:45:27+00:00",
+          "min": "2025-11-01T00:00:02+00:00"
+        },
+        "fit": {
+          "max": "2025-10-31T23:54:18+00:00",
+          "min": "2025-01-01T00:05:56+00:00"
+        },
+        "score": {
+          "max": "2025-12-31T23:57:36+00:00",
+          "min": "2025-12-01T00:01:00+00:00"
+        }
+      },
+      "name": "final_audit",
+      "score_groups_also_in_reserved_audit": 0
+    },
+    "forward": {
+      "counts": {
+        "early_stop": 185674,
+        "fit": 1571364,
+        "reserved_audit": 165677,
+        "score": 162332
+      },
+      "definition": {
+        "early_stop_months": [
+          "2025-10"
+        ],
+        "fit_months": [
+          "2025-01",
+          "2025-02",
+          "2025-03",
+          "2025-04",
+          "2025-05",
+          "2025-06",
+          "2025-07",
+          "2025-08",
+          "2025-09"
+        ],
+        "purpose": "Strict chronological November development evaluation",
+        "score_months": [
+          "2025-11"
+        ],
+        "sealed": false
+      },
+      "group_overlap_counts": {
+        "early_stop/score": 0,
+        "fit/early_stop": 0,
+        "fit/score": 0
+      },
+      "identity_sha256": {
+        "early_stop": "e5211f63da95435690c91169652d33464ff37979084dccc1bc5621cf3a2b9a90",
+        "fit": "2ae283a3fdce5d1ed58714a153d4cfbcf9d1dbd75672f8e881963d2e3397876f",
+        "reserved_audit": "d198dea10625b0a75977f0f004a5cb47b99e239bc44d0bea06c60da8b3cbb4ab",
+        "score": "7dc46218c228a5675e8fae283c4c4d51577a0bcab8e124a2d7be8eca131cc70f"
+      },
+      "movement_time_ranges_utc": {
+        "early_stop": {
+          "max": "2025-10-31T23:54:18+00:00",
+          "min": "2025-10-01T00:07:03+00:00"
+        },
+        "fit": {
+          "max": "2025-09-30T23:59:09+00:00",
+          "min": "2025-01-01T00:05:56+00:00"
+        },
+        "reserved_audit": {
+          "max": "2025-12-31T23:57:36+00:00",
+          "min": "2025-12-01T00:01:00+00:00"
+        },
+        "score": {
+          "max": "2025-11-30T23:45:27+00:00",
+          "min": "2025-11-01T00:00:02+00:00"
+        }
+      },
+      "name": "forward",
+      "score_groups_also_in_reserved_audit": 0
+    },
+    "seasonal": {
+      "counts": {
+        "early_stop": 185674,
+        "fit": 1226945,
+        "reserved_audit": 165677,
+        "score": 344419,
+        "unused": 162332
+      },
+      "definition": {
+        "early_stop_months": [
+          "2025-10"
+        ],
+        "fit_months": [
+          "2025-02",
+          "2025-03",
+          "2025-04",
+          "2025-05",
+          "2025-06",
+          "2025-08",
+          "2025-09"
+        ],
+        "purpose": "January/July seasonal development; not a forward-time test",
+        "score_months": [
+          "2025-01",
+          "2025-07"
+        ],
+        "sealed": false
+      },
+      "group_overlap_counts": {
+        "early_stop/score": 0,
+        "fit/early_stop": 0,
+        "fit/score": 0
+      },
+      "identity_sha256": {
+        "early_stop": "e5211f63da95435690c91169652d33464ff37979084dccc1bc5621cf3a2b9a90",
+        "fit": "5a8ca81854dc7ddc29c0cc0e82c5f3a0a3bc2eb2b22ac17d4da387e7090b63f7",
+        "reserved_audit": "d198dea10625b0a75977f0f004a5cb47b99e239bc44d0bea06c60da8b3cbb4ab",
+        "score": "19afdfc7fedf88eafca9662868862723b1d6c003b67142ad63f0839e8b37ba79",
+        "unused": "7dc46218c228a5675e8fae283c4c4d51577a0bcab8e124a2d7be8eca131cc70f"
+      },
+      "movement_time_ranges_utc": {
+        "early_stop": {
+          "max": "2025-10-31T23:54:18+00:00",
+          "min": "2025-10-01T00:07:03+00:00"
+        },
+        "fit": {
+          "max": "2025-09-30T23:59:09+00:00",
+          "min": "2025-02-01T00:35:55+00:00"
+        },
+        "reserved_audit": {
+          "max": "2025-12-31T23:57:36+00:00",
+          "min": "2025-12-01T00:01:00+00:00"
+        },
+        "score": {
+          "max": "2025-07-31T23:47:28+00:00",
+          "min": "2025-01-01T00:05:56+00:00"
+        },
+        "unused": {
+          "max": "2025-11-30T23:45:27+00:00",
+          "min": "2025-11-01T00:00:02+00:00"
+        }
+      },
+      "name": "seasonal",
+      "score_groups_also_in_reserved_audit": 0
+    }
+  },
+  "parent_bundle": "data/phase1/58d621b245de3f5e12dd",
+  "ranking_ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+  "resources": {
+    "cpu_seconds": 71.96,
+    "mean_active_cpu_cores": 1.06325974021627,
+    "peak_process_rss_bytes_sampled": 4948062208,
+    "rss_sample_interval_seconds": 0.05,
+    "wall_seconds": 67.67866521999895
+  },
+  "rows": {
+    "ranking.parquet": 344841,
+    "training_2025-01-01_2025-02-01.parquet": 153706,
+    "training_2025-02-01_2025-03-01.parquet": 143731,
+    "training_2025-03-01_2025-04-01.parquet": 164450,
+    "training_2025-04-01_2025-05-01.parquet": 175288,
+    "training_2025-05-01_2025-06-01.parquet": 185202,
+    "training_2025-06-01_2025-07-01.parquet": 183142,
+    "training_2025-07-01_2025-08-01.parquet": 190713,
+    "training_2025-08-01_2025-09-01.parquet": 191181,
+    "training_2025-09-01_2025-10-01.parquet": 183951,
+    "training_2025-10-01_2025-11-01.parquet": 185674,
+    "training_2025-11-01_2025-12-01.parquet": 162332
+  },
+  "source_ids_sha256": {
+    "ranking.parquet": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "training_2025-01-01_2025-02-01.parquet": "3c4a47fc831ee0822e9d84e28a7b1c784a98412a4d9ad938b135ba4af3a4cd96",
+    "training_2025-02-01_2025-03-01.parquet": "e3fa19807d23d6324bfbb5c6c79eaf7433a8c07d86fe69b78610208b6406544e",
+    "training_2025-03-01_2025-04-01.parquet": "be1ac6680b4d6a6ed545188ca336b49dffc28cdad82e879e22ab67e53bd41d2f",
+    "training_2025-04-01_2025-05-01.parquet": "41205286175a62cf24c6653a75f0d9fa5bf9090f489962beef3ad99b58cc815b",
+    "training_2025-05-01_2025-06-01.parquet": "921ad5f51a1c5393e60874b6aac35e00340b59f71d5fd2e64f56ce047469811a",
+    "training_2025-06-01_2025-07-01.parquet": "6e2249b5193f76edb3817cfe42c6f062bc80cb179dfdf07e612b331d5405ec6a",
+    "training_2025-07-01_2025-08-01.parquet": "ecf61b720d96f5555a28b902b8a580e01214bc91e1981710821688fa16d650f7",
+    "training_2025-08-01_2025-09-01.parquet": "206f620ae820ce5c2ed480e6f5193d3eaec753c98b57f03c7de2c072b35e5546",
+    "training_2025-09-01_2025-10-01.parquet": "9026b1d1bdf916a432bad96671a77660d4e4783a8600790198b1e5afc792b196",
+    "training_2025-10-01_2025-11-01.parquet": "e5211f63da95435690c91169652d33464ff37979084dccc1bc5621cf3a2b9a90",
+    "training_2025-11-01_2025-12-01.parquet": "7dc46218c228a5675e8fae283c4c4d51577a0bcab8e124a2d7be8eca131cc70f"
+  }
+}

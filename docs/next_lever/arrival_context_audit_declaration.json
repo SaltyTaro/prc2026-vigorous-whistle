@@ -1,0 +1,63 @@
+{
+  "analysis": "Covariate coverage on fitting samples and all ranking departures; correlations with raw offset residual centered within airport and NM-availability group. This is not a v6 model error or a development RMSE.",
+  "audit_used": false,
+  "availability": "The original supplied ranking arrivals retain taxi-in labels and block timestamps. Use only arrival rows completed strictly before each query, with completion=max(landing, in-block). Exclude every focal flight ID. No departure label or departure block time enters any context aggregate. Official pages describe a post-operations task; there is no online publication-time claim.",
+  "context_periods": [
+    "2025-01 through 2025-11",
+    "2026-01",
+    "2026-07"
+  ],
+  "created_at_utc": "2026-09-14T17:42:27.144624+00:00",
+  "departure_label_scope": "At most 10,000 deterministic, evenly spaced movement IDs per airport plus all missing-clock departures in the intersection of the two original fitting sets. No original scoring/stopping departure labels, December labels, or hidden ranking departure labels.",
+  "features": {
+    "airport": [
+      {
+        "statistics": [
+          "count",
+          "raw_mean",
+          "normal_mean",
+          "negative_fraction",
+          "over3h_fraction"
+        ],
+        "window_seconds": 3600
+      },
+      {
+        "statistics": [
+          "count",
+          "raw_mean",
+          "normal_mean",
+          "negative_fraction",
+          "over3h_fraction"
+        ],
+        "window_seconds": 10800
+      }
+    ],
+    "airport_runway": [
+      {
+        "statistics": [
+          "count",
+          "normal_mean"
+        ],
+        "window_seconds": 10800
+      }
+    ],
+    "airport_stand": [
+      {
+        "statistics": [
+          "count",
+          "normal_mean"
+        ],
+        "window_seconds": 604800
+      }
+    ]
+  },
+  "models_fitted": 0,
+  "normal_arrival_interval": "0 through 10800 seconds inclusive for a separately flagged mean; raw moments and anomaly fractions remain separate. No departure target or model prediction is clipped.",
+  "predictions_changed": false,
+  "purpose": "Fitting-only assessment of previously unused, supplied arrival taxi-in context. This does not add a timeline candidate or fit a model.",
+  "selection": "No model selection or promotion. A future experiment needs a separate declaration.",
+  "source_review": {
+    "path": "docs/next_lever/field_use_review.json",
+    "sha256": "e923cc0b34b00ed62ca99885be1f937e3820fa2c6465ea9c02a9c4e5589f54dc"
+  }
+}

@@ -1,0 +1,272 @@
+{
+  "audit_used": false,
+  "authorization": "User requested parallel testing using all eight allocated Azure VMs.",
+  "automatic_submission": false,
+  "candidate_count": 12,
+  "candidate_families": {
+    "augmented_mean": {
+      "cat_augmented": 0.5,
+      "lgb_augmented": 0.5
+    },
+    "cat_augmented": {
+      "cat_augmented": 1.0
+    },
+    "cat_natural": {
+      "cat_natural": 1.0
+    },
+    "lgb_augmented": {
+      "lgb_augmented": 1.0
+    },
+    "lgb_natural": {
+      "lgb_natural": 1.0
+    },
+    "natural_mean": {
+      "cat_natural": 0.5,
+      "lgb_natural": 0.5
+    }
+  },
+  "candidate_formula": "On eligible rows: v7 + candidate_weight * (family_prediction - v7); all other rows exactly v7.",
+  "candidate_weights": [
+    0.5,
+    1.0
+  ],
+  "declared_at_utc": "2026-09-15T02:31:16.398599+00:00",
+  "development_folds": [
+    "seasonal",
+    "forward"
+  ],
+  "execution": {
+    "cloud": "Azure",
+    "new_resources_provisioned": false,
+    "remote_directory": "/home/azureuser/prc-flight-2026",
+    "workers": [
+      "arcw0",
+      "arcw1",
+      "arcw2",
+      "arcw3",
+      "arcw4",
+      "arcw5",
+      "arcw6",
+      "arcw7"
+    ]
+  },
+  "experiment_id": "nm-mask-v1",
+  "feature_config": "configs/features_nm_mask_v1.json",
+  "fit_population_policy": "Natural controls use original fitting rows with missing NM origin AND missing NM clock. Augmented variants use ALL original fitting rows; every predictor uses the same NM-blind view. No target-value filters.",
+  "jobs": [
+    {
+      "fold": "seasonal",
+      "job_id": "seasonal_lgb_natural",
+      "variant": "lgb_natural",
+      "worker": "arcw0"
+    },
+    {
+      "fold": "forward",
+      "job_id": "forward_lgb_natural",
+      "variant": "lgb_natural",
+      "worker": "arcw1"
+    },
+    {
+      "fold": "seasonal",
+      "job_id": "seasonal_cat_natural",
+      "variant": "cat_natural",
+      "worker": "arcw2"
+    },
+    {
+      "fold": "forward",
+      "job_id": "forward_cat_natural",
+      "variant": "cat_natural",
+      "worker": "arcw3"
+    },
+    {
+      "fold": "seasonal",
+      "job_id": "seasonal_lgb_augmented",
+      "variant": "lgb_augmented",
+      "worker": "arcw4"
+    },
+    {
+      "fold": "forward",
+      "job_id": "forward_lgb_augmented",
+      "variant": "lgb_augmented",
+      "worker": "arcw5"
+    },
+    {
+      "fold": "seasonal",
+      "job_id": "seasonal_cat_augmented",
+      "variant": "cat_augmented",
+      "worker": "arcw6"
+    },
+    {
+      "fold": "forward",
+      "job_id": "forward_cat_augmented",
+      "variant": "cat_augmented",
+      "worker": "arcw7"
+    }
+  ],
+  "minimum_improvement_fraction_each_fold": 0.005,
+  "native_fit_count": 8,
+  "prediction_postprocess": "none",
+  "prediction_route": "Only rows with missing NM origin AND missing NM clock may change. Every other prediction is exactly v7.",
+  "prior_information": "v7 and the completed non-qualifying Rome experiment are known. Joint NM masking has not been trained or scored. Naturally missing NM origin is distinct from missing NM clock.",
+  "reference_candidate": "full_timeline_v6_100",
+  "reference_predictions": {
+    "forward": {
+      "path": "runs/azure_arcw0_rome_geometry/references/forward/v7.parquet",
+      "sha256": "3008d3047cb5c820c1e9b5161df60cfe2be8801cfa7ca054d596cc523511b0d5"
+    },
+    "seasonal": {
+      "path": "runs/azure_arcw0_rome_geometry/references/seasonal/v7.parquet",
+      "sha256": "cdbced2928f1a124aadc618115cc7b18765c4949a67f5531bc00a1f49a4d3b75"
+    }
+  },
+  "reference_selection": "docs/surface_airports/development_results.json",
+  "reference_sha256": "3a6edb7beb178744acca53c92e269f2ee92fa1524115adbda74bf876cdd4d042",
+  "refit_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11"
+  ],
+  "refit_policy": "Only after qualification and both platform verifiers, separately declare January-November refit with all December flight groups protected; tree counts are rounded medians of the two October-selected counts.",
+  "sample_weight_policy": "Natural controls have unit weights. Augmented natural rows have weight 0.5 and other rows weight 0.5*n_natural/n_other, giving each cohort half the total fitting weight and keeping total weight n_natural.",
+  "seed": 20260913,
+  "selection": "Finish all eight jobs and twelve common candidates; require at least 0.5% lower complete RMSE on BOTH original folds; eligible winner minimizes equal-weight mean relative RMSE, then lexical recipe.",
+  "stopping_policy": "Same original October stopping IDs restricted to naturally missing NM origin AND clock, with unit weights for every variant.",
+  "target": "taxi-out minus the unchanged conditional schedule offset evaluated in the NM-masked feature view",
+  "target_filter": "none",
+  "threads_per_worker": 16,
+  "validation_protocol": "prc2026-validation-v1",
+  "variants": {
+    "cat_augmented": {
+      "features": "ground_weather",
+      "fit_population": "augmented",
+      "kind": "catboost",
+      "settings": {
+        "catboost": {
+          "early_stopping_rounds": 200,
+          "parameters": {
+            "allow_writing_files": false,
+            "boosting_type": "Plain",
+            "bootstrap_type": "Bernoulli",
+            "depth": 6,
+            "eval_metric": "RMSE",
+            "l2_leaf_reg": 20.0,
+            "learning_rate": 0.04,
+            "loss_function": "RMSE",
+            "max_ctr_complexity": 1,
+            "nan_mode": "Min",
+            "one_hot_max_size": 10,
+            "random_strength": 1.0,
+            "rsm": 0.9,
+            "subsample": 0.8,
+            "task_type": "CPU"
+          },
+          "rounds": 4000
+        },
+        "seed": 20260913,
+        "threads": 16
+      }
+    },
+    "cat_natural": {
+      "features": "ground_weather",
+      "fit_population": "natural",
+      "kind": "catboost",
+      "settings": {
+        "catboost": {
+          "early_stopping_rounds": 200,
+          "parameters": {
+            "allow_writing_files": false,
+            "boosting_type": "Plain",
+            "bootstrap_type": "Bernoulli",
+            "depth": 6,
+            "eval_metric": "RMSE",
+            "l2_leaf_reg": 20.0,
+            "learning_rate": 0.04,
+            "loss_function": "RMSE",
+            "max_ctr_complexity": 1,
+            "nan_mode": "Min",
+            "one_hot_max_size": 10,
+            "random_strength": 1.0,
+            "rsm": 0.9,
+            "subsample": 0.8,
+            "task_type": "CPU"
+          },
+          "rounds": 4000
+        },
+        "seed": 20260913,
+        "threads": 16
+      }
+    },
+    "lgb_augmented": {
+      "features": "ground_weather",
+      "fit_population": "augmented",
+      "kind": "lightgbm",
+      "settings": {
+        "lightgbm": {
+          "early_stopping_rounds": 160,
+          "parameters": {
+            "bagging_fraction": 1.0,
+            "bagging_freq": 1,
+            "cat_l2": 20.0,
+            "cat_smooth": 20.0,
+            "deterministic": true,
+            "feature_fraction": 0.9,
+            "force_col_wise": true,
+            "lambda_l2": 100.0,
+            "learning_rate": 0.03,
+            "max_bin": 255,
+            "max_cat_threshold": 32,
+            "max_cat_to_onehot": 8,
+            "metric": "rmse",
+            "min_data_in_leaf": 20,
+            "num_leaves": 31,
+            "objective": "regression",
+            "verbosity": -1
+          },
+          "rounds": 2400
+        },
+        "seed": 20260913,
+        "threads": 16
+      }
+    },
+    "lgb_natural": {
+      "features": "ground_weather",
+      "fit_population": "natural",
+      "kind": "lightgbm",
+      "settings": {
+        "lightgbm": {
+          "early_stopping_rounds": 160,
+          "parameters": {
+            "bagging_fraction": 1.0,
+            "bagging_freq": 1,
+            "cat_l2": 20.0,
+            "cat_smooth": 20.0,
+            "deterministic": true,
+            "feature_fraction": 0.9,
+            "force_col_wise": true,
+            "lambda_l2": 100.0,
+            "learning_rate": 0.03,
+            "max_bin": 255,
+            "max_cat_threshold": 32,
+            "max_cat_to_onehot": 8,
+            "metric": "rmse",
+            "min_data_in_leaf": 20,
+            "num_leaves": 31,
+            "objective": "regression",
+            "verbosity": -1
+          },
+          "rounds": 2400
+        },
+        "seed": 20260913,
+        "threads": 16
+      }
+    }
+  }
+}

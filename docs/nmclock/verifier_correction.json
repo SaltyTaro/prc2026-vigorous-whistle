@@ -1,0 +1,22 @@
+{
+  "created_at_utc": "2026-09-14T05:14:08.959916+00:00",
+  "failure": "Metric keys differ at metrics/cat_direct_v5_25/folds/seasonal/metrics/ranking_month_weights.",
+  "cause": "The new verifier passed serialized and recomputed reports to same_metrics in reverse order. The frozen helper normalizes integer month keys only in its recomputed first argument.",
+  "change": "Pass the rebuilt candidates first and saved JSON second; add a regression check that accepts serialized keys but rejects changed scores, key collisions and changed selection.",
+  "old_verifier_sha256": "1b6ac5a270f8e29273d94f70ce83858ad87f42cfe0ad802c08774f545740147c",
+  "new_verifier_sha256": "ceb1e0df0834b6d975ebf67aaf4014f892efc8277ba0a43c311c0fef012098b3",
+  "test_sha256": "6690cf77293b43f9d34d7f2e9afa0d6ae07039fdb996cbcbd61ac1a8c6864e3d",
+  "frozen_model_code_sha256": "f1b5e85d331e92c9bb52a5bc7b91c244e83c8f7088c9535bc610a2f3931ee740",
+  "models_features_predictions_selection_changed": false,
+  "earlier_checks_completed": [
+    "all feature rows",
+    "all native development samples",
+    "all eight complete development metrics",
+    "recomputed twenty-candidate selection"
+  ],
+  "tests_passed_on": [
+    "Windows",
+    "Azure"
+  ],
+  "total_tests_passed_per_platform": 117
+}

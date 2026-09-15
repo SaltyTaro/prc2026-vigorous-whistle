@@ -1,0 +1,333 @@
+{
+  "checked_at_utc": "2026-09-15T02:55:25.573792+00:00",
+  "read_only": true,
+  "workers": [
+    {
+      "child_processes": [],
+      "job_id": "seasonal_lgb_natural",
+      "log_tail": [
+        "..................................                                       [100%]",
+        "job_complete worker=arcw0 job=seasonal_lgb_natural iterations=688 complete_rmse=328.313862487"
+      ],
+      "result": {
+        "complete_rmse_seconds": 328.3138624867766,
+        "iterations": 688,
+        "native_reload_maximum_difference_seconds": 0.0,
+        "resources": {
+          "cpu_seconds": 28.759999999999998,
+          "mean_active_cpu_cores": 6.6722847892570405,
+          "peak_process_rss_bytes_sampled": 451162112,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 4.310367573983967
+        }
+      },
+      "status": {
+        "audit_used": false,
+        "complete": true,
+        "finished_at_utc": "2026-09-15T02:54:34.705835+00:00",
+        "job_id": "seasonal_lgb_natural",
+        "phase": "complete",
+        "started_at_utc": "2026-09-15T02:54:07.917168+00:00",
+        "steps": [
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "-m",
+              "pytest",
+              "-q",
+              "-p",
+              "no:cacheprovider",
+              "tests/test_nm_mask_features.py",
+              "tests/test_nm_mask_native.py",
+              "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_seasonal_lgb_natural.xml"
+            ],
+            "finished_at_utc": "2026-09-15T02:54:09.259236+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:54:07.917277+00:00"
+          },
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "tools/run_nm_mask.py",
+              "--job",
+              "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/seasonal_lgb_natural.json"
+            ],
+            "finished_at_utc": "2026-09-15T02:54:34.705594+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:54:29.889985+00:00"
+          }
+        ],
+        "worker": "arcw0"
+      },
+      "worker": "arcw0"
+    },
+    {
+      "child_processes": [],
+      "job_id": "seasonal_cat_natural",
+      "log_tail": [
+        "ImportError while loading conftest '/home/azureuser/prc-flight-2026/tests/conftest.py'.",
+        "tests/conftest.py:8: in <module>",
+        "    from prc2026.features import BLOCK, CATEGORY_SOURCES, ID, PHASE, TARGET, TIME",
+        "E   ModuleNotFoundError: No module named 'prc2026'"
+      ],
+      "status": {
+        "audit_used": false,
+        "complete": false,
+        "job_id": "seasonal_cat_natural",
+        "phase": "failed",
+        "started_at_utc": "2026-09-15T02:54:07.947667+00:00",
+        "steps": [
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "-m",
+              "pytest",
+              "-q",
+              "-p",
+              "no:cacheprovider",
+              "tests/test_nm_mask_features.py",
+              "tests/test_nm_mask_native.py",
+              "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_seasonal_cat_natural.xml"
+            ],
+            "finished_at_utc": "2026-09-15T02:54:09.073426+00:00",
+            "returncode": 4,
+            "started_at_utc": "2026-09-15T02:54:07.947770+00:00"
+          }
+        ],
+        "worker": "arcw2"
+      },
+      "worker": "arcw2"
+    },
+    {
+      "child_processes": [],
+      "job_id": "seasonal_lgb_augmented",
+      "log_tail": [
+        "ImportError while loading conftest '/home/azureuser/prc-flight-2026/tests/conftest.py'.",
+        "tests/conftest.py:8: in <module>",
+        "    from prc2026.features import BLOCK, CATEGORY_SOURCES, ID, PHASE, TARGET, TIME",
+        "E   ModuleNotFoundError: No module named 'prc2026'"
+      ],
+      "status": {
+        "audit_used": false,
+        "complete": false,
+        "job_id": "seasonal_lgb_augmented",
+        "phase": "failed",
+        "started_at_utc": "2026-09-15T02:54:07.797594+00:00",
+        "steps": [
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "-m",
+              "pytest",
+              "-q",
+              "-p",
+              "no:cacheprovider",
+              "tests/test_nm_mask_features.py",
+              "tests/test_nm_mask_native.py",
+              "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_seasonal_lgb_augmented.xml"
+            ],
+            "finished_at_utc": "2026-09-15T02:54:09.033514+00:00",
+            "returncode": 4,
+            "started_at_utc": "2026-09-15T02:54:07.797706+00:00"
+          }
+        ],
+        "worker": "arcw4"
+      },
+      "worker": "arcw4"
+    },
+    {
+      "child_processes": [],
+      "job_id": "seasonal_cat_augmented",
+      "log_tail": [
+        "ImportError while loading conftest '/home/azureuser/prc-flight-2026/tests/conftest.py'.",
+        "tests/conftest.py:8: in <module>",
+        "    from prc2026.features import BLOCK, CATEGORY_SOURCES, ID, PHASE, TARGET, TIME",
+        "E   ModuleNotFoundError: No module named 'prc2026'"
+      ],
+      "status": {
+        "audit_used": false,
+        "complete": false,
+        "job_id": "seasonal_cat_augmented",
+        "phase": "failed",
+        "started_at_utc": "2026-09-15T02:54:07.913620+00:00",
+        "steps": [
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "-m",
+              "pytest",
+              "-q",
+              "-p",
+              "no:cacheprovider",
+              "tests/test_nm_mask_features.py",
+              "tests/test_nm_mask_native.py",
+              "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_seasonal_cat_augmented.xml"
+            ],
+            "finished_at_utc": "2026-09-15T02:54:09.137236+00:00",
+            "returncode": 4,
+            "started_at_utc": "2026-09-15T02:54:07.913728+00:00"
+          }
+        ],
+        "worker": "arcw6"
+      },
+      "worker": "arcw6"
+    },
+    {
+      "child_processes": [],
+      "job_id": "forward_lgb_natural",
+      "log_tail": [
+        "ImportError while loading conftest '/home/azureuser/prc-flight-2026/tests/conftest.py'.",
+        "tests/conftest.py:8: in <module>",
+        "    from prc2026.features import BLOCK, CATEGORY_SOURCES, ID, PHASE, TARGET, TIME",
+        "E   ModuleNotFoundError: No module named 'prc2026'"
+      ],
+      "status": {
+        "audit_used": false,
+        "complete": false,
+        "job_id": "forward_lgb_natural",
+        "phase": "failed",
+        "started_at_utc": "2026-09-15T02:54:07.974050+00:00",
+        "steps": [
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "-m",
+              "pytest",
+              "-q",
+              "-p",
+              "no:cacheprovider",
+              "tests/test_nm_mask_features.py",
+              "tests/test_nm_mask_native.py",
+              "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_forward_lgb_natural.xml"
+            ],
+            "finished_at_utc": "2026-09-15T02:54:09.161440+00:00",
+            "returncode": 4,
+            "started_at_utc": "2026-09-15T02:54:07.974187+00:00"
+          }
+        ],
+        "worker": "arcw1"
+      },
+      "worker": "arcw1"
+    },
+    {
+      "child_processes": [],
+      "job_id": "forward_cat_natural",
+      "log_tail": [
+        "ImportError while loading conftest '/home/azureuser/prc-flight-2026/tests/conftest.py'.",
+        "tests/conftest.py:8: in <module>",
+        "    from prc2026.features import BLOCK, CATEGORY_SOURCES, ID, PHASE, TARGET, TIME",
+        "E   ModuleNotFoundError: No module named 'prc2026'"
+      ],
+      "status": {
+        "audit_used": false,
+        "complete": false,
+        "job_id": "forward_cat_natural",
+        "phase": "failed",
+        "started_at_utc": "2026-09-15T02:54:08.415244+00:00",
+        "steps": [
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "-m",
+              "pytest",
+              "-q",
+              "-p",
+              "no:cacheprovider",
+              "tests/test_nm_mask_features.py",
+              "tests/test_nm_mask_native.py",
+              "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_forward_cat_natural.xml"
+            ],
+            "finished_at_utc": "2026-09-15T02:54:09.643118+00:00",
+            "returncode": 4,
+            "started_at_utc": "2026-09-15T02:54:08.415353+00:00"
+          }
+        ],
+        "worker": "arcw3"
+      },
+      "worker": "arcw3"
+    },
+    {
+      "child_processes": [],
+      "job_id": "forward_lgb_augmented",
+      "log_tail": [
+        "ImportError while loading conftest '/home/azureuser/prc-flight-2026/tests/conftest.py'.",
+        "tests/conftest.py:8: in <module>",
+        "    from prc2026.features import BLOCK, CATEGORY_SOURCES, ID, PHASE, TARGET, TIME",
+        "E   ModuleNotFoundError: No module named 'prc2026'"
+      ],
+      "status": {
+        "audit_used": false,
+        "complete": false,
+        "job_id": "forward_lgb_augmented",
+        "phase": "failed",
+        "started_at_utc": "2026-09-15T02:54:07.883706+00:00",
+        "steps": [
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "-m",
+              "pytest",
+              "-q",
+              "-p",
+              "no:cacheprovider",
+              "tests/test_nm_mask_features.py",
+              "tests/test_nm_mask_native.py",
+              "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_forward_lgb_augmented.xml"
+            ],
+            "finished_at_utc": "2026-09-15T02:54:09.166118+00:00",
+            "returncode": 4,
+            "started_at_utc": "2026-09-15T02:54:07.883810+00:00"
+          }
+        ],
+        "worker": "arcw5"
+      },
+      "worker": "arcw5"
+    },
+    {
+      "child_processes": [],
+      "job_id": "forward_cat_augmented",
+      "log_tail": [
+        "ImportError while loading conftest '/home/azureuser/prc-flight-2026/tests/conftest.py'.",
+        "tests/conftest.py:8: in <module>",
+        "    from prc2026.features import BLOCK, CATEGORY_SOURCES, ID, PHASE, TARGET, TIME",
+        "E   ModuleNotFoundError: No module named 'prc2026'"
+      ],
+      "status": {
+        "audit_used": false,
+        "complete": false,
+        "job_id": "forward_cat_augmented",
+        "phase": "failed",
+        "started_at_utc": "2026-09-15T02:54:08.064903+00:00",
+        "steps": [
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "-m",
+              "pytest",
+              "-q",
+              "-p",
+              "no:cacheprovider",
+              "tests/test_nm_mask_features.py",
+              "tests/test_nm_mask_native.py",
+              "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_forward_cat_augmented.xml"
+            ],
+            "finished_at_utc": "2026-09-15T02:54:09.285687+00:00",
+            "returncode": 4,
+            "started_at_utc": "2026-09-15T02:54:08.065009+00:00"
+          }
+        ],
+        "worker": "arcw7"
+      },
+      "worker": "arcw7"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "audit_used": false,
+  "created_at_utc": "2026-09-14T15:04:17.373714+00:00",
+  "folds": {
+    "forward": {
+      "lirf_lfpg_sse_fraction": 0.4593000760876743,
+      "missing_clock_rows": 1356,
+      "missing_clock_sse_fraction": 0.21877633106756394,
+      "over_3h_sse_fraction": 0.14995758344828275,
+      "rmse_seconds": 223.32713908273132,
+      "rows": 162332
+    },
+    "seasonal": {
+      "lirf_lfpg_sse_fraction": 0.6304983697276649,
+      "missing_clock_rows": 5373,
+      "missing_clock_sse_fraction": 0.4960692428198166,
+      "over_3h_sse_fraction": 0.33414412821195155,
+      "rmse_seconds": 324.9170674788965,
+      "rows": 344419
+    }
+  },
+  "inputs": {
+    "docs/nmclock/analysis.json": "4bdafc6dab9042b6fd0fc0929fadbf21b0d4756c6d065d475a848441fa5db1d0",
+    "docs/nmclock/development_results.json": "c3a3efc18a43484198b927f7a38fed431b64541f77a31ef60ce2f0b1ee1dfeb9",
+    "docs/nmclock/leaderboard_snapshot.json": "2a8c172917dfb4cbb5af0163ba77e0c4f9d0efd6a60255fa57dce88b7ca1c52e"
+  },
+  "interpretation": "Descriptive headroom on reused complete development sets; overlapping slices are not additive and do not establish predictability.",
+  "new_labels_read": false,
+  "new_model_scores_read": false
+}

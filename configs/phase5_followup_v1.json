@@ -1,0 +1,113 @@
+{
+  "adaptive_followup": {
+    "changes": "Only the CatBoost global-model iteration cap and stopping patience; retain all original airport models, features, IDs, and labels.",
+    "initial_catboost_complete_rmse": {
+      "forward": 247.00847310035738,
+      "seasonal": 368.3888982966187
+    },
+    "initial_catboost_october_rmse": {
+      "forward": 241.7028854,
+      "seasonal": 242.9912188
+    },
+    "limit": "One additional model specification on each fold. No further tuning in this phase.",
+    "observed_before_declaration": "All twelve initial complete-set evaluations. Both CatBoost fits selected all 3000 permitted trees and October error was still falling at the cap.",
+    "parent_configuration_sha256": "ec09566a952abdb2b6a01d4ed1075b93a3d519a194aa3e4dd05942adda474eea",
+    "seed_plan": "Keep the original six-candidate anchor selection and its two planned replicas. Do not fit additional follow-up seeds."
+  },
+  "blend_extension": {
+    "include_followup_individual": true,
+    "pair_with": [
+      "reference",
+      "three_seed_mean"
+    ],
+    "promotion_margin_unchanged": true,
+    "weights": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "weights_shared_across_folds_and_airports": true
+  },
+  "blend_policy": {
+    "include_equal_three_seed_average": true,
+    "include_reference_seed_average_pairs": true,
+    "include_top_initial_pair": true,
+    "top_initial_alternatives": 2,
+    "weights": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "weights_shared_across_folds_and_airports": true
+  },
+  "declared_at_utc": "2026-09-13T19:21:22.705546+00:00",
+  "development_folds": [
+    "seasonal",
+    "forward"
+  ],
+  "diagnostic_scope": "Any new tail analysis uses only the intersection of the two fitting partitions. No December or hidden ranking labels. New feature or offset hypotheses require a separately declared later batch.",
+  "experiment_id": "prc2026-phase5-catboost-cap-followup-v1",
+  "feature_bundle_id": "2ceb3449c26767a9731121bdd4988cff7d57f6e9310b84ac680657a131ae9cff",
+  "feature_changes": false,
+  "feature_policy": "record-quality-conditional-schedule-v1",
+  "minimum_improvement_fraction_each_fold": 0.005,
+  "prediction_postprocess": "none",
+  "reference_model_code_sha256": "124b752ecc6717ec9ed9f5fcd32237716a637decc41200c3ed411d6122c788c4",
+  "reference_variant": "airport_blend",
+  "refit_iterations": "rounded median of October-selected iterations separately for each model component and seed",
+  "refit_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11"
+  ],
+  "seed": 20260913,
+  "seed_anchor_rule": "among initial candidates improving both complete folds and the reference, minimize mean RMSE ratio to reference; refit every component of that recipe with each declared seed",
+  "seed_replicas": [
+    20260914,
+    20260915
+  ],
+  "selection": "require at least 0.5 percent RMSE improvement on each complete fold over v3; minimize mean relative RMSE among the declared candidates and blends",
+  "target_filter": "none",
+  "threads": 16,
+  "validation_protocol": "prc2026-validation-v1",
+  "variant_order": [
+    "reference",
+    "catboost_long"
+  ],
+  "variants": {
+    "catboost_long": {
+      "early_stopping_rounds": 200,
+      "kind": "catboost",
+      "parameters": {
+        "allow_writing_files": false,
+        "boosting_type": "Plain",
+        "bootstrap_type": "Bernoulli",
+        "depth": 8,
+        "eval_metric": "RMSE",
+        "l2_leaf_reg": 10.0,
+        "learning_rate": 0.055,
+        "loss_function": "RMSE",
+        "max_ctr_complexity": 1,
+        "nan_mode": "Min",
+        "one_hot_max_size": 10,
+        "random_strength": 1.0,
+        "rsm": 0.9,
+        "subsample": 0.8,
+        "task_type": "CPU"
+      },
+      "replace": "global",
+      "rounds": 6000
+    },
+    "reference": {
+      "replace": "none"
+    }
+  }
+}

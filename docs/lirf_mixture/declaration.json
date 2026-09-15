@@ -1,0 +1,146 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "mixture_100": {
+      "mixture_weight": 1.0,
+      "rules": [
+        "mixture",
+        "floor"
+      ]
+    },
+    "mixture_50": {
+      "mixture_weight": 0.5,
+      "rules": [
+        "mixture",
+        "floor"
+      ]
+    },
+    "mixture_75": {
+      "mixture_weight": 0.75,
+      "rules": [
+        "mixture",
+        "floor"
+      ]
+    }
+  },
+  "classifier": {
+    "categorical": [
+      "flight_prefix",
+      "stand_prefix",
+      "runway",
+      "destination_region"
+    ],
+    "inner_folds": 5,
+    "inner_group": "movement_date_utc",
+    "max_rounds": 2000,
+    "modes": {
+      "fill": 0,
+      "normal": 1,
+      "one_day": 2
+    },
+    "params": {
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1,
+      "deterministic": true,
+      "feature_fraction": 0.8,
+      "force_row_wise": true,
+      "lambda_l2": 5.0,
+      "learning_rate": 0.03,
+      "min_data_in_leaf": 20,
+      "num_class": 3,
+      "num_leaves": 7,
+      "num_threads": 4,
+      "objective": "multiclass",
+      "seed": 20260915,
+      "verbose": -1
+    },
+    "rounds_rule": "median best iteration over inner date-grouped folds with 100-round patience, at least 50"
+  },
+  "declared_at_utc": "2026-09-15T06:05:00+00:00",
+  "development_folds": [
+    "seasonal",
+    "forward"
+  ],
+  "development_native_fits": 2,
+  "execution": {
+    "automatic_submission": false,
+    "azure_only": true,
+    "host": "local-windows",
+    "new_workers": 0
+  },
+  "experiment_id": "prc2026-lirf-turnaround-mixture-v1",
+  "fallback_recipe": "cat_weather_v4_100",
+  "fill_tolerance_seconds": 120,
+  "floor_rule": "Raise every prediction to at least the minimum departure label of the fitting rows (refit months for the export).",
+  "incumbent": {
+    "official_rmse_seconds": 275.057,
+    "recipe": "full_timeline_v6_100",
+    "submission": "vigorous-whistle_v7.parquet",
+    "submission_sha256": "534e1031a068a743515eeb44b4b8f13676c5626d6c18c9416da092d58b0b924e"
+  },
+  "minimum_improvement_fraction_each_fold": 0.005,
+  "mixture": {
+    "applies_to": "LIRF departures with no Network Manager record (AOBT_3_flt and LOBT_flt missing) and missing AIRCRAFT_TYPE_mvt whose schedule interval s = MVT_TIME_UTC_mvt - SCHED_TIME_UTC_mvt is at most 43200 seconds; every other row keeps the incumbent prediction, including the long-schedule rows above 43200 seconds whose one-day mode the incumbent already carries.",
+    "normal_component": "median fitting label of normal-mode population rows within the schedule-interval band of the row",
+    "normal_component_bands_seconds": [
+      -1000000000,
+      1800,
+      3600,
+      7200,
+      14400,
+      43200,
+      1000000000
+    ],
+    "one_day_label_interval_seconds": [
+      82800,
+      90000
+    ],
+    "prediction": "(1 - w) * incumbent + w * (p_fill * s + (1 - p_fill) * normal_component), with p_fill = P(fill) / (P(fill) + P(normal)) from the three-class classifier",
+    "schedule_interval_threshold_seconds": 43200
+  },
+  "parents": {
+    "fallback_selection": {
+      "path": "runs/azure_arcw0_weather/selection.json",
+      "sha256": "1228b7b16d3bea90229da139fb51ee714cf323472f3796604d40b1a7178351f3"
+    },
+    "incumbent_ranking_predictions": {
+      "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/ranking_predictions.parquet",
+      "sha256": "cf0c62b5288de74a8262dbb07705e75792bc92059b1e0bb8d66ac0681ec875be"
+    },
+    "incumbent_refit_run": {
+      "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/run.json",
+      "sha256": "0c1a0fcd1c2aa6034e28eca1b56dadb567aff5269cac823067c4c097a84498e0"
+    },
+    "incumbent_selection": {
+      "path": "runs/azure_arcw0_surface_airports/selection.json",
+      "sha256": "3a6edb7beb178744acca53c92e269f2ee92fa1524115adbda74bf876cdd4d042"
+    },
+    "timeline_selection": {
+      "path": "runs/azure_arcw0_timeline/selection.json",
+      "sha256": "4a51746cab6da283662dbff4650b6b29492d6e165e34fce34001232c1e396780"
+    }
+  },
+  "prediction_postprocess": "lirf-turnaround-mixture-v1",
+  "prior_evidence": "Declared after a same-day diagnostic that found the stand-turnaround signal: among fitting-period population rows, the schedule-fill share is 65-83% when the scheduled departure precedes the previous arrival's in-block at the same stand and 25-33% when the schedule falls within two hours after it. A prototype three-class classifier with these features, evaluated on the original folds with fitting-month training, scored 318.076/317.218/317.385 seasonal and 219.927/219.757/219.879 forward for mixture weights 0.5/0.75/1.0 against v7's 322.819/221.138. The declared implementation fixes the feature definitions, date-grouped inner validation, seed and bands; its scores are recomputed from scratch here. The v8 result (283.668) is not used for any rule: rows above 43200 seconds are left exactly at v7.",
+  "refit_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11"
+  ],
+  "seed": 20260915,
+  "selection": "Score the three fixed candidates on both complete original folds against the exactly reconstructed v7 development predictions. Require at least 0.5% lower complete RMSE than v7 on EACH fold, then choose the lowest equally weighted mean ratio; otherwise select nothing. The classifier and normal component are fitted on the fold's fitting months only; no scoring, stopping, December or ranking labels enter any parameter. Common weights at all rows; no airport, threshold or band search.",
+  "target_filter": "none",
+  "threads": 4,
+  "turnaround_features": {
+    "description": "Label-free stand occupancy from arrival rows at LIRF: the latest arrival in-block at the departure's stand that is at least 1200 seconds before takeoff (previous aircraft), and the first arrival in-block after that point (next aircraft). Features: schedule minus previous in-block, takeoff minus previous in-block, next in-block minus takeoff. Arrival in-block times remain supplied in the ranking data.",
+    "previous_arrival_margin_seconds": 1200
+  }
+}

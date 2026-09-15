@@ -1,0 +1,4938 @@
+{
+  "actual_months": [
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-08",
+    "2025-09"
+  ],
+  "aobt_lobt_comparisons_by_disagreement_threshold": {
+    "3600": {
+      "aobt_closer_rows": 1106,
+      "aobt_residual": {
+        "absolute_error_at_most_60_seconds_rows": 11,
+        "bias_seconds": 1233.0524439918534,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.1753979753356203,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 188,
+            "sse": 3222738427.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.033538948775534344,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 62,
+            "sse": 616240061.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0003815908431698121,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 26,
+            "sse": 7011298.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 2.536173213308438e-05,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 60,
+            "sse": 465993.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.009644788568787335,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 745,
+            "sse": 177212027.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.14452433701347905,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 518,
+            "sse": 2655470416.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.5972740349972591,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 362,
+            "sse": 10974231489.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.03921296273401708,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 3,
+            "sse": 720493618.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 47,
+        "quantiles_seconds": {
+          "maximum": 20657.0,
+          "median": 703.5,
+          "minimum": -9069.0,
+          "p001": -6836.302,
+          "p01": -4398.1,
+          "p10": -3568.0,
+          "p90": 4681.7,
+          "p99": 8701.07,
+          "p999": 11950.431000000013
+        },
+        "rmse_seconds": 3058.6479955350587,
+        "rows": 1964,
+        "sse": 18373863329.0
+      },
+      "equal_absolute_error_rows": 0,
+      "interpretation": "Descriptive fitting-only source comparison; no target-aware choice is made at prediction time.",
+      "lobt_closer_rows": 858,
+      "lobt_residual": {
+        "absolute_error_at_most_60_seconds_rows": 111,
+        "bias_seconds": -1875.8803462321791,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.06413410511562646,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 64,
+            "sse": 830895202.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.8740240368905116,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 1262,
+            "sse": 11323497496.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.00492676146825584,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 233,
+            "sse": 63829104.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 4.045983088203486e-05,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 161,
+            "sse": 524181.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0019391356209573802,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 138,
+            "sse": 25122647.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.05493550107376677,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 106,
+            "sse": 711721855.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 251,
+        "quantiles_seconds": {
+          "maximum": 3599.0,
+          "median": -2580.0,
+          "minimum": -3606.0,
+          "p001": -3606.0,
+          "p01": -3604.0,
+          "p10": -3543.0,
+          "p90": 245.0,
+          "p99": 3426.0,
+          "p999": 3596.0370000000003
+        },
+        "rmse_seconds": 2568.3716307230648,
+        "rows": 1964,
+        "sse": 12955590485.0
+      },
+      "rows": 1964
+    },
+    "60": {
+      "aobt_closer_rows": 763975,
+      "aobt_residual": {
+        "absolute_error_at_most_60_seconds_rows": 215475,
+        "bias_seconds": -8.957072367642954,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.03351247750398186,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 338,
+            "sse": 5414170799.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.10062552600777412,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 7114,
+            "sse": 16256744506.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.26906877518051064,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 356400,
+            "sse": 43469907748.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.011896627356248862,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 400703,
+            "sse": 1921981818.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.21424732964145074,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 272643,
+            "sse": 34613126880.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2730693496134701,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 19109,
+            "sse": 44116228011.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.09312022418043747,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 585,
+            "sse": 15044211473.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.004459690516126161,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 3,
+            "sse": 720493618.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 172,
+        "quantiles_seconds": {
+          "maximum": 20657.0,
+          "median": -30.0,
+          "minimum": -9069.0,
+          "p001": -2263.1059999999998,
+          "p01": -837.0,
+          "p10": -363.0,
+          "p90": 358.0,
+          "p99": 1199.0,
+          "p999": 3001.0
+        },
+        "rmse_seconds": 390.97301799119896,
+        "rows": 1056895,
+        "sse": 161556864853.0
+      },
+      "equal_absolute_error_rows": 2731,
+      "interpretation": "Descriptive fitting-only source comparison; no target-aware choice is made at prediction time.",
+      "lobt_closer_rows": 290189,
+      "lobt_residual": {
+        "absolute_error_at_most_60_seconds_rows": 96519,
+        "bias_seconds": -397.4214278618027,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0024489651043870645,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 120,
+            "sse": 1557951914.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.7039851355695429,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 180022,
+            "sse": 447852436698.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2088578327744792,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 501466,
+            "sse": 132868557311.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0012793161975868,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 173094,
+            "sse": 813859338.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.04808494880602703,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 193210,
+            "sse": 30590079823.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.034690946501042146,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 8951,
+            "sse": 22069251376.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.000652855046934871,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 32,
+            "sse": 415325138.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 647,
+        "quantiles_seconds": {
+          "maximum": 3606.0,
+          "median": -307.0,
+          "minimum": -3606.0,
+          "p001": -3477.0,
+          "p01": -2642.0,
+          "p10": -1195.0,
+          "p90": 300.0,
+          "p99": 846.0,
+          "p999": 2396.0
+        },
+        "rmse_seconds": 775.8357798854994,
+        "rows": 1056895,
+        "sse": 636167461598.0
+      },
+      "rows": 1056895
+    },
+    "900": {
+      "aobt_closer_rows": 182065,
+      "aobt_residual": {
+        "absolute_error_at_most_60_seconds_rows": 34826,
+        "bias_seconds": 152.42307365077565,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.06349986675694225,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 335,
+            "sse": 5374235356.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.10541033176389387,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 2919,
+            "sse": 8921277489.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.08420394575929376,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 45107,
+            "sse": 7126500346.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0036229400193368184,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 64744,
+            "sse": 306623200.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.16853134316973478,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 83882,
+            "sse": 14263448875.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.40012365967913266,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 14055,
+            "sse": 33863987886.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.1660948415565748,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 521,
+            "sse": 14057238472.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.00851307129509109,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 3,
+            "sse": 720493618.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 145,
+        "quantiles_seconds": {
+          "maximum": 20657.0,
+          "median": 92.0,
+          "minimum": -9069.0,
+          "p001": -3792.0,
+          "p01": -1027.35,
+          "p10": -348.0,
+          "p90": 718.0,
+          "p99": 2159.0,
+          "p999": 4861.434999999998
+        },
+        "rmse_seconds": 632.4832029721548,
+        "rows": 211566,
+        "sse": 84633805242.0
+      },
+      "equal_absolute_error_rows": 195,
+      "interpretation": "Descriptive fitting-only source comparison; no target-aware choice is made at prediction time.",
+      "lobt_closer_rows": 29306,
+      "lobt_residual": {
+        "absolute_error_at_most_60_seconds_rows": 3222,
+        "bias_seconds": -1122.2102133613153,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.003452113869343205,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 118,
+            "sse": 1532003106.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.9079616456307782,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 143193,
+            "sse": 402941534921.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0452557508876359,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 43004,
+            "sse": 20083911930.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 3.918467130024773e-05,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 4775,
+            "sse": 17389646.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.011459335443993695,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 14984,
+            "sse": 5085503595.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.03151016610220182,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 5481,
+            "sse": 13983800699.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0003218033947469088,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 11,
+            "sse": 142812149.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 605,
+        "quantiles_seconds": {
+          "maximum": 3606.0,
+          "median": -1141.0,
+          "minimum": -3606.0,
+          "p001": -3596.0,
+          "p01": -3311.35,
+          "p10": -2214.0,
+          "p90": 60.0,
+          "p99": 1326.3500000000058,
+          "p999": 3121.4349999999977
+        },
+        "rmse_seconds": 1448.319336642112,
+        "rows": 211566,
+        "sse": 443786956046.0
+      },
+      "rows": 211566
+    }
+  },
+  "audit_used": false,
+  "bundle_id": "72e86725e23367ede5b558027cfc8eeb7ef6cfbaed23980537766ef6a34a7f34",
+  "code_sha256": "47e5ab3ebe2ea755c9b07edf642431069a6bac2761290646c78e887b2eb937e0",
+  "created_at_utc": "2026-09-14T15:36:31.427602+00:00",
+  "feature_columns": [
+    "airport",
+    "nm_missing",
+    "aircraft_missing",
+    "lirf_missing_record",
+    "conditional_schedule_offset_s",
+    "schedule_to_movement_s",
+    "nmclock_available",
+    "nmclock_source",
+    "nmclock_proxy_s",
+    "nmclock_both_present",
+    "nmclock_agree_60s",
+    "nmclock_clock_difference_s",
+    "nmclock_aobt_movement_minus_s",
+    "nmclock_lobt_movement_minus_s"
+  ],
+  "fitting_ids_sha256": "5a8ca81854dc7ddc29c0cc0e82c5f3a0a3bc2eb2b22ac17d4da387e7090b63f7",
+  "fitting_rows": 1226945,
+  "groups": {
+    "airport/EDDF": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 28544,
+        "bias_seconds": -57.16151610809535,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.010062196514044575,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 1,
+            "sse": 82246761.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.005161855135489044,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 19,
+            "sse": 42192166.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.4380549585905228,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 57875,
+            "sse": 3580590126.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.03289669767859847,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 56351,
+            "sse": 268892267.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.26460060034671506,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 20558,
+            "sse": 2162802357.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.17501033739331734,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 758,
+            "sse": 1430506090.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.07421335434131271,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 22,
+            "sse": 606607912.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 0,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 0,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 9031.0,
+          "median": -90.0,
+          "minimum": -9069.0,
+          "p001": -596.417,
+          "p01": -443.0,
+          "p10": -288.0,
+          "p90": 199.0,
+          "p99": 707.0,
+          "p999": 1563.5019999999204
+        },
+        "rmse_seconds": 245.5323855237516,
+        "rows": 135584,
+        "sse": 8173837679.0,
+        "target_above_3h_rows": 0
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 1,
+        "bias_seconds": 948.3522072936661,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 4.848977062537419e-06,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 2,
+            "sse": 5188.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.20346320652611224,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 471,
+            "sse": 217688618.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.7761743825919152,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 568,
+            "sse": 830441688.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.020357561904910094,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 1,
+            "sse": 21780889.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 0,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 0,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 4667.0,
+          "median": 944.5,
+          "minimum": 2.0,
+          "p001": 74.50099999999999,
+          "p01": 246.05,
+          "p10": 495.4000000000001,
+          "p90": 1374.9,
+          "p99": 1795.0,
+          "p999": 2345.2210000000014
+        },
+        "rmse_seconds": 1013.3070386169024,
+        "rows": 1042,
+        "sse": 1069916383.0,
+        "target_above_3h_rows": 0
+      }
+    },
+    "airport/EDDM": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 26105,
+        "bias_seconds": 58.503376988308496,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.010394660280323938,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 4,
+            "sse": 97473308.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.002647762310210357,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 8,
+            "sse": 24828724.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.1280216899114314,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 22661,
+            "sse": 1200491144.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.025013843227149394,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 47989,
+            "sse": 234561013.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.4018795926990335,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 26802,
+            "sse": 3768524633.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.38436107128834923,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 2164,
+            "sse": 3604249112.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.04768138028350218,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 17,
+            "sse": 447120131.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 0,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 3,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 8285.0,
+          "median": 0.0,
+          "minimum": -5527.0,
+          "p001": -544.0,
+          "p01": -416.0,
+          "p10": -184.0,
+          "p90": 361.0,
+          "p99": 1136.0,
+          "p999": 2165.0
+        },
+        "rmse_seconds": 306.7679235745101,
+        "rows": 99645,
+        "sse": 9377248065.0,
+        "target_above_3h_rows": 0
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 0,
+        "bias_seconds": 909.1033834586466,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2901411271136329,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 310,
+            "sse": 161165786.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.5171283758058848,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 218,
+            "sse": 287251249.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.19273049708048232,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 4,
+            "sse": 107056736.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 0,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 0,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 6612.0,
+          "median": 844.5,
+          "minimum": 177.0,
+          "p001": 182.841,
+          "p01": 264.33000000000004,
+          "p10": 591.2,
+          "p90": 1211.9,
+          "p99": 2152.979999999986,
+          "p999": 5932.320000000065
+        },
+        "rmse_seconds": 1021.8236783805943,
+        "rows": 532,
+        "sse": 555473771.0,
+        "target_above_3h_rows": 0
+      }
+    },
+    "airport/EGLL": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 27028,
+        "bias_seconds": -19.262173473805746,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0008055949427314147,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 1,
+            "sse": 18190225.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.09759476047558586,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 1275,
+            "sse": 2203676510.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2722947103725758,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 48022,
+            "sse": 6148377783.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.011061349202394538,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 50132,
+            "sse": 249763771.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.15823906162093085,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 36999,
+            "sse": 3573016639.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.3155045014304686,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 2017,
+            "sse": 7124049029.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.1445000219553129,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 134,
+            "sse": 3262790979.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 0,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 19,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 10086.0,
+          "median": -6.0,
+          "minimum": -4265.0,
+          "p001": -1680.842,
+          "p01": -896.21,
+          "p10": -415.0,
+          "p90": 302.0,
+          "p99": 1435.0,
+          "p999": 3595.0
+        },
+        "rmse_seconds": 403.65505114826215,
+        "rows": 138580,
+        "sse": 22579864936.0,
+        "target_above_3h_rows": 1
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 1,
+        "bias_seconds": 1526.621301775148,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 3.290476723683619e-07,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 1,
+            "sse": 676.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.012964890087660831,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 43,
+            "sse": 26635246.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.6606034512350084,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 612,
+            "sse": 1357152688.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.32643132962965843,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 20,
+            "sse": 670624950.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 0,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 0,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 8695.0,
+          "median": 1373.5,
+          "minimum": 26.0,
+          "p001": 131.3,
+          "p01": 671.0,
+          "p10": 965.0,
+          "p90": 1991.0,
+          "p99": 6032.75,
+          "p999": 8047.000000000044
+        },
+        "rmse_seconds": 1743.2938116133687,
+        "rows": 676,
+        "sse": 2054413560.0,
+        "target_above_3h_rows": 0
+      }
+    },
+    "airport/EHAM": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 33581,
+        "bias_seconds": -154.9606938741538,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.005162242743141081,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 5,
+            "sse": 82532724.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.41482183488249713,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 3080,
+            "sse": 6632074025.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.4643698838163604,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 65685,
+            "sse": 7424236589.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.01830978429248968,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 63903,
+            "sse": 292732529.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.03028767905468071,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 11446,
+            "sse": 484232296.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.01152766948136263,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 34,
+            "sse": 184301671.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.05552090572946836,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 23,
+            "sse": 887655195.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 1,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 3,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 9705.0,
+          "median": -110.0,
+          "minimum": -4721.0,
+          "p001": -2464.65,
+          "p01": -1258.25,
+          "p10": -433.0,
+          "p90": 100.0,
+          "p99": 269.0,
+          "p999": 457.82500000001164
+        },
+        "rmse_seconds": 333.0024220080096,
+        "rows": 144176,
+        "sse": 15987765029.0,
+        "target_above_3h_rows": 0
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 72,
+        "bias_seconds": 550.25,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.001649627885752808,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 239,
+            "sse": 1814077.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.39672128204233875,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 1679,
+            "sse": 436269876.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.6016290900719085,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 434,
+            "sse": 661604659.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 0,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 0,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 2765.0,
+          "median": 482.0,
+          "minimum": 15.0,
+          "p001": 32.0,
+          "p01": 52.0,
+          "p10": 119.0,
+          "p90": 1074.7000000000003,
+          "p99": 1726.9199999999983,
+          "p999": 2649.5759999999973
+        },
+        "rmse_seconds": 683.7797028084331,
+        "rows": 2352,
+        "sse": 1099688612.0,
+        "target_above_3h_rows": 0
+      }
+    },
+    "airport/LEBL": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 27797,
+        "bias_seconds": 70.34227568809067,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.007358676058460502,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 64,
+            "sse": 71654389.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.16300585936683962,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 19985,
+            "sse": 1587253626.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.02335646125666956,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 49221,
+            "sse": 227431259.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.3756295168183724,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 34966,
+            "sse": 3657655712.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.41733350741973596,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 1997,
+            "sse": 4063744245.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.013315979079921911,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 3,
+            "sse": 129663045.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 4,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 0,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 8697.0,
+          "median": 55.0,
+          "minimum": -1265.0,
+          "p001": -785.0,
+          "p01": -498.3000000000002,
+          "p10": -185.0,
+          "p90": 360.0,
+          "p99": 1195.0,
+          "p999": 2225.0
+        },
+        "rmse_seconds": 302.75107990915427,
+        "rows": 106236,
+        "sse": 9737402276.0,
+        "target_above_3h_rows": 0
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 12,
+        "bias_seconds": 1042.5610236220473,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 2.0886640365533423e-05,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 13,
+            "sse": 26592.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.13813292106808378,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 359,
+            "sse": 175865078.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.8618461922915507,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 644,
+            "sse": 1097266652.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 0,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 0,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 3273.0,
+          "median": 1036.5,
+          "minimum": 18.0,
+          "p001": 19.015,
+          "p01": 55.15,
+          "p10": 588.5,
+          "p90": 1499.5,
+          "p99": 2300.950000000001,
+          "p999": 2891.1900000000005
+        },
+        "rmse_seconds": 1119.423326827554,
+        "rows": 1016,
+        "sse": 1273158322.0,
+        "target_above_3h_rows": 0
+      }
+    },
+    "airport/LEMD": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 31884,
+        "bias_seconds": 38.375126870313984,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.006938672977885674,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 33,
+            "sse": 64239552.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.16734188666924002,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 29558,
+            "sse": 1549282963.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.030711534915538772,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 58396,
+            "sse": 284333222.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.38193382645815094,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 32604,
+            "sse": 3536015890.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.376081322604214,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 1573,
+            "sse": 3481832298.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.03699275637497056,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 8,
+            "sse": 342485963.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 0,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 0,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 8282.0,
+          "median": -1.0,
+          "minimum": -2641.0,
+          "p001": -657.0,
+          "p01": -366.0,
+          "p10": -186.0,
+          "p90": 304.0,
+          "p99": 1024.0,
+          "p999": 2101.0
+        },
+        "rmse_seconds": 275.2816104154152,
+        "rows": 122172,
+        "sse": 9258189888.0,
+        "target_above_3h_rows": 0
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 0,
+        "bias_seconds": 1101.8363228699552,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.107590751269186,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 118,
+            "sse": 63641941.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.892409248730814,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 328,
+            "sse": 527876756.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 0,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 0,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 2666.0,
+          "median": 1083.5,
+          "minimum": 192.0,
+          "p001": 249.85,
+          "p01": 366.05,
+          "p10": 715.5,
+          "p90": 1533.0,
+          "p99": 2069.700000000002,
+          "p999": 2543.180000000002
+        },
+        "rmse_seconds": 1151.6401805169728,
+        "rows": 446,
+        "sse": 591518697.0,
+        "target_above_3h_rows": 0
+      }
+    },
+    "airport/LFPG": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 31237,
+        "bias_seconds": 30.938313582826062,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.005534792309352613,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 6,
+            "sse": 99102787.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.03944596432864681,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 525,
+            "sse": 706296602.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.257876076424698,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 35950,
+            "sse": 4617379740.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.014840618967626514,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 56303,
+            "sse": 265727532.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.3002327235409169,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 44279,
+            "sse": 5375793343.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.18695709306719405,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 1667,
+            "sse": 3347545479.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.16283191284454068,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 83,
+            "sse": 2915573968.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.03228081851702443,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 2,
+            "sse": 578001649.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 25,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 11,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 20657.0,
+          "median": 4.0,
+          "minimum": -4442.0,
+          "p001": -1082.0,
+          "p01": -777.0,
+          "p10": -304.0,
+          "p90": 363.0,
+          "p99": 962.859999999986,
+          "p999": 2637.929999999935
+        },
+        "rmse_seconds": 359.1485115541801,
+        "rows": 138815,
+        "sse": 17905421100.0,
+        "target_above_3h_rows": 2
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 14,
+        "bias_seconds": 1058.8419661733615,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 1.4553576417334855e-06,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 14,
+            "sse": 3895.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.1435624830458074,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 738,
+            "sse": 384218872.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.6953578759208937,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 1124,
+            "sse": 1860998870.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.1610781856756571,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 16,
+            "sse": 431096464.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 7,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 1,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 9115.0,
+          "median": 967.0,
+          "minimum": -11.0,
+          "p001": -9.0,
+          "p01": 307.1,
+          "p10": 607.0,
+          "p90": 1505.8000000000002,
+          "p99": 2843.95999999998,
+          "p999": 5482.934999999945
+        },
+        "rmse_seconds": 1189.3462283312062,
+        "rows": 1892,
+        "sse": 2676318101.0,
+        "target_above_3h_rows": 0
+      }
+    },
+    "airport/LIRF": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 17877,
+        "bias_seconds": 223.25427444103462,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0020217567791832917,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 2,
+            "sse": 58347700.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.002522138298929083,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 44,
+            "sse": 72788661.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.03967746797472736,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 15806,
+            "sse": 1145087788.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.005190635070664829,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 31807,
+            "sse": 149801213.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.25759015648917155,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 41996,
+            "sse": 7434026352.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.5104674398763203,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 5900,
+            "sse": 14732039654.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.18253040551100363,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 247,
+            "sse": 5267809388.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 0,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 34,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 10435.0,
+          "median": 120.0,
+          "minimum": -6484.0,
+          "p001": -783.0,
+          "p01": -474.0,
+          "p10": -182.0,
+          "p90": 718.0,
+          "p99": 2221.0,
+          "p999": 4376.198999999993
+        },
+        "rmse_seconds": 548.8581643811423,
+        "rows": 95802,
+        "sse": 28859900756.0,
+        "target_above_3h_rows": 3
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 432,
+        "bias_seconds": -2022.7141148325359,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.14768515841433322,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 18,
+            "sse": 3814978903.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.41389214217445547,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 331,
+            "sse": 10691594250.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0019023593045234355,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 9,
+            "sse": 49141435.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 4.384419160083409e-05,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 2,
+            "sse": 1132576.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 4.912542658634693e-07,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 433,
+            "sse": 12690.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 9.675432776609418e-05,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 7,
+            "sse": 2499342.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0007748845810461134,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 8,
+            "sse": 20016692.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.027522948747244275,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 20,
+            "sse": 710968319.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.4080814170047647,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 8,
+            "sse": 10541492546.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 0,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 13,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 75474.0,
+          "median": -4.0,
+          "minimum": -21961.0,
+          "p001": -18651.895,
+          "p01": -13672.7,
+          "p10": -6569.0,
+          "p90": 5.0,
+          "p99": 9329.24999999993,
+          "p999": 43316.4799999986
+        },
+        "rmse_seconds": 5558.716242044505,
+        "rows": 836,
+        "sse": 25831836753.0,
+        "target_above_3h_rows": 102
+      }
+    },
+    "airport/LSZH": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 19070,
+        "bias_seconds": 57.39603529863154,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.009874170436738935,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 51,
+            "sse": 51641681.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.18911313334371457,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 16489,
+            "sse": 989057275.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.029700554488209813,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 35122,
+            "sse": 155333207.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.5525962327295033,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 26057,
+            "sse": 2890065404.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.1494354943841214,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 459,
+            "sse": 781544149.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.06928041461771202,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 12,
+            "sse": 362334952.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 46,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 2,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 7455.0,
+          "median": 32.0,
+          "minimum": -1445.0,
+          "p001": -713.811,
+          "p01": -378.0,
+          "p10": -224.0,
+          "p90": 351.0,
+          "p99": 783.0,
+          "p999": 1481.8110000000015
+        },
+        "rmse_seconds": 258.6272423631941,
+        "rows": 78190,
+        "sse": 5229976668.0,
+        "target_above_3h_rows": 0
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 286,
+        "bias_seconds": 707.1586059743954,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 4.3070513634835005e-06,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 287,
+            "sse": 37805.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.040063889190122035,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 785,
+            "sse": 351659454.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.052227813864297715,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 332,
+            "sse": 458427898.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.03860923565411242,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 1,
+            "sse": 338891281.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.8690947542401043,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 1,
+            "sse": 7628450281.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 146,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 0,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 87341.0,
+          "median": 692.5,
+          "minimum": -12.0,
+          "p001": -12.0,
+          "p01": -11.0,
+          "p10": -1.0,
+          "p90": 1086.5,
+          "p99": 1778.8000000000002,
+          "p999": 12341.695000000409
+        },
+        "rmse_seconds": 2498.5723831359296,
+        "rows": 1406,
+        "sse": 8777466719.0,
+        "target_above_3h_rows": 2
+      }
+    },
+    "airport/LTFM": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 13539,
+        "bias_seconds": -236.4534024144093,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.11268621710828604,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 319,
+            "sse": 4976277294.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.17244908154679106,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 2641,
+            "sse": 7615433998.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.46999375858124925,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 103175,
+            "sse": 20755149380.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.003166739152641123,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 26190,
+            "sse": 139844717.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.07612787618092347,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 20369,
+            "sse": 3361843457.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.1425163527821875,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 2831,
+            "sse": 6293590366.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.01983328931543794,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 40,
+            "sse": 875847551.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.003226685332483637,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 1,
+            "sse": 142491969.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 0,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 104,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 11937.0,
+          "median": -296.0,
+          "minimum": -8614.0,
+          "p001": -3856.0,
+          "p01": -1076.0,
+          "p10": -655.0,
+          "p90": 241.0,
+          "p99": 1197.0,
+          "p999": 2644.0
+        },
+        "rmse_seconds": 532.7942680094325,
+        "rows": 155566,
+        "sse": 44160478732.0,
+        "target_above_3h_rows": 0
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 2,
+        "bias_seconds": 1474.4341241797072,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 1.4956994320151938e-06,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 3,
+            "sse": 12395.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.04920500718939457,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 729,
+            "sse": 407766461.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2129369218778692,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 1048,
+            "sse": 1764628033.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.7378565752333042,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 201,
+            "sse": 6114685915.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 1,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 9,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 10309.0,
+          "median": 1019.0,
+          "minimum": -5.0,
+          "p001": 108.92,
+          "p01": 469.0,
+          "p10": 666.0,
+          "p90": 3664.0,
+          "p99": 7095.800000000003,
+          "p999": 9254.53999999998
+        },
+        "rmse_seconds": 2045.3086893004725,
+        "rows": 1981,
+        "sse": 8287092804.0,
+        "target_above_3h_rows": 0
+      }
+    },
+    "all": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 256662,
+        "bias_seconds": -17.603177072786035,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.03161188829282163,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 338,
+            "sse": 5414170799.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.1020892019457484,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 7740,
+            "sse": 17484826308.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.28607976913829236,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 415206,
+            "sse": 48996906414.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.013244699027804148,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 475414,
+            "sse": 2268420730.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.21161883615402638,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 296076,
+            "sse": 36243976083.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.26299631987146777,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 19400,
+            "sse": 45043402093.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.08815251695956317,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 589,
+            "sse": 15097889084.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.004206768610276143,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 3,
+            "sse": 720493618.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 76,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 176,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 20657.0,
+          "median": -49.0,
+          "minimum": -9069.0,
+          "p001": -2098.0,
+          "p01": -818.0,
+          "p10": -362.0,
+          "p90": 306.0,
+          "p99": 1138.0,
+          "p999": 2883.0
+        },
+        "rmse_seconds": 375.4865998854939,
+        "rows": 1214766,
+        "sse": 171270085129.0,
+        "target_above_3h_rows": 6
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 820,
+        "bias_seconds": 786.2821249692093,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.07306025620584237,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 18,
+            "sse": 3814978903.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.20475358711411232,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 331,
+            "sse": 10691594250.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0009411024078270635,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 9,
+            "sse": 49141435.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 2.1689842810799976e-05,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 2,
+            "sse": 1132576.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 3.664175001684142e-05,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 992,
+            "sse": 1913318.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.04265690549169153,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 5239,
+            "sse": 2227410674.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.1697854133195758,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 5316,
+            "sse": 8865665185.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.1542836856349158,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 262,
+            "sse": 8056213273.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2083690762728508,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 9,
+            "sse": 10880383827.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.14609164196035665,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 1,
+            "sse": 7628450281.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 154,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 23,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 87341.0,
+          "median": 848.0,
+          "minimum": -21961.0,
+          "p001": -12224.21,
+          "p01": -5698.0,
+          "p10": 71.0,
+          "p90": 1491.0,
+          "p99": 5353.659999999965,
+          "p999": 10078.19400000012
+        },
+        "rmse_seconds": 2070.6164486401376,
+        "rows": 12179,
+        "sse": 52216883722.0,
+        "target_above_3h_rows": 104
+      }
+    },
+    "month/2025-02": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 30280,
+        "bias_seconds": -36.72264447280223,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.01974680290923376,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 22,
+            "sse": 380363649.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.10976666766545165,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 1275,
+            "sse": 2114329618.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.32001695034431576,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 51882,
+            "sse": 6164178350.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.014021427872929907,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 56314,
+            "sse": 270081263.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.1828326406617946,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 30661,
+            "sse": 3521729096.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.29497171405527084,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 2414,
+            "sse": 5681756081.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0586437964910035,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 54,
+            "sse": 1129598980.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 9,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 7,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 7319.0,
+          "median": -58.0,
+          "minimum": -6768.0,
+          "p001": -1736.0,
+          "p01": -892.5799999999999,
+          "p10": -365.0,
+          "p90": 298.0,
+          "p99": 1199.0,
+          "p999": 2701.136999999959
+        },
+        "rmse_seconds": 367.5004249802245,
+        "rows": 142622,
+        "sse": 19262037037.0,
+        "target_above_3h_rows": 1
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 102,
+        "bias_seconds": 1569.990990990991,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.05292316358816622,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 11,
+            "sse": 413504533.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 2.680839218636685e-05,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 120,
+            "sse": 209462.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.020772553116797786,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 431,
+            "sse": 162302181.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.09248244734081809,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 349,
+            "sse": 722593069.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.7737706920201113,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 197,
+            "sse": 6045702240.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.06002433554192026,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 2,
+            "sse": 468988117.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 26,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 7,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 18409.0,
+          "median": 894.5,
+          "minimum": -9838.0,
+          "p001": -8277.389,
+          "p01": -11.91,
+          "p10": 56.0,
+          "p90": 4982.0,
+          "p99": 7732.82,
+          "p999": 11286.427000000083
+        },
+        "rmse_seconds": 2653.1130112474384,
+        "rows": 1110,
+        "sse": 7813299602.0,
+        "target_above_3h_rows": 11
+      }
+    },
+    "month/2025-03": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 34243,
+        "bias_seconds": -41.167775621759596,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.014030329770601754,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 17,
+            "sse": 280027607.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0848848858141396,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 956,
+            "sse": 1694194779.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.38499206191548746,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 59742,
+            "sse": 7683953804.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.01526901590831766,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 63622,
+            "sse": 304750213.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.21748765596974826,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 37039,
+            "sse": 4340778075.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2103316518093347,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 1951,
+            "sse": 4197953298.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.05162470265824366,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 39,
+            "sse": 1030363661.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.021379696154126923,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 1,
+            "sse": 426711649.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 5,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 12,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 20657.0,
+          "median": -57.0,
+          "minimum": -4895.0,
+          "p001": -1469.902,
+          "p01": -836.0,
+          "p10": -414.0,
+          "p90": 299.0,
+          "p99": 963.0,
+          "p999": 2305.0199999997276
+        },
+        "rmse_seconds": 349.52988828021233,
+        "rows": 163367,
+        "sse": 19958733086.0,
+        "target_above_3h_rows": 1
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 98,
+        "bias_seconds": 833.9390018484288,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.07799704417184972,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 9,
+            "sse": 158074791.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.00016122403847497558,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 124,
+            "sse": 326749.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.09812092692124648,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 512,
+            "sse": 198859395.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.357093193008685,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 419,
+            "sse": 723712449.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.23247943258769987,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 17,
+            "sse": 471160646.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.23414817927204398,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 1,
+            "sse": 474542656.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 21,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 1,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 21784.0,
+          "median": 788.0,
+          "minimum": -5044.0,
+          "p001": -4533.597,
+          "p01": -10.19,
+          "p10": 65.10000000000001,
+          "p90": 1502.9,
+          "p99": 4554.430000000017,
+          "p999": 7133.5050000000865
+        },
+        "rmse_seconds": 1368.6065224558472,
+        "rows": 1082,
+        "sse": 2026676686.0,
+        "target_above_3h_rows": 6
+      }
+    },
+    "month/2025-04": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 37260,
+        "bias_seconds": -25.04763408207666,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.04853064010967761,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 60,
+            "sse": 1004416057.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.08360679536993246,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 780,
+            "sse": 1730370907.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.33615526795566053,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 60589,
+            "sse": 6957249029.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.01603816887393056,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 69168,
+            "sse": 331934512.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.23760131937108026,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 41236,
+            "sse": 4917523853.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.23704665061152805,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 2333,
+            "sse": 4906044132.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.04102115770819055,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 37,
+            "sse": 848995797.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 11,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 11,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 8757.0,
+          "median": -55.0,
+          "minimum": -9069.0,
+          "p001": -1884.182,
+          "p01": -778.0,
+          "p10": -360.0,
+          "p90": 302.0,
+          "p99": 1021.0,
+          "p999": 2383.4960000005085
+        },
+        "rmse_seconds": 344.68390039887487,
+        "rows": 174203,
+        "sse": 20696534287.0,
+        "target_above_3h_rows": 0
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 89,
+        "bias_seconds": 655.6009216589862,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.10771871999490853,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 1,
+            "sse": 188650225.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.34218768374060204,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 17,
+            "sse": 599281012.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.007777603779118783,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 2,
+            "sse": 13621093.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.00020963756610993019,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 128,
+            "sse": 367143.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.12324501968602226,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 538,
+            "sse": 215841784.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.3484005232354212,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 392,
+            "sse": 610161698.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0704608119978172,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 7,
+            "sse": 123399610.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 21,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 1,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 4670.0,
+          "median": 774.0,
+          "minimum": -13735.0,
+          "p001": -9462.88,
+          "p01": -4554.48,
+          "p10": 59.20000000000002,
+          "p90": 1316.0,
+          "p99": 2349.2400000000052,
+          "p999": 4569.58
+        },
+        "rmse_seconds": 1270.4810820014213,
+        "rows": 1085,
+        "sse": 1751322565.0,
+        "target_above_3h_rows": 10
+      }
+    },
+    "month/2025-05": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 38395,
+        "bias_seconds": -15.160732473842165,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.04417986277353579,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 72,
+            "sse": 1120745318.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.10661707478355911,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 1044,
+            "sse": 2704639170.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2842472121598476,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 62574,
+            "sse": 7210722537.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.013445396963115832,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 71428,
+            "sse": 341079957.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2250936068463395,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 45477,
+            "sse": 5710126518.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2524554978897745,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 2926,
+            "sse": 6404237123.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.07396134858382766,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 76,
+            "sse": 1876235686.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 7,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 40,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 10682.0,
+          "median": -46.0,
+          "minimum": -5132.0,
+          "p001": -2609.564,
+          "p01": -784.0,
+          "p10": -360.0,
+          "p90": 330.3999999999942,
+          "p99": 1084.0,
+          "p999": 2762.4040000000095
+        },
+        "rmse_seconds": 371.713637687307,
+        "rows": 183597,
+        "sse": 25367786309.0,
+        "target_above_3h_rows": 1
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 86,
+        "bias_seconds": 839.171339563863,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.013822816711825992,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 1,
+            "sse": 175774564.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.09107130171615042,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 44,
+            "sse": 1158086567.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 1.2989508646006335e-05,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 101,
+            "sse": 165178.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.022777986060065855,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 678,
+            "sse": 289650847.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0987621499508271,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 768,
+            "sse": 1255885411.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.02417046267660487,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 10,
+            "sse": 307357945.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.14948508623764736,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 2,
+            "sse": 1900891577.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.5998972071382324,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 1,
+            "sse": 7628450281.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 14,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 3,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 87341.0,
+          "median": 889.0,
+          "minimum": -13258.0,
+          "p001": -9110.408,
+          "p01": -4917.88,
+          "p10": 171.0,
+          "p90": 1448.6000000000001,
+          "p99": 2775.2400000000143,
+          "p999": 30593.61999999991
+        },
+        "rmse_seconds": 2814.7655148212243,
+        "rows": 1605,
+        "sse": 12716262370.0,
+        "target_above_3h_rows": 16
+      }
+    },
+    "month/2025-06": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 38607,
+        "bias_seconds": -4.909244906997343,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0228239245525899,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 42,
+            "sse": 630009376.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.09715351379033785,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 1132,
+            "sse": 2681730938.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.24379488126187557,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 59534,
+            "sse": 6729476373.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.012232915176396767,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 71211,
+            "sse": 337665472.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.20284596941849023,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 45436,
+            "sse": 5599162507.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2808308143914817,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 3142,
+            "sse": 7751780187.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.14031798140882795,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 143,
+            "sse": 3873200847.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 29,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 25,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 10435.0,
+          "median": -27.0,
+          "minimum": -4902.0,
+          "p001": -2094.805,
+          "p01": -783.0,
+          "p10": -358.0,
+          "p90": 354.0,
+          "p99": 1200.0,
+          "p999": 3364.0
+        },
+        "rmse_seconds": 390.90514144207145,
+        "rows": 180640,
+        "sse": 27603025700.0,
+        "target_above_3h_rows": 1
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 168,
+        "bias_seconds": 693.3293365307754,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.07900335257151285,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 5,
+            "sse": 979247123.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.20128484478939376,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 78,
+            "sse": 2494927098.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0004631555200353467,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 1,
+            "sse": 5740816.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 2.6349319128769188e-05,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 197,
+            "sse": 326600.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.037849116977857776,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 1098,
+            "sse": 469140077.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.14607727478794263,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 1107,
+            "sse": 1810628871.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.041140233584832674,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 14,
+            "sse": 509933491.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.4941556724492962,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 2,
+            "sse": 6125063112.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 31,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 7,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 75474.0,
+          "median": 842.5,
+          "minimum": -16684.0,
+          "p001": -13199.455,
+          "p01": -6003.91,
+          "p10": 59.10000000000002,
+          "p90": 1419.7000000000003,
+          "p99": 2701.2799999999843,
+          "p999": 9746.733999999742
+        },
+        "rmse_seconds": 2225.767203344773,
+        "rows": 2502,
+        "sse": 12395007188.0,
+        "target_above_3h_rows": 17
+      }
+    },
+    "month/2025-08": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 39814,
+        "bias_seconds": -3.5429542710694086,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.03393047364006673,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 58,
+            "sse": 990131495.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.1115422529329806,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 1289,
+            "sse": 3254935337.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.24696211954587594,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 61921,
+            "sse": 7206647783.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.011909368883882483,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 73174,
+            "sse": 347529520.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.21049060296959965,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 48797,
+            "sse": 6142365639.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2913721479894612,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 3496,
+            "sse": 8502585126.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.09379303403813338,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 117,
+            "sse": 2736992062.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 11,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 35,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 10257.0,
+          "median": -21.0,
+          "minimum": -8614.0,
+          "p001": -2547.341,
+          "p01": -832.0,
+          "p10": -360.0,
+          "p90": 358.0,
+          "p99": 1206.0,
+          "p999": 3123.29800000001
+        },
+        "rmse_seconds": 393.0888111775558,
+        "rows": 188852,
+        "sse": 29181186962.0,
+        "target_above_3h_rows": 1
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 162,
+        "bias_seconds": 616.1248927038627,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.18596367755596693,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 5,
+            "sse": 1381428263.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.40128457989377775,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 90,
+            "sse": 2980936210.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.00249963306074534,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 4,
+            "sse": 18568485.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 5.6240005625233654e-05,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 198,
+            "sse": 417778.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.056794475126953695,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 940,
+            "sse": 421896868.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2363966363953506,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 1084,
+            "sse": 1756068707.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0436776972232099,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 8,
+            "sse": 324459089.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0733270607383705,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 1,
+            "sse": 544708921.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 29,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 2,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 23339.0,
+          "median": 872.0,
+          "minimum": -21961.0,
+          "p001": -15846.56,
+          "p01": -6403.4400000000005,
+          "p10": 5.900000000000006,
+          "p90": 1435.1,
+          "p99": 2161.26,
+          "p999": 7360.597999999797
+        },
+        "rmse_seconds": 1785.5505301469782,
+        "rows": 2330,
+        "sse": 7428484321.0,
+        "target_above_3h_rows": 24
+      }
+    },
+    "month/2025-09": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 38063,
+        "bias_seconds": -3.9567457365622505,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.034535969129287844,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 67,
+            "sse": 1008477297.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.1131690784006609,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 1264,
+            "sse": 3304625559.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2412496555330235,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 58964,
+            "sse": 7044678538.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.011485301862610943,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 70497,
+            "sse": 335379793.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.20589484373690747,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 47430,
+            "sse": 6012290395.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.26023433932622264,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 3138,
+            "sse": 7599046146.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.12337005502418578,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 123,
+            "sse": 3602502051.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.010060756987100919,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 2,
+            "sse": 293781969.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 4,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 46,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 12300.0,
+          "median": -16.0,
+          "minimum": -4721.0,
+          "p001": -2815.1279999999997,
+          "p01": -836.0,
+          "p10": -361.0,
+          "p90": 358.0,
+          "p99": 1198.0,
+          "p999": 3180.5800000000163
+        },
+        "rmse_seconds": 401.12235951319127,
+        "rows": 181485,
+        "sse": 29200781748.0,
+        "target_above_3h_rows": 1
+      },
+      "clock_missing": {
+        "absolute_error_at_most_60_seconds_rows": 115,
+        "bias_seconds": 690.7261663286004,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.1347887099480421,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 6,
+            "sse": 1089878728.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.35701760803189875,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 82,
+            "sse": 2886784039.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0013865044933371777,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 2,
+            "sse": 11211041.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.00014006921507519663,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 2,
+            "sse": 1132576.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 1.2417771299471596e-05,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 124,
+            "sse": 100408.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.05809168192866223,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 1042,
+            "sse": 469719522.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.24569088600255296,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 1197,
+            "sse": 1986614980.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.033911202489776505,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 9,
+            "sse": 274200252.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.1689609201193556,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 1,
+            "sse": 1366189444.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 12,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 2,
+        "offset": "unchanged conditional LIRF schedule offset",
+        "quantiles_seconds": {
+          "maximum": 36962.0,
+          "median": 891.0,
+          "minimum": -16139.0,
+          "p001": -13056.808,
+          "p01": -6564.5199999999995,
+          "p10": 178.4,
+          "p90": 1446.6,
+          "p99": 2335.880000000001,
+          "p999": 5969.448000000004
+        },
+        "rmse_seconds": 1811.1476968254203,
+        "rows": 2465,
+        "sse": 8085830990.0,
+        "target_above_3h_rows": 20
+      }
+    },
+    "source/aobt_only": {},
+    "source/both_agree_60s": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 41187,
+        "bias_seconds": -75.48603606742213,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.12643405246707082,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 626,
+            "sse": 1228081802.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.5690181535012065,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 58806,
+            "sse": 5526998666.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.03566674101440918,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 74711,
+            "sse": 346438912.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.16789995044481784,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 23433,
+            "sse": 1630849203.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.09545486004172238,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 291,
+            "sse": 927174082.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.00552624253077322,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 4,
+            "sse": 53677611.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 8,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 4,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 3665.0,
+          "median": -62.0,
+          "minimum": -3540.0,
+          "p001": -1464.13,
+          "p01": -715.0,
+          "p10": -329.0,
+          "p90": 178.0,
+          "p99": 478.0,
+          "p999": 1381.0
+        },
+        "rmse_seconds": 248.04497818631788,
+        "rows": 157871,
+        "sse": 9713220276.0,
+        "target_above_3h_rows": 1
+      }
+    },
+    "source/both_disagree_60s": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 215475,
+        "bias_seconds": -8.957072367642954,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.03351247750398186,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 338,
+            "sse": 5414170799.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.10062552600777412,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 7114,
+            "sse": 16256744506.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.26906877518051064,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 356400,
+            "sse": 43469907748.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.011896627356248862,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 400703,
+            "sse": 1921981818.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.21424732964145074,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 272643,
+            "sse": 34613126880.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2730693496134701,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 19109,
+            "sse": 44116228011.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.09312022418043747,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 585,
+            "sse": 15044211473.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.004459690516126161,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 3,
+            "sse": 720493618.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 68,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 172,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 20657.0,
+          "median": -30.0,
+          "minimum": -9069.0,
+          "p001": -2263.1059999999998,
+          "p01": -837.0,
+          "p10": -363.0,
+          "p90": 358.0,
+          "p99": 1199.0,
+          "p999": 3001.0
+        },
+        "rmse_seconds": 390.97301799119896,
+        "rows": 1056895,
+        "sse": 161556864853.0,
+        "target_above_3h_rows": 5
+      }
+    },
+    "source/lobt_only": {},
+    "source/proxy_0_to_3h": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 256660,
+        "bias_seconds": -18.77557528275144,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.03280011939232246,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 338,
+            "sse": 5414170799.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.10588049332459078,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 7739,
+            "sse": 17477225259.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2968329666530807,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 415206,
+            "sse": 48996906414.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.013742521031612871,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 475412,
+            "sse": 2268417233.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.21936268561859062,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 296010,
+            "sse": 36209229383.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.2646692790152857,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 19056,
+            "sse": 43687788593.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.06412683125188931,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 467,
+            "sse": 10585132726.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.002585103712627592,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 1,
+            "sse": 426711649.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 69,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 168,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 20657.0,
+          "median": -49.0,
+          "minimum": -9069.0,
+          "p001": -2097.772,
+          "p01": -819.0,
+          "p10": -362.0,
+          "p90": 306.0,
+          "p99": 1127.0,
+          "p999": 2759.0
+        },
+        "rmse_seconds": 368.7040968275834,
+        "rows": 1214229,
+        "sse": 165065582056.0,
+        "target_above_3h_rows": 5
+      }
+    },
+    "source/proxy_negative": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 2,
+        "bias_seconds": 2643.402985074627,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 5.643142309587046e-07,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 2,
+            "sse": 3497.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0056071081752510216,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 66,
+            "sse": 34746700.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.21875664561902713,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 344,
+            "sse": 1355613500.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.7282278048809765,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 122,
+            "sse": 4512756358.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.04740787701051444,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 2,
+            "sse": 293781969.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 7,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 8,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": 12300.0,
+          "median": 1837.0,
+          "minimum": 19.0,
+          "p001": 38.795,
+          "p01": 419.05,
+          "p10": 843.0,
+          "p90": 6109.5,
+          "p99": 8917.999999999995,
+          "p999": 12105.795000000011
+        },
+        "rmse_seconds": 3400.2035781897425,
+        "rows": 536,
+        "sse": 6196902024.0,
+        "target_above_3h_rows": 0
+      }
+    },
+    "source/proxy_over_3h": {
+      "clock_available": {
+        "absolute_error_at_most_60_seconds_rows": 0,
+        "bias_seconds": -2757.0,
+        "bins": [
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": null,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 1.0,
+            "lower_inclusive_seconds": -3600.0,
+            "rows": 1,
+            "sse": 7601049.0,
+            "upper_exclusive_seconds": -900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": -120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": -120.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 120.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 120.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 900.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 900.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 3600.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 3600.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 10800.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 10800.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": 86400.0
+          },
+          {
+            "fraction_of_proxy_sse": 0.0,
+            "lower_inclusive_seconds": 86400.0,
+            "rows": 0,
+            "sse": 0.0,
+            "upper_exclusive_seconds": null
+          }
+        ],
+        "interpretation": "Error of the stated raw clock offset, not a trained-model or leaderboard score.",
+        "negative_target_rows": 0,
+        "nonzero_day_multiple_within_120_seconds_rows": 0,
+        "nonzero_hour_multiple_within_60_seconds_rows": 0,
+        "offset": "AOBT then LOBT",
+        "quantiles_seconds": {
+          "maximum": -2757.0,
+          "median": -2757.0,
+          "minimum": -2757.0,
+          "p001": -2757.0,
+          "p01": -2757.0,
+          "p10": -2757.0,
+          "p90": -2757.0,
+          "p99": -2757.0,
+          "p999": -2757.0
+        },
+        "rmse_seconds": 2757.0,
+        "rows": 1,
+        "sse": 7601049.0,
+        "target_above_3h_rows": 1
+      }
+    }
+  },
+  "interpretation": "Raw residual distributions guide a possible future declaration. This audit cannot change the active ladder recipes, weights or promotion rule.",
+  "models_fitted": 0,
+  "parent_bundle_id": "58d621b245de3f5e12dd3b50b0a90a87ea8ac3dc96aa2c274ffa7ea0af96b2e0",
+  "predictions_changed": false,
+  "scope": "Intersection of both original fitting partitions; no scoring, stopping, reserved December or ranking labels.",
+  "split_file_sha256": {
+    "forward": "0128a4b3fcc5715f3d0d727a2e4d4ce1b3d8d10b024669e7afe3de82c3be8054",
+    "seasonal": "55692f98747009d14f6a924021b65fe820f846c2440987ceef6f254c95beff96"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "audit_used": false,
+  "bundle_id": "72e86725e23367ede5b558027cfc8eeb7ef6cfbaed23980537766ef6a34a7f34",
+  "candidate_count": 36,
+  "complete_scores": {
+    "cat_long/forward": 225.13676897567834,
+    "cat_long/seasonal": 326.14471873318445,
+    "cat_missing_core/forward": 223.37378570899767,
+    "cat_missing_core/seasonal": 332.23150226225385,
+    "cat_missing_ground/forward": 221.6849663563403,
+    "cat_missing_ground/seasonal": 334.39015271577614,
+    "lgb_missing_regularized/forward": 227.9439495750883,
+    "lgb_missing_regularized/seasonal": 330.7513254710394
+  },
+  "created_at_utc": "2026-09-14T16:11:30.329079+00:00",
+  "development_run_count": 8,
+  "inherited_feature_rows_hash_verified": 2264211,
+  "model_code_sha256": "137bd8c306d044887cbcb6fdd673cddead97c5d81c5156c0d8a1ade6c820f6e6",
+  "native_prediction_checks": {
+    "cat_long/forward": {
+      "max_difference_seconds": 0.0,
+      "rows": 1064
+    },
+    "cat_long/seasonal": {
+      "max_difference_seconds": 0.0,
+      "rows": 1250
+    },
+    "cat_missing_core/forward": {
+      "max_difference_seconds": 0.0,
+      "rows": 1356
+    },
+    "cat_missing_core/seasonal": {
+      "max_difference_seconds": 0.0,
+      "rows": 5373
+    },
+    "cat_missing_ground/forward": {
+      "max_difference_seconds": 0.0,
+      "rows": 1356
+    },
+    "cat_missing_ground/seasonal": {
+      "max_difference_seconds": 0.0,
+      "rows": 5373
+    },
+    "lgb_missing_regularized/forward": {
+      "max_difference_seconds": 0.0,
+      "rows": 1356
+    },
+    "lgb_missing_regularized/seasonal": {
+      "max_difference_seconds": 0.0,
+      "rows": 5373
+    }
+  },
+  "passed": true,
+  "reference_checks": {
+    "forward": {
+      "full_reference_rows": 162332,
+      "native_differences_seconds": {
+        "v6_airports": 0.0,
+        "v6_global": 0.0
+      },
+      "sample_rows": 1064,
+      "source_run_sha256": "8b441c6cd57e1e6a8c220d23d3d4239bf9142d5369eba2500f85ea0a2ce8ed23"
+    },
+    "seasonal": {
+      "full_reference_rows": 344419,
+      "native_differences_seconds": {
+        "v6_airports": 0.0,
+        "v6_global": 0.0
+      },
+      "sample_rows": 1250,
+      "source_run_sha256": "7d504775432b60b944ca8e0e45a408f0832d9191a1d400d07e750290a3c9989b"
+    }
+  },
+  "refit": null,
+  "run_sha256": {
+    "cat_long/forward": "e82d52466d225610b127b052a61f7daf7b6feeb9b541c2c1cc4444e00ab891c7",
+    "cat_long/seasonal": "9029c8c3d2c19e4779911a90aa2495132db8f24baec7077dbb219141235191a7",
+    "cat_missing_core/forward": "dad39ecd8047c5ae3ce04d7a24eefa2b2f18138bbcc8f77a871cf7a91ed4521a",
+    "cat_missing_core/seasonal": "481fd950fca6d645e609f7ff52cc9c294267060347a404a67ca54e0790b4dffa",
+    "cat_missing_ground/forward": "7c26a3c5c04fad6d729054314175c259762eb4d96e845dc400ddba6ace177724",
+    "cat_missing_ground/seasonal": "e5ecf34179ceb0e9c3206684e04a16457723f6e8134a400d2032109e0ab3eeeb",
+    "lgb_missing_regularized/forward": "510a7237a2e21626f971623102b3e7f201cc2a458267d4513200c1db024fb683",
+    "lgb_missing_regularized/seasonal": "ec343e16ec8c9a287d2128e34738dde1d76815c27e715f5a09e7d94b24ee6379"
+  },
+  "selected_candidate": null,
+  "selection_sha256": "274d811d51d692ee1fa357e237f9242fbb7f361bf23a64fcd92ac85f09c15d97",
+  "verification_code_sha256": "9dc85c67b5a2e160e75c9e7fe3f90fcbce29365e4be5ce2f8a223b54fb0935d5"
+}

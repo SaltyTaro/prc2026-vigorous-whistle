@@ -1,0 +1,14 @@
+{
+  "feature_policy": "planned-demand-past-service-v1",
+  "previous_bundle_id": "2ceb3449c26767a9731121bdd4988cff7d57f6e9310b84ac680657a131ae9cff",
+  "training_months": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11"],
+  "ranking_months": ["2026-01", "2026-07"],
+  "departure_labels_used_in_shared_features": false,
+  "audit_used": false,
+  "external_data": [],
+  "input_columns": ["MVT_ID_mvt", "PHASE_mvt", "MVT_TIME_UTC_mvt", "ADEP_mvt", "ADES_mvt", "RUNWAY_mvt", "STAND_mvt", "SCHED_TIME_UTC_mvt", "EOBT_1_flt", "WK_TBL_CAT_flt"],
+  "observed_service": "Only movements strictly before the query or fixed 10/20-minute lookback. Windows are left-inclusive and right-exclusive; equal-time events excluded.",
+  "planned_demand": "Retrospective supplied plans: scheduled/first-filed EOBT events before the query, including plans for later departures. Event times are the plan clocks, never eventual takeoff/off-block. Focal flight excluded. Plan publication times are not supplied; this is not a claim of live forecast availability.",
+  "late_nm_fields": "AOBT_3_flt, LOBT_flt and ARVT_3_flt remain outside the current working contract; this is not an asserted organizer ban.",
+  "prior_predictors": "Preserve the 112 Phase-4 feature values exactly. Fit-only supervised baselines are model artifacts, never shared bundle features."
+}

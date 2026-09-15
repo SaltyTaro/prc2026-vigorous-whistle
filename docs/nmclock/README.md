@@ -1,0 +1,264 @@
+# Supplied NM off-block clock experiment
+
+Declared at **03:47:15 UTC on 14 September 2026**, after the user approved the
+proposed NM timestamp experiment. All eight development runs and the twenty
+declared candidate comparisons are complete. The selected refit and both final
+platform verifiers passed. **V6 officially scores 277.4508 seconds RMSE on all
+344,841 rows**, improving v5 by **45.4758 seconds / 14.0824%**. It was uploaded
+once at **14:49:49 UTC on 14 September** and processed at **14:50:24 UTC**.
+It is the best submission and ranks **20th of 134** in the 14:52:58 UTC snapshot.
+Only **arcw0** was used for modeling; submission required no new training.
+No December model score or training label is used by this campaign.
+
+Selected **`cat_residual_v5_100`**: **324.9171 seconds seasonal / 223.3271 forward**,
+improving v5 development by **11.0233% / 7.1992%**. On rows with an NM clock,
+predictions are 50% CatBoost global and 50% LightGBM airport residual models.
+Rows without a clock retain the frozen v5 pipeline exactly. These are complete
+development scores from the reused folds; the official result is recorded below.
+
+## New information and source interpretation
+
+The [field-use review](field_use_review.json) records a fresh retrieval of the
+official data, rationale and ranking pages. They document `AOBT_3_flt` and
+`LOBT_flt` and describe a post-operations task. The
+user explicitly approved this experiment after that uncertainty was explained.
+This new package supersedes the earlier temporary exclusion for these two
+supplied fields. Previous packages and their declarations remain frozen.
+
+The [feature declaration](../../configs/features_nmclock_v1.json) adds **29**
+predictors: clock-to-movement and clock-to-plan differences, missingness,
+agreement, day offsets, time-of-day and source indicators. No raw movement or
+flight ID is a predictor. Departure airport block times, departure targets and
+`ARVT_3_flt` are excluded. The transformation uses an explicit seven-column raw
+projection, masks the protected movement periods and preserves every parent
+feature value. No external source beyond those already in v5 is introduced.
+
+The proxy is movement time minus `AOBT_3_flt`, with `LOBT_flt` as fallback when
+AOBT is missing. Signed and unusually long intervals are retained. There is no
+hard-coded date repair, target filtering or prediction clipping. When neither
+clock is present, the pipeline returns the unchanged v5 prediction.
+
+All **232** inherited weather/ground features remain in the shared bundle;
+the new models use the **173 core/weather predictors plus 29 clock predictors**,
+or **202 predictors**. Existing weather inputs, including the documented rare
+pressure anomalies, remain as recorded in the frozen parent bundle.
+
+## Declared comparisons
+
+The [model declaration](../../configs/nmclock_v1.json) specifies these four
+recipes on both original folds, for **eight complete development runs**:
+
+| Recipe | Global model | Target |
+| --- | --- | --- |
+| `lgb_direct` | LightGBM | Taxi time in seconds |
+| `lgb_residual` | LightGBM | Taxi time minus the NM clock proxy |
+| `cat_direct` | CatBoost | Taxi time in seconds |
+| `cat_residual` | CatBoost | Taxi time minus the NM clock proxy |
+
+Each recipe gives the global model and ten airport models equal total weight.
+The two LightGBM recipes fit new airport models with the same new features and
+matching target formulation. Each CatBoost recipe reuses the matching new
+LightGBM airport models. This is **44 new LightGBM native fits and four new
+CatBoost fits**, with fit-only category vocabularies and October early stopping.
+All new native models train only on rows with an NM clock. That routing depends
+only on supplied covariates; all finite labels within each route are retained.
+
+Five candidate families comprise those four recipes and an equal blend of the
+two CatBoost recipes. Each family is mixed with v5 at **25%, 50%, 75% and 100%**,
+giving **20 declared recipes**. Weights are common to both folds and all airports.
+Missing-clock rows retain v5 exactly for every recipe.
+
+Selection requires at least **0.5% lower complete RMSE on each fold** than v5,
+then minimizes the equally weighted mean of the two relative RMSEs. The frozen
+v5 references are **365.1711399752 seasonal** and **240.6522204681 forward**.
+Every one of the original **344,419 seasonal** and **162,332 forward** scoring
+rows remains included, including unusual and negative labels.
+
+A promoted recipe refits January-November, with December flight groups protected,
+at the rounded median October-selected iteration count for each new component.
+V5's native refit supplies the fallback. Every new artifact belongs to this
+campaign; prior code, source data, predictions and submission versions remain
+unchanged. Reused development sets are not an independent final audit.
+
+## Completed results
+
+All rows of both original scoring sets are included. The
+[selection receipt](development_results.json) contains every candidate and
+its complete metrics; the [diagnostics](analysis.json) summarize the selected
+recipe, airport and target-band changes, and the declared paired-day comparisons.
+
+| Complete pipeline | Seasonal RMSE, seconds | Forward RMSE, seconds |
+| --- | ---: | ---: |
+| Frozen v5 | 365.171140 | 240.652220 |
+| LightGBM direct | 355.754157 | 223.860523 |
+| LightGBM NM residual | 325.665205 | 224.620946 |
+| CatBoost direct | 352.838392 | 222.967623 |
+| **CatBoost NM residual, selected** | **324.917067** | **223.327139** |
+| Equal CatBoost direct/residual blend | 330.710797 | 222.378672 |
+
+All twenty declared candidates pass the 0.5% two-fold promotion margin.
+The selected full residual recipe minimizes mean relative RMSE across the two
+folds. The equal direct/residual blend has the lowest November RMSE, but a higher
+mean relative RMSE; no airport-specific weights or post-hoc corrections were added.
+
+The selected recipe improves all ten airports seasonally and nine forward.
+November LTFM increases by **0.4785 seconds**. Taxi times under one hour improve
+from **257.3424 to 244.3953 seconds seasonal** and **212.2568 to 194.3310 forward**,
+or **5.03% / 8.45%**. Labels above three hours account for **73.38% of the seasonal
+SSE reduction**. Their November predictions are unchanged because all six such
+rows use the missing-clock fallback. Every unusual label remains in the score.
+
+Squared error improves on **57/62 seasonal days** and **30/30 November days**.
+The declared 2,000-replicate paired-day intervals for candidate-minus-v5 RMSE
+are **[-104.66, -8.91] seconds seasonal** and **[-24.46, -10.93] forward**.
+These are descriptive intervals on reused development data after model
+selection, not an independent confirmation of leaderboard performance.
+
+Missing NM records retain v5 and now account for **49.61% seasonal / 21.88%
+forward SSE**. LIRF and LFPG together account for **63.05% / 45.93%**; labels
+above three hours account for **33.41% / 15.00%**. These groups overlap and their
+shares must not be added. New information or supported source corrections for
+missing NM records remain a priority; the earlier failed missing-record expert
+should not simply be repeated unchanged.
+
+## Verification and fixed refit
+
+Both [Azure](verification.json) and [Windows](local_verification.json) passed
+all **2,264,211 inherited feature rows and new clock reconstructions**, every
+protected fitting/stopping/scoring identity, eight complete development scores,
+forty blend/fold scores, and independent native composition checks. Native model
+predictions match exactly. The largest cross-platform RMSE difference is
+**2.84e-14 seconds**. Four cyclic float64 features differ by at most **1.11e-16**
+when recomputed; their actual float32 model inputs match exactly. See the
+[platform comparison](development_verification_comparison.json).
+
+An initial verification run found reversed arguments to the existing metric
+comparison helper at the JSON month-key boundary. Only the new verifier was
+corrected, with a regression check covering changed values and key collisions.
+Models, features, predictions, configuration and selection were unchanged;
+the [correction receipt](verifier_correction.json) records both code hashes.
+The two status receipts with differing Windows/Linux line endings were also
+preserved separately after confirming that their parsed contents were identical.
+
+The fixed refit launched at **05:22:42 UTC**, PID **36811**, using
+`tools/launch_nmclock_refit.py` after both platform reports passed. Log:
+`runs/nmclock/refit.log` on arcw0. It uses the **1,919,370 January-November rows**,
+protects December flight groups, and fits the new components on the **1,898,549
+clock-present rows**. The selected component counts are independently frozen by
+the rounded-median stopping rule: **5,968 CatBoost global trees** and ten airport
+models with **8,446 total LightGBM trees**, or **14,414 new trees**. The unchanged
+native v5 refit supplies the complete missing-clock fallback.
+
+The refit completed successfully in **1,284.83 seconds (21.41 minutes)**, using
+**18,625.59 CPU seconds** and **11.85 GiB sampled peak RSS**. Its identity is
+`20260914T052244675761Z_refit_cat_residual_v5_100`; the run receipt SHA-256 is
+`2583ef8a495f7ee63b60acd8dfd3b9be69f7e9a22fafb2bb061bde717740c152`.
+
+Both [final Azure verification](verification_refit.json) and
+[final Windows verification](local_verification_refit.json) check the complete
+development evidence and the new refit. They independently reproduce **6,450
+ranking rows with zero difference**, including all **5,290 missing-clock rows**.
+Every missing-clock ranking prediction matches frozen v5 exactly. The
+[final comparison receipt](refit_verification_comparison.json) binds both reports.
+The serialized pipeline retains 23 native model files, including one unused
+legacy model carried with the original airport reference; 11 models are newly fitted.
+
+The development archive is **238,949,847 bytes**, SHA-256
+`129e1c47946159ba2b2519759848f6ac39e830618f7ce01399040cb7207d536c`.
+It is restored under `runs/azure_arcw0_nmclock/`; Azure originals remain under
+`runs/nmclock/`. Archive inventory: [development_archive.json](development_archive.json).
+The archive including the completed refit is **297,912,088 bytes**, SHA-256
+`42a209cef4952d54fdff2c18bab371d78554ea3268b00c2d84f06eb0483833cd`;
+its [inventory](refit_archive.json) covers 539 files. Both archives are preserved
+locally and the native models remain on arcw0.
+
+## Official v6 submission
+
+The export is [vigorous-whistle_v6.parquet](../../runs/submissions/vigorous-whistle_v6.parquet):
+**344,841 rows**, exactly `MVT_ID_mvt` (`double`) and `TAXITIME_SEC_mvt` (`int32`),
+in the exact template order. File size is **1,351,547 bytes**; SHA-256:
+`b81c2030118a8b7693718a40ba4caf3e1e7d90103899d65f8c5a37a2cd5578e5`.
+The [export receipt](submission_export.json) binds the native refit, input template,
+IDs, code and configuration. Predictions use the existing nearest-integer,
+ties-to-even export rule, with no clipping; the export retains 32 negative
+predictions and the observed range of -3,653 to 120,549 seconds.
+
+The user requested submission on **14 September**. The uploader rechecked live
+ranking/template ETags, versions and capacity after the existing rolling 24-hour
+guard opened. V6 was uploaded once at **14:49:49 UTC (20:19:49 IST)** and officially
+processed at **14:50:24 UTC**. The [official result](official_result.json) confirms
+**277.4508 seconds RMSE on all 344,841 rows**, improving v5's 322.9266 by
+**45.4758 seconds / 14.0824%**.
+
+At **14:52:58 UTC**, the [dated leaderboard snapshot](leaderboard_snapshot.json)
+places the team **20th of 134**. Third place scores **252.9192 seconds**, requiring
+another **8.8418%** reduction from v6 to that snapshot score. All seven API pages
+are archived and hashed; teams are ranked using their best official submission.
+These standings are not a final qualifying cutoff.
+
+The [full submission receipt](submission_v6.json) binds the export, refit, upload,
+official score and standings. The [integrity check](submission_integrity_20260914.json)
+reproduces every exported prediction by rounding the frozen refit's 344,841 values.
+The [remote verification](submission_remote_verification.json) downloads the uploaded
+file and confirms its exact SHA-256; v1-v5 retain their original ETags, sizes and
+timestamps. Preserve v1-v6 exports; do not overwrite or re-upload any version.
+
+[pending_submission.json](pending_submission.json), [completion.json](completion.json)
+and [export_validation.json](export_validation.json) preserve the historical
+pre-upload state. Upload and complete official scoring are now finished; the
+December audit remains reserved.
+
+## Resources and reproduction
+
+Only the existing arcw0 is used. [Storage reclamation](storage_reclamation.json)
+records the removal of five redundant Azure transfer archives after their
+byte-identical local copies were checked. Native models, features, raw data and
+receipts remain on Azure; the archives can be restored from their recorded local
+paths. The resulting free space was 5.61 GB.
+
+The original **114 tests plus two refit-selection checks and one verifier
+regression check pass on Windows and Azure: 117 total per platform**.
+The Azure runner completed the full original suite before preparing
+the fresh feature bundle or fitting any model. Dependency pins inherit
+`requirements-weather.txt`; no new libraries are needed.
+
+The eight development runs total **4,347.91 seconds**, or **72.47 minutes**, of
+measured run time and **64,118.17 CPU seconds**. Maximum sampled RSS is
+**12,619,743,232 bytes (11.75 GiB)**. Feature preparation took **38.08 seconds**
+and peaked at **1.41 GiB**. One 16-vCPU worker was sufficient; no extra VM was started.
+
+The [covariate analysis](coverage_analysis.json) reads no labels: clocks cover
+98.9152% of January-November departures and 98.4660% of ranking departures.
+The missing-clock and missing-NM-origin groups agree exactly. Every airport has
+at least 96.84% ranking coverage. Period summaries use actual UTC movement
+months, including two records whose movement month differs from their filename.
+
+The historical [submission-capacity check](submission_capacity.json) found v1-v5
+in the team bucket and placed the next rolling-window slot after **14:49:06 UTC
+on 14 September**. The completed v6 upload respected that guard. Its exact
+pre-upload counts and resulting official score are in [submission_v6.json](submission_v6.json).
+
+```bash
+.venv/bin/python -m pytest
+.venv/bin/python tools/prepare_nmclock.py
+.venv/bin/python tools/run_nmclock.py --fold seasonal
+.venv/bin/python tools/run_nmclock.py --fold forward
+.venv/bin/python tools/select_nmclock.py
+.venv/bin/python tools/summarize_nmclock.py
+.venv/bin/python tools/verify_nmclock.py
+```
+
+The Windows verification command uses the local run mirrors:
+
+```powershell
+.\.venv\Scripts\python.exe -X utf8 -B tools/verify_nmclock.py --runs runs/azure_arcw0_nmclock --previous-runs runs/azure_arcw0_weather --output docs/nmclock/local_verification.json
+```
+
+After the fixed refit, add `--require-refit` and use separate
+`verification_refit.json` / `local_verification_refit.json` output paths to
+preserve the original development verification receipts.
+
+Preserve completed runs and immutable declarations; reproduction belongs in a
+separate workspace. The launch helper requires both matching verification reports
+and refuses a duplicate refit. Training and prediction make no network requests.
+Credentials remain local and no administrator message is sent.

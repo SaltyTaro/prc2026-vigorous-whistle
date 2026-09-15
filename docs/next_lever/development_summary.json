@@ -1,0 +1,709 @@
+{
+  "additional_preserved_timeline_fit_attempts": 1,
+  "all_platform_development_verifications_passed": true,
+  "audit_used": false,
+  "batches": [
+    {
+      "archive_sha256": "de8ff34f1db12bf69109602e221cc8c576d40ceb025cb92ef8ebddd3e49ec6b2",
+      "archive_size_bytes": 171374259,
+      "both_platform_verifications_passed": true,
+      "campaign": "timeline",
+      "candidate_recipes": 10,
+      "candidates_by_mean_relative_rmse": [
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": 0.006439237935908282,
+            "seasonal": 0.004568198903681875
+          },
+          "name": "combined_mean_v6_100",
+          "rmse_seconds": {
+            "forward": 221.88908249663194,
+            "seasonal": 323.4327816874519
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": 0.006168720388001314,
+            "seasonal": 0.0034517461110692427
+          },
+          "name": "cat_combined_v6_100",
+          "rmse_seconds": {
+            "forward": 221.94949640667767,
+            "seasonal": 323.7955362548062
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": 0.004693417196269478,
+            "seasonal": 0.0032943485015446416
+          },
+          "name": "combined_mean_v6_50",
+          "rmse_seconds": {
+            "forward": 222.27897164776675,
+            "seasonal": 323.84667742452115
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": 0.003805610065074294,
+            "seasonal": 0.003109212963168795
+          },
+          "name": "lgb_combined_v6_50",
+          "rmse_seconds": {
+            "forward": 222.47724307443383,
+            "seasonal": 323.90683112073634
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": 0.003799781632633392,
+            "seasonal": 0.002814708339523353
+          },
+          "name": "lgb_surface_v6_50",
+          "rmse_seconds": {
+            "forward": 222.47854472157618,
+            "seasonal": 324.0025206994102
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": 0.0041163972735557275,
+            "seasonal": 0.002407392627049809
+          },
+          "name": "cat_combined_v6_50",
+          "rmse_seconds": {
+            "forward": 222.40783585630015,
+            "seasonal": 324.13486452624517
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": 0.0008536322535589447,
+            "seasonal": 0.0013948330980587675
+          },
+          "name": "lgb_combined_v6_100",
+          "rmse_seconds": {
+            "forward": 223.13649983371525,
+            "seasonal": 324.46386239905274
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": 0.0009664084062563916,
+            "seasonal": 0.0008962819994989824
+          },
+          "name": "lgb_surface_v6_100",
+          "rmse_seconds": {
+            "forward": 223.11131385817657,
+            "seasonal": 324.6258501599852
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": 0.00038203999379005094,
+            "seasonal": 0.0011929999499368238
+          },
+          "name": "lgb_flown_v6_50",
+          "rmse_seconds": {
+            "forward": 223.241819183903,
+            "seasonal": 324.52944143366057
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": -0.0052136723884737,
+            "seasonal": -0.001855714836892064
+          },
+          "name": "lgb_flown_v6_100",
+          "rmse_seconds": {
+            "forward": 224.49149362136376,
+            "seasonal": 325.52002090177655
+          }
+        }
+      ],
+      "development_native_fits": 8,
+      "eligible_candidates": 0,
+      "maximum_native_difference_seconds": 0.0,
+      "maximum_platform_numeric_difference": 1.1368683772161603e-13,
+      "selected_candidate": null,
+      "selection_sha256": "4a51746cab6da283662dbff4650b6b29492d6e165e34fce34001232c1e396780"
+    },
+    {
+      "archive_sha256": "77a8c381570083ee97dcd0f7c6b5f7a535c227205e6ea65dcf27bb2be45977ed",
+      "archive_size_bytes": 30429523,
+      "both_platform_verifications_passed": true,
+      "campaign": "arrivalctx",
+      "candidate_recipes": 6,
+      "candidates_by_mean_relative_rmse": [
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": -0.0015524927746488615,
+            "seasonal": -0.0054898652623489586
+          },
+          "name": "arrival_mean_v6_50",
+          "rmse_seconds": {
+            "forward": 223.67385285254028,
+            "seasonal": 326.7008184007932
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": 0.0027243770528503353,
+            "seasonal": -0.011192511961473084
+          },
+          "name": "cat_arrival_v6_50",
+          "rmse_seconds": {
+            "forward": 222.7187117497356,
+            "seasonal": 328.5537056431408
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": -0.0073059009578981815,
+            "seasonal": -0.0022570283194782714
+          },
+          "name": "lgb_arrival_v6_50",
+          "rmse_seconds": {
+            "forward": 224.9587450420805,
+            "seasonal": 325.6504145016782
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": -0.0072229612919676445,
+            "seasonal": -0.016857690766404643
+          },
+          "name": "arrival_mean_v6_100",
+          "rmse_seconds": {
+            "forward": 224.94022236377177,
+            "seasonal": 330.39441892718276
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": -0.019231452708479146,
+            "seasonal": -0.012657027260761122
+          },
+          "name": "lgb_arrival_v6_100",
+          "rmse_seconds": {
+            "forward": 227.6220443965208,
+            "seasonal": 329.02955165946344
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": -0.0010992218403189646,
+            "seasonal": -0.03080730826356426
+          },
+          "name": "cat_arrival_v6_100",
+          "rmse_seconds": {
+            "forward": 223.572625151547,
+            "seasonal": 334.9268877368122
+          }
+        }
+      ],
+      "development_native_fits": 4,
+      "eligible_candidates": 0,
+      "maximum_native_difference_seconds": 0.0,
+      "maximum_platform_numeric_difference": 5.684341886080802e-14,
+      "selected_candidate": null,
+      "selection_sha256": "6c3c852e78ff4b30bacc1491bc40cfa84a2c98ab0a7b212031feecae92f4aaad"
+    },
+    {
+      "archive_sha256": "3e309dec5f97a82bccf77f2695568f5f7f3615e346e96c17ae575d02fd2b299c",
+      "archive_size_bytes": 11457970,
+      "both_platform_verifications_passed": true,
+      "campaign": "nextlever_joint",
+      "candidate_recipes": 2,
+      "candidates_by_mean_relative_rmse": [
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": 0.0031336149936883606,
+            "seasonal": -0.0022135625076411536
+          },
+          "name": "joint_mean_v6_50",
+          "rmse_seconds": {
+            "forward": 222.62731781120414,
+            "seasonal": 325.63629171756054
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": -0.0008301962206871405,
+            "seasonal": -0.012365563373549993
+          },
+          "name": "joint_mean_v6_100",
+          "rmse_seconds": {
+            "forward": 223.5125444295747,
+            "seasonal": 328.9348500679548
+          }
+        }
+      ],
+      "development_native_fits": 0,
+      "eligible_candidates": 0,
+      "maximum_native_difference_seconds": 0.0,
+      "maximum_platform_numeric_difference": 2.842170943040401e-14,
+      "selected_candidate": null,
+      "selection_sha256": "8eb8161938ce6cc9379d5680437505a623ec9085e22900b264b0fad099e0ea55"
+    },
+    {
+      "archive_sha256": "f2572a4fa9751e079a4a3fb038f10b80b2943bd8a8b62b0e4474ef460b717caa",
+      "archive_size_bytes": 52732147,
+      "both_platform_verifications_passed": true,
+      "campaign": "surface_airports",
+      "candidate_recipes": 4,
+      "candidates_by_mean_relative_rmse": [
+        {
+          "eligible": true,
+          "improvement_fraction": {
+            "forward": 0.009801687112665936,
+            "seasonal": 0.00645624563034064
+          },
+          "name": "full_timeline_v6_100",
+          "rmse_seconds": {
+            "forward": 221.13815634167557,
+            "seasonal": 322.8193230817628
+          }
+        },
+        {
+          "eligible": true,
+          "improvement_fraction": {
+            "forward": 0.008511639285439743,
+            "seasonal": 0.005498496566319733
+          },
+          "name": "full_timeline_v6_50",
+          "rmse_seconds": {
+            "forward": 221.42625903220988,
+            "seasonal": 323.1305120990251
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": 0.007274552314278093,
+            "seasonal": 0.0040694983333426915
+          },
+          "name": "airport_only_v6_100",
+          "rmse_seconds": {
+            "forward": 221.70253412627594,
+            "seasonal": 323.59481801431656
+          }
+        },
+        {
+          "eligible": false,
+          "improvement_fraction": {
+            "forward": 0.004782686270066505,
+            "seasonal": 0.0027441174216542574
+          },
+          "name": "airport_only_v6_50",
+          "rmse_seconds": {
+            "forward": 222.2590354409071,
+            "seasonal": 324.02545689343486
+          }
+        }
+      ],
+      "development_native_fits": 20,
+      "eligible_candidates": 2,
+      "maximum_native_difference_seconds": 0.0,
+      "maximum_platform_numeric_difference": 0.0,
+      "selected_candidate": "full_timeline_v6_100",
+      "selection_sha256": "3a6edb7beb178744acca53c92e269f2ee92fa1524115adbda74bf876cdd4d042"
+    }
+  ],
+  "code_sha256": "aa0df63815aa6d12a0744ccf82007fe126835d961a8fb0c331d5c1a3fd05b34a",
+  "complete": true,
+  "completed_fit_resources_by_campaign": {
+    "arrivalctx": {
+      "maximum_sampled_rss_bytes": 4592603136,
+      "total_cpu_seconds": 140.06999999999996,
+      "total_wall_seconds": 15.87440869701095
+    },
+    "surface_airports": {
+      "maximum_sampled_rss_bytes": 9303793664,
+      "total_cpu_seconds": 2834.6799999999994,
+      "total_wall_seconds": 215.19066219999513
+    },
+    "timeline": {
+      "maximum_sampled_rss_bytes": 14543851520,
+      "total_cpu_seconds": 47728.61,
+      "total_wall_seconds": 3187.571038798982
+    }
+  },
+  "created_at_utc": "2026-09-14T19:02:07.044614+00:00",
+  "decision": "The full timeline recipe with new airport models qualifies. Refit it at the frozen counts; the other declarations remain rejected.",
+  "declared_candidate_recipes": 22,
+  "development_native_fits": 32,
+  "distinct_tests_passed_each_platform": 196,
+  "evidence_sha256": {
+    "docs/arrivalctx/development_mirror.json": "b3e5de72885e44dd7b06e95783bf4715b009be22c454cd1a728ff83df7b5a0cb",
+    "docs/arrivalctx/development_results.json": "6c3c852e78ff4b30bacc1491bc40cfa84a2c98ab0a7b212031feecae92f4aaad",
+    "docs/arrivalctx/local_verification.json": "731d8ae50947a40847e3a66472d0a7ea3595140f19b314fbbce8b9db3961e5e2",
+    "docs/arrivalctx/verification.json": "e100b22987840ed9e3631b9ae3a0f18e5509a595cf428f977a70d762e75d124d",
+    "docs/nextlever_joint/development_mirror.json": "8cd30df43d4023b571e6285cff4e65c4f8bde00aa75b5c68398303cea29f3fb1",
+    "docs/nextlever_joint/development_results.json": "8eb8161938ce6cc9379d5680437505a623ec9085e22900b264b0fad099e0ea55",
+    "docs/nextlever_joint/local_verification.json": "34116c2aa6f2754bffcefa87e6c82c4d963ba75548b17f7fb2f6be6963130a13",
+    "docs/nextlever_joint/verification.json": "36da08e0f0042d1bab08f0b54c44b1b43f0327f74596887bcf005c51da0a55ff",
+    "docs/surface_airports/development_mirror.json": "fae1f3e9da179aaa4e16d0c4fcdfd7c37f57eaa285af9e9c0e5756649ceefd61",
+    "docs/surface_airports/development_results.json": "3a6edb7beb178744acca53c92e269f2ee92fa1524115adbda74bf876cdd4d042",
+    "docs/surface_airports/local_verification.json": "0b0b2e644dd26c453d4382e2b430538454e4cd8f4821e43ec2633c1cbe5bf22a",
+    "docs/surface_airports/verification.json": "91b92f396ab3959fdb9be36cbc1b550b22ab593150a526c4604e03f81384e7a9",
+    "docs/timeline/development_mirror.json": "960b3c3053347cfa828cc1fd92052ec95e4a763fe07a5db7ce9b3e220c87b5c7",
+    "docs/timeline/development_results.json": "4a51746cab6da283662dbff4650b6b29492d6e165e34fce34001232c1e396780",
+    "docs/timeline/local_verification.json": "fbbfd2a2472720b0e409a4bc2515d06429a9c3d9a1d5174006b8a1a7873e9d0f",
+    "docs/timeline/verification.json": "c532ed09609818d10f256169fe3b32db09e8595180ad5b7a0cea9533ae1659a4"
+  },
+  "new_refit_native_models": 12,
+  "official_best": {
+    "rmse_seconds": 277.4508,
+    "rows": 344841,
+    "version": 6
+  },
+  "paired_day_comparison": "Selected surface recipe minus v6; see paired_day_label_note.json for the inherited display label.",
+  "refit_component_iterations": {
+    "airports": {
+      "EDDF": 902,
+      "EDDM": 1142,
+      "EGLL": 1172,
+      "EHAM": 744,
+      "LEBL": 773,
+      "LEMD": 1014,
+      "LFPG": 1227,
+      "LIRF": 880,
+      "LSZH": 748,
+      "LTFM": 1002
+    },
+    "globals": {
+      "cat_combined": 5971,
+      "lgb_combined": 1612
+    }
+  },
+  "scope": "Complete reused development evidence. This report does not claim refit completion, an official new score or use of the December audit.",
+  "selected_campaign": "surface_airports",
+  "selected_candidate": "full_timeline_v6_100",
+  "selected_development_diagnostics": {
+    "forward": {
+      "airports_improved": 10,
+      "by_airport": {
+        "EDDF": {
+          "rmse_delta_seconds": -1.4793462633780905,
+          "rmse_seconds": 181.79874733038181,
+          "rows": 18122,
+          "sse_delta": -9787240.24578309,
+          "sse_fraction": 0.07544950425016686
+        },
+        "EDDM": {
+          "rmse_delta_seconds": -1.4995075235778472,
+          "rmse_seconds": 158.96443116914236,
+          "rows": 12562,
+          "sse_delta": -6017012.633269787,
+          "sse_fraction": 0.03998777145972726
+        },
+        "EGLL": {
+          "rmse_delta_seconds": -5.193090692520144,
+          "rmse_seconds": 200.4601468864704,
+          "rows": 19423,
+          "sse_delta": -40962789.18097401,
+          "sse_fraction": 0.09831977822984056
+        },
+        "EHAM": {
+          "rmse_delta_seconds": -3.8287860514086276,
+          "rmse_seconds": 157.0980768364563,
+          "rows": 19232,
+          "sse_delta": -23417834.28426069,
+          "sse_fraction": 0.05979084332307606
+        },
+        "LEBL": {
+          "rmse_delta_seconds": -1.6989634773683235,
+          "rmse_seconds": 161.93258057667416,
+          "rows": 13332,
+          "sse_delta": -7374216.6017766595,
+          "sse_fraction": 0.04403847489363593
+        },
+        "LEMD": {
+          "rmse_delta_seconds": -1.3161593827757656,
+          "rmse_seconds": 170.98534224434866,
+          "rows": 17419,
+          "sse_delta": -7870256.073291898,
+          "sse_fraction": 0.06415189280415041
+        },
+        "LFPG": {
+          "rmse_delta_seconds": -2.5414308614062406,
+          "rmse_seconds": 264.4432960692415,
+          "rows": 18646,
+          "sse_delta": -25183055.98438549,
+          "sse_fraction": 0.1642552633247289
+        },
+        "LIRF": {
+          "rmse_delta_seconds": -0.6038218603914061,
+          "rmse_seconds": 458.67870602386824,
+          "rows": 11328,
+          "sse_delta": -6278941.1599702835,
+          "sse_fraction": 0.3002194944300909
+        },
+        "LSZH": {
+          "rmse_delta_seconds": -1.2428201911408223,
+          "rmse_seconds": 157.51004146199438,
+          "rows": 10078,
+          "sse_delta": -3961237.734895617,
+          "sse_fraction": 0.03149628541284666
+        },
+        "LTFM": {
+          "rmse_delta_seconds": -2.89769749881566,
+          "rmse_seconds": 209.16249038982613,
+          "rows": 22190,
+          "sse_delta": -27084579.24966848,
+          "sse_fraction": 0.12229069187173647
+        }
+      },
+      "by_month": {
+        "2025-11": {
+          "rmse_delta_seconds": -2.188982741055753,
+          "rmse_seconds": 221.13815634167557,
+          "rows": 162332,
+          "sse_delta": -157937163.14827538,
+          "sse_fraction": 1.0
+        }
+      },
+      "by_nm_missing": {
+        "False": {
+          "rmse_delta_seconds": -2.4904587391334303,
+          "rmse_seconds": 195.73101590612237,
+          "rows": 160976,
+          "sse_delta": -157937163.14827728,
+          "sse_fraction": 0.7768710248171197
+        },
+        "True": {
+          "rmse_delta_seconds": 0.0,
+          "rmse_seconds": 1142.9149005832548,
+          "rows": 1356,
+          "sse_delta": 0.0,
+          "sse_fraction": 0.22312897518288016
+        }
+      },
+      "by_target_band": {
+        "0_to_1h": {
+          "rmse_delta_seconds": -2.4475587910815477,
+          "rmse_seconds": 191.88344184936904,
+          "rows": 162092,
+          "sse_delta": -153222739.73626232,
+          "sse_fraction": 0.7518047620892857
+        },
+        "1h_to_3h": {
+          "rmse_delta_seconds": -5.916396932520001,
+          "rmse_seconds": 1866.1719902892391,
+          "rows": 216,
+          "sse_delta": -4777278.961781025,
+          "sse_fraction": 0.09476011437537195
+        },
+        "negative": {
+          "rmse_delta_seconds": 3.7554901009682453,
+          "rmse_seconds": 466.7937604238132,
+          "rows": 18,
+          "sse_delta": 62855.549766580574,
+          "sse_fraction": 0.0004940729544031905
+        },
+        "over_3h": {
+          "rmse_delta_seconds": 0.0,
+          "rmse_seconds": 14224.996347523604,
+          "rows": 6,
+          "sse_delta": 0.0,
+          "sse_fraction": 0.15294105058093904
+        }
+      },
+      "improvement_fraction": 0.009801687112665936,
+      "improvement_seconds": 2.188982741055753,
+      "rmse_seconds": 221.13815634167557,
+      "rows": 162332
+    },
+    "seasonal": {
+      "airports_improved": 10,
+      "by_airport": {
+        "EDDF": {
+          "rmse_delta_seconds": -2.3718710996595576,
+          "rmse_seconds": 188.29626675610294,
+          "rows": 36830,
+          "sse_delta": -33104819.304400682,
+          "sse_fraction": 0.03638136517969337
+        },
+        "EDDM": {
+          "rmse_delta_seconds": -2.4376500953218283,
+          "rmse_seconds": 174.07233008081883,
+          "rows": 27091,
+          "sse_delta": -23151887.381616235,
+          "sse_fraction": 0.022870643020272457
+        },
+        "EGLL": {
+          "rmse_delta_seconds": -3.5564608802065436,
+          "rmse_seconds": 272.59053852139044,
+          "rows": 40210,
+          "sse_delta": -78472371.83825493,
+          "sse_fraction": 0.08324333705609697
+        },
+        "EHAM": {
+          "rmse_delta_seconds": -5.35726138022423,
+          "rmse_seconds": 182.94582045433225,
+          "rows": 40949,
+          "sse_delta": -81442540.92625833,
+          "sse_fraction": 0.038184063031899834
+        },
+        "LEBL": {
+          "rmse_delta_seconds": -1.7657359084030873,
+          "rmse_seconds": 224.33502917143343,
+          "rows": 28986,
+          "sse_delta": -23054034.12465763,
+          "sse_fraction": 0.040642117438836035
+        },
+        "LEMD": {
+          "rmse_delta_seconds": -1.3106549623825856,
+          "rmse_seconds": 178.41180961682858,
+          "rows": 35328,
+          "sse_delta": -16582626.300686836,
+          "sse_fraction": 0.031329978853661025
+        },
+        "LFPG": {
+          "rmse_delta_seconds": -0.9065035606927268,
+          "rmse_seconds": 570.6526032162085,
+          "rows": 39612,
+          "sse_delta": -41015016.721868515,
+          "sse_fraction": 0.3593885441683594
+        },
+        "LIRF": {
+          "rmse_delta_seconds": -1.4868118671852244,
+          "rmse_seconds": 612.0208244311681,
+          "rows": 26528,
+          "sse_delta": -48337471.5103817,
+          "sse_fraction": 0.2768412245157406
+        },
+        "LSZH": {
+          "rmse_delta_seconds": -3.4673070879053114,
+          "rmse_seconds": 205.8636383791461,
+          "rows": 22346,
+          "sse_delta": -32169460.780162573,
+          "sse_fraction": 0.026384747124237214
+        },
+        "LTFM": {
+          "rmse_delta_seconds": -3.782252048219817,
+          "rmse_seconds": 255.63678768684346,
+          "rows": 46539,
+          "sse_delta": -90661274.32432365,
+          "sse_fraction": 0.08473397961120305
+        }
+      },
+      "by_month": {
+        "2025-01": {
+          "rmse_delta_seconds": -1.647418150659007,
+          "rmse_seconds": 345.2928806675611,
+          "rows": 153706,
+          "sse_delta": -175285938.80719757,
+          "sse_fraction": 0.5105754424813204
+        },
+        "2025-07": {
+          "rmse_delta_seconds": -2.5180652484426105,
+          "rmse_seconds": 303.49797850839917,
+          "rows": 190713,
+          "sse_delta": -292705564.4054184,
+          "sse_fraction": 0.48942455751867947
+        }
+      },
+      "by_nm_missing": {
+        "False": {
+          "rmse_delta_seconds": -2.987976341691308,
+          "rmse_seconds": 229.4848502576615,
+          "rows": 339046,
+          "sse_delta": -467991503.2126045,
+          "sse_fraction": 0.49746269595000897
+        },
+        "True": {
+          "rmse_delta_seconds": 0.0,
+          "rmse_seconds": 1832.2250047055338,
+          "rows": 5373,
+          "sse_delta": 0.0,
+          "sse_fraction": 0.502537304049991
+        }
+      },
+      "by_target_band": {
+        "0_to_1h": {
+          "rmse_delta_seconds": -2.4746480713812673,
+          "rmse_seconds": 241.92064527849652,
+          "rows": 343355,
+          "sse_delta": -413214282.8496361,
+          "sse_fraction": 0.5598647107615262
+        },
+        "1h_to_3h": {
+          "rmse_delta_seconds": -17.081609837468477,
+          "rmse_seconds": 1978.3146046157522,
+          "rows": 921,
+          "sse_delta": -62515064.970620155,
+          "sse_fraction": 0.10042554515781597
+        },
+        "negative": {
+          "rmse_delta_seconds": 6.774932536006531,
+          "rmse_seconds": 668.4014735025933,
+          "rows": 80,
+          "sse_delta": 720868.0055221915,
+          "sse_fraction": 0.0009957690824678686
+        },
+        "over_3h": {
+          "rmse_delta_seconds": 4.088920898308061,
+          "rmse_seconds": 14234.169762459247,
+          "rows": 60,
+          "sse_delta": 6983284.148965836,
+          "sse_fraction": 0.33869546846878407
+        },
+        "zero": {
+          "rmse_delta_seconds": 12.089028106624198,
+          "rmse_seconds": 470.54908872390166,
+          "rows": 3,
+          "sse_delta": 33692.45315308962,
+          "sse_fraction": 1.850652940586187e-05
+        }
+      },
+      "improvement_fraction": 0.00645624563034064,
+      "improvement_seconds": 2.097744397133738,
+      "rmse_seconds": 322.8193230817628,
+      "rows": 344419
+    }
+  },
+  "selected_paired_days": {
+    "forward": {
+      "comparison": "candidate minus Phase-3 timing_traffic",
+      "days": 30,
+      "days_with_lower_squared_error": 30,
+      "interpretation": "Descriptive on reused development data, not an independent audit",
+      "replicates": 2000,
+      "rmse_difference_95pct_interval_seconds": [
+        -2.694362678341347,
+        -1.76547105262704
+      ]
+    },
+    "seasonal": {
+      "comparison": "candidate minus Phase-3 timing_traffic",
+      "days": 62,
+      "days_with_lower_squared_error": 59,
+      "interpretation": "Descriptive on reused development data, not an independent audit",
+      "replicates": 2000,
+      "rmse_difference_95pct_interval_seconds": [
+        -2.663175738347074,
+        -1.66675425888793
+      ]
+    }
+  }
+}

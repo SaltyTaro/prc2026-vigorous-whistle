@@ -1,0 +1,243 @@
+{
+  "audit_labels_used": false,
+  "by_population_airport": {
+    "january_november_training/EDDF": {
+      "airport": "EDDF",
+      "coverage_fraction": 1.0,
+      "covered_rows": 212817,
+      "population": "january_november_training",
+      "rows": 212817
+    },
+    "january_november_training/EDDM": {
+      "airport": "EDDM",
+      "coverage_fraction": 1.0,
+      "covered_rows": 155299,
+      "population": "january_november_training",
+      "rows": 155299
+    },
+    "january_november_training/EGLL": {
+      "airport": "EGLL",
+      "coverage_fraction": 1.0,
+      "covered_rows": 219546,
+      "population": "january_november_training",
+      "rows": 219546
+    },
+    "january_november_training/EHAM": {
+      "airport": "EHAM",
+      "coverage_fraction": 1.0,
+      "covered_rows": 228493,
+      "population": "january_november_training",
+      "rows": 228493
+    },
+    "january_november_training/LEBL": {
+      "airport": "LEBL",
+      "coverage_fraction": 0.9997709049255441,
+      "covered_rows": 165832,
+      "population": "january_november_training",
+      "rows": 165870
+    },
+    "january_november_training/LEMD": {
+      "airport": "LEMD",
+      "coverage_fraction": 0.9998713045089752,
+      "covered_rows": 194232,
+      "population": "january_november_training",
+      "rows": 194257
+    },
+    "january_november_training/LFPG": {
+      "airport": "LFPG",
+      "coverage_fraction": 0.9999544987123136,
+      "covered_rows": 219764,
+      "population": "january_november_training",
+      "rows": 219774
+    },
+    "january_november_training/LIRF": {
+      "airport": "LIRF",
+      "coverage_fraction": 0.9995357786808041,
+      "covered_rows": 148567,
+      "population": "january_november_training",
+      "rows": 148636
+    },
+    "january_november_training/LSZH": {
+      "airport": "LSZH",
+      "coverage_fraction": 0.9999517382281495,
+      "covered_rows": 124316,
+      "population": "january_november_training",
+      "rows": 124322
+    },
+    "january_november_training/LTFM": {
+      "airport": "LTFM",
+      "coverage_fraction": 0.9998482161402164,
+      "covered_rows": 250318,
+      "population": "january_november_training",
+      "rows": 250356
+    },
+    "ranking/EDDF": {
+      "airport": "EDDF",
+      "coverage_fraction": 1.0,
+      "covered_rows": 36317,
+      "population": "ranking",
+      "rows": 36317
+    },
+    "ranking/EDDM": {
+      "airport": "EDDM",
+      "coverage_fraction": 1.0,
+      "covered_rows": 25966,
+      "population": "ranking",
+      "rows": 25966
+    },
+    "ranking/EGLL": {
+      "airport": "EGLL",
+      "coverage_fraction": 1.0,
+      "covered_rows": 39840,
+      "population": "ranking",
+      "rows": 39840
+    },
+    "ranking/EHAM": {
+      "airport": "EHAM",
+      "coverage_fraction": 1.0,
+      "covered_rows": 38182,
+      "population": "ranking",
+      "rows": 38182
+    },
+    "ranking/LEBL": {
+      "airport": "LEBL",
+      "coverage_fraction": 0.9997340425531915,
+      "covered_rows": 30072,
+      "population": "ranking",
+      "rows": 30080
+    },
+    "ranking/LEMD": {
+      "airport": "LEMD",
+      "coverage_fraction": 0.9999458786599557,
+      "covered_rows": 36952,
+      "population": "ranking",
+      "rows": 36954
+    },
+    "ranking/LFPG": {
+      "airport": "LFPG",
+      "coverage_fraction": 0.9999498394863563,
+      "covered_rows": 39870,
+      "population": "ranking",
+      "rows": 39872
+    },
+    "ranking/LIRF": {
+      "airport": "LIRF",
+      "coverage_fraction": 1.0,
+      "covered_rows": 26899,
+      "population": "ranking",
+      "rows": 26899
+    },
+    "ranking/LSZH": {
+      "airport": "LSZH",
+      "coverage_fraction": 1.0,
+      "covered_rows": 23150,
+      "population": "ranking",
+      "rows": 23150
+    },
+    "ranking/LTFM": {
+      "airport": "LTFM",
+      "coverage_fraction": 0.99985288245308,
+      "covered_rows": 47574,
+      "population": "ranking",
+      "rows": 47581
+    }
+  },
+  "code_sha256": "2874118ebffacf2fdd28a985e4a32490d454712abb6330a5e1b38709911c77e7",
+  "created_at_utc": "2026-09-14T00:33:48.436935+00:00",
+  "departure_labels_read": false,
+  "inventory_sha256": "7b0f1fcb86f4b0365e262ba3891bc7a6a3c576fb4912a72e33303e0870be6ea4",
+  "license": {
+    "saved_path": "docs/competition/weather_20260914/iem_usage.html",
+    "sha256": "5a8b5c647681c7b39ec42bf27f2f2baa585bd1186f4bdf0264860a6dc165629a",
+    "source_url": "https://mesonet.agron.iastate.edu/disclaimer.php",
+    "statement": "IEM website materials are public domain; attribution appreciated"
+  },
+  "model_trained": false,
+  "official_input_receipts": [
+    {
+      "path": "ranking.parquet",
+      "sha256": "9db75e3a56fa09b87aab72e191a53da3fe763d9887ad2b23aea9cde6a6325f86",
+      "size_bytes": 43564605
+    },
+    {
+      "path": "submitting.parquet",
+      "sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+      "size_bytes": 1677097
+    },
+    {
+      "path": "training_2025-01-01_2025-02-01.parquet",
+      "sha256": "a4dc8f152c082c650cd7eb745fe9c641089f34f74df127e6944a188990a0ed94",
+      "size_bytes": 21218481
+    },
+    {
+      "path": "training_2025-02-01_2025-03-01.parquet",
+      "sha256": "b6f9ff2cdb1cfe07c5442f4e1f11bbcdbeafe52852dcb0b8175f62ab84c6a066",
+      "size_bytes": 19824510
+    },
+    {
+      "path": "training_2025-03-01_2025-04-01.parquet",
+      "sha256": "58fde7e5f8b539546af63b41d7f6ec0f2884fdc3d3dd9b6bfca7c59a420dcdd3",
+      "size_bytes": 22606072
+    },
+    {
+      "path": "training_2025-04-01_2025-05-01.parquet",
+      "sha256": "9ffe0cf5741c4863799c41be81475dfaecedabe0ba687b8f8e4eacba992f9390",
+      "size_bytes": 23840340
+    },
+    {
+      "path": "training_2025-05-01_2025-06-01.parquet",
+      "sha256": "5481c0642a8fbb4dc395f93bc713c57f4cc16854fb361d404967077e1fce2ff9",
+      "size_bytes": 25187756
+    },
+    {
+      "path": "training_2025-06-01_2025-07-01.parquet",
+      "sha256": "c3ef5080f2cc636c3416baf1555f7d0ee3519f9046e8043c1c0c8f017a244025",
+      "size_bytes": 24991697
+    },
+    {
+      "path": "training_2025-07-01_2025-08-01.parquet",
+      "sha256": "34d1c5bba7c8596a1c20c09edd3cb2f63277b5a684fa801911660fe0eaf63c9d",
+      "size_bytes": 26014977
+    },
+    {
+      "path": "training_2025-08-01_2025-09-01.parquet",
+      "sha256": "6c8d2aa7a1b6c9dff9a0305a37eb02de1e87a68d07557264f41b77738272c540",
+      "size_bytes": 25969246
+    },
+    {
+      "path": "training_2025-09-01_2025-10-01.parquet",
+      "sha256": "955308a4000947e32a00586d3ee13928949d2231b67f84f6dfb0631893f3754a",
+      "size_bytes": 25102673
+    },
+    {
+      "path": "training_2025-10-01_2025-11-01.parquet",
+      "sha256": "4a31a35601c1bdcd74b8cd6379231ba516a48324e4c2478bf1c9360cd23e687f",
+      "size_bytes": 25392098
+    },
+    {
+      "path": "training_2025-11-01_2025-12-01.parquet",
+      "sha256": "ac36b17db7a537e3baeb682fa4763dacaa1fcc5d9bfa6bf32b3ee5d9f91300b0",
+      "size_bytes": 22173840
+    },
+    {
+      "path": "training_2025-12-01_2026-01-01.parquet",
+      "sha256": "2d357f2f403a86778a69e93f72d8754effe77f1ac0942399b3d1b7728241f724",
+      "size_bytes": 22653598
+    }
+  ],
+  "overall": {
+    "january_november_training": {
+      "coverage_fraction": 0.9999030932024571,
+      "covered_rows": 1919184,
+      "rows": 1919370
+    },
+    "ranking": {
+      "coverage_fraction": 0.9999449021433067,
+      "covered_rows": 344822,
+      "rows": 344841
+    }
+  },
+  "publication_time_limitation": "METAR publication timestamps are absent; the 15-minute delay is an explicit conservative convention",
+  "unique_station_times": 190466,
+  "weather_join_for_coverage_only": "last observation at least 15 minutes before takeoff; maximum observation age 90 minutes"
+}

@@ -1,0 +1,119 @@
+{
+  "absent_codes": "No weather code means none reported; missing sky coverage remains missing, not asserted clear.",
+  "audit_used": false,
+  "availability": {
+    "lagged": "same rule at movement minus 60 minutes",
+    "latest": "last report at or before movement minus 15 minutes; maximum age from movement 90 minutes",
+    "publication_time_limitation": "Provider publication timestamps unavailable; 15-minute delay is a conservative convention, not measured live availability",
+    "recent": "all reports in [movement-195min, movement-15min], independent of latest-report staleness",
+    "runway_geometry": "2026-09-14 static OurAirports coordinates, including currently closed runways; exact airport/designator match; geodesic threshold bearing. Unknown designators use flagged runway number times 10 degrees, an approximate magnetic bearing. No historical runway-name remapping."
+  },
+  "declared_at_utc": "2026-09-14T01:59:25.203626+00:00",
+  "departure_labels_used_in_shared_features": false,
+  "excluded_weather_fields": {
+    "mslp": "entirely missing",
+    "p01i": "all 190466 reports have value zero; use weather codes for precipitation"
+  },
+  "external_data": {
+    "iem_license": {
+      "path": "docs/competition/weather_20260914/iem_usage.html",
+      "sha256": "5a8b5c647681c7b39ec42bf27f2f2baa585bd1186f4bdf0264860a6dc165629a"
+    },
+    "runways": {
+      "manifest": "docs/competition/weather_20260914/runway_sources.json",
+      "sha256": "217a19f55e1a25572502a0602997ad4fa82e429b2b7a28b1c631dc48bbd8cd42"
+    },
+    "weather": {
+      "manifest": "docs/competition/weather_20260914/inventory.json",
+      "sha256": "7b0f1fcb86f4b0365e262ba3891bc7a6a3c576fb4912a72e33303e0870be6ea4"
+    }
+  },
+  "feature_policy": "iem-delayed-surface-weather-v1",
+  "input_columns": [
+    "MVT_ID_mvt",
+    "MVT_TIME_UTC_mvt",
+    "ADEP_mvt",
+    "RUNWAY_mvt"
+  ],
+  "new_feature_names": [
+    "wx_missing",
+    "wx_age_minutes",
+    "wx_temperature_c",
+    "wx_dewpoint_c",
+    "wx_dewpoint_spread_c",
+    "wx_humidity_pct",
+    "wx_pressure_hpa",
+    "wx_speed_mps",
+    "wx_gust_mps",
+    "wx_gust_excess_mps",
+    "wx_gust_reported",
+    "wx_direction_missing",
+    "wx_direction_sin",
+    "wx_direction_cos",
+    "wx_east_wind_mps",
+    "wx_north_wind_mps",
+    "wx_visibility_km",
+    "wx_visibility_below_1km",
+    "wx_visibility_below_5km",
+    "wx_cloud_fraction",
+    "wx_ceiling_m",
+    "wx_ceiling_reported",
+    "wx_sky_missing",
+    "wx_rain",
+    "wx_snow",
+    "wx_ice",
+    "wx_fog",
+    "wx_mist",
+    "wx_thunder",
+    "wx_freezing_weather",
+    "wx_showers",
+    "wx_heavy_weather",
+    "wx_no_weather_code",
+    "wx_temperature_below_zero",
+    "wx_runway_bearing_sin",
+    "wx_runway_bearing_cos",
+    "wx_runway_length_m",
+    "wx_runway_external_bearing",
+    "wx_headwind_mps",
+    "wx_tailwind_mps",
+    "wx_crosswind_mps",
+    "wx_abs_crosswind_mps",
+    "wx_gust_crosswind_mps",
+    "wx_lag60_missing",
+    "wx_lag60_observation_gap_minutes",
+    "wx_change60_temperature_c",
+    "wx_change60_pressure_hpa",
+    "wx_change60_speed_mps",
+    "wx_change60_visibility_km",
+    "wx_change60_east_wind_mps",
+    "wx_change60_north_wind_mps",
+    "wx_reports_3h",
+    "wx_mean3h_temperature_c",
+    "wx_mean3h_speed_mps",
+    "wx_mean3h_visibility_km",
+    "wx_mean3h_rain",
+    "wx_mean3h_snow",
+    "wx_mean3h_fog",
+    "wx_mean3h_thunder",
+    "wx_max3h_speed_mps",
+    "wx_max3h_gust_mps"
+  ],
+  "previous_bundle_id": "d4decaaa6d8e7915d8210a0aaa644af5caa8bb6924c646d9a56f74b8a6f9e2cc",
+  "ranking_months": [
+    "2026-01",
+    "2026-07"
+  ],
+  "training_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11"
+  ]
+}

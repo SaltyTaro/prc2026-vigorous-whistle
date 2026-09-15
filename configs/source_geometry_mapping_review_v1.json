@@ -1,0 +1,138 @@
+{
+  "airports": [
+    "LFPG",
+    "LIRF"
+  ],
+  "audit_used": false,
+  "common_fitting_months": [
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-08",
+    "2025-09"
+  ],
+  "decision": "Finish the semantic mapping review and four historical snapshots for every qualifying airport. No model training, feature-bundle creation, prediction edit or submission in this audit.",
+  "declared_at_utc": "2026-09-14T20:34:58.776735+00:00",
+  "expected_all_airport_common_fitting_ids_sha256": "5a8ca81854dc7ddc29c0cc0e82c5f3a0a3bc2eb2b22ac17d4da387e7090b63f7",
+  "expected_all_airport_common_fitting_rows": 1226945,
+  "experiment_id": "source-geometry-mapping-review-v1",
+  "geometry": {
+    "aeroway_tags": [
+      "parking_position",
+      "gate",
+      "taxiway",
+      "taxilane",
+      "runway",
+      "apron",
+      "terminal",
+      "holding_position"
+    ],
+    "bbox_south_west_north_east": {
+      "LFPG": [
+        48.98,
+        2.47,
+        49.055,
+        2.625
+      ],
+      "LIRF": [
+        41.77,
+        12.2,
+        41.85,
+        12.3
+      ]
+    },
+    "delay_between_requests_seconds": 3,
+    "endpoints": [
+      "https://overpass-api.de/api/interpreter",
+      "https://overpass.kumi.systems/api/interpreter"
+    ],
+    "graph_edge_types": [
+      "taxiway",
+      "taxilane",
+      "parking_position"
+    ],
+    "historical_fetch_minimum_current_exact_parking_row_coverage": 0.5,
+    "historical_policy": "Fetch historical LFPG snapshots only if the explicit-node review clears the original 50% current-row gate. LIRF already qualified under the original declaration. Preserve source receipts from either declaration and all original reports.",
+    "license": "ODbL-1.0",
+    "license_urls": [
+      "https://www.openstreetmap.org/copyright",
+      "https://opendatacommons.org/licenses/odbl/1-0/"
+    ],
+    "max_duplicate_position_span_m": 30,
+    "max_graph_snap_distance_m": 75,
+    "max_request_timeout_seconds": 45,
+    "max_response_bytes": 25000000,
+    "parking_way_inclusion": "Include non-area, non-closed parking-position lead-in ways containing an unambiguously named parking node. Use actual shared OSM nodes only. These add a geometric connection, not directed operational clearance.",
+    "provider": "OpenStreetMap contributors via public Overpass API",
+    "requested_snapshots": [
+      "current",
+      "2025-01-01T00:00:00Z",
+      "2025-07-01T00:00:00Z",
+      "2026-01-01T00:00:00Z",
+      "2026-07-01T00:00:00Z"
+    ],
+    "route_proxy": "Undirected mapped taxiway/taxilane plus explicitly linked parking lead-in connectivity to any shared-node access for the recorded runway; runway traversal remains excluded. Geometric lower bound only.",
+    "sequential_requests_only": true,
+    "stand_matching": "Keep exact whole-ref matching. A parking-position way and same-ref parking node are one location only when the actual node ID occurs in that way. Use that node coordinate, not the lead-in way centroid. Unlinked objects retain the original 30m ambiguity check. No geometric-nearness aliases or passenger-gate substitution."
+  },
+  "input_receipts_sha256": {
+    "configs/validation_v1.json": "cd9dd96fd4168a36655d57a4278b40901de7accda481d8541dca198605e0469b",
+    "docs/competition/gain_review_v7_20260915/error_headroom.json": "c96202ec6d5ce132df2bbccae5db54de7b0f92bed2d7926e4051d65cc5c644cf",
+    "docs/ladder/fitting_clock_regimes.json": "73d33dd59e616eaee88e87976797124ee97a5e4a4d3b019939c196f7e9a56c16",
+    "docs/next_lever/clock_relink_quality.json": "c58bf572138d1a0998e97d7e243e027d2207568118cf3ce3fed5874cecde118b",
+    "docs/phase5/fitting_diagnostics.json": "9db9c886164162ecd949edd7256b725cb740e7986029fa06f3c12fd2abd8c317",
+    "docs/source_geometry/current_geometry_coverage.json": "e34f4a5bea8e228bc984cec48723008b1e20b69edabf5efe40d88887715c0d7c",
+    "docs/source_geometry/fitting_source_audit.json": "604378d140a5aced394163475bf28f9e58ddca547b6b0ad93c92fafc6a9e5465",
+    "docs/surface_refit/submission_v7_official.json": "63aad28134819b548bbd6944c0df889f65651cb3154d50694ceaef224315905b"
+  },
+  "native_models_to_fit": 0,
+  "parent_declaration": {
+    "path": "configs/source_geometry_audit_v1.json",
+    "sha256": "5cffff6da5f1da03cf02237f98e450551a6e7e83ba480ec66f330a0ceb6e8444"
+  },
+  "prediction_changes": false,
+  "prior_information": "The initial current-map check gives LFPG 35.93% and LIRF 81.20% unambiguous parking coverage. Inspection of four rejected refs per airport shows named parking nodes contained in same-ref parking-position ways; their way-centroid differences caused false ambiguity. No model scores or hidden labels motivated this review.",
+  "public_tag_definition": "https://wiki.openstreetmap.org/wiki/Tag:aeroway%3Dparking_position",
+  "purpose": "Explicit node/way identity reconciliation in the label-free airport geometry study; preserve the initial strict centroid report.",
+  "source_audit": {
+    "clock_disagreement_thresholds_seconds": [
+      60,
+      900,
+      3600
+    ],
+    "day_multiple_tolerance_seconds": 120,
+    "groupings": [
+      "airport",
+      "airport_month",
+      "airport_nm_availability",
+      "airport_nm_availability_aircraft_missing",
+      "airport_nm_availability_schedule_interval",
+      "airport_nm_availability_stand",
+      "airport_nm_availability_schedule_midnight"
+    ],
+    "hour_multiple_tolerance_seconds": 60,
+    "interpretation": "Raw clock/label relationships on common fitting rows, not v7 prediction errors. Recurrence across months does not establish prediction improvement. No per-ID rule or broader schedule gate is selected.",
+    "minimum_stand_active_months": 5,
+    "minimum_stand_group_rows": 50,
+    "near_clock_seconds": 60,
+    "reporting_mechanisms": [
+      "block_near_schedule",
+      "block_near_aobt",
+      "block_near_lobt",
+      "nonzero_day_difference_from_schedule",
+      "nonzero_hour_difference_from_nm_proxy"
+    ],
+    "schedule_interval_bins_seconds": [
+      0,
+      3600,
+      10800,
+      21600,
+      43200,
+      86400
+    ]
+  },
+  "split_source": "data/phase1/58d621b245de3f5e12dd",
+  "user_authorization": "User approved proceeding with the proposed reporting audit and small geometry coverage study after the v7 gain review."
+}

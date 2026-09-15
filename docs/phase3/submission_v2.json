@@ -1,0 +1,546 @@
+{
+  "created_at_utc": "2026-09-13T16:47:29.403982+00:00",
+  "export": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v2.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 42903,
+    "maximum_rounding_change_seconds": 0.4999976156914272,
+    "minimum_prediction_seconds": -834,
+    "negative_predictions": 43,
+    "provenance": {
+      "audit_used": false,
+      "bundle_id": "410850c6cdc70bd5b987b93770a40b09b0e30c6acb4f4f28cbc4f86b05f12ae8",
+      "config_sha256": "003ff95ba3cea1f755d4533e01d6de267dc6dd3cd477ae9f20c0d5c8f2e5d8c1",
+      "iterations": 462,
+      "model_code_sha256": "8fbd13ca438e9b454d6a0bf5288a4ff89f97e851cca1cebc6cb363358dea9dcb",
+      "model_kind": "lightgbm",
+      "refit_run_id": "20260913T161326150055Z_refit_timing_traffic_lightgbm",
+      "refit_run_sha256": "43ecc14f13df1507a11b762acf4580762103205cd8b488b6c2afcff0a5ae1f0b"
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "98efb0ff6fab73afa04763db7b7e19d81cbdfa5ed808e1cd4257d409c1fe9724",
+    "size_bytes": 1338296,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-13T16:39:07.370895+00:00",
+    "version": 2
+  },
+  "leaderboard_snapshot": {
+    "created_at_utc": "2026-09-13T16:47:29.372601+00:00",
+    "pages": [
+      {
+        "path": "runs/phase3/leaderboard_pages/page_1.json",
+        "sha256": "13e2d9a6111e96541d3ec4b50f7de0aea5cb51ca2f375f915da6cca5890f350c",
+        "size_bytes": 50449
+      },
+      {
+        "path": "runs/phase3/leaderboard_pages/page_2.json",
+        "sha256": "43b9f88046ffcaebad4b6d903db93050496b7a2c5f8bc2aeffc79b30b9b6c464",
+        "size_bytes": 50445
+      },
+      {
+        "path": "runs/phase3/leaderboard_pages/page_3.json",
+        "sha256": "725883401c473f9f720281efbf925a39162c3a463e1fb1fca88544cb1a1df1fd",
+        "size_bytes": 50577
+      },
+      {
+        "path": "runs/phase3/leaderboard_pages/page_4.json",
+        "sha256": "743c7bb4bead74c06eaadbcd04646a5999a1e97d17e42c54d004fe1c8f7db9d9",
+        "size_bytes": 50475
+      },
+      {
+        "path": "runs/phase3/leaderboard_pages/page_5.json",
+        "sha256": "053e6a53bde2ec71ba0de2d44d4750fcc255c43db68f6a019a243df04298a825",
+        "size_bytes": 50749
+      },
+      {
+        "path": "runs/phase3/leaderboard_pages/page_6.json",
+        "sha256": "0fba39f8932809773f3942ccd7ec6d4818b18b374cbed17ee1b8f30d2829cb1d",
+        "size_bytes": 48154
+      }
+    ],
+    "retrieval_end_utc": "2026-09-13T16:45:08.862833+00:00",
+    "retrieval_start_utc": "2026-09-13T16:44:50.676087+00:00",
+    "rmse_reduction_fraction_to_third": 0.378314792120762,
+    "scored_teams": 131,
+    "source": "https://datacomp.opensky-network.org/api/competitions/bb3693e1-26bc-4a9e-8619-4fe78b4eab0c/leaderboard",
+    "successful_submissions": 1190,
+    "team_best": {
+      "filename": "vigorous-whistle_v2.parquet",
+      "processedAt": "2026-09-13T16:40:59.666597Z",
+      "score": 421.3047,
+      "submissionId": "22ce5a81-e043-4e77-b27d-93667f69d7e5",
+      "teamId": "64cf67d0-5b26-49db-bd82-7b12ca4411ce",
+      "teamName": "vigorous-whistle",
+      "usedPairs": 344841
+    },
+    "team_rank": 96,
+    "top_three": []
+  },
+  "local_verification": {
+    "all_original_predictors_unchanged": "asserted for every row during feature preparation",
+    "audit_used": false,
+    "bundle_id": "410850c6cdc70bd5b987b93770a40b09b0e30c6acb4f4f28cbc4f86b05f12ae8",
+    "checked_at_utc": "2026-09-13T16:38:11.393708+00:00",
+    "development_runs_rescored": 16,
+    "feature_artifacts_verified": 12,
+    "independent_window_comparisons": 816,
+    "parent_artifacts_verified": 43,
+    "parent_cross_platform_equivalence": {
+      "local_manifest_sha256": "77aa476f862ee77a49a03bd08cb44a63ddedbc063f6d5187982ed8e670f15a1c",
+      "matching_data_code_split_identity_sha256": "2966ab723abd073a34dc547e9ea4fdf34294508bea71378001b8858b3a97299d",
+      "only_allowed_differences": [
+        "created_at_utc",
+        "preparation",
+        "sources[*].wall_seconds"
+      ],
+      "producing_manifest_sha256": "7dea6171209256c6eccbc5bc8125ce58ff2cf1f476bbac2dd4031c4770ca9dba"
+    },
+    "real_departures_sampled": 48,
+    "runs_verified": [
+      {
+        "local_refit_reload_difference_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T160049026913Z_seasonal_layout_lightgbm",
+        "stage": "development"
+      },
+      {
+        "local_refit_reload_difference_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T160123052631Z_forward_layout_lightgbm",
+        "stage": "development"
+      },
+      {
+        "local_refit_reload_difference_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T160154917101Z_seasonal_timing_lightgbm",
+        "stage": "development"
+      },
+      {
+        "local_refit_reload_difference_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T160223162311Z_forward_timing_lightgbm",
+        "stage": "development"
+      },
+      {
+        "local_refit_reload_difference_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T160251677038Z_seasonal_traffic_lightgbm",
+        "stage": "development"
+      },
+      {
+        "local_refit_reload_difference_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T160319410046Z_forward_traffic_lightgbm",
+        "stage": "development"
+      },
+      {
+        "local_refit_reload_difference_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T160347925627Z_seasonal_structural_lightgbm",
+        "stage": "development"
+      },
+      {
+        "local_refit_reload_difference_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T160424930155Z_forward_structural_lightgbm",
+        "stage": "development"
+      },
+      {
+        "local_refit_reload_difference_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T160503044964Z_seasonal_structural_traffic_lightgbm",
+        "stage": "development"
+      },
+      {
+        "local_refit_reload_difference_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T160551749483Z_forward_structural_traffic_lightgbm",
+        "stage": "development"
+      },
+      {
+        "local_refit_reload_difference_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T160638086948Z_seasonal_structural_traffic_arrivals_lightgbm",
+        "stage": "development"
+      },
+      {
+        "local_refit_reload_difference_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T160721956684Z_forward_structural_traffic_arrivals_lightgbm",
+        "stage": "development"
+      },
+      {
+        "local_refit_reload_difference_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T160840226359Z_seasonal_timing_traffic_lightgbm",
+        "stage": "development"
+      },
+      {
+        "local_refit_reload_difference_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T160920483418Z_forward_timing_traffic_lightgbm",
+        "stage": "development"
+      },
+      {
+        "local_refit_reload_difference_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T160953847734Z_seasonal_timing_traffic_arrivals_lightgbm",
+        "stage": "development"
+      },
+      {
+        "local_refit_reload_difference_seconds": null,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T161028016196Z_forward_timing_traffic_arrivals_lightgbm",
+        "stage": "development"
+      },
+      {
+        "local_refit_reload_difference_seconds": 0.0,
+        "reload_difference_seconds": 0.0,
+        "run_id": "20260913T161326150055Z_refit_timing_traffic_lightgbm",
+        "stage": "refit"
+      }
+    ]
+  },
+  "official": {
+    "bucket": "prc-2026-vigorous-whistle",
+    "checked_at_utc": "2026-09-13T16:42:13.994661+00:00",
+    "filename": "vigorous-whistle_v2.parquet",
+    "objects": [
+      {
+        "key": "vigorous-whistle_v1.parquet",
+        "last_modified_utc": "2026-09-13T14:49:05.379000+00:00",
+        "size_bytes": 1336139
+      },
+      {
+        "key": "vigorous-whistle_v1.parquet_persist.json",
+        "last_modified_utc": "2026-09-13T14:49:42.922000+00:00",
+        "size_bytes": 147
+      },
+      {
+        "key": "vigorous-whistle_v1.parquet_result.json",
+        "last_modified_utc": "2026-09-13T14:49:24.545000+00:00",
+        "size_bytes": 279
+      },
+      {
+        "key": "vigorous-whistle_v2.parquet",
+        "last_modified_utc": "2026-09-13T16:40:23.930000+00:00",
+        "size_bytes": 1338296
+      },
+      {
+        "key": "vigorous-whistle_v2.parquet_persist.json",
+        "last_modified_utc": "2026-09-13T16:41:00.751000+00:00",
+        "size_bytes": 147
+      },
+      {
+        "key": "vigorous-whistle_v2.parquet_result.json",
+        "last_modified_utc": "2026-09-13T16:40:42.830000+00:00",
+        "size_bytes": 279
+      }
+    ],
+    "official_results": [
+      {
+        "filename": "vigorous-whistle_v2.parquet",
+        "processedAt": "2026-09-13T16:40:59.666597Z",
+        "score": 421.3047,
+        "submissionId": "22ce5a81-e043-4e77-b27d-93667f69d7e5",
+        "teamId": "64cf67d0-5b26-49db-bd82-7b12ca4411ce",
+        "teamName": "vigorous-whistle",
+        "usedPairs": 344841
+      }
+    ],
+    "scored": true
+  },
+  "official_rmse_improvement_fraction": 0.035690056434276585,
+  "official_rmse_improvement_seconds": 15.592899999999986,
+  "previous_official_rmse_seconds": 436.8976,
+  "refit": {
+    "artifacts": [
+      {
+        "path": "config.json",
+        "sha256": "95cf8c31716d3092e6131eff29c06172a1d3f0a9e646f8d34c0db4a00614134e",
+        "size_bytes": 1476
+      },
+      {
+        "path": "encoder.json",
+        "sha256": "2bd7e791445d20ae995fff4cbbe4e8d78e0a0377111fa0259982e6c5a4f180fa",
+        "size_bytes": 127233
+      },
+      {
+        "path": "feature_importance.json",
+        "sha256": "ab27b2b5923cb6af61f66ebf1645a426e759c27b9656f8bf4e5ddafa3d8cf99a",
+        "size_bytes": 3156
+      },
+      {
+        "path": "model.txt",
+        "sha256": "973b8a6cf56b4f43f4c78af1f286a79721d3836e1fc0d4ca0f270ddab4a9e467",
+        "size_bytes": 4977796
+      },
+      {
+        "path": "ranking_predictions.parquet",
+        "sha256": "7f1e8c8eac6a7f43f95e9664444de40386161104ec3be7f96e1125c4f646ae17",
+        "size_bytes": 3668908
+      },
+      {
+        "path": "selection.json",
+        "sha256": "3446d52d7f01e7d59eacc511dc453262a9596c707bb18c99a2c34d791efe8a55",
+        "size_bytes": 364653
+      },
+      {
+        "path": "training_history.json",
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "size_bytes": 3
+      }
+    ],
+    "audit_used": false,
+    "bundle_id": "410850c6cdc70bd5b987b93770a40b09b0e30c6acb4f4f28cbc4f86b05f12ae8",
+    "config_sha256": "003ff95ba3cea1f755d4533e01d6de267dc6dd3cd477ae9f20c0d5c8f2e5d8c1",
+    "created_at_utc": "2026-09-13T16:14:09.531851+00:00",
+    "environment": {
+      "disk_available_bytes": 9972596736,
+      "logical_cpus": 16,
+      "memory_total_bytes": 67419996160,
+      "packages": {
+        "catboost": "1.2.10",
+        "lightgbm": "4.7.0",
+        "numpy": "2.4.2",
+        "pandas": "3.0.0",
+        "psutil": "7.2.2",
+        "pyarrow": "23.0.1",
+        "scipy": "1.18.1",
+        "tzdata": "2025.3"
+      },
+      "physical_cpus_reported": 8,
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "python": "3.12.3"
+    },
+    "families": [
+      "timing",
+      "traffic"
+    ],
+    "feature_code": {
+      "files": {
+        "requirements-phase3.txt": "7a9a653b3db21f8f0c52d7d90863d62f5d095b0c715cc44deb73921237b3347b",
+        "src/prc2026_phase3/__init__.py": "62fe24c8c7406560ed59250a6a7e1834e730c7cd221e2f74d40ed4b30662cd2f",
+        "src/prc2026_phase3/bundle.py": "36212f2fffa104d6bebcc95f656e63ec913a477531077fb3617c5e9741587bc3",
+        "src/prc2026_phase3/features.py": "b3536837557bec3aefdc91ffc666cafd1968a345561671f7914d8717bb5064c3",
+        "tools/prepare_phase3.py": "dcfaaad461b4c847b2d52d6ba110fc97417e17623157cdd7d745d0dd73454418"
+      },
+      "sha256": "337d682757109ca7d3f59ae2a5314763cb359d707d84c41771090dc436cb30f7"
+    },
+    "feature_names": [
+      "airport",
+      "destination",
+      "runway",
+      "stand",
+      "aircraft_type",
+      "movement_rule",
+      "nm_origin",
+      "nm_destination",
+      "nm_aircraft_type",
+      "market_segment",
+      "flight_type",
+      "wake_category",
+      "operator",
+      "utc_hour",
+      "utc_weekday",
+      "month",
+      "minute_of_day",
+      "local_hour",
+      "local_weekday",
+      "schedule_to_movement_s",
+      "movement_minus_eobt1_s",
+      "movement_minus_iobt_s",
+      "planned_duration_s",
+      "nm_missing",
+      "nm_origin_agrees",
+      "local_minute_of_day",
+      "local_time_sin",
+      "local_time_cos",
+      "local_weekday_sin",
+      "local_weekday_cos",
+      "local_weekend",
+      "utc_offset_hours",
+      "day_of_year_sin",
+      "day_of_year_cos",
+      "movement_second",
+      "scheduled_utc_minute",
+      "scheduled_weekday",
+      "eobt_utc_minute",
+      "eobt_weekday",
+      "iobt_utc_minute",
+      "iobt_weekday",
+      "eobt_minus_schedule_s",
+      "iobt_minus_schedule_s",
+      "eobt_minus_iobt_s",
+      "planned_duration_iobt_s",
+      "movement_minus_arvt1_s",
+      "schedule_missing",
+      "eobt_missing",
+      "iobt_missing",
+      "arvt1_missing",
+      "nm_destination_agrees",
+      "nm_aircraft_agrees",
+      "nm_rule_agrees",
+      "nm_filed_destination_agrees",
+      "airport_dep_last_s",
+      "airport_dep_count_5m",
+      "airport_dep_count_15m",
+      "airport_dep_count_30m",
+      "airport_dep_count_60m",
+      "airport_arr_last_s",
+      "airport_arr_count_5m",
+      "airport_arr_count_15m",
+      "airport_arr_count_30m",
+      "airport_arr_count_60m",
+      "runway_dep_last_s",
+      "runway_dep_count_15m",
+      "runway_dep_count_60m",
+      "runway_arr_last_s",
+      "runway_arr_count_15m",
+      "runway_arr_count_60m",
+      "stand_arr_last_s",
+      "stand_arr_count_60m",
+      "dep_schedule_delay_last_s",
+      "dep_schedule_delay_count_30m",
+      "dep_schedule_delay_mean_30m",
+      "dep_schedule_delay_std_30m",
+      "dep_schedule_delay_count_60m",
+      "dep_schedule_delay_mean_60m",
+      "dep_schedule_delay_std_60m",
+      "arr_schedule_delay_last_s",
+      "arr_schedule_delay_count_30m",
+      "arr_schedule_delay_mean_30m",
+      "arr_schedule_delay_std_30m",
+      "arr_schedule_delay_count_60m",
+      "arr_schedule_delay_mean_60m",
+      "arr_schedule_delay_std_60m"
+    ],
+    "fit_ids_sha256": "ba1c387b134605f2fa6ad6a7ab4097a5f1d8efe9e5e583ff6476fb1c6562d4c8",
+    "fit_rows": 1919370,
+    "iterations": 462,
+    "label": "azure-arcw0",
+    "max_model_reload_difference_seconds": 0.0,
+    "model_code": {
+      "files": {
+        "requirements-phase2.txt": "b5e77a692442298b7ff4c19348ad01af4eb6fb00497a33aef10daa5647ef69f0",
+        "requirements-phase3.txt": "7a9a653b3db21f8f0c52d7d90863d62f5d095b0c715cc44deb73921237b3347b",
+        "src/prc2026_models/__init__.py": "64ac385d71b84688c00efd31d760b65508bde1268eadd8d2f517e7d94ccff335",
+        "src/prc2026_models/encoding.py": "1c3614a92f756c17f758683d3446f0a4e27abebc45cc1198fbcda437aa86592b",
+        "src/prc2026_models/experiments.py": "553c5e7f9c38d4203a994a0f41b3eb3526f3b81910e1944bf9a3dae5df893207",
+        "src/prc2026_phase3/__init__.py": "62fe24c8c7406560ed59250a6a7e1834e730c7cd221e2f74d40ed4b30662cd2f",
+        "src/prc2026_phase3/encoding.py": "b5c0dbde41fb5d8b664f99baa74352f9005a82c9c42176000af4c3de927de25b",
+        "src/prc2026_phase3/training.py": "fa4c3372e82ee78ff5564d2ee8f2e973b50e0c6e9670a18297c31d3f824d0bd5",
+        "tools/run_phase3.py": "b5b097929dc8cc837e10a7accfc2f3071ab5f761e866a4e67fea061d5cbfdc1e"
+      },
+      "sha256": "8fbd13ca438e9b454d6a0bf5288a4ff89f97e851cca1cebc6cb363358dea9dcb"
+    },
+    "model_kind": "lightgbm",
+    "parameters": {
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1,
+      "bagging_seed": 20260913,
+      "cat_l2": 20.0,
+      "cat_smooth": 20.0,
+      "data_random_seed": 20260913,
+      "deterministic": true,
+      "feature_fraction": 0.9,
+      "feature_fraction_seed": 20260913,
+      "force_col_wise": true,
+      "lambda_l2": 10.0,
+      "learning_rate": 0.04,
+      "max_bin": 255,
+      "max_cat_threshold": 32,
+      "max_cat_to_onehot": 8,
+      "metric": "rmse",
+      "min_data_in_leaf": 100,
+      "num_leaves": 63,
+      "num_threads": 16,
+      "objective": "regression",
+      "seed": 20260913,
+      "verbosity": -1
+    },
+    "parent_bundle_id": "58d621b245de3f5e12dd3b50b0a90a87ea8ac3dc96aa2c274ffa7ea0af96b2e0",
+    "ranking_ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "ranking_rows": 344841,
+    "refit_months": [
+      "2025-01",
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11"
+    ],
+    "resources": {
+      "cpu_seconds": 410.12999999999994,
+      "mean_active_cpu_cores": 9.454048062182133,
+      "peak_process_rss_bytes_sampled": 3628388352,
+      "rss_sample_interval_seconds": 0.05,
+      "wall_seconds": 43.38141686000017
+    },
+    "run_id": "20260913T161326150055Z_refit_timing_traffic_lightgbm",
+    "stage": "refit",
+    "variant": "timing_traffic"
+  },
+  "stage": "phase3_complete",
+  "tests": {
+    "azure": "61 passed, 1 pre-existing pandas warning",
+    "windows": "61 passed, 1 pre-existing pandas warning"
+  },
+  "upload_event": {
+    "bucket": "prc-2026-vigorous-whistle",
+    "created_at_utc": "2026-09-13T16:40:21.294161+00:00",
+    "endpoint": "https://s3.opensky-network.org",
+    "etag": "33a89fc3382203da000cce0aac2f032e",
+    "filename": "vigorous-whistle_v2.parquet",
+    "limits": {
+      "bucket_bytes_after_upload": 2674861,
+      "bucket_bytes_before": 1336565,
+      "daily_count_policy": "conservative rolling 24 hours while reset timezone is unspecified",
+      "existing_submission_versions": 1,
+      "highest_existing_version": 1,
+      "submissions_in_previous_24h": 1
+    },
+    "refit_run_id": "20260913T161326150055Z_refit_timing_traffic_lightgbm",
+    "response_http_status": 200,
+    "sha256": "98efb0ff6fab73afa04763db7b7e19d81cbdfa5ed808e1cd4257d409c1fe9724",
+    "status": "uploaded_processing_not_yet_confirmed",
+    "uploaded_at_utc": "2026-09-13T16:40:24.248053+00:00",
+    "validation": {
+      "columns": [
+        "MVT_ID_mvt",
+        "TAXITIME_SEC_mvt"
+      ],
+      "exact_template_order": true,
+      "filename": "vigorous-whistle_v2.parquet",
+      "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+      "maximum_prediction_seconds": 42903,
+      "minimum_prediction_seconds": -834,
+      "negative_predictions": 43,
+      "rows": 344841,
+      "sha256": "98efb0ff6fab73afa04763db7b7e19d81cbdfa5ed808e1cd4257d409c1fe9724",
+      "size_bytes": 1338296,
+      "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+      "types": {
+        "MVT_ID_mvt": "double",
+        "TAXITIME_SEC_mvt": "int32"
+      },
+      "validated_at_utc": "2026-09-13T16:40:18.669277+00:00",
+      "version": 2
+    }
+  }
+}

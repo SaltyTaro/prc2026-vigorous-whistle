@@ -1,0 +1,149 @@
+{
+  "changed_by_airport": {
+    "EDDF": 17,
+    "EDDM": 1,
+    "EGLL": 1,
+    "EHAM": 23,
+    "LEBL": 7,
+    "LEMD": 8,
+    "LFPG": 33,
+    "LIRF": 37,
+    "LSZH": 41,
+    "LTFM": 29
+  },
+  "changed_rows": [],
+  "created_at_utc": "2026-09-15T04:17:14.373018+00:00",
+  "hedged_rows": [],
+  "output": "runs/submissions/vigorous-whistle_v8.parquet",
+  "parameters": {
+    "fitting_rows": 1919370,
+    "floor_seconds": -12.0,
+    "hedge_population_rows": 1399,
+    "long_schedule_group_one_day_rows": 10,
+    "long_schedule_group_ordinary_rows": 0,
+    "long_schedule_group_rows": 27,
+    "long_schedule_group_schedule_fill_rows": 17,
+    "negative_fitting_labels": 348,
+    "one_day_rows": 11,
+    "one_day_share": 0.37037037037037035,
+    "one_day_taxi_median_seconds": 961.0,
+    "schedule_interval_threshold_seconds": 43200.0
+  },
+  "ranking_ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+  "ranking_rows": 344841,
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v8.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 102657,
+    "maximum_rounding_change_seconds": 0.49999763185041957,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 18,
+    "provenance": {
+      "audit_used": false,
+      "config_sha256": "da7422e328915a2c8010336ac972cad7aae4656c28c2588913ff05d28840495d",
+      "experiment_id": "prc2026-extreme-row-postprocess-v1",
+      "incumbent": {
+        "official_rmse_seconds": 275.057,
+        "recipe": "full_timeline_v6_100",
+        "submission": "vigorous-whistle_v7.parquet",
+        "submission_sha256": "534e1031a068a743515eeb44b4b8f13676c5626d6c18c9416da092d58b0b924e"
+      },
+      "model_code_sha256": "d476d0c7d200b7be8f2195d770945b425457e7a9b2542cac413037ea258f9239",
+      "native_fit_count": 0,
+      "parameters": {
+        "fitting_rows": 1919370,
+        "floor_seconds": -12.0,
+        "hedge_population_rows": 1399,
+        "long_schedule_group_one_day_rows": 10,
+        "long_schedule_group_ordinary_rows": 0,
+        "long_schedule_group_rows": 27,
+        "long_schedule_group_schedule_fill_rows": 17,
+        "negative_fitting_labels": 348,
+        "one_day_rows": 11,
+        "one_day_share": 0.37037037037037035,
+        "one_day_taxi_median_seconds": 961.0,
+        "schedule_interval_threshold_seconds": 43200.0
+      },
+      "parents": {
+        "fallback_ranking_predictions": {
+          "path": "runs/azure_arcw0_weather/20260914T024435836344Z_refit_cat_weather_v4_100/ranking_predictions.parquet",
+          "sha256": "0b745c873b4ee98a136fc518db5f8999010ced5fe23e22fd2f10f87849b669a5"
+        },
+        "fallback_refit_run": {
+          "path": "runs/azure_arcw0_weather/20260914T024435836344Z_refit_cat_weather_v4_100/run.json",
+          "sha256": "507b653bd67b671309f5b7aa257f1b6231a91b6a1669088718af30d7c76663b3"
+        },
+        "fallback_selection": {
+          "path": "runs/azure_arcw0_weather/selection.json",
+          "sha256": "1228b7b16d3bea90229da139fb51ee714cf323472f3796604d40b1a7178351f3"
+        },
+        "incumbent_ranking_predictions": {
+          "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/ranking_predictions.parquet",
+          "sha256": "cf0c62b5288de74a8262dbb07705e75792bc92059b1e0bb8d66ac0681ec875be"
+        },
+        "incumbent_refit_run": {
+          "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/run.json",
+          "sha256": "0c1a0fcd1c2aa6034e28eca1b56dadb567aff5269cac823067c4c097a84498e0"
+        },
+        "incumbent_selection": {
+          "path": "runs/azure_arcw0_surface_airports/selection.json",
+          "sha256": "3a6edb7beb178744acca53c92e269f2ee92fa1524115adbda74bf876cdd4d042"
+        },
+        "timeline_selection": {
+          "path": "runs/azure_arcw0_timeline/selection.json",
+          "sha256": "4a51746cab6da283662dbff4650b6b29492d6e165e34fce34001232c1e396780"
+        }
+      },
+      "policy": "declared-extreme-row-rules-v1",
+      "refit_months": [
+        "2025-01",
+        "2025-02",
+        "2025-03",
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11"
+      ],
+      "row_counts": {
+        "changed_rows": 197,
+        "floor": 17,
+        "hedge_long_schedule": 11,
+        "route_negative_proxy": 169
+      },
+      "rules": [
+        "route_negative_proxy",
+        "hedge_long_schedule",
+        "floor"
+      ],
+      "selected_candidate": "floor_route_hedge",
+      "selection_sha256": "15346f96e38bcb5713f232a9cd9ff8f8d397d788f936efbc2d2eaecef0384fc3"
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "2c3727b3ab90fa204bb4a16e0678043432f64d60f86b96d376aee34f973bc974",
+    "size_bytes": 1342953,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-15T04:17:14.361748+00:00",
+    "version": 8
+  },
+  "row_counts": {
+    "changed_rows": 197,
+    "floor": 17,
+    "hedge_long_schedule": 11,
+    "route_negative_proxy": 169
+  },
+  "untouched_rows_match_v7_export": true
+}

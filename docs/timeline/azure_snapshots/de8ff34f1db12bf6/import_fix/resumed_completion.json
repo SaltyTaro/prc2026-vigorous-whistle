@@ -1,0 +1,64 @@
+{
+  "audit_used": false,
+  "declared_batch_complete": true,
+  "finished_at_utc": "2026-09-14T18:16:51.054775+00:00",
+  "steps": [
+    {
+      "arguments": [
+        "-m",
+        "pytest",
+        "-q",
+        "--junitxml=docs/timeline/import_fix/tests_azure.xml"
+      ],
+      "finished_at_utc": "2026-09-14T17:20:04.786654+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T17:19:56.926314+00:00"
+    },
+    {
+      "arguments": [
+        "tools/verify_timeline.py",
+        "--features-only"
+      ],
+      "finished_at_utc": "2026-09-14T17:20:46.635813+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T17:20:04.786674+00:00"
+    },
+    {
+      "arguments": [
+        "tools/run_timeline.py",
+        "--fold",
+        "seasonal"
+      ],
+      "finished_at_utc": "2026-09-14T17:44:56.131666+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T17:20:46.635833+00:00"
+    },
+    {
+      "arguments": [
+        "tools/run_timeline.py",
+        "--fold",
+        "forward"
+      ],
+      "finished_at_utc": "2026-09-14T18:14:24.984317+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T17:44:56.131688+00:00"
+    },
+    {
+      "arguments": [
+        "tools/select_timeline.py"
+      ],
+      "finished_at_utc": "2026-09-14T18:15:19.850719+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T18:14:24.984331+00:00"
+    },
+    {
+      "arguments": [
+        "tools/verify_timeline.py"
+      ],
+      "finished_at_utc": "2026-09-14T18:16:51.054755+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T18:15:19.850738+00:00"
+    }
+  ],
+  "submission_uploaded": false
+}

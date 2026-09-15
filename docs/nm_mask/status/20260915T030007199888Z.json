@@ -1,0 +1,515 @@
+{
+  "checked_at_utc": "2026-09-15T03:00:07.199888+00:00",
+  "read_only": true,
+  "workers": [
+    {
+      "child_processes": [],
+      "job_id": "seasonal_lgb_natural",
+      "log_tail": [
+        "..................................                                       [100%]",
+        "job_complete worker=arcw0 job=seasonal_lgb_natural iterations=688 complete_rmse=328.313862487"
+      ],
+      "result": {
+        "complete_rmse_seconds": 328.3138624867766,
+        "iterations": 688,
+        "native_reload_maximum_difference_seconds": 0.0,
+        "resources": {
+          "cpu_seconds": 28.759999999999998,
+          "mean_active_cpu_cores": 6.6722847892570405,
+          "peak_process_rss_bytes_sampled": 451162112,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 4.310367573983967
+        }
+      },
+      "status": {
+        "audit_used": false,
+        "complete": true,
+        "finished_at_utc": "2026-09-15T02:54:34.705835+00:00",
+        "job_id": "seasonal_lgb_natural",
+        "phase": "complete",
+        "started_at_utc": "2026-09-15T02:54:07.917168+00:00",
+        "steps": [
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "-m",
+              "pytest",
+              "-q",
+              "-p",
+              "no:cacheprovider",
+              "tests/test_nm_mask_features.py",
+              "tests/test_nm_mask_native.py",
+              "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_seasonal_lgb_natural.xml"
+            ],
+            "finished_at_utc": "2026-09-15T02:54:09.259236+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:54:07.917277+00:00"
+          },
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "tools/run_nm_mask.py",
+              "--job",
+              "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/seasonal_lgb_natural.json"
+            ],
+            "finished_at_utc": "2026-09-15T02:54:34.705594+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:54:29.889985+00:00"
+          }
+        ],
+        "worker": "arcw0"
+      },
+      "worker": "arcw0"
+    },
+    {
+      "child_processes": [],
+      "job_id": "seasonal_cat_natural",
+      "log_tail": [
+        "..................................                                       [100%]",
+        "34 passed in 1.22s",
+        "job_complete worker=arcw2 job=seasonal_cat_natural iterations=998 complete_rmse=330.785285791"
+      ],
+      "result": {
+        "complete_rmse_seconds": 330.7852857914812,
+        "iterations": 998,
+        "native_reload_maximum_difference_seconds": 0.0,
+        "resources": {
+          "cpu_seconds": 56.69,
+          "mean_active_cpu_cores": 9.093032050473877,
+          "peak_process_rss_bytes_sampled": 1144377344,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 6.234444097999813
+        }
+      },
+      "status": {
+        "audit_used": false,
+        "complete": true,
+        "finished_at_utc": "2026-09-15T02:57:20.492598+00:00",
+        "fix": "Explicit PYTHONPATH points to the unchanged project src directory.",
+        "job_id": "seasonal_cat_natural",
+        "phase": "complete",
+        "preserved_failure": "runs/nm_mask_status/seasonal_cat_natural.json",
+        "started_at_utc": "2026-09-15T02:56:51.709982+00:00",
+        "steps": [
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "-m",
+              "pytest",
+              "-q",
+              "-p",
+              "no:cacheprovider",
+              "tests/test_nm_mask_features.py",
+              "tests/test_nm_mask_native.py",
+              "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_resumed_seasonal_cat_natural.xml"
+            ],
+            "finished_at_utc": "2026-09-15T02:56:54.070499+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:56:51.710155+00:00"
+          },
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "tools/run_nm_mask.py",
+              "--job",
+              "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/seasonal_cat_natural.json"
+            ],
+            "finished_at_utc": "2026-09-15T02:57:20.492417+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:57:13.122849+00:00"
+          }
+        ],
+        "worker": "arcw2"
+      },
+      "worker": "arcw2"
+    },
+    {
+      "child_processes": [],
+      "job_id": "seasonal_lgb_augmented",
+      "log_tail": [
+        "..................................                                       [100%]",
+        "34 passed in 1.29s",
+        "job_complete worker=arcw4 job=seasonal_lgb_augmented iterations=277 complete_rmse=329.020128648"
+      ],
+      "result": {
+        "complete_rmse_seconds": 329.0201286476201,
+        "iterations": 277,
+        "native_reload_maximum_difference_seconds": 0.0,
+        "resources": {
+          "cpu_seconds": 345.56000000000006,
+          "mean_active_cpu_cores": 9.356582428879339,
+          "peak_process_rss_bytes_sampled": 5022425088,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 36.932288324999945
+        }
+      },
+      "status": {
+        "audit_used": false,
+        "complete": true,
+        "finished_at_utc": "2026-09-15T02:57:55.353647+00:00",
+        "fix": "Explicit PYTHONPATH points to the unchanged project src directory.",
+        "job_id": "seasonal_lgb_augmented",
+        "phase": "complete",
+        "preserved_failure": "runs/nm_mask_status/seasonal_lgb_augmented.json",
+        "started_at_utc": "2026-09-15T02:56:51.287968+00:00",
+        "steps": [
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "-m",
+              "pytest",
+              "-q",
+              "-p",
+              "no:cacheprovider",
+              "tests/test_nm_mask_features.py",
+              "tests/test_nm_mask_native.py",
+              "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_resumed_seasonal_lgb_augmented.xml"
+            ],
+            "finished_at_utc": "2026-09-15T02:56:53.781570+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:56:51.288148+00:00"
+          },
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "tools/run_nm_mask.py",
+              "--job",
+              "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/seasonal_lgb_augmented.json"
+            ],
+            "finished_at_utc": "2026-09-15T02:57:55.353397+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:57:13.123014+00:00"
+          }
+        ],
+        "worker": "arcw4"
+      },
+      "worker": "arcw4"
+    },
+    {
+      "child_processes": [],
+      "job_id": "seasonal_cat_augmented",
+      "log_tail": [
+        "..................................                                       [100%]",
+        "34 passed in 1.24s",
+        "job_complete worker=arcw6 job=seasonal_cat_augmented iterations=327 complete_rmse=324.321444055"
+      ],
+      "result": {
+        "complete_rmse_seconds": 324.3214440550373,
+        "iterations": 327,
+        "native_reload_maximum_difference_seconds": 0.0,
+        "resources": {
+          "cpu_seconds": 697.4899999999999,
+          "mean_active_cpu_cores": 11.211303896919215,
+          "peak_process_rss_bytes_sampled": 6608424960,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 62.21310263400005
+        }
+      },
+      "status": {
+        "audit_used": false,
+        "complete": true,
+        "finished_at_utc": "2026-09-15T02:58:20.417804+00:00",
+        "fix": "Explicit PYTHONPATH points to the unchanged project src directory.",
+        "job_id": "seasonal_cat_augmented",
+        "phase": "complete",
+        "preserved_failure": "runs/nm_mask_status/seasonal_cat_augmented.json",
+        "started_at_utc": "2026-09-15T02:56:51.310105+00:00",
+        "steps": [
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "-m",
+              "pytest",
+              "-q",
+              "-p",
+              "no:cacheprovider",
+              "tests/test_nm_mask_features.py",
+              "tests/test_nm_mask_native.py",
+              "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_resumed_seasonal_cat_augmented.xml"
+            ],
+            "finished_at_utc": "2026-09-15T02:56:53.747717+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:56:51.310253+00:00"
+          },
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "tools/run_nm_mask.py",
+              "--job",
+              "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/seasonal_cat_augmented.json"
+            ],
+            "finished_at_utc": "2026-09-15T02:58:20.417612+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:57:13.123063+00:00"
+          }
+        ],
+        "worker": "arcw6"
+      },
+      "worker": "arcw6"
+    },
+    {
+      "child_processes": [],
+      "job_id": "forward_lgb_natural",
+      "log_tail": [
+        "..................................                                       [100%]",
+        "34 passed in 1.21s",
+        "job_complete worker=arcw1 job=forward_lgb_natural iterations=227 complete_rmse=225.838106556"
+      ],
+      "result": {
+        "complete_rmse_seconds": 225.83810655594672,
+        "iterations": 227,
+        "native_reload_maximum_difference_seconds": 0.0,
+        "resources": {
+          "cpu_seconds": 15.479999999999999,
+          "mean_active_cpu_cores": 6.0316170421980075,
+          "peak_process_rss_bytes_sampled": 447049728,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 2.56647593699995
+        }
+      },
+      "status": {
+        "audit_used": false,
+        "complete": true,
+        "finished_at_utc": "2026-09-15T02:57:16.801059+00:00",
+        "fix": "Explicit PYTHONPATH points to the unchanged project src directory.",
+        "job_id": "forward_lgb_natural",
+        "phase": "complete",
+        "preserved_failure": "runs/nm_mask_status/forward_lgb_natural.json",
+        "started_at_utc": "2026-09-15T02:56:51.233521+00:00",
+        "steps": [
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "-m",
+              "pytest",
+              "-q",
+              "-p",
+              "no:cacheprovider",
+              "tests/test_nm_mask_features.py",
+              "tests/test_nm_mask_native.py",
+              "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_resumed_forward_lgb_natural.xml"
+            ],
+            "finished_at_utc": "2026-09-15T02:56:53.610067+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:56:51.233673+00:00"
+          },
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "tools/run_nm_mask.py",
+              "--job",
+              "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/forward_lgb_natural.json"
+            ],
+            "finished_at_utc": "2026-09-15T02:57:16.800858+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:57:13.122872+00:00"
+          }
+        ],
+        "worker": "arcw1"
+      },
+      "worker": "arcw1"
+    },
+    {
+      "child_processes": [],
+      "job_id": "forward_cat_natural",
+      "log_tail": [
+        "..................................                                       [100%]",
+        "34 passed in 1.25s",
+        "job_complete worker=arcw3 job=forward_cat_natural iterations=1026 complete_rmse=220.157263831"
+      ],
+      "result": {
+        "complete_rmse_seconds": 220.1572638313988,
+        "iterations": 1026,
+        "native_reload_maximum_difference_seconds": 0.0,
+        "resources": {
+          "cpu_seconds": 59.56999999999999,
+          "mean_active_cpu_cores": 11.261330404828616,
+          "peak_process_rss_bytes_sampled": 920469504,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 5.289783521000118
+        }
+      },
+      "status": {
+        "audit_used": false,
+        "complete": true,
+        "finished_at_utc": "2026-09-15T02:57:19.548465+00:00",
+        "fix": "Explicit PYTHONPATH points to the unchanged project src directory.",
+        "job_id": "forward_cat_natural",
+        "phase": "complete",
+        "preserved_failure": "runs/nm_mask_status/forward_cat_natural.json",
+        "started_at_utc": "2026-09-15T02:56:51.387722+00:00",
+        "steps": [
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "-m",
+              "pytest",
+              "-q",
+              "-p",
+              "no:cacheprovider",
+              "tests/test_nm_mask_features.py",
+              "tests/test_nm_mask_native.py",
+              "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_resumed_forward_cat_natural.xml"
+            ],
+            "finished_at_utc": "2026-09-15T02:56:53.828627+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:56:51.387875+00:00"
+          },
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "tools/run_nm_mask.py",
+              "--job",
+              "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/forward_cat_natural.json"
+            ],
+            "finished_at_utc": "2026-09-15T02:57:19.548287+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:57:13.122967+00:00"
+          }
+        ],
+        "worker": "arcw3"
+      },
+      "worker": "arcw3"
+    },
+    {
+      "child_processes": [],
+      "job_id": "forward_lgb_augmented",
+      "log_tail": [
+        "..................................                                       [100%]",
+        "34 passed in 1.86s",
+        "job_complete worker=arcw5 job=forward_lgb_augmented iterations=1368 complete_rmse=224.450233536"
+      ],
+      "result": {
+        "complete_rmse_seconds": 224.45023353612373,
+        "iterations": 1368,
+        "native_reload_maximum_difference_seconds": 0.0,
+        "resources": {
+          "cpu_seconds": 1678.72,
+          "mean_active_cpu_cores": 13.262392008240559,
+          "peak_process_rss_bytes_sampled": 6359740416,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 126.57746799799997
+        }
+      },
+      "status": {
+        "audit_used": false,
+        "complete": true,
+        "finished_at_utc": "2026-09-15T02:59:26.624639+00:00",
+        "fix": "Explicit PYTHONPATH points to the unchanged project src directory.",
+        "job_id": "forward_lgb_augmented",
+        "phase": "complete",
+        "preserved_failure": "runs/nm_mask_status/forward_lgb_augmented.json",
+        "started_at_utc": "2026-09-15T02:56:51.117473+00:00",
+        "steps": [
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "-m",
+              "pytest",
+              "-q",
+              "-p",
+              "no:cacheprovider",
+              "tests/test_nm_mask_features.py",
+              "tests/test_nm_mask_native.py",
+              "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_resumed_forward_lgb_augmented.xml"
+            ],
+            "finished_at_utc": "2026-09-15T02:56:54.206305+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:56:51.117632+00:00"
+          },
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "tools/run_nm_mask.py",
+              "--job",
+              "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/forward_lgb_augmented.json"
+            ],
+            "finished_at_utc": "2026-09-15T02:59:26.624403+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:57:13.122907+00:00"
+          }
+        ],
+        "worker": "arcw5"
+      },
+      "worker": "arcw5"
+    },
+    {
+      "child_processes": [],
+      "job_id": "forward_cat_augmented",
+      "log_tail": [
+        "..................................                                       [100%]",
+        "34 passed in 1.25s",
+        "job_complete worker=arcw7 job=forward_cat_augmented iterations=717 complete_rmse=220.073511274"
+      ],
+      "result": {
+        "complete_rmse_seconds": 220.07351127448925,
+        "iterations": 717,
+        "native_reload_maximum_difference_seconds": 0.0,
+        "resources": {
+          "cpu_seconds": 1595.8799999999999,
+          "mean_active_cpu_cores": 12.750289307320491,
+          "peak_process_rss_bytes_sampled": 8407646208,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 125.16421875100013
+        }
+      },
+      "status": {
+        "audit_used": false,
+        "complete": true,
+        "finished_at_utc": "2026-09-15T02:59:24.478625+00:00",
+        "fix": "Explicit PYTHONPATH points to the unchanged project src directory.",
+        "job_id": "forward_cat_augmented",
+        "phase": "complete",
+        "preserved_failure": "runs/nm_mask_status/forward_cat_augmented.json",
+        "started_at_utc": "2026-09-15T02:56:51.140680+00:00",
+        "steps": [
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "-m",
+              "pytest",
+              "-q",
+              "-p",
+              "no:cacheprovider",
+              "tests/test_nm_mask_features.py",
+              "tests/test_nm_mask_native.py",
+              "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_resumed_forward_cat_augmented.xml"
+            ],
+            "finished_at_utc": "2026-09-15T02:56:53.584593+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:56:51.140835+00:00"
+          },
+          {
+            "command": [
+              "/home/azureuser/prc-flight-2026/.venv/bin/python",
+              "-B",
+              "tools/run_nm_mask.py",
+              "--job",
+              "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/forward_cat_augmented.json"
+            ],
+            "finished_at_utc": "2026-09-15T02:59:24.478386+00:00",
+            "returncode": 0,
+            "started_at_utc": "2026-09-15T02:57:13.123035+00:00"
+          }
+        ],
+        "worker": "arcw7"
+      },
+      "worker": "arcw7"
+    }
+  ]
+}

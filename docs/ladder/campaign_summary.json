@@ -1,0 +1,166 @@
+{
+  "all_platform_verifications_passed": true,
+  "audit_used": false,
+  "batches": [
+    {
+      "both_platform_verifications_passed": true,
+      "campaign": "ladder",
+      "candidate_recipes": 36,
+      "development_native_fits": 8,
+      "eligible_candidates": 0,
+      "leading_mean_ratio_candidate": {
+        "eligible": false,
+        "improvement_fraction": {
+          "forward": 0.0016126899191134525,
+          "seasonal": 0.0009454757557310067
+        },
+        "mean_relative_rmse": 0.9987209171625777,
+        "name": "long50_v6_100",
+        "rmse_seconds": {
+          "forward": 222.96698165686814,
+          "seasonal": 324.609866268972
+        }
+      },
+      "selection_sha256": "274d811d51d692ee1fa357e237f9242fbb7f361bf23a64fcd92ac85f09c15d97"
+    },
+    {
+      "both_platform_verifications_passed": true,
+      "campaign": "ladder_scale",
+      "candidate_recipes": 20,
+      "development_native_fits": 8,
+      "eligible_candidates": 0,
+      "leading_mean_ratio_candidate": {
+        "eligible": false,
+        "improvement_fraction": {
+          "forward": 0.0028632429313558694,
+          "seasonal": 0.007730890518224287
+        },
+        "mean_relative_rmse": 0.99470293327521,
+        "name": "clock300_missing300_v6_25",
+        "rmse_seconds": {
+          "forward": 222.68769923037277,
+          "seasonal": 322.40516920271466
+        }
+      },
+      "selection_sha256": "c23931559347114ec0b529050e1d51991afb439e781b7bfd2e5e431ec585ac19"
+    },
+    {
+      "both_platform_verifications_passed": true,
+      "campaign": "ladder_blend",
+      "candidate_recipes": 8,
+      "development_native_fits": 0,
+      "eligible_candidates": 0,
+      "leading_mean_ratio_candidate": {
+        "eligible": false,
+        "improvement_fraction": {
+          "forward": 0.003974020057968541,
+          "seasonal": 0.007166959003997886
+        },
+        "mean_relative_rmse": 0.9944295104690168,
+        "name": "missing_ground_v6_50__clock300_missing300_v6_50__left25",
+        "rmse_seconds": {
+          "forward": 222.43963255252783,
+          "seasonal": 322.58840017657604
+        }
+      },
+      "selection_sha256": "4e5bc238b4f69136ff449a5a73cc09e500ad50b299cdf488f35d764bedfed2eb"
+    }
+  ],
+  "closest_rule": "Largest minimum fold improvement; descriptive only, not a selection rule.",
+  "closest_to_joint_margin": {
+    "campaign": "ladder_blend",
+    "eligible": false,
+    "improvement_fraction": {
+      "forward": 0.0046777604397454375,
+      "seasonal": 0.005872821221971192
+    },
+    "mean_relative_rmse": 0.9947247091691417,
+    "name": "missing_ground_v6_75__clock300_missing300_v6_50__left25",
+    "rmse_seconds": {
+      "forward": 222.28246822640858,
+      "seasonal": 323.0088876296258
+    }
+  },
+  "code_sha256": "7a864d59ccdc98b3b8fe91490dcfdea84dd525c0fd4f8352c87d98b202f11a9f",
+  "complete": true,
+  "compute": {
+    "active_campaign_processes": [],
+    "new_workers_started": 0,
+    "vm_left_running": true,
+    "worker": "arcw0"
+  },
+  "created_at_utc": "2026-09-14T16:45:24.745575+00:00",
+  "decision": "retain v6; no candidate meets the declared two-fold promotion margin",
+  "declared_candidate_recipes": 64,
+  "development_native_fits": 16,
+  "eligible_candidates": 0,
+  "evidence_sha256": {
+    "docs/ladder/completion.json": "6965b96ffcf846497d690fe8d0660431fe7b9defefe9c8981843597feb53f8d5",
+    "docs/ladder/development_archive.json": "f140b5fc11fc9ea1a575000aacab80c9b58d8e36ffd580dcd49e8deabd99adb7",
+    "docs/ladder/final_execution_state.json": "d3a9d9a1c4e7c82aafbeea7a4c377aca2890325b92fc259bd390aa8dd7cd9165",
+    "docs/ladder/final_submission_integrity.json": "f94e7cd74849f547bab50e2227191022197c507b2d9c22d01cfb0ef69ac12805",
+    "docs/ladder/leaderboard_after_campaign.json": "2c24f51f07edb689122d9d78e4130b0d4e8544afc4ee585f1032d1558d65635c",
+    "docs/ladder/verification_comparison.json": "cd92800bd2a087b7821f0ee5982c8bf39086054e6c3a1abc912899612855deeb",
+    "docs/ladder_blend/completion.json": "02433e609abc4271f9655d2d3f07b882f1d1d1733c13e765f5c0a1123f0b5044",
+    "docs/ladder_blend/development_archive.json": "2177d2ac20bbb2b15c061aad1d6cd53fb94d61c589375c03ac55daed734cce93",
+    "docs/ladder_blend/verification_comparison.json": "73668a48facad345ab0ef6fb744fc1c0bc389350625eee741c8c2d3da40ea464",
+    "docs/ladder_scale/completion.json": "b7bee8f6e648643bcec3af7677a6c0f32a68c9fc371ca100c53559926b4c2988",
+    "docs/ladder_scale/development_archive.json": "c61fd66177c45b9fffea5f35762bd1355c6f9676640b93d7d70e9a735dcdde66",
+    "docs/ladder_scale/verification_comparison.json": "e88ca9bb498e3cec05323b7b2d0cc1302f63ad2f2aba1d2ecb9f1a87d38de2cd"
+  },
+  "fit_resources": {
+    "maximum_sampled_rss_bytes": 12060401664,
+    "total_cpu_seconds": 52694.39,
+    "total_wall_seconds": 3519.0328993979783
+  },
+  "frozen_model_code_sha256": {
+    "ladder": "137bd8c306d044887cbcb6fdd673cddead97c5d81c5156c0d8a1ade6c820f6e6",
+    "ladder_blend": "c064573f92c623ffa9dbb6f9fd23e6365aa3ad51eed06d4d6fb0df27bd367e51",
+    "ladder_scale": "2c5ee07eea80711b07704e4c68d552161073802456101ea026be8cabb236fe53"
+  },
+  "interpretation": "Reused complete development folds, distinct from official scores. All three declared batches are closed. Further interpolation was not evaluated; the promotion margin remains unchanged.",
+  "leaderboard": {
+    "created_at_utc": "2026-09-14T16:38:49.174706+00:00",
+    "rmse_reduction_fraction_to_third": 0.08841783840594453,
+    "scored_teams": 134,
+    "team_rank": 20
+  },
+  "maximum_independent_scale_difference_seconds": 0.0,
+  "maximum_native_prediction_difference_seconds": 0.0,
+  "minimum_improvement_fraction_each_fold": 0.005,
+  "official_result": {
+    "filename": "vigorous-whistle_v6.parquet",
+    "processedAt": "2026-09-14T14:50:24.955593Z",
+    "score": 277.4508,
+    "submissionId": "f080a77f-ac9d-439e-9096-369484272fde",
+    "teamId": "64cf67d0-5b26-49db-bd82-7b12ca4411ce",
+    "teamName": "vigorous-whistle",
+    "usedPairs": 344841
+  },
+  "reference_development_rmse_seconds": {
+    "forward": 223.32713908273132,
+    "seasonal": 324.9170674788965
+  },
+  "refit_created": false,
+  "submission_exported": false,
+  "submission_uploaded": false,
+  "tests": {
+    "azure": {
+      "distinct_passing_tests": 153,
+      "reports": {
+        "docs/ladder_blend/tests_azure.xml": "633d3e814cc8d8ff8237b5f3f90b16cb6578c7d6c3e4d886a7f5c7a660f81b89"
+      }
+    },
+    "identical_test_identities": true,
+    "windows": {
+      "distinct_passing_tests": 153,
+      "reports": {
+        "docs/ladder_blend/tests_local.xml": "279445f36e9738e9ff517bbcc581048ba8b799e2d0f17f0fc7be80c97693cbb9",
+        "docs/ladder_scale/selection_tests_local.xml": "8f2f6e702c6516214557b61e74c2d3cc7e8c4f4810e915fb17aa23511fddb4e4",
+        "docs/ladder_scale/tests_local.xml": "1c31432143d8060c4bed3c35980b2fce721b799c238615e738b6afce1ab77cac",
+        "docs/ladder_scale/tests_review_local.xml": "24404541e19117eb11ee38799f3e6338160bca06ac97d3679367c1d13c21712f"
+      }
+    }
+  },
+  "third_place_rmse_seconds": 252.9192
+}

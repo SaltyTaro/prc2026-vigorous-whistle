@@ -1,0 +1,202 @@
+{
+  "changed_by_airport": {
+    "EHAM": 3,
+    "LEBL": 1,
+    "LFPG": 4,
+    "LIRF": 376,
+    "LSZH": 14
+  },
+  "created_at_utc": "2026-09-15T04:55:52.908054+00:00",
+  "fitting_summary": {
+    "fitting_population_ids_sha256": "ab872d805e9de43ef5dee49c4f3ef6af3bd0807dccac920b53fee621480d28eb",
+    "fitting_population_rows": 1399,
+    "floor_seconds": -12.0,
+    "inner_best_iterations": [
+      256,
+      594,
+      445,
+      758,
+      454
+    ],
+    "mode_counts": {
+      "0": 655,
+      "1": 733,
+      "2": 11
+    },
+    "normal_component": {
+      "band_medians": {
+        "0": 4446.5,
+        "1": 5555.5,
+        "2": 1020.0,
+        "3": 1073.0,
+        "4": 1143.0,
+        "5": null
+      },
+      "bands_seconds": [
+        -1000000000.0,
+        1800.0,
+        3600.0,
+        7200.0,
+        14400.0,
+        43200.0,
+        1000000000.0
+      ],
+      "overall_median": 1031.0
+    },
+    "rounds": 454
+  },
+  "largest_changes": [],
+  "output": "runs/submissions/vigorous-whistle_v9.parquet",
+  "p_fill_quantiles": {
+    "0.1": 0.019390728708837394,
+    "0.25": 0.06522458537524384,
+    "0.5": 0.3869793422887906,
+    "0.75": 0.8437703794623812,
+    "0.9": 0.9554397920576302
+  },
+  "ranking_ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+  "ranking_population_interval_bands": {
+    "(-1000000000, 1800]": 28,
+    "(14400, 43200]": 32,
+    "(1800, 3600]": 7,
+    "(3600, 7200]": 167,
+    "(43200, 1000000000]": 11,
+    "(7200, 14400]": 138
+  },
+  "ranking_population_rows": 383,
+  "ranking_rows": 344841,
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v9.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 120549,
+    "maximum_rounding_change_seconds": 0.49999763185041957,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 27,
+    "provenance": {
+      "audit_used": false,
+      "classifier_sha256": "c8ed40b1209ceafb94ca44484d4fe9c82b7aea9624bae302757301b10d52058e",
+      "config_sha256": "4c3d4b8a07eeb070a2de08bb33968a0eaafb131f054c8149dd4e1fa156733ebc",
+      "experiment_id": "prc2026-lirf-turnaround-mixture-v1",
+      "fitting_summary": {
+        "fitting_population_ids_sha256": "ab872d805e9de43ef5dee49c4f3ef6af3bd0807dccac920b53fee621480d28eb",
+        "fitting_population_rows": 1399,
+        "floor_seconds": -12.0,
+        "inner_best_iterations": [
+          256,
+          594,
+          445,
+          758,
+          454
+        ],
+        "mode_counts": {
+          "0": 655,
+          "1": 733,
+          "2": 11
+        },
+        "rounds": 454
+      },
+      "incumbent": {
+        "official_rmse_seconds": 275.057,
+        "recipe": "full_timeline_v6_100",
+        "submission": "vigorous-whistle_v7.parquet",
+        "submission_sha256": "534e1031a068a743515eeb44b4b8f13676c5626d6c18c9416da092d58b0b924e"
+      },
+      "model_code_sha256": "47f2c4dfcd26d640ef061c1bdaf5883f481d5c1aec1ae9218040c8905ca7a911",
+      "native_fit_count": 1,
+      "normal_component": {
+        "band_medians": {
+          "0": 4446.5,
+          "1": 5555.5,
+          "2": 1020.0,
+          "3": 1073.0,
+          "4": 1143.0,
+          "5": null
+        },
+        "bands_seconds": [
+          -1000000000.0,
+          1800.0,
+          3600.0,
+          7200.0,
+          14400.0,
+          43200.0,
+          1000000000.0
+        ],
+        "overall_median": 1031.0
+      },
+      "parents": {
+        "fallback_selection": {
+          "path": "runs/azure_arcw0_weather/selection.json",
+          "sha256": "1228b7b16d3bea90229da139fb51ee714cf323472f3796604d40b1a7178351f3"
+        },
+        "incumbent_ranking_predictions": {
+          "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/ranking_predictions.parquet",
+          "sha256": "cf0c62b5288de74a8262dbb07705e75792bc92059b1e0bb8d66ac0681ec875be"
+        },
+        "incumbent_refit_run": {
+          "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/run.json",
+          "sha256": "0c1a0fcd1c2aa6034e28eca1b56dadb567aff5269cac823067c4c097a84498e0"
+        },
+        "incumbent_selection": {
+          "path": "runs/azure_arcw0_surface_airports/selection.json",
+          "sha256": "3a6edb7beb178744acca53c92e269f2ee92fa1524115adbda74bf876cdd4d042"
+        },
+        "timeline_selection": {
+          "path": "runs/azure_arcw0_timeline/selection.json",
+          "sha256": "4a51746cab6da283662dbff4650b6b29492d6e165e34fce34001232c1e396780"
+        }
+      },
+      "policy": "lirf-turnaround-mixture-v1",
+      "refit_months": [
+        "2025-01",
+        "2025-02",
+        "2025-03",
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11"
+      ],
+      "row_counts": {
+        "changed_rows": 398,
+        "floored_rows": 26,
+        "mixture_rows": 372,
+        "population_rows": 383
+      },
+      "selected_candidate": "mixture_75",
+      "selection_sha256": "67c95f9e89e57d9c8b759b95d82916533684c8969a2655968d7401b874b10aa7",
+      "spec": {
+        "mixture_weight": 0.75,
+        "rules": [
+          "mixture",
+          "floor"
+        ]
+      }
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "25d3b296a2753852144f53a2c36a1e539031dbd6ef35b8be928d9e1fa7363521",
+    "size_bytes": 1342448,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-15T04:55:52.897644+00:00",
+    "version": 9
+  },
+  "row_counts": {
+    "changed_rows": 398,
+    "floored_rows": 26,
+    "mixture_rows": 372,
+    "population_rows": 383
+  },
+  "untouched_rows_match_v7_export": true
+}

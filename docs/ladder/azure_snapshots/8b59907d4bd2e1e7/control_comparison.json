@@ -1,0 +1,68 @@
+{
+  "audit_used": false,
+  "code_sha256": "2885ec8bebd8f097d626d7e1ac31d1ea3647061f6d3e9ab1d5ce82a769bfbf05",
+  "created_at_utc": "2026-09-14T16:06:03.840657+00:00",
+  "folds": {
+    "forward": {
+      "identical_encoder_values": true,
+      "identical_fitting_and_stopping_populations": true,
+      "learning_curve_prefix": {
+        "learn": {
+          "RMSE": {
+            "maximum_prefix_difference": 0.0,
+            "new_evaluated_iterations": 10000,
+            "old_evaluated_iterations": 6000,
+            "prefix_matches_to_1e_minus_8": true
+          }
+        },
+        "validation": {
+          "RMSE": {
+            "maximum_prefix_difference": 0.0,
+            "new_evaluated_iterations": 10000,
+            "old_evaluated_iterations": 6000,
+            "prefix_matches_to_1e_minus_8": true
+          }
+        }
+      },
+      "longer_run_sha256": "e82d52466d225610b127b052a61f7daf7b6feeb9b541c2c1cc4444e00ab891c7",
+      "new_cap": 10000,
+      "new_october_selected_iterations": 9966,
+      "old_cap": 6000,
+      "old_october_selected_iterations": 5981,
+      "only_round_cap_changed_in_settings": true,
+      "previous_run_sha256": "8b441c6cd57e1e6a8c220d23d3d4239bf9142d5369eba2500f85ea0a2ce8ed23"
+    },
+    "seasonal": {
+      "identical_encoder_values": true,
+      "identical_fitting_and_stopping_populations": true,
+      "learning_curve_prefix": {
+        "learn": {
+          "RMSE": {
+            "maximum_prefix_difference": 0.0,
+            "new_evaluated_iterations": 10000,
+            "old_evaluated_iterations": 6000,
+            "prefix_matches_to_1e_minus_8": true
+          }
+        },
+        "validation": {
+          "RMSE": {
+            "maximum_prefix_difference": 0.0,
+            "new_evaluated_iterations": 10000,
+            "old_evaluated_iterations": 6000,
+            "prefix_matches_to_1e_minus_8": true
+          }
+        }
+      },
+      "longer_run_sha256": "9029c8c3d2c19e4779911a90aa2495132db8f24baec7077dbb219141235191a7",
+      "new_cap": 10000,
+      "new_october_selected_iterations": 9892,
+      "old_cap": 6000,
+      "old_october_selected_iterations": 5954,
+      "only_round_cap_changed_in_settings": true,
+      "previous_run_sha256": "7d504775432b60b944ca8e0e45a408f0832d9191a1d400d07e750290a3c9989b"
+    }
+  },
+  "interpretation": "An experimental-control check only; complete original-fold scores and the declared selection rule determine promotion.",
+  "new_labels_read": false,
+  "new_models_fitted": 0
+}

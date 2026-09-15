@@ -1,0 +1,35 @@
+{
+  "protocol_id": "prc2026-validation-v1",
+  "created_on": "2026-09-13",
+  "assignment_clock": "MVT_TIME_UTC_mvt",
+  "scored_phase": "DEP",
+  "feature_policy": "documented-core-v1",
+  "target_policy": "retain_all_finite_labels_in_every_evaluation",
+  "group_key": "FLIGHT_ID_mvt",
+  "null_group_policy": "treat_each_movement_as_an_independent_group",
+  "group_priority": ["score", "early_stop", "fit"],
+  "reserved_audit_months": ["2025-12"],
+  "folds": {
+    "seasonal": {
+      "purpose": "January/July seasonal development; not a forward-time test",
+      "fit_months": ["2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-08", "2025-09"],
+      "early_stop_months": ["2025-10"],
+      "score_months": ["2025-01", "2025-07"],
+      "sealed": false
+    },
+    "forward": {
+      "purpose": "Strict chronological November development evaluation",
+      "fit_months": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09"],
+      "early_stop_months": ["2025-10"],
+      "score_months": ["2025-11"],
+      "sealed": false
+    },
+    "final_audit": {
+      "purpose": "December audit after freezing the selected recipe; unavailable to phase-1 scoring",
+      "fit_months": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10"],
+      "early_stop_months": ["2025-11"],
+      "score_months": ["2025-12"],
+      "sealed": true
+    }
+  }
+}

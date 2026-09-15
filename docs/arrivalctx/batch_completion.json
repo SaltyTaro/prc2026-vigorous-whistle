@@ -1,0 +1,73 @@
+{
+  "audit_used": false,
+  "declared_batch_complete": true,
+  "finished_at_utc": "2026-09-14T18:19:46.544950+00:00",
+  "queued_at_utc": "2026-09-14T18:00:16.244301+00:00",
+  "steps": [
+    {
+      "arguments": [
+        "-m",
+        "pytest",
+        "-q",
+        "--junitxml=docs/arrivalctx/tests_azure.xml"
+      ],
+      "finished_at_utc": "2026-09-14T18:17:24.487833+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T18:17:16.826381+00:00"
+    },
+    {
+      "arguments": [
+        "tools/verify_arrivalctx.py",
+        "--features-only"
+      ],
+      "finished_at_utc": "2026-09-14T18:17:30.657957+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T18:17:24.487855+00:00"
+    },
+    {
+      "arguments": [
+        "tools/run_arrivalctx.py",
+        "--fold",
+        "seasonal"
+      ],
+      "finished_at_utc": "2026-09-14T18:17:58.447214+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T18:17:30.657978+00:00"
+    },
+    {
+      "arguments": [
+        "tools/run_arrivalctx.py",
+        "--fold",
+        "forward"
+      ],
+      "finished_at_utc": "2026-09-14T18:18:19.554688+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T18:17:58.447235+00:00"
+    },
+    {
+      "arguments": [
+        "tools/select_arrivalctx.py"
+      ],
+      "finished_at_utc": "2026-09-14T18:18:54.568412+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T18:18:19.554711+00:00"
+    },
+    {
+      "arguments": [
+        "tools/verify_arrivalctx.py"
+      ],
+      "finished_at_utc": "2026-09-14T18:19:46.421837+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T18:18:54.568432+00:00"
+    },
+    {
+      "arguments": [
+        "tools/summarize_arrivalctx.py"
+      ],
+      "finished_at_utc": "2026-09-14T18:19:46.544939+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T18:19:46.421858+00:00"
+    }
+  ],
+  "submission_uploaded": false
+}

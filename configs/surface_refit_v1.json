@@ -1,0 +1,38 @@
+{
+  "audit_used": false,
+  "automatic_submission": false,
+  "cloud": "Azure",
+  "component_iterations": {
+    "airports": {
+      "EDDF": 902,
+      "EDDM": 1142,
+      "EGLL": 1172,
+      "EHAM": 744,
+      "LEBL": 773,
+      "LEMD": 1014,
+      "LFPG": 1227,
+      "LIRF": 880,
+      "LSZH": 748,
+      "LTFM": 1002
+    },
+    "globals": {
+      "cat_combined": 5971,
+      "lgb_combined": 1612
+    }
+  },
+  "declared_at_utc": "2026-09-14T18:50:40.514539+00:00",
+  "development_config": "configs/surface_airports_v1.json",
+  "development_config_sha256": "ecd601a957400913d667afd2016f5c4b210d4ad1640eefc4353bfc6552b9b09d",
+  "experiment_id": "prc2026-surface-selected-refit-v1",
+  "feature_bundle": "data/timeline/ce42240e5e43eee1713f",
+  "new_native_models": 12,
+  "purpose": "Refit the already selected recipe at the original October median counts on January-November, protecting every December flight group. No further selection or official submission.",
+  "reference_refit_run": "20260914T052244675761Z_refit_cat_residual_v5_100",
+  "reference_refit_sha256": "2583ef8a495f7ee63b60acd8dfd3b9be69f7e9a22fafb2bb061bde717740c152",
+  "selected_candidate": "full_timeline_v6_100",
+  "selection": "docs/surface_airports/development_results.json",
+  "selection_sha256": "3a6edb7beb178744acca53c92e269f2ee92fa1524115adbda74bf876cdd4d042",
+  "timeline_config": "configs/timeline_v1.json",
+  "timeline_config_sha256": "0f3ccec8ae1e23d24eb8eef8c536eeeb8b1439b7e7fc248dccde37732ba8ddd3",
+  "worker": "arcw0"
+}

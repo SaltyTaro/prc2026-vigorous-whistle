@@ -1,0 +1,66 @@
+{
+  "audit_used": false,
+  "created_at_utc": "2026-09-15T02:04:51.095530+00:00",
+  "declared_batch_complete": true,
+  "new_native_models_declared": 6,
+  "steps": [
+    {
+      "arguments": [
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_rome_geometry.py",
+        "tests/test_source_geometry_audit.py",
+        "--junitxml=docs/rome_geometry/tests_azure.xml"
+      ],
+      "finished_at_utc": "2026-09-15T02:02:43.386874+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-15T02:02:42.118593+00:00"
+    },
+    {
+      "arguments": [
+        "tools/check_rome_geometry_features.py"
+      ],
+      "finished_at_utc": "2026-09-15T02:02:51.972743+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-15T02:02:43.386897+00:00"
+    },
+    {
+      "arguments": [
+        "tools/run_rome_geometry.py",
+        "--fold",
+        "seasonal"
+      ],
+      "finished_at_utc": "2026-09-15T02:03:22.239671+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-15T02:02:51.972770+00:00"
+    },
+    {
+      "arguments": [
+        "tools/run_rome_geometry.py",
+        "--fold",
+        "forward"
+      ],
+      "finished_at_utc": "2026-09-15T02:03:53.724613+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-15T02:03:22.239691+00:00"
+    },
+    {
+      "arguments": [
+        "tools/select_rome_geometry.py"
+      ],
+      "finished_at_utc": "2026-09-15T02:04:16.963535+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-15T02:03:53.724634+00:00"
+    },
+    {
+      "arguments": [
+        "tools/verify_rome_geometry.py"
+      ],
+      "finished_at_utc": "2026-09-15T02:04:51.095502+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-15T02:04:16.963559+00:00"
+    }
+  ],
+  "submission_uploaded": false
+}

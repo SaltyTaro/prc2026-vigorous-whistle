@@ -1,0 +1,241 @@
+{
+  "export": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v1.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 37456,
+    "maximum_rounding_change_seconds": 0.49999916241586106,
+    "minimum_prediction_seconds": -116,
+    "negative_predictions": 32,
+    "provenance": {
+      "audit_used": false,
+      "bundle_id": "58d621b245de3f5e12dd3b50b0a90a87ea8ac3dc96aa2c274ffa7ea0af96b2e0",
+      "config_sha256": "457375a40a52a9d65cd3f312278c25cc1aa95504521e82ba57dbccc7084758a9",
+      "iterations": 278,
+      "model_code_sha256": "cf58ba22463451d2f01d53f14749ab2aeac75d5a9011b3d3f313e14c354216ed",
+      "model_kind": "lightgbm",
+      "refit_run_id": "20260913T144337040626Z_refit_lightgbm",
+      "refit_run_sha256": "2bc751acc6a34fee027c74bb01b832d68afb1f4e3029d5ebb070afeaef5cdbc7"
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "ba074016e32978fd8817aac138a6afaf4b3fe4d463a87b1a00f330872fef7e6e",
+    "size_bytes": 1336139,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-13T14:48:24.042914+00:00",
+    "version": 1
+  },
+  "leaderboard_retrieval_finished_at_utc": "2026-09-13T14:52:07.752265+00:00",
+  "official_result": {
+    "filename": "vigorous-whistle_v1.parquet",
+    "processedAt": "2026-09-13T14:49:41.925234Z",
+    "score": 436.8976,
+    "submissionId": "41f5d444-cf7e-48d7-8855-97de8fbc4318",
+    "teamId": "64cf67d0-5b26-49db-bd82-7b12ca4411ce",
+    "teamName": "vigorous-whistle",
+    "usedPairs": 344841
+  },
+  "recorded_at_utc": "2026-09-13T14:58:16.385100+00:00",
+  "refit": {
+    "artifacts": [
+      {
+        "path": "config.json",
+        "sha256": "4822f2ec1196a69ce71725d94a7ba57c045a45b2b65f01e36431fcc5b52fbf3e",
+        "size_bytes": 1769
+      },
+      {
+        "path": "encoder.json",
+        "sha256": "051bd48f8e88c313ae61e8dfae905a65ba1712fada2488b983c97f5fbd6b4149",
+        "size_bytes": 125488
+      },
+      {
+        "path": "model.txt",
+        "sha256": "595935454a0842e9c5b8ab6d9e4fc41550fea4f7b259b0e1046146be7b8c249d",
+        "size_bytes": 3141848
+      },
+      {
+        "path": "ranking_predictions.parquet",
+        "sha256": "9efe4f663737cf3f40c90df2cf6faa5b1e8a839834b1a4f20591d5afe931d7a7",
+        "size_bytes": 3674638
+      },
+      {
+        "path": "selection.json",
+        "sha256": "f3a133c61402a997f46e83c8346abd31ad1fe8099470aff4f52e81d8d80c2cfd",
+        "size_bytes": 82160
+      },
+      {
+        "path": "training_history.json",
+        "sha256": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+        "size_bytes": 3
+      }
+    ],
+    "audit_used": false,
+    "bundle_id": "58d621b245de3f5e12dd3b50b0a90a87ea8ac3dc96aa2c274ffa7ea0af96b2e0",
+    "config_sha256": "457375a40a52a9d65cd3f312278c25cc1aa95504521e82ba57dbccc7084758a9",
+    "created_at_utc": "2026-09-13T14:43:57.856375+00:00",
+    "environment": {
+      "disk_available_bytes": 10421178368,
+      "logical_cpus": 16,
+      "memory_total_bytes": 67419996160,
+      "packages": {
+        "catboost": "1.2.10",
+        "lightgbm": "4.7.0",
+        "numpy": "2.4.2",
+        "pandas": "3.0.0",
+        "psutil": "7.2.2",
+        "pyarrow": "23.0.1",
+        "scipy": "1.18.1",
+        "tzdata": "2025.3"
+      },
+      "physical_cpus_reported": 8,
+      "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+      "python": "3.12.3"
+    },
+    "feature_code": {
+      "files": {
+        "pyproject.toml": "fad2740d0592c18660445864bdac378f7fa4525f71b473545beb76a0539b585e",
+        "requirements-phase1.txt": "4f98e2a260175514876a813c3dfd4eb7f0d9bf6f07a2912290953c3fe7b24d8e",
+        "src/prc2026/__init__.py": "ac99d9f3961b9106c3211c7fed5bdb5a82422d9af696bf2fb3c0fc9299a4511b",
+        "src/prc2026/artifacts.py": "da5ab0eb042316aa913f8c48adf6ea00ea7f0d108dfa061392c1a97b4334bd3e",
+        "src/prc2026/features.py": "dff76bcea912e5f11b4aee3e044476c205e84fdd46098adab9a251615158ac1a",
+        "src/prc2026/phase1.py": "58941020cf4fb6b17a69d02a4cceea7f607ec4a81be3ee17014468369b18bf3d",
+        "src/prc2026/validation.py": "ffc47704360d6fdf419e4b7e7f8a160f9bbb0f0454efaa4dd5be88ac699f19a3",
+        "tools/run_phase1.py": "13e86e8e93eaab103622469c2bb37608d9e03ba4f73c066f493eb265848e34d4"
+      },
+      "sha256": "13bdc139942ae2b472b14bf206d0b18549c7b98d5aa18ba6797f91d7dee4e5d1"
+    },
+    "fit_ids_sha256": "ba1c387b134605f2fa6ad6a7ab4097a5f1d8efe9e5e583ff6476fb1c6562d4c8",
+    "fit_rows": 1919370,
+    "iterations": 278,
+    "label": "azure-arcw0",
+    "model_code": {
+      "files": {
+        "requirements-phase2.txt": "b5e77a692442298b7ff4c19348ad01af4eb6fb00497a33aef10daa5647ef69f0",
+        "src/prc2026_models/__init__.py": "64ac385d71b84688c00efd31d760b65508bde1268eadd8d2f517e7d94ccff335",
+        "src/prc2026_models/encoding.py": "1c3614a92f756c17f758683d3446f0a4e27abebc45cc1198fbcda437aa86592b",
+        "src/prc2026_models/experiments.py": "553c5e7f9c38d4203a994a0f41b3eb3526f3b81910e1944bf9a3dae5df893207",
+        "tools/run_phase2.py": "0ea75acc27171a8c71d8462e23175468b8394bdb558235e2c8c4f7997f66b969"
+      },
+      "sha256": "cf58ba22463451d2f01d53f14749ab2aeac75d5a9011b3d3f313e14c354216ed"
+    },
+    "model_kind": "lightgbm",
+    "parameters": {
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1,
+      "bagging_seed": 20260913,
+      "cat_l2": 20.0,
+      "cat_smooth": 20.0,
+      "data_random_seed": 20260913,
+      "deterministic": true,
+      "feature_fraction": 0.9,
+      "feature_fraction_seed": 20260913,
+      "force_col_wise": true,
+      "lambda_l2": 10.0,
+      "learning_rate": 0.04,
+      "max_bin": 255,
+      "max_cat_threshold": 32,
+      "max_cat_to_onehot": 8,
+      "metric": "rmse",
+      "min_data_in_leaf": 100,
+      "num_leaves": 63,
+      "num_threads": 16,
+      "objective": "regression",
+      "seed": 20260913,
+      "verbosity": -1
+    },
+    "ranking_ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "ranking_rows": 344841,
+    "refit_months": [
+      "2025-01",
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11"
+    ],
+    "resources": {
+      "cpu_seconds": 155.02999999999997,
+      "mean_active_cpu_cores": 7.447808190001998,
+      "peak_process_rss_bytes_sampled": 1669939200,
+      "rss_sample_interval_seconds": 0.05,
+      "wall_seconds": 20.815519955000127
+    },
+    "run_id": "20260913T144337040626Z_refit_lightgbm",
+    "stage": "refit"
+  },
+  "relative_rmse_reduction_to_current_third": 0.40050277227432696,
+  "scored_teams": 131,
+  "standing": {
+    "filename": "vigorous-whistle_v1.parquet",
+    "processedAt": "2026-09-13T14:49:41.925234Z",
+    "rank": 97,
+    "score": 436.8976,
+    "submissionId": "41f5d444-cf7e-48d7-8855-97de8fbc4318",
+    "teamId": "64cf67d0-5b26-49db-bd82-7b12ca4411ce",
+    "teamName": "vigorous-whistle",
+    "usedPairs": 344841
+  },
+  "third_place": {
+    "processedAt": "2026-09-12T01:08:52.934494Z",
+    "rank": 3,
+    "score": 261.9189,
+    "submissionId": "b3f6b8c6-dabf-47d8-9f16-7b4bc603495c",
+    "teamId": "9eeb7568-432e-4d15-a178-056a22e67b72",
+    "usedPairs": 344841
+  },
+  "upload": {
+    "bucket": "prc-2026-vigorous-whistle",
+    "created_at_utc": "2026-09-13T14:49:02.549851+00:00",
+    "endpoint": "https://s3.opensky-network.org",
+    "etag": "e45b469327cdc188462aff1c1d698f38",
+    "filename": "vigorous-whistle_v1.parquet",
+    "limits": {
+      "bucket_bytes_after_upload": 1336139,
+      "bucket_bytes_before": 0,
+      "daily_count_policy": "conservative rolling 24 hours while reset timezone is unspecified",
+      "existing_submission_versions": 0,
+      "highest_existing_version": 0,
+      "submissions_in_previous_24h": 0
+    },
+    "refit_run_id": "20260913T144337040626Z_refit_lightgbm",
+    "response_http_status": 200,
+    "sha256": "ba074016e32978fd8817aac138a6afaf4b3fe4d463a87b1a00f330872fef7e6e",
+    "status": "uploaded_processing_not_yet_confirmed",
+    "uploaded_at_utc": "2026-09-13T14:49:05.702644+00:00",
+    "validation": {
+      "columns": [
+        "MVT_ID_mvt",
+        "TAXITIME_SEC_mvt"
+      ],
+      "exact_template_order": true,
+      "filename": "vigorous-whistle_v1.parquet",
+      "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+      "maximum_prediction_seconds": 37456,
+      "minimum_prediction_seconds": -116,
+      "negative_predictions": 32,
+      "rows": 344841,
+      "sha256": "ba074016e32978fd8817aac138a6afaf4b3fe4d463a87b1a00f330872fef7e6e",
+      "size_bytes": 1336139,
+      "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+      "types": {
+        "MVT_ID_mvt": "double",
+        "TAXITIME_SEC_mvt": "int32"
+      },
+      "validated_at_utc": "2026-09-13T14:49:00.404712+00:00",
+      "version": 1
+    }
+  }
+}

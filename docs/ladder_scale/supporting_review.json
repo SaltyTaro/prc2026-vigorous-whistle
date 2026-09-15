@@ -1,0 +1,25 @@
+{
+  "created_at_utc": "2026-09-14T15:58:09.662668+00:00",
+  "archive_sha256": "5545be335302895d31557159968a4089fbbc57a53ffd0231a2287e5cd354056e",
+  "changed_supporting_files": {
+    "tests/test_ladder_scale.py": {
+      "before_sha256": "c40fdf21bee0fe44019483de6866db153129243c8923f7fccaa37bce13dbd517",
+      "after_sha256": "45f8a3b3e716c2dd96505b318f4c41db9b5c8319d1ddd0debf6a8c1f3ee7d259",
+      "before_snapshot": "docs/ladder_scale/supporting_tools_before_review/tests__test_ladder_scale.py.snapshot"
+    },
+    "tools/refit_ladder_scale.py": {
+      "before_sha256": "381b0e214c6b3c131de08894431186a6f7b0c926fb388d686b07d825ba0ddb75",
+      "after_sha256": "a5f51ff2fb915709b9ba3531b236c4d661fb0bf95e4b660f5c74a8ebf565c0f2",
+      "before_snapshot": "docs/ladder_scale/supporting_tools_before_review/tools__refit_ladder_scale.py.snapshot"
+    },
+    "tools/verify_ladder_scale.py": {
+      "before_sha256": "26d9645333681ccab6e1bfa370e907e8a2b57aae466005885c80c1a8389f6534",
+      "after_sha256": "026c4f3cd35dab5351deffa6efdca56156968f59b3e07e814283d11be9230713",
+      "before_snapshot": "docs/ladder_scale/supporting_tools_before_review/tools__verify_ladder_scale.py.snapshot"
+    }
+  },
+  "identical_files": 25,
+  "frozen_model_code_sha256": "2c5ee07eea80711b07704e4c68d552161073802456101ea026be8cabb236fe53",
+  "before_any_target_scale_development_fit": true,
+  "purpose": "Independently reconstruct native scaling and include all large clock disagreements in verification samples."
+}

@@ -1,0 +1,34 @@
+{
+  "columns": [
+    "MVT_ID_mvt",
+    "TAXITIME_SEC_mvt"
+  ],
+  "exact_template_order": true,
+  "filename": "vigorous-whistle_v6.parquet",
+  "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+  "maximum_prediction_seconds": 120549,
+  "maximum_rounding_change_seconds": 0.4999957952995828,
+  "minimum_prediction_seconds": -3653,
+  "negative_predictions": 32,
+  "provenance": {
+    "audit_used": false,
+    "bundle_id": "72e86725e23367ede5b558027cfc8eeb7ef6cfbaed23980537766ef6a34a7f34",
+    "config_sha256": "3db847ac45e01142c7e066315107a09ffd910d25090128468cabaccbec15443b",
+    "iterations": 14414,
+    "model_code_sha256": "f1b5e85d331e92c9bb52a5bc7b91c244e83c8f7088c9535bc610a2f3931ee740",
+    "model_kind": "ensemble",
+    "refit_run_id": "20260914T052244675761Z_refit_cat_residual_v5_100",
+    "refit_run_sha256": "2583ef8a495f7ee63b60acd8dfd3b9be69f7e9a22fafb2bb061bde717740c152"
+  },
+  "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+  "rows": 344841,
+  "sha256": "b81c2030118a8b7693718a40ba4caf3e1e7d90103899d65f8c5a37a2cd5578e5",
+  "size_bytes": 1351547,
+  "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+  "types": {
+    "MVT_ID_mvt": "double",
+    "TAXITIME_SEC_mvt": "int32"
+  },
+  "validated_at_utc": "2026-09-14T05:52:52.638582+00:00",
+  "version": 6
+}

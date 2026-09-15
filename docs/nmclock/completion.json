@@ -1,0 +1,111 @@
+{
+  "completed_at_utc": "2026-09-14T06:01:58.490361+00:00",
+  "status": "validated_candidate_ready_upload_pending",
+  "experiment_complete": true,
+  "official_submission_complete": false,
+  "selected_candidate": "cat_residual_v5_100",
+  "candidate_count": 20,
+  "development_runs": 8,
+  "new_native_development_fits": 48,
+  "scores_seconds": {
+    "forward": 223.32713908273132,
+    "seasonal": 324.9170674788965
+  },
+  "improvements_fraction": {
+    "forward": 0.07199219417829117,
+    "seasonal": 0.1102334442395092
+  },
+  "refit": {
+    "fallback_rows": 5290,
+    "max_difference_seconds": 0.0,
+    "max_fallback_difference_seconds": 0.0,
+    "rows": 6450,
+    "run_id": "20260914T052244675761Z_refit_cat_residual_v5_100",
+    "run_sha256": "2583ef8a495f7ee63b60acd8dfd3b9be69f7e9a22fafb2bb061bde717740c152"
+  },
+  "bundle_id": "72e86725e23367ede5b558027cfc8eeb7ef6cfbaed23980537766ef6a34a7f34",
+  "model_code_sha256": "f1b5e85d331e92c9bb52a5bc7b91c244e83c8f7088c9535bc610a2f3931ee740",
+  "selection_sha256": "c3a3efc18a43484198b927f7a38fed431b64541f77a31ef60ce2f0b1ee1dfeb9",
+  "tests": {
+    "local": {
+      "passed": 117,
+      "reports": {
+        "docs/nmclock/tests_local.xml": "82e171e80cdc9ebe82f73e6e83d0d63da0c0a859750c6f1601e8185c4e34f437",
+        "docs/nmclock/refit_tests_local.xml": "224f6e39551b1958518c94b365a123035922413e0925cc2f13db7ca3095f027a",
+        "docs/nmclock/verifier_tests_local.xml": "81bcfd70200900a73cc260210bf741b31e5a26f5376b3235d61be36fe84975d2"
+      }
+    },
+    "azure": {
+      "passed": 117,
+      "reports": {
+        "docs/nmclock/tests_azure.xml": "b6a6fb5882a0528fb2b4b358fe82826da8bbab8751f36a84f8c220c7b6968580",
+        "docs/nmclock/refit_tests_azure.xml": "b255b99539bf3fa6ba5b7fe40ff60e696213af66fab247b1279bc11ea7251ae0",
+        "docs/nmclock/verifier_tests_azure.xml": "af226e4e921a8b35e6d6d5157b7fc5ecca5f34b5b8c33bcf6b08244e9510929f"
+      }
+    }
+  },
+  "submission": {
+    "filename": "vigorous-whistle_v6.parquet",
+    "rows": 344841,
+    "sha256": "b81c2030118a8b7693718a40ba4caf3e1e7d90103899d65f8c5a37a2cd5578e5",
+    "size_bytes": 1351547,
+    "uploaded": false,
+    "automatic_upload_scheduled": false,
+    "earliest_guard_release_utc": "2026-09-14T14:49:06.379000+00:00",
+    "guard_policy": "Existing conservative rolling 24-hour guard; organizer reset timezone remains unverified."
+  },
+  "official_best": {
+    "filename": "vigorous-whistle_v5.parquet",
+    "rmse_seconds": 322.9266,
+    "rows": 344841
+  },
+  "audit_used": false,
+  "reserved_audit_months": [
+    "2025-12"
+  ],
+  "cloud": "Azure only",
+  "project_workers_used": [
+    "arcw0"
+  ],
+  "active_campaign_processes": [],
+  "prior_versions_preserved": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "final_code_package": "0cb071120ad523f611e609612ffd71be83717ab06a652b09c54466dab87e2b7d",
+  "archives": {
+    "feature": "1aaa0276b2aae8df8bffb0b1a921e1fe9abb853740769a6ee0253e0eadca8153",
+    "development": "129e1c47946159ba2b2519759848f6ac39e830618f7ce01399040cb7207d536c",
+    "refit": "42a209cef4952d54fdff2c18bab371d78554ea3268b00c2d84f06eb0483833cd"
+  },
+  "remaining_actions": [
+    "Confirm official scoring on all 344,841 rows and record the resulting dated leaderboard standing."
+  ],
+  "artifact_sha256": {
+    "README.md": "050286ce0b84a026855931bd82885c7a6662806b788472e774cfcb43214ca3d6",
+    "docs/competition/PROJECT_PLAN.md": "846b6b6e78e3150a6533878f92f47e3b162ea5200c5d0b250a6d388dd4814726",
+    "docs/competition/OPEN_QUESTIONS.md": "652da750c15bb545910b9b4970b0ca29e285e03a0310dd0d2888fee299c45632",
+    "docs/nmclock/README.md": "f61b5fd3cb2d598db58fad50a3ff3ed0acb40b6f3d6ead59dda1a3a21a348176",
+    "configs/nmclock_v1.json": "5ac794b3dacd338e7976da8c8995fc8f54797665d5063e557f3c4e163b4997de",
+    "configs/features_nmclock_v1.json": "4869c37e09c76faade224083346b2b3f6a302d2b34f2f08acd250eeb8fb61d10",
+    "docs/nmclock/declaration.json": "d705f95ef3d23331c6a851daedaf956954df026be8f73b10d1b4c7ed945c3a39",
+    "docs/nmclock/field_use_review.json": "904cb84688b96b327800826da22a0d669bbd7ce0567af7d7bd61f10e232db3a3",
+    "docs/nmclock/development_results.json": "c3a3efc18a43484198b927f7a38fed431b64541f77a31ef60ce2f0b1ee1dfeb9",
+    "docs/nmclock/analysis.json": "4bdafc6dab9042b6fd0fc0929fadbf21b0d4756c6d065d475a848441fa5db1d0",
+    "docs/nmclock/verification.json": "da560ae622c5ae78ed61ef9c8511dbb61633b5d828a62dcf8fa5eba06a4ada7f",
+    "docs/nmclock/local_verification.json": "cb809e4f44a5b76e25687c3ac5210f1fd2f27a49a36be57960521a2a5725b204",
+    "docs/nmclock/verification_refit.json": "15f4df347449015cc77711f3c9d4865bcaf43eb32328f2412ebc327ba12fd432",
+    "docs/nmclock/local_verification_refit.json": "627c3da3c7804914a618ea62d3da13ba4f5b02d6d91db44dd9952753e6bc679b",
+    "docs/nmclock/refit_verification_comparison.json": "60615efb44bf89b3fc0ce63e23e0db60d2f3d2ddc93c3d56f9a5f4c0c9f00998",
+    "docs/nmclock/code_package_final.json": "36ec305e9a0e1b57e7380148c811f9b8b04e43bb43159acdc2c07b93f704acaf",
+    "docs/nmclock/artifact_mirror.json": "1b6a7d723a70838f1c7cb942dedd0ea6c64463fc105fe44f4e03ec0bf65f6377",
+    "docs/nmclock/final_execution_status.json": "f260dacf27ade05818e404ea8fc2a1908efdeab03fce1efe6d25aedafb0d2907",
+    "docs/nmclock/azure_vm_status.json": "9834e07380a53c1e5c862aeae7fc18776af6b5846818bb6ed080952b83122dd5",
+    "docs/nmclock/pending_submission.json": "081a440f85d797bde4477df1797b6a0f25560a343e7c0946f9b676a43f727842",
+    "docs/nmclock/submission_export.json": "63aee08087abbaf2810c8e68a82e55e445c003883f8c40efb4a9c264249d8da7",
+    "docs/nmclock/export_validation.json": "e303aa4b035e5ea89154ef005f08d7b2a91e9454ef7ad87583284985c74392e2"
+  }
+}

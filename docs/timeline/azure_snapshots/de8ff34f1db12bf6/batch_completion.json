@@ -1,0 +1,38 @@
+{
+  "audit_used": false,
+  "finished_at_utc": "2026-09-14T17:14:00.916648+00:00",
+  "native_batch_complete": false,
+  "selection_or_verification_complete": false,
+  "steps": [
+    {
+      "arguments": [
+        "-m",
+        "pytest",
+        "-q",
+        "--junitxml=docs/timeline/tests_azure.xml"
+      ],
+      "finished_at_utc": "2026-09-14T17:10:17.888676+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T17:10:10.915007+00:00"
+    },
+    {
+      "arguments": [
+        "tools/prepare_timeline.py"
+      ],
+      "finished_at_utc": "2026-09-14T17:12:06.908638+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-14T17:10:17.888697+00:00"
+    },
+    {
+      "arguments": [
+        "tools/run_timeline.py",
+        "--fold",
+        "seasonal"
+      ],
+      "finished_at_utc": "2026-09-14T17:14:00.916626+00:00",
+      "returncode": 1,
+      "started_at_utc": "2026-09-14T17:12:06.908659+00:00"
+    }
+  ],
+  "submission_uploaded": false
+}

@@ -1,0 +1,40 @@
+{
+  "created_at_utc": "2026-09-14T05:54:29.195519+00:00",
+  "status": "validated_ready_waiting_for_upload_guard",
+  "filename": "vigorous-whistle_v6.parquet",
+  "sha256": "b81c2030118a8b7693718a40ba4caf3e1e7d90103899d65f8c5a37a2cd5578e5",
+  "size_bytes": 1351547,
+  "rows": 344841,
+  "export_receipt_sha256": "63aee08087abbaf2810c8e68a82e55e445c003883f8c40efb4a9c264249d8da7",
+  "refit_run_id": "20260914T052244675761Z_refit_cat_residual_v5_100",
+  "refit_run_sha256": "2583ef8a495f7ee63b60acd8dfd3b9be69f7e9a22fafb2bb061bde717740c152",
+  "audit_used": false,
+  "upload_performed": false,
+  "automatic_upload_scheduled": false,
+  "earliest_guard_release_with_one_second_buffer_utc": "2026-09-14T14:49:06.379000+00:00",
+  "quota_policy": "Existing conservative rolling 24-hour guard; organizer reset timezone remains unverified.",
+  "upload_command": [
+    ".venv/Scripts/python.exe",
+    "-X",
+    "utf8",
+    "-B",
+    "tools/prc_submit.py",
+    "upload",
+    "--file",
+    "runs/submissions/vigorous-whistle_v6.parquet",
+    "--expected-sha256",
+    "b81c2030118a8b7693718a40ba4caf3e1e7d90103899d65f8c5a37a2cd5578e5"
+  ],
+  "status_command": [
+    ".venv/Scripts/python.exe",
+    "-X",
+    "utf8",
+    "-B",
+    "tools/prc_submit.py",
+    "status",
+    "--filename",
+    "vigorous-whistle_v6.parquet",
+    "--report-dir",
+    "docs/nmclock"
+  ]
+}

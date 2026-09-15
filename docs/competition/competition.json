@@ -1,0 +1,95 @@
+{
+  "name": "PRC Data Challenge 2026",
+  "research_date": "2026-09-13",
+  "official_url": "https://prc-data-challenge-2026.netlify.app/",
+  "eurocontrol_url": "https://ansperformance.eu/study/data-challenge/dc2026/",
+  "competition_id": "bb3693e1-26bc-4a9e-8619-4fe78b4eab0c",
+  "team": {
+    "name": "vigorous-whistle",
+    "status_observed": "APPROVED",
+    "registered_at_utc": "2026-09-13T07:30:08.918988Z",
+    "members": 1,
+    "goal": "top 3"
+  },
+  "task": {
+    "type": "regression",
+    "target": "TAXITIME_SEC_mvt",
+    "unit": "seconds",
+    "scored_phase": "DEP",
+    "id_column": "MVT_ID_mvt",
+    "metric": "RMSE",
+    "direction": "minimize",
+    "team_ranking": "best submission"
+  },
+  "timeline": {
+    "start_date": "2026-09-01",
+    "published_deadline": "2026-10-11 23:59:59 CET",
+    "timezone_ambiguity": "Confirm fixed CET (UTC+1) versus local CEST (UTC+2)."
+  },
+  "prizes": {
+    "combined_amount_eur": 5000,
+    "winning_places": 3,
+    "individual_prize_shares": null
+  },
+  "data": {
+    "endpoint": "https://s3.opensky-network.org",
+    "bucket": "prc-2026-datasets",
+    "files": 14,
+    "total_bytes": 330216990,
+    "training_months": 12,
+    "training_year": 2025,
+    "training_movements": 4167797,
+    "training_departures": 2085047,
+    "ranking_months": [
+      "2026-01",
+      "2026-07"
+    ],
+    "ranking_movements": 689534,
+    "ranking_departures": 344841,
+    "airports": [
+      "EDDF",
+      "EDDM",
+      "EGLL",
+      "EHAM",
+      "LEBL",
+      "LEMD",
+      "LFPG",
+      "LIRF",
+      "LSZH",
+      "LTFM"
+    ]
+  },
+  "submission": {
+    "bucket": "prc-2026-vigorous-whistle",
+    "filename_pattern": "^vigorous-whistle_v[0-9]+\\.parquet$",
+    "version_policy": "increasing integer",
+    "template": "submitting.parquet",
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "rows": 344841,
+    "daily_limit": 5,
+    "daily_reset_definition": null,
+    "bucket_capacity_as_published": "1 GB"
+  },
+  "compute": {
+    "cloud": "azure",
+    "aws_allowed": false,
+    "maximum_vms": 8,
+    "vm_sizes_confirmed": false,
+    "provisioned_for_research": 0,
+    "initial_priority": "CPU and RAM"
+  },
+  "leaderboard_snapshot": {
+    "at_utc": "2026-09-13T12:53:30.404105+00:00",
+    "successful_submissions": 1174,
+    "scored_teams": 130,
+    "approved_teams": 378,
+    "third_place_rmse_seconds": 261.9189
+  },
+  "contacts": {
+    "email_from_acceptance_message": "challenge@opensky-network.org"
+  },
+  "known_gaps_document": "OPEN_QUESTIONS.md"
+}

@@ -1,0 +1,241 @@
+{
+  "audit_used": false,
+  "comparison": "selected minus frozen v4; negative deltas improve",
+  "created_at_utc": "2026-09-14T02:54:56.581383+00:00",
+  "folds": {
+    "forward": {
+      "airports_improved": 9,
+      "by_airport": {
+        "EDDF": {
+          "new_rmse_seconds": 217.93365642319006,
+          "old_rmse_seconds": 223.67917982275767,
+          "rmse_delta_seconds": -5.745523399567617,
+          "rows": 18122,
+          "sse_delta": -45980894.135481715
+        },
+        "EDDM": {
+          "new_rmse_seconds": 194.8958295120773,
+          "old_rmse_seconds": 200.98473607562107,
+          "rmse_delta_seconds": -6.088906563543759,
+          "rows": 12562,
+          "sse_delta": -30280446.923328936
+        },
+        "EGLL": {
+          "new_rmse_seconds": 229.68890294203854,
+          "old_rmse_seconds": 230.95701294736753,
+          "rmse_delta_seconds": -1.2681100053289924,
+          "rows": 19423,
+          "sse_delta": -11345939.523135543
+        },
+        "EHAM": {
+          "new_rmse_seconds": 189.54265127908565,
+          "old_rmse_seconds": 191.76644327871966,
+          "rmse_delta_seconds": -2.2237919996340167,
+          "rows": 19232,
+          "sse_delta": -16307815.05385828
+        },
+        "LEBL": {
+          "new_rmse_seconds": 169.783576515496,
+          "old_rmse_seconds": 169.10128829138432,
+          "rmse_delta_seconds": 0.6822882241116872,
+          "rows": 13332,
+          "sse_delta": 3082587.0782954693
+        },
+        "LEMD": {
+          "new_rmse_seconds": 180.28548413751528,
+          "old_rmse_seconds": 181.47829702565136,
+          "rmse_delta_seconds": -1.192812888136075,
+          "rows": 17419,
+          "sse_delta": -7516585.924513459
+        },
+        "LFPG": {
+          "new_rmse_seconds": 291.6782980667517,
+          "old_rmse_seconds": 296.8333081609654,
+          "rmse_delta_seconds": -5.155010094213651,
+          "rows": 18646,
+          "sse_delta": -56567922.86483359
+        },
+        "LIRF": {
+          "new_rmse_seconds": 461.9015399496452,
+          "old_rmse_seconds": 473.14173692056715,
+          "rmse_delta_seconds": -11.240196970921943,
+          "rows": 11328,
+          "sse_delta": -119058079.85147333
+        },
+        "LSZH": {
+          "new_rmse_seconds": 199.38871985043335,
+          "old_rmse_seconds": 204.1419303959162,
+          "rmse_delta_seconds": -4.753210545482858,
+          "rows": 10078,
+          "sse_delta": -19330270.580854774
+        },
+        "LTFM": {
+          "new_rmse_seconds": 211.581690322442,
+          "old_rmse_seconds": 212.01658534741802,
+          "rmse_delta_seconds": -0.43489502497601507,
+          "rows": 22190,
+          "sse_delta": -4087859.1676079035
+        }
+      },
+      "by_nm_missing": {
+        "False": {
+          "rows": 160976,
+          "sse_delta": -164848782.27615166
+        },
+        "True": {
+          "rows": 1356,
+          "sse_delta": -142544444.67064095
+        }
+      },
+      "by_target_band": {
+        "0_to_1h": {
+          "rows": 162092,
+          "sse_delta": -173596517.1831808
+        },
+        "1h_to_3h": {
+          "rows": 216,
+          "sse_delta": 10099559.016202211
+        },
+        "negative": {
+          "rows": 18,
+          "sse_delta": -144550.5792632578
+        },
+        "over_3h": {
+          "rows": 6,
+          "sse_delta": -143751718.20054913
+        }
+      },
+      "paired_days": {
+        "comparison": "candidate minus frozen v4",
+        "days": 30,
+        "days_with_lower_squared_error": 25,
+        "interpretation": "Descriptive on reused development data, not an independent audit",
+        "replicates": 2000,
+        "rmse_difference_95pct_interval_seconds": [
+          -7.534916304627093,
+          -1.3649258614352469
+        ]
+      }
+    },
+    "seasonal": {
+      "airports_improved": 9,
+      "by_airport": {
+        "EDDF": {
+          "new_rmse_seconds": 215.63642947074337,
+          "old_rmse_seconds": 216.37922672424781,
+          "rmse_delta_seconds": -0.7427972535044489,
+          "rows": 36830,
+          "sse_delta": -11818748.579733372
+        },
+        "EDDM": {
+          "new_rmse_seconds": 201.72278668556623,
+          "old_rmse_seconds": 207.11390529070442,
+          "rmse_delta_seconds": -5.391118605138189,
+          "rows": 27091,
+          "sse_delta": -59710923.5333519
+        },
+        "EGLL": {
+          "new_rmse_seconds": 302.5273238465781,
+          "old_rmse_seconds": 302.23956517558094,
+          "rmse_delta_seconds": 0.2877586709971638,
+          "rows": 40210,
+          "sse_delta": 6997622.302336216
+        },
+        "EHAM": {
+          "new_rmse_seconds": 215.82563703761227,
+          "old_rmse_seconds": 217.80697297887795,
+          "rmse_delta_seconds": -1.9813359412656837,
+          "rows": 40949,
+          "sse_delta": -35182229.13109875
+        },
+        "LEBL": {
+          "new_rmse_seconds": 226.93136798644008,
+          "old_rmse_seconds": 227.1070350826828,
+          "rmse_delta_seconds": -0.17566709624273358,
+          "rows": 28986,
+          "sse_delta": -2311911.9931354523
+        },
+        "LEMD": {
+          "new_rmse_seconds": 186.7675689431744,
+          "old_rmse_seconds": 187.8422249535935,
+          "rmse_delta_seconds": -1.0746560104190905,
+          "rows": 35328,
+          "sse_delta": -14222228.476691246
+        },
+        "LFPG": {
+          "new_rmse_seconds": 582.3296354110969,
+          "old_rmse_seconds": 585.5414540930262,
+          "rmse_delta_seconds": -3.211818681929344,
+          "rows": 39612,
+          "sse_delta": -148584223.1430359
+        },
+        "LIRF": {
+          "new_rmse_seconds": 800.7524749033256,
+          "old_rmse_seconds": 804.1642790112359,
+          "rmse_delta_seconds": -3.411804107910257,
+          "rows": 26528,
+          "sse_delta": -145258350.23134804
+        },
+        "LSZH": {
+          "new_rmse_seconds": 228.83710242306358,
+          "old_rmse_seconds": 231.83143463717548,
+          "rmse_delta_seconds": -2.9943322141118927,
+          "rows": 22346,
+          "sse_delta": -30823952.637669563
+        },
+        "LTFM": {
+          "new_rmse_seconds": 261.725058203498,
+          "old_rmse_seconds": 263.426955415846,
+          "rmse_delta_seconds": -1.7018972123480012,
+          "rows": 46539,
+          "sse_delta": -41594452.21892595
+        }
+      },
+      "by_nm_missing": {
+        "False": {
+          "rows": 339046,
+          "sse_delta": -320435590.83398056
+        },
+        "True": {
+          "rows": 5373,
+          "sse_delta": -162073806.8086853
+        }
+      },
+      "by_target_band": {
+        "0_to_1h": {
+          "rows": 343355,
+          "sse_delta": -595423959.7644272
+        },
+        "1h_to_3h": {
+          "rows": 921,
+          "sse_delta": 90510948.43065548
+        },
+        "negative": {
+          "rows": 80,
+          "sse_delta": 666955.618243698
+        },
+        "over_3h": {
+          "rows": 60,
+          "sse_delta": 22017226.587734222
+        },
+        "zero": {
+          "rows": 3,
+          "sse_delta": -280568.51486788085
+        }
+      },
+      "paired_days": {
+        "comparison": "candidate minus frozen v4",
+        "days": 62,
+        "days_with_lower_squared_error": 40,
+        "interpretation": "Descriptive on reused development data, not an independent audit",
+        "replicates": 2000,
+        "rmse_difference_95pct_interval_seconds": [
+          -3.446300653041874,
+          -0.5117372824448908
+        ]
+      }
+    }
+  },
+  "selected_candidate": "cat_weather_v4_100",
+  "selection_sha256": "1228b7b16d3bea90229da139fb51ee714cf323472f3796604d40b1a7178351f3"
+}

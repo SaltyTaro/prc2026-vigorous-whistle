@@ -15,3 +15,12 @@
 *.jpg  binary
 *.pt   binary
 *.xlsx binary
+
+# PRC bundle identities include these configuration/dependency file bytes.
+/pyproject.toml text eol=lf
+/requirements-phase1.txt text eol=lf
+/requirements-phase2.txt text eol=lf
+/requirements-phase3.txt text eol=lf
+/requirements-phase4.txt text eol=lf
+/requirements-phase5.txt text eol=lf
+/configs/*.json text eol=lf

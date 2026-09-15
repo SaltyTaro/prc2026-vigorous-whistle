@@ -1,0 +1,96 @@
+{
+  "audit_used": false,
+  "bundle_id": "72e86725e23367ede5b558027cfc8eeb7ef6cfbaed23980537766ef6a34a7f34",
+  "candidate_count": 20,
+  "complete_scores": {
+    "clock_scale300/forward": 229.7949567142846,
+    "clock_scale300/seasonal": 329.4875487894556,
+    "clock_scale60/forward": 231.9312357348367,
+    "clock_scale60/seasonal": 331.51223371334214,
+    "missing_scale300/forward": 226.23521493980698,
+    "missing_scale300/seasonal": 326.33198191759277,
+    "missing_scale900/forward": 226.76869258078557,
+    "missing_scale900/seasonal": 325.9043976760697
+  },
+  "created_at_utc": "2026-09-14T16:20:23.371797+00:00",
+  "development_run_count": 8,
+  "inherited_feature_rows_hash_verified": 2264211,
+  "model_code_sha256": "2c5ee07eea80711b07704e4c68d552161073802456101ea026be8cabb236fe53",
+  "native_prediction_checks": {
+    "clock_scale300/forward": {
+      "independent_scale_reconstruction_difference_seconds": 0.0,
+      "max_difference_seconds": 0.0,
+      "rows": 1283
+    },
+    "clock_scale300/seasonal": {
+      "independent_scale_reconstruction_difference_seconds": 0.0,
+      "max_difference_seconds": 0.0,
+      "rows": 2243
+    },
+    "clock_scale60/forward": {
+      "independent_scale_reconstruction_difference_seconds": 0.0,
+      "max_difference_seconds": 0.0,
+      "rows": 1283
+    },
+    "clock_scale60/seasonal": {
+      "independent_scale_reconstruction_difference_seconds": 0.0,
+      "max_difference_seconds": 0.0,
+      "rows": 2243
+    },
+    "missing_scale300/forward": {
+      "independent_scale_reconstruction_difference_seconds": 0.0,
+      "max_difference_seconds": 0.0,
+      "rows": 1356
+    },
+    "missing_scale300/seasonal": {
+      "independent_scale_reconstruction_difference_seconds": 0.0,
+      "max_difference_seconds": 0.0,
+      "rows": 5373
+    },
+    "missing_scale900/forward": {
+      "independent_scale_reconstruction_difference_seconds": 0.0,
+      "max_difference_seconds": 0.0,
+      "rows": 1356
+    },
+    "missing_scale900/seasonal": {
+      "independent_scale_reconstruction_difference_seconds": 0.0,
+      "max_difference_seconds": 0.0,
+      "rows": 5373
+    }
+  },
+  "passed": true,
+  "reference_checks": {
+    "forward": {
+      "full_reference_rows": 162332,
+      "native_differences_seconds": {
+        "v6_airports": 0.0,
+        "v6_global": 0.0
+      },
+      "sample_rows": 1283,
+      "source_run_sha256": "8b441c6cd57e1e6a8c220d23d3d4239bf9142d5369eba2500f85ea0a2ce8ed23"
+    },
+    "seasonal": {
+      "full_reference_rows": 344419,
+      "native_differences_seconds": {
+        "v6_airports": 0.0,
+        "v6_global": 0.0
+      },
+      "sample_rows": 2243,
+      "source_run_sha256": "7d504775432b60b944ca8e0e45a408f0832d9191a1d400d07e750290a3c9989b"
+    }
+  },
+  "refit": null,
+  "run_sha256": {
+    "clock_scale300/forward": "02f7817736108151488f08c76522db6f795c873eede29e151224cdc07b978c83",
+    "clock_scale300/seasonal": "907fe87bc82adc9d139fc82a23e79f662b98cc4202a0bd08dc709abf33011459",
+    "clock_scale60/forward": "d010c6e70e4b96f37891069483ad66466b8149b2e6fca186b3ce63d133b79181",
+    "clock_scale60/seasonal": "4c8d7f621561975ceeb2de1c6360c6d651336815d93d9cc09dd38f8b8992bbc7",
+    "missing_scale300/forward": "81c82472ebea9ac009b97300aabd75afc41507c25ab2c3cc8bb4cfea1edbc0ee",
+    "missing_scale300/seasonal": "68cb02f2809c129fc50846010c26ac020f598abe706f1387f92538bd98c5316d",
+    "missing_scale900/forward": "515eb310e7d5108c2f87a265792b265b8937d2d32fc58522cc3a813d90a25c96",
+    "missing_scale900/seasonal": "c309e8aead221c5efaea90fd688df558326c3692bc6091a59f7dacf881d3bd81"
+  },
+  "selected_candidate": null,
+  "selection_sha256": "c23931559347114ec0b529050e1d51991afb439e781b7bfd2e5e431ec585ac19",
+  "verification_code_sha256": "026c4f3cd35dab5351deffa6efdca56156968f59b3e07e814283d11be9230713"
+}

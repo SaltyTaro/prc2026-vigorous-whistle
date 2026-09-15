@@ -1,0 +1,94 @@
+{
+  "audit_used": false,
+  "candidate_count": 20,
+  "candidates_improving_both_folds_without_margin": 0,
+  "code_sha256": "a6b3685ee062bec41a439a24fdb17ce7dfd86fdc56986f36c157c2b4d8a2b99e",
+  "created_at_utc": "2026-09-14T00:45:35.314461+00:00",
+  "lowest_mean_candidate_comparison": {
+    "forward": {
+      "airport_rmse_change_seconds": {
+        "EDDF": -0.8882825834406844,
+        "EDDM": -0.0999837339354599,
+        "EGLL": -1.3971210833435919,
+        "EHAM": -1.8202855640907103,
+        "LEBL": -1.7599257317502577,
+        "LEMD": -1.2955913953351796,
+        "LFPG": -1.1020239005770804,
+        "LIRF": -2.241109062488988,
+        "LSZH": -1.971746102072018,
+        "LTFM": -1.328618352795928
+      },
+      "airports_improved": 10,
+      "candidate_rmse_seconds": 243.21256646528067,
+      "paired_days": {
+        "comparison": "candidate minus frozen v4",
+        "days": 30,
+        "days_with_lower_squared_error": 25,
+        "interpretation": "Descriptive on reused development data, not an independent audit",
+        "replicates": 2000,
+        "rmse_difference_95pct_interval_seconds": [
+          -2.0655200859634335,
+          -0.6598499466477976
+        ]
+      },
+      "reference_rmse_seconds": 244.5549008776592,
+      "rmse_change_percent": -0.5488887802130193
+    },
+    "seasonal": {
+      "airport_rmse_change_seconds": {
+        "EDDF": -0.3450748680202196,
+        "EDDM": -1.233953617802456,
+        "EGLL": 0.6143960092420571,
+        "EHAM": -1.5043116603613385,
+        "LEBL": -1.153308650576264,
+        "LEMD": -1.7659768320632168,
+        "LFPG": -0.06395340761173429,
+        "LIRF": 6.701813036838985,
+        "LSZH": -1.2415699269869265,
+        "LTFM": -0.31625798928655513
+      },
+      "airports_improved": 8,
+      "candidate_rmse_seconds": 367.85080039739603,
+      "paired_days": {
+        "comparison": "candidate minus frozen v4",
+        "days": 62,
+        "days_with_lower_squared_error": 38,
+        "interpretation": "Descriptive on reused development data, not an independent audit",
+        "replicates": 2000,
+        "rmse_difference_95pct_interval_seconds": [
+          -0.47237562062666855,
+          1.9829319383523614
+        ]
+      },
+      "reference_rmse_seconds": 367.0843209597658,
+      "rmse_change_percent": 0.20880200920219139
+    }
+  },
+  "lowest_mean_candidate_is_promoted": false,
+  "lowest_mean_relative_rmse_candidate": "combined_v4_50",
+  "matched_lightgbm_comparison": {
+    "forward": {
+      "improvement_percent": 0.6707123961921857,
+      "new_rmse_seconds": 243.5571869324567,
+      "old_rmse_seconds": 245.2017857048638
+    },
+    "seasonal": {
+      "improvement_percent": 0.5005131344150815,
+      "new_rmse_seconds": 370.48557208354976,
+      "old_rmse_seconds": 372.3492288799874
+    }
+  },
+  "official_best_unchanged": {
+    "rmse_seconds": 326.6895,
+    "rows": 344841,
+    "version": 4
+  },
+  "resources": {
+    "max_run_peak_rss_bytes": 7002296320,
+    "model_runs": 10,
+    "total_run_cpu_seconds": 11902.95,
+    "total_run_wall_seconds": 956.5967932500134
+  },
+  "selected_candidate": null,
+  "source_sha256": "4c3f466e5566df318df07a68764746549525b5ad47e6206ec602d3331acdf910"
+}

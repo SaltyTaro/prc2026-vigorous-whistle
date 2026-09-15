@@ -1,0 +1,142 @@
+{
+  "checked_at_utc": "2026-09-14T04:26:30.889059+00:00",
+  "batch_complete": false,
+  "partial_seasonal_results": [
+    {
+      "variant": "lgb_direct",
+      "rmse_seconds": 355.75415705955123,
+      "improvement_fraction": 0.02578786186751225,
+      "ordinary_rmse_seconds": 243.6705465091195,
+      "ordinary_reference_rmse_seconds": 257.3423612259941,
+      "airports_improved": 9,
+      "by_airport": {
+        "EDDF": -26.479319830928432,
+        "EDDM": -23.8663737446727,
+        "EGLL": -27.114609228608913,
+        "EHAM": -23.57937181737094,
+        "LEBL": -4.24826097818962,
+        "LEMD": -7.440025934967252,
+        "LFPG": -9.767755375432898,
+        "LIRF": 3.7628849097457078,
+        "LSZH": -22.19855584451068,
+        "LTFM": -0.8100075990773234
+      },
+      "target_band_sse_gain": {
+        "0_to_1h": 2351897849.597847,
+        "1h_to_3h": 200793358.41473913,
+        "negative": -2591990.007178493,
+        "over_3h": -211848517.35469055,
+        "zero": -10359.53834510129
+      },
+      "resources": {
+        "cpu_seconds": 2516.15,
+        "mean_active_cpu_cores": 13.329532213932044,
+        "peak_process_rss_bytes_sampled": 8594874368,
+        "rss_sample_interval_seconds": 0.05,
+        "wall_seconds": 188.76506389099814
+      }
+    },
+    {
+      "variant": "lgb_residual",
+      "rmse_seconds": 325.66520535803284,
+      "improvement_fraction": 0.1081847120226449,
+      "ordinary_rmse_seconds": 245.9205812640206,
+      "ordinary_reference_rmse_seconds": 257.3423612259941,
+      "airports_improved": 10,
+      "by_airport": {
+        "EDDF": -24.86961016688798,
+        "EDDM": -23.99177170885949,
+        "EGLL": -25.01223411046692,
+        "EHAM": -27.98296804152173,
+        "LEBL": -0.7487233474940069,
+        "LEMD": -4.986305386684791,
+        "LFPG": -9.245599249601241,
+        "LIRF": -187.31217783998636,
+        "LSZH": -21.37643656157107,
+        "LTFM": -0.06816629430619514
+      },
+      "target_band_sse_gain": {
+        "0_to_1h": 1973658993.402958,
+        "1h_to_3h": 425230095.5430651,
+        "negative": -4650646.282404907,
+        "over_3h": 7005695939.633158,
+        "zero": -4368.99313764309
+      },
+      "resources": {
+        "cpu_seconds": 2402.2499999999995,
+        "mean_active_cpu_cores": 13.259497919432631,
+        "peak_process_rss_bytes_sampled": 8851165184,
+        "rss_sample_interval_seconds": 0.05,
+        "wall_seconds": 181.17201832200226
+      }
+    },
+    {
+      "variant": "cat_direct",
+      "rmse_seconds": 352.838392472192,
+      "improvement_fraction": 0.03377251418027971,
+      "ordinary_rmse_seconds": 241.81927102621637,
+      "ordinary_reference_rmse_seconds": 257.3423612259941,
+      "airports_improved": 10,
+      "by_airport": {
+        "EDDF": -28.30547015628551,
+        "EDDM": -25.106239628053316,
+        "EGLL": -29.251351537871585,
+        "EHAM": -22.934784767998224,
+        "LEBL": -5.044109428107902,
+        "LEMD": -8.929279801043094,
+        "LFPG": -11.451339130347037,
+        "LIRF": -7.094001717787705,
+        "LSZH": -22.777559901234923,
+        "LTFM": -3.5611516336408613
+      },
+      "target_band_sse_gain": {
+        "0_to_1h": 2660496875.8295555,
+        "1h_to_3h": 137904652.63646555,
+        "negative": -2272217.2333100513,
+        "over_3h": 253703807.17604446,
+        "zero": 7551.621117976843
+      },
+      "resources": {
+        "cpu_seconds": 11836.240000000002,
+        "mean_active_cpu_cores": 15.129463625355852,
+        "peak_process_rss_bytes_sampled": 10255589376,
+        "rss_sample_interval_seconds": 0.05,
+        "wall_seconds": 782.3304442970039
+      }
+    },
+    {
+      "variant": "cat_residual",
+      "rmse_seconds": 324.9170674788965,
+      "improvement_fraction": 0.1102334442395092,
+      "ordinary_rmse_seconds": 244.3952933498778,
+      "ordinary_reference_rmse_seconds": 257.3423612259941,
+      "airports_improved": 10,
+      "by_airport": {
+        "EDDF": -24.96829161498087,
+        "EDDM": -25.212806509425576,
+        "EGLL": -26.380324444981113,
+        "EHAM": -27.522555203055788,
+        "LEBL": -0.8306029066035592,
+        "LEMD": -7.045104363963247,
+        "LFPG": -10.77052863419567,
+        "LIRF": -187.2448386049723,
+        "LSZH": -19.506156956012177,
+        "LTFM": -2.306018468434729
+      },
+      "target_band_sse_gain": {
+        "0_to_1h": 2230444885.312229,
+        "1h_to_3h": 320148206.85484695,
+        "negative": -3497887.7726384476,
+        "over_3h": 7020445847.767105,
+        "zero": 26382.198974762927
+      },
+      "resources": {
+        "cpu_seconds": 11758.96,
+        "mean_active_cpu_cores": 15.110766723651407,
+        "peak_process_rss_bytes_sampled": 11044081664,
+        "rss_sample_interval_seconds": 0.05,
+        "wall_seconds": 778.1842056759997
+      }
+    }
+  ]
+}

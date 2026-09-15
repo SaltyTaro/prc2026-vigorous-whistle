@@ -1,0 +1,50 @@
+{
+  "audit_used": false,
+  "azure_actions_performed": false,
+  "code_sha256": "4e930c9a6c382f001e2586fd61f8c08f68af4dc0161c9d4d452c20b73391748c",
+  "complete_source_group_totals": {
+    "airport": 237345,
+    "airport_month": 237345,
+    "airport_nm_availability": 237345,
+    "airport_nm_availability_aircraft_missing": 237345,
+    "airport_nm_availability_schedule_interval": 237345,
+    "airport_nm_availability_schedule_midnight": 237345
+  },
+  "created_at_utc": "2026-09-14T20:59:21.665073+00:00",
+  "fitting_rows_verified": 237345,
+  "focused_local_tests_passed": 34,
+  "full_geometry_maps_reconstructed": 10,
+  "independent_lirf_gate_check": {
+    "above_3h_rows_in_gate": 102,
+    "above_3h_rows_outside_gate": 0,
+    "existing_schedule_gate_rows": 835,
+    "missing_clock_rows": 836
+  },
+  "input_sha256": {
+    "docs/source_geometry/audit_decision.json": "a18f8636f0004c228063b10a9fe874189f5b19e2c84ecfc9a110b920c9b15d8c",
+    "docs/source_geometry/current_geometry_coverage.json": "e34f4a5bea8e228bc984cec48723008b1e20b69edabf5efe40d88887715c0d7c",
+    "docs/source_geometry/current_geometry_mapping_review.json": "bc6e9e567c9d8966e3cf9a892c6cd8a44c4146747ed87f62cca3f3a72788b523",
+    "docs/source_geometry/fitting_source_audit.json": "604378d140a5aced394163475bf28f9e58ddca547b6b0ad93c92fafc6a9e5465",
+    "docs/source_geometry/geometry_coverage.json": "ddf655aa23addc7063905a785a481134251b7b85de85a9da210a69d422dbbf3f",
+    "docs/source_geometry/geometry_endpoint_review.json": "c8a3ef4d16cc0440a504677c54100c479d96de273dff390d372e9c23a094ce3a",
+    "docs/source_geometry/geometry_mapping_review.json": "68da812af7bacdc4e61ba05fb09bd02eb316350a22645e1933a94c3741ba83ac"
+  },
+  "models_fitted": 0,
+  "official_v7_artifact_hashes_checked": 22,
+  "passed": true,
+  "predictions_changed": false,
+  "prior_archive_files_checked": 314,
+  "prior_frozen_archive_files_unchanged_except_five_previously_documented_narratives": 309,
+  "public_sources_verified": 13,
+  "raw_input_hashes_verified": 14,
+  "scope_note": "Source statistics reconstruct only common fitting labels. Geometry reads six label-free columns. All original Parquet files, including December, are byte-hashed for preservation; reserved labels are not decoded, selected, trained or scored.",
+  "submission_versions_unchanged": [
+    "v1",
+    "v2",
+    "v3",
+    "v4",
+    "v5",
+    "v6",
+    "v7"
+  ]
+}

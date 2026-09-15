@@ -1,0 +1,3655 @@
+{
+  "generated_at_utc": "2026-09-13T12:58:09.259650+00:00",
+  "environment": {
+    "python": "3.14.2",
+    "pyarrow": "23.0.1",
+    "pandas": "3.0.0",
+    "numpy": "2.4.2",
+    "boto3": "1.43.79",
+    "beautifulsoup4": "4.14.3",
+    "python-dotenv": "1.2.1"
+  },
+  "files": [
+    {
+      "filename": "training_2025-01-01_2025-02-01.parquet",
+      "bytes": 21218481,
+      "rows": 307257,
+      "columns": 30,
+      "row_groups": 1,
+      "schema": [
+        {
+          "name": "MVT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "PHASE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MVT_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "BLOCK_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "SCHED_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "RUNWAY_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "STAND_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "TAXITIME_SEC_mvt",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "LOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "CALLSIGN_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_FILED_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MARKET_SEGMENT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "IOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "WK_TBL_CAT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_OPERATOR_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "EOBT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AOBT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        }
+      ],
+      "null_counts": {
+        "MVT_ID_mvt": 0,
+        "FLIGHT_ID_mvt": 2059,
+        "FLIGHT_mvt": 13,
+        "FLIGHT_RULE_mvt": 38,
+        "ADEP_mvt": 4,
+        "ADES_mvt": 8,
+        "PHASE_mvt": 0,
+        "MVT_TIME_UTC_mvt": 0,
+        "BLOCK_TIME_UTC_mvt": 0,
+        "SCHED_TIME_UTC_mvt": 0,
+        "AIRCRAFT_TYPE_mvt": 73,
+        "RUNWAY_mvt": 0,
+        "STAND_mvt": 7,
+        "TAXITIME_SEC_mvt": 0,
+        "LOBT_flt": 2541,
+        "CALLSIGN_flt": 2541,
+        "ADEP_flt": 2541,
+        "ADES_flt": 2541,
+        "ADES_FILED_flt": 2541,
+        "MARKET_SEGMENT_flt": 2541,
+        "IOBT_flt": 2541,
+        "FLIGHT_RULE_flt": 2541,
+        "FLIGHT_TYPE_flt": 2541,
+        "AIRCRAFT_TYPE_flt": 2541,
+        "WK_TBL_CAT_flt": 2541,
+        "AIRCRAFT_OPERATOR_flt": 2541,
+        "EOBT_1_flt": 2541,
+        "ARVT_1_flt": 2541,
+        "AOBT_3_flt": 2541,
+        "ARVT_3_flt": 2541
+      },
+      "duplicate_movement_ids": 0,
+      "phase_counts": {
+        "DEP": 153706,
+        "ARR": 153551
+      },
+      "movement_time_min_utc": "2025-01-01 00:01:04+00:00",
+      "movement_time_max_utc": "2025-01-31 23:51:43+00:00",
+      "movements_by_airport_phase": {
+        "EDDF/ARR": 15432,
+        "EDDF/DEP": 15496,
+        "EDDM/ARR": 11215,
+        "EDDM/DEP": 11266,
+        "EGLL/ARR": 19427,
+        "EGLL/DEP": 19420,
+        "EHAM/ARR": 18469,
+        "EHAM/DEP": 18460,
+        "LEBL/ARR": 12165,
+        "LEBL/DEP": 12234,
+        "LEMD/ARR": 16643,
+        "LEMD/DEP": 16510,
+        "LFPG/ARR": 17816,
+        "LFPG/DEP": 17900,
+        "LIRF/ARR": 11298,
+        "LIRF/DEP": 11317,
+        "LSZH/ARR": 9702,
+        "LSZH/DEP": 9735,
+        "LTFM/ARR": 21384,
+        "LTFM/DEP": 21368
+      },
+      "departures_target_seconds": {
+        "rows": 153706,
+        "missing_or_nonfinite": 0,
+        "mean": 995.292525991178,
+        "std": 604.8310676272794,
+        "min": -12.0,
+        "max": 87177.0,
+        "zero": 2,
+        "negative": 46,
+        "over_1_hour": 325,
+        "over_3_hours": 10,
+        "quantiles": {
+          "0.01": 291.0,
+          "0.05": 478.0,
+          "0.25": 714.0,
+          "0.5": 906.0,
+          "0.75": 1175.0,
+          "0.9": 1495.0,
+          "0.95": 1748.0,
+          "0.99": 2589.0,
+          "0.999": 4267.0
+        }
+      }
+    },
+    {
+      "filename": "training_2025-02-01_2025-03-01.parquet",
+      "bytes": 19824510,
+      "rows": 287411,
+      "columns": 30,
+      "row_groups": 1,
+      "schema": [
+        {
+          "name": "MVT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "PHASE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MVT_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "BLOCK_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "SCHED_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "RUNWAY_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "STAND_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "TAXITIME_SEC_mvt",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "LOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "CALLSIGN_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_FILED_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MARKET_SEGMENT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "IOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "WK_TBL_CAT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_OPERATOR_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "EOBT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AOBT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        }
+      ],
+      "null_counts": {
+        "MVT_ID_mvt": 0,
+        "FLIGHT_ID_mvt": 1692,
+        "FLIGHT_mvt": 13,
+        "FLIGHT_RULE_mvt": 63,
+        "ADEP_mvt": 5,
+        "ADES_mvt": 8,
+        "PHASE_mvt": 0,
+        "MVT_TIME_UTC_mvt": 0,
+        "BLOCK_TIME_UTC_mvt": 0,
+        "SCHED_TIME_UTC_mvt": 0,
+        "AIRCRAFT_TYPE_mvt": 65,
+        "RUNWAY_mvt": 0,
+        "STAND_mvt": 4,
+        "TAXITIME_SEC_mvt": 0,
+        "LOBT_flt": 2188,
+        "CALLSIGN_flt": 2188,
+        "ADEP_flt": 2188,
+        "ADES_flt": 2188,
+        "ADES_FILED_flt": 2188,
+        "MARKET_SEGMENT_flt": 2188,
+        "IOBT_flt": 2188,
+        "FLIGHT_RULE_flt": 2188,
+        "FLIGHT_TYPE_flt": 2188,
+        "AIRCRAFT_TYPE_flt": 2188,
+        "WK_TBL_CAT_flt": 2188,
+        "AIRCRAFT_OPERATOR_flt": 2188,
+        "EOBT_1_flt": 2188,
+        "ARVT_1_flt": 2188,
+        "AOBT_3_flt": 2188,
+        "ARVT_3_flt": 2188
+      },
+      "duplicate_movement_ids": 0,
+      "phase_counts": {
+        "DEP": 143731,
+        "ARR": 143680
+      },
+      "movement_time_min_utc": "2025-02-01 00:04:05+00:00",
+      "movement_time_max_utc": "2025-02-28 23:56:20+00:00",
+      "movements_by_airport_phase": {
+        "EDDF/ARR": 15083,
+        "EDDF/DEP": 15099,
+        "EDDM/ARR": 10404,
+        "EDDM/DEP": 10381,
+        "EGLL/ARR": 17955,
+        "EGLL/DEP": 17956,
+        "EHAM/ARR": 17835,
+        "EHAM/DEP": 17852,
+        "LEBL/ARR": 12107,
+        "LEBL/DEP": 12169,
+        "LEMD/ARR": 15474,
+        "LEMD/DEP": 15390,
+        "LFPG/ARR": 16770,
+        "LFPG/DEP": 16806,
+        "LIRF/ARR": 10689,
+        "LIRF/DEP": 10703,
+        "LSZH/ARR": 9016,
+        "LSZH/DEP": 9048,
+        "LTFM/ARR": 18347,
+        "LTFM/DEP": 18327
+      },
+      "departures_target_seconds": {
+        "rows": 143731,
+        "missing_or_nonfinite": 0,
+        "mean": 1002.3730162595403,
+        "std": 628.3244935392552,
+        "min": -12.0,
+        "max": 131167.0,
+        "zero": 3,
+        "negative": 35,
+        "over_1_hour": 762,
+        "over_3_hours": 12,
+        "quantiles": {
+          "0.01": 280.0,
+          "0.05": 477.0,
+          "0.25": 714.0,
+          "0.5": 904.0,
+          "0.75": 1163.0,
+          "0.9": 1494.0,
+          "0.95": 1769.5,
+          "0.99": 2891.0,
+          "0.999": 5649.2699999999895
+        }
+      }
+    },
+    {
+      "filename": "training_2025-03-01_2025-04-01.parquet",
+      "bytes": 22606072,
+      "rows": 328622,
+      "columns": 30,
+      "row_groups": 1,
+      "schema": [
+        {
+          "name": "MVT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "PHASE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MVT_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "BLOCK_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "SCHED_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "RUNWAY_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "STAND_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "TAXITIME_SEC_mvt",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "LOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "CALLSIGN_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_FILED_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MARKET_SEGMENT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "IOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "WK_TBL_CAT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_OPERATOR_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "EOBT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AOBT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        }
+      ],
+      "null_counts": {
+        "MVT_ID_mvt": 0,
+        "FLIGHT_ID_mvt": 1769,
+        "FLIGHT_mvt": 19,
+        "FLIGHT_RULE_mvt": 28,
+        "ADEP_mvt": 4,
+        "ADES_mvt": 10,
+        "PHASE_mvt": 0,
+        "MVT_TIME_UTC_mvt": 0,
+        "BLOCK_TIME_UTC_mvt": 0,
+        "SCHED_TIME_UTC_mvt": 0,
+        "AIRCRAFT_TYPE_mvt": 62,
+        "RUNWAY_mvt": 0,
+        "STAND_mvt": 1,
+        "TAXITIME_SEC_mvt": 0,
+        "LOBT_flt": 2295,
+        "CALLSIGN_flt": 2295,
+        "ADEP_flt": 2295,
+        "ADES_flt": 2295,
+        "ADES_FILED_flt": 2295,
+        "MARKET_SEGMENT_flt": 2295,
+        "IOBT_flt": 2295,
+        "FLIGHT_RULE_flt": 2303,
+        "FLIGHT_TYPE_flt": 2295,
+        "AIRCRAFT_TYPE_flt": 2295,
+        "WK_TBL_CAT_flt": 2303,
+        "AIRCRAFT_OPERATOR_flt": 2295,
+        "EOBT_1_flt": 2295,
+        "ARVT_1_flt": 2295,
+        "AOBT_3_flt": 2295,
+        "ARVT_3_flt": 2295
+      },
+      "duplicate_movement_ids": 0,
+      "phase_counts": {
+        "DEP": 164450,
+        "ARR": 164172
+      },
+      "movement_time_min_utc": "2025-02-28 23:59:57+00:00",
+      "movement_time_max_utc": "2025-03-31 22:58:24+00:00",
+      "movements_by_airport_phase": {
+        "EDDF/ARR": 17644,
+        "EDDF/DEP": 17636,
+        "EDDM/ARR": 12488,
+        "EDDM/DEP": 12513,
+        "EGLL/ARR": 19244,
+        "EGLL/DEP": 19251,
+        "EHAM/ARR": 20209,
+        "EHAM/DEP": 20224,
+        "LEBL/ARR": 14017,
+        "LEBL/DEP": 14147,
+        "LEMD/ARR": 17432,
+        "LEMD/DEP": 17546,
+        "LFPG/ARR": 19285,
+        "LFPG/DEP": 19341,
+        "LIRF/ARR": 12520,
+        "LIRF/DEP": 12544,
+        "LSZH/ARR": 10436,
+        "LSZH/DEP": 10449,
+        "LTFM/ARR": 20897,
+        "LTFM/DEP": 20799
+      },
+      "departures_target_seconds": {
+        "rows": 164450,
+        "missing_or_nonfinite": 0,
+        "mean": 972.0010033444817,
+        "std": 461.6828358354291,
+        "min": -12.0,
+        "max": 87247.0,
+        "zero": 2,
+        "negative": 26,
+        "over_1_hour": 157,
+        "over_3_hours": 7,
+        "quantiles": {
+          "0.01": 281.0,
+          "0.05": 480.0,
+          "0.25": 717.0,
+          "0.5": 905.0,
+          "0.75": 1151.0,
+          "0.9": 1442.0,
+          "0.95": 1641.0,
+          "0.99": 2156.5100000000093,
+          "0.999": 3543.0
+        }
+      }
+    },
+    {
+      "filename": "training_2025-04-01_2025-05-01.parquet",
+      "bytes": 23840340,
+      "rows": 350288,
+      "columns": 30,
+      "row_groups": 1,
+      "schema": [
+        {
+          "name": "MVT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "PHASE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MVT_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "BLOCK_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "SCHED_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "RUNWAY_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "STAND_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "TAXITIME_SEC_mvt",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "LOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "CALLSIGN_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_FILED_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MARKET_SEGMENT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "IOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "WK_TBL_CAT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_OPERATOR_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "EOBT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AOBT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        }
+      ],
+      "null_counts": {
+        "MVT_ID_mvt": 0,
+        "FLIGHT_ID_mvt": 1758,
+        "FLIGHT_mvt": 28,
+        "FLIGHT_RULE_mvt": 42,
+        "ADEP_mvt": 12,
+        "ADES_mvt": 12,
+        "PHASE_mvt": 0,
+        "MVT_TIME_UTC_mvt": 0,
+        "BLOCK_TIME_UTC_mvt": 0,
+        "SCHED_TIME_UTC_mvt": 0,
+        "AIRCRAFT_TYPE_mvt": 74,
+        "RUNWAY_mvt": 0,
+        "STAND_mvt": 6,
+        "TAXITIME_SEC_mvt": 0,
+        "LOBT_flt": 2345,
+        "CALLSIGN_flt": 2345,
+        "ADEP_flt": 2345,
+        "ADES_flt": 2345,
+        "ADES_FILED_flt": 2345,
+        "MARKET_SEGMENT_flt": 2345,
+        "IOBT_flt": 2345,
+        "FLIGHT_RULE_flt": 2361,
+        "FLIGHT_TYPE_flt": 2345,
+        "AIRCRAFT_TYPE_flt": 2345,
+        "WK_TBL_CAT_flt": 2361,
+        "AIRCRAFT_OPERATOR_flt": 2345,
+        "EOBT_1_flt": 2345,
+        "ARVT_1_flt": 2345,
+        "AOBT_3_flt": 2345,
+        "ARVT_3_flt": 2345
+      },
+      "duplicate_movement_ids": 0,
+      "phase_counts": {
+        "DEP": 175288,
+        "ARR": 175000
+      },
+      "movement_time_min_utc": "2025-04-01 00:00:06+00:00",
+      "movement_time_max_utc": "2025-04-30 23:49:32+00:00",
+      "movements_by_airport_phase": {
+        "EDDF/ARR": 19585,
+        "EDDF/DEP": 19583,
+        "EDDM/ARR": 14328,
+        "EDDM/DEP": 14326,
+        "EGLL/ARR": 20227,
+        "EGLL/DEP": 20229,
+        "EHAM/ARR": 20921,
+        "EHAM/DEP": 20935,
+        "LEBL/ARR": 15315,
+        "LEBL/DEP": 15374,
+        "LEMD/ARR": 17186,
+        "LEMD/DEP": 17348,
+        "LFPG/ARR": 19935,
+        "LFPG/DEP": 20002,
+        "LIRF/ARR": 14007,
+        "LIRF/DEP": 14028,
+        "LSZH/ARR": 11150,
+        "LSZH/DEP": 11162,
+        "LTFM/ARR": 22346,
+        "LTFM/DEP": 22301
+      },
+      "departures_target_seconds": {
+        "rows": 175288,
+        "missing_or_nonfinite": 0,
+        "mean": 971.4185968235133,
+        "std": 436.04143564561974,
+        "min": -11.0,
+        "max": 59641.0,
+        "zero": 0,
+        "negative": 32,
+        "over_1_hour": 170,
+        "over_3_hours": 10,
+        "quantiles": {
+          "0.01": 295.0,
+          "0.05": 486.0,
+          "0.25": 722.0,
+          "0.5": 908.0,
+          "0.75": 1150.0,
+          "0.9": 1431.0,
+          "0.95": 1617.0,
+          "0.99": 2098.0,
+          "0.999": 3545.8519999999553
+        }
+      }
+    },
+    {
+      "filename": "training_2025-05-01_2025-06-01.parquet",
+      "bytes": 25187756,
+      "rows": 370105,
+      "columns": 30,
+      "row_groups": 1,
+      "schema": [
+        {
+          "name": "MVT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "PHASE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MVT_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "BLOCK_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "SCHED_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "RUNWAY_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "STAND_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "TAXITIME_SEC_mvt",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "LOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "CALLSIGN_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_FILED_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MARKET_SEGMENT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "IOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "WK_TBL_CAT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_OPERATOR_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "EOBT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AOBT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        }
+      ],
+      "null_counts": {
+        "MVT_ID_mvt": 0,
+        "FLIGHT_ID_mvt": 2322,
+        "FLIGHT_mvt": 37,
+        "FLIGHT_RULE_mvt": 31,
+        "ADEP_mvt": 6,
+        "ADES_mvt": 8,
+        "PHASE_mvt": 0,
+        "MVT_TIME_UTC_mvt": 0,
+        "BLOCK_TIME_UTC_mvt": 0,
+        "SCHED_TIME_UTC_mvt": 0,
+        "AIRCRAFT_TYPE_mvt": 107,
+        "RUNWAY_mvt": 0,
+        "STAND_mvt": 1,
+        "TAXITIME_SEC_mvt": 0,
+        "LOBT_flt": 2916,
+        "CALLSIGN_flt": 2916,
+        "ADEP_flt": 2916,
+        "ADES_flt": 2916,
+        "ADES_FILED_flt": 2916,
+        "MARKET_SEGMENT_flt": 2916,
+        "IOBT_flt": 2916,
+        "FLIGHT_RULE_flt": 2935,
+        "FLIGHT_TYPE_flt": 2916,
+        "AIRCRAFT_TYPE_flt": 2916,
+        "WK_TBL_CAT_flt": 2935,
+        "AIRCRAFT_OPERATOR_flt": 2916,
+        "EOBT_1_flt": 2916,
+        "ARVT_1_flt": 2916,
+        "AOBT_3_flt": 2916,
+        "ARVT_3_flt": 2916
+      },
+      "duplicate_movement_ids": 0,
+      "phase_counts": {
+        "DEP": 185202,
+        "ARR": 184903
+      },
+      "movement_time_min_utc": "2025-05-01 00:02:00+00:00",
+      "movement_time_max_utc": "2025-05-31 23:58:26+00:00",
+      "movements_by_airport_phase": {
+        "EDDF/ARR": 21124,
+        "EDDF/DEP": 21130,
+        "EDDM/ARR": 15818,
+        "EDDM/DEP": 15798,
+        "EGLL/ARR": 20779,
+        "EGLL/DEP": 20791,
+        "EHAM/ARR": 22122,
+        "EHAM/DEP": 22173,
+        "LEBL/ARR": 16466,
+        "LEBL/DEP": 16507,
+        "LEMD/ARR": 17985,
+        "LEMD/DEP": 18180,
+        "LFPG/ARR": 20858,
+        "LFPG/DEP": 20908,
+        "LIRF/ARR": 14518,
+        "LIRF/DEP": 14541,
+        "LSZH/ARR": 12015,
+        "LSZH/DEP": 12040,
+        "LTFM/ARR": 23218,
+        "LTFM/DEP": 23134
+      },
+      "departures_target_seconds": {
+        "rows": 185202,
+        "missing_or_nonfinite": 0,
+        "mean": 986.6149015669378,
+        "std": 469.39380251291374,
+        "min": -11.0,
+        "max": 87341.0,
+        "zero": 0,
+        "negative": 21,
+        "over_1_hour": 219,
+        "over_3_hours": 17,
+        "quantiles": {
+          "0.01": 295.0,
+          "0.05": 481.0,
+          "0.25": 724.0,
+          "0.5": 925.0,
+          "0.75": 1185.0,
+          "0.9": 1447.0,
+          "0.95": 1669.0,
+          "0.99": 2168.0,
+          "0.999": 3896.5929999999935
+        }
+      }
+    },
+    {
+      "filename": "training_2025-06-01_2025-07-01.parquet",
+      "bytes": 24991697,
+      "rows": 365986,
+      "columns": 30,
+      "row_groups": 1,
+      "schema": [
+        {
+          "name": "MVT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "PHASE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MVT_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "BLOCK_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "SCHED_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "RUNWAY_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "STAND_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "TAXITIME_SEC_mvt",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "LOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "CALLSIGN_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_FILED_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MARKET_SEGMENT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "IOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "WK_TBL_CAT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_OPERATOR_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "EOBT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AOBT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        }
+      ],
+      "null_counts": {
+        "MVT_ID_mvt": 0,
+        "FLIGHT_ID_mvt": 3336,
+        "FLIGHT_mvt": 56,
+        "FLIGHT_RULE_mvt": 44,
+        "ADEP_mvt": 14,
+        "ADES_mvt": 22,
+        "PHASE_mvt": 0,
+        "MVT_TIME_UTC_mvt": 0,
+        "BLOCK_TIME_UTC_mvt": 0,
+        "SCHED_TIME_UTC_mvt": 0,
+        "AIRCRAFT_TYPE_mvt": 214,
+        "RUNWAY_mvt": 0,
+        "STAND_mvt": 6,
+        "TAXITIME_SEC_mvt": 0,
+        "LOBT_flt": 3959,
+        "CALLSIGN_flt": 3959,
+        "ADEP_flt": 3959,
+        "ADES_flt": 3959,
+        "ADES_FILED_flt": 3959,
+        "MARKET_SEGMENT_flt": 3959,
+        "IOBT_flt": 3959,
+        "FLIGHT_RULE_flt": 3971,
+        "FLIGHT_TYPE_flt": 3959,
+        "AIRCRAFT_TYPE_flt": 3959,
+        "WK_TBL_CAT_flt": 3971,
+        "AIRCRAFT_OPERATOR_flt": 3959,
+        "EOBT_1_flt": 3959,
+        "ARVT_1_flt": 3959,
+        "AOBT_3_flt": 3959,
+        "ARVT_3_flt": 3959
+      },
+      "duplicate_movement_ids": 0,
+      "phase_counts": {
+        "DEP": 183142,
+        "ARR": 182844
+      },
+      "movement_time_min_utc": "2025-06-01 00:02:01+00:00",
+      "movement_time_max_utc": "2025-06-30 23:58:50+00:00",
+      "movements_by_airport_phase": {
+        "EDDF/ARR": 20717,
+        "EDDF/DEP": 20706,
+        "EDDM/ARR": 15647,
+        "EDDM/DEP": 15661,
+        "EGLL/ARR": 20072,
+        "EGLL/DEP": 20063,
+        "EHAM/ARR": 21228,
+        "EHAM/DEP": 21257,
+        "LEBL/ARR": 16241,
+        "LEBL/DEP": 16315,
+        "LEMD/ARR": 17806,
+        "LEMD/DEP": 17992,
+        "LFPG/ARR": 20817,
+        "LFPG/DEP": 20887,
+        "LIRF/ARR": 14670,
+        "LIRF/DEP": 14696,
+        "LSZH/ARR": 12080,
+        "LSZH/DEP": 12083,
+        "LTFM/ARR": 23566,
+        "LTFM/DEP": 23482
+      },
+      "departures_target_seconds": {
+        "rows": 183142,
+        "missing_or_nonfinite": 0,
+        "mean": 973.2313341560101,
+        "std": 554.9284596806332,
+        "min": -12.0,
+        "max": 88392.0,
+        "zero": 2,
+        "negative": 60,
+        "over_1_hour": 394,
+        "over_3_hours": 18,
+        "quantiles": {
+          "0.01": 288.4100000000001,
+          "0.05": 471.0,
+          "0.25": 712.0,
+          "0.5": 902.0,
+          "0.75": 1152.0,
+          "0.9": 1443.0,
+          "0.95": 1658.0,
+          "0.99": 2223.0,
+          "0.999": 4858.0
+        }
+      }
+    },
+    {
+      "filename": "training_2025-07-01_2025-08-01.parquet",
+      "bytes": 26014977,
+      "rows": 381161,
+      "columns": 30,
+      "row_groups": 1,
+      "schema": [
+        {
+          "name": "MVT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "PHASE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MVT_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "BLOCK_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "SCHED_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "RUNWAY_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "STAND_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "TAXITIME_SEC_mvt",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "LOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "CALLSIGN_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_FILED_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MARKET_SEGMENT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "IOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "WK_TBL_CAT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_OPERATOR_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "EOBT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AOBT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        }
+      ],
+      "null_counts": {
+        "MVT_ID_mvt": 0,
+        "FLIGHT_ID_mvt": 4783,
+        "FLIGHT_mvt": 34,
+        "FLIGHT_RULE_mvt": 215,
+        "ADEP_mvt": 11,
+        "ADES_mvt": 8,
+        "PHASE_mvt": 0,
+        "MVT_TIME_UTC_mvt": 0,
+        "BLOCK_TIME_UTC_mvt": 0,
+        "SCHED_TIME_UTC_mvt": 0,
+        "AIRCRAFT_TYPE_mvt": 359,
+        "RUNWAY_mvt": 0,
+        "STAND_mvt": 12,
+        "TAXITIME_SEC_mvt": 0,
+        "LOBT_flt": 5430,
+        "CALLSIGN_flt": 5430,
+        "ADEP_flt": 5430,
+        "ADES_flt": 5430,
+        "ADES_FILED_flt": 5430,
+        "MARKET_SEGMENT_flt": 5430,
+        "IOBT_flt": 5430,
+        "FLIGHT_RULE_flt": 5442,
+        "FLIGHT_TYPE_flt": 5430,
+        "AIRCRAFT_TYPE_flt": 5430,
+        "WK_TBL_CAT_flt": 5442,
+        "AIRCRAFT_OPERATOR_flt": 5430,
+        "EOBT_1_flt": 5430,
+        "ARVT_1_flt": 5430,
+        "AOBT_3_flt": 5430,
+        "ARVT_3_flt": 5430
+      },
+      "duplicate_movement_ids": 0,
+      "phase_counts": {
+        "DEP": 190713,
+        "ARR": 190448
+      },
+      "movement_time_min_utc": "2025-06-30 23:59:56+00:00",
+      "movement_time_max_utc": "2025-07-31 23:57:00+00:00",
+      "movements_by_airport_phase": {
+        "EDDF/ARR": 21323,
+        "EDDF/DEP": 21334,
+        "EDDM/ARR": 15831,
+        "EDDM/DEP": 15825,
+        "EGLL/ARR": 20774,
+        "EGLL/DEP": 20790,
+        "EHAM/ARR": 22463,
+        "EHAM/DEP": 22489,
+        "LEBL/ARR": 16707,
+        "LEBL/DEP": 16752,
+        "LEMD/ARR": 18665,
+        "LEMD/DEP": 18818,
+        "LFPG/ARR": 21638,
+        "LFPG/DEP": 21712,
+        "LIRF/ARR": 15185,
+        "LIRF/DEP": 15211,
+        "LSZH/ARR": 12602,
+        "LSZH/DEP": 12611,
+        "LTFM/ARR": 25260,
+        "LTFM/DEP": 25171
+      },
+      "departures_target_seconds": {
+        "rows": 190713,
+        "missing_or_nonfinite": 0,
+        "mean": 1025.7332431454595,
+        "std": 745.0087756845653,
+        "min": -12.0,
+        "max": 88132.0,
+        "zero": 1,
+        "negative": 34,
+        "over_1_hour": 656,
+        "over_3_hours": 50,
+        "quantiles": {
+          "0.01": 292.0,
+          "0.05": 479.0,
+          "0.25": 726.0,
+          "0.5": 948.0,
+          "0.75": 1205.0,
+          "0.9": 1512.0,
+          "0.95": 1751.0,
+          "0.99": 2635.0,
+          "0.999": 5905.080000000016
+        }
+      }
+    },
+    {
+      "filename": "training_2025-08-01_2025-09-01.parquet",
+      "bytes": 25969246,
+      "rows": 382047,
+      "columns": 30,
+      "row_groups": 1,
+      "schema": [
+        {
+          "name": "MVT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "PHASE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MVT_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "BLOCK_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "SCHED_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "RUNWAY_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "STAND_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "TAXITIME_SEC_mvt",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "LOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "CALLSIGN_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_FILED_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MARKET_SEGMENT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "IOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "WK_TBL_CAT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_OPERATOR_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "EOBT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AOBT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        }
+      ],
+      "null_counts": {
+        "MVT_ID_mvt": 0,
+        "FLIGHT_ID_mvt": 3130,
+        "FLIGHT_mvt": 71,
+        "FLIGHT_RULE_mvt": 29,
+        "ADEP_mvt": 5,
+        "ADES_mvt": 7,
+        "PHASE_mvt": 0,
+        "MVT_TIME_UTC_mvt": 0,
+        "BLOCK_TIME_UTC_mvt": 0,
+        "SCHED_TIME_UTC_mvt": 0,
+        "AIRCRAFT_TYPE_mvt": 222,
+        "RUNWAY_mvt": 0,
+        "STAND_mvt": 8,
+        "TAXITIME_SEC_mvt": 0,
+        "LOBT_flt": 3761,
+        "CALLSIGN_flt": 3761,
+        "ADEP_flt": 3761,
+        "ADES_flt": 3761,
+        "ADES_FILED_flt": 3761,
+        "MARKET_SEGMENT_flt": 3761,
+        "IOBT_flt": 3761,
+        "FLIGHT_RULE_flt": 3775,
+        "FLIGHT_TYPE_flt": 3761,
+        "AIRCRAFT_TYPE_flt": 3761,
+        "WK_TBL_CAT_flt": 3775,
+        "AIRCRAFT_OPERATOR_flt": 3761,
+        "EOBT_1_flt": 3761,
+        "ARVT_1_flt": 3761,
+        "AOBT_3_flt": 3761,
+        "ARVT_3_flt": 3761
+      },
+      "duplicate_movement_ids": 0,
+      "phase_counts": {
+        "DEP": 191181,
+        "ARR": 190866
+      },
+      "movement_time_min_utc": "2025-07-31 23:59:58+00:00",
+      "movement_time_max_utc": "2025-08-31 23:52:40+00:00",
+      "movements_by_airport_phase": {
+        "EDDF/ARR": 21478,
+        "EDDF/DEP": 21468,
+        "EDDM/ARR": 15563,
+        "EDDM/DEP": 15562,
+        "EGLL/ARR": 20823,
+        "EGLL/DEP": 20828,
+        "EHAM/ARR": 22585,
+        "EHAM/DEP": 22621,
+        "LEBL/ARR": 16563,
+        "LEBL/DEP": 16596,
+        "LEMD/ARR": 18293,
+        "LEMD/DEP": 18490,
+        "LFPG/ARR": 21984,
+        "LFPG/DEP": 22081,
+        "LIRF/ARR": 15443,
+        "LIRF/DEP": 15459,
+        "LSZH/ARR": 12614,
+        "LSZH/DEP": 12636,
+        "LTFM/ARR": 25520,
+        "LTFM/DEP": 25440
+      },
+      "departures_target_seconds": {
+        "rows": 191181,
+        "missing_or_nonfinite": 0,
+        "mean": 993.7657246274473,
+        "std": 533.8257791900538,
+        "min": -12.0,
+        "max": 53530.0,
+        "zero": 5,
+        "negative": 40,
+        "over_1_hour": 341,
+        "over_3_hours": 25,
+        "quantiles": {
+          "0.01": 289.0,
+          "0.05": 477.0,
+          "0.25": 721.0,
+          "0.5": 929.0,
+          "0.75": 1192.0,
+          "0.9": 1461.0,
+          "0.95": 1678.0,
+          "0.99": 2279.0,
+          "0.999": 4570.640000000014
+        }
+      }
+    },
+    {
+      "filename": "training_2025-09-01_2025-10-01.parquet",
+      "bytes": 25102673,
+      "rows": 367679,
+      "columns": 30,
+      "row_groups": 1,
+      "schema": [
+        {
+          "name": "MVT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "PHASE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MVT_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "BLOCK_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "SCHED_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "RUNWAY_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "STAND_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "TAXITIME_SEC_mvt",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "LOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "CALLSIGN_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_FILED_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MARKET_SEGMENT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "IOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "WK_TBL_CAT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_OPERATOR_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "EOBT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AOBT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        }
+      ],
+      "null_counts": {
+        "MVT_ID_mvt": 0,
+        "FLIGHT_ID_mvt": 3141,
+        "FLIGHT_mvt": 35,
+        "FLIGHT_RULE_mvt": 74,
+        "ADEP_mvt": 9,
+        "ADES_mvt": 10,
+        "PHASE_mvt": 0,
+        "MVT_TIME_UTC_mvt": 0,
+        "BLOCK_TIME_UTC_mvt": 0,
+        "SCHED_TIME_UTC_mvt": 0,
+        "AIRCRAFT_TYPE_mvt": 177,
+        "RUNWAY_mvt": 0,
+        "STAND_mvt": 3,
+        "TAXITIME_SEC_mvt": 0,
+        "LOBT_flt": 3808,
+        "CALLSIGN_flt": 3808,
+        "ADEP_flt": 3808,
+        "ADES_flt": 3808,
+        "ADES_FILED_flt": 3808,
+        "MARKET_SEGMENT_flt": 3808,
+        "IOBT_flt": 3808,
+        "FLIGHT_RULE_flt": 3827,
+        "FLIGHT_TYPE_flt": 3808,
+        "AIRCRAFT_TYPE_flt": 3808,
+        "WK_TBL_CAT_flt": 3827,
+        "AIRCRAFT_OPERATOR_flt": 3808,
+        "EOBT_1_flt": 3808,
+        "ARVT_1_flt": 3808,
+        "AOBT_3_flt": 3808,
+        "ARVT_3_flt": 3808
+      },
+      "duplicate_movement_ids": 0,
+      "phase_counts": {
+        "DEP": 183951,
+        "ARR": 183728
+      },
+      "movement_time_min_utc": "2025-08-31 23:59:57+00:00",
+      "movement_time_max_utc": "2025-09-30 23:59:09+00:00",
+      "movements_by_airport_phase": {
+        "EDDF/ARR": 20994,
+        "EDDF/DEP": 21004,
+        "EDDM/ARR": 15941,
+        "EDDM/DEP": 15936,
+        "EGLL/ARR": 20125,
+        "EGLL/DEP": 20138,
+        "EHAM/ARR": 21431,
+        "EHAM/DEP": 21466,
+        "LEBL/ARR": 16121,
+        "LEBL/DEP": 16144,
+        "LEMD/ARR": 17446,
+        "LEMD/DEP": 17672,
+        "LFPG/ARR": 20649,
+        "LFPG/DEP": 20682,
+        "LIRF/ARR": 14654,
+        "LIRF/DEP": 14667,
+        "LSZH/ARR": 12182,
+        "LSZH/DEP": 12178,
+        "LTFM/ARR": 24185,
+        "LTFM/DEP": 24064
+      },
+      "departures_target_seconds": {
+        "rows": 183951,
+        "missing_or_nonfinite": 0,
+        "mean": 989.7824148822241,
+        "std": 560.3332573254938,
+        "min": -11.0,
+        "max": 87543.0,
+        "zero": 2,
+        "negative": 16,
+        "over_1_hour": 306,
+        "over_3_hours": 21,
+        "quantiles": {
+          "0.01": 291.0,
+          "0.05": 478.0,
+          "0.25": 718.0,
+          "0.5": 914.0,
+          "0.75": 1191.0,
+          "0.9": 1480.0,
+          "0.95": 1680.0,
+          "0.99": 2225.0,
+          "0.999": 4374.249999999942
+        }
+      }
+    },
+    {
+      "filename": "training_2025-10-01_2025-11-01.parquet",
+      "bytes": 25392098,
+      "rows": 371163,
+      "columns": 30,
+      "row_groups": 1,
+      "schema": [
+        {
+          "name": "MVT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "PHASE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MVT_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "BLOCK_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "SCHED_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "RUNWAY_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "STAND_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "TAXITIME_SEC_mvt",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "LOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "CALLSIGN_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_FILED_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MARKET_SEGMENT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "IOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "WK_TBL_CAT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_OPERATOR_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "EOBT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AOBT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        }
+      ],
+      "null_counts": {
+        "MVT_ID_mvt": 0,
+        "FLIGHT_ID_mvt": 2621,
+        "FLIGHT_mvt": 40,
+        "FLIGHT_RULE_mvt": 47,
+        "ADEP_mvt": 5,
+        "ADES_mvt": 9,
+        "PHASE_mvt": 0,
+        "MVT_TIME_UTC_mvt": 0,
+        "BLOCK_TIME_UTC_mvt": 0,
+        "SCHED_TIME_UTC_mvt": 0,
+        "AIRCRAFT_TYPE_mvt": 131,
+        "RUNWAY_mvt": 0,
+        "STAND_mvt": 7,
+        "TAXITIME_SEC_mvt": 0,
+        "LOBT_flt": 3274,
+        "CALLSIGN_flt": 3274,
+        "ADEP_flt": 3274,
+        "ADES_flt": 3274,
+        "ADES_FILED_flt": 3274,
+        "MARKET_SEGMENT_flt": 3274,
+        "IOBT_flt": 3274,
+        "FLIGHT_RULE_flt": 3293,
+        "FLIGHT_TYPE_flt": 3274,
+        "AIRCRAFT_TYPE_flt": 3274,
+        "WK_TBL_CAT_flt": 3293,
+        "AIRCRAFT_OPERATOR_flt": 3274,
+        "EOBT_1_flt": 3274,
+        "ARVT_1_flt": 3274,
+        "AOBT_3_flt": 3274,
+        "ARVT_3_flt": 3274
+      },
+      "duplicate_movement_ids": 0,
+      "phase_counts": {
+        "DEP": 185674,
+        "ARR": 185489
+      },
+      "movement_time_min_utc": "2025-09-30 23:59:58+00:00",
+      "movement_time_max_utc": "2025-10-31 23:54:18+00:00",
+      "movements_by_airport_phase": {
+        "EDDF/ARR": 21238,
+        "EDDF/DEP": 21239,
+        "EDDM/ARR": 15449,
+        "EDDM/DEP": 15469,
+        "EGLL/ARR": 20668,
+        "EGLL/DEP": 20657,
+        "EHAM/ARR": 21774,
+        "EHAM/DEP": 21784,
+        "LEBL/ARR": 16293,
+        "LEBL/DEP": 16300,
+        "LEMD/ARR": 18735,
+        "LEMD/DEP": 18892,
+        "LFPG/ARR": 20748,
+        "LFPG/DEP": 20809,
+        "LIRF/ARR": 14136,
+        "LIRF/DEP": 14142,
+        "LSZH/ARR": 12261,
+        "LSZH/DEP": 12302,
+        "LTFM/ARR": 24187,
+        "LTFM/DEP": 24080
+      },
+      "departures_target_seconds": {
+        "rows": 185674,
+        "missing_or_nonfinite": 0,
+        "mean": 991.9811659144522,
+        "std": 437.06590841436866,
+        "min": -12.0,
+        "max": 25558.0,
+        "zero": 0,
+        "negative": 20,
+        "over_1_hour": 313,
+        "over_3_hours": 14,
+        "quantiles": {
+          "0.01": 291.0,
+          "0.05": 480.0,
+          "0.25": 721.0,
+          "0.5": 925.0,
+          "0.75": 1194.0,
+          "0.9": 1479.0,
+          "0.95": 1680.0,
+          "0.99": 2265.2699999999895,
+          "0.999": 4315.0
+        }
+      }
+    },
+    {
+      "filename": "training_2025-11-01_2025-12-01.parquet",
+      "bytes": 22173840,
+      "rows": 324530,
+      "columns": 30,
+      "row_groups": 1,
+      "schema": [
+        {
+          "name": "MVT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "PHASE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MVT_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "BLOCK_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "SCHED_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "RUNWAY_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "STAND_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "TAXITIME_SEC_mvt",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "LOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "CALLSIGN_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_FILED_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MARKET_SEGMENT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "IOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "WK_TBL_CAT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_OPERATOR_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "EOBT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AOBT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        }
+      ],
+      "null_counts": {
+        "MVT_ID_mvt": 0,
+        "FLIGHT_ID_mvt": 2015,
+        "FLIGHT_mvt": 20,
+        "FLIGHT_RULE_mvt": 45,
+        "ADEP_mvt": 5,
+        "ADES_mvt": 7,
+        "PHASE_mvt": 0,
+        "MVT_TIME_UTC_mvt": 0,
+        "BLOCK_TIME_UTC_mvt": 1,
+        "SCHED_TIME_UTC_mvt": 0,
+        "AIRCRAFT_TYPE_mvt": 61,
+        "RUNWAY_mvt": 0,
+        "STAND_mvt": 4,
+        "TAXITIME_SEC_mvt": 1,
+        "LOBT_flt": 2567,
+        "CALLSIGN_flt": 2567,
+        "ADEP_flt": 2567,
+        "ADES_flt": 2567,
+        "ADES_FILED_flt": 2567,
+        "MARKET_SEGMENT_flt": 2567,
+        "IOBT_flt": 2567,
+        "FLIGHT_RULE_flt": 2579,
+        "FLIGHT_TYPE_flt": 2567,
+        "AIRCRAFT_TYPE_flt": 2567,
+        "WK_TBL_CAT_flt": 2579,
+        "AIRCRAFT_OPERATOR_flt": 2567,
+        "EOBT_1_flt": 2567,
+        "ARVT_1_flt": 2567,
+        "AOBT_3_flt": 2567,
+        "ARVT_3_flt": 2567
+      },
+      "duplicate_movement_ids": 0,
+      "phase_counts": {
+        "DEP": 162332,
+        "ARR": 162198
+      },
+      "movement_time_min_utc": "2025-11-01 00:00:02+00:00",
+      "movement_time_max_utc": "2025-11-30 23:45:27+00:00",
+      "movements_by_airport_phase": {
+        "EDDF/ARR": 18117,
+        "EDDF/DEP": 18122,
+        "EDDM/ARR": 12569,
+        "EDDM/DEP": 12562,
+        "EGLL/ARR": 19424,
+        "EGLL/DEP": 19423,
+        "EHAM/ARR": 19225,
+        "EHAM/DEP": 19232,
+        "LEBL/ARR": 13285,
+        "LEBL/DEP": 13332,
+        "LEMD/ARR": 17357,
+        "LEMD/DEP": 17419,
+        "LFPG/ARR": 18571,
+        "LFPG/DEP": 18646,
+        "LIRF/ARR": 11320,
+        "LIRF/DEP": 11328,
+        "LSZH/ARR": 10052,
+        "LSZH/DEP": 10078,
+        "LTFM/ARR": 22278,
+        "LTFM/DEP": 22190
+      },
+      "departures_target_seconds": {
+        "rows": 162332,
+        "missing_or_nonfinite": 0,
+        "mean": 996.9587265603824,
+        "std": 532.0118073072101,
+        "min": -11.0,
+        "max": 87598.0,
+        "zero": 0,
+        "negative": 18,
+        "over_1_hour": 222,
+        "over_3_hours": 6,
+        "quantiles": {
+          "0.01": 299.0,
+          "0.05": 483.0,
+          "0.25": 720.0,
+          "0.5": 927.0,
+          "0.75": 1195.0,
+          "0.9": 1495.0,
+          "0.95": 1696.0,
+          "0.99": 2319.6900000000023,
+          "0.999": 3845.6689999999944
+        }
+      }
+    },
+    {
+      "filename": "training_2025-12-01_2026-01-01.parquet",
+      "bytes": 22653598,
+      "rows": 331548,
+      "columns": 30,
+      "row_groups": 1,
+      "schema": [
+        {
+          "name": "MVT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "PHASE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MVT_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "BLOCK_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "SCHED_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "RUNWAY_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "STAND_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "TAXITIME_SEC_mvt",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "LOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "CALLSIGN_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_FILED_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MARKET_SEGMENT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "IOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "WK_TBL_CAT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_OPERATOR_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "EOBT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AOBT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        }
+      ],
+      "null_counts": {
+        "MVT_ID_mvt": 0,
+        "FLIGHT_ID_mvt": 2304,
+        "FLIGHT_mvt": 44,
+        "FLIGHT_RULE_mvt": 33,
+        "ADEP_mvt": 4,
+        "ADES_mvt": 13,
+        "PHASE_mvt": 0,
+        "MVT_TIME_UTC_mvt": 0,
+        "BLOCK_TIME_UTC_mvt": 0,
+        "SCHED_TIME_UTC_mvt": 0,
+        "AIRCRAFT_TYPE_mvt": 104,
+        "RUNWAY_mvt": 0,
+        "STAND_mvt": 5,
+        "TAXITIME_SEC_mvt": 0,
+        "LOBT_flt": 2835,
+        "CALLSIGN_flt": 2835,
+        "ADEP_flt": 2835,
+        "ADES_flt": 2835,
+        "ADES_FILED_flt": 2835,
+        "MARKET_SEGMENT_flt": 2835,
+        "IOBT_flt": 2835,
+        "FLIGHT_RULE_flt": 2845,
+        "FLIGHT_TYPE_flt": 2835,
+        "AIRCRAFT_TYPE_flt": 2835,
+        "WK_TBL_CAT_flt": 2845,
+        "AIRCRAFT_OPERATOR_flt": 2835,
+        "EOBT_1_flt": 2835,
+        "ARVT_1_flt": 2835,
+        "AOBT_3_flt": 2835,
+        "ARVT_3_flt": 2835
+      },
+      "duplicate_movement_ids": 0,
+      "phase_counts": {
+        "ARR": 165871,
+        "DEP": 165677
+      },
+      "movement_time_min_utc": "2025-11-30 23:59:57+00:00",
+      "movement_time_max_utc": "2025-12-31 23:57:36+00:00",
+      "movements_by_airport_phase": {
+        "EDDF/ARR": 17387,
+        "EDDF/DEP": 17324,
+        "EDDM/ARR": 12070,
+        "EDDM/DEP": 12035,
+        "EGLL/ARR": 19993,
+        "EGLL/DEP": 20000,
+        "EHAM/ARR": 19444,
+        "EHAM/DEP": 19458,
+        "LEBL/ARR": 13801,
+        "LEBL/DEP": 13835,
+        "LEMD/ARR": 18069,
+        "LEMD/DEP": 17985,
+        "LFPG/ARR": 19764,
+        "LFPG/DEP": 19778,
+        "LIRF/ARR": 12064,
+        "LIRF/DEP": 12068,
+        "LSZH/ARR": 10581,
+        "LSZH/DEP": 10585,
+        "LTFM/ARR": 22698,
+        "LTFM/DEP": 22609
+      },
+      "departures_target_seconds": {
+        "rows": 165677,
+        "missing_or_nonfinite": 0,
+        "mean": 995.0367824139742,
+        "std": 514.7235473726978,
+        "min": -12.0,
+        "max": 87605.0,
+        "zero": 2,
+        "negative": 21,
+        "over_1_hour": 261,
+        "over_3_hours": 12,
+        "quantiles": {
+          "0.01": 305.0,
+          "0.05": 491.0,
+          "0.25": 721.0,
+          "0.5": 911.0,
+          "0.75": 1185.0,
+          "0.9": 1493.0,
+          "0.95": 1730.0,
+          "0.99": 2344.0,
+          "0.999": 4142.323999999993
+        }
+      }
+    },
+    {
+      "filename": "ranking.parquet",
+      "bytes": 43564605,
+      "rows": 689534,
+      "columns": 30,
+      "row_groups": 1,
+      "schema": [
+        {
+          "name": "MVT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "PHASE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MVT_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "BLOCK_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "SCHED_TIME_UTC_mvt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "RUNWAY_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "STAND_mvt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "TAXITIME_SEC_mvt",
+          "type": "int32",
+          "nullable": true
+        },
+        {
+          "name": "LOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "CALLSIGN_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADEP_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "ADES_FILED_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "MARKET_SEGMENT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "IOBT_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_RULE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "FLIGHT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_TYPE_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "WK_TBL_CAT_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "AIRCRAFT_OPERATOR_flt",
+          "type": "string",
+          "nullable": true
+        },
+        {
+          "name": "EOBT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_1_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "AOBT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        },
+        {
+          "name": "ARVT_3_flt",
+          "type": "timestamp[us, tz=UTC]",
+          "nullable": true
+        }
+      ],
+      "null_counts": {
+        "MVT_ID_mvt": 0,
+        "FLIGHT_ID_mvt": 6692,
+        "FLIGHT_mvt": 97,
+        "FLIGHT_RULE_mvt": 84,
+        "ADEP_mvt": 13,
+        "ADES_mvt": 13,
+        "PHASE_mvt": 0,
+        "MVT_TIME_UTC_mvt": 0,
+        "BLOCK_TIME_UTC_mvt": 344841,
+        "SCHED_TIME_UTC_mvt": 0,
+        "AIRCRAFT_TYPE_mvt": 409,
+        "RUNWAY_mvt": 0,
+        "STAND_mvt": 9,
+        "TAXITIME_SEC_mvt": 344841,
+        "LOBT_flt": 7842,
+        "CALLSIGN_flt": 7842,
+        "ADEP_flt": 7842,
+        "ADES_flt": 7842,
+        "ADES_FILED_flt": 7842,
+        "MARKET_SEGMENT_flt": 7842,
+        "IOBT_flt": 7842,
+        "FLIGHT_RULE_flt": 7868,
+        "FLIGHT_TYPE_flt": 7842,
+        "AIRCRAFT_TYPE_flt": 7842,
+        "WK_TBL_CAT_flt": 7868,
+        "AIRCRAFT_OPERATOR_flt": 7842,
+        "EOBT_1_flt": 7842,
+        "ARVT_1_flt": 7842,
+        "AOBT_3_flt": 7842,
+        "ARVT_3_flt": 7842
+      },
+      "duplicate_movement_ids": 0,
+      "phase_counts": {
+        "DEP": 344841,
+        "ARR": 344693
+      },
+      "movement_time_min_utc": "2026-01-01 00:01:55+00:00",
+      "movement_time_max_utc": "2026-07-31 23:56:19+00:00",
+      "movements_by_airport_phase": {
+        "EDDF/ARR": 36253,
+        "EDDF/DEP": 36317,
+        "EDDM/ARR": 25935,
+        "EDDM/DEP": 25966,
+        "EGLL/ARR": 39837,
+        "EGLL/DEP": 39840,
+        "EHAM/ARR": 38143,
+        "EHAM/DEP": 38182,
+        "LEBL/ARR": 29973,
+        "LEBL/DEP": 30080,
+        "LEMD/ARR": 37093,
+        "LEMD/DEP": 36954,
+        "LFPG/ARR": 39733,
+        "LFPG/DEP": 39872,
+        "LIRF/ARR": 26839,
+        "LIRF/DEP": 26899,
+        "LSZH/ARR": 23123,
+        "LSZH/DEP": 23150,
+        "LTFM/ARR": 47764,
+        "LTFM/DEP": 47581
+      },
+      "departures_target_seconds": {
+        "rows": 344841,
+        "missing_or_nonfinite": 344841
+      }
+    },
+    {
+      "filename": "submitting.parquet",
+      "bytes": 1677097,
+      "rows": 344841,
+      "columns": 2,
+      "row_groups": 1,
+      "schema": [
+        {
+          "name": "MVT_ID_mvt",
+          "type": "double",
+          "nullable": true
+        },
+        {
+          "name": "TAXITIME_SEC_mvt",
+          "type": "int32",
+          "nullable": true
+        }
+      ],
+      "null_counts": {
+        "MVT_ID_mvt": 0,
+        "TAXITIME_SEC_mvt": 344841
+      },
+      "duplicate_movement_ids": 0
+    }
+  ],
+  "training": {
+    "rows": 4167797,
+    "departure_rows": 2085047,
+    "phase_counts": {
+      "DEP": 2085047,
+      "ARR": 2082750
+    },
+    "departure_null_counts": {
+      "MVT_ID_mvt": 0,
+      "FLIGHT_ID_mvt": 22424,
+      "FLIGHT_mvt": 188,
+      "FLIGHT_RULE_mvt": 203,
+      "ADEP_mvt": 0,
+      "ADES_mvt": 122,
+      "PHASE_mvt": 0,
+      "MVT_TIME_UTC_mvt": 0,
+      "BLOCK_TIME_UTC_mvt": 0,
+      "SCHED_TIME_UTC_mvt": 0,
+      "AIRCRAFT_TYPE_mvt": 1507,
+      "RUNWAY_mvt": 0,
+      "STAND_mvt": 28,
+      "TAXITIME_SEC_mvt": 0,
+      "LOBT_flt": 22470,
+      "CALLSIGN_flt": 22470,
+      "ADEP_flt": 22470,
+      "ADES_flt": 22470,
+      "ADES_FILED_flt": 22470,
+      "MARKET_SEGMENT_flt": 22470,
+      "IOBT_flt": 22470,
+      "FLIGHT_RULE_flt": 22544,
+      "FLIGHT_TYPE_flt": 22470,
+      "AIRCRAFT_TYPE_flt": 22470,
+      "WK_TBL_CAT_flt": 22544,
+      "AIRCRAFT_OPERATOR_flt": 22470,
+      "EOBT_1_flt": 22470,
+      "ARVT_1_flt": 22470,
+      "AOBT_3_flt": 22470,
+      "ARVT_3_flt": 22470
+    },
+    "movements_by_airport_phase": {
+      "EDDF/ARR": 230122,
+      "EDDF/DEP": 230141,
+      "EDDM/ARR": 167323,
+      "EDDM/DEP": 167334,
+      "EGLL/ARR": 239511,
+      "EGLL/DEP": 239546,
+      "EHAM/ARR": 247706,
+      "EHAM/DEP": 247951,
+      "LEBL/ARR": 179081,
+      "LEBL/DEP": 179705,
+      "LEMD/ARR": 211091,
+      "LEMD/DEP": 212242,
+      "LFPG/ARR": 238835,
+      "LFPG/DEP": 239552,
+      "LIRF/ARR": 160504,
+      "LIRF/DEP": 160704,
+      "LSZH/ARR": 134691,
+      "LSZH/DEP": 134907,
+      "LTFM/ARR": 273886,
+      "LTFM/DEP": 272965
+    },
+    "departure_target_seconds": {
+      "rows": 2085047,
+      "missing_or_nonfinite": 0,
+      "mean": 991.200707226264,
+      "std": 546.35963761073,
+      "min": -12.0,
+      "max": 131167.0,
+      "zero": 19,
+      "negative": 369,
+      "over_1_hour": 4126,
+      "over_3_hours": 202,
+      "quantiles": {
+        "0.01": 291.0,
+        "0.05": 480.0,
+        "0.25": 719.0,
+        "0.5": 912.0,
+        "0.75": 1188.0,
+        "0.9": 1471.0,
+        "0.95": 1684.0,
+        "0.99": 2339.0,
+        "0.999": 4501.0
+      }
+    },
+    "departure_target_seconds_by_airport": {
+      "EDDF": {
+        "rows": 230141,
+        "missing_or_nonfinite": 0,
+        "mean": 863.4781546964687,
+        "std": 329.7878852052948,
+        "min": 2.0,
+        "max": 6907.0,
+        "zero": 0,
+        "negative": 0,
+        "over_1_hour": 73,
+        "over_3_hours": 0,
+        "quantiles": {
+          "0.01": 246.0,
+          "0.05": 376.0,
+          "0.25": 649.0,
+          "0.5": 837.0,
+          "0.75": 1048.0,
+          "0.9": 1251.0,
+          "0.95": 1399.0,
+          "0.99": 1819.0,
+          "0.999": 2927.0
+        }
+      },
+      "EDDM": {
+        "rows": 167334,
+        "missing_or_nonfinite": 0,
+        "mean": 811.9118887972558,
+        "std": 301.754069152773,
+        "min": 2.0,
+        "max": 6899.0,
+        "zero": 0,
+        "negative": 0,
+        "over_1_hour": 59,
+        "over_3_hours": 0,
+        "quantiles": {
+          "0.01": 348.0,
+          "0.05": 472.0,
+          "0.25": 612.0,
+          "0.5": 774.0,
+          "0.75": 911.0,
+          "0.9": 1135.0,
+          "0.95": 1320.0,
+          "0.99": 1921.0,
+          "0.999": 3007.3349999999336
+        }
+      },
+      "EGLL": {
+        "rows": 239546,
+        "missing_or_nonfinite": 0,
+        "mean": 1364.2393193791588,
+        "std": 421.7834130049119,
+        "min": 9.0,
+        "max": 11452.0,
+        "zero": 0,
+        "negative": 0,
+        "over_1_hour": 728,
+        "over_3_hours": 4,
+        "quantiles": {
+          "0.01": 667.0,
+          "0.05": 835.0,
+          "0.25": 1088.0,
+          "0.5": 1319.0,
+          "0.75": 1561.0,
+          "0.9": 1806.0,
+          "0.95": 1989.0,
+          "0.99": 2701.0,
+          "0.999": 4749.274999999936
+        }
+      },
+      "EHAM": {
+        "rows": 247951,
+        "missing_or_nonfinite": 0,
+        "mean": 784.5597476920843,
+        "std": 318.45916328264406,
+        "min": -4.0,
+        "max": 11032.0,
+        "zero": 0,
+        "negative": 3,
+        "over_1_hour": 82,
+        "over_3_hours": 2,
+        "quantiles": {
+          "0.01": 173.0,
+          "0.05": 382.0,
+          "0.25": 579.0,
+          "0.5": 742.0,
+          "0.75": 943.0,
+          "0.9": 1157.0,
+          "0.95": 1309.0,
+          "0.99": 1774.5,
+          "0.999": 2934.0
+        }
+      },
+      "LEBL": {
+        "rows": 179705,
+        "missing_or_nonfinite": 0,
+        "mean": 956.5493558888178,
+        "std": 330.91349415056237,
+        "min": -8.0,
+        "max": 3604.0,
+        "zero": 0,
+        "negative": 5,
+        "over_1_hour": 1,
+        "over_3_hours": 0,
+        "quantiles": {
+          "0.01": 391.0,
+          "0.05": 530.0,
+          "0.25": 714.0,
+          "0.5": 906.0,
+          "0.75": 1161.0,
+          "0.9": 1357.0,
+          "0.95": 1501.0,
+          "0.99": 1961.9599999999919,
+          "0.999": 2963.296000000002
+        }
+      },
+      "LEMD": {
+        "rows": 212242,
+        "missing_or_nonfinite": 0,
+        "mean": 1014.7099820016773,
+        "std": 312.54850473997266,
+        "min": 39.0,
+        "max": 3598.0,
+        "zero": 0,
+        "negative": 0,
+        "over_1_hour": 0,
+        "over_3_hours": 0,
+        "quantiles": {
+          "0.01": 397.0,
+          "0.05": 568.0,
+          "0.25": 807.0,
+          "0.5": 985.0,
+          "0.75": 1186.0,
+          "0.9": 1402.0,
+          "0.95": 1559.0,
+          "0.99": 1932.0,
+          "0.999": 2703.758999999991
+        }
+      },
+      "LFPG": {
+        "rows": 239552,
+        "missing_or_nonfinite": 0,
+        "mean": 1019.5233101790008,
+        "std": 452.9892606476881,
+        "min": -12.0,
+        "max": 84240.0,
+        "zero": 4,
+        "negative": 61,
+        "over_1_hour": 396,
+        "over_3_hours": 6,
+        "quantiles": {
+          "0.01": 429.0,
+          "0.05": 592.0,
+          "0.25": 777.0,
+          "0.5": 954.0,
+          "0.75": 1151.0,
+          "0.9": 1444.0,
+          "0.95": 1681.0,
+          "0.99": 2409.0,
+          "0.999": 4023.4489999999932
+        }
+      },
+      "LIRF": {
+        "rows": 160704,
+        "missing_or_nonfinite": 0,
+        "mean": 1194.6075268817203,
+        "std": 1331.9524605174358,
+        "min": 49.0,
+        "max": 131167.0,
+        "zero": 0,
+        "negative": 0,
+        "over_1_hour": 1967,
+        "over_3_hours": 188,
+        "quantiles": {
+          "0.01": 417.0,
+          "0.05": 601.0,
+          "0.25": 834.0,
+          "0.5": 1025.0,
+          "0.75": 1318.0,
+          "0.9": 1689.0,
+          "0.95": 2090.0,
+          "0.99": 4018.970000000001,
+          "0.999": 11574.781999999948
+        }
+      },
+      "LSZH": {
+        "rows": 134907,
+        "missing_or_nonfinite": 0,
+        "mean": 740.5136501441734,
+        "std": 385.38000282592674,
+        "min": -12.0,
+        "max": 87341.0,
+        "zero": 15,
+        "negative": 298,
+        "over_1_hour": 26,
+        "over_3_hours": 2,
+        "quantiles": {
+          "0.01": 190.0,
+          "0.05": 296.0,
+          "0.25": 568.0,
+          "0.5": 711.0,
+          "0.75": 878.0,
+          "0.9": 1080.0,
+          "0.95": 1240.0,
+          "0.99": 1707.0,
+          "0.999": 2504.752000000095
+        }
+      },
+      "LTFM": {
+        "rows": 272965,
+        "missing_or_nonfinite": 0,
+        "mean": 1052.9522686058651,
+        "std": 427.6434930637168,
+        "min": -12.0,
+        "max": 10309.0,
+        "zero": 0,
+        "negative": 2,
+        "over_1_hour": 794,
+        "over_3_hours": 0,
+        "quantiles": {
+          "0.01": 481.0,
+          "0.05": 599.0,
+          "0.25": 786.0,
+          "0.5": 963.0,
+          "0.75": 1201.0,
+          "0.9": 1502.0,
+          "0.95": 1749.0,
+          "0.99": 2587.0,
+          "0.999": 4612.0
+        }
+      }
+    },
+    "duplicate_movement_ids_across_months": 0,
+    "target_equation_comparable_rows": 2085047,
+    "target_equation_mismatch_rows": 0,
+    "schemas_consistent_across_training_months": true
+  },
+  "ranking": {
+    "rows": 689534,
+    "phase_counts": {
+      "DEP": 344841,
+      "ARR": 344693
+    },
+    "months": {
+      "2026-01": 305590,
+      "2026-07": 383944
+    },
+    "departure_null_counts": {
+      "MVT_ID_mvt": 0,
+      "FLIGHT_ID_mvt": 5283,
+      "FLIGHT_mvt": 58,
+      "FLIGHT_RULE_mvt": 20,
+      "ADEP_mvt": 0,
+      "ADES_mvt": 13,
+      "PHASE_mvt": 0,
+      "MVT_TIME_UTC_mvt": 0,
+      "BLOCK_TIME_UTC_mvt": 344841,
+      "SCHED_TIME_UTC_mvt": 0,
+      "AIRCRAFT_TYPE_mvt": 388,
+      "RUNWAY_mvt": 0,
+      "STAND_mvt": 4,
+      "TAXITIME_SEC_mvt": 344841,
+      "LOBT_flt": 5290,
+      "CALLSIGN_flt": 5290,
+      "ADEP_flt": 5290,
+      "ADES_flt": 5290,
+      "ADES_FILED_flt": 5290,
+      "MARKET_SEGMENT_flt": 5290,
+      "IOBT_flt": 5290,
+      "FLIGHT_RULE_flt": 5304,
+      "FLIGHT_TYPE_flt": 5290,
+      "AIRCRAFT_TYPE_flt": 5290,
+      "WK_TBL_CAT_flt": 5304,
+      "AIRCRAFT_OPERATOR_flt": 5290,
+      "EOBT_1_flt": 5290,
+      "ARVT_1_flt": 5290,
+      "AOBT_3_flt": 5290,
+      "ARVT_3_flt": 5290
+    },
+    "arrivals_with_labels": 344693,
+    "movements_by_airport_phase": {
+      "EDDF/ARR": 36253,
+      "EDDF/DEP": 36317,
+      "EDDM/ARR": 25935,
+      "EDDM/DEP": 25966,
+      "EGLL/ARR": 39837,
+      "EGLL/DEP": 39840,
+      "EHAM/ARR": 38143,
+      "EHAM/DEP": 38182,
+      "LEBL/ARR": 29973,
+      "LEBL/DEP": 30080,
+      "LEMD/ARR": 37093,
+      "LEMD/DEP": 36954,
+      "LFPG/ARR": 39733,
+      "LFPG/DEP": 39872,
+      "LIRF/ARR": 26839,
+      "LIRF/DEP": 26899,
+      "LSZH/ARR": 23123,
+      "LSZH/DEP": 23150,
+      "LTFM/ARR": 47764,
+      "LTFM/DEP": 47581
+    },
+    "departure_ids_shared_with_training": 0,
+    "schema_matches_training": true
+  },
+  "submission": {
+    "rows": 344841,
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "duplicate_ids": 0,
+    "null_ids": 0,
+    "blank_targets": 344841,
+    "all_ids_integer_valued": true,
+    "ranking_departure_ids_match_as_set": true,
+    "ranking_departure_ids_match_in_order": true
+  },
+  "supplied_aobt3_diagnostic": {
+    "description": "Unfitted arithmetic diagnostic on training departures only: (MVT_TIME_UTC_mvt - AOBT_3_flt) in seconds versus the supplied taxi-out target. This is not a validation or leaderboard result.",
+    "by_airport": {
+      "EDDF": {
+        "comparable_rows": 228185,
+        "rmse_seconds": 255.07955650676357,
+        "mae_seconds": 177.9943028682867,
+        "median_error_seconds": 87.0,
+        "exact_matches": 419
+      },
+      "EDDM": {
+        "comparable_rows": 166324,
+        "rmse_seconds": 348.91578539988603,
+        "mae_seconds": 207.10604001827758,
+        "median_error_seconds": -2.0,
+        "exact_matches": 1750
+      },
+      "EGLL": {
+        "comparable_rows": 238132,
+        "rmse_seconds": 418.5052119047584,
+        "mae_seconds": 250.31606839903918,
+        "median_error_seconds": 54.0,
+        "exact_matches": 1888
+      },
+      "EHAM": {
+        "comparable_rows": 243867,
+        "rmse_seconds": 329.6393800401628,
+        "mae_seconds": 204.84189742769624,
+        "median_error_seconds": 107.0,
+        "exact_matches": 537
+      },
+      "LEBL": {
+        "comparable_rows": 177843,
+        "rmse_seconds": 311.3624353834485,
+        "mae_seconds": 193.4720568141563,
+        "median_error_seconds": -54.0,
+        "exact_matches": 1965
+      },
+      "LEMD": {
+        "comparable_rows": 211295,
+        "rmse_seconds": 276.4142793610455,
+        "mae_seconds": 173.05082940911996,
+        "median_error_seconds": 2.0,
+        "exact_matches": 2295
+      },
+      "LFPG": {
+        "comparable_rows": 235779,
+        "rmse_seconds": 379.5092669012702,
+        "mae_seconds": 234.2639548051353,
+        "median_error_seconds": -4.0,
+        "exact_matches": 2094
+      },
+      "LIRF": {
+        "comparable_rows": 159216,
+        "rmse_seconds": 557.3622331944986,
+        "mae_seconds": 324.9772510300472,
+        "median_error_seconds": -118.0,
+        "exact_matches": 1317
+      },
+      "LSZH": {
+        "comparable_rows": 132616,
+        "rmse_seconds": 268.42667937677635,
+        "mae_seconds": 183.01894190746214,
+        "median_error_seconds": -33.0,
+        "exact_matches": 303
+      },
+      "LTFM": {
+        "comparable_rows": 269320,
+        "rmse_seconds": 530.6075008984079,
+        "mae_seconds": 386.8111057478093,
+        "median_error_seconds": 296.0,
+        "exact_matches": 898
+      }
+    }
+  }
+}

@@ -1,0 +1,847 @@
+{
+  "airport_block_times_read": false,
+  "audit_used": false,
+  "code_sha256": "02d579d6b76633f5acdc09ff682ab30d60e143f12f7c2a38cb9d408e6b820369",
+  "created_at_utc": "2026-09-14T15:29:26.762054+00:00",
+  "eligible_movement_rows": 4525784,
+  "input_columns": [
+    "MVT_ID_mvt",
+    "MVT_TIME_UTC_mvt",
+    "FLIGHT_ID_mvt",
+    "PHASE_mvt",
+    "ADEP_mvt",
+    "ADEP_flt",
+    "AOBT_3_flt",
+    "LOBT_flt"
+  ],
+  "input_sha256": {
+    "ranking.parquet": "9db75e3a56fa09b87aab72e191a53da3fe763d9887ad2b23aea9cde6a6325f86",
+    "training_2025-01-01_2025-02-01.parquet": "a4dc8f152c082c650cd7eb745fe9c641089f34f74df127e6944a188990a0ed94",
+    "training_2025-02-01_2025-03-01.parquet": "b6f9ff2cdb1cfe07c5442f4e1f11bbcdbeafe52852dcb0b8175f62ab84c6a066",
+    "training_2025-03-01_2025-04-01.parquet": "58fde7e5f8b539546af63b41d7f6ec0f2884fdc3d3dd9b6bfca7c59a420dcdd3",
+    "training_2025-04-01_2025-05-01.parquet": "9ffe0cf5741c4863799c41be81475dfaecedabe0ba687b8f8e4eacba992f9390",
+    "training_2025-05-01_2025-06-01.parquet": "5481c0642a8fbb4dc395f93bc713c57f4cc16854fb361d404967077e1fce2ff9",
+    "training_2025-06-01_2025-07-01.parquet": "c3ef5080f2cc636c3416baf1555f7d0ee3519f9046e8043c1c0c8f017a244025",
+    "training_2025-07-01_2025-08-01.parquet": "34d1c5bba7c8596a1c20c09edd3cb2f63277b5a684fa801911660fe0eaf63c9d",
+    "training_2025-08-01_2025-09-01.parquet": "6c8d2aa7a1b6c9dff9a0305a37eb02de1e87a68d07557264f41b77738272c540",
+    "training_2025-09-01_2025-10-01.parquet": "955308a4000947e32a00586d3ee13928949d2231b67f84f6dfb0631893f3754a",
+    "training_2025-10-01_2025-11-01.parquet": "4a31a35601c1bdcd74b8cd6379231ba516a48324e4c2478bf1c9360cd23e687f",
+    "training_2025-11-01_2025-12-01.parquet": "ac36b17db7a537e3baeb682fa4763dacaa1fcc5d9bfa6bf32b3ee5d9f91300b0",
+    "training_2025-12-01_2026-01-01.parquet": "2d357f2f403a86778a69e93f72d8754effe77f1ac0942399b3d1b7728241f724"
+  },
+  "interpretation": "Covariate coverage only. Same-flight matching requires additional consistency review before any new feature is declared. No existing feature or prediction is changed.",
+  "labels_read": false,
+  "missing_by_airport_month": [
+    {
+      "airport": "EDDF",
+      "missing_rows": 164,
+      "movement_month": "2025-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDM",
+      "missing_rows": 65,
+      "movement_month": "2025-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EGLL",
+      "missing_rows": 128,
+      "movement_month": "2025-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EHAM",
+      "missing_rows": 293,
+      "movement_month": "2025-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEBL",
+      "missing_rows": 66,
+      "movement_month": "2025-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEMD",
+      "missing_rows": 32,
+      "movement_month": "2025-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LFPG",
+      "missing_rows": 216,
+      "movement_month": "2025-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LIRF",
+      "missing_rows": 60,
+      "movement_month": "2025-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LSZH",
+      "missing_rows": 179,
+      "movement_month": "2025-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LTFM",
+      "missing_rows": 232,
+      "movement_month": "2025-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDF",
+      "missing_rows": 74,
+      "movement_month": "2025-02",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDM",
+      "missing_rows": 27,
+      "movement_month": "2025-02",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EGLL",
+      "missing_rows": 38,
+      "movement_month": "2025-02",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EHAM",
+      "missing_rows": 252,
+      "movement_month": "2025-02",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEBL",
+      "missing_rows": 45,
+      "movement_month": "2025-02",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEMD",
+      "missing_rows": 17,
+      "movement_month": "2025-02",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LFPG",
+      "missing_rows": 123,
+      "movement_month": "2025-02",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LIRF",
+      "missing_rows": 58,
+      "movement_month": "2025-02",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LSZH",
+      "missing_rows": 112,
+      "movement_month": "2025-02",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LTFM",
+      "missing_rows": 364,
+      "movement_month": "2025-02",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDF",
+      "missing_rows": 84,
+      "movement_month": "2025-03",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDM",
+      "missing_rows": 31,
+      "movement_month": "2025-03",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EGLL",
+      "missing_rows": 91,
+      "movement_month": "2025-03",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EHAM",
+      "missing_rows": 262,
+      "movement_month": "2025-03",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEBL",
+      "missing_rows": 67,
+      "movement_month": "2025-03",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEMD",
+      "missing_rows": 35,
+      "movement_month": "2025-03",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LFPG",
+      "missing_rows": 106,
+      "movement_month": "2025-03",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LIRF",
+      "missing_rows": 59,
+      "movement_month": "2025-03",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LSZH",
+      "missing_rows": 152,
+      "movement_month": "2025-03",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LTFM",
+      "missing_rows": 195,
+      "movement_month": "2025-03",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDF",
+      "missing_rows": 72,
+      "movement_month": "2025-04",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDM",
+      "missing_rows": 25,
+      "movement_month": "2025-04",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EGLL",
+      "missing_rows": 36,
+      "movement_month": "2025-04",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EHAM",
+      "missing_rows": 236,
+      "movement_month": "2025-04",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEBL",
+      "missing_rows": 86,
+      "movement_month": "2025-04",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEMD",
+      "missing_rows": 55,
+      "movement_month": "2025-04",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LFPG",
+      "missing_rows": 152,
+      "movement_month": "2025-04",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LIRF",
+      "missing_rows": 70,
+      "movement_month": "2025-04",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LSZH",
+      "missing_rows": 126,
+      "movement_month": "2025-04",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LTFM",
+      "missing_rows": 227,
+      "movement_month": "2025-04",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDF",
+      "missing_rows": 157,
+      "movement_month": "2025-05",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDM",
+      "missing_rows": 39,
+      "movement_month": "2025-05",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EGLL",
+      "missing_rows": 68,
+      "movement_month": "2025-05",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EHAM",
+      "missing_rows": 284,
+      "movement_month": "2025-05",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEBL",
+      "missing_rows": 132,
+      "movement_month": "2025-05",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEMD",
+      "missing_rows": 65,
+      "movement_month": "2025-05",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LFPG",
+      "missing_rows": 265,
+      "movement_month": "2025-05",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LIRF",
+      "missing_rows": 99,
+      "movement_month": "2025-05",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LSZH",
+      "missing_rows": 227,
+      "movement_month": "2025-05",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LTFM",
+      "missing_rows": 269,
+      "movement_month": "2025-05",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDF",
+      "missing_rows": 289,
+      "movement_month": "2025-06",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDM",
+      "missing_rows": 159,
+      "movement_month": "2025-06",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EGLL",
+      "missing_rows": 127,
+      "movement_month": "2025-06",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EHAM",
+      "missing_rows": 415,
+      "movement_month": "2025-06",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEBL",
+      "missing_rows": 213,
+      "movement_month": "2025-06",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEMD",
+      "missing_rows": 103,
+      "movement_month": "2025-06",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LFPG",
+      "missing_rows": 454,
+      "movement_month": "2025-06",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LIRF",
+      "missing_rows": 185,
+      "movement_month": "2025-06",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LSZH",
+      "missing_rows": 271,
+      "movement_month": "2025-06",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LTFM",
+      "missing_rows": 286,
+      "movement_month": "2025-06",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDF",
+      "missing_rows": 435,
+      "movement_month": "2025-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDM",
+      "missing_rows": 172,
+      "movement_month": "2025-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EGLL",
+      "missing_rows": 338,
+      "movement_month": "2025-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EHAM",
+      "missing_rows": 515,
+      "movement_month": "2025-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEBL",
+      "missing_rows": 430,
+      "movement_month": "2025-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEMD",
+      "missing_rows": 277,
+      "movement_month": "2025-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LFPG",
+      "missing_rows": 664,
+      "movement_month": "2025-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LIRF",
+      "missing_rows": 337,
+      "movement_month": "2025-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LSZH",
+      "missing_rows": 345,
+      "movement_month": "2025-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LTFM",
+      "missing_rows": 425,
+      "movement_month": "2025-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDF",
+      "missing_rows": 193,
+      "movement_month": "2025-08",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDM",
+      "missing_rows": 136,
+      "movement_month": "2025-08",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EGLL",
+      "missing_rows": 112,
+      "movement_month": "2025-08",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EHAM",
+      "missing_rows": 366,
+      "movement_month": "2025-08",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEBL",
+      "missing_rows": 226,
+      "movement_month": "2025-08",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEMD",
+      "missing_rows": 77,
+      "movement_month": "2025-08",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LFPG",
+      "missing_rows": 403,
+      "movement_month": "2025-08",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LIRF",
+      "missing_rows": 197,
+      "movement_month": "2025-08",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LSZH",
+      "missing_rows": 301,
+      "movement_month": "2025-08",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LTFM",
+      "missing_rows": 319,
+      "movement_month": "2025-08",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDF",
+      "missing_rows": 173,
+      "movement_month": "2025-09",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDM",
+      "missing_rows": 115,
+      "movement_month": "2025-09",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EGLL",
+      "missing_rows": 204,
+      "movement_month": "2025-09",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EHAM",
+      "missing_rows": 537,
+      "movement_month": "2025-09",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEBL",
+      "missing_rows": 247,
+      "movement_month": "2025-09",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEMD",
+      "missing_rows": 94,
+      "movement_month": "2025-09",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LFPG",
+      "missing_rows": 389,
+      "movement_month": "2025-09",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LIRF",
+      "missing_rows": 168,
+      "movement_month": "2025-09",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LSZH",
+      "missing_rows": 217,
+      "movement_month": "2025-09",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LTFM",
+      "missing_rows": 321,
+      "movement_month": "2025-09",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDF",
+      "missing_rows": 127,
+      "movement_month": "2025-10",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDM",
+      "missing_rows": 76,
+      "movement_month": "2025-10",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EGLL",
+      "missing_rows": 91,
+      "movement_month": "2025-10",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EHAM",
+      "missing_rows": 379,
+      "movement_month": "2025-10",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEBL",
+      "missing_rows": 194,
+      "movement_month": "2025-10",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEMD",
+      "missing_rows": 85,
+      "movement_month": "2025-10",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LFPG",
+      "missing_rows": 316,
+      "movement_month": "2025-10",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LIRF",
+      "missing_rows": 115,
+      "movement_month": "2025-10",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LSZH",
+      "missing_rows": 163,
+      "movement_month": "2025-10",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LTFM",
+      "missing_rows": 367,
+      "movement_month": "2025-10",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDF",
+      "missing_rows": 92,
+      "movement_month": "2025-11",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDM",
+      "missing_rows": 35,
+      "movement_month": "2025-11",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EGLL",
+      "missing_rows": 54,
+      "movement_month": "2025-11",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EHAM",
+      "missing_rows": 230,
+      "movement_month": "2025-11",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEBL",
+      "missing_rows": 67,
+      "movement_month": "2025-11",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEMD",
+      "missing_rows": 47,
+      "movement_month": "2025-11",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LFPG",
+      "missing_rows": 372,
+      "movement_month": "2025-11",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LIRF",
+      "missing_rows": 52,
+      "movement_month": "2025-11",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LSZH",
+      "missing_rows": 97,
+      "movement_month": "2025-11",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LTFM",
+      "missing_rows": 310,
+      "movement_month": "2025-11",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDF",
+      "missing_rows": 212,
+      "movement_month": "2026-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDM",
+      "missing_rows": 119,
+      "movement_month": "2026-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EGLL",
+      "missing_rows": 112,
+      "movement_month": "2026-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EHAM",
+      "missing_rows": 805,
+      "movement_month": "2026-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEBL",
+      "missing_rows": 77,
+      "movement_month": "2026-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEMD",
+      "missing_rows": 63,
+      "movement_month": "2026-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LFPG",
+      "missing_rows": 325,
+      "movement_month": "2026-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LIRF",
+      "missing_rows": 107,
+      "movement_month": "2026-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LSZH",
+      "missing_rows": 300,
+      "movement_month": "2026-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LTFM",
+      "missing_rows": 333,
+      "movement_month": "2026-01",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDF",
+      "missing_rows": 209,
+      "movement_month": "2026-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EDDM",
+      "missing_rows": 119,
+      "movement_month": "2026-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EGLL",
+      "missing_rows": 136,
+      "movement_month": "2026-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "EHAM",
+      "missing_rows": 401,
+      "movement_month": "2026-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEBL",
+      "missing_rows": 365,
+      "movement_month": "2026-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LEMD",
+      "missing_rows": 175,
+      "movement_month": "2026-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LFPG",
+      "missing_rows": 409,
+      "movement_month": "2026-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LIRF",
+      "missing_rows": 276,
+      "movement_month": "2026-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LSZH",
+      "missing_rows": 359,
+      "movement_month": "2026-07",
+      "same_flight_peer_has_clock_rows": 0
+    },
+    {
+      "airport": "LTFM",
+      "missing_rows": 388,
+      "movement_month": "2026-07",
+      "same_flight_peer_has_clock_rows": 0
+    }
+  ],
+  "models_fitted": 0,
+  "movement_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11",
+    "2026-01",
+    "2026-07"
+  ],
+  "periods": {
+    "ranking_2026": {
+      "departure_rows": 344841,
+      "matching_origin_peer_within_48h_rows": 0,
+      "missing_clock_rows": 5290,
+      "same_flight_peer_has_clock_rows": 0
+    },
+    "training_2025_jan_nov": {
+      "departure_rows": 1919370,
+      "matching_origin_peer_within_48h_rows": 0,
+      "missing_clock_rows": 20821,
+      "same_flight_peer_has_clock_rows": 0
+    }
+  },
+  "raw_identifiers_used_only_for_matching": true
+}

@@ -1,0 +1,110 @@
+{
+  "airport": "LIRF",
+  "audit_used": false,
+  "candidate_count": 4,
+  "candidate_formula": "On LIRF rows with an NM clock and supported connected route: v7 + 0.5 * candidate_weight * (new_airport_prediction - frozen_v7_airport_prediction). Every other prediction equals v7 exactly.",
+  "candidate_variants": [
+    "geometry",
+    "geometry_queue"
+  ],
+  "candidate_weights": [
+    0.5,
+    1.0
+  ],
+  "control_reload_maximum_difference_seconds": 1e-08,
+  "declared_at_utc": "2026-09-15T01:38:03.715367+00:00",
+  "development_folds": [
+    "seasonal",
+    "forward"
+  ],
+  "execution": {
+    "automatic_submission": false,
+    "directory": "/home/azureuser/prc-flight-2026",
+    "maximum_threads": 16,
+    "minimum_free_disk_before_fit_bytes": 800000000,
+    "worker": "arcw0"
+  },
+  "experiment_id": "rome-geometry-v1",
+  "feature_config": "configs/features_rome_geometry_v1.json",
+  "feature_receipts_sha256": {
+    "configs/surface_airports_v1.json": "ecd601a957400913d667afd2016f5c4b210d4ad1640eefc4353bfc6552b9b09d",
+    "configs/validation_v1.json": "cd9dd96fd4168a36655d57a4278b40901de7accda481d8541dca198605e0469b",
+    "docs/source_geometry/audit_decision.json": "a18f8636f0004c228063b10a9fe874189f5b19e2c84ecfc9a110b920c9b15d8c",
+    "docs/source_geometry/geometry_endpoint_review.json": "c8a3ef4d16cc0440a504677c54100c479d96de273dff390d372e9c23a094ce3a",
+    "docs/source_geometry/geometry_endpoint_review_locations.json": "3e723eb053111c172a62bcd4443c8a45837631dbed4dbea3b6947e6cb0cbfaf0",
+    "docs/source_geometry/parking_endpoint_controls.json": "8bb5041492caff941f62c3c1d7a8300f8fe8a48d4d0de574e6e98609418e6e86",
+    "docs/source_geometry/source_inventory.json": "1c556e5ff00b57adfffe7291f062487405430fdc2a46e04fa3c1d75e36dbdb4f",
+    "docs/source_geometry/verification.json": "f01c84cb977c62ce557524088b78e128cee97858ff7e4ff84c94f48c9402637f",
+    "docs/surface_airports/development_results.json": "3a6edb7beb178744acca53c92e269f2ee92fa1524115adbda74bf876cdd4d042",
+    "docs/surface_refit/submission_v7_official.json": "63aad28134819b548bbd6944c0df889f65651cb3154d50694ceaef224315905b",
+    "docs/timeline/local_feature_verification.json": "35fc4fdf3e228c200e389dd014ce8d59f96a63b787fc26c47fed310df542a894"
+  },
+  "fit_route": "All original LIRF clock-present fitting rows, including geometry-missing rows. Same October stopping sets; no December.",
+  "minimum_improvement_fraction_each_fold": 0.005,
+  "model_kind": "lightgbm",
+  "native_fit_count": 6,
+  "prediction_postprocess": "none",
+  "prior_information": "The v7 and source/geometry audit results are known. LIRF supported historical coverage is 98.32-100%. LFPG failed endpoint controls and is excluded from new geometry models. Reporting audit supports no additional clock repair. No Rome geometry model has yet been fitted or scored.",
+  "reference_candidate": "full_timeline_v6_100",
+  "reference_selection": "docs/surface_airports/development_results.json",
+  "reference_selection_sha256": "3a6edb7beb178744acca53c92e269f2ee92fa1524115adbda74bf876cdd4d042",
+  "refit_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11"
+  ],
+  "refit_policy": "Only if a candidate qualifies after both platform verifiers, refit its one new LIRF airport learner on the same January-November clock-present IDs protected from all December flight groups. Freeze trees by ties-to-even rounded median of its two October stopping counts. Reuse v7 prediction and all other components; no stopping set during refit.",
+  "seed": 20260913,
+  "selection": "Finish all six native fits and four complete candidate recipes. Require >=0.5% RMSE improvement over v7 on BOTH original complete folds; among eligible candidates choose lowest equal-weight mean relative RMSE, then lexical name. Control must reproduce before selection. No new airport weights or label filters.",
+  "settings": {
+    "lightgbm": {
+      "early_stopping_rounds": 120,
+      "parameters": {
+        "bagging_fraction": 0.8,
+        "bagging_freq": 1,
+        "cat_l2": 20.0,
+        "cat_smooth": 20.0,
+        "deterministic": true,
+        "feature_fraction": 0.9,
+        "force_col_wise": true,
+        "lambda_l2": 20.0,
+        "learning_rate": 0.04,
+        "max_bin": 255,
+        "max_cat_threshold": 32,
+        "max_cat_to_onehot": 8,
+        "metric": "rmse",
+        "min_data_in_leaf": 50,
+        "num_leaves": 31,
+        "objective": "regression",
+        "verbosity": -1
+      },
+      "rounds": 1800
+    },
+    "seed": 20260913,
+    "threads": 16
+  },
+  "target": "nm_residual",
+  "target_filter": "none",
+  "threads": 16,
+  "validation_protocol": "prc2026-validation-v1",
+  "variants": {
+    "control": {
+      "additions": "none",
+      "purpose": "Reproduce the frozen v7 LIRF airport component at identical fitting/stopping IDs and settings."
+    },
+    "geometry": {
+      "additions": "static"
+    },
+    "geometry_queue": {
+      "additions": "static_and_queue"
+    }
+  }
+}

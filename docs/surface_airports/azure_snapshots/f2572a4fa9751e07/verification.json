@@ -1,0 +1,215 @@
+{
+  "audit_used": false,
+  "bundle_id": "ce42240e5e43eee1713f1f8dbc23cfa4511076e510bdc9aec6853fad30cf134c",
+  "candidate_count": 4,
+  "complete_rmse_seconds": {
+    "airport_only_v6_100": {
+      "forward": 221.70253412627594,
+      "seasonal": 323.59481801431656
+    },
+    "airport_only_v6_50": {
+      "forward": 222.2590354409071,
+      "seasonal": 324.02545689343486
+    },
+    "full_timeline_v6_100": {
+      "forward": 221.13815634167557,
+      "seasonal": 322.8193230817628
+    },
+    "full_timeline_v6_50": {
+      "forward": 221.42625903220988,
+      "seasonal": 323.1305120990251
+    }
+  },
+  "created_at_utc": "2026-09-14T18:46:47.701061+00:00",
+  "feature_verification_sha256": "6effcdc01abf3504d5762d5d65b6d3c7fa6b46696ebc49ffb2d65d5f22ff342b",
+  "model_code_sha256": "0fe8598a2ac9e5921907cd5fb9f0679f14e1d11be91bc5f28f73a6610b74673c",
+  "native_fit_count": 20,
+  "native_prediction_checks": {
+    "forward": {
+      "EDDF": {
+        "early_stop_rows": 21112,
+        "fit_encoder_verified": true,
+        "fitting_rows": 171815,
+        "iterations": 936,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1014
+      },
+      "EDDM": {
+        "early_stop_rows": 15393,
+        "fit_encoder_verified": true,
+        "fitting_rows": 126499,
+        "iterations": 1129,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1022
+      },
+      "EGLL": {
+        "early_stop_rows": 20566,
+        "fit_encoder_verified": true,
+        "fitting_rows": 178324,
+        "iterations": 1063,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1023
+      },
+      "EHAM": {
+        "early_stop_rows": 21405,
+        "fit_encoder_verified": true,
+        "fitting_rows": 184317,
+        "iterations": 612,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1006
+      },
+      "LEBL": {
+        "early_stop_rows": 16106,
+        "fit_encoder_verified": true,
+        "fitting_rows": 134726,
+        "iterations": 740,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1007
+      },
+      "LEMD": {
+        "early_stop_rows": 18807,
+        "fit_encoder_verified": true,
+        "fitting_rows": 157191,
+        "iterations": 1001,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1008
+      },
+      "LFPG": {
+        "early_stop_rows": 20493,
+        "fit_encoder_verified": true,
+        "fitting_rows": 177547,
+        "iterations": 1657,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1109
+      },
+      "LIRF": {
+        "early_stop_rows": 14027,
+        "fit_encoder_verified": true,
+        "fitting_rows": 121933,
+        "iterations": 945,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1003
+      },
+      "LSZH": {
+        "early_stop_rows": 12139,
+        "fit_encoder_verified": true,
+        "fitting_rows": 100012,
+        "iterations": 666,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1009
+      },
+      "LTFM": {
+        "early_stop_rows": 23713,
+        "fit_encoder_verified": true,
+        "fitting_rows": 201448,
+        "iterations": 1048,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1056
+      }
+    },
+    "seasonal": {
+      "EDDF": {
+        "early_stop_rows": 21112,
+        "fit_encoder_verified": true,
+        "fitting_rows": 135584,
+        "iterations": 869,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1097
+      },
+      "EDDM": {
+        "early_stop_rows": 15393,
+        "fit_encoder_verified": true,
+        "fitting_rows": 99645,
+        "iterations": 1156,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1104
+      },
+      "EGLL": {
+        "early_stop_rows": 20566,
+        "fit_encoder_verified": true,
+        "fitting_rows": 138580,
+        "iterations": 1282,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1256
+      },
+      "EHAM": {
+        "early_stop_rows": 21405,
+        "fit_encoder_verified": true,
+        "fitting_rows": 144176,
+        "iterations": 875,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1032
+      },
+      "LEBL": {
+        "early_stop_rows": 16106,
+        "fit_encoder_verified": true,
+        "fitting_rows": 106236,
+        "iterations": 806,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1082
+      },
+      "LEMD": {
+        "early_stop_rows": 18807,
+        "fit_encoder_verified": true,
+        "fitting_rows": 122172,
+        "iterations": 1028,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1047
+      },
+      "LFPG": {
+        "early_stop_rows": 20493,
+        "fit_encoder_verified": true,
+        "fitting_rows": 138815,
+        "iterations": 797,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1219
+      },
+      "LIRF": {
+        "early_stop_rows": 14027,
+        "fit_encoder_verified": true,
+        "fitting_rows": 95802,
+        "iterations": 816,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1160
+      },
+      "LSZH": {
+        "early_stop_rows": 12139,
+        "fit_encoder_verified": true,
+        "fitting_rows": 78190,
+        "iterations": 829,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1060
+      },
+      "LTFM": {
+        "early_stop_rows": 23713,
+        "fit_encoder_verified": true,
+        "fitting_rows": 155566,
+        "iterations": 956,
+        "maximum_difference_seconds": 0.0,
+        "rows": 1143
+      }
+    }
+  },
+  "passed": true,
+  "refit_iterations": {
+    "airports": {
+      "EDDF": 902,
+      "EDDM": 1142,
+      "EGLL": 1172,
+      "EHAM": 744,
+      "LEBL": 773,
+      "LEMD": 1014,
+      "LFPG": 1227,
+      "LIRF": 880,
+      "LSZH": 748,
+      "LTFM": 1002
+    },
+    "globals": {
+      "cat_combined": 5971,
+      "lgb_combined": 1612
+    }
+  },
+  "selected_candidate": "full_timeline_v6_100",
+  "selection_sha256": "3a6edb7beb178744acca53c92e269f2ee92fa1524115adbda74bf876cdd4d042",
+  "verifier_code_sha256": "a75de96ef9db7af228388d0503ad5a7997798a6ce7478868a1a539f9d6e79361"
+}

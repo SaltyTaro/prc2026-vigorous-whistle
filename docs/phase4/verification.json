@@ -1,0 +1,138 @@
+{
+  "audit_used": false,
+  "bundle_id": "2ceb3449c26767a9731121bdd4988cff7d57f6e9310b84ac680657a131ae9cff",
+  "checked_at_utc": "2026-09-13T18:03:10.076049+00:00",
+  "code_sha256": "4d07addb8a07a6092ab2f8712683f6de6013afde63d916acb4ba5eca17a7f2e3",
+  "declared_configuration_sha256": "2854bb7045cd74396573dda074c24ab7eeae592c242e55c0e3827b25161cb23a",
+  "development_runs_rescored": 14,
+  "feature_artifacts_verified": 12,
+  "gated_rows_including_ranking": 1782,
+  "parent_artifacts_verified": 43,
+  "parent_scientific_sha256": "2966ab723abd073a34dc547e9ea4fdf34294508bea71378001b8858b3a97299d",
+  "previous_artifacts_verified": 12,
+  "reload_samples_include": "all gated LIRF scoring/ranking rows plus deterministic random rows, 1,000 per fold",
+  "rows_with_all_86_prior_predictors_exactly_unchanged": 2264211,
+  "rows_with_independently_verified_offset": 2264211,
+  "runs_verified": [
+    {
+      "components": 1,
+      "development_rmse_seconds": 404.36436786940135,
+      "reload_difference_seconds": 0.0,
+      "reload_sample_rows": 1000,
+      "run_id": "20260913T174342477332Z_seasonal_schedule_gate_lightgbm",
+      "stage": "development"
+    },
+    {
+      "components": 1,
+      "development_rmse_seconds": 458.8165904182885,
+      "reload_difference_seconds": 0.0,
+      "reload_sample_rows": 1000,
+      "run_id": "20260913T174351158366Z_seasonal_clock_features_lightgbm",
+      "stage": "development"
+    },
+    {
+      "components": 1,
+      "development_rmse_seconds": 378.89717905591726,
+      "reload_difference_seconds": 0.0,
+      "reload_sample_rows": 1000,
+      "run_id": "20260913T174417808227Z_seasonal_conditional_offset_lightgbm",
+      "stage": "development"
+    },
+    {
+      "components": 1,
+      "development_rmse_seconds": 379.4142204191457,
+      "reload_difference_seconds": 0.0,
+      "reload_sample_rows": 1000,
+      "run_id": "20260913T174535170985Z_seasonal_conditional_offset_fine_lightgbm",
+      "stage": "development"
+    },
+    {
+      "components": 2,
+      "development_rmse_seconds": 375.43859770412587,
+      "reload_difference_seconds": 0.0,
+      "reload_sample_rows": 1000,
+      "run_id": "20260913T174618651113Z_seasonal_missing_record_specialist_lightgbm",
+      "stage": "development"
+    },
+    {
+      "components": 11,
+      "development_rmse_seconds": 373.9143666035315,
+      "reload_difference_seconds": 0.0,
+      "reload_sample_rows": 1000,
+      "run_id": "20260913T174630850210Z_seasonal_airport_specialists_lightgbm",
+      "stage": "development"
+    },
+    {
+      "components": 11,
+      "development_rmse_seconds": 372.855048809903,
+      "reload_difference_seconds": 0.0,
+      "reload_sample_rows": 1000,
+      "run_id": "20260913T174726137061Z_seasonal_airport_blend_lightgbm",
+      "stage": "development"
+    },
+    {
+      "components": 1,
+      "development_rmse_seconds": 263.8872322662219,
+      "reload_difference_seconds": 0.0,
+      "reload_sample_rows": 1000,
+      "run_id": "20260913T174748607989Z_forward_schedule_gate_lightgbm",
+      "stage": "development"
+    },
+    {
+      "components": 1,
+      "development_rmse_seconds": 299.29285217926247,
+      "reload_difference_seconds": 0.0,
+      "reload_sample_rows": 1000,
+      "run_id": "20260913T174751219404Z_forward_clock_features_lightgbm",
+      "stage": "development"
+    },
+    {
+      "components": 1,
+      "development_rmse_seconds": 249.17754747417098,
+      "reload_difference_seconds": 0.0,
+      "reload_sample_rows": 1000,
+      "run_id": "20260913T174817868636Z_forward_conditional_offset_lightgbm",
+      "stage": "development"
+    },
+    {
+      "components": 1,
+      "development_rmse_seconds": 249.04695731239966,
+      "reload_difference_seconds": 0.0,
+      "reload_sample_rows": 1000,
+      "run_id": "20260913T174933708115Z_forward_conditional_offset_fine_lightgbm",
+      "stage": "development"
+    },
+    {
+      "components": 2,
+      "development_rmse_seconds": 247.98054510095696,
+      "reload_difference_seconds": 0.0,
+      "reload_sample_rows": 1000,
+      "run_id": "20260913T175041877548Z_forward_missing_record_specialist_lightgbm",
+      "stage": "development"
+    },
+    {
+      "components": 11,
+      "development_rmse_seconds": 249.3546147575259,
+      "reload_difference_seconds": 0.0,
+      "reload_sample_rows": 1000,
+      "run_id": "20260913T175046869785Z_forward_airport_specialists_lightgbm",
+      "stage": "development"
+    },
+    {
+      "components": 11,
+      "development_rmse_seconds": 245.86268533987746,
+      "reload_difference_seconds": 0.0,
+      "reload_sample_rows": 1000,
+      "run_id": "20260913T175141158334Z_forward_airport_blend_lightgbm",
+      "stage": "development"
+    },
+    {
+      "components": 11,
+      "development_rmse_seconds": null,
+      "reload_difference_seconds": 0.0,
+      "reload_sample_rows": 1000,
+      "run_id": "20260913T175343734071Z_refit_airport_blend_lightgbm",
+      "stage": "refit"
+    }
+  ]
+}

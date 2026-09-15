@@ -1,0 +1,33 @@
+{
+  "created_at_utc": "2026-09-14T16:33:28.328175+00:00",
+  "steps": [
+    {
+      "arguments": [
+        "-m",
+        "pytest",
+        "-q",
+        "--junitxml=docs/ladder_blend/tests_azure.xml"
+      ],
+      "finished_at_utc": "2026-09-14T16:31:48.547026+00:00"
+    },
+    {
+      "arguments": [
+        "-u",
+        "tools/evaluate_ladder_blend.py"
+      ],
+      "finished_at_utc": "2026-09-14T16:32:38.949633+00:00"
+    },
+    {
+      "arguments": [
+        "-u",
+        "tools/evaluate_ladder_blend.py",
+        "--verify-only",
+        "--output",
+        "docs/ladder_blend/verification.json"
+      ],
+      "finished_at_utc": "2026-09-14T16:33:28.328012+00:00"
+    }
+  ],
+  "new_native_development_fits": 0,
+  "audit_used": false
+}

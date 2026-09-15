@@ -1,0 +1,125 @@
+{
+  "audit_used": false,
+  "blend_weights_new_candidate": [
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "candidate_families": {
+    "cat75_ground25": {
+      "cat_weather": 0.75,
+      "lgb_ground_weather": 0.25
+    },
+    "cat_weather": {
+      "cat_weather": 1.0
+    },
+    "lgb_ground_weather": {
+      "lgb_ground_weather": 1.0
+    },
+    "lgb_weather": {
+      "lgb_weather": 1.0
+    }
+  },
+  "candidate_structure": "Each fitted global model receives weight 0.5 and the frozen original-seed airport predictions weight 0.5. Candidate families combine these pipelines with declared weights.",
+  "catboost": {
+    "early_stopping_rounds": 200,
+    "parameters": {
+      "allow_writing_files": false,
+      "boosting_type": "Plain",
+      "bootstrap_type": "Bernoulli",
+      "depth": 8,
+      "eval_metric": "RMSE",
+      "l2_leaf_reg": 10.0,
+      "learning_rate": 0.055,
+      "loss_function": "RMSE",
+      "max_ctr_complexity": 1,
+      "nan_mode": "Min",
+      "one_hot_max_size": 10,
+      "random_strength": 1.0,
+      "rsm": 0.9,
+      "subsample": 0.8,
+      "task_type": "CPU"
+    },
+    "rounds": 6000
+  },
+  "declared_at_utc": "2026-09-14T01:59:25.204831+00:00",
+  "development_folds": [
+    "seasonal",
+    "forward"
+  ],
+  "experiment_id": "prc2026-surface-weather-v1",
+  "feature_configuration_sha256": "abf1291816a409691ed67c6d541a40234487130be12fa76942e5b8d9ae7e7606",
+  "feature_policy": "iem-delayed-surface-weather-v1",
+  "lightgbm": {
+    "early_stopping_rounds": 200,
+    "parameters": {
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1,
+      "cat_l2": 20.0,
+      "cat_smooth": 20.0,
+      "deterministic": true,
+      "feature_fraction": 0.9,
+      "force_col_wise": true,
+      "lambda_l2": 20.0,
+      "learning_rate": 0.04,
+      "max_bin": 255,
+      "max_cat_threshold": 32,
+      "max_cat_to_onehot": 8,
+      "metric": "rmse",
+      "min_data_in_leaf": 100,
+      "num_leaves": 127,
+      "objective": "regression",
+      "verbosity": -1
+    },
+    "rounds": 3200
+  },
+  "minimum_improvement_fraction_each_fold": 0.005,
+  "prediction_postprocess": "none",
+  "prior_evidence": "Phase-5R first batch failed promotion. No weather-based target fit or held-out score was examined before this declaration. Weather coverage and variable quality were audited without target labels.",
+  "reference_refit_run": "20260913T195813824072Z_refit_followup_catboost_long_three_seed_mean_75",
+  "reference_refit_sha256": "e8578b945792a157b6e27f276bb1265ef50406f4e168efed4bc4085d1b25d68b",
+  "reference_selection": "docs/phase5/development_results.json",
+  "reference_selection_sha256": "4612946cb3f9200907e5297873b6c53c631b88f6e964f56dd649949ec26f2db3",
+  "refit_iterations": "Rounded median of October-selected counts separately for each selected new native component. Retain frozen v4 and airport refits for old members. January-November only, all December flight groups protected.",
+  "refit_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11"
+  ],
+  "seed": 20260913,
+  "selection": "Six fits, three variants on both frozen folds. Four candidate families, each mixed with v4 at 25/50/75/100 percent (16 recipes). Require at least 0.5 percent lower complete-set RMSE on BOTH folds; minimize equal mean relative RMSE. Weights are common to every airport and fold.",
+  "target_filter": "none",
+  "threads": 16,
+  "validation_protocol": "prc2026-validation-v1",
+  "variant_order": [
+    "lgb_weather",
+    "lgb_ground_weather",
+    "cat_weather"
+  ],
+  "variants": {
+    "cat_weather": {
+      "features": "core_weather",
+      "kind": "catboost",
+      "route": "all"
+    },
+    "lgb_ground_weather": {
+      "features": "ground_weather",
+      "kind": "lightgbm",
+      "route": "all"
+    },
+    "lgb_weather": {
+      "features": "core_weather",
+      "kind": "lightgbm",
+      "route": "all"
+    }
+  }
+}

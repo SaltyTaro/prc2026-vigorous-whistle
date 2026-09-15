@@ -1,0 +1,376 @@
+{
+  "audit_labels_used": false,
+  "created_at_utc": "2026-09-14T02:11:06.379267+00:00",
+  "departure_labels_read": false,
+  "geometry_exact_coverage": {
+    "ranking.parquet": {
+      "fraction": 0.9997274106037275,
+      "matched": 344747,
+      "rows": 344841
+    },
+    "training_2025-01-01_2025-02-01.parquet": {
+      "fraction": 0.999616150312935,
+      "matched": 153647,
+      "rows": 153706
+    },
+    "training_2025-02-01_2025-03-01.parquet": {
+      "fraction": 0.9996521279334312,
+      "matched": 143681,
+      "rows": 143731
+    },
+    "training_2025-03-01_2025-04-01.parquet": {
+      "fraction": 0.9996837944664032,
+      "matched": 164398,
+      "rows": 164450
+    },
+    "training_2025-04-01_2025-05-01.parquet": {
+      "fraction": 0.9998117383962394,
+      "matched": 175255,
+      "rows": 175288
+    },
+    "training_2025-05-01_2025-06-01.parquet": {
+      "fraction": 0.9998758112763361,
+      "matched": 185179,
+      "rows": 185202
+    },
+    "training_2025-06-01_2025-07-01.parquet": {
+      "fraction": 0.9997324480457787,
+      "matched": 183093,
+      "rows": 183142
+    },
+    "training_2025-07-01_2025-08-01.parquet": {
+      "fraction": 0.9998007477203966,
+      "matched": 190675,
+      "rows": 190713
+    },
+    "training_2025-08-01_2025-09-01.parquet": {
+      "fraction": 0.999764620961288,
+      "matched": 191136,
+      "rows": 191181
+    },
+    "training_2025-09-01_2025-10-01.parquet": {
+      "fraction": 0.9998749667030894,
+      "matched": 183928,
+      "rows": 183951
+    },
+    "training_2025-10-01_2025-11-01.parquet": {
+      "fraction": 0.9999030558936631,
+      "matched": 185656,
+      "rows": 185674
+    },
+    "training_2025-11-01_2025-12-01.parquet": {
+      "fraction": 0.9999014365621073,
+      "matched": 162316,
+      "rows": 162332
+    }
+  },
+  "interpretation": "Missing cloud groups remain unknown; numerical cloud fractions are representative encodings FEW=0.125,SCT=0.375,BKN=0.75,OVC/VV=1. Empty weather codes mean no conditions reported.",
+  "observation_summaries": {
+    "ceiling_m": {
+      "maximum": 9144.0,
+      "median": 762.0,
+      "minimum": 0.0,
+      "missing": 138980,
+      "observations": 190466
+    },
+    "ceiling_reported": {
+      "maximum": 1.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "missing": 0,
+      "observations": 190466
+    },
+    "cloud_fraction": {
+      "maximum": 1.0,
+      "median": 0.375,
+      "minimum": 0.0,
+      "missing": 74779,
+      "observations": 190466
+    },
+    "dewpoint_c": {
+      "maximum": 26.999999999999996,
+      "median": 9.000000000000002,
+      "minimum": -17.0,
+      "missing": 7,
+      "observations": 190466
+    },
+    "dewpoint_spread_c": {
+      "maximum": 42.0,
+      "median": 4.000000000000002,
+      "minimum": 0.0,
+      "missing": 7,
+      "observations": 190466
+    },
+    "direction_cos": {
+      "maximum": 1.0,
+      "median": 0.17364817766692997,
+      "minimum": -1.0,
+      "missing": 18886,
+      "observations": 190466
+    },
+    "direction_missing": {
+      "maximum": 1.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "missing": 0,
+      "observations": 190466
+    },
+    "direction_sin": {
+      "maximum": 1.0,
+      "median": -2.4492935982947064e-16,
+      "minimum": -1.0,
+      "missing": 18886,
+      "observations": 190466
+    },
+    "east_wind_mps": {
+      "maximum": 15.593268520363141,
+      "median": 1.1340229360104493e-15,
+      "minimum": -13.365658731739837,
+      "missing": 18886,
+      "observations": 190466
+    },
+    "fog": {
+      "maximum": 1.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "missing": 0,
+      "observations": 190466
+    },
+    "freezing_weather": {
+      "maximum": 1.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "missing": 0,
+      "observations": 190466
+    },
+    "gust_excess_mps": {
+      "maximum": 11.31777777777778,
+      "median": 5.658888888888889,
+      "minimum": 5.144444444444442,
+      "missing": 186806,
+      "observations": 190466
+    },
+    "gust_mps": {
+      "maximum": 26.751111111111115,
+      "median": 11.832222222222223,
+      "minimum": 5.658888888888889,
+      "missing": 186806,
+      "observations": 190466
+    },
+    "gust_reported": {
+      "maximum": 1.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "missing": 0,
+      "observations": 190466
+    },
+    "heavy_weather": {
+      "maximum": 1.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "missing": 0,
+      "observations": 190466
+    },
+    "humidity_pct": {
+      "maximum": 100.0,
+      "median": 74.98,
+      "minimum": 6.88,
+      "missing": 7,
+      "observations": 190466
+    },
+    "ice": {
+      "maximum": 1.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "missing": 0,
+      "observations": 190466
+    },
+    "mist": {
+      "maximum": 1.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "missing": 0,
+      "observations": 190466
+    },
+    "no_weather_code": {
+      "maximum": 1.0,
+      "median": 1.0,
+      "minimum": 0.0,
+      "missing": 0,
+      "observations": 190466
+    },
+    "north_wind_mps": {
+      "maximum": 18.74526846316904,
+      "median": -5.040101937824218e-16,
+      "minimum": -15.947777777777778,
+      "missing": 18886,
+      "observations": 190466
+    },
+    "pressure_hpa": {
+      "maximum": 1354.555466668,
+      "median": 1016.932516601001,
+      "minimum": 100.914382266766,
+      "missing": 6,
+      "observations": 190466
+    },
+    "rain": {
+      "maximum": 1.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "missing": 0,
+      "observations": 190466
+    },
+    "showers": {
+      "maximum": 1.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "missing": 0,
+      "observations": 190466
+    },
+    "sky_missing": {
+      "maximum": 1.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "missing": 0,
+      "observations": 190466
+    },
+    "snow": {
+      "maximum": 1.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "missing": 0,
+      "observations": 190466
+    },
+    "speed_mps": {
+      "maximum": 19.034444444444446,
+      "median": 3.086666666666667,
+      "minimum": 0.0,
+      "missing": 6,
+      "observations": 190466
+    },
+    "temperature_below_zero": {
+      "maximum": 1.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "missing": 7,
+      "observations": 190466
+    },
+    "temperature_c": {
+      "maximum": 41.0,
+      "median": 14.000000000000002,
+      "minimum": -15.0,
+      "missing": 7,
+      "observations": 190466
+    },
+    "thunder": {
+      "maximum": 1.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "missing": 0,
+      "observations": 190466
+    },
+    "visibility_below_1km": {
+      "maximum": 1.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "missing": 4,
+      "observations": 190466
+    },
+    "visibility_below_5km": {
+      "maximum": 1.0,
+      "median": 0.0,
+      "minimum": 0.0,
+      "missing": 4,
+      "observations": 190466
+    },
+    "visibility_km": {
+      "maximum": 9.99402624,
+      "median": 9.99402624,
+      "minimum": 0.04828032,
+      "missing": 4,
+      "observations": 190466
+    }
+  },
+  "observations": 190466,
+  "pressure_quality_check": {
+    "feature_counts": {
+      "ranking.parquet": {
+        "latest_pressure_outlier_rows": 23,
+        "pressure_change_over_100hpa_rows": 49
+      },
+      "training_2025-01-01_2025-02-01.parquet": {
+        "latest_pressure_outlier_rows": 0,
+        "pressure_change_over_100hpa_rows": 0
+      },
+      "training_2025-02-01_2025-03-01.parquet": {
+        "latest_pressure_outlier_rows": 17,
+        "pressure_change_over_100hpa_rows": 29
+      },
+      "training_2025-03-01_2025-04-01.parquet": {
+        "latest_pressure_outlier_rows": 0,
+        "pressure_change_over_100hpa_rows": 0
+      },
+      "training_2025-04-01_2025-05-01.parquet": {
+        "latest_pressure_outlier_rows": 0,
+        "pressure_change_over_100hpa_rows": 0
+      },
+      "training_2025-05-01_2025-06-01.parquet": {
+        "latest_pressure_outlier_rows": 0,
+        "pressure_change_over_100hpa_rows": 0
+      },
+      "training_2025-06-01_2025-07-01.parquet": {
+        "latest_pressure_outlier_rows": 0,
+        "pressure_change_over_100hpa_rows": 0
+      },
+      "training_2025-07-01_2025-08-01.parquet": {
+        "latest_pressure_outlier_rows": 0,
+        "pressure_change_over_100hpa_rows": 0
+      },
+      "training_2025-08-01_2025-09-01.parquet": {
+        "latest_pressure_outlier_rows": 0,
+        "pressure_change_over_100hpa_rows": 0
+      },
+      "training_2025-09-01_2025-10-01.parquet": {
+        "latest_pressure_outlier_rows": 0,
+        "pressure_change_over_100hpa_rows": 0
+      },
+      "training_2025-10-01_2025-11-01.parquet": {
+        "latest_pressure_outlier_rows": 7,
+        "pressure_change_over_100hpa_rows": 14
+      },
+      "training_2025-11-01_2025-12-01.parquet": {
+        "latest_pressure_outlier_rows": 0,
+        "pressure_change_over_100hpa_rows": 0
+      }
+    },
+    "outlier_observations": 4,
+    "plausibility_interval_hpa": [
+      850,
+      1100
+    ],
+    "policy": "Values are finite source values, retained in the frozen first batch. Bounds are a label-free diagnostic, not a post-hoc feature change.",
+    "source_reports": [
+      {
+        "pressure_hpa": 1354.555466668,
+        "station": "EGLL",
+        "valid": "2025-02-10T20:20:00+00:00"
+      },
+      {
+        "pressure_hpa": 1354.555466668,
+        "station": "EGLL",
+        "valid": "2026-01-09T04:50:00+00:00"
+      },
+      {
+        "pressure_hpa": 1354.555466668,
+        "station": "EGLL",
+        "valid": "2026-01-22T08:50:00+00:00"
+      },
+      {
+        "pressure_hpa": 100.914382266766,
+        "station": "LIRF",
+        "valid": "2025-10-04T20:20:00+00:00"
+      }
+    ]
+  },
+  "source_configuration_sha256": "abf1291816a409691ed67c6d541a40234487130be12fa76942e5b8d9ae7e7606"
+}

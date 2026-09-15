@@ -1,0 +1,276 @@
+{
+  "checked_at_utc": "2026-09-14T04:11:02.591940+00:00",
+  "partial_batch": true,
+  "runs": {
+    "lgb_direct_seasonal": {
+      "by_airport": {
+        "EDDF": {
+          "mae_seconds": 124.30184895324263,
+          "max_absolute_error_seconds": 3774.4498064796585,
+          "rmse_seconds": 189.15710963981493,
+          "rows": 36830,
+          "sse": 1317792578.6480527
+        },
+        "EDDM": {
+          "mae_seconds": 115.48754320875027,
+          "max_absolute_error_seconds": 5893.302851230856,
+          "rmse_seconds": 177.85641294089353,
+          "rows": 27091,
+          "sse": 856966992.0832466
+        },
+        "EGLL": {
+          "mae_seconds": 174.1302059586253,
+          "max_absolute_error_seconds": 9464.870646144826,
+          "rmse_seconds": 275.4127146179692,
+          "rows": 40210,
+          "sse": 3050015489.237938
+        },
+        "EHAM": {
+          "mae_seconds": 115.54917719574854,
+          "max_absolute_error_seconds": 10883.629678190422,
+          "rmse_seconds": 192.24626522024133,
+          "rows": 40949,
+          "sse": 1513418796.1853385
+        },
+        "LEBL": {
+          "mae_seconds": 142.74903705032688,
+          "max_absolute_error_seconds": 2633.3715585071095,
+          "rmse_seconds": 222.68310700825046,
+          "rows": 28986,
+          "sse": 1437350989.532534
+        },
+        "LEMD": {
+          "mae_seconds": 125.72237039303175,
+          "max_absolute_error_seconds": 2757.1644551294776,
+          "rmse_seconds": 179.32754300820716,
+          "rows": 35328,
+          "sse": 1136090813.4471
+        },
+        "LFPG": {
+          "mae_seconds": 170.81439283984986,
+          "max_absolute_error_seconds": 83383.72479681516,
+          "rmse_seconds": 572.561880035664,
+          "rows": 39612,
+          "sse": 12985887341.488615
+        },
+        "LIRF": {
+          "mae_seconds": 272.6386645888524,
+          "max_absolute_error_seconds": 84557.96230845299,
+          "rmse_seconds": 804.5153598130713,
+          "rows": 26528,
+          "sse": 17170114409.638529
+        },
+        "LSZH": {
+          "mae_seconds": 123.70678389794074,
+          "max_absolute_error_seconds": 8197.7985965629,
+          "rmse_seconds": 206.6385465785529,
+          "rows": 22346,
+          "sse": 954162779.6766347
+        },
+        "LTFM": {
+          "mae_seconds": 172.94213841887733,
+          "max_absolute_error_seconds": 6038.492622598113,
+          "rmse_seconds": 260.9150506044207,
+          "rows": 46539,
+          "sse": 3168219848.7653384
+        }
+      },
+      "by_nm_missing": {
+        "False": {
+          "mae_seconds": 148.4116537388644,
+          "max_absolute_error_seconds": 84557.96230845299,
+          "rmse_seconds": 274.5289974367929,
+          "rows": 339046,
+          "sse": 25552598620.84752
+        },
+        "True": {
+          "mae_seconds": 467.6603574324805,
+          "max_absolute_error_seconds": 83383.72479681516,
+          "rmse_seconds": 1832.2250047055338,
+          "rows": 5373,
+          "sse": 18037421417.855804
+        }
+      },
+      "by_target_band": {
+        "0_to_1h": {
+          "mae_seconds": 148.1059559069254,
+          "max_absolute_error_seconds": 17760.982185489156,
+          "rmse_seconds": 243.6705465091195,
+          "rows": 343355,
+          "sse": 20386818229.974968
+        },
+        "1h_to_3h": {
+          "mae_seconds": 1626.8399883393404,
+          "max_absolute_error_seconds": 8197.7985965629,
+          "rmse_seconds": 2027.6091146891013,
+          "rows": 921,
+          "sse": 3786414022.9346657
+        },
+        "negative": {
+          "mae_seconds": 472.08457229204066,
+          "max_absolute_error_seconds": 1622.560056118375,
+          "rmse_seconds": 653.0129842837438,
+          "rows": 80,
+          "sse": 34114076.61145288
+        },
+        "over_3h": {
+          "mae_seconds": 7349.971378392785,
+          "max_absolute_error_seconds": 84557.96230845299,
+          "rmse_seconds": 17973.131062117594,
+          "rows": 60,
+          "sse": 19382006410.563377
+        },
+        "zero": {
+          "mae_seconds": 370.4952873040914,
+          "max_absolute_error_seconds": 729.092815578766,
+          "rmse_seconds": 471.6278967093505,
+          "rows": 3,
+          "sse": 667298.6188634575
+        }
+      },
+      "metrics_sha256": "6d784d364d0b871b0b32f0968f6e11c3223079232551f6571803d5653a671288",
+      "overall": {
+        "mae_seconds": 153.39199246856805,
+        "max_absolute_error_seconds": 84557.96230845299,
+        "rmse_seconds": 355.75415705955123,
+        "rows": 344419,
+        "sse": 43590020038.70333
+      }
+    },
+    "lgb_residual_seasonal": {
+      "by_airport": {
+        "EDDF": {
+          "mae_seconds": 124.87314443492528,
+          "max_absolute_error_seconds": 4050.7519981811397,
+          "rmse_seconds": 190.76681930385539,
+          "rows": 36830,
+          "sse": 1340316599.3614204
+        },
+        "EDDM": {
+          "mae_seconds": 115.04885210280551,
+          "max_absolute_error_seconds": 5893.302851230856,
+          "rmse_seconds": 177.73101497670675,
+          "rows": 27091,
+          "sse": 855759006.0308629
+        },
+        "EGLL": {
+          "mae_seconds": 174.2562635877811,
+          "max_absolute_error_seconds": 9464.870646144826,
+          "rmse_seconds": 277.5150897361112,
+          "rows": 40210,
+          "sse": 3096758072.506234
+        },
+        "EHAM": {
+          "mae_seconds": 115.42833147551329,
+          "max_absolute_error_seconds": 10883.629678190422,
+          "rmse_seconds": 187.84266899609054,
+          "rows": 40949,
+          "sse": 1444880071.8354938
+        },
+        "LEBL": {
+          "mae_seconds": 143.81260345596846,
+          "max_absolute_error_seconds": 3541.0771421745185,
+          "rmse_seconds": 226.18264463894607,
+          "rows": 28986,
+          "sse": 1482882853.097863
+        },
+        "LEMD": {
+          "mae_seconds": 125.5198720841917,
+          "max_absolute_error_seconds": 5097.027438274734,
+          "rmse_seconds": 181.78126355648962,
+          "rows": 35328,
+          "sse": 1167393544.6186914
+        },
+        "LFPG": {
+          "mae_seconds": 171.82469282338042,
+          "max_absolute_error_seconds": 83383.72479681516,
+          "rmse_seconds": 573.0840361614956,
+          "rows": 39612,
+          "sse": 13009583478.874798
+        },
+        "LIRF": {
+          "mae_seconds": 268.6180120564626,
+          "max_absolute_error_seconds": 24419.81608223068,
+          "rmse_seconds": 613.4402970633392,
+          "rows": 26528,
+          "sse": 9982725100.566397
+        },
+        "LSZH": {
+          "mae_seconds": 123.63149303144868,
+          "max_absolute_error_seconds": 8197.7985965629,
+          "rmse_seconds": 207.46066586149252,
+          "rows": 22346,
+          "sse": 961770228.3996387
+        },
+        "LTFM": {
+          "mae_seconds": 173.12002521174477,
+          "max_absolute_error_seconds": 6038.492622598113,
+          "rmse_seconds": 261.6568919091918,
+          "rows": 46539,
+          "sse": 3186261411.2206597
+        }
+      },
+      "by_nm_missing": {
+        "False": {
+          "mae_seconds": 148.33174579011376,
+          "max_absolute_error_seconds": 6759.343755145806,
+          "rmse_seconds": 233.53383840884217,
+          "rows": 339046,
+          "sse": 18490908948.656254
+        },
+        "True": {
+          "mae_seconds": 467.6603574324805,
+          "max_absolute_error_seconds": 83383.72479681516,
+          "rmse_seconds": 1832.2250047055338,
+          "rows": 5373,
+          "sse": 18037421417.855804
+        }
+      },
+      "by_target_band": {
+        "0_to_1h": {
+          "mae_seconds": 148.5065625272864,
+          "max_absolute_error_seconds": 17760.982185489156,
+          "rmse_seconds": 245.9205812640206,
+          "rows": 343355,
+          "sse": 20765057086.169857
+        },
+        "1h_to_3h": {
+          "mae_seconds": 1542.565388061576,
+          "max_absolute_error_seconds": 8197.7985965629,
+          "rmse_seconds": 1966.5987453461103,
+          "rows": 921,
+          "sse": 3561977285.8063397
+        },
+        "negative": {
+          "mae_seconds": 487.99676052778466,
+          "max_absolute_error_seconds": 1655.6094337907757,
+          "rmse_seconds": 672.4278110574332,
+          "rows": 80,
+          "sse": 36172732.88667929
+        },
+        "over_3h": {
+          "mae_seconds": 5878.461440259475,
+          "max_absolute_error_seconds": 83383.72479681516,
+          "rmse_seconds": 14238.71597299392,
+          "rows": 60,
+          "sse": 12164461953.57553
+        },
+        "zero": {
+          "mae_seconds": 367.75247356514706,
+          "max_absolute_error_seconds": 729.092815578766,
+          "rmse_seconds": 469.506149642366,
+          "rows": 3,
+          "sse": 661308.0736559993
+        }
+      },
+      "metrics_sha256": "5671e2e863bdd87b454bb2e05ea4c57594490168de127711937b086721cc23c3",
+      "overall": {
+        "mae_seconds": 153.31333109857363,
+        "max_absolute_error_seconds": 83383.72479681516,
+        "rmse_seconds": 325.66520535803284,
+        "rows": 344419,
+        "sse": 36528330366.51205
+      }
+    }
+  }
+}

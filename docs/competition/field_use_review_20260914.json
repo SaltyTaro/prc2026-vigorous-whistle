@@ -1,0 +1,61 @@
+{
+  "checked_at_utc": "2026-09-13T21:33:25.733842+00:00",
+  "user_clarification": "The user does not know of an organizer announcement concerning AOBT_3_flt or LOBT_flt.",
+  "sources": [
+    {
+      "source": "data",
+      "url": "https://prc-data-challenge-2026.netlify.app/data.html",
+      "final_url": "https://prc-data-challenge-2026.netlify.app/data.html",
+      "retrieved_at_utc": "2026-09-13T21:33:24.356745+00:00",
+      "path": "docs/competition/sources/field_use_20260914/data.html",
+      "sha256": "7e5d540b0fdd34e56753426fdce125cf725b5552cb07c5870781cc5551d51182",
+      "bytes": 137255,
+      "relevant_text": [
+        "LOBT_flt : last known off-block time CALLSIGN_flt",
+        "AOBT_3_flt : the Actual Off-Block Time (AOBT) for flown (M3) trajectory. ARVT_3_flt"
+      ]
+    },
+    {
+      "source": "rationale",
+      "url": "https://prc-data-challenge-2026.netlify.app/rationale.html",
+      "final_url": "https://prc-data-challenge-2026.netlify.app/rationale.html",
+      "retrieved_at_utc": "2026-09-13T21:33:25.253416+00:00",
+      "path": "docs/competition/sources/field_use_20260914/rationale.html",
+      "sha256": "8751daed8bf81a0ae892f062cbb8a19a5baf3821ce2ae919e630322601f54e41",
+      "bytes": 124246,
+      "relevant_text": [
+        "A model to estimate taxi-out time can be used in post-operations analysis to identify constrained operations intervals and measure excess fuel burnt/CO2 production compared to unconstrained status. The reasons for variability of taxi-out time are various and interlinked. These include airline-specific constraints, airport procedures and load, and Air Traffic Flow Management (ATFM)-related reasons. List of Acronyms"
+      ]
+    },
+    {
+      "source": "ranking",
+      "url": "https://prc-data-challenge-2026.netlify.app/ranking.html",
+      "final_url": "https://prc-data-challenge-2026.netlify.app/ranking.html",
+      "retrieved_at_utc": "2026-09-13T21:33:25.059856+00:00",
+      "path": "docs/competition/sources/field_use_20260914/ranking.html",
+      "sha256": "29556ddb207ccb5c5f5783c0d335cc90b6b3871521c058526c775e849a322883",
+      "bytes": 127834,
+      "relevant_text": [
+        "We will monitor submissions for attempts to learn from or exploit the ranking process. We consider such practices unfair and inconsistent with the purposes and goals of the Data Challenge. Leaderboard Important"
+      ]
+    },
+    {
+      "source": "eurocontrol_data",
+      "url": "https://ansperformance.eu/study/data-challenge/dc2026/data.html",
+      "final_url": "https://prc-data-challenge-2026.netlify.app/data.html",
+      "retrieved_at_utc": "2026-09-13T21:33:25.733260+00:00",
+      "path": "docs/competition/sources/field_use_20260914/eurocontrol_data.html",
+      "sha256": "7e5d540b0fdd34e56753426fdce125cf725b5552cb07c5870781cc5551d51182",
+      "bytes": 137255,
+      "relevant_text": [
+        "LOBT_flt : last known off-block time CALLSIGN_flt",
+        "AOBT_3_flt : the Actual Off-Block Time (AOBT) for flown (M3) trajectory. ARVT_3_flt"
+      ]
+    }
+  ],
+  "finding": "Fields are documented as supplied NM off-block times; rationale is post-operations analysis. No field-specific prohibition was found in these public pages.",
+  "working_policy": "Keep the existing exclusion for the next campaign until reviewed; it is a project choice, not a verified organizer ban. Other experiments can proceed.",
+  "administrator_message_sent": false,
+  "new_model_trained": false,
+  "december_scored": false
+}

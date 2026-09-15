@@ -1,0 +1,95 @@
+{
+  "created_at_utc": "2026-09-15T02:56:51.998853+00:00",
+  "cause": "Fresh workers lacked the pytest project source search path. Seven failed during conftest import before any competition model fit.",
+  "correction": "New resume runner explicitly sets PYTHONPATH to the unchanged src directory. It preserves original logs/status and refuses to repeat an existing native output.",
+  "worker_arcw0_completed_model_preserved": true,
+  "model_configuration_changed": false,
+  "feature_or_job_data_changed": false,
+  "runner_sha256": "5ca56eeacb71be96d52eede8b466126a120b9d1db8e7f2ff8f71873c29ce8727",
+  "resumed": [
+    {
+      "created_at_utc": "2026-09-15T02:56:51.688266+00:00",
+      "worker": "arcw2",
+      "job_id": "seasonal_cat_natural",
+      "pid": 3553,
+      "log": "runs/nm_mask_logs/seasonal_cat_natural_resumed.log",
+      "start_at_utc": "2026-09-15T02:57:13.122555+00:00",
+      "job_sha256": "b477352dc0ca99d0b917427ff27a7ccdb4f3d6b358b45b49382df71f5fc3ea26",
+      "runner_sha256": "5ca56eeacb71be96d52eede8b466126a120b9d1db8e7f2ff8f71873c29ce8727",
+      "original_failure_preserved": true,
+      "native_fit_repeated": false
+    },
+    {
+      "created_at_utc": "2026-09-15T02:56:51.265136+00:00",
+      "worker": "arcw4",
+      "job_id": "seasonal_lgb_augmented",
+      "pid": 6495,
+      "log": "runs/nm_mask_logs/seasonal_lgb_augmented_resumed.log",
+      "start_at_utc": "2026-09-15T02:57:13.122555+00:00",
+      "job_sha256": "79d367eac98b47c2095dcc86b3eaa71ade456182a8ad73f22548a32091f048ad",
+      "runner_sha256": "5ca56eeacb71be96d52eede8b466126a120b9d1db8e7f2ff8f71873c29ce8727",
+      "original_failure_preserved": true,
+      "native_fit_repeated": false
+    },
+    {
+      "created_at_utc": "2026-09-15T02:56:51.288656+00:00",
+      "worker": "arcw6",
+      "job_id": "seasonal_cat_augmented",
+      "pid": 2031,
+      "log": "runs/nm_mask_logs/seasonal_cat_augmented_resumed.log",
+      "start_at_utc": "2026-09-15T02:57:13.122555+00:00",
+      "job_sha256": "623d94003414c57914a501cfa17d97dc79fdf59f780e518be6a4e1fa9ab72c16",
+      "runner_sha256": "5ca56eeacb71be96d52eede8b466126a120b9d1db8e7f2ff8f71873c29ce8727",
+      "original_failure_preserved": true,
+      "native_fit_repeated": false
+    },
+    {
+      "created_at_utc": "2026-09-15T02:56:51.211800+00:00",
+      "worker": "arcw1",
+      "job_id": "forward_lgb_natural",
+      "pid": 2004,
+      "log": "runs/nm_mask_logs/forward_lgb_natural_resumed.log",
+      "start_at_utc": "2026-09-15T02:57:13.122555+00:00",
+      "job_sha256": "80295d102ff52b8623f9a511e446ba24d0ef1840d37eacb8ef790118972c8d12",
+      "runner_sha256": "5ca56eeacb71be96d52eede8b466126a120b9d1db8e7f2ff8f71873c29ce8727",
+      "original_failure_preserved": true,
+      "native_fit_repeated": false
+    },
+    {
+      "created_at_utc": "2026-09-15T02:56:51.365900+00:00",
+      "worker": "arcw3",
+      "job_id": "forward_cat_natural",
+      "pid": 2119,
+      "log": "runs/nm_mask_logs/forward_cat_natural_resumed.log",
+      "start_at_utc": "2026-09-15T02:57:13.122555+00:00",
+      "job_sha256": "dd13945fbff84ab5bdfd1abb6258f0851fdf718d3bcec0ec0a9cae67b42b9e8d",
+      "runner_sha256": "5ca56eeacb71be96d52eede8b466126a120b9d1db8e7f2ff8f71873c29ce8727",
+      "original_failure_preserved": true,
+      "native_fit_repeated": false
+    },
+    {
+      "created_at_utc": "2026-09-15T02:56:51.093069+00:00",
+      "worker": "arcw5",
+      "job_id": "forward_lgb_augmented",
+      "pid": 2007,
+      "log": "runs/nm_mask_logs/forward_lgb_augmented_resumed.log",
+      "start_at_utc": "2026-09-15T02:57:13.122555+00:00",
+      "job_sha256": "0a5b4990dd70bcb66124e3ad75314c4f5090007dbffaf47706ce835844d8107d",
+      "runner_sha256": "5ca56eeacb71be96d52eede8b466126a120b9d1db8e7f2ff8f71873c29ce8727",
+      "original_failure_preserved": true,
+      "native_fit_repeated": false
+    },
+    {
+      "created_at_utc": "2026-09-15T02:56:51.118527+00:00",
+      "worker": "arcw7",
+      "job_id": "forward_cat_augmented",
+      "pid": 2025,
+      "log": "runs/nm_mask_logs/forward_cat_augmented_resumed.log",
+      "start_at_utc": "2026-09-15T02:57:13.122555+00:00",
+      "job_sha256": "a1a0e83832594517bb5886fc149a0c2ecfdbd5a2fd9ebb871d6f0e064df0dbf3",
+      "runner_sha256": "5ca56eeacb71be96d52eede8b466126a120b9d1db8e7f2ff8f71873c29ce8727",
+      "original_failure_preserved": true,
+      "native_fit_repeated": false
+    }
+  ]
+}

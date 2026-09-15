@@ -1,0 +1,396 @@
+{
+  "arrival_context_rows": 2261572,
+  "arrival_only_raw_columns": [
+    "MVT_ID_mvt",
+    "FLIGHT_ID_mvt",
+    "PHASE_mvt",
+    "MVT_TIME_UTC_mvt",
+    "BLOCK_TIME_UTC_mvt",
+    "TAXITIME_SEC_mvt",
+    "ADES_mvt",
+    "RUNWAY_mvt",
+    "STAND_mvt"
+  ],
+  "arrival_rows_excluded_missing_context": 1,
+  "audit_used": false,
+  "code_sha256": "e80451523506177414827544b0e8cc20c17edbc8a9fa7032fba4e195a184e049",
+  "created_at_utc": "2026-09-14T17:44:38.045331+00:00",
+  "declaration_sha256": "6804ceff1a6014daf453a2cac081bacfc188cfd67a672131456ae806df7bf3f9",
+  "feature_artifact": "runs/research_next_lever/arrival_context_features.parquet",
+  "feature_artifact_sha256": "44433e6b6b4dbd60451b88c3601363d7169f52a130f4e6a0f0ddc0e492f0e31d",
+  "fitting_ids_sha256": "80a1be14df0147c8d3cb08fd005fda24a109d5daf1b11c46ed2c81dd3b400682",
+  "fitting_months": [
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-08",
+    "2025-09"
+  ],
+  "fitting_rows": 111177,
+  "fitting_signal": {
+    "all": {
+      "features": {
+        "arrival_airport_10800s_count": {
+          "finite_rows": 111177,
+          "nonzero_rows": 111067,
+          "pearson_centered_raw_proxy_residual": -0.012215889060658795,
+          "spearman_centered_raw_proxy_residual": 0.03996657328028041
+        },
+        "arrival_airport_10800s_negative_fraction": {
+          "finite_rows": 111067,
+          "nonzero_rows": 1311,
+          "pearson_centered_raw_proxy_residual": -0.008144787542079025,
+          "spearman_centered_raw_proxy_residual": -0.06334879471020749
+        },
+        "arrival_airport_10800s_normal_mean": {
+          "finite_rows": 111067,
+          "nonzero_rows": 111067,
+          "pearson_centered_raw_proxy_residual": 0.032398097345745544,
+          "spearman_centered_raw_proxy_residual": 0.04297632541669092
+        },
+        "arrival_airport_10800s_over3h_fraction": {
+          "finite_rows": 111067,
+          "nonzero_rows": 203,
+          "pearson_centered_raw_proxy_residual": -0.0015852770261411276,
+          "spearman_centered_raw_proxy_residual": 0.02502525852598229
+        },
+        "arrival_airport_10800s_raw_mean": {
+          "finite_rows": 111067,
+          "nonzero_rows": 111067,
+          "pearson_centered_raw_proxy_residual": 0.020812156230251917,
+          "spearman_centered_raw_proxy_residual": 0.042345279896743235
+        },
+        "arrival_airport_3600s_count": {
+          "finite_rows": 111177,
+          "nonzero_rows": 110946,
+          "pearson_centered_raw_proxy_residual": -0.0227587660387176,
+          "spearman_centered_raw_proxy_residual": -0.0191287879459758
+        },
+        "arrival_airport_3600s_negative_fraction": {
+          "finite_rows": 110946,
+          "nonzero_rows": 487,
+          "pearson_centered_raw_proxy_residual": -0.011908311785792738,
+          "spearman_centered_raw_proxy_residual": -0.06660588709494464
+        },
+        "arrival_airport_3600s_normal_mean": {
+          "finite_rows": 110946,
+          "nonzero_rows": 110946,
+          "pearson_centered_raw_proxy_residual": 0.043707734017547774,
+          "spearman_centered_raw_proxy_residual": 0.05644221531232265
+        },
+        "arrival_airport_3600s_over3h_fraction": {
+          "finite_rows": 110946,
+          "nonzero_rows": 74,
+          "pearson_centered_raw_proxy_residual": -0.00636889231270601,
+          "spearman_centered_raw_proxy_residual": 0.02229440356760558
+        },
+        "arrival_airport_3600s_raw_mean": {
+          "finite_rows": 110946,
+          "nonzero_rows": 110946,
+          "pearson_centered_raw_proxy_residual": 0.01986785166984917,
+          "spearman_centered_raw_proxy_residual": 0.055940231232574474
+        },
+        "arrival_runway_10800s_count": {
+          "finite_rows": 111177,
+          "nonzero_rows": 31833,
+          "pearson_centered_raw_proxy_residual": -0.012612526797427309,
+          "spearman_centered_raw_proxy_residual": -0.028993434385365956
+        },
+        "arrival_runway_10800s_normal_mean": {
+          "finite_rows": 31765,
+          "nonzero_rows": 31763,
+          "pearson_centered_raw_proxy_residual": 0.03618954198601795,
+          "spearman_centered_raw_proxy_residual": 0.08018633330246223
+        },
+        "arrival_stand_604800s_count": {
+          "finite_rows": 111177,
+          "nonzero_rows": 110882,
+          "pearson_centered_raw_proxy_residual": -0.004082765921588585,
+          "spearman_centered_raw_proxy_residual": 0.038472086724015336
+        },
+        "arrival_stand_604800s_normal_mean": {
+          "finite_rows": 110879,
+          "nonzero_rows": 110879,
+          "pearson_centered_raw_proxy_residual": 0.04747458833922382,
+          "spearman_centered_raw_proxy_residual": 0.08264078662452316
+        }
+      },
+      "rows": 111177
+    },
+    "clock_available_0": {
+      "features": {
+        "arrival_airport_10800s_count": {
+          "finite_rows": 12179,
+          "nonzero_rows": 12173,
+          "pearson_centered_raw_proxy_residual": -0.10337338754256327,
+          "spearman_centered_raw_proxy_residual": -0.06824637231493867
+        },
+        "arrival_airport_10800s_negative_fraction": {
+          "finite_rows": 12173,
+          "nonzero_rows": 244,
+          "pearson_centered_raw_proxy_residual": -0.022271895744159963,
+          "spearman_centered_raw_proxy_residual": -0.10132334383088473
+        },
+        "arrival_airport_10800s_normal_mean": {
+          "finite_rows": 12173,
+          "nonzero_rows": 12173,
+          "pearson_centered_raw_proxy_residual": 0.06118505735354805,
+          "spearman_centered_raw_proxy_residual": 0.04306395111056441
+        },
+        "arrival_airport_10800s_over3h_fraction": {
+          "finite_rows": 12173,
+          "nonzero_rows": 18,
+          "pearson_centered_raw_proxy_residual": -0.018338109656066436,
+          "spearman_centered_raw_proxy_residual": -0.07252078068196059
+        },
+        "arrival_airport_10800s_raw_mean": {
+          "finite_rows": 12173,
+          "nonzero_rows": 12173,
+          "pearson_centered_raw_proxy_residual": 0.042492154864581265,
+          "spearman_centered_raw_proxy_residual": 0.04285617086021984
+        },
+        "arrival_airport_3600s_count": {
+          "finite_rows": 12179,
+          "nonzero_rows": 12157,
+          "pearson_centered_raw_proxy_residual": -0.06522801956764596,
+          "spearman_centered_raw_proxy_residual": -0.06711847097680768
+        },
+        "arrival_airport_3600s_negative_fraction": {
+          "finite_rows": 12157,
+          "nonzero_rows": 141,
+          "pearson_centered_raw_proxy_residual": -0.024006537991694832,
+          "spearman_centered_raw_proxy_residual": -0.09804442734761033
+        },
+        "arrival_airport_3600s_normal_mean": {
+          "finite_rows": 12157,
+          "nonzero_rows": 12157,
+          "pearson_centered_raw_proxy_residual": 0.07676622056118387,
+          "spearman_centered_raw_proxy_residual": 0.08540085320343714
+        },
+        "arrival_airport_3600s_over3h_fraction": {
+          "finite_rows": 12157,
+          "nonzero_rows": 8,
+          "pearson_centered_raw_proxy_residual": -0.037100480251550355,
+          "spearman_centered_raw_proxy_residual": -0.06940389438283394
+        },
+        "arrival_airport_3600s_raw_mean": {
+          "finite_rows": 12157,
+          "nonzero_rows": 12157,
+          "pearson_centered_raw_proxy_residual": 0.07224725723670726,
+          "spearman_centered_raw_proxy_residual": 0.08606484957506953
+        },
+        "arrival_runway_10800s_count": {
+          "finite_rows": 12179,
+          "nonzero_rows": 4038,
+          "pearson_centered_raw_proxy_residual": -0.026026327307892293,
+          "spearman_centered_raw_proxy_residual": -0.06156168868613555
+        },
+        "arrival_runway_10800s_normal_mean": {
+          "finite_rows": 3970,
+          "nonzero_rows": 3968,
+          "pearson_centered_raw_proxy_residual": 0.057964572496667414,
+          "spearman_centered_raw_proxy_residual": 0.25449256469149556
+        },
+        "arrival_stand_604800s_count": {
+          "finite_rows": 12179,
+          "nonzero_rows": 12061,
+          "pearson_centered_raw_proxy_residual": -0.0407799611280195,
+          "spearman_centered_raw_proxy_residual": 0.017190290864305534
+        },
+        "arrival_stand_604800s_normal_mean": {
+          "finite_rows": 12058,
+          "nonzero_rows": 12058,
+          "pearson_centered_raw_proxy_residual": 0.06357238630041148,
+          "spearman_centered_raw_proxy_residual": 0.2326577052917009
+        }
+      },
+      "rows": 12179
+    },
+    "clock_available_1": {
+      "features": {
+        "arrival_airport_10800s_count": {
+          "finite_rows": 98998,
+          "nonzero_rows": 98894,
+          "pearson_centered_raw_proxy_residual": 0.030330693269240754,
+          "spearman_centered_raw_proxy_residual": 0.05488752986905605
+        },
+        "arrival_airport_10800s_negative_fraction": {
+          "finite_rows": 98894,
+          "nonzero_rows": 1067,
+          "pearson_centered_raw_proxy_residual": 0.0019829833657315633,
+          "spearman_centered_raw_proxy_residual": -0.06430160887078515
+        },
+        "arrival_airport_10800s_normal_mean": {
+          "finite_rows": 98894,
+          "nonzero_rows": 98894,
+          "pearson_centered_raw_proxy_residual": 0.024527432229034737,
+          "spearman_centered_raw_proxy_residual": 0.04345003563772308
+        },
+        "arrival_airport_10800s_over3h_fraction": {
+          "finite_rows": 98894,
+          "nonzero_rows": 185,
+          "pearson_centered_raw_proxy_residual": 0.0009113738666731057,
+          "spearman_centered_raw_proxy_residual": 0.04140983776058883
+        },
+        "arrival_airport_10800s_raw_mean": {
+          "finite_rows": 98894,
+          "nonzero_rows": 98894,
+          "pearson_centered_raw_proxy_residual": 0.01679707914763086,
+          "spearman_centered_raw_proxy_residual": 0.042949815103333656
+        },
+        "arrival_airport_3600s_count": {
+          "finite_rows": 98998,
+          "nonzero_rows": 98789,
+          "pearson_centered_raw_proxy_residual": -0.008974552387140813,
+          "spearman_centered_raw_proxy_residual": -0.012247475671456875
+        },
+        "arrival_airport_3600s_negative_fraction": {
+          "finite_rows": 98789,
+          "nonzero_rows": 346,
+          "pearson_centered_raw_proxy_residual": 0.00014917921512423642,
+          "spearman_centered_raw_proxy_residual": -0.0669220143773753
+        },
+        "arrival_airport_3600s_normal_mean": {
+          "finite_rows": 98789,
+          "nonzero_rows": 98789,
+          "pearson_centered_raw_proxy_residual": 0.03464125160682987,
+          "spearman_centered_raw_proxy_residual": 0.051379783137181806
+        },
+        "arrival_airport_3600s_over3h_fraction": {
+          "finite_rows": 98789,
+          "nonzero_rows": 66,
+          "pearson_centered_raw_proxy_residual": -0.0025165141727529175,
+          "spearman_centered_raw_proxy_residual": 0.041022701635550995
+        },
+        "arrival_airport_3600s_raw_mean": {
+          "finite_rows": 98789,
+          "nonzero_rows": 98789,
+          "pearson_centered_raw_proxy_residual": 0.015431254120219723,
+          "spearman_centered_raw_proxy_residual": 0.051170452333457066
+        },
+        "arrival_runway_10800s_count": {
+          "finite_rows": 98998,
+          "nonzero_rows": 27795,
+          "pearson_centered_raw_proxy_residual": -0.008582653914628357,
+          "spearman_centered_raw_proxy_residual": -0.02557699984352071
+        },
+        "arrival_runway_10800s_normal_mean": {
+          "finite_rows": 27795,
+          "nonzero_rows": 27795,
+          "pearson_centered_raw_proxy_residual": 0.037646452722930865,
+          "spearman_centered_raw_proxy_residual": 0.050618054149589746
+        },
+        "arrival_stand_604800s_count": {
+          "finite_rows": 98998,
+          "nonzero_rows": 98821,
+          "pearson_centered_raw_proxy_residual": 0.01585262820598583,
+          "spearman_centered_raw_proxy_residual": 0.038863138693450525
+        },
+        "arrival_stand_604800s_normal_mean": {
+          "finite_rows": 98821,
+          "nonzero_rows": 98821,
+          "pearson_centered_raw_proxy_residual": 0.052222937721577746,
+          "spearman_centered_raw_proxy_residual": 0.05383875513205073
+        }
+      },
+      "rows": 98998
+    }
+  },
+  "independent_direct_scan": {
+    "feature_values": 896,
+    "maximum_absolute_difference": 0.0,
+    "query_rows": 64
+  },
+  "input_sha256": {
+    "ranking.parquet": "9db75e3a56fa09b87aab72e191a53da3fe763d9887ad2b23aea9cde6a6325f86",
+    "training_2025-01-01_2025-02-01.parquet": "a4dc8f152c082c650cd7eb745fe9c641089f34f74df127e6944a188990a0ed94",
+    "training_2025-02-01_2025-03-01.parquet": "b6f9ff2cdb1cfe07c5442f4e1f11bbcdbeafe52852dcb0b8175f62ab84c6a066",
+    "training_2025-03-01_2025-04-01.parquet": "58fde7e5f8b539546af63b41d7f6ec0f2884fdc3d3dd9b6bfca7c59a420dcdd3",
+    "training_2025-04-01_2025-05-01.parquet": "9ffe0cf5741c4863799c41be81475dfaecedabe0ba687b8f8e4eacba992f9390",
+    "training_2025-05-01_2025-06-01.parquet": "5481c0642a8fbb4dc395f93bc713c57f4cc16854fb361d404967077e1fce2ff9",
+    "training_2025-06-01_2025-07-01.parquet": "c3ef5080f2cc636c3416baf1555f7d0ee3519f9046e8043c1c0c8f017a244025",
+    "training_2025-07-01_2025-08-01.parquet": "34d1c5bba7c8596a1c20c09edd3cb2f63277b5a684fa801911660fe0eaf63c9d",
+    "training_2025-08-01_2025-09-01.parquet": "6c8d2aa7a1b6c9dff9a0305a37eb02de1e87a68d07557264f41b77738272c540",
+    "training_2025-09-01_2025-10-01.parquet": "955308a4000947e32a00586d3ee13928949d2231b67f84f6dfb0631893f3754a",
+    "training_2025-10-01_2025-11-01.parquet": "4a31a35601c1bdcd74b8cd6379231ba516a48324e4c2478bf1c9360cd23e687f",
+    "training_2025-11-01_2025-12-01.parquet": "ac36b17db7a537e3baeb682fa4763dacaa1fcc5d9bfa6bf32b3ee5d9f91300b0",
+    "training_2025-12-01_2026-01-01.parquet": "2d357f2f403a86778a69e93f72d8754effe77f1ac0942399b3d1b7728241f724"
+  },
+  "interpretation": "Only supplied past completed arrivals enter context. Departure labels are restricted to a common-fitting sample; these are raw offset-residual correlations, not incremental v6 improvement or complete validation scores. Arrival quality means have explicit population flags; no departure is clipped or filtered. A model experiment needs a new declaration.",
+  "models_fitted": 0,
+  "predictions_changed": false,
+  "query_raw_columns": [
+    "MVT_ID_mvt",
+    "FLIGHT_ID_mvt",
+    "PHASE_mvt",
+    "MVT_TIME_UTC_mvt",
+    "ADEP_mvt",
+    "RUNWAY_mvt",
+    "STAND_mvt",
+    "AOBT_3_flt",
+    "LOBT_flt"
+  ],
+  "ranking_covariate_coverage": {
+    "features": {
+      "arrival_airport_10800s_count": {
+        "finite_rows": 344841,
+        "nonzero_rows": 344604
+      },
+      "arrival_airport_10800s_negative_fraction": {
+        "finite_rows": 344604,
+        "nonzero_rows": 2792
+      },
+      "arrival_airport_10800s_normal_mean": {
+        "finite_rows": 344602,
+        "nonzero_rows": 344602
+      },
+      "arrival_airport_10800s_over3h_fraction": {
+        "finite_rows": 344604,
+        "nonzero_rows": 412
+      },
+      "arrival_airport_10800s_raw_mean": {
+        "finite_rows": 344604,
+        "nonzero_rows": 344604
+      },
+      "arrival_airport_3600s_count": {
+        "finite_rows": 344841,
+        "nonzero_rows": 344210
+      },
+      "arrival_airport_3600s_negative_fraction": {
+        "finite_rows": 344210,
+        "nonzero_rows": 934
+      },
+      "arrival_airport_3600s_normal_mean": {
+        "finite_rows": 344210,
+        "nonzero_rows": 344210
+      },
+      "arrival_airport_3600s_over3h_fraction": {
+        "finite_rows": 344210,
+        "nonzero_rows": 164
+      },
+      "arrival_airport_3600s_raw_mean": {
+        "finite_rows": 344210,
+        "nonzero_rows": 344210
+      },
+      "arrival_runway_10800s_count": {
+        "finite_rows": 344841,
+        "nonzero_rows": 91008
+      },
+      "arrival_runway_10800s_normal_mean": {
+        "finite_rows": 90911,
+        "nonzero_rows": 90909
+      },
+      "arrival_stand_604800s_count": {
+        "finite_rows": 344841,
+        "nonzero_rows": 342152
+      },
+      "arrival_stand_604800s_normal_mean": {
+        "finite_rows": 342148,
+        "nonzero_rows": 342148
+      }
+    },
+    "rows": 344841
+  }
+}

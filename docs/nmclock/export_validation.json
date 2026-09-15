@@ -1,0 +1,35 @@
+{
+  "checked_at_utc": "2026-09-14T05:52:52.738675+00:00",
+  "endpoint": "https://s3.opensky-network.org",
+  "bucket": "prc-2026-vigorous-whistle",
+  "filename": "vigorous-whistle_v6.parquet",
+  "sha256": "b81c2030118a8b7693718a40ba4caf3e1e7d90103899d65f8c5a37a2cd5578e5",
+  "size_bytes": 1351547,
+  "inputs": {
+    "ranking.parquet": {
+      "etag": "838b6c57f7c3c6b491a169c0c1516d55-3",
+      "size_bytes": 43564605,
+      "matches_frozen_input": true
+    },
+    "submitting.parquet": {
+      "etag": "03044267cf6c774914ae275dfd29d0e0",
+      "size_bytes": 1677097,
+      "matches_frozen_input": true
+    }
+  },
+  "existing_remote_versions": [
+    "vigorous-whistle_v1.parquet",
+    "vigorous-whistle_v2.parquet",
+    "vigorous-whistle_v3.parquet",
+    "vigorous-whistle_v4.parquet",
+    "vigorous-whistle_v5.parquet"
+  ],
+  "rolling_24h_count": 5,
+  "bucket_bytes_before": 6693332,
+  "upload_permitted_by_guard": false,
+  "guard_reason": "Five submissions are present in the last 24 hours; wait for capacity.",
+  "earliest_guard_release_with_one_second_buffer_utc": "2026-09-14T14:49:06.379000+00:00",
+  "policy": "Existing conservative rolling 24-hour guard; organizer reset timezone remains unverified.",
+  "upload_performed": false,
+  "refit_run_sha256": "2583ef8a495f7ee63b60acd8dfd3b9be69f7e9a22fafb2bb061bde717740c152"
+}

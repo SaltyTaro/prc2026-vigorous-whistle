@@ -1,0 +1,16 @@
+{
+  "active_ground_population": "Retrospective intervals use offblock < query <= takeoff, exclude the focal ID, and require a positive NM interval of at most six hours. The supplied takeoff endpoint is also used for this interval-quality gate even when it follows the query; this is explicitly retrospective. No online feature-availability claim is made.",
+  "anchors": "Query times are takeoff and the supplied NM offblock if it lies from zero to six hours before takeoff. Otherwise use takeoff minus twenty minutes for context only, with an explicit fallback flag. Original clock predictors and residual offsets are never clipped or repaired.",
+  "audit_used": false,
+  "created_at_utc": "2026-09-14T17:07:27.224068+00:00",
+  "flown_arrival": "ARVT_3_flt is the supplied flown-trajectory arrival timestamp; it occurs after departure and is used under the documented post-operations task, with no claim of online availability. Earlier package exclusions remain frozen; no field-specific organizer ban was identified in the retrieved official pages.",
+  "past_completed_proxies": "Other departures movement-minus-NM-offblock proxies enter summaries only when their takeoff is strictly before the query time. No airport-reported departure block time or target is read.",
+  "past_pushbacks": "Other departures supplied AOBT, then LOBT, enter histories when the offblock timestamp is strictly before the query. Records may describe a flight that takes off later. Its future takeoff is not a demand event. Exact focal ID is excluded.",
+  "protection": "All December movement context is excluded by actual UTC time, all original protected flight groups remain intact, all scoring rows and signed/extreme labels are retained. Shared features read only their explicit raw projection.",
+  "source_review": {
+    "path": "docs/next_lever/field_use_review.json",
+    "sha256": "e923cc0b34b00ed62ca99885be1f937e3820fa2c6465ea9c02a9c4e5589f54dc"
+  },
+  "stand_context": "Same-stand prior NM offblocks and prior landings only; no arrival or departure airport block time is read. Missing stand/runway codes are excluded from pooled context.",
+  "uncertainty": "No administrator contact is made."
+}

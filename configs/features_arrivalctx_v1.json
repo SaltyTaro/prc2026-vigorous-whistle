@@ -1,0 +1,109 @@
+{
+  "arrival_only_columns": [
+    "MVT_ID_mvt",
+    "FLIGHT_ID_mvt",
+    "PHASE_mvt",
+    "MVT_TIME_UTC_mvt",
+    "BLOCK_TIME_UTC_mvt",
+    "TAXITIME_SEC_mvt",
+    "ADES_mvt",
+    "RUNWAY_mvt",
+    "STAND_mvt"
+  ],
+  "audit_used": false,
+  "context_rule": "Only supplied ARR rows. Completion=max(landing, arrival block); completion must be strictly before the query. Exclude every occurrence of focal flight ID. Arrival-only label values define past taxi-in means/anomaly fractions; no departure block or label enters context. Preserve all signed/extreme departure targets. Missing runway/stand codes never form pooled groups.",
+  "declared_at_utc": "2026-09-14T17:48:33.451035+00:00",
+  "departure_labels_used_in_shared_features": false,
+  "feature_policy": "past-completed-arrival-context-v1",
+  "field_use_review": {
+    "path": "docs/next_lever/arrival_context_audit_declaration.json",
+    "sha256": "6804ceff1a6014daf453a2cac081bacfc188cfd67a672131456ae806df7bf3f9"
+  },
+  "new_feature_names": [
+    "arrival_airport_3600s_count",
+    "arrival_airport_3600s_raw_mean",
+    "arrival_airport_3600s_normal_mean",
+    "arrival_airport_3600s_negative_fraction",
+    "arrival_airport_3600s_over3h_fraction",
+    "arrival_airport_10800s_count",
+    "arrival_airport_10800s_raw_mean",
+    "arrival_airport_10800s_normal_mean",
+    "arrival_airport_10800s_negative_fraction",
+    "arrival_airport_10800s_over3h_fraction",
+    "arrival_runway_10800s_count",
+    "arrival_runway_10800s_normal_mean",
+    "arrival_stand_604800s_count",
+    "arrival_stand_604800s_normal_mean"
+  ],
+  "previous_bundle_id": "72e86725e23367ede5b558027cfc8eeb7ef6cfbaed23980537766ef6a34a7f34",
+  "prior_fitting_audit": {
+    "path": "docs/next_lever/arrival_context_audit.json",
+    "sha256": "8a1e0f0729e499499bc6039baf642059646ba46a1aeb62b4225f0450556e9246"
+  },
+  "query_columns": [
+    "MVT_ID_mvt",
+    "FLIGHT_ID_mvt",
+    "PHASE_mvt",
+    "MVT_TIME_UTC_mvt",
+    "ADEP_mvt",
+    "RUNWAY_mvt",
+    "STAND_mvt"
+  ],
+  "ranking_months": [
+    "2026-01",
+    "2026-07"
+  ],
+  "statistic_specifications": [
+    [
+      "airport",
+      3600,
+      [
+        "count",
+        "raw_mean",
+        "normal_mean",
+        "negative_fraction",
+        "over3h_fraction"
+      ]
+    ],
+    [
+      "airport",
+      10800,
+      [
+        "count",
+        "raw_mean",
+        "normal_mean",
+        "negative_fraction",
+        "over3h_fraction"
+      ]
+    ],
+    [
+      "runway",
+      10800,
+      [
+        "count",
+        "normal_mean"
+      ]
+    ],
+    [
+      "stand",
+      604800,
+      [
+        "count",
+        "normal_mean"
+      ]
+    ]
+  ],
+  "training_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11"
+  ]
+}

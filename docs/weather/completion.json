@@ -1,0 +1,208 @@
+{
+  "checks": {
+    "azure": {
+      "passed_tests": 102
+    },
+    "full_verification_reports": [
+      "docs/weather/verification_refit.json",
+      "docs/weather/local_verification_refit.json"
+    ],
+    "local": {
+      "passed_tests": 102
+    },
+    "python_files_parsed": 22
+  },
+  "competition_objective": "top three remains outstanding",
+  "compute": {
+    "active_prc_jobs_at_final_check": [],
+    "additional_workers_started": false,
+    "filesystem_free_bytes_at_final_check": 3825537024,
+    "provider": "Azure",
+    "vm_power_action": "none",
+    "workers_used": [
+      "arcw0"
+    ]
+  },
+  "created_at_utc": "2026-09-14T03:21:04.544013+00:00",
+  "december_audit_used": false,
+  "development_rmse_seconds": {
+    "forward": 240.6522204681083,
+    "seasonal": 365.17113997523455
+  },
+  "evidence_sha256": {
+    "README.md": "08603d4c631694f0f063c5d3f7f9007df7d2ee222f9f43d5be82dbaef1d627f4",
+    "configs/features_weather_v1.json": "abf1291816a409691ed67c6d541a40234487130be12fa76942e5b8d9ae7e7606",
+    "configs/weather_v1.json": "d96ae43cd3252c9f78d0d78d4ae95780a89dd4efd31657fdfa8c7c325047fab8",
+    "docs/competition/PROJECT_PLAN.md": "852dabfab936b416c6fcb2fd695bf33427fe92fa540330f4f55f7f0131d2f440",
+    "docs/weather/README.md": "a72b7e3bda375a5c5691035b87f47df6a709d50721573ec886197924b6af9e51",
+    "docs/weather/analysis.json": "69efbc4a6a335864ef6d52aa428016a5ad606404db61dda2c6b9519e160f2196",
+    "docs/weather/azure_status.json": "05bcf0d7e22dca7cc9d574d1154f6cea3f948bbde8cf7c4834d02eab84715aa8",
+    "docs/weather/code_package_final.json": "7964a00ab24e24effc26f72ed6081126116a192dd8b1f517456e862a14796d17",
+    "docs/weather/code_package_initial.json": "894f71f3eff9c07b2c26ec81a2d7bc1104af64fbf4c09f49150e62a66f86cb90",
+    "docs/weather/covariate_audit.json": "c32755aff4aa76e1088dea2ccdb8292b29073f47b1eac15c0715af176d3a90e6",
+    "docs/weather/declaration.json": "65e3cf91b47f4bfd1f8b0b00e62462f4f74202adc85327daf08b9c506ae9f1db",
+    "docs/weather/development_archive.json": "36ebbd9d79f3cb1f9731d4eb33f3586d2224d45914911217e3308771b034e7f7",
+    "docs/weather/development_results.json": "1228b7b16d3bea90229da139fb51ee714cf323472f3796604d40b1a7178351f3",
+    "docs/weather/feature_archive.json": "c59294026bcb13c3e0da29cdcd98f34f844d5331573923fadf5240929584c54e",
+    "docs/weather/leaderboard_snapshot.json": "20ce51d81923a1936c0d1bfd8a996df1b78e690aa66bba609c44b69b60afbea1",
+    "docs/weather/local_verification.json": "fc137936db4074bad3405b61aa9af92a5ef4d6646590ac740ffa69bb674f3a21",
+    "docs/weather/local_verification_refit.json": "ce8bc7f6e61f01d78d38cf081bbf07308589978d876afa260dfcced4da4189c5",
+    "docs/weather/official_result.json": "4b8203148d63aea96cec61ab5a922c55e6b2acb43b07e8a9279150e63ae3a7ea",
+    "docs/weather/platform_comparison.json": "c4bc754723c65c6bbd7df25bfa6368a34fe680fdc26c3a9a33e3ab3fa00a7a0a",
+    "docs/weather/pressure_review.json": "3d2b59a49f192e937d5463e4a9c0a36f364e12e53a9dc9a99b93d417f477a42e",
+    "docs/weather/pressure_sensitivity.json": "e9a612987c357b87e09202e0b151c9c20f81d3ed3f4275b5edea72c14fb42f1a",
+    "docs/weather/refit_archive.json": "9e1d8264d6fc4313296721d4f3f2e69f7b140c86534442b88946bf0bb7b08d1f",
+    "docs/weather/refit_summary.json": "4c323aed3d2ccfb9897f13176b69e63f8edf98b5ca8f049aa6947ac0ec60b9fd",
+    "docs/weather/refit_tests_azure.xml": "ef9713be2cbe9a1affd5225fe3c3b2155c9e04af80097ca51b10797d36945e64",
+    "docs/weather/refit_tests_local.xml": "8cab4aaf4328d01a550a2d5dbed453c8d71c542cee246357641a140877f53b05",
+    "docs/weather/selected_diagnostics.json": "ccf85d2ba543db19649371fd17ce5cd2a20326689a908a9c892214fbdb47147f",
+    "docs/weather/submission_v5.json": "cfea3cc5d5a2883aa9c8cb4379b589395afcd5d0db1306637dbb3beef8e6bcc3",
+    "docs/weather/submission_v5_upload.json": "8ffcc95c12672eeb11f6891656dc67ab5921884cc1fa44e4530900427a41485c",
+    "docs/weather/team_status_before_decision.json": "ba7bc6fa204b2994ab6c2279e0a3a29fbacdef20871b6719d5e483a683fb9110",
+    "docs/weather/tests_azure.xml": "502a0b18004277665c13e7f3d3aba11d460bfd5551de65db1c607f55948d88ed",
+    "docs/weather/tests_local.xml": "d04fb07f93559b237590257c3d420a6e16dce8fa27b45d4eb76771408df53ae4",
+    "docs/weather/verification.json": "5fe645c84368206c349748d4178c3d5f4473cf6c17fecfbf1a4283c046887977",
+    "docs/weather/verification_refit.json": "55b42ac70a23cdc7f8869a7a84bd24cadb19b51b66a0617260d1e1a576e43601",
+    "runs/azure_arcw0_weather/20260914T024435836344Z_refit_cat_weather_v4_100/run.json": "507b653bd67b671309f5b7aa257f1b6231a91b6a1669088718af30d7c76663b3"
+  },
+  "feature_bundle_id": "827d828796d9cb9c45811d48b0d9647659c187dd719d6ba3caa771a16bfe1ce8",
+  "feature_code_sha256": "de47c446f35ea59ab5085f1a2e1375e20534d0b16f35abca6fc02143d3c06e40",
+  "limitations": [
+    "Development folds have been reused for selection; December remains reserved for an independent final audit.",
+    "Weather publication times are unavailable; the fixed 15-minute observation delay is a convention.",
+    "Runway data is a static public-domain snapshot, not historical operation information.",
+    "Further large experiment batches require planning around the measured remaining disk space."
+  ],
+  "model_code_sha256": "2595cf585a898a29c4375361439d660f3c82019e51f6decb707d98188a00bb6e",
+  "official": {
+    "filename": "vigorous-whistle_v5.parquet",
+    "processedAt": "2026-09-14T03:12:45.201442Z",
+    "score": 322.9266,
+    "submissionId": "37c0c8b5-f984-4403-af02-bf776e89aab2",
+    "teamId": "64cf67d0-5b26-49db-bd82-7b12ca4411ce",
+    "teamName": "vigorous-whistle",
+    "usedPairs": 344841
+  },
+  "official_improvement_fraction": 0.011518276528630356,
+  "official_improvement_seconds": 3.762900000000002,
+  "pipeline": "50% weather CatBoost and 50% unchanged original-seed airport models",
+  "preserved_submission_sha256": {
+    "vigorous-whistle_v1.parquet": "ba074016e32978fd8817aac138a6afaf4b3fe4d463a87b1a00f330872fef7e6e",
+    "vigorous-whistle_v2.parquet": "98efb0ff6fab73afa04763db7b7e19d81cbdfa5ed808e1cd4257d409c1fe9724",
+    "vigorous-whistle_v3.parquet": "c445bc304ea3f548890fae74825a55ec3d2be6d4f7404e65d4b40ef8883cf7f5",
+    "vigorous-whistle_v4.parquet": "bcde3c25fd38456099e69278e35ccd9d629882e1c742657eab4701a1e36d0f90",
+    "vigorous-whistle_v5.parquet": "25ddc5554ce2fc059b920fbd43e58e149facc7e837c49b6e292ce434f66fa3bd"
+  },
+  "pressure_input_limitation": {
+    "decision": "Retain the unchanged validated recipe. The bounded sensitivity is documented; no source, feature, prediction, blend weight or submission was modified.",
+    "limitation": "This measures prediction sensitivity, not the effect of retraining on pressure-filtered data. It uses no hidden labels.",
+    "ranking_rows_affected": 49,
+    "rounded_rmse_sensitivity_bound_seconds": 0.41994393704678734
+  },
+  "previous_development_rmse_seconds": {
+    "forward": 244.5549008776592,
+    "seasonal": 367.0843209597658
+  },
+  "previous_official_rmse_seconds": 326.6895,
+  "refit": {
+    "active_native_models": 11,
+    "fit_ids_sha256": "ba1c387b134605f2fa6ad6a7ab4097a5f1d8efe9e5e583ff6476fb1c6562d4c8",
+    "fit_rows": 1919370,
+    "new_catboost_iterations": 5994,
+    "resources": {
+      "cpu_seconds": 16945.01,
+      "mean_active_cpu_cores": 14.666957616906998,
+      "peak_process_rss_bytes_sampled": 8673099776,
+      "rss_sample_interval_seconds": 0.05,
+      "wall_seconds": 1155.3186722559985
+    },
+    "run_id": "20260914T024435836344Z_refit_cat_weather_v4_100",
+    "run_sha256": "507b653bd67b671309f5b7aa257f1b6231a91b6a1669088718af30d7c76663b3"
+  },
+  "scientific_code_files_sha256": {
+    "requirements-phase2.txt": "b5e77a692442298b7ff4c19348ad01af4eb6fb00497a33aef10daa5647ef69f0",
+    "requirements-phase3.txt": "7a9a653b3db21f8f0c52d7d90863d62f5d095b0c715cc44deb73921237b3347b",
+    "requirements-phase4.txt": "c675d471ae3a5dfa6f2dcb6c22977ccdb980c265f729239e3519180f8c4afa8f",
+    "requirements-phase5.txt": "35c6668e317b834de84fa6289589e8f37b67c9c84b38d109327d41b749ab9f0b",
+    "requirements-phase5r.txt": "7bf1bdea0deaa3c481b1f0d771073c2db26567e72aaddc10108c1a051875f9c7",
+    "requirements-weather.txt": "ff55fa75ba443b5d79de354d7d9f33a5b2ab17b15404f3d5826f3046914c5408",
+    "src/prc2026_models/__init__.py": "64ac385d71b84688c00efd31d760b65508bde1268eadd8d2f517e7d94ccff335",
+    "src/prc2026_models/encoding.py": "1c3614a92f756c17f758683d3446f0a4e27abebc45cc1198fbcda437aa86592b",
+    "src/prc2026_models/experiments.py": "553c5e7f9c38d4203a994a0f41b3eb3526f3b81910e1944bf9a3dae5df893207",
+    "src/prc2026_phase3/bundle.py": "36212f2fffa104d6bebcc95f656e63ec913a477531077fb3617c5e9741587bc3",
+    "src/prc2026_phase3/training.py": "fa4c3372e82ee78ff5564d2ee8f2e973b50e0c6e9670a18297c31d3f824d0bd5",
+    "src/prc2026_phase4/__init__.py": "9b61cf321b62eb7f8c7f9a8f17c6ac8fa8227aebc3cc9712a52fc31f952602a4",
+    "src/prc2026_phase4/bundle.py": "1599cfc01f011994a16f41e1a5b32d3f3a6a02b5a32c61d6c52d3607306efdec",
+    "src/prc2026_phase4/encoding.py": "eaa375ef774cc00b07dbe84c033da3123caaca9f394804343234e040b1a86413",
+    "src/prc2026_phase4/features.py": "50ba225f588b4d8f4082d934a13df495af622e5efbe17fee4d9cb028738c5d9a",
+    "src/prc2026_phase4/training.py": "caf23225acf0b872d9b4764b8f3a5a3fc2478db0f208793ea158c79e881f8c34",
+    "src/prc2026_phase5/__init__.py": "36043bc6638657521c7224a89488832c6e410b05f0678607e048b2258cb9ca64",
+    "src/prc2026_phase5/inference.py": "91a3b5fc1eb493e9339bd9bba64dfed650aae282b509544aeae2b055a62f7297",
+    "src/prc2026_phase5/training.py": "ca9e1b30307436e5df9ca292f9527b4eead0193baccb0d1d36b5a19984a4bc3f",
+    "src/prc2026_phase5r/__init__.py": "a75a145724e3e7223d611ce7f6b9a2b11be2af8a7625537c5b626fa620ed4201",
+    "src/prc2026_phase5r/baseline.py": "f77aebb527d32cda62d69ed2502f80fdd8f6a154c84806b0886495c08933e832",
+    "src/prc2026_phase5r/encoding.py": "683cc50de117df62c3d0a51b8f97cf8c46d242e1a9f9911108800163c58ea909",
+    "src/prc2026_phase5r/inference.py": "f24e8af3d7e985f4219d965d4bc3fee742f542c2ecb97b924665076db512662d",
+    "src/prc2026_phase5r/training.py": "af83ed6790693ec91d3ff0e76fe75bbd1fdc40316b6b6bb906ddbd3465702b6a",
+    "src/prc2026_weather/__init__.py": "adc95b51064c225981acf97ed4ab198078b994f6113bb7f24185fe6d8e76e5b2",
+    "src/prc2026_weather/bundle.py": "694ef82d5415def8117ac855a51b2993a5fa41e00f42db144620a79b53549935",
+    "src/prc2026_weather/encoding.py": "63e99b609f27e52c2c68c850203ef043faf02be632c112740e3cef9cecd1995e",
+    "src/prc2026_weather/features.py": "b0d0af762882f87dade2aafa1690c2faf91d6607812274889ca5380576305b1f",
+    "src/prc2026_weather/inference.py": "731b6ae58990db467bfeac46dbb53e6daa913b1a08a38d06427e79b470a42d16",
+    "src/prc2026_weather/training.py": "9e44f3313c6ec184a558f131420b8fdc672ae8968184530d1d53b867bc81321f",
+    "tools/prepare_weather.py": "b4b558a26f1c988acd2b7a86697e8f5aec26f4619ac013d8d5e86f6085591e1d",
+    "tools/run_phase4.py": "c99e3c7cd437add00ccc3b68b901c6ba97f7304b5a8aa35991733ed6a795b302",
+    "tools/run_phase5.py": "87226ac94b6ab61404c4c1db76255da0d398d3b160d95dad4b8859e594666100",
+    "tools/run_phase5r.py": "c5b5c09a8168146c0ba70ea2555b2f1d18b9d5f2934a63955d290b0cce6755c2",
+    "tools/run_weather.py": "1681e834635ea51969609d686ccef1a6a0df884585caf7cb9e1d78971f72aec4"
+  },
+  "selected_candidate": "cat_weather_v4_100",
+  "standings": {
+    "checked_at_utc": "2026-09-14T03:13:54.029508+00:00",
+    "remaining_rmse_reduction_fraction_to_current_third": 0.20605363571783808,
+    "team_rank": 68,
+    "teams": 133,
+    "third_place": {
+      "processedAt": "2026-09-14T01:02:03.436883Z",
+      "score": 256.3864,
+      "submissionId": "f3ed9509-f845-4dfc-97fa-d327985c8fcf",
+      "teamId": "757e7e60-be13-4253-8188-ea3677db8255",
+      "usedPairs": 344841
+    }
+  },
+  "status": "weather campaign complete; v5 officially scored",
+  "submission": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v5.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 120549,
+    "maximum_rounding_change_seconds": 0.4999998256278104,
+    "minimum_prediction_seconds": -106,
+    "negative_predictions": 19,
+    "provenance": {
+      "audit_used": false,
+      "bundle_id": "827d828796d9cb9c45811d48b0d9647659c187dd719d6ba3caa771a16bfe1ce8",
+      "config_sha256": "d319941180483afa9e665633775d8ec2e3238ed4f5e52c67850ac20139607552",
+      "iterations": 5994,
+      "model_code_sha256": "2595cf585a898a29c4375361439d660f3c82019e51f6decb707d98188a00bb6e",
+      "model_kind": "ensemble",
+      "refit_run_id": "20260914T024435836344Z_refit_cat_weather_v4_100",
+      "refit_run_sha256": "507b653bd67b671309f5b7aa257f1b6231a91b6a1669088718af30d7c76663b3"
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "25ddc5554ce2fc059b920fbd43e58e149facc7e837c49b6e292ce434f66fa3bd",
+    "size_bytes": 1340031,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-14T03:09:15.773273+00:00",
+    "version": 5
+  }
+}

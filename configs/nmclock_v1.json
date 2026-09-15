@@ -1,0 +1,161 @@
+{
+  "airport_lightgbm": {
+    "early_stopping_rounds": 120,
+    "parameters": {
+      "lambda_l2": 20.0,
+      "min_data_in_leaf": 50,
+      "num_leaves": 31
+    },
+    "rounds": 1800
+  },
+  "airports": [
+    "EDDF",
+    "EDDM",
+    "EGLL",
+    "EHAM",
+    "LEBL",
+    "LEMD",
+    "LFPG",
+    "LIRF",
+    "LSZH",
+    "LTFM"
+  ],
+  "audit_used": false,
+  "blend_weights_new_candidate": [
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "candidate_families": {
+    "cat_direct": {
+      "cat_direct": 1.0
+    },
+    "cat_direct_residual_mean": {
+      "cat_direct": 0.5,
+      "cat_residual": 0.5
+    },
+    "cat_residual": {
+      "cat_residual": 1.0
+    },
+    "lgb_direct": {
+      "lgb_direct": 1.0
+    },
+    "lgb_residual": {
+      "lgb_residual": 1.0
+    }
+  },
+  "candidate_structure": "On rows with a finite NM clock, 50% new global and 50% new LightGBM airport models. CatBoost uses the already fitted airport models of the matching target formulation. V5 is retained exactly where both NM clocks are missing. All candidate/v5 weights are common across folds and airports.",
+  "catboost": {
+    "early_stopping_rounds": 200,
+    "parameters": {
+      "allow_writing_files": false,
+      "boosting_type": "Plain",
+      "bootstrap_type": "Bernoulli",
+      "depth": 8,
+      "eval_metric": "RMSE",
+      "l2_leaf_reg": 10.0,
+      "learning_rate": 0.055,
+      "loss_function": "RMSE",
+      "max_ctr_complexity": 1,
+      "nan_mode": "Min",
+      "one_hot_max_size": 10,
+      "random_strength": 1.0,
+      "rsm": 0.9,
+      "subsample": 0.8,
+      "task_type": "CPU"
+    },
+    "rounds": 6000
+  },
+  "declared_at_utc": "2026-09-14T03:47:15.052356+00:00",
+  "development_folds": [
+    "seasonal",
+    "forward"
+  ],
+  "experiment_id": "prc2026-nm-offblock-clock-v1",
+  "feature_configuration_sha256": "4869c37e09c76faade224083346b2b3f6a302d2b34f2f08acd250eeb8fb61d10",
+  "feature_policy": "supplied-nm-offblock-clock-v1",
+  "lightgbm": {
+    "early_stopping_rounds": 200,
+    "parameters": {
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1,
+      "cat_l2": 20.0,
+      "cat_smooth": 20.0,
+      "deterministic": true,
+      "feature_fraction": 0.9,
+      "force_col_wise": true,
+      "lambda_l2": 20.0,
+      "learning_rate": 0.04,
+      "max_bin": 255,
+      "max_cat_threshold": 32,
+      "max_cat_to_onehot": 8,
+      "metric": "rmse",
+      "min_data_in_leaf": 100,
+      "num_leaves": 127,
+      "objective": "regression",
+      "verbosity": -1
+    },
+    "rounds": 3200
+  },
+  "minimum_improvement_fraction_each_fold": 0.005,
+  "prediction_postprocess": "none",
+  "prior_evidence": "Declared after v5 and the aggregate gain review. Only the original full-data arithmetic NM proxy audit exists; no new NM-clock model or complete validation score was inspected before this declaration. Earlier generic missing-NM and stand/runway models failed promotion. No held-out-ID-specific rules are introduced.",
+  "reference_refit_run": "20260914T024435836344Z_refit_cat_weather_v4_100",
+  "reference_refit_sha256": "507b653bd67b671309f5b7aa257f1b6231a91b6a1669088718af30d7c76663b3",
+  "reference_selection": "docs/weather/development_results.json",
+  "reference_selection_sha256": "1228b7b16d3bea90229da139fb51ee714cf323472f3796604d40b1a7178351f3",
+  "refit_iterations": "Rounded median of the two October-selected counts for every selected global and airport component. New clock nodes fit only the clock-available route. All January-November rows remain represented by the pipeline, with December flight groups excluded.",
+  "refit_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11"
+  ],
+  "seed": 20260913,
+  "selection": "Eight development runs: direct and NM-residual targets with LightGBM and CatBoost on both original folds. Forty-four new LightGBM native fits and four new CatBoost fits. Five families mixed with v5 at 25/50/75/100 percent, twenty recipes. Require at least 0.5 percent lower complete RMSE on both folds and minimize their equally weighted mean RMSE ratio. No airport-specific weight tuning.",
+  "target_filter": "none",
+  "threads": 16,
+  "validation_protocol": "prc2026-validation-v1",
+  "variant_order": [
+    "lgb_direct",
+    "lgb_residual",
+    "cat_direct",
+    "cat_residual"
+  ],
+  "variants": {
+    "cat_direct": {
+      "airport_anchor": "lgb_direct",
+      "features": "core_weather_nmclock",
+      "kind": "catboost",
+      "route": "clock_available",
+      "target": "direct"
+    },
+    "cat_residual": {
+      "airport_anchor": "lgb_residual",
+      "features": "core_weather_nmclock",
+      "kind": "catboost",
+      "route": "clock_available",
+      "target": "nm_residual"
+    },
+    "lgb_direct": {
+      "features": "core_weather_nmclock",
+      "kind": "lightgbm",
+      "route": "clock_available",
+      "target": "direct"
+    },
+    "lgb_residual": {
+      "features": "core_weather_nmclock",
+      "kind": "lightgbm",
+      "route": "clock_available",
+      "target": "nm_residual"
+    }
+  }
+}

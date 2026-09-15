@@ -1,0 +1,1867 @@
+{
+  "attempt_accounting": "Eight completed declared fits plus one earlier LightGBM training attempt repeated after the recorded provenance-import error. Completed-fit resource totals exclude that preserved partial attempt.",
+  "audit_used": false,
+  "candidate_count": 10,
+  "candidates_by_mean_relative_rmse": [
+    {
+      "eligible": false,
+      "improvement_fraction": {
+        "forward": 0.006439237935908282,
+        "seasonal": 0.004568198903681875
+      },
+      "mean_relative_rmse": 0.994496281580205,
+      "name": "combined_mean_v6_100",
+      "rmse_seconds": {
+        "forward": 221.88908249663194,
+        "seasonal": 323.4327816874519
+      }
+    },
+    {
+      "eligible": false,
+      "improvement_fraction": {
+        "forward": 0.006168720388001314,
+        "seasonal": 0.0034517461110692427
+      },
+      "mean_relative_rmse": 0.9951897667504648,
+      "name": "cat_combined_v6_100",
+      "rmse_seconds": {
+        "forward": 221.94949640667767,
+        "seasonal": 323.7955362548062
+      }
+    },
+    {
+      "eligible": false,
+      "improvement_fraction": {
+        "forward": 0.004693417196269478,
+        "seasonal": 0.0032943485015446416
+      },
+      "mean_relative_rmse": 0.996006117151093,
+      "name": "combined_mean_v6_50",
+      "rmse_seconds": {
+        "forward": 222.27897164776675,
+        "seasonal": 323.84667742452115
+      }
+    },
+    {
+      "eligible": false,
+      "improvement_fraction": {
+        "forward": 0.003805610065074294,
+        "seasonal": 0.003109212963168795
+      },
+      "mean_relative_rmse": 0.9965425884858785,
+      "name": "lgb_combined_v6_50",
+      "rmse_seconds": {
+        "forward": 222.47724307443383,
+        "seasonal": 323.90683112073634
+      }
+    },
+    {
+      "eligible": false,
+      "improvement_fraction": {
+        "forward": 0.003799781632633392,
+        "seasonal": 0.002814708339523353
+      },
+      "mean_relative_rmse": 0.9966927550139216,
+      "name": "lgb_surface_v6_50",
+      "rmse_seconds": {
+        "forward": 222.47854472157618,
+        "seasonal": 324.0025206994102
+      }
+    },
+    {
+      "eligible": false,
+      "improvement_fraction": {
+        "forward": 0.0041163972735557275,
+        "seasonal": 0.002407392627049809
+      },
+      "mean_relative_rmse": 0.9967381050496973,
+      "name": "cat_combined_v6_50",
+      "rmse_seconds": {
+        "forward": 222.40783585630015,
+        "seasonal": 324.13486452624517
+      }
+    },
+    {
+      "eligible": false,
+      "improvement_fraction": {
+        "forward": 0.0008536322535589447,
+        "seasonal": 0.0013948330980587675
+      },
+      "mean_relative_rmse": 0.9988757673241911,
+      "name": "lgb_combined_v6_100",
+      "rmse_seconds": {
+        "forward": 223.13649983371525,
+        "seasonal": 324.46386239905274
+      }
+    },
+    {
+      "eligible": false,
+      "improvement_fraction": {
+        "forward": 0.0009664084062563916,
+        "seasonal": 0.0008962819994989824
+      },
+      "mean_relative_rmse": 0.9990686547971224,
+      "name": "lgb_surface_v6_100",
+      "rmse_seconds": {
+        "forward": 223.11131385817657,
+        "seasonal": 324.6258501599852
+      }
+    },
+    {
+      "eligible": false,
+      "improvement_fraction": {
+        "forward": 0.00038203999379005094,
+        "seasonal": 0.0011929999499368238
+      },
+      "mean_relative_rmse": 0.9992124800281366,
+      "name": "lgb_flown_v6_50",
+      "rmse_seconds": {
+        "forward": 223.241819183903,
+        "seasonal": 324.52944143366057
+      }
+    },
+    {
+      "eligible": false,
+      "improvement_fraction": {
+        "forward": -0.0052136723884737,
+        "seasonal": -0.001855714836892064
+      },
+      "mean_relative_rmse": 1.003534693612683,
+      "name": "lgb_flown_v6_100",
+      "rmse_seconds": {
+        "forward": 224.49149362136376,
+        "seasonal": 325.52002090177655
+      }
+    }
+  ],
+  "candidates_improving_both_folds": [
+    "combined_mean_v6_100",
+    "cat_combined_v6_100",
+    "combined_mean_v6_50",
+    "lgb_combined_v6_50",
+    "lgb_surface_v6_50",
+    "cat_combined_v6_50",
+    "lgb_combined_v6_100",
+    "lgb_surface_v6_100",
+    "lgb_flown_v6_50"
+  ],
+  "code_sha256": "1b5fd8a779bfa0657df8e4adc516f84ea9639dcd60f67d11f721a08fa2c63987",
+  "comparison_code_sha256": "84af9f82ce0738bcc0da1d39e186a42718dcac89a3e2dbebecdea698724e9daa",
+  "completed_fit_resources": {
+    "maximum_sampled_rss_bytes": 14543851520,
+    "total_cpu_seconds": 47728.61,
+    "total_wall_seconds": 3187.571038798982
+  },
+  "completed_native_fits": 8,
+  "created_at_utc": "2026-09-14T18:16:41.000428+00:00",
+  "decision": "Retain v6; no refit or submission from this batch.",
+  "eligible_candidates": [],
+  "interpretation": "Complete reused development scores, distinct from official scoring and the reserved December audit. Matched LightGBM comparisons retain the original airport models. Native importance is descriptive, not an independent estimate of incremental value. Subgroup findings do not change the declared selection rule.",
+  "leading_candidate_diagnostics": {
+    "forward": {
+      "airports_improved": 10,
+      "by_airport": {
+        "EDDF": {
+          "rmse_delta_seconds": -0.4382645626709234,
+          "rmse_seconds": 182.83982903108898,
+          "rows": 18122,
+          "sse_delta": -2907792.896785021,
+          "sse_fraction": 0.0758004407659993
+        },
+        "EDDM": {
+          "rmse_delta_seconds": -1.1655525791694572,
+          "rmse_seconds": 159.29838611355075,
+          "rows": 12562,
+          "sse_delta": -4681854.917738438,
+          "sse_fraction": 0.03988462680093596
+        },
+        "EGLL": {
+          "rmse_delta_seconds": -3.525949315236943,
+          "rmse_seconds": 202.1272882637536,
+          "rows": 19423,
+          "sse_delta": -27926650.9474411,
+          "sse_fraction": 0.09928649993474219
+        },
+        "EHAM": {
+          "rmse_delta_seconds": -2.1489530980607867,
+          "rmse_seconds": 158.77790978980414,
+          "rows": 19232,
+          "sse_delta": -13212971.76281631,
+          "sse_fraction": 0.060663659184626594
+        },
+        "LEBL": {
+          "rmse_delta_seconds": -1.2786113193431845,
+          "rmse_seconds": 162.3529327346993,
+          "rows": 13332,
+          "sse_delta": -5556876.816107333,
+          "sse_fraction": 0.04396828975318468
+        },
+        "LEMD": {
+          "rmse_delta_seconds": -1.010647212964443,
+          "rmse_seconds": 171.29085441415998,
+          "rows": 17419,
+          "sse_delta": -6048759.194788396,
+          "sse_fraction": 0.0639463208450807
+        },
+        "LFPG": {
+          "rmse_delta_seconds": -1.91280536674509,
+          "rmse_seconds": 265.07192156390266,
+          "rows": 18646,
+          "sse_delta": -18976422.272723913,
+          "sse_fraction": 0.1639219548288599
+        },
+        "LIRF": {
+          "rmse_delta_seconds": -0.27966604618063684,
+          "rmse_seconds": 459.002861838079,
+          "rows": 11328,
+          "sse_delta": -2909180.4304008484,
+          "sse_fraction": 0.29861252435860053
+        },
+        "LSZH": {
+          "rmse_delta_seconds": -0.9067174617296985,
+          "rmse_seconds": 157.8461441914055,
+          "rows": 10078,
+          "sse_delta": -2893049.605718434,
+          "sse_fraction": 0.03141711494905133
+        },
+        "LTFM": {
+          "rmse_delta_seconds": -2.0091364005825483,
+          "rmse_seconds": 210.05105148805924,
+          "rows": 22190,
+          "sse_delta": -18818874.255452514,
+          "sse_fraction": 0.12249856857891882
+        }
+      },
+      "by_month": {
+        "2025-11": {
+          "rmse_delta_seconds": -1.4380565860993784,
+          "rmse_seconds": 221.88908249663194,
+          "rows": 162332,
+          "sse_delta": -103932433.09997177,
+          "sse_fraction": 1.0
+        }
+      },
+      "by_nm_missing": {
+        "False": {
+          "rmse_delta_seconds": -1.6353263452337217,
+          "rmse_seconds": 196.58614830002207,
+          "rows": 160976,
+          "sse_delta": -103932433.09997368,
+          "sse_fraction": 0.7783787138028707
+        },
+        "True": {
+          "rmse_delta_seconds": 0.0,
+          "rmse_seconds": 1142.9149005832548,
+          "rows": 1356,
+          "sse_delta": 0.0,
+          "sse_fraction": 0.22162128619712904
+        }
+      },
+      "by_target_band": {
+        "0_to_1h": {
+          "rmse_delta_seconds": -1.592348389830363,
+          "rmse_seconds": 192.73865225062022,
+          "rows": 162092,
+          "sse_delta": -99905361.81833935,
+          "sse_fraction": 0.7533958235873429
+        },
+        "1h_to_3h": {
+          "rmse_delta_seconds": -4.9876777964373105,
+          "rmse_seconds": 1867.1007094253218,
+          "rows": 216,
+          "sse_delta": -4028372.013749957,
+          "sse_fraction": 0.09421352016721048
+        },
+        "negative": {
+          "rmse_delta_seconds": 0.07802466036440592,
+          "rmse_seconds": 463.11629498320934,
+          "rows": 18,
+          "sse_delta": 1300.7321172524244,
+          "sse_fraction": 0.00048303279893097595
+        },
+        "over_3h": {
+          "rmse_delta_seconds": 0.0,
+          "rmse_seconds": 14224.996347523604,
+          "rows": 6,
+          "sse_delta": 0.0,
+          "sse_fraction": 0.15190762344651557
+        }
+      },
+      "improvement_fraction": 0.006439237935908282,
+      "improvement_seconds": 1.4380565860993784,
+      "rmse_seconds": 221.88908249663194,
+      "rows": 162332
+    },
+    "seasonal": {
+      "airports_improved": 10,
+      "by_airport": {
+        "EDDF": {
+          "rmse_delta_seconds": -1.5448311861755997,
+          "rmse_seconds": 189.1233066695869,
+          "rows": 36830,
+          "sse_delta": -21608664.38306451,
+          "sse_fraction": 0.0365625645917465
+        },
+        "EDDM": {
+          "rmse_delta_seconds": -1.4832323160677277,
+          "rmse_seconds": 175.02674786007293,
+          "rows": 27091,
+          "sse_delta": -14125535.521129727,
+          "sse_fraction": 0.023034495754191427
+        },
+        "EGLL": {
+          "rmse_delta_seconds": -2.9122342004330903,
+          "rmse_seconds": 273.2347652011639,
+          "rows": 40210,
+          "sse_delta": -64333119.51525211,
+          "sse_fraction": 0.08332029756895472
+        },
+        "EHAM": {
+          "rmse_delta_seconds": -3.2511869412316514,
+          "rmse_seconds": 185.05189489332483,
+          "rows": 40949,
+          "sse_delta": -49705813.6279788,
+          "sse_fraction": 0.03892021227111322
+        },
+        "LEBL": {
+          "rmse_delta_seconds": -1.6143003581772746,
+          "rmse_seconds": 224.48646472165925,
+          "rows": 28986,
+          "sse_delta": -21083927.30353093,
+          "sse_fraction": 0.040542771691601844
+        },
+        "LEMD": {
+          "rmse_delta_seconds": -0.726726915705143,
+          "rmse_seconds": 178.99573766350602,
+          "rows": 35328,
+          "sse_delta": -9209662.421963215,
+          "sse_fraction": 0.031415882021442465
+        },
+        "LFPG": {
+          "rmse_delta_seconds": -0.47828347547022076,
+          "rmse_seconds": 571.080823301431,
+          "rows": 39612,
+          "sse_delta": -21648187.629535675,
+          "sse_fraction": 0.35856405525258034
+        },
+        "LIRF": {
+          "rmse_delta_seconds": -1.4225752750703577,
+          "rmse_seconds": 612.085061023283,
+          "rows": 26528,
+          "sse_delta": -46251511.45600891,
+          "sse_fraction": 0.2758499410091974
+        },
+        "LSZH": {
+          "rmse_delta_seconds": -2.450228650570466,
+          "rmse_seconds": 206.88071681648094,
+          "rows": 22346,
+          "sse_delta": -22788757.825742245,
+          "sse_fraction": 0.026545117114425233
+        },
+        "LTFM": {
+          "rmse_delta_seconds": -2.5258084622817023,
+          "rmse_seconds": 256.8932312727816,
+          "rows": 46539,
+          "sse_delta": -60691784.633282185,
+          "sse_fraction": 0.08524466272474679
+        }
+      },
+      "by_month": {
+        "2025-01": {
+          "rmse_delta_seconds": -1.1581046258261836,
+          "rmse_seconds": 345.78219419239394,
+          "rows": 153706,
+          "sse_delta": -123309888.96335983,
+          "sse_fraction": 0.5100830580853151
+        },
+        "2025-07": {
+          "rmse_delta_seconds": -1.7884049273096707,
+          "rmse_seconds": 304.2276388295321,
+          "rows": 190713,
+          "sse_delta": -208137075.35411453,
+          "sse_fraction": 0.4899169419146852
+        }
+      },
+      "by_nm_missing": {
+        "False": {
+          "rmse_delta_seconds": -2.112178700751514,
+          "rmse_seconds": 230.3606478986013,
+          "rows": 339046,
+          "sse_delta": -331446964.3174782,
+          "sse_fraction": 0.49936722441266485
+        },
+        "True": {
+          "rmse_delta_seconds": 0.0,
+          "rmse_seconds": 1832.2250047055338,
+          "rows": 5373,
+          "sse_delta": 0.0,
+          "sse_fraction": 0.5006327755873351
+        }
+      },
+      "by_target_band": {
+        "0_to_1h": {
+          "rmse_delta_seconds": -1.6336673670931816,
+          "rmse_seconds": 242.7616259827846,
+          "rows": 343355,
+          "sse_delta": -273259887.6746521,
+          "sse_fraction": 0.5616273878498462
+        },
+        "1h_to_3h": {
+          "rmse_delta_seconds": -18.470058599230242,
+          "rmse_seconds": 1976.9261558539904,
+          "rows": 921,
+          "sse_delta": -67572873.82519293,
+          "sse_fraction": 0.09990456926447462
+        },
+        "negative": {
+          "rmse_delta_seconds": 6.968563994383203,
+          "rmse_seconds": 668.5951049609699,
+          "rows": 80,
+          "sse_delta": 741578.7733087987,
+          "sse_fraction": 0.000992570123974945
+        },
+        "over_3h": {
+          "rmse_delta_seconds": 5.0379652319807064,
+          "rmse_seconds": 14235.11880679292,
+          "rows": 60,
+          "sse_delta": 8604401.168985367,
+          "sse_fraction": 0.3374568663739391
+        },
+        "zero": {
+          "rmse_delta_seconds": 14.253426114296417,
+          "rmse_seconds": 472.7134867315739,
+          "rows": 3,
+          "sse_delta": 39817.24007017235,
+          "sse_fraction": 1.86063877652262e-05
+        }
+      },
+      "improvement_fraction": 0.004568198903681875,
+      "improvement_seconds": 1.48428579144462,
+      "rmse_seconds": 323.4327816874519,
+      "rows": 344419
+    }
+  },
+  "leading_mean_ratio_candidate": "combined_mean_v6_100",
+  "matched_lightgbm_feature_comparisons": {
+    "lgb_combined": {
+      "forward": {
+        "airports_improved": 10,
+        "by_airport": {
+          "EDDF": {
+            "rmse_delta_seconds": -0.8912451784314896,
+            "rmse_seconds": 183.49905382699743,
+            "rows": 18122,
+            "sse_delta": -5941834.327000141,
+            "sse_fraction": 0.07549677712444884
+          },
+          "EDDM": {
+            "rmse_delta_seconds": -0.9406144365209173,
+            "rmse_seconds": 160.28443567838178,
+            "rows": 12562,
+            "sse_delta": -3798955.6184512973,
+            "sse_fraction": 0.03992970686880147
+          },
+          "EGLL": {
+            "rmse_delta_seconds": -3.4355803570000205,
+            "rmse_seconds": 203.1154777118769,
+            "rows": 19423,
+            "sse_delta": -27336751.855997562,
+            "sse_fraction": 0.09914184008663232
+          },
+          "EHAM": {
+            "rmse_delta_seconds": -1.4538110009955005,
+            "rmse_seconds": 159.68682172924954,
+            "rows": 19232,
+            "sse_delta": -8970237.187567234,
+            "sse_fraction": 0.06067604049672135
+          },
+          "LEBL": {
+            "rmse_delta_seconds": -1.6358890251681828,
+            "rmse_seconds": 162.98457092770172,
+            "rows": 13332,
+            "sse_delta": -7144958.427465916,
+            "sse_fraction": 0.04381702827924108
+          },
+          "LEMD": {
+            "rmse_delta_seconds": -0.5832080800479389,
+            "rmse_seconds": 172.52602486033686,
+            "rows": 17419,
+            "sse_delta": -3511274.554946661,
+            "sse_fraction": 0.06414858468242506
+          },
+          "LFPG": {
+            "rmse_delta_seconds": -2.148060179235074,
+            "rmse_seconds": 267.0226587685021,
+            "rows": 18646,
+            "sse_delta": -21476008.64015746,
+            "sse_fraction": 0.16448887850979058
+          },
+          "LIRF": {
+            "rmse_delta_seconds": -0.716503718620686,
+            "rmse_seconds": 460.6747038420607,
+            "rows": 11328,
+            "sse_delta": -7483997.876288891,
+            "sse_fraction": 0.29743810045410246
+          },
+          "LSZH": {
+            "rmse_delta_seconds": -0.8027701796508211,
+            "rmse_seconds": 159.17319194719076,
+            "rows": 10078,
+            "sse_delta": -2582018.104566753,
+            "sse_fraction": 0.031591397108847896
+          },
+          "LTFM": {
+            "rmse_delta_seconds": -2.079484717529624,
+            "rmse_seconds": 211.8974025392972,
+            "rows": 22190,
+            "sse_delta": -19651443.523507833,
+            "sse_fraction": 0.12327164638898894
+          }
+        },
+        "by_month": {
+          "2025-11": {
+            "rmse_delta_seconds": -1.4844458042715019,
+            "rmse_seconds": 223.13649983371525,
+            "rows": 162332,
+            "sse_delta": -107897480.11594963,
+            "sse_fraction": 1.0
+          }
+        },
+        "by_nm_missing": {
+          "False": {
+            "rmse_delta_seconds": -1.6853881368504915,
+            "rmse_seconds": 198.0048548756534,
+            "rows": 160976,
+            "sse_delta": -107897480.11594963,
+            "sse_fraction": 0.7808496810634048
+          },
+          "True": {
+            "rmse_delta_seconds": 0.0,
+            "rmse_seconds": 1142.9149005832548,
+            "rows": 1356,
+            "sse_delta": 0.0,
+            "sse_fraction": 0.21915031893659506
+          }
+        },
+        "by_target_band": {
+          "0_to_1h": {
+            "rmse_delta_seconds": -1.7635884740569452,
+            "rmse_seconds": 194.15992928673748,
+            "rows": 162092,
+            "sse_delta": -111510651.81735897,
+            "sse_fraction": 0.7560237157346578
+          },
+          "1h_to_3h": {
+            "rmse_delta_seconds": 4.416376477525546,
+            "rmse_seconds": 1868.5209848936665,
+            "rows": 216,
+            "sse_delta": 3560690.851855874,
+            "sse_fraction": 0.09330487564278274
+          },
+          "negative": {
+            "rmse_delta_seconds": 3.227938735172529,
+            "rmse_seconds": 453.2338717543558,
+            "rows": 18,
+            "sse_delta": 52480.84955360694,
+            "sse_fraction": 0.0004574797240847386
+          },
+          "over_3h": {
+            "rmse_delta_seconds": 0.0,
+            "rmse_seconds": 14224.996347523604,
+            "rows": 6,
+            "sse_delta": 0.0,
+            "sse_fraction": 0.1502139288984748
+          }
+        },
+        "improvement_fraction": 0.00660867044279978,
+        "improvement_seconds": 1.4844458042715019,
+        "rmse_seconds": 223.13649983371525,
+        "rows": 162332
+      },
+      "seasonal": {
+        "airports_improved": 10,
+        "by_airport": {
+          "EDDF": {
+            "rmse_delta_seconds": -0.6538998046921449,
+            "rmse_seconds": 190.11291949916324,
+            "rows": 36830,
+            "sse_delta": -9172776.190377712,
+            "sse_fraction": 0.03671176058255732
+          },
+          "EDDM": {
+            "rmse_delta_seconds": -1.4320309143016345,
+            "rmse_seconds": 176.2989840624051,
+            "rows": 27091,
+            "sse_delta": -13734646.739975452,
+            "sse_fraction": 0.023222281578356752
+          },
+          "EGLL": {
+            "rmse_delta_seconds": -2.649915731473584,
+            "rmse_seconds": 274.8651740046376,
+            "rows": 40210,
+            "sse_delta": -58857835.867319584,
+            "sse_fraction": 0.08378258173147955
+          },
+          "EHAM": {
+            "rmse_delta_seconds": -2.722512865699116,
+            "rmse_seconds": 185.12015613039142,
+            "rows": 40949,
+            "sse_delta": -41579454.48262644,
+            "sse_fraction": 0.03870178067377299
+          },
+          "LEBL": {
+            "rmse_delta_seconds": -1.2227546727119147,
+            "rmse_seconds": 224.95988996623416,
+            "rows": 28986,
+            "sse_delta": -15989739.712188482,
+            "sse_fraction": 0.04045560505290145
+          },
+          "LEMD": {
+            "rmse_delta_seconds": -0.9468143568557821,
+            "rmse_seconds": 180.83444919963384,
+            "rows": 35328,
+            "sse_delta": -12129153.862282276,
+            "sse_fraction": 0.03186116254663612
+          },
+          "LFPG": {
+            "rmse_delta_seconds": -0.8150951628695111,
+            "rmse_seconds": 572.2689409986261,
+            "rows": 39612,
+            "sse_delta": -36980641.04993248,
+            "sse_fraction": 0.35777282756743534
+          },
+          "LIRF": {
+            "rmse_delta_seconds": -0.38622597891389887,
+            "rmse_seconds": 613.0540710844253,
+            "rows": 26528,
+            "sse_delta": -12566419.392873764,
+            "sse_fraction": 0.27496809293034336
+          },
+          "LSZH": {
+            "rmse_delta_seconds": -0.8754546275213215,
+            "rmse_seconds": 206.5852112339712,
+            "rows": 22346,
+            "sse_delta": -8099941.859577537,
+            "sse_fraction": 0.026301376774415533
+          },
+          "LTFM": {
+            "rmse_delta_seconds": -2.4707701826148423,
+            "rmse_seconds": 259.18612172657697,
+            "rows": 46539,
+            "sse_delta": -59890265.99015427,
+            "sse_fraction": 0.0862225305621015
+          }
+        },
+        "by_month": {
+          "2025-01": {
+            "rmse_delta_seconds": -1.0686292887955915,
+            "rmse_seconds": 346.6766805000351,
+            "rows": 153706,
+            "sse_delta": -114062098.92617035,
+            "sse_fraction": 0.5094719884456793
+          },
+          "2025-07": {
+            "rmse_delta_seconds": -1.3272583229548331,
+            "rmse_seconds": 305.3877708431841,
+            "rows": 190713,
+            "sse_delta": -154938776.22114182,
+            "sse_fraction": 0.4905280115543204
+          }
+        },
+        "by_nm_missing": {
+          "False": {
+            "rmse_delta_seconds": -1.7049177892678813,
+            "rmse_seconds": 231.8289206195743,
+            "rows": 339046,
+            "sse_delta": -269000875.14731216,
+            "sse_fraction": 0.5025439887918648
+          },
+          "True": {
+            "rmse_delta_seconds": 0.0,
+            "rmse_seconds": 1832.2250047055338,
+            "rows": 5373,
+            "sse_delta": 0.0,
+            "sse_fraction": 0.497456011208135
+          }
+        },
+        "by_target_band": {
+          "0_to_1h": {
+            "rmse_delta_seconds": -1.6100690812217238,
+            "rmse_seconds": 244.31051218279887,
+            "rows": 343355,
+            "sse_delta": -271012136.29460526,
+            "sse_fraction": 0.5652074993487113
+          },
+          "1h_to_3h": {
+            "rmse_delta_seconds": 1.1290308081827334,
+            "rmse_seconds": 1967.727776154293,
+            "rows": 921,
+            "sse_delta": 4091059.7598991394,
+            "sse_fraction": 0.09834898757340525
+          },
+          "negative": {
+            "rmse_delta_seconds": 0.9177036415239854,
+            "rmse_seconds": 673.3455146989572,
+            "rows": 80,
+            "sse_delta": 98801.68653699756,
+            "sse_fraction": 0.0010003366052826334
+          },
+          "over_3h": {
+            "rmse_delta_seconds": -1.3021290688047884,
+            "rmse_seconds": 14237.413843925115,
+            "rows": 60,
+            "sse_delta": -2224775.784099579,
+            "sse_fraction": 0.33542366470642804
+          },
+          "zero": {
+            "rmse_delta_seconds": 16.1149504659773,
+            "rmse_seconds": 485.6211001083433,
+            "rows": 3,
+            "sse_delta": 46175.48495531338,
+            "sse_fraction": 1.951176617261501e-05
+          }
+        },
+        "improvement_fraction": 0.003688889507429405,
+        "improvement_seconds": 1.2013429589800921,
+        "rmse_seconds": 324.46386239905274,
+        "rows": 344419
+      }
+    },
+    "lgb_flown": {
+      "forward": {
+        "airports_improved": 6,
+        "by_airport": {
+          "EDDF": {
+            "rmse_delta_seconds": -0.19899931306576946,
+            "rmse_seconds": 184.19129969236315,
+            "rows": 18122,
+            "sse_delta": -1329203.1222555637,
+            "sse_fraction": 0.07515198090587105
+          },
+          "EDDM": {
+            "rmse_delta_seconds": 0.10332170876714031,
+            "rmse_seconds": 161.32837182366984,
+            "rows": 12562,
+            "sse_delta": 418650.8938270807,
+            "sse_fraction": 0.039964682985616104
+          },
+          "EGLL": {
+            "rmse_delta_seconds": -0.3604510041098763,
+            "rmse_seconds": 206.19060706476705,
+            "rows": 19423,
+            "sse_delta": -2889620.8465224504,
+            "sse_fraction": 0.10093694275689995
+          },
+          "EHAM": {
+            "rmse_delta_seconds": -0.5303588379520932,
+            "rmse_seconds": 160.61027389229295,
+            "rows": 19232,
+            "sse_delta": -3281814.579352498,
+            "sse_fraction": 0.060641114918902485
+          },
+          "LEBL": {
+            "rmse_delta_seconds": -0.07933884531914259,
+            "rmse_seconds": 164.54112110755077,
+            "rows": 13332,
+            "sse_delta": -348169.1764637232,
+            "sse_fraction": 0.04412048631756519
+          },
+          "LEMD": {
+            "rmse_delta_seconds": -0.08634844041665701,
+            "rmse_seconds": 173.02288449996814,
+            "rows": 17419,
+            "sse_delta": -520618.5236340165,
+            "sse_fraction": 0.06374210432027776
+          },
+          "LFPG": {
+            "rmse_delta_seconds": -0.27734196272109557,
+            "rmse_seconds": 268.89337698501606,
+            "rows": 18646,
+            "sse_delta": -2782500.671916485,
+            "sse_fraction": 0.1647942189443587
+          },
+          "LIRF": {
+            "rmse_delta_seconds": 0.04262434120448688,
+            "rmse_seconds": 461.43383190188587,
+            "rows": 11328,
+            "sse_delta": 445584.7203631401,
+            "sse_fraction": 0.294827635116974
+          },
+          "LSZH": {
+            "rmse_delta_seconds": 0.16077758245938867,
+            "rmse_seconds": 160.13673970930097,
+            "rows": 10078,
+            "sse_delta": 518683.88497018814,
+            "sse_fraction": 0.031590201803701166
+          },
+          "LTFM": {
+            "rmse_delta_seconds": 0.03488093923311908,
+            "rmse_seconds": 214.01176819605993,
+            "rows": 22190,
+            "sse_delta": 331266.661026597,
+            "sse_fraction": 0.12423063192983333
+          }
+        },
+        "by_month": {
+          "2025-11": {
+            "rmse_delta_seconds": -0.12945201662299155,
+            "rmse_seconds": 224.49149362136376,
+            "rows": 162332,
+            "sse_delta": -9437740.759955406,
+            "sse_fraction": 1.0
+          }
+        },
+        "by_nm_missing": {
+          "False": {
+            "rmse_delta_seconds": -0.14685197448301324,
+            "rmse_seconds": 199.54339103802087,
+            "rows": 160976,
+            "sse_delta": -9437740.759958267,
+            "sse_fraction": 0.7834872077982861
+          },
+          "True": {
+            "rmse_delta_seconds": 0.0,
+            "rmse_seconds": 1142.9149005832548,
+            "rows": 1356,
+            "sse_delta": 0.0,
+            "sse_fraction": 0.21651279220171352
+          }
+        },
+        "by_target_band": {
+          "0_to_1h": {
+            "rmse_delta_seconds": -0.16610067020411634,
+            "rmse_seconds": 195.7574170905903,
+            "rows": 162092,
+            "sse_delta": -10545456.836021423,
+            "sse_fraction": 0.7592662836505678
+          },
+          "1h_to_3h": {
+            "rmse_delta_seconds": 1.475305157670391,
+            "rmse_seconds": 1865.5799135738114,
+            "rows": 216,
+            "sse_delta": 1188523.3273432255,
+            "sse_fraction": 0.0918919668153801
+          },
+          "negative": {
+            "rmse_delta_seconds": -5.015991543230712,
+            "rmse_seconds": 444.98994147595255,
+            "rows": 18,
+            "sse_delta": -80807.25127849169,
+            "sse_fraction": 0.00043568135576135824
+          },
+          "over_3h": {
+            "rmse_delta_seconds": 0.0,
+            "rmse_seconds": 14224.996347523604,
+            "rows": 6,
+            "sse_delta": 0.0,
+            "sse_fraction": 0.14840606817829055
+          }
+        },
+        "improvement_fraction": 0.0005763132029175111,
+        "improvement_seconds": 0.12945201662299155,
+        "rmse_seconds": 224.49149362136376,
+        "rows": 162332
+      },
+      "seasonal": {
+        "airports_improved": 7,
+        "by_airport": {
+          "EDDF": {
+            "rmse_delta_seconds": 0.18909629002922657,
+            "rmse_seconds": 190.9559155938846,
+            "rows": 36830,
+            "sse_delta": 2658476.06058383,
+            "sse_fraction": 0.0367981039292311
+          },
+          "EDDM": {
+            "rmse_delta_seconds": -0.13847994511036177,
+            "rmse_seconds": 177.59253503159638,
+            "rows": 27091,
+            "sse_delta": -1333017.685841322,
+            "sse_fraction": 0.023411645453714987
+          },
+          "EGLL": {
+            "rmse_delta_seconds": -0.29104830968174156,
+            "rmse_seconds": 277.22404142642944,
+            "rows": 40210,
+            "sse_delta": -6492141.193719387,
+            "sse_fraction": 0.08467463692404494
+          },
+          "EHAM": {
+            "rmse_delta_seconds": -1.811048464070268,
+            "rmse_seconds": 186.03162053202027,
+            "rows": 40949,
+            "sse_delta": -27726750.442667246,
+            "sse_fraction": 0.03883062028376185
+          },
+          "LEBL": {
+            "rmse_delta_seconds": 0.0012009979372180624,
+            "rmse_seconds": 226.1838456368833,
+            "rows": 28986,
+            "sse_delta": 15747.839351892471,
+            "sse_fraction": 0.04063206967311149
+          },
+          "LEMD": {
+            "rmse_delta_seconds": -0.33910108872376554,
+            "rmse_seconds": 181.44216246776585,
+            "rows": 35328,
+            "sse_delta": -4351330.6551404,
+            "sse_fraction": 0.031867864896945625
+          },
+          "LFPG": {
+            "rmse_delta_seconds": -0.00921112810908653,
+            "rmse_seconds": 573.0748250333866,
+            "rows": 39612,
+            "sse_delta": -418200.3667049408,
+            "sse_fraction": 0.3564568134674124
+          },
+          "LIRF": {
+            "rmse_delta_seconds": 0.3353456605697147,
+            "rmse_seconds": 613.775642723909,
+            "rows": 26528,
+            "sse_delta": 10917373.972846985,
+            "sse_fraction": 0.27383017089435996
+          },
+          "LSZH": {
+            "rmse_delta_seconds": -0.48276641603331427,
+            "rmse_seconds": 206.9778994454592,
+            "rows": 22346,
+            "sse_delta": -4470921.107673287,
+            "sse_fraction": 0.02623041934716572
+          },
+          "LTFM": {
+            "rmse_delta_seconds": -0.05590070161230187,
+            "rmse_seconds": 261.6009912075795,
+            "rows": 46539,
+            "sse_delta": -1361288.218583107,
+            "sse_fraction": 0.08726765513025178
+          }
+        },
+        "by_month": {
+          "2025-01": {
+            "rmse_delta_seconds": -0.3236821346780516,
+            "rmse_seconds": 347.42162765415264,
+            "rows": 153706,
+            "sse_delta": -34585866.35667801,
+            "sse_fraction": 0.5083490438742743
+          },
+          "2025-07": {
+            "rmse_delta_seconds": 0.01729868610948415,
+            "rmse_seconds": 306.73232785224843,
+            "rows": 190713,
+            "sse_delta": 2023814.559135437,
+            "sse_fraction": 0.49165095612572574
+          }
+        },
+        "by_nm_missing": {
+          "False": {
+            "rmse_delta_seconds": -0.20571437782666635,
+            "rmse_seconds": 233.3281240310155,
+            "rows": 339046,
+            "sse_delta": -32562051.797546387,
+            "sse_fraction": 0.5057667710318239
+          },
+          "True": {
+            "rmse_delta_seconds": 0.0,
+            "rmse_seconds": 1832.2250047055338,
+            "rows": 5373,
+            "sse_delta": 0.0,
+            "sse_fraction": 0.49423322896817606
+          }
+        },
+        "by_target_band": {
+          "0_to_1h": {
+            "rmse_delta_seconds": -0.1782063529824427,
+            "rmse_seconds": 245.74237491103816,
+            "rows": 343355,
+            "sse_delta": -30083893.77368927,
+            "sse_fraction": 0.5681473263856773
+          },
+          "1h_to_3h": {
+            "rmse_delta_seconds": 0.20718704502951368,
+            "rmse_seconds": 1966.8059323911398,
+            "rows": 921,
+            "sse_delta": 750569.4032115936,
+            "sse_fraction": 0.09762030009854912
+          },
+          "negative": {
+            "rmse_delta_seconds": -0.5930438100513129,
+            "rmse_seconds": 671.8347672473819,
+            "rows": 80,
+            "sse_delta": -63776.52809178084,
+            "sse_fraction": 0.0009894011833703183
+          },
+          "over_3h": {
+            "rmse_delta_seconds": -1.8405299607438792,
+            "rmse_seconds": 14236.875443033176,
+            "rows": 60,
+            "sse_delta": -3144610.749065399,
+            "sse_fraction": 0.333225409531198
+          },
+          "zero": {
+            "rmse_delta_seconds": -7.27679685214332,
+            "rmse_seconds": 462.22935279022266,
+            "rows": 3,
+            "sse_delta": -20340.14991339494,
+            "sse_fraction": 1.7562801205206474e-05
+          }
+        },
+        "improvement_fraction": 0.00044580892851808773,
+        "improvement_seconds": 0.14518445625628829,
+        "rmse_seconds": 325.52002090177655,
+        "rows": 344419
+      }
+    },
+    "lgb_surface": {
+      "forward": {
+        "airports_improved": 10,
+        "by_airport": {
+          "EDDF": {
+            "rmse_delta_seconds": -1.4978041372517055,
+            "rmse_seconds": 182.8924948681772,
+            "rows": 18122,
+            "sse_delta": -9969232.745655537,
+            "sse_fraction": 0.07501542390916997
+          },
+          "EDDM": {
+            "rmse_delta_seconds": -0.5863994889166122,
+            "rmse_seconds": 160.6386506259861,
+            "rows": 12562,
+            "sse_delta": -2370960.7941869497,
+            "sse_fraction": 0.040115439724485474
+          },
+          "EGLL": {
+            "rmse_delta_seconds": -3.375720220042325,
+            "rmse_seconds": 203.1753378488346,
+            "rows": 19423,
+            "sse_delta": -26864372.37868488,
+            "sse_fraction": 0.09922268261722518
+          },
+          "EHAM": {
+            "rmse_delta_seconds": -0.7494282933912757,
+            "rmse_seconds": 160.39120443685377,
+            "rows": 19232,
+            "sse_delta": -4634239.956974685,
+            "sse_fraction": 0.06122632901074203
+          },
+          "LEBL": {
+            "rmse_delta_seconds": -1.479219776966886,
+            "rmse_seconds": 163.14124017590302,
+            "rows": 13332,
+            "sse_delta": -6463774.744051635,
+            "sse_fraction": 0.0439112193595468
+          },
+          "LEMD": {
+            "rmse_delta_seconds": -0.7792126276182216,
+            "rmse_seconds": 172.33002031276658,
+            "rows": 17419,
+            "sse_delta": -4688683.172787607,
+            "sse_fraction": 0.06401736153621847
+          },
+          "LFPG": {
+            "rmse_delta_seconds": -2.326736409564319,
+            "rmse_seconds": 266.84398253817284,
+            "rows": 18646,
+            "sse_delta": -23254637.135779858,
+            "sse_fraction": 0.16430590828086394
+          },
+          "LIRF": {
+            "rmse_delta_seconds": -0.8326521174867025,
+            "rmse_seconds": 460.5585554431947,
+            "rows": 11328,
+            "sse_delta": -8696091.248737812,
+            "sse_fraction": 0.2973552578572844
+          },
+          "LSZH": {
+            "rmse_delta_seconds": -0.5970438893314167,
+            "rmse_seconds": 159.37891823751016,
+            "rows": 10078,
+            "sse_delta": -1921560.971125275,
+            "sse_fraction": 0.03168026289194735
+          },
+          "LTFM": {
+            "rmse_delta_seconds": -2.2078692300525518,
+            "rmse_seconds": 211.76901802677426,
+            "rows": 22190,
+            "sse_delta": -20858406.594101906,
+            "sse_fraction": 0.12315011481251628
+          }
+        },
+        "by_month": {
+          "2025-11": {
+            "rmse_delta_seconds": -1.509631779810178,
+            "rmse_seconds": 223.11131385817657,
+            "rows": 162332,
+            "sse_delta": -109721959.74208546,
+            "sse_fraction": 1.0
+          }
+        },
+        "by_nm_missing": {
+          "False": {
+            "rmse_delta_seconds": -1.714010365203535,
+            "rmse_seconds": 197.97623264730035,
+            "rows": 160976,
+            "sse_delta": -109721959.74208546,
+            "sse_fraction": 0.7808002005954496
+          },
+          "True": {
+            "rmse_delta_seconds": 0.0,
+            "rmse_seconds": 1142.9149005832548,
+            "rows": 1356,
+            "sse_delta": 0.0,
+            "sse_fraction": 0.2191997994045503
+          }
+        },
+        "by_target_band": {
+          "0_to_1h": {
+            "rmse_delta_seconds": -1.729722800941346,
+            "rmse_seconds": 194.19379495985308,
+            "rows": 162092,
+            "sse_delta": -109378840.48108768,
+            "sse_fraction": 0.7564582294028088
+          },
+          "1h_to_3h": {
+            "rmse_delta_seconds": -0.4380861700415153,
+            "rmse_seconds": 1863.6665222460995,
+            "rows": 216,
+            "sse_delta": -352746.3551235199,
+            "sse_fraction": 0.09284164613997224
+          },
+          "negative": {
+            "rmse_delta_seconds": 0.5938653773996521,
+            "rmse_seconds": 450.5997983965829,
+            "rows": 18,
+            "sse_delta": 9627.09412635956,
+            "sse_fraction": 0.0004522797719392776
+          },
+          "over_3h": {
+            "rmse_delta_seconds": 0.0,
+            "rmse_seconds": 14224.996347523604,
+            "rows": 6,
+            "sse_delta": 0.0,
+            "sse_fraction": 0.15024784468527974
+          }
+        },
+        "improvement_fraction": 0.006720797009924451,
+        "improvement_seconds": 1.509631779810178,
+        "rmse_seconds": 223.11131385817657,
+        "rows": 162332
+      },
+      "seasonal": {
+        "airports_improved": 10,
+        "by_airport": {
+          "EDDF": {
+            "rmse_delta_seconds": -0.3613557793116229,
+            "rmse_seconds": 190.40546352454376,
+            "rows": 36830,
+            "sse_delta": -5072920.273354292,
+            "sse_fraction": 0.0367880890659337
+          },
+          "EDDM": {
+            "rmse_delta_seconds": -0.881742611492399,
+            "rmse_seconds": 176.84927236521435,
+            "rows": 27091,
+            "sse_delta": -8469961.828621745,
+            "sse_fraction": 0.023344162051371936
+          },
+          "EGLL": {
+            "rmse_delta_seconds": -2.4043155083689953,
+            "rmse_seconds": 275.1107742277422,
+            "rows": 40210,
+            "sse_delta": -53426501.658525944,
+            "sse_fraction": 0.08384862975871027
+          },
+          "EHAM": {
+            "rmse_delta_seconds": -0.9589570068203557,
+            "rmse_seconds": 186.88371198927018,
+            "rows": 40949,
+            "sse_delta": -14714879.365217209,
+            "sse_fraction": 0.039403327874600366
+          },
+          "LEBL": {
+            "rmse_delta_seconds": -1.0853605537678561,
+            "rmse_seconds": 225.09728408517822,
+            "rows": 28986,
+            "sse_delta": -14197384.346918821,
+            "sse_fraction": 0.04046462281038722
+          },
+          "LEMD": {
+            "rmse_delta_seconds": -0.797933707788502,
+            "rmse_seconds": 180.98332984870112,
+            "rows": 35328,
+            "sse_delta": -10226116.965295792,
+            "sse_fraction": 0.031881804841633554
+          },
+          "LFPG": {
+            "rmse_delta_seconds": -0.7968898978847392,
+            "rmse_seconds": 572.2871462636109,
+            "rows": 39612,
+            "sse_delta": -36155247.91097069,
+            "sse_fraction": 0.3574386014522505
+          },
+          "LIRF": {
+            "rmse_delta_seconds": -0.6214120168011732,
+            "rmse_seconds": 612.8188850465381,
+            "rows": 26528,
+            "sse_delta": -20214659.415470123,
+            "sse_fraction": 0.27448302296376725
+          },
+          "LSZH": {
+            "rmse_delta_seconds": -0.7974533706904481,
+            "rmse_seconds": 206.66321249080207,
+            "rows": 22346,
+            "sse_delta": -7379643.209865332,
+            "sse_fraction": 0.026294980011161144
+          },
+          "LTFM": {
+            "rmse_delta_seconds": -2.5967929306642077,
+            "rmse_seconds": 259.0600989785276,
+            "rows": 46539,
+            "sse_delta": -62929765.91168165,
+            "sse_fraction": 0.0860527591701841
+          }
+        },
+        "by_month": {
+          "2025-01": {
+            "rmse_delta_seconds": -0.762702856794931,
+            "rmse_seconds": 346.98260693203576,
+            "rows": 153706,
+            "sse_delta": -81444346.8196106,
+            "sse_fraction": 0.5098623349469993
+          },
+          "2025-07": {
+            "rmse_delta_seconds": -1.2963880201949678,
+            "rmse_seconds": 305.418641145944,
+            "rows": 190713,
+            "sse_delta": -151342734.0663147,
+            "sse_fraction": 0.4901376650530006
+          }
+        },
+        "by_nm_missing": {
+          "False": {
+            "rmse_delta_seconds": -1.474666442010431,
+            "rmse_seconds": 232.05917196683174,
+            "rows": 339046,
+            "sse_delta": -232787080.8859253,
+            "sse_fraction": 0.503040324375058
+          },
+          "True": {
+            "rmse_delta_seconds": 0.0,
+            "rmse_seconds": 1832.2250047055338,
+            "rows": 5373,
+            "sse_delta": 0.0,
+            "sse_fraction": 0.4969596756249419
+          }
+        },
+        "by_target_band": {
+          "0_to_1h": {
+            "rmse_delta_seconds": -1.42620843951525,
+            "rmse_seconds": 244.49437282450535,
+            "rows": 343355,
+            "sse_delta": -240154142.6612091,
+            "sse_fraction": 0.5654937517256279
+          },
+          "1h_to_3h": {
+            "rmse_delta_seconds": 1.3013485251590282,
+            "rmse_seconds": 1967.9000938712693,
+            "rows": 921,
+            "sse_delta": 4715662.074985504,
+            "sse_fraction": 0.09826806888695387
+          },
+          "negative": {
+            "rmse_delta_seconds": -1.7709197381700506,
+            "rmse_seconds": 670.6568913192632,
+            "rows": 80,
+            "sse_delta": -190279.61675784737,
+            "sse_fraction": 0.000991373871628237
+          },
+          "over_3h": {
+            "rmse_delta_seconds": 1.6512351972396573,
+            "rmse_seconds": 14240.367208191159,
+            "rows": 60,
+            "sse_delta": 2821539.87203598,
+            "sse_fraction": 0.3352280305517864
+          },
+          "zero": {
+            "rmse_delta_seconds": 7.095542437091979,
+            "rmse_seconds": 476.60169207945796,
+            "rows": 3,
+            "sse_delta": 20139.445023008157,
+            "sse_fraction": 1.8774964003607466e-05
+          }
+        },
+        "improvement_fraction": 0.0031914837107175353,
+        "improvement_seconds": 1.0393551980476445,
+        "rmse_seconds": 324.6258501599852,
+        "rows": 344419
+      }
+    }
+  },
+  "native_models": {
+    "cat_combined": {
+      "forward": {
+        "global_replacement_complete_rmse_seconds": 224.11233693836442,
+        "leading_new_features": [
+          [
+            "surface_anchor_lookback_s",
+            1.8284102777895699
+          ],
+          [
+            "surface_offblock_stand_arr_last_s",
+            1.0793165749493603
+          ],
+          [
+            "flight_duration_minus_plan_s",
+            0.7944522396025092
+          ],
+          [
+            "flight_duration_minus_initial_s",
+            0.7303309508893194
+          ],
+          [
+            "surface_takeoff_runway_active",
+            0.7300136554668549
+          ],
+          [
+            "surface_interval_airport_arr_count",
+            0.4791053855930515
+          ],
+          [
+            "surface_takeoff_airport_proxy_mean_60m",
+            0.4338485677825513
+          ],
+          [
+            "surface_interval_airport_dep_count",
+            0.38788500828967476
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            0.3828460602412045
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_15m",
+            0.33675101824866327
+          ],
+          [
+            "surface_offblock_stand_arr_count_60m",
+            0.2939181290465923
+          ],
+          [
+            "flight_duration_lobt_s",
+            0.29143021277110437
+          ]
+        ],
+        "native_importance_fraction_by_family": {
+          "flown_timeline": 0.02909424419054621,
+          "inherited": 0.8757875921990007,
+          "surface_context": 0.09511816361045305
+        },
+        "native_importance_kind": "prediction_value_change",
+        "october_selected_trees": 5998,
+        "resources": {
+          "cpu_seconds": 18553.72,
+          "mean_active_cpu_cores": 15.200705474544655,
+          "peak_process_rss_bytes_sampled": 14543851520,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 1220.5828230189945
+        },
+        "run_id": "20260914T175404122986Z_forward_cat_combined",
+        "run_sha256": "1ea8d58c9602db9213a8112491ec841fb283444a68388db6f2cd391ea596edff"
+      },
+      "seasonal": {
+        "global_replacement_complete_rmse_seconds": 325.0507410341447,
+        "leading_new_features": [
+          [
+            "surface_anchor_lookback_s",
+            2.745915138857564
+          ],
+          [
+            "surface_offblock_stand_arr_last_s",
+            1.0707752730759494
+          ],
+          [
+            "surface_takeoff_runway_active",
+            0.7646125252650402
+          ],
+          [
+            "flight_duration_minus_plan_s",
+            0.6000082202687043
+          ],
+          [
+            "surface_interval_airport_arr_count",
+            0.5958085124049216
+          ],
+          [
+            "flight_duration_minus_initial_s",
+            0.5601794486843832
+          ],
+          [
+            "surface_interval_airport_dep_count",
+            0.5313717856518881
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            0.38112287891922914
+          ],
+          [
+            "flight_duration_lobt_s",
+            0.35466934158208807
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_15m",
+            0.34024022629052525
+          ],
+          [
+            "surface_offblock_stand_arr_count_60m",
+            0.3199256049533483
+          ],
+          [
+            "flight_arrival_minus_movement_s",
+            0.3122870190735477
+          ]
+        ],
+        "native_importance_fraction_by_family": {
+          "flown_timeline": 0.02668084710604049,
+          "inherited": 0.8635790497350966,
+          "surface_context": 0.10974010315886291
+        },
+        "native_importance_kind": "prediction_value_change",
+        "october_selected_trees": 5944,
+        "resources": {
+          "cpu_seconds": 14634.129999999997,
+          "mean_active_cpu_cores": 15.299850552355743,
+          "peak_process_rss_bytes_sampled": 12227207168,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 956.4884277740057
+        },
+        "run_id": "20260914T172859368186Z_seasonal_cat_combined",
+        "run_sha256": "941c64b9fb1f8f77b5c501842162f5523c840f60b8ecffbaebb39d47c19af52e"
+      }
+    },
+    "lgb_combined": {
+      "forward": {
+        "global_replacement_complete_rmse_seconds": 224.89041487683116,
+        "leading_new_features": [
+          [
+            "surface_anchor_lookback_s",
+            50602137049.0
+          ],
+          [
+            "flight_duration_minus_plan_s",
+            14049665935.0
+          ],
+          [
+            "surface_offblock_stand_arr_last_s",
+            13361723001.0
+          ],
+          [
+            "surface_interval_airport_dep_count",
+            6041873025.0
+          ],
+          [
+            "surface_interval_runway_dep_count",
+            6009596393.0
+          ],
+          [
+            "surface_takeoff_runway_active",
+            5725240396.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            4900527571.0
+          ],
+          [
+            "surface_interval_airport_arr_count",
+            3415274408.0
+          ],
+          [
+            "flight_duration_minus_initial_s",
+            2826252301.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_15m",
+            2721066854.0
+          ],
+          [
+            "surface_takeoff_runway_push_count_30m",
+            2504155013.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_mean_60m",
+            2459347368.0
+          ]
+        ],
+        "native_importance_fraction_by_family": {
+          "flown_timeline": 0.011900008549217404,
+          "inherited": 0.9279624422927316,
+          "surface_context": 0.06013754915805097
+        },
+        "native_importance_kind": "gain",
+        "october_selected_trees": 1580,
+        "resources": {
+          "cpu_seconds": 2878.01,
+          "mean_active_cpu_cores": 14.56643725430317,
+          "peak_process_rss_bytes_sampled": 12926550016,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 197.5781688930001
+        },
+        "run_id": "20260914T175046387442Z_forward_lgb_combined",
+        "run_sha256": "489c625b4f08a30dfe892739faa22b0c1da676ffe97cec555850ee93b686849d"
+      },
+      "seasonal": {
+        "global_replacement_complete_rmse_seconds": 325.29899878508576,
+        "leading_new_features": [
+          [
+            "surface_offblock_stand_arr_last_s",
+            9954139350.0
+          ],
+          [
+            "flight_duration_minus_plan_s",
+            9394801086.0
+          ],
+          [
+            "surface_anchor_lookback_s",
+            7061035317.0
+          ],
+          [
+            "surface_interval_airport_dep_count",
+            4517092790.0
+          ],
+          [
+            "surface_takeoff_runway_active",
+            4196712835.0
+          ],
+          [
+            "surface_interval_runway_dep_count",
+            3831308671.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            3828370244.0
+          ],
+          [
+            "surface_interval_airport_arr_count",
+            2542814231.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_15m",
+            2497078838.0
+          ],
+          [
+            "flight_duration_minus_initial_s",
+            2283124740.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_mean_15m",
+            1983633394.0
+          ],
+          [
+            "surface_takeoff_runway_push_count_30m",
+            1738001047.0
+          ]
+        ],
+        "native_importance_fraction_by_family": {
+          "flown_timeline": 0.011524898268967305,
+          "inherited": 0.9470655403458405,
+          "surface_context": 0.04140956138519225
+        },
+        "native_importance_kind": "gain",
+        "october_selected_trees": 1644,
+        "resources": {
+          "cpu_seconds": 2630.33,
+          "mean_active_cpu_cores": 14.527740451450583,
+          "peak_process_rss_bytes_sampled": 10994106368,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 181.05568507299176
+        },
+        "run_id": "20260914T172558163407Z_seasonal_lgb_combined",
+        "run_sha256": "358e8b2cd14d7f96ba8aa740e501ff380823ac4f2d48d8a47a59514a6b80289a"
+      }
+    },
+    "lgb_flown": {
+      "forward": {
+        "global_replacement_complete_rmse_seconds": 226.68887970444388,
+        "leading_new_features": [
+          [
+            "flight_duration_minus_plan_s",
+            15719913883.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            5449553980.0
+          ],
+          [
+            "flight_duration_minus_initial_s",
+            4010765850.0
+          ],
+          [
+            "flight_arrival_hour_cos",
+            862825542.0
+          ],
+          [
+            "flight_duration_lobt_s",
+            644508805.0
+          ],
+          [
+            "flight_arrival_hour_sin",
+            606602809.0
+          ],
+          [
+            "flight_arrival_minus_movement_s",
+            539766172.0
+          ],
+          [
+            "flight_arrival_second",
+            424354960.0
+          ],
+          [
+            "flight_duration_aobt_s",
+            323218672.0
+          ],
+          [
+            "flight_arrival_before_movement",
+            0.0
+          ],
+          [
+            "flight_arrival_day_delta",
+            0.0
+          ],
+          [
+            "flight_arrival_missing",
+            0.0
+          ]
+        ],
+        "native_importance_fraction_by_family": {
+          "flown_timeline": 0.014231367321237798,
+          "inherited": 0.9857686326787622,
+          "surface_context": 0.0
+        },
+        "native_importance_kind": "gain",
+        "october_selected_trees": 1530,
+        "resources": {
+          "cpu_seconds": 2136.7299999999996,
+          "mean_active_cpu_cores": 14.232978234843724,
+          "peak_process_rss_bytes_sampled": 11794366464,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 150.12529104900023
+        },
+        "run_id": "20260914T174512121708Z_forward_lgb_flown",
+        "run_sha256": "b7c617ee14fc5fb4fe7d2e5cc15ab91f2c45a8e84b3d46b031938e4ebe6bc21e"
+      },
+      "seasonal": {
+        "global_replacement_complete_rmse_seconds": 326.798249168119,
+        "leading_new_features": [
+          [
+            "flight_duration_minus_plan_s",
+            9155755470.0
+          ],
+          [
+            "flight_arrival_minus_plan_s",
+            3899762261.0
+          ],
+          [
+            "flight_duration_minus_initial_s",
+            2853988759.0
+          ],
+          [
+            "flight_arrival_hour_cos",
+            545404068.0
+          ],
+          [
+            "flight_arrival_hour_sin",
+            399653329.0
+          ],
+          [
+            "flight_duration_lobt_s",
+            365540275.0
+          ],
+          [
+            "flight_arrival_minus_movement_s",
+            284711570.0
+          ],
+          [
+            "flight_arrival_second",
+            276003847.0
+          ],
+          [
+            "flight_duration_aobt_s",
+            191989582.0
+          ],
+          [
+            "flight_arrival_day_delta",
+            1306700.0
+          ],
+          [
+            "flight_arrival_before_movement",
+            0.0
+          ],
+          [
+            "flight_arrival_missing",
+            0.0
+          ]
+        ],
+        "native_importance_fraction_by_family": {
+          "flown_timeline": 0.012311872118801307,
+          "inherited": 0.9876881278811986,
+          "surface_context": 0.0
+        },
+        "native_importance_kind": "gain",
+        "october_selected_trees": 1184,
+        "resources": {
+          "cpu_seconds": 1616.38,
+          "mean_active_cpu_cores": 13.829359815072689,
+          "peak_process_rss_bytes_sampled": 9829019648,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 116.88031995799975
+        },
+        "run_id": "20260914T172059950031Z_seasonal_lgb_flown",
+        "run_sha256": "0ccd8c69c7cd369eed4687f7227f36153e598c8012029ffc94d93bbae4b791b0"
+      }
+    },
+    "lgb_surface": {
+      "forward": {
+        "global_replacement_complete_rmse_seconds": 224.72724240685056,
+        "leading_new_features": [
+          [
+            "surface_anchor_lookback_s",
+            65005670479.0
+          ],
+          [
+            "surface_offblock_stand_arr_last_s",
+            13764079596.0
+          ],
+          [
+            "surface_interval_runway_dep_count",
+            6196438588.0
+          ],
+          [
+            "surface_interval_airport_dep_count",
+            5660524163.0
+          ],
+          [
+            "surface_takeoff_runway_active",
+            5641087946.0
+          ],
+          [
+            "surface_interval_airport_arr_count",
+            3784355621.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_15m",
+            3081955375.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_mean_60m",
+            2681729201.0
+          ],
+          [
+            "surface_takeoff_runway_push_count_30m",
+            2605469565.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_mean_15m",
+            1786940106.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_60m",
+            1648016225.0
+          ],
+          [
+            "surface_takeoff_airport_active",
+            1374260969.0
+          ]
+        ],
+        "native_importance_fraction_by_family": {
+          "flown_timeline": 0.0,
+          "inherited": 0.9320647625698056,
+          "surface_context": 0.06793523743019438
+        },
+        "native_importance_kind": "gain",
+        "october_selected_trees": 1475,
+        "resources": {
+          "cpu_seconds": 2663.0999999999995,
+          "mean_active_cpu_cores": 14.486874907897864,
+          "peak_process_rss_bytes_sampled": 12685340672,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 183.82846658999915
+        },
+        "run_id": "20260914T174742403070Z_forward_lgb_surface",
+        "run_sha256": "c2f2bcd959e90d0f5945c77eed91166e764ee120bf3377bfe57f6a219c54bcbd"
+      },
+      "seasonal": {
+        "global_replacement_complete_rmse_seconds": 325.51874203322365,
+        "leading_new_features": [
+          [
+            "surface_offblock_stand_arr_last_s",
+            9852425870.0
+          ],
+          [
+            "surface_interval_airport_dep_count",
+            4940993712.0
+          ],
+          [
+            "surface_takeoff_runway_active",
+            4116910563.0
+          ],
+          [
+            "surface_interval_runway_dep_count",
+            4020960311.0
+          ],
+          [
+            "surface_interval_airport_arr_count",
+            2831406697.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_15m",
+            2525466842.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_mean_15m",
+            2143148949.0
+          ],
+          [
+            "surface_takeoff_runway_push_count_30m",
+            2013137383.0
+          ],
+          [
+            "surface_takeoff_airport_active",
+            1218985341.0
+          ],
+          [
+            "surface_takeoff_airport_proxy_mean_60m",
+            1141577382.0
+          ],
+          [
+            "surface_takeoff_runway_proxy_mean_60m",
+            1133308477.0
+          ],
+          [
+            "surface_offblock_runway_active",
+            1029029909.0
+          ]
+        ],
+        "native_importance_fraction_by_family": {
+          "flown_timeline": 0.0,
+          "inherited": 0.9622087299136061,
+          "surface_context": 0.03779127008639391
+        },
+        "native_importance_kind": "gain",
+        "october_selected_trees": 1607,
+        "resources": {
+          "cpu_seconds": 2616.21,
+          "mean_active_cpu_cores": 14.451655368312908,
+          "peak_process_rss_bytes_sampled": 10619142144,
+          "rss_sample_interval_seconds": 0.05,
+          "wall_seconds": 181.03185644299083
+        },
+        "run_id": "20260914T172256981919Z_seasonal_lgb_surface",
+        "run_sha256": "ea69a5f667baffe8e6e0ea1801479e7e04de26b7c6f9cc4664460bc25d976440"
+      }
+    }
+  },
+  "new_labels_read": false,
+  "refit_iterations": {},
+  "selected_candidate": null,
+  "selected_diagnostics": null,
+  "selected_paired_days": {},
+  "selection_sha256": "4a51746cab6da283662dbff4650b6b29492d6e165e34fce34001232c1e396780"
+}

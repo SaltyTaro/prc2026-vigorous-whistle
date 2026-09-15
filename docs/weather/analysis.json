@@ -1,0 +1,543 @@
+{
+  "audit_used": false,
+  "both_folds_improved_before_margin": [
+    "cat75_ground25_v4_100",
+    "cat75_ground25_v4_25",
+    "cat75_ground25_v4_50",
+    "cat75_ground25_v4_75",
+    "cat_weather_v4_100",
+    "cat_weather_v4_25",
+    "cat_weather_v4_50",
+    "cat_weather_v4_75",
+    "lgb_ground_weather_v4_25"
+  ],
+  "candidate_count": 16,
+  "code_sha256": "4d29edcab412d1ed04b3da2465e83295e75640e76934b2a98e6bd214b615b2ea",
+  "created_at_utc": "2026-09-14T02:41:14.552466+00:00",
+  "development_fits": {
+    "cat_weather": {
+      "forward": {
+        "importance_measure": "CatBoost PredictionValuesChange",
+        "iterations": 5998,
+        "matched_reference": "catboost_long",
+        "matched_reference_rmse_seconds": 245.37561394933013,
+        "rmse_delta_to_matched_reference_seconds": -4.7233934812218195,
+        "rmse_seconds": 240.6522204681083,
+        "top_weather_importances": [
+          {
+            "feature": "wx_mean3h_temperature_c",
+            "importance": 1.8118828069755992
+          },
+          {
+            "feature": "wx_runway_length_m",
+            "importance": 1.688381530884479
+          },
+          {
+            "feature": "wx_mean3h_snow",
+            "importance": 1.5261061115365966
+          },
+          {
+            "feature": "wx_runway_bearing_sin",
+            "importance": 1.260811960459879
+          },
+          {
+            "feature": "wx_runway_bearing_cos",
+            "importance": 1.0495999286332014
+          },
+          {
+            "feature": "wx_temperature_c",
+            "importance": 0.7945166872088832
+          },
+          {
+            "feature": "wx_pressure_hpa",
+            "importance": 0.2533610505548782
+          },
+          {
+            "feature": "wx_humidity_pct",
+            "importance": 0.24236454551577513
+          },
+          {
+            "feature": "wx_dewpoint_c",
+            "importance": 0.24118012746311102
+          },
+          {
+            "feature": "wx_east_wind_mps",
+            "importance": 0.22031845057303875
+          },
+          {
+            "feature": "wx_change60_east_wind_mps",
+            "importance": 0.21168546289648751
+          },
+          {
+            "feature": "wx_crosswind_mps",
+            "importance": 0.2060751706224537
+          },
+          {
+            "feature": "wx_age_minutes",
+            "importance": 0.19256506961087871
+          },
+          {
+            "feature": "wx_mean3h_speed_mps",
+            "importance": 0.18410899191731903
+          },
+          {
+            "feature": "wx_max3h_speed_mps",
+            "importance": 0.17545446492505748
+          }
+        ],
+        "weather_importance_share": 0.12631369096521514
+      },
+      "seasonal": {
+        "importance_measure": "CatBoost PredictionValuesChange",
+        "iterations": 5991,
+        "matched_reference": "catboost_long",
+        "matched_reference_rmse_seconds": 366.7681330822125,
+        "rmse_delta_to_matched_reference_seconds": -1.5969931069779477,
+        "rmse_seconds": 365.17113997523455,
+        "top_weather_importances": [
+          {
+            "feature": "wx_mean3h_snow",
+            "importance": 2.401403525672127
+          },
+          {
+            "feature": "wx_mean3h_temperature_c",
+            "importance": 1.822018270754652
+          },
+          {
+            "feature": "wx_runway_length_m",
+            "importance": 1.734503802724341
+          },
+          {
+            "feature": "wx_runway_bearing_sin",
+            "importance": 1.3512121379322162
+          },
+          {
+            "feature": "wx_runway_bearing_cos",
+            "importance": 1.2749249415317265
+          },
+          {
+            "feature": "wx_temperature_c",
+            "importance": 0.42355915047480686
+          },
+          {
+            "feature": "wx_snow",
+            "importance": 0.3361749658131664
+          },
+          {
+            "feature": "wx_humidity_pct",
+            "importance": 0.3246380909837662
+          },
+          {
+            "feature": "wx_dewpoint_c",
+            "importance": 0.3123689214580505
+          },
+          {
+            "feature": "wx_max3h_speed_mps",
+            "importance": 0.26370213690175565
+          },
+          {
+            "feature": "wx_pressure_hpa",
+            "importance": 0.25790781968525667
+          },
+          {
+            "feature": "wx_east_wind_mps",
+            "importance": 0.2209541729123027
+          },
+          {
+            "feature": "wx_mean3h_speed_mps",
+            "importance": 0.21275362932465228
+          },
+          {
+            "feature": "wx_headwind_mps",
+            "importance": 0.19555201650720996
+          },
+          {
+            "feature": "wx_crosswind_mps",
+            "importance": 0.19262374041989205
+          }
+        ],
+        "weather_importance_share": 0.1381429971196991
+      }
+    },
+    "lgb_ground_weather": {
+      "forward": {
+        "importance_measure": "split gain",
+        "iterations": 1161,
+        "matched_reference": "phase5r_demand_service",
+        "matched_reference_rmse_seconds": 244.82065210193525,
+        "rmse_delta_to_matched_reference_seconds": -2.7950502084661935,
+        "rmse_seconds": 242.02560189346906,
+        "top_weather_importances": [
+          {
+            "feature": "wx_mean3h_snow",
+            "importance": 37633668224.0
+          },
+          {
+            "feature": "wx_mean3h_temperature_c",
+            "importance": 30061970326.0
+          },
+          {
+            "feature": "wx_temperature_c",
+            "importance": 16524112338.0
+          },
+          {
+            "feature": "wx_runway_length_m",
+            "importance": 10631336421.0
+          },
+          {
+            "feature": "wx_change60_east_wind_mps",
+            "importance": 9493210351.0
+          },
+          {
+            "feature": "wx_runway_bearing_sin",
+            "importance": 4642394154.0
+          },
+          {
+            "feature": "wx_crosswind_mps",
+            "importance": 4232897462.0
+          },
+          {
+            "feature": "wx_change60_north_wind_mps",
+            "importance": 3634776605.0
+          },
+          {
+            "feature": "wx_direction_cos",
+            "importance": 3510600548.0
+          },
+          {
+            "feature": "wx_mean3h_visibility_km",
+            "importance": 3466675496.0
+          },
+          {
+            "feature": "wx_north_wind_mps",
+            "importance": 3210972078.0
+          },
+          {
+            "feature": "wx_runway_bearing_cos",
+            "importance": 3149844484.0
+          },
+          {
+            "feature": "wx_abs_crosswind_mps",
+            "importance": 3092797870.0
+          },
+          {
+            "feature": "wx_dewpoint_c",
+            "importance": 2571326007.0
+          },
+          {
+            "feature": "wx_visibility_km",
+            "importance": 2560737095.0
+          }
+        ],
+        "weather_importance_share": 0.05464768213913157
+      },
+      "seasonal": {
+        "importance_measure": "split gain",
+        "iterations": 924,
+        "matched_reference": "phase5r_demand_service",
+        "matched_reference_rmse_seconds": 371.8019215111272,
+        "rmse_delta_to_matched_reference_seconds": -1.7890299511670946,
+        "rmse_seconds": 370.0128915599601,
+        "top_weather_importances": [
+          {
+            "feature": "wx_mean3h_snow",
+            "importance": 37178722460.0
+          },
+          {
+            "feature": "wx_mean3h_temperature_c",
+            "importance": 17482454303.0
+          },
+          {
+            "feature": "wx_temperature_c",
+            "importance": 7648247614.0
+          },
+          {
+            "feature": "wx_runway_length_m",
+            "importance": 4822474589.0
+          },
+          {
+            "feature": "wx_direction_cos",
+            "importance": 3978748981.0
+          },
+          {
+            "feature": "wx_runway_bearing_cos",
+            "importance": 3650221948.0
+          },
+          {
+            "feature": "wx_runway_bearing_sin",
+            "importance": 3091084520.0
+          },
+          {
+            "feature": "wx_humidity_pct",
+            "importance": 2662972893.0
+          },
+          {
+            "feature": "wx_snow",
+            "importance": 2237057704.0
+          },
+          {
+            "feature": "wx_headwind_mps",
+            "importance": 1849840315.0
+          },
+          {
+            "feature": "wx_abs_crosswind_mps",
+            "importance": 1680864300.0
+          },
+          {
+            "feature": "wx_change60_north_wind_mps",
+            "importance": 1433865598.0
+          },
+          {
+            "feature": "wx_crosswind_mps",
+            "importance": 1338878886.0
+          },
+          {
+            "feature": "wx_north_wind_mps",
+            "importance": 1317180075.0
+          },
+          {
+            "feature": "wx_change60_east_wind_mps",
+            "importance": 1316776907.0
+          }
+        ],
+        "weather_importance_share": 0.051873726858987244
+      }
+    },
+    "lgb_weather": {
+      "forward": {
+        "importance_measure": "split gain",
+        "iterations": 1172,
+        "matched_reference": "global_capacity",
+        "matched_reference_rmse_seconds": 245.2017857048638,
+        "rmse_delta_to_matched_reference_seconds": -2.3034642219038517,
+        "rmse_seconds": 242.89832148295994,
+        "top_weather_importances": [
+          {
+            "feature": "wx_mean3h_snow",
+            "importance": 36241490748.0
+          },
+          {
+            "feature": "wx_mean3h_temperature_c",
+            "importance": 33069894725.0
+          },
+          {
+            "feature": "wx_temperature_c",
+            "importance": 13935717241.0
+          },
+          {
+            "feature": "wx_change60_east_wind_mps",
+            "importance": 10065284025.0
+          },
+          {
+            "feature": "wx_crosswind_mps",
+            "importance": 6320088618.0
+          },
+          {
+            "feature": "wx_change60_north_wind_mps",
+            "importance": 5942985321.0
+          },
+          {
+            "feature": "wx_runway_length_m",
+            "importance": 5479520423.0
+          },
+          {
+            "feature": "wx_direction_cos",
+            "importance": 4490942253.0
+          },
+          {
+            "feature": "wx_runway_bearing_sin",
+            "importance": 4329387605.0
+          },
+          {
+            "feature": "wx_north_wind_mps",
+            "importance": 3998669145.0
+          },
+          {
+            "feature": "wx_east_wind_mps",
+            "importance": 3916352864.0
+          },
+          {
+            "feature": "wx_runway_bearing_cos",
+            "importance": 3686522274.0
+          },
+          {
+            "feature": "wx_abs_crosswind_mps",
+            "importance": 3534981832.0
+          },
+          {
+            "feature": "wx_mean3h_visibility_km",
+            "importance": 3369196558.0
+          },
+          {
+            "feature": "wx_headwind_mps",
+            "importance": 3206246552.0
+          }
+        ],
+        "weather_importance_share": 0.058834237934243756
+      },
+      "seasonal": {
+        "importance_measure": "split gain",
+        "iterations": 859,
+        "matched_reference": "global_capacity",
+        "matched_reference_rmse_seconds": 372.3492288799874,
+        "rmse_delta_to_matched_reference_seconds": -1.4304265465185608,
+        "rmse_seconds": 370.9188023334688,
+        "top_weather_importances": [
+          {
+            "feature": "wx_mean3h_snow",
+            "importance": 36880972285.0
+          },
+          {
+            "feature": "wx_mean3h_temperature_c",
+            "importance": 18866189926.0
+          },
+          {
+            "feature": "wx_temperature_c",
+            "importance": 7246099532.0
+          },
+          {
+            "feature": "wx_runway_length_m",
+            "importance": 6648516124.0
+          },
+          {
+            "feature": "wx_direction_cos",
+            "importance": 4217530620.0
+          },
+          {
+            "feature": "wx_humidity_pct",
+            "importance": 2775359176.0
+          },
+          {
+            "feature": "wx_runway_bearing_cos",
+            "importance": 2674515558.0
+          },
+          {
+            "feature": "wx_headwind_mps",
+            "importance": 2453931724.0
+          },
+          {
+            "feature": "wx_snow",
+            "importance": 2251722754.0
+          },
+          {
+            "feature": "wx_runway_bearing_sin",
+            "importance": 2241384226.0
+          },
+          {
+            "feature": "wx_east_wind_mps",
+            "importance": 2079958391.0
+          },
+          {
+            "feature": "wx_change60_north_wind_mps",
+            "importance": 1790349737.0
+          },
+          {
+            "feature": "wx_north_wind_mps",
+            "importance": 1771575382.0
+          },
+          {
+            "feature": "wx_abs_crosswind_mps",
+            "importance": 1672542004.0
+          },
+          {
+            "feature": "wx_age_minutes",
+            "importance": 1649488608.0
+          }
+        ],
+        "weather_importance_share": 0.05668090098122493
+      }
+    }
+  },
+  "eligible_candidates": [
+    "cat_weather_v4_100"
+  ],
+  "fit_resources": {
+    "count": 6,
+    "maximum_sampled_rss_bytes": 7825063936,
+    "summed_cpu_seconds": 31354.21,
+    "summed_wall_seconds": 2126.163873904996
+  },
+  "limitation": "Reused development scores and model importance do not establish independent generalization or causal weather effects.",
+  "lowest_mean_ratio_candidate": "cat75_ground25_v4_100",
+  "lowest_mean_ratio_comparisons": {
+    "forward": {
+      "airport_rmse_deltas_seconds": {
+        "EDDF": -6.399060353949466,
+        "EDDM": -6.075361423386909,
+        "EGLL": -1.8160992430331078,
+        "EHAM": -3.1033199417632886,
+        "LEBL": -0.5657982228708818,
+        "LEMD": -2.4153791005281278,
+        "LFPG": -6.213558416221758,
+        "LIRF": -9.380079582976464,
+        "LSZH": -6.41840743851904,
+        "LTFM": -1.4424479258337897
+      },
+      "nm_missing_sse_deltas": {
+        "False": -225262390.41046333,
+        "True": -119872857.59275746
+      },
+      "paired_days": {
+        "comparison": "candidate minus frozen v4",
+        "days": 30,
+        "days_with_lower_squared_error": 30,
+        "interpretation": "Descriptive on reused development data, not an independent audit",
+        "replicates": 2000,
+        "rmse_difference_95pct_interval_seconds": [
+          -6.907249327260224,
+          -2.490676049350373
+        ]
+      },
+      "rmse_delta_seconds": -4.38622628215802,
+      "rmse_seconds": 240.1686745955012,
+      "target_band_sse_deltas": {
+        "0_to_1h": -232187460.84852982,
+        "1h_to_3h": -2199545.7575240135,
+        "negative": -334476.5048539704,
+        "over_3h": -110413764.8923099
+      },
+      "v4_rmse_seconds": 244.5549008776592
+    },
+    "seasonal": {
+      "airport_rmse_deltas_seconds": {
+        "EDDF": -1.6409440324138416,
+        "EDDM": -5.533612641467641,
+        "EGLL": 0.698645494857999,
+        "EHAM": -2.0057455042494325,
+        "LEBL": -1.269432815533321,
+        "LEMD": -2.4538781900022855,
+        "LFPG": -3.386607151887574,
+        "LIRF": 0.09199704023842514,
+        "LSZH": -4.007019720017212,
+        "LTFM": -2.2438723527239404
+      },
+      "nm_missing_sse_deltas": {
+        "False": -384086461.5209122,
+        "True": -19534236.57762146
+      },
+      "paired_days": {
+        "comparison": "candidate minus frozen v4",
+        "days": 62,
+        "days_with_lower_squared_error": 44,
+        "interpretation": "Descriptive on reused development data, not an independent audit",
+        "replicates": 2000,
+        "rmse_difference_95pct_interval_seconds": [
+          -3.0073801508797104,
+          -0.18616238928276158
+        ]
+      },
+      "rmse_delta_seconds": -1.599697344475942,
+      "rmse_seconds": 365.4846236152899,
+      "target_band_sse_deltas": {
+        "0_to_1h": -612580318.2585144,
+        "1h_to_3h": 94396528.55355072,
+        "negative": 46910.53092643246,
+        "over_3h": 114449737.93987656,
+        "zero": 66443.13562839245
+      },
+      "v4_rmse_seconds": 367.0843209597658
+    }
+  },
+  "selected_candidate": "cat_weather_v4_100",
+  "selection_sha256": "1228b7b16d3bea90229da139fb51ee714cf323472f3796604d40b1a7178351f3"
+}

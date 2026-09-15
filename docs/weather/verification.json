@@ -1,0 +1,125 @@
+{
+  "audit_used": false,
+  "blend_fold_scores_checked": 32,
+  "bundle_id": "827d828796d9cb9c45811d48b0d9647659c187dd719d6ba3caa771a16bfe1ce8",
+  "coverage": {
+    "ranking.parquet": {
+      "external_runway_bearing_rows": 344747,
+      "rows": 344841,
+      "weather_missing_rows": 19
+    },
+    "training_2025-01-01_2025-02-01.parquet": {
+      "external_runway_bearing_rows": 153647,
+      "rows": 153706,
+      "weather_missing_rows": 13
+    },
+    "training_2025-02-01_2025-03-01.parquet": {
+      "external_runway_bearing_rows": 143681,
+      "rows": 143731,
+      "weather_missing_rows": 0
+    },
+    "training_2025-03-01_2025-04-01.parquet": {
+      "external_runway_bearing_rows": 164398,
+      "rows": 164450,
+      "weather_missing_rows": 0
+    },
+    "training_2025-04-01_2025-05-01.parquet": {
+      "external_runway_bearing_rows": 175255,
+      "rows": 175288,
+      "weather_missing_rows": 0
+    },
+    "training_2025-05-01_2025-06-01.parquet": {
+      "external_runway_bearing_rows": 185179,
+      "rows": 185202,
+      "weather_missing_rows": 0
+    },
+    "training_2025-06-01_2025-07-01.parquet": {
+      "external_runway_bearing_rows": 183093,
+      "rows": 183142,
+      "weather_missing_rows": 37
+    },
+    "training_2025-07-01_2025-08-01.parquet": {
+      "external_runway_bearing_rows": 190675,
+      "rows": 190713,
+      "weather_missing_rows": 0
+    },
+    "training_2025-08-01_2025-09-01.parquet": {
+      "external_runway_bearing_rows": 191136,
+      "rows": 191181,
+      "weather_missing_rows": 10
+    },
+    "training_2025-09-01_2025-10-01.parquet": {
+      "external_runway_bearing_rows": 183928,
+      "rows": 183951,
+      "weather_missing_rows": 126
+    },
+    "training_2025-10-01_2025-11-01.parquet": {
+      "external_runway_bearing_rows": 185656,
+      "rows": 185674,
+      "weather_missing_rows": 0
+    },
+    "training_2025-11-01_2025-12-01.parquet": {
+      "external_runway_bearing_rows": 162316,
+      "rows": 162332,
+      "weather_missing_rows": 0
+    }
+  },
+  "created_at_utc": "2026-09-14T02:43:20.378063+00:00",
+  "development_run_sha256": {
+    "20260914T020207415603Z_seasonal_lgb_weather": "b758ebbf67eb8a9994487cfed14beca2b24bdfd5aa7d4f75320d5c65271f1335",
+    "20260914T020330864636Z_seasonal_lgb_ground_weather": "13102c926ed0d7c0b123e09166f989a87c9dd5c51dc89f4325d9f3687ed4aba9",
+    "20260914T020527588880Z_seasonal_cat_weather": "00dcbf2ac2805b6c7ec27f45479f576d88cbb120a4d15a6359183a3dd30f5e8a",
+    "20260914T021744741806Z_forward_lgb_weather": "6ab2eded350d9adf61eaeb72a10dcfc0cce807379be071033ae27988d0b7a683",
+    "20260914T021936530856Z_forward_lgb_ground_weather": "7361b67341cbdb29b0c1f6f158122226cea3f645459156ccf300eb00ef027ca4",
+    "20260914T022205340687Z_forward_cat_weather": "2016498eb9745850cd863b9f2671f1d4ee35ea95bbc7f1fe66bce1f833b4f9ff"
+  },
+  "development_scores": {
+    "20260914T020207415603Z_seasonal_lgb_weather": 370.9188023334688,
+    "20260914T020330864636Z_seasonal_lgb_ground_weather": 370.0128915599601,
+    "20260914T020527588880Z_seasonal_cat_weather": 365.17113997523455,
+    "20260914T021744741806Z_forward_lgb_weather": 242.89832148295994,
+    "20260914T021936530856Z_forward_lgb_ground_weather": 242.02560189346906,
+    "20260914T022205340687Z_forward_cat_weather": 240.6522204681083
+  },
+  "feature_rows_checked": 2264211,
+  "model_code_sha256": "2595cf585a898a29c4375361439d660f3c82019e51f6decb707d98188a00bb6e",
+  "native_checks": {
+    "20260914T020207415603Z_seasonal_lgb_weather": {
+      "max_difference_seconds": 0.0,
+      "rows": 1409
+    },
+    "20260914T020330864636Z_seasonal_lgb_ground_weather": {
+      "max_difference_seconds": 0.0,
+      "rows": 1409
+    },
+    "20260914T020527588880Z_seasonal_cat_weather": {
+      "max_difference_seconds": 0.0,
+      "rows": 1409
+    },
+    "20260914T021744741806Z_forward_lgb_weather": {
+      "max_difference_seconds": 0.0,
+      "rows": 1052
+    },
+    "20260914T021936530856Z_forward_lgb_ground_weather": {
+      "max_difference_seconds": 0.0,
+      "rows": 1052
+    },
+    "20260914T022205340687Z_forward_cat_weather": {
+      "max_difference_seconds": 0.0,
+      "rows": 1052
+    }
+  },
+  "passed": true,
+  "refits": [],
+  "resources": {
+    "cpu_seconds": 389.3,
+    "mean_active_cpu_cores": 2.859852014675471,
+    "peak_process_rss_bytes_sampled": 2195976192,
+    "rss_sample_interval_seconds": 0.05,
+    "wall_seconds": 136.1259246990012
+  },
+  "selected_candidate": "cat_weather_v4_100",
+  "selection_sha256": "1228b7b16d3bea90229da139fb51ee714cf323472f3796604d40b1a7178351f3",
+  "verification_code_sha256": "c701c7dc38559130fcc4c945818018ca3f9e469147d68f07b3d3987573d4fdd9",
+  "weather_feature_rows_recomputed": 13979
+}

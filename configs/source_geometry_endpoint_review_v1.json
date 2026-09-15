@@ -1,0 +1,20 @@
+{
+  "audit_used": false,
+  "control_policy": "Use explicit same-ref parking nodes contained in parking ways across all five snapshots; deduplicate exact way ID/version/node control identities. Every observed same-ref node must be at the final way node within 1m. Report all exceptions. No departure labels.",
+  "declared_at_utc": "2026-09-14T20:47:47.595871+00:00",
+  "experiment_id": "source-geometry-endpoint-review-v1",
+  "inference_policy": "Only if the airport controls pass, materialize the existing final OSM node of a non-area, non-closed parking_position way for a full ref with no explicit parking node. Flag it as inferred from the documented way convention. Preserve any different-ref parking-node conflict as unresolved. Existing explicit parking nodes always take priority. No fuzzy stand aliases and no passenger gates.",
+  "input_sha256": {
+    "configs/source_geometry_mapping_review_v1.json": "34868036de808f7c23b809b9a1d3ee6d9edcdb035455b90f5025ea2edc459fd2",
+    "data/external/osm/source_geometry_v1/parking_position_definition.html": "86b4de018aab818ec93b2eff846fdbd66d33eb75710b5bec3b088319f3519910",
+    "docs/source_geometry/geometry_mapping_review.json": "68da812af7bacdc4e61ba05fb09bd02eb316350a22645e1933a94c3741ba83ac"
+  },
+  "interpretation": "Distinguish changes of OSM representation from recorded position changes. An inferred endpoint is not a surveyed airport location; OSM edit times do not prove operational change dates.",
+  "minimum_distinct_control_ways_per_airport": 30,
+  "minimum_last_node_control_fraction": 0.99,
+  "models_to_fit": 0,
+  "node_to_endpoint_tolerance_m": 1.0,
+  "parent_declaration": "configs/source_geometry_mapping_review_v1.json",
+  "prior_information": "The explicit-node review has high current coverage but reports only 30.43% LFPG stable references because older snapshots often have parking ways without parking nodes. The archived OSM tag definition says to draw from the taxiway to the nose-wheel position, usually the final node. This review tests that convention against same-ref explicit parking nodes before resolving way-only records; no target or model score is used.",
+  "stability_tolerance_m": 30
+}

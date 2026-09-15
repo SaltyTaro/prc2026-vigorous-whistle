@@ -1,0 +1,159 @@
+{
+  "audit_used": false,
+  "binding_completed_at_utc": "2026-09-15T02:45:44.351666+00:00",
+  "binding_note": "The job loader source binding was added while the initial preparation process was already running. This immutable overlay adds that source hash; all feature, target, split, reference and model settings/bytes are unchanged. Original job definitions and index are preserved. No competition model has been fitted.",
+  "bundle_id": "aa7dc17c8794d1b5e1d10d286720d9ce64a80cf46b5cbb6ecd7be31271d9061d",
+  "competition_models_fitted": 0,
+  "created_at_utc": "2026-09-15T02:43:18.357059+00:00",
+  "folds": {
+    "forward": {
+      "assignment_sha256": "0128a4b3fcc5715f3d0d727a2e4d4ce1b3d8d10b024669e7afe3de82c3be8054",
+      "files": {
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/forward/early_stop_features.parquet": "c92dc01dfd58f699c27336555606d5f83f75bd73cbe1d81189f7b38d573b2d55",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/forward/early_stop_truth.parquet": "5d02a166f29ece4335b22fe40f6ebce039eb866572f297b46933a6a5a3957121",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/forward/fit_augmented_features.parquet": "d1330a87d167a3e5792178203ed49fb2b211b073c15a34c39192d5672e114061",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/forward/fit_augmented_truth.parquet": "43de019a797d8242996e9da0b95856f5f9714138f8534b74964a72b5dd2d560d",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/forward/fit_natural_features.parquet": "0273a236d5f0864502debea3aab1b357b6340b6ffeefd571222db7735cc979b8",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/forward/fit_natural_truth.parquet": "12db5f6153ac05b8b4e62aec724fb6e73ee1e113e4264a07a5e23aff744f3672",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/forward/reference.parquet": "3008d3047cb5c820c1e9b5161df60cfe2be8801cfa7ca054d596cc523511b0d5",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/forward/reference_metrics.json": "6f0c082d3acbe7ea67f576b7a600001000bed1ff9f5fe961ea838bd863fdbd10",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/forward/score_features.parquet": "a39173e0a6868b165ef461d1b99a31d7abc078210ed73ccae15fa1784e082836",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/forward/score_truth.parquet": "85d8f7374defade900800d8bd4bc9a22922f7505575b279ba5c73e6f7a2b174f"
+      },
+      "identity": {
+        "early_stop": {
+          "natural_ids_sha256": "c75f6a594ed06c4f4208f7cd46c6170e40f77adf720294aae646a647b387dd71",
+          "natural_rows": 1913,
+          "original_ids_sha256": "e5211f63da95435690c91169652d33464ff37979084dccc1bc5621cf3a2b9a90",
+          "original_rows": 185674
+        },
+        "fit": {
+          "natural_ids_sha256": "aa2ab105b0c29c4a78b7afc3e39836cddb25f4d7735c0f7d5ab3fe95d8d10d8d",
+          "natural_rows": 17552,
+          "original_ids_sha256": "2ae283a3fdce5d1ed58714a153d4cfbcf9d1dbd75672f8e881963d2e3397876f",
+          "original_rows": 1571364
+        },
+        "score": {
+          "natural_ids_sha256": "62da21387f72adcb7dbe76faeeb34eea39d1ba4ee7649aefe5713d048e3097a9",
+          "natural_rows": 1356,
+          "original_ids_sha256": "7dc46218c228a5675e8fae283c4c4d51577a0bcab8e124a2d7be8eca131cc70f",
+          "original_rows": 162332
+        }
+      }
+    },
+    "seasonal": {
+      "assignment_sha256": "55692f98747009d14f6a924021b65fe820f846c2440987ceef6f254c95beff96",
+      "files": {
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/seasonal/early_stop_features.parquet": "c92dc01dfd58f699c27336555606d5f83f75bd73cbe1d81189f7b38d573b2d55",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/seasonal/early_stop_truth.parquet": "5d02a166f29ece4335b22fe40f6ebce039eb866572f297b46933a6a5a3957121",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/seasonal/fit_augmented_features.parquet": "43c8c22913b54eb19875b1ee23a422acee2d0975daabacb0acc40936ff06a7ea",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/seasonal/fit_augmented_truth.parquet": "4d9610a9d8dfe1c90541f83ada30c6b1806caa945ab8f68aeb4a680b9f32fdff",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/seasonal/fit_natural_features.parquet": "7dcab352db8963f6fcd480313e35db7f493a44c06cfb4620ceec6491f9215df3",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/seasonal/fit_natural_truth.parquet": "d96cc8a6a12ad3d31fe55338c4da6b411d16d993afdc043acc2e542af2941690",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/seasonal/reference.parquet": "cdbced2928f1a124aadc618115cc7b18765c4949a67f5531bc00a1f49a4d3b75",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/seasonal/reference_metrics.json": "7d0652b60534f792f674f854fb920017e8dac3d3284dd033db0e4bdbbefe8cde",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/seasonal/score_features.parquet": "3f83c0a62f4b0aeccffd5fdc37e2d14fb14afb525707cc84b8f893b9f28f2114",
+        "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/seasonal/score_truth.parquet": "6d7e6d01e8c938df0acea2c2945dd7c69d8ccbecf8cb658f97b334ffbb7173b1"
+      },
+      "identity": {
+        "early_stop": {
+          "natural_ids_sha256": "c75f6a594ed06c4f4208f7cd46c6170e40f77adf720294aae646a647b387dd71",
+          "natural_rows": 1913,
+          "original_ids_sha256": "e5211f63da95435690c91169652d33464ff37979084dccc1bc5621cf3a2b9a90",
+          "original_rows": 185674
+        },
+        "fit": {
+          "natural_ids_sha256": "cc00f1e2eecc53d8e0bbaef341d05c318b965d56a8c397f4af5d0e36166ad4b3",
+          "natural_rows": 12179,
+          "original_ids_sha256": "5a8ca81854dc7ddc29c0cc0e82c5f3a0a3bc2eb2b22ac17d4da387e7090b63f7",
+          "original_rows": 1226945
+        },
+        "score": {
+          "natural_ids_sha256": "b180e6ef1a5a57fe1fe1f8cbdaba2d3c47c9fce808ac350e2c97f5c5750e2d92",
+          "natural_rows": 5373,
+          "original_ids_sha256": "19afdfc7fedf88eafca9662868862723b1d6c003b67142ad63f0839e8b37ba79",
+          "original_rows": 344419
+        }
+      }
+    }
+  },
+  "job_input_code_sha256": "933ece59e925d90cd71596bf1f64c11ba61f6bb01e1a7ef798742a5ceda73979",
+  "jobs": [
+    {
+      "fold": "seasonal",
+      "job_id": "seasonal_lgb_natural",
+      "path": "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/seasonal_lgb_natural.json",
+      "sha256": "ad93d9bded1a6afc3cb25c0c1c45fcd779cc5436b6155b9a97f7ead2a391ea35",
+      "variant": "lgb_natural",
+      "worker": "arcw0"
+    },
+    {
+      "fold": "seasonal",
+      "job_id": "seasonal_cat_natural",
+      "path": "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/seasonal_cat_natural.json",
+      "sha256": "b477352dc0ca99d0b917427ff27a7ccdb4f3d6b358b45b49382df71f5fc3ea26",
+      "variant": "cat_natural",
+      "worker": "arcw2"
+    },
+    {
+      "fold": "seasonal",
+      "job_id": "seasonal_lgb_augmented",
+      "path": "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/seasonal_lgb_augmented.json",
+      "sha256": "79d367eac98b47c2095dcc86b3eaa71ade456182a8ad73f22548a32091f048ad",
+      "variant": "lgb_augmented",
+      "worker": "arcw4"
+    },
+    {
+      "fold": "seasonal",
+      "job_id": "seasonal_cat_augmented",
+      "path": "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/seasonal_cat_augmented.json",
+      "sha256": "623d94003414c57914a501cfa17d97dc79fdf59f780e518be6a4e1fa9ab72c16",
+      "variant": "cat_augmented",
+      "worker": "arcw6"
+    },
+    {
+      "fold": "forward",
+      "job_id": "forward_lgb_natural",
+      "path": "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/forward_lgb_natural.json",
+      "sha256": "80295d102ff52b8623f9a511e446ba24d0ef1840d37eacb8ef790118972c8d12",
+      "variant": "lgb_natural",
+      "worker": "arcw1"
+    },
+    {
+      "fold": "forward",
+      "job_id": "forward_cat_natural",
+      "path": "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/forward_cat_natural.json",
+      "sha256": "dd13945fbff84ab5bdfd1abb6258f0851fdf718d3bcec0ec0a9cae67b42b9e8d",
+      "variant": "cat_natural",
+      "worker": "arcw3"
+    },
+    {
+      "fold": "forward",
+      "job_id": "forward_lgb_augmented",
+      "path": "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/forward_lgb_augmented.json",
+      "sha256": "0a5b4990dd70bcb66124e3ad75314c4f5090007dbffaf47706ce835844d8107d",
+      "variant": "lgb_augmented",
+      "worker": "arcw5"
+    },
+    {
+      "fold": "forward",
+      "job_id": "forward_cat_augmented",
+      "path": "data/nm_mask_jobs/aa7dc17c8794d1b5e1d1/jobs_bound/forward_cat_augmented.json",
+      "sha256": "a1a0e83832594517bb5886fc149a0c2ecfdbd5a2fd9ebb871d6f0e064df0dbf3",
+      "variant": "cat_augmented",
+      "worker": "arcw7"
+    }
+  ],
+  "model_code_sha256": "10b798a7b702149ab86c25d6967c4c37f6296f08bd8f4a9ece9c40820c81b1d0",
+  "original_index": {
+    "path": "docs/nm_mask/jobs.json",
+    "sha256": "abf44c0bb4446d90bb36969066ca69b01896bae897df2436ce4e9befc0310cfc"
+  },
+  "resources": {
+    "cpu_seconds": 89.78125,
+    "mean_active_cpu_cores": 1.3773969502961012,
+    "peak_process_rss_bytes_sampled": 3410415616,
+    "rss_sample_interval_seconds": 0.05,
+    "wall_seconds": 65.18182719999459
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "airports": [
+    "LFPG",
+    "LIRF"
+  ],
+  "audit_used": false,
+  "common_fitting_months": [
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-08",
+    "2025-09"
+  ],
+  "decision": "Complete both audits and document whether a separate declared model experiment is justified. Any model experiment must compare complete original folds against v7 and preserve December.",
+  "declared_at_utc": "2026-09-14T20:22:01.594417+00:00",
+  "expected_all_airport_common_fitting_ids_sha256": "5a8ca81854dc7ddc29c0cc0e82c5f3a0a3bc2eb2b22ac17d4da387e7090b63f7",
+  "expected_all_airport_common_fitting_rows": 1226945,
+  "experiment_id": "source-geometry-audit-v1",
+  "geometry": {
+    "aeroway_tags": [
+      "parking_position",
+      "gate",
+      "taxiway",
+      "taxilane",
+      "runway",
+      "apron",
+      "terminal",
+      "holding_position"
+    ],
+    "bbox_south_west_north_east": {
+      "LFPG": [
+        48.98,
+        2.47,
+        49.055,
+        2.625
+      ],
+      "LIRF": [
+        41.77,
+        12.2,
+        41.85,
+        12.3
+      ]
+    },
+    "delay_between_requests_seconds": 3,
+    "endpoints": [
+      "https://overpass-api.de/api/interpreter",
+      "https://overpass.kumi.systems/api/interpreter"
+    ],
+    "historical_fetch_minimum_current_exact_parking_row_coverage": 0.5,
+    "historical_policy": "Fetch all four period-start snapshots only for airports meeting current exact parking coverage; compare identities and positions. A snapshot is recorded map state, not proof of the operational layout or a constant layout over the month.",
+    "license": "ODbL-1.0",
+    "license_urls": [
+      "https://www.openstreetmap.org/copyright",
+      "https://opendatacommons.org/licenses/odbl/1-0/"
+    ],
+    "max_duplicate_position_span_m": 30,
+    "max_graph_snap_distance_m": 75,
+    "max_request_timeout_seconds": 45,
+    "max_response_bytes": 25000000,
+    "provider": "OpenStreetMap contributors via public Overpass API",
+    "requested_snapshots": [
+      "current",
+      "2025-01-01T00:00:00Z",
+      "2025-07-01T00:00:00Z",
+      "2026-01-01T00:00:00Z",
+      "2026-07-01T00:00:00Z"
+    ],
+    "route_proxy": "Undirected mapped taxiway/taxilane connectivity to any shared-node access for the recorded runway. Exclude runway traversal from graph edges. This is a geometric lower bound, not an actual taxi clearance or live routing claim.",
+    "sequential_requests_only": true,
+    "stand_matching": "Only upper-case whitespace-trimmed full ref values; parking_position and passenger gate matches reported separately. Multiple ref locations are ambiguous unless all within 30 metres. No zero stripping, fuzzy matching or inferred stand aliases."
+  },
+  "input_receipts_sha256": {
+    "configs/validation_v1.json": "cd9dd96fd4168a36655d57a4278b40901de7accda481d8541dca198605e0469b",
+    "docs/competition/gain_review_v7_20260915/error_headroom.json": "c96202ec6d5ce132df2bbccae5db54de7b0f92bed2d7926e4051d65cc5c644cf",
+    "docs/ladder/fitting_clock_regimes.json": "73d33dd59e616eaee88e87976797124ee97a5e4a4d3b019939c196f7e9a56c16",
+    "docs/next_lever/clock_relink_quality.json": "c58bf572138d1a0998e97d7e243e027d2207568118cf3ce3fed5874cecde118b",
+    "docs/phase5/fitting_diagnostics.json": "9db9c886164162ecd949edd7256b725cb740e7986029fa06f3c12fd2abd8c317",
+    "docs/surface_refit/submission_v7_official.json": "63aad28134819b548bbd6944c0df889f65651cb3154d50694ceaef224315905b"
+  },
+  "native_models_to_fit": 0,
+  "prediction_changes": false,
+  "prior_information": "V7 is 275.0570 seconds officially; prior aggregate error shares and failed clock/arrival/fallback campaigns are known. Ranking stand counts were inspected label-free before declaration: LFPG 39872 rows/361 distinct stands; LIRF 26899 rows/133 distinct stands.",
+  "purpose": "Fitting-only LIRF/LFPG source audit and label-free exact stand/geometry coverage; no native model fits or submission.",
+  "source_audit": {
+    "clock_disagreement_thresholds_seconds": [
+      60,
+      900,
+      3600
+    ],
+    "day_multiple_tolerance_seconds": 120,
+    "groupings": [
+      "airport",
+      "airport_month",
+      "airport_nm_availability",
+      "airport_nm_availability_aircraft_missing",
+      "airport_nm_availability_schedule_interval",
+      "airport_nm_availability_stand",
+      "airport_nm_availability_schedule_midnight"
+    ],
+    "hour_multiple_tolerance_seconds": 60,
+    "interpretation": "Raw clock/label relationships on common fitting rows, not v7 prediction errors. Recurrence across months does not establish prediction improvement. No per-ID rule or broader schedule gate is selected.",
+    "minimum_stand_active_months": 5,
+    "minimum_stand_group_rows": 50,
+    "near_clock_seconds": 60,
+    "reporting_mechanisms": [
+      "block_near_schedule",
+      "block_near_aobt",
+      "block_near_lobt",
+      "nonzero_day_difference_from_schedule",
+      "nonzero_hour_difference_from_nm_proxy"
+    ],
+    "schedule_interval_bins_seconds": [
+      0,
+      3600,
+      10800,
+      21600,
+      43200,
+      86400
+    ]
+  },
+  "split_source": "data/phase1/58d621b245de3f5e12dd",
+  "user_authorization": "User approved proceeding with the proposed reporting audit and small geometry coverage study after the v7 gain review."
+}

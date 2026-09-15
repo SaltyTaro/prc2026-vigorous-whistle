@@ -1,0 +1,40 @@
+{
+  "artifacts": {
+    "docs/nm_mask/tests_verifier_azure.xml": "951d08651a66d449b13c2a01f91d8c6f4c0e2470f59558497ce3ab1bb50fc733",
+    "docs/nm_mask/verification.json": "7df71387908908e8f80480ee26e3bc91943ab8999e84e7b5b6cb515b27d252ab",
+    "runs/nm_mask_verification.log": "f1d292a89d8e582b7934ebdc4c34aa609f8612639e09e1e53c115679a0ade087"
+  },
+  "audit_used": false,
+  "passed": true,
+  "steps": [
+    {
+      "command": [
+        "/home/azureuser/prc-flight-2026/.venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_nm_mask_verification.py",
+        "--junitxml=/home/azureuser/prc-flight-2026/docs/nm_mask/tests_verifier_azure.xml"
+      ],
+      "finished_at_utc": "2026-09-15T03:18:09.335362+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-15T03:18:08.097124+00:00"
+    },
+    {
+      "command": [
+        "/home/azureuser/prc-flight-2026/.venv/bin/python",
+        "-B",
+        "tools/verify_nm_mask.py",
+        "--output",
+        "docs/nm_mask/verification.json"
+      ],
+      "finished_at_utc": "2026-09-15T03:20:06.215049+00:00",
+      "returncode": 0,
+      "started_at_utc": "2026-09-15T03:18:09.335435+00:00"
+    }
+  ],
+  "worker": "arcw4"
+}

@@ -1,0 +1,39 @@
+{
+  "experiment_id": "prc2026-phase4-clock-and-specialists-v1",
+  "declared_at_utc": "2026-09-13T17:26:00Z",
+  "diagnostic_context": "Adaptive after Phase-3 errors and Jan-Nov label diagnostics. Before model experiments, direct schedule replacement on missing-NM/missing-aircraft LIRF rows scored 404.3644 seasonal and 263.8872 forward. These are reused development sets, not an independent audit.",
+  "feature_policy": "record-quality-conditional-schedule-v1",
+  "validation_protocol": "prc2026-validation-v1",
+  "development_folds": ["seasonal", "forward"],
+  "seed": 20260913,
+  "threads": 16,
+  "target_filter": "none",
+  "prediction_postprocess": "none",
+  "refit_months": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11"],
+  "refit_iterations": "rounded median of two October-selected counts, separately for each fitted component",
+  "selection": "require complete-set RMSE improvement on both folds over Phase-3 timing_traffic; minimize equally weighted mean of the two RMSE ratios",
+  "reference_variant": "timing_traffic",
+  "reference_bundle_id": "410850c6cdc70bd5b987b93770a40b09b0e30c6acb4f4f28cbc4f86b05f12ae8",
+  "airports": ["EDDF", "EDDM", "EGLL", "EHAM", "LEBL", "LEMD", "LFPG", "LIRF", "LSZH", "LTFM"],
+  "variants": {
+    "schedule_gate": {"kind": "reference_gate", "offset": "lirf_missing_schedule"},
+    "clock_features": {"kind": "global", "offset": "none", "parameters": {}},
+    "conditional_offset": {"kind": "global", "offset": "lirf_missing_schedule", "parameters": {}},
+    "conditional_offset_fine": {"kind": "global", "offset": "lirf_missing_schedule", "parameters": {"num_leaves": 31, "min_data_in_leaf": 25, "lambda_l2": 20.0}},
+    "missing_record_specialist": {"kind": "specialist", "base": "conditional_offset", "routes": ["lirf_missing_record"], "weight": 1.0, "rounds": 800, "early_stopping_rounds": 80, "parameters": {"num_leaves": 7, "min_data_in_leaf": 15, "lambda_l2": 50.0, "learning_rate": 0.025, "bagging_fraction": 1.0}},
+    "airport_specialists": {"kind": "specialist", "base": "conditional_offset", "routes": "all_airports", "weight": 1.0, "parameters": {"num_leaves": 31, "min_data_in_leaf": 50, "lambda_l2": 20.0}},
+    "airport_blend": {"kind": "blend", "source": "airport_specialists", "weight": 0.5}
+  },
+  "lightgbm": {
+    "rounds": 1800,
+    "early_stopping_rounds": 120,
+    "parameters": {
+      "objective": "regression", "metric": "rmse", "learning_rate": 0.04,
+      "num_leaves": 63, "min_data_in_leaf": 100, "lambda_l2": 10.0,
+      "feature_fraction": 0.9, "bagging_fraction": 0.8, "bagging_freq": 1,
+      "max_bin": 255, "cat_smooth": 20.0, "cat_l2": 20.0,
+      "max_cat_to_onehot": 8, "max_cat_threshold": 32,
+      "deterministic": true, "force_col_wise": true, "verbosity": -1
+    }
+  }
+}

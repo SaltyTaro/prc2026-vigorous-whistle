@@ -1,0 +1,13 @@
+{
+  "feature_policy": "record-quality-conditional-schedule-v1",
+  "parent_bundle_id": "58d621b245de3f5e12dd3b50b0a90a87ea8ac3dc96aa2c274ffa7ea0af96b2e0",
+  "previous_bundle_id": "410850c6cdc70bd5b987b93770a40b09b0e30c6acb4f4f28cbc4f86b05f12ae8",
+  "training_months": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11"],
+  "ranking_months": ["2026-01", "2026-07"],
+  "departure_labels_used_in_features": false,
+  "audit_features_materialized": false,
+  "external_data": [],
+  "parent_identity_excludes_only": ["created_at_utc", "preparation", "sources[*].wall_seconds"],
+  "prior_predictors": "exact timing_traffic values from the verified Phase-3 bundle",
+  "offset": "MVT minus SCHED if LIRF, NM origin missing, aircraft missing, and interval finite; zero otherwise"
+}

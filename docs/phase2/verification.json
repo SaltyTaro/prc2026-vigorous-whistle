@@ -1,0 +1,45 @@
+{
+  "audit_used": false,
+  "azure_states": {
+    "arcw0": "VM running",
+    "arcw1": "VM deallocated",
+    "arcw2": "VM deallocated",
+    "arcw3": "VM deallocated",
+    "arcw4": "VM deallocated",
+    "arcw5": "VM deallocated",
+    "arcw6": "VM deallocated",
+    "arcw7": "VM deallocated"
+  },
+  "credential_value_exposures_in_phase2_source_and_reports": 0,
+  "document_links_valid": true,
+  "feature_code_matches_frozen_bundle": true,
+  "model_code_matches_trained_recipe": true,
+  "native_model_reload_tolerance_seconds": 1e-09,
+  "observed_development_model_reload_max_difference_seconds": 0.0,
+  "official_score": 436.8976,
+  "official_used_pairs": 344841,
+  "phase": 2,
+  "python_sources_parse": true,
+  "recorded_at_utc": "2026-09-13T15:12:34.247071+00:00",
+  "saved_development_scores_reproduced_locally": true,
+  "submissions_uploaded": 1,
+  "tests": {
+    "azure_arcw0": {
+      "failed": 0,
+      "passed": 48,
+      "warnings": 1
+    },
+    "local_windows": {
+      "failed": 0,
+      "passed": 48,
+      "warnings": 1
+    }
+  },
+  "verified_completed_model_runs": [
+    "20260913T143152741210Z_seasonal_lightgbm",
+    "20260913T143210011786Z_forward_lightgbm",
+    "20260913T143224526011Z_seasonal_catboost",
+    "20260913T143358335748Z_forward_catboost",
+    "20260913T144337040626Z_refit_lightgbm"
+  ]
+}

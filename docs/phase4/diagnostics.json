@@ -1,0 +1,366 @@
+{
+  "above_three_hour_rows": 190,
+  "above_three_hour_slices": [
+    {
+      "airport": "EGLL",
+      "maximum_target_seconds": 11411.0,
+      "nm_missing": false,
+      "rows": 2
+    },
+    {
+      "airport": "EGLL",
+      "maximum_target_seconds": 11167.0,
+      "nm_missing": true,
+      "rows": 1
+    },
+    {
+      "airport": "EHAM",
+      "maximum_target_seconds": 10972.0,
+      "nm_missing": false,
+      "rows": 1
+    },
+    {
+      "airport": "EHAM",
+      "maximum_target_seconds": 11032.0,
+      "nm_missing": true,
+      "rows": 1
+    },
+    {
+      "airport": "LFPG",
+      "maximum_target_seconds": 21308.0,
+      "nm_missing": false,
+      "rows": 4
+    },
+    {
+      "airport": "LFPG",
+      "maximum_target_seconds": 84240.0,
+      "nm_missing": true,
+      "rows": 2
+    },
+    {
+      "airport": "LIRF",
+      "maximum_target_seconds": 87002.0,
+      "nm_missing": false,
+      "rows": 8
+    },
+    {
+      "airport": "LIRF",
+      "maximum_target_seconds": 131167.0,
+      "nm_missing": true,
+      "rows": 169
+    },
+    {
+      "airport": "LSZH",
+      "maximum_target_seconds": 87341.0,
+      "nm_missing": true,
+      "rows": 2
+    }
+  ],
+  "audit_used": false,
+  "code_sha256": "d3e5ed1982f001258c522c39cd5c865c88f76a12b713fead65b9f35a1b757a3e",
+  "created_at_utc": "2026-09-13T17:40:54.745720+00:00",
+  "development_rows": 1919370,
+  "external_data": [],
+  "input_projection": [
+    "MVT_ID_mvt",
+    "PHASE_mvt",
+    "MVT_TIME_UTC_mvt",
+    "ADEP_mvt",
+    "ADEP_flt",
+    "AIRCRAFT_TYPE_mvt",
+    "FLIGHT_mvt",
+    "SCHED_TIME_UTC_mvt",
+    "EOBT_1_flt",
+    "IOBT_flt",
+    "ARVT_1_flt",
+    "TAXITIME_SEC_mvt"
+  ],
+  "mechanism": "TAXITIME minus (movement minus schedule) equals schedule minus block by target definition. Block is not an input feature.",
+  "missing_lirf_months": [
+    {
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.4166666666666667,
+      "month": "2025-01",
+      "rows": 60
+    },
+    {
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.7586206896551724,
+      "month": "2025-02",
+      "rows": 58
+    },
+    {
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.7288135593220338,
+      "month": "2025-03",
+      "rows": 59
+    },
+    {
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.6666666666666666,
+      "month": "2025-04",
+      "rows": 69
+    },
+    {
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.46464646464646464,
+      "month": "2025-05",
+      "rows": 99
+    },
+    {
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.4864864864864865,
+      "month": "2025-06",
+      "rows": 185
+    },
+    {
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.32344213649851633,
+      "month": "2025-07",
+      "rows": 337
+    },
+    {
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.4517766497461929,
+      "month": "2025-08",
+      "rows": 197
+    },
+    {
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.43452380952380953,
+      "month": "2025-09",
+      "rows": 168
+    },
+    {
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.48695652173913045,
+      "month": "2025-10",
+      "rows": 115
+    },
+    {
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.6153846153846154,
+      "month": "2025-11",
+      "rows": 52
+    }
+  ],
+  "missing_lirf_rows": 1399,
+  "missingness_slices": [
+    {
+      "aircraft_missing": false,
+      "airport": "EDDF",
+      "finite_schedule_rows": 210957,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.012315305962826548,
+      "nm_missing": false,
+      "rows": 210957,
+      "schedule_interval_rmse_seconds": 3701.7447566718133
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "EDDF",
+      "finite_schedule_rows": 1860,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.0016129032258064516,
+      "nm_missing": true,
+      "rows": 1860,
+      "schedule_interval_rmse_seconds": 9240.916853106162
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "EDDM",
+      "finite_schedule_rows": 154419,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.05011688976097501,
+      "nm_missing": false,
+      "rows": 154419,
+      "schedule_interval_rmse_seconds": 1628.1770663218604
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "EDDM",
+      "finite_schedule_rows": 880,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.0,
+      "nm_missing": true,
+      "rows": 880,
+      "schedule_interval_rmse_seconds": 6227.760969952495
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "EGLL",
+      "finite_schedule_rows": 218259,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.04915719397596434,
+      "nm_missing": false,
+      "rows": 218259,
+      "schedule_interval_rmse_seconds": 1658.1729584935647
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "EGLL",
+      "finite_schedule_rows": 1287,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.003108003108003108,
+      "nm_missing": true,
+      "rows": 1287,
+      "schedule_interval_rmse_seconds": 6463.84751420303
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "EHAM",
+      "finite_schedule_rows": 224724,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.012192734198394475,
+      "nm_missing": false,
+      "rows": 224724,
+      "schedule_interval_rmse_seconds": 2719.245727268071
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "EHAM",
+      "finite_schedule_rows": 3768,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.028927813163481954,
+      "nm_missing": true,
+      "rows": 3768,
+      "schedule_interval_rmse_seconds": 6771.115552818297
+    },
+    {
+      "aircraft_missing": true,
+      "airport": "EHAM",
+      "finite_schedule_rows": 1,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.0,
+      "nm_missing": true,
+      "rows": 1,
+      "schedule_interval_rmse_seconds": 7473.0
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "LEBL",
+      "finite_schedule_rows": 164097,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.05650316581046576,
+      "nm_missing": false,
+      "rows": 164097,
+      "schedule_interval_rmse_seconds": 2024.1940714462694
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "LEBL",
+      "finite_schedule_rows": 1773,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.018612521150592216,
+      "nm_missing": true,
+      "rows": 1773,
+      "schedule_interval_rmse_seconds": 6785.644981752796
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "LEMD",
+      "finite_schedule_rows": 193370,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.0450845529296168,
+      "nm_missing": false,
+      "rows": 193370,
+      "schedule_interval_rmse_seconds": 1987.3193251523808
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "LEMD",
+      "finite_schedule_rows": 887,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.002254791431792559,
+      "nm_missing": true,
+      "rows": 887,
+      "schedule_interval_rmse_seconds": 6076.540899776092
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "LFPG",
+      "finite_schedule_rows": 216314,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.04207772035097127,
+      "nm_missing": false,
+      "rows": 216314,
+      "schedule_interval_rmse_seconds": 2217.6004017615087
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "LFPG",
+      "finite_schedule_rows": 3455,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.0034732272069464545,
+      "nm_missing": true,
+      "rows": 3455,
+      "schedule_interval_rmse_seconds": 7258.834783980746
+    },
+    {
+      "aircraft_missing": true,
+      "airport": "LFPG",
+      "finite_schedule_rows": 5,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.2,
+      "nm_missing": true,
+      "rows": 5,
+      "schedule_interval_rmse_seconds": 3614.7746264463017
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "LIRF",
+      "finite_schedule_rows": 147236,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.17632236681246435,
+      "nm_missing": false,
+      "rows": 147236,
+      "schedule_interval_rmse_seconds": 1892.8748363889824
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "LIRF",
+      "finite_schedule_rows": 1,
+      "fraction_target_within_10_seconds_of_schedule_interval": 1.0,
+      "nm_missing": true,
+      "rows": 1,
+      "schedule_interval_rmse_seconds": 0.0
+    },
+    {
+      "aircraft_missing": true,
+      "airport": "LIRF",
+      "finite_schedule_rows": 1399,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.46676197283774123,
+      "nm_missing": true,
+      "rows": 1399,
+      "schedule_interval_rmse_seconds": 5624.980622633609
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "LSZH",
+      "finite_schedule_rows": 122132,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.011160056332492712,
+      "nm_missing": false,
+      "rows": 122132,
+      "schedule_interval_rmse_seconds": 1690.0444464557645
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "LSZH",
+      "finite_schedule_rows": 2183,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.0233623453962437,
+      "nm_missing": true,
+      "rows": 2183,
+      "schedule_interval_rmse_seconds": 4545.193456451939
+    },
+    {
+      "aircraft_missing": true,
+      "airport": "LSZH",
+      "finite_schedule_rows": 7,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.0,
+      "nm_missing": true,
+      "rows": 7,
+      "schedule_interval_rmse_seconds": 5611.442506165416
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "LTFM",
+      "finite_schedule_rows": 247041,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.05125869794892346,
+      "nm_missing": false,
+      "rows": 247041,
+      "schedule_interval_rmse_seconds": 2327.898197112318
+    },
+    {
+      "aircraft_missing": false,
+      "airport": "LTFM",
+      "finite_schedule_rows": 3309,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.05107283167119976,
+      "nm_missing": true,
+      "rows": 3309,
+      "schedule_interval_rmse_seconds": 3268.5075845808246
+    },
+    {
+      "aircraft_missing": true,
+      "airport": "LTFM",
+      "finite_schedule_rows": 6,
+      "fraction_target_within_10_seconds_of_schedule_interval": 0.0,
+      "nm_missing": true,
+      "rows": 6,
+      "schedule_interval_rmse_seconds": 3597.1615430317647
+    }
+  ],
+  "parent_bundle_id": "58d621b245de3f5e12dd3b50b0a90a87ea8ac3dc96aa2c274ffa7ea0af96b2e0",
+  "scope": "Exploratory January-November diagnostics, including reused development labels; no December labels or hidden ranking labels"
+}

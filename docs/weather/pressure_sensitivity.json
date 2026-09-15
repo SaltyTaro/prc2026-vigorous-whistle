@@ -1,0 +1,16 @@
+{
+  "affected_rows": 49,
+  "audit_labels_used": false,
+  "bound_interpretation": "By the reverse triangle inequality, the absolute change in full-ranking RMSE between these two prediction vectors cannot exceed this value for any fixed hidden targets.",
+  "bundle_id": "827d828796d9cb9c45811d48b0d9647659c187dd719d6ba3caa771a16bfe1ce8",
+  "code_sha256": "48b32fb87d3c243a9a8daf49464800fbe61faf3c1eeabcdf8e26fd137ee5074f",
+  "created_at_utc": "2026-09-14T03:04:58.721063+00:00",
+  "departure_labels_read": false,
+  "limitation": "This is an input-sensitivity check of the fitted recipe. It does not evaluate a model retrained on pressure-filtered fitting data.",
+  "maximum_absolute_prediction_change_seconds": 90.32505536196959,
+  "perturbation": "Only suspect pressure outside 850-1100 hPa and hourly pressure changes over 100 hPa are replaced by missing values at inference.",
+  "predictions_or_submission_modified": false,
+  "ranking_rows": 344841,
+  "refit_run_sha256": "507b653bd67b671309f5b7aa257f1b6231a91b6a1669088718af30d7c76663b3",
+  "rmse_difference_upper_bound_seconds": 0.40802359843897007
+}

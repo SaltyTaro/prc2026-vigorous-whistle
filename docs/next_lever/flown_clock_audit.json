@@ -1,0 +1,810 @@
+{
+  "actual_fitting_months": [
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-08",
+    "2025-09"
+  ],
+  "audit_used": false,
+  "code_sha256": "b953614f35fbfbec4ae9b827884475ed8fcfd106d35cd51b8c977144d0b3ee73",
+  "created_at_utc": "2026-09-14T16:57:47.389951+00:00",
+  "feature_bundle_id": "72e86725e23367ede5b558027cfc8eeb7ef6cfbaed23980537766ef6a34a7f34",
+  "fitting_ids_sha256": "5a8ca81854dc7ddc29c0cc0e82c5f3a0a3bc2eb2b22ac17d4da387e7090b63f7",
+  "fitting_rows": 1226945,
+  "groups": {
+    "airport/EDDF": {
+      "airport_centered_raw_proxy_residual_rmse_seconds": 238.7859154498191,
+      "clock_present_rows": 135584,
+      "correlations_with_airport_centered_proxy_residual": {
+        "flown_arrival_minus_plan_s": {
+          "pearson": 0.3388069555660838,
+          "spearman": 0.3396812035535642
+        },
+        "flown_arrival_minus_takeoff_s": {
+          "pearson": 0.09867887549497094,
+          "spearman": 0.12648845280704316
+        },
+        "flown_duration_s": {
+          "pearson": 0.09578494045833205,
+          "spearman": 0.12402347036303205
+        },
+        "flown_lobt_duration_s": {
+          "pearson": 0.11478439251182324,
+          "spearman": 0.16743483880783214
+        },
+        "flown_minus_initial_duration_s": {
+          "pearson": -0.018908497909680366,
+          "spearman": 0.015064621953020569
+        },
+        "flown_minus_planned_duration_s": {
+          "pearson": 0.03630490562884979,
+          "spearman": 0.034658212855960976
+        }
+      },
+      "flown_arrival_present_rows": 135584,
+      "observable_regimes": {
+        "arrival_before_reported_takeoff": {
+          "fraction_of_centered_proxy_sse": 0.010850837669254664,
+          "rmse_seconds": 6476.338847225689,
+          "rows": 2
+        },
+        "duration_plan_disagreement_over_1h": {
+          "fraction_of_centered_proxy_sse": 0.011273018219894215,
+          "rmse_seconds": 1270.3873263611893,
+          "rows": 54
+        },
+        "duration_plan_disagreement_over_3h": {
+          "fraction_of_centered_proxy_sse": 0.010931393341978232,
+          "rmse_seconds": 2006.0467111791022,
+          "rows": 21
+        },
+        "flown_duration_negative": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "flown_duration_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_under_10m": {
+          "fraction_of_centered_proxy_sse": 1.4763603839916802e-05,
+          "rmse_seconds": 337.8384838919047,
+          "rows": 1
+        }
+      },
+      "rows": 136626
+    },
+    "airport/EDDM": {
+      "airport_centered_raw_proxy_residual_rmse_seconds": 301.1376990932559,
+      "clock_present_rows": 99645,
+      "correlations_with_airport_centered_proxy_residual": {
+        "flown_arrival_minus_plan_s": {
+          "pearson": 0.36830897014025865,
+          "spearman": 0.4404771287571575
+        },
+        "flown_arrival_minus_takeoff_s": {
+          "pearson": 0.2672792426252535,
+          "spearman": 0.34079355044834997
+        },
+        "flown_duration_s": {
+          "pearson": 0.2566734044914267,
+          "spearman": 0.31798607616463603
+        },
+        "flown_lobt_duration_s": {
+          "pearson": 0.29146861651451866,
+          "spearman": 0.4075050454777932
+        },
+        "flown_minus_initial_duration_s": {
+          "pearson": -0.13422033020889867,
+          "spearman": -0.058369552481236195
+        },
+        "flown_minus_planned_duration_s": {
+          "pearson": -0.149268080278211,
+          "spearman": -0.04580137295071399
+        }
+      },
+      "flown_arrival_present_rows": 99645,
+      "observable_regimes": {
+        "arrival_before_reported_takeoff": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "duration_plan_disagreement_over_1h": {
+          "fraction_of_centered_proxy_sse": 0.012163263911084687,
+          "rmse_seconds": 1545.7492078829137,
+          "rows": 46
+        },
+        "duration_plan_disagreement_over_3h": {
+          "fraction_of_centered_proxy_sse": 6.182937967610023e-05,
+          "rmse_seconds": 207.30923642275917,
+          "rows": 13
+        },
+        "flown_duration_negative": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "flown_duration_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_under_10m": {
+          "fraction_of_centered_proxy_sse": 0.00015597247345450327,
+          "rmse_seconds": 224.35608217407952,
+          "rows": 28
+        }
+      },
+      "rows": 100177
+    },
+    "airport/EGLL": {
+      "airport_centered_raw_proxy_residual_rmse_seconds": 403.1951996125092,
+      "clock_present_rows": 138580,
+      "correlations_with_airport_centered_proxy_residual": {
+        "flown_arrival_minus_plan_s": {
+          "pearson": 0.2624111851979919,
+          "spearman": 0.12549317337118926
+        },
+        "flown_arrival_minus_takeoff_s": {
+          "pearson": -0.006718789180475205,
+          "spearman": 0.031553292010604875
+        },
+        "flown_duration_s": {
+          "pearson": -0.023216150889161367,
+          "spearman": -0.0039067591840574465
+        },
+        "flown_lobt_duration_s": {
+          "pearson": 0.003452370890308633,
+          "spearman": 0.03566631160895009
+        },
+        "flown_minus_initial_duration_s": {
+          "pearson": -0.22744519375011965,
+          "spearman": -0.25139067686674743
+        },
+        "flown_minus_planned_duration_s": {
+          "pearson": -0.25698007696599523,
+          "spearman": -0.2866767669852349
+        }
+      },
+      "flown_arrival_present_rows": 138580,
+      "observable_regimes": {
+        "arrival_before_reported_takeoff": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "duration_plan_disagreement_over_1h": {
+          "fraction_of_centered_proxy_sse": 0.0032779802233434486,
+          "rmse_seconds": 905.8317546018944,
+          "rows": 90
+        },
+        "duration_plan_disagreement_over_3h": {
+          "fraction_of_centered_proxy_sse": 7.46388070277404e-05,
+          "rmse_seconds": 334.8130263516626,
+          "rows": 15
+        },
+        "flown_duration_negative": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "flown_duration_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_under_10m": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        }
+      },
+      "rows": 139256
+    },
+    "airport/EHAM": {
+      "airport_centered_raw_proxy_residual_rmse_seconds": 294.7503968059099,
+      "clock_present_rows": 144176,
+      "correlations_with_airport_centered_proxy_residual": {
+        "flown_arrival_minus_plan_s": {
+          "pearson": -0.1833265394483649,
+          "spearman": -0.0676328477619064
+        },
+        "flown_arrival_minus_takeoff_s": {
+          "pearson": 0.009411754125645223,
+          "spearman": 0.019531365319537454
+        },
+        "flown_duration_s": {
+          "pearson": -0.012378946144690307,
+          "spearman": -0.02111473280334262
+        },
+        "flown_lobt_duration_s": {
+          "pearson": -0.002771549086533958,
+          "spearman": 0.012391428045371291
+        },
+        "flown_minus_initial_duration_s": {
+          "pearson": -0.35900063278334715,
+          "spearman": -0.283814529179167
+        },
+        "flown_minus_planned_duration_s": {
+          "pearson": -0.4052271109376212,
+          "spearman": -0.33857445367960864
+        }
+      },
+      "flown_arrival_present_rows": 144176,
+      "observable_regimes": {
+        "arrival_before_reported_takeoff": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "duration_plan_disagreement_over_1h": {
+          "fraction_of_centered_proxy_sse": 0.017299227445402972,
+          "rmse_seconds": 1625.576127390812,
+          "rows": 82
+        },
+        "duration_plan_disagreement_over_3h": {
+          "fraction_of_centered_proxy_sse": 5.2235418166662197e-05,
+          "rmse_seconds": 216.18193741265384,
+          "rows": 14
+        },
+        "flown_duration_negative": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "flown_duration_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_under_10m": {
+          "fraction_of_centered_proxy_sse": 0.0006212249768135404,
+          "rmse_seconds": 411.28836422062557,
+          "rows": 46
+        }
+      },
+      "rows": 146528
+    },
+    "airport/LEBL": {
+      "airport_centered_raw_proxy_residual_rmse_seconds": 294.4659244075276,
+      "clock_present_rows": 106236,
+      "correlations_with_airport_centered_proxy_residual": {
+        "flown_arrival_minus_plan_s": {
+          "pearson": 0.37184709675734606,
+          "spearman": 0.38076430552787155
+        },
+        "flown_arrival_minus_takeoff_s": {
+          "pearson": 0.028930308814531902,
+          "spearman": 0.007830194947766298
+        },
+        "flown_duration_s": {
+          "pearson": 0.0127516439493256,
+          "spearman": -0.03335179861414688
+        },
+        "flown_lobt_duration_s": {
+          "pearson": 0.05147114855105674,
+          "spearman": 0.052917298207846304
+        },
+        "flown_minus_initial_duration_s": {
+          "pearson": -0.049423653910327166,
+          "spearman": 0.002007551752125153
+        },
+        "flown_minus_planned_duration_s": {
+          "pearson": 0.029172520943317355,
+          "spearman": 0.05957670915372908
+        }
+      },
+      "flown_arrival_present_rows": 106236,
+      "observable_regimes": {
+        "arrival_before_reported_takeoff": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "duration_plan_disagreement_over_1h": {
+          "fraction_of_centered_proxy_sse": 0.0006966735751807301,
+          "rmse_seconds": 654.0936607452636,
+          "rows": 15
+        },
+        "duration_plan_disagreement_over_3h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "flown_duration_negative": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "flown_duration_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_under_10m": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        }
+      },
+      "rows": 107252
+    },
+    "airport/LEMD": {
+      "airport_centered_raw_proxy_residual_rmse_seconds": 272.5936805404551,
+      "clock_present_rows": 122172,
+      "correlations_with_airport_centered_proxy_residual": {
+        "flown_arrival_minus_plan_s": {
+          "pearson": 0.3767164259768782,
+          "spearman": 0.38856805511155984
+        },
+        "flown_arrival_minus_takeoff_s": {
+          "pearson": 0.056440153271376685,
+          "spearman": 0.07997511042054115
+        },
+        "flown_duration_s": {
+          "pearson": 0.052333345444462075,
+          "spearman": 0.0754523152301817
+        },
+        "flown_lobt_duration_s": {
+          "pearson": 0.07595268086358917,
+          "spearman": 0.13739858102601962
+        },
+        "flown_minus_initial_duration_s": {
+          "pearson": -0.02121143209453622,
+          "spearman": 0.018242579891391348
+        },
+        "flown_minus_planned_duration_s": {
+          "pearson": -0.0029209691740246057,
+          "spearman": 0.02508666312027997
+        }
+      },
+      "flown_arrival_present_rows": 122172,
+      "observable_regimes": {
+        "arrival_before_reported_takeoff": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "duration_plan_disagreement_over_1h": {
+          "fraction_of_centered_proxy_sse": 0.00015016307622560336,
+          "rmse_seconds": 213.16827763737885,
+          "rows": 30
+        },
+        "duration_plan_disagreement_over_3h": {
+          "fraction_of_centered_proxy_sse": 5.0526948187968046e-05,
+          "rmse_seconds": 338.63602954892997,
+          "rows": 4
+        },
+        "flown_duration_negative": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "flown_duration_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_under_10m": {
+          "fraction_of_centered_proxy_sse": 0.0006907429151370248,
+          "rmse_seconds": 491.10366004656584,
+          "rows": 26
+        }
+      },
+      "rows": 122618
+    },
+    "airport/LFPG": {
+      "airport_centered_raw_proxy_residual_rmse_seconds": 357.81346272077826,
+      "clock_present_rows": 138815,
+      "correlations_with_airport_centered_proxy_residual": {
+        "flown_arrival_minus_plan_s": {
+          "pearson": 0.41803876000431556,
+          "spearman": 0.44136497448248163
+        },
+        "flown_arrival_minus_takeoff_s": {
+          "pearson": 0.1511316208376053,
+          "spearman": 0.18519784582897436
+        },
+        "flown_duration_s": {
+          "pearson": 0.1393508629272632,
+          "spearman": 0.15142944519852866
+        },
+        "flown_lobt_duration_s": {
+          "pearson": 0.17114102633730027,
+          "spearman": 0.23258842557801818
+        },
+        "flown_minus_initial_duration_s": {
+          "pearson": -0.050288138075466546,
+          "spearman": -0.027360236293533048
+        },
+        "flown_minus_planned_duration_s": {
+          "pearson": -0.02622858442220128,
+          "spearman": -0.03522866717950563
+        }
+      },
+      "flown_arrival_present_rows": 138815,
+      "observable_regimes": {
+        "arrival_before_reported_takeoff": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "duration_plan_disagreement_over_1h": {
+          "fraction_of_centered_proxy_sse": 0.0033897630487277086,
+          "rmse_seconds": 941.2502180487592,
+          "rows": 68
+        },
+        "duration_plan_disagreement_over_3h": {
+          "fraction_of_centered_proxy_sse": 0.0003369217636956439,
+          "rmse_seconds": 489.40612909546,
+          "rows": 25
+        },
+        "flown_duration_negative": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "flown_duration_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_under_10m": {
+          "fraction_of_centered_proxy_sse": 9.894055869327421e-06,
+          "rmse_seconds": 296.51526540834897,
+          "rows": 2
+        }
+      },
+      "rows": 140707
+    },
+    "airport/LIRF": {
+      "airport_centered_raw_proxy_residual_rmse_seconds": 501.40085116765033,
+      "clock_present_rows": 95802,
+      "correlations_with_airport_centered_proxy_residual": {
+        "flown_arrival_minus_plan_s": {
+          "pearson": 0.36279442510139814,
+          "spearman": 0.42104080792033854
+        },
+        "flown_arrival_minus_takeoff_s": {
+          "pearson": 0.08072087126593629,
+          "spearman": 0.03499104943240896
+        },
+        "flown_duration_s": {
+          "pearson": 0.07890270667291803,
+          "spearman": 0.027982928676778377
+        },
+        "flown_lobt_duration_s": {
+          "pearson": 0.10922992722126573,
+          "spearman": 0.10993971188645267
+        },
+        "flown_minus_initial_duration_s": {
+          "pearson": -0.10799924980360277,
+          "spearman": -0.06609142104834646
+        },
+        "flown_minus_planned_duration_s": {
+          "pearson": 0.006156833905295437,
+          "spearman": 0.010306303210062377
+        }
+      },
+      "flown_arrival_present_rows": 95802,
+      "observable_regimes": {
+        "arrival_before_reported_takeoff": {
+          "fraction_of_centered_proxy_sse": 0.0008547258858258171,
+          "rmse_seconds": 2619.540732242815,
+          "rows": 3
+        },
+        "duration_plan_disagreement_over_1h": {
+          "fraction_of_centered_proxy_sse": 0.003025598269823565,
+          "rmse_seconds": 1585.1814712225773,
+          "rows": 29
+        },
+        "duration_plan_disagreement_over_3h": {
+          "fraction_of_centered_proxy_sse": 0.0002023598780080535,
+          "rmse_seconds": 987.3009547796021,
+          "rows": 5
+        },
+        "flown_duration_negative": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "flown_duration_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_under_10m": {
+          "fraction_of_centered_proxy_sse": 0.0002578312582280149,
+          "rmse_seconds": 1762.0780484001662,
+          "rows": 2
+        }
+      },
+      "rows": 96638
+    },
+    "airport/LSZH": {
+      "airport_centered_raw_proxy_residual_rmse_seconds": 252.1780038472598,
+      "clock_present_rows": 78190,
+      "correlations_with_airport_centered_proxy_residual": {
+        "flown_arrival_minus_plan_s": {
+          "pearson": 0.31326751607288245,
+          "spearman": 0.32937248660409885
+        },
+        "flown_arrival_minus_takeoff_s": {
+          "pearson": 0.30273526672213863,
+          "spearman": 0.26408083368955987
+        },
+        "flown_duration_s": {
+          "pearson": 0.3006494874327098,
+          "spearman": 0.2657420423231861
+        },
+        "flown_lobt_duration_s": {
+          "pearson": 0.32652320630364495,
+          "spearman": 0.3332285782912374
+        },
+        "flown_minus_initial_duration_s": {
+          "pearson": -0.06267815267370228,
+          "spearman": -0.05900027791816442
+        },
+        "flown_minus_planned_duration_s": {
+          "pearson": -0.03854029525517215,
+          "spearman": -0.054108648290316745
+        }
+      },
+      "flown_arrival_present_rows": 78190,
+      "observable_regimes": {
+        "arrival_before_reported_takeoff": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "duration_plan_disagreement_over_1h": {
+          "fraction_of_centered_proxy_sse": 0.0010677910871723215,
+          "rmse_seconds": 355.5505131637608,
+          "rows": 42
+        },
+        "duration_plan_disagreement_over_3h": {
+          "fraction_of_centered_proxy_sse": 0.0004520355704953292,
+          "rmse_seconds": 452.0357384463126,
+          "rows": 11
+        },
+        "flown_duration_negative": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "flown_duration_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_over_24h": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "remaining_airborne_under_10m": {
+          "fraction_of_centered_proxy_sse": 1.9127224437044208e-05,
+          "rmse_seconds": 308.39603529863155,
+          "rows": 1
+        }
+      },
+      "rows": 79596
+    },
+    "airport/LTFM": {
+      "airport_centered_raw_proxy_residual_rmse_seconds": 477.45106608987305,
+      "clock_present_rows": 155566,
+      "correlations_with_airport_centered_proxy_residual": {
+        "flown_arrival_minus_plan_s": {
+          "pearson": 0.37513705019302473,
+          "spearman": 0.48647694872131547
+        },
+        "flown_arrival_minus_takeoff_s": {
+          "pearson": 0.12593813305385462,
+          "spearman": 0.18604471804324846
+        },
+        "flown_duration_s": {
+          "pearson": 0.10846657786773525,
+          "spearman": 0.16907022840211333
+        },
+        "flown_lobt_duration_s": {
+          "pearson": 0.15567366125728485,
+          "spearman": 0.24124952503359906
+        },
+        "flown_minus_initial_duration_s": {
+          "pearson": -0.21553647234497836,
+          "spearman": -0.053096155203426344
+        },
+        "flown_minus_planned_duration_s": {
+          "pearson": -0.21434974020945274,
+          "spearman": -0.05443675866044711
+        }
+      },
+      "flown_arrival_present_rows": 155566,
+      "observable_regimes": {
+        "arrival_before_reported_takeoff": {
+          "fraction_of_centered_proxy_sse": 0.0010277569613222498,
+          "rmse_seconds": 2699.892181890015,
+          "rows": 5
+        },
+        "duration_plan_disagreement_over_1h": {
+          "fraction_of_centered_proxy_sse": 0.09848090599161599,
+          "rmse_seconds": 2820.5250906792444,
+          "rows": 439
+        },
+        "duration_plan_disagreement_over_3h": {
+          "fraction_of_centered_proxy_sse": 0.00022305891317631957,
+          "rmse_seconds": 586.4514748630844,
+          "rows": 23
+        },
+        "flown_duration_negative": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "flown_duration_over_24h": {
+          "fraction_of_centered_proxy_sse": 1.030550023436347e-07,
+          "rmse_seconds": 60.45340241440931,
+          "rows": 1
+        },
+        "remaining_airborne_over_24h": {
+          "fraction_of_centered_proxy_sse": 1.030550023436347e-07,
+          "rmse_seconds": 60.45340241440931,
+          "rows": 1
+        },
+        "remaining_airborne_under_10m": {
+          "fraction_of_centered_proxy_sse": 0.0010058834340399413,
+          "rmse_seconds": 2986.2766751730665,
+          "rows": 4
+        }
+      },
+      "rows": 157547
+    },
+    "all": {
+      "airport_centered_raw_proxy_residual_rmse_seconds": 354.2024324794732,
+      "clock_present_rows": 1214766,
+      "correlations_with_airport_centered_proxy_residual": {
+        "flown_arrival_minus_plan_s": {
+          "pearson": 0.2950148681027125,
+          "spearman": 0.3300814498310056
+        },
+        "flown_arrival_minus_takeoff_s": {
+          "pearson": 0.08728424584452539,
+          "spearman": 0.11804130833144445
+        },
+        "flown_duration_s": {
+          "pearson": 0.07594671893404402,
+          "spearman": 0.09782762408906354
+        },
+        "flown_lobt_duration_s": {
+          "pearson": 0.10385398840498919,
+          "spearman": 0.15679856855731716
+        },
+        "flown_minus_initial_duration_s": {
+          "pearson": -0.13876906591131813,
+          "spearman": -0.06952581442267303
+        },
+        "flown_minus_planned_duration_s": {
+          "pearson": -0.1289345851968517,
+          "spearman": -0.06735061239183833
+        }
+      },
+      "flown_arrival_present_rows": 1214766,
+      "observable_regimes": {
+        "arrival_before_reported_takeoff": {
+          "fraction_of_centered_proxy_sse": 0.0009246424860886132,
+          "rmse_seconds": 3753.917948503415,
+          "rows": 10
+        },
+        "duration_plan_disagreement_over_1h": {
+          "fraction_of_centered_proxy_sse": 0.027074147189616406,
+          "rmse_seconds": 2147.1566407745204,
+          "rows": 895
+        },
+        "duration_plan_disagreement_over_3h": {
+          "fraction_of_centered_proxy_sse": 0.0007144287217540163,
+          "rmse_seconds": 911.6783855623456,
+          "rows": 131
+        },
+        "flown_duration_negative": {
+          "fraction_of_centered_proxy_sse": 0.0,
+          "rmse_seconds": null,
+          "rows": 0
+        },
+        "flown_duration_over_24h": {
+          "fraction_of_centered_proxy_sse": 2.397981292111334e-08,
+          "rmse_seconds": 60.45340241440931,
+          "rows": 1
+        },
+        "remaining_airborne_over_24h": {
+          "fraction_of_centered_proxy_sse": 2.397981292111334e-08,
+          "rmse_seconds": 60.45340241440931,
+          "rows": 1
+        },
+        "remaining_airborne_under_10m": {
+          "fraction_of_centered_proxy_sse": 0.00037878158968274726,
+          "rmse_seconds": 724.42919101106,
+          "rows": 110
+        }
+      },
+      "rows": 1226945
+    }
+  },
+  "interpretation": "Descriptive fitting-only arithmetic residuals, not v6 model errors or validation scores. Ranking is covariates only. Correlation does not establish incremental predictive value; any model test requires a new declaration.",
+  "models_fitted": 0,
+  "ranking_covariate_coverage": {
+    "clock_present_rows": 339551,
+    "flown_arrival_present_rows": 339551,
+    "rows": 344841
+  },
+  "raw_columns": [
+    "MVT_ID_mvt",
+    "PHASE_mvt",
+    "MVT_TIME_UTC_mvt",
+    "ADEP_mvt",
+    "ARVT_3_flt",
+    "ARVT_1_flt",
+    "AOBT_3_flt",
+    "LOBT_flt",
+    "EOBT_1_flt",
+    "IOBT_flt"
+  ],
+  "raw_inputs_sha256": {
+    "data/raw/training_2025-02-01_2025-03-01.parquet": "b6f9ff2cdb1cfe07c5442f4e1f11bbcdbeafe52852dcb0b8175f62ab84c6a066",
+    "data/raw/training_2025-03-01_2025-04-01.parquet": "58fde7e5f8b539546af63b41d7f6ec0f2884fdc3d3dd9b6bfca7c59a420dcdd3",
+    "data/raw/training_2025-04-01_2025-05-01.parquet": "9ffe0cf5741c4863799c41be81475dfaecedabe0ba687b8f8e4eacba992f9390",
+    "data/raw/training_2025-05-01_2025-06-01.parquet": "5481c0642a8fbb4dc395f93bc713c57f4cc16854fb361d404967077e1fce2ff9",
+    "data/raw/training_2025-06-01_2025-07-01.parquet": "c3ef5080f2cc636c3416baf1555f7d0ee3519f9046e8043c1c0c8f017a244025",
+    "data/raw/training_2025-08-01_2025-09-01.parquet": "6c8d2aa7a1b6c9dff9a0305a37eb02de1e87a68d07557264f41b77738272c540",
+    "data/raw/training_2025-09-01_2025-10-01.parquet": "955308a4000947e32a00586d3ee13928949d2231b67f84f6dfb0631893f3754a"
+  },
+  "split_file_sha256": {
+    "forward": "0128a4b3fcc5715f3d0d727a2e4d4ce1b3d8d10b024669e7afe3de82c3be8054",
+    "seasonal": "55692f98747009d14f6a924021b65fe820f846c2440987ceef6f254c95beff96"
+  }
+}
