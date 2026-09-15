@@ -46,3 +46,14 @@ w = 0.3 on every non-LIRF row: **317,942 rows touched** (LIRF 26,899 keep v9).
 Output `runs/submissions/vigorous-whistle_v13.parquet`, SHA-256
 **`c3985c532c1f9ca70cdfd699fe4a97e5037604d15d387cb2e596abd087a85ad2`**, 344,841
 rows, min −12, max 120,549 (inherited).
+
+## Verification ([`verification.json`](verification.json))
+
+`tools/verify_adsb_v11.py --version 13 --config configs/adsb_v12_v4.json
+--run-root runs/adsb_v12_v4`: receipts and parents re-checked, v9 reproduced
+from scratch, the ADS-B features and the attached learner prediction reproduced,
+the residual recomputed from the saved booster (difference 0.0), the blend
+recomputed row by row, rows outside both scopes equal the uploaded v9, and the
+independent segment re-derivation agrees on **300/300** sampled matched
+departures. Not uploaded at the time of writing (next allowance 00:00 UTC,
+16 September).
