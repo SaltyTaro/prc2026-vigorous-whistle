@@ -117,6 +117,7 @@ def main():
     parser.add_argument("--settings", type=Path, default=Path("configs/timeline_v1.json"), help="LightGBM parameters are taken from this declaration's lightgbm block")
     parser.add_argument("--threads", type=int, default=16)
     parser.add_argument("--seed", type=int, default=20260915)
+    parser.add_argument("--exclude-airports", nargs="*", default=[], help="Airports left out of fitting and early stopping (their rows are still predicted)")
     args = parser.parse_args()
     started = time.time()
     out = ROOT / args.output / args.fold
@@ -137,7 +138,10 @@ def main():
     names = [*BUNDLE_NAMES, *ADSB_NAMES]
     inputs = {"bundle_id": manifest["bundle_id"], "stands_sha256": sha256_file(matches_root / "stands.parquet"),
               "matches_sha256": {m: sha256_file(matches_root / f"matches2_{m}.parquet") for m in TRAINING_MONTHS + RANKING_MONTHS},
-              "code": code_receipt(), "lightgbm_parameters": params, "features": len(names), "adsb_features": ADSB_NAMES}
+              "code": code_receipt(), "lightgbm_parameters": params, "features": len(names), "adsb_features": ADSB_NAMES, "excluded_airports": sorted(args.exclude_airports)}
+
+    def keep(frame: pd.DataFrame) -> np.ndarray:
+        return ~frame["airport"].isin(args.exclude_airports).to_numpy()
     out.mkdir(parents=True, exist_ok=True)
     if args.fold in ("seasonal", "forward"):
         assignment = pd.read_parquet(parent / "splits" / f"{args.fold}.parquet")
@@ -148,9 +152,10 @@ def main():
                 raise ValueError("Protected split populations changed.")
             parts[role] = attach(features, tables, catalog)
             truths[role] = aligned_truth(parts[role], truth)[TARGET].to_numpy(dtype=float)
-        x, vocab = encode(parts["fit"], names)
-        xs, _ = encode(parts["early_stop"], names, vocab)
-        booster, history = fit(params, x, truths["fit"], settings["rounds"], xs, truths["early_stop"], settings["early_stopping_rounds"])
+        fit_keep, stop_keep = keep(parts["fit"]), keep(parts["early_stop"])
+        x, vocab = encode(parts["fit"][fit_keep].reset_index(drop=True), names)
+        xs, _ = encode(parts["early_stop"][stop_keep].reset_index(drop=True), names, vocab)
+        booster, history = fit(params, x, truths["fit"][fit_keep], settings["rounds"], xs, truths["early_stop"][stop_keep], settings["early_stopping_rounds"])
         best = int(booster.best_iteration or booster.current_iteration())
         xt, _ = encode(parts["score"], names, vocab)
         prediction = booster.predict(xt, num_iteration=best)
@@ -162,6 +167,7 @@ def main():
         months = catalog.set_index(ID)[TIME].reindex(score[ID]).dt.strftime("%Y-%m").to_numpy()
         by_month = {m: rmse(months == m) for m in sorted(set(months))}
         record = {"created_at_utc": utc_now(), "fold": args.fold, "stage": "development", "best_iteration": best, "rows": {r: int(len(p)) for r, p in parts.items()},
+                  "fitted_rows": int(fit_keep.sum()), "early_stop_rows": int(stop_keep.sum()),
                   "score_ids_sha256": identity_hash(score[ID]), "score_rmse": rmse(np.ones(len(score), dtype=bool)), "score_rmse_by_month": by_month,
                   "score_rmse_matched": rmse(matched), "score_rmse_unmatched": rmse(~matched), "matched_share": float(matched.mean()),
                   "early_stop_rmse_curve_tail": {k: v["rmse"][-5:] for k, v in history.items()}, "inputs": inputs, "audit_used": False,
@@ -172,7 +178,8 @@ def main():
     else:
         folds = {f: read_json(ROOT / args.output / f / "run.json") for f in ["seasonal", "forward"]}
         for f, rec in folds.items():
-            if rec["inputs"]["code"]["sha256"] != inputs["code"]["sha256"] or rec["inputs"]["stands_sha256"] != inputs["stands_sha256"] or rec["inputs"]["matches_sha256"] != inputs["matches_sha256"]:
+            if (rec["inputs"]["code"]["sha256"] != inputs["code"]["sha256"] or rec["inputs"]["stands_sha256"] != inputs["stands_sha256"] or rec["inputs"]["matches_sha256"] != inputs["matches_sha256"]
+                    or rec["inputs"].get("excluded_airports", []) != inputs["excluded_airports"]):
                 raise ValueError(f"Development fold {f} used different inputs.")
         rounds = int(np.rint(np.median([rec["best_iteration"] for rec in folds.values()])))
         training = catalog[catalog["source_file"].isin([source_file(m) for m in TRAINING_MONTHS])]
@@ -182,8 +189,9 @@ def main():
         features, truth = load_partition(base, parent, catalog, assignment, "fit", BUNDLE_NAMES)
         frame = attach(features, tables, catalog)
         y = aligned_truth(frame, truth)[TARGET].to_numpy(dtype=float)
-        x, vocab = encode(frame, names)
-        booster, _ = fit(params, x, y, rounds)
+        fit_keep = keep(frame)
+        x, vocab = encode(frame[fit_keep].reset_index(drop=True), names)
+        booster, _ = fit(params, x, y[fit_keep], rounds)
         ranking = pd.read_parquet(base / "features" / "ranking.parquet", columns=[ID, *BUNDLE_NAMES])
         if identity_hash(ranking[ID]) != original["ranking_ids_sha256"]:
             raise ValueError("Ranking identities changed.")
@@ -195,7 +203,7 @@ def main():
         booster.save_model(str(out / "model.txt"), num_iteration=rounds)
         pd.DataFrame({ID: rank[ID].to_numpy(), "adsb_full": prediction}).to_parquet(out / "ranking_predictions.parquet", index=False, compression="zstd")
         record = {"created_at_utc": utc_now(), "fold": "refit", "stage": "refit", "rounds": rounds, "rounds_rule": "median best iteration of the seasonal and forward folds",
-                  "development_best_iterations": {f: rec["best_iteration"] for f, rec in folds.items()}, "rows": int(len(frame)), "months": TRAINING_MONTHS,
+                  "development_best_iterations": {f: rec["best_iteration"] for f, rec in folds.items()}, "rows": int(len(frame)), "fitted_rows": int(fit_keep.sum()), "months": TRAINING_MONTHS,
                   "ranking_rows": int(len(rank)), "ranking_ids_sha256": identity_hash(rank[ID]), "ranking_matched_share": float(rank["adsb_matched"].mean()),
                   "prediction_quantiles": {str(q): float(np.quantile(prediction, q)) for q in [0.01, 0.1, 0.5, 0.9, 0.99]}, "inputs": inputs, "audit_used": False,
                   "seconds": round(time.time() - started, 1), "environment": environment(ROOT)}
