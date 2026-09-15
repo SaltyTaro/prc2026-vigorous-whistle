@@ -1,0 +1,149 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "residual_matched_100": {
+      "weight": 1.0
+    },
+    "residual_matched_75": {
+      "weight": 0.75
+    },
+    "residual_matched_50": {
+      "weight": 0.5
+    }
+  },
+  "declared_at_utc": "2026-09-15T08:21:00+00:00",
+  "development_months": [
+    "2025-01",
+    "2025-07",
+    "2025-11"
+  ],
+  "development_scheme": "leave-one-month-out over the three scoring months that hold out-of-sample v9 predictions (Jan and Jul 2025 from the seasonal fold, Nov 2025 from the forward fold); the residual model is fitted on the other two months' matched rows and applied to the held-out month's matched rows",
+  "execution": {
+    "automatic_submission": false,
+    "azure_only": true,
+    "development_host": "arcw1",
+    "workers_used": [
+      "arcw1",
+      "arcw2",
+      "arcw3",
+      "arcw4",
+      "arcw5"
+    ]
+  },
+  "experiment_id": "prc2026-adsb-surface-residual-v11-v1",
+  "external_data": {
+    "source": "adsb.lol globe_history daily archives (GitHub releases adsblol/globe_history_2025 and globe_history_2026, tags vYYYY.MM.DD-planes-readsb-prod-0)",
+    "license": "Open Database License (ODbL) 1.0; feeder data CC0; licence files are inside every archive",
+    "extraction": "tools/adsb_extract_day.py keeps positions inside the ten aerodrome boxes that are on the ground or below 3,000 ft; per-day parquet with archive part hashes under data/external/adsblol/surface/",
+    "matching": "tools/build_adsb_features.py: ICAO callsign (CALLSIGN_flt, else FLIGHT_mvt) and takeoff within the track's ground-to-air transition; stand positions learned label-free from covered segments of the 2025 months; pass 2 anchors on them",
+    "labels_used_in_features": false
+  },
+  "floor_seconds_rule": "minimum departure label over the refit months (-12), applied after the residual",
+  "incumbent": {
+    "official_rmse_seconds": 267.4454,
+    "recipe": "v9 = full_timeline_v6_100 + lirf-turnaround-mixture-v1 mixture_75 + floor",
+    "submission": "vigorous-whistle_v9.parquet",
+    "submission_sha256": "25d3b296a2753852144f53a2c36a1e539031dbd6ef35b8be928d9e1fa7363521"
+  },
+  "minimum_improvement_fraction_each_month": 0.005,
+  "parents": {
+    "incumbent_ranking_predictions": {
+      "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/ranking_predictions.parquet",
+      "sha256": "cf0c62b5288de74a8262dbb07705e75792bc92059b1e0bb8d66ac0681ec875be"
+    },
+    "lirf_mixture_selection": {
+      "path": "runs/lirf_mixture/selection.json",
+      "sha256": "67c95f9e89e57d9c8b759b95d82916533684c8969a2655968d7401b874b10aa7"
+    },
+    "v9_export": {
+      "path": "runs/submissions/vigorous-whistle_v9.parquet",
+      "sha256": "25d3b296a2753852144f53a2c36a1e539031dbd6ef35b8be928d9e1fa7363521"
+    },
+    "v9_receipt": {
+      "path": "runs/submissions/vigorous-whistle_v9.receipt.json",
+      "sha256": "8b0bc7d79f24c839138787ebab8d45f5dc839b89807d6a2e7c1318729dc7ae67"
+    },
+    "adsb_feature_code": {
+      "path": "src/prc2026_adsb/features.py",
+      "sha256": "f8f66d9bb6a565c0466bb8a959780be3d141dded4d7b1d0f4d4c3bc46482a088"
+    },
+    "adsb_extract_code": {
+      "path": "tools/adsb_extract_day.py",
+      "sha256": "552831202585f1c769318600d73f67b3248473b8066dbe1bc106874f628a6dae"
+    },
+    "adsb_match_code": {
+      "path": "tools/build_adsb_features.py",
+      "sha256": "a5f678a0426e28828b642ae9322e097b518dda235c3de42cbaa415e975def585"
+    }
+  },
+  "prediction_postprocess": "adsb-surface-residual-v11-v1",
+  "prior_evidence": "(2) a per-airport offset audit on 2025-03-10 (docs/opensky/adsb_pushback_audit.json); (3) a seven-day March 2025 day-grouped test with a simple baseline (not v9): EDDM -38%, LSZH -30%, EHAM -26%, LEBL -22%, EDDF -19%, EGLL -8%, LEMD 0%, LFPG/LIRF/LTFM no coverage, overall -6.7%. No number against v9 existed before this declaration; the leave-one-month-out scores below are computed from scratch by tools/run_adsb_v11.py.",
+  "refit_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11"
+  ],
+  "residual_model": {
+    "applies_to": "departures with a matched ADS-B surface segment (adsb_matched == 1); every other row keeps the v9 prediction exactly",
+    "features": [
+      "airport",
+      "v9",
+      "proxy_s",
+      "schedule_interval_s",
+      "hour",
+      "stand",
+      "runway",
+      "adsb_gate",
+      "adsb_first_point_s",
+      "adsb_motion_s",
+      "adsb_first_gs_kt",
+      "adsb_first_dist_stand_m",
+      "adsb_stop_seconds",
+      "adsb_taxi_path_m",
+      "adsb_taxi_stops",
+      "adsb_taxi_stopped_s",
+      "adsb_slow_start_s",
+      "adsb_gap_before_s",
+      "adsb_turnaround_s",
+      "adsb_anchor_dist_stand_m",
+      "adsb_last_ground_s",
+      "adsb_points"
+    ],
+    "categorical": [
+      "airport",
+      "stand",
+      "runway"
+    ],
+    "kind": "lightgbm",
+    "params": {
+      "objective": "regression",
+      "learning_rate": 0.03,
+      "num_leaves": 63,
+      "min_data_in_leaf": 100,
+      "feature_fraction": 0.9,
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1,
+      "lambda_l2": 10.0,
+      "verbose": -1,
+      "num_threads": 8,
+      "seed": 20260915,
+      "deterministic": true,
+      "force_row_wise": true
+    },
+    "rounds_rule": "development: early stopping (200 rounds patience, at most 4000) on the held-out month is NOT used for selection; rounds per held-out month come from a 5-fold day-grouped inner split of the two training months (median best iteration); export: median of the three development round counts",
+    "target": "label minus v9 prediction",
+    "prediction": "v9 + weight * residual on matched rows, then floor"
+  },
+  "selection": "For each candidate weight, RMSE of (v9 + weight * residual) on each held-out month versus v9 on the same rows (all departures of the month, matched or not). A candidate is eligible when it is at least 0.5% lower than v9 on EACH of the three months. Choose the eligible candidate with the lowest mean ratio; otherwise select nothing. Per-airport reports are descriptive only.",
+  "seed": 20260915,
+  "target_filter": "none",
+  "threads": 8
+}

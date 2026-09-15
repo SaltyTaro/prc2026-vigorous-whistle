@@ -1,0 +1,175 @@
+{
+  "absolute_change_quantiles_seconds": {
+    "0.5": 20.34762373002411,
+    "0.9": 120.21175164224178,
+    "0.99": 301.72986968307725,
+    "0.999": 583.9909666565806
+  },
+  "changed_rows_vs_v9": 223979,
+  "created_at_utc": "2026-09-15T08:57:47.425195+00:00",
+  "matched_by_airport": {
+    "EDDF": {
+      "gate_share": 0.07108617689876788,
+      "matched": 28163,
+      "rows": 36317
+    },
+    "EDDM": {
+      "gate_share": 0.6580463194692726,
+      "matched": 25173,
+      "rows": 25966
+    },
+    "EGLL": {
+      "gate_share": 0.3897769617108603,
+      "matched": 37034,
+      "rows": 39840
+    },
+    "EHAM": {
+      "gate_share": 0.6529134295227524,
+      "matched": 36040,
+      "rows": 38182
+    },
+    "LEBL": {
+      "gate_share": 0.341946448390677,
+      "matched": 28832,
+      "rows": 30080
+    },
+    "LEMD": {
+      "gate_share": 0.24555880368787947,
+      "matched": 31129,
+      "rows": 36954
+    },
+    "LFPG": {
+      "gate_share": 0.010222489476849068,
+      "matched": 8315,
+      "rows": 39872
+    },
+    "LIRF": {
+      "gate_share": 0.16035282144068755,
+      "matched": 8843,
+      "rows": 26899
+    },
+    "LSZH": {
+      "gate_share": 0.27645192440336597,
+      "matched": 21747,
+      "rows": 23150
+    },
+    "LTFM": {
+      "gate_share": 0.0,
+      "matched": 2,
+      "rows": 47581
+    }
+  },
+  "matched_rows": 225278,
+  "output": "runs/submissions/vigorous-whistle_v11.parquet",
+  "ranking_ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+  "ranking_rows": 344841,
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v11.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 120549,
+    "maximum_rounding_change_seconds": 0.4999977190518621,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 28,
+    "provenance": {
+      "audit_used": false,
+      "config_sha256": "c7b08114ade33113e97ffe6cbf757cd08843f0e16a6f871488050f345f0a81a9",
+      "experiment_id": "prc2026-adsb-surface-residual-v11-v1",
+      "external_data": {
+        "extraction": "tools/adsb_extract_day.py keeps positions inside the ten aerodrome boxes that are on the ground or below 3,000 ft; per-day parquet with archive part hashes under data/external/adsblol/surface/",
+        "labels_used_in_features": false,
+        "license": "Open Database License (ODbL) 1.0; feeder data CC0; licence files are inside every archive",
+        "matching": "tools/build_adsb_features.py: ICAO callsign (CALLSIGN_flt, else FLIGHT_mvt) and takeoff within the track's ground-to-air transition; stand positions learned label-free from covered segments of the 2025 months; pass 2 anchors on them",
+        "source": "adsb.lol globe_history daily archives (GitHub releases adsblol/globe_history_2025 and globe_history_2026, tags vYYYY.MM.DD-planes-readsb-prod-0)"
+      },
+      "incumbent": {
+        "official_rmse_seconds": 267.4454,
+        "recipe": "v9 = full_timeline_v6_100 + lirf-turnaround-mixture-v1 mixture_75 + floor",
+        "submission": "vigorous-whistle_v9.parquet",
+        "submission_sha256": "25d3b296a2753852144f53a2c36a1e539031dbd6ef35b8be928d9e1fa7363521"
+      },
+      "model_code_sha256": "790973607099a3036c5b1bb9dcfed0d65dbd25a46f39887aa41ae4ecbf4e656d",
+      "native_fit_count": 2,
+      "parents": {
+        "adsb_extract_code": {
+          "path": "tools/adsb_extract_day.py",
+          "sha256": "552831202585f1c769318600d73f67b3248473b8066dbe1bc106874f628a6dae"
+        },
+        "adsb_feature_code": {
+          "path": "src/prc2026_adsb/features.py",
+          "sha256": "f8f66d9bb6a565c0466bb8a959780be3d141dded4d7b1d0f4d4c3bc46482a088"
+        },
+        "adsb_match_code": {
+          "path": "tools/build_adsb_features.py",
+          "sha256": "a5f678a0426e28828b642ae9322e097b518dda235c3de42cbaa415e975def585"
+        },
+        "incumbent_ranking_predictions": {
+          "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/ranking_predictions.parquet",
+          "sha256": "cf0c62b5288de74a8262dbb07705e75792bc92059b1e0bb8d66ac0681ec875be"
+        },
+        "lirf_mixture_selection": {
+          "path": "runs/lirf_mixture/selection.json",
+          "sha256": "67c95f9e89e57d9c8b759b95d82916533684c8969a2655968d7401b874b10aa7"
+        },
+        "v9_export": {
+          "path": "runs/submissions/vigorous-whistle_v9.parquet",
+          "sha256": "25d3b296a2753852144f53a2c36a1e539031dbd6ef35b8be928d9e1fa7363521"
+        },
+        "v9_receipt": {
+          "path": "runs/submissions/vigorous-whistle_v9.receipt.json",
+          "sha256": "8b0bc7d79f24c839138787ebab8d45f5dc839b89807d6a2e7c1318729dc7ae67"
+        }
+      },
+      "policy": "adsb-surface-residual-v11-v1",
+      "ranking_matched_rows": 225278,
+      "refit_months": [
+        "2025-01",
+        "2025-02",
+        "2025-03",
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11"
+      ],
+      "residual_model_sha256": "920c09e25f08c4ab7e70a994a34be572ed46bd98de96a3bd98c233a02f5eaea5",
+      "rounds": 873,
+      "selected_candidate": "residual_matched_75",
+      "selection_sha256": "cbf9cce51de233467aa58388effdccf218c355888d3dba4268f86ac333aad275",
+      "stands": 1111,
+      "training_matched_rows": 292826,
+      "weight": 0.75
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "98af50be5fb49d6cc42c8390b26be3220ba2ae24b693fc97c437ceb695c66b09",
+    "size_bytes": 1354177,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-15T08:57:47.392210+00:00",
+    "version": 11
+  },
+  "residual_quantiles_matched": {
+    "0.01": -290.4381216750146,
+    "0.1": -127.67151184870899,
+    "0.25": -65.79646402745709,
+    "0.5": -6.6722022293168575,
+    "0.75": 62.92813324258673,
+    "0.9": 152.38935086033615,
+    "0.99": 429.1819141052536
+  },
+  "rounds": 873,
+  "training_matched_rows": 292826,
+  "unmatched_rows_match_v9_export": true,
+  "v9_reproduced_from_scratch": true
+}

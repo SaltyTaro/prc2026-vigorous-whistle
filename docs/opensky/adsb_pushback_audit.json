@@ -1,0 +1,477 @@
+{
+  "airports": {
+    "EDDF": {
+      "first_ground_offset_median_s": -457.0149999856949,
+      "mae_adsb_taxi_vs_label_s": 391.8763636133888,
+      "matched": 22,
+      "motion_gap_median_s": 0.0,
+      "motion_offset_quantiles_s": {
+        "0.05": -1874.9799998998642,
+        "0.25": 35.9899999499321,
+        "0.5": 59.74000000953674,
+        "0.75": 75.43999993801117,
+        "0.95": 403.28049989938734
+      },
+      "motion_offset_within_180s": 0.7727272727272727,
+      "motion_offset_within_60s": 0.4090909090909091,
+      "regimes": {
+        "dark": {
+          "offset_iqr_s": 43.86999988555908,
+          "offset_quantiles_s": {
+            "0.05": -2446.0319999217986,
+            "0.25": 43.94000005722046,
+            "0.5": 63.859999895095825,
+            "0.75": 87.80999994277954,
+            "0.95": 431.9379999160766
+          },
+          "offset_std_s": 1145.4686588938368,
+          "offset_within_60s": 0.29411764705882354,
+          "rmse_label_vs_adsb_taxi_centered_s": 1188.5127104689795,
+          "rows": 17
+        },
+        "gate": {
+          "offset_iqr_s": 21.90000009536743,
+          "offset_quantiles_s": {
+            "0.05": 29.02000002861023,
+            "0.25": 33.33999991416931,
+            "0.5": 44.69000005722046,
+            "0.75": 55.24000000953674,
+            "0.95": 72.29599995613098
+          },
+          "offset_std_s": 17.293767181818527,
+          "offset_within_60s": 0.8,
+          "rmse_label_vs_adsb_taxi_centered_s": 17.529314846545887,
+          "rows": 5
+        }
+      },
+      "rmse_adsb_taxi_vs_label_centered_s": 1043.8497031708123,
+      "rmse_adsb_taxi_vs_label_s": 1031.4926153897195,
+      "rmse_nm_proxy_vs_label_centered_s": 247.78152033229156,
+      "stop_end_offset_median_s": 59.56500005722046,
+      "takeoff_minus_last_ground_quantiles_s": {
+        "0.05": 11.522000098228455,
+        "0.5": 61.38499999046326,
+        "0.95": 1931.9720000743853
+      }
+    },
+    "EDDM": {
+      "first_ground_offset_median_s": -280.57999992370605,
+      "mae_adsb_taxi_vs_label_s": 194.5635442914842,
+      "matched": 79,
+      "motion_gap_median_s": 0.0,
+      "motion_offset_quantiles_s": {
+        "0.05": -50.86399993896484,
+        "0.25": 3.6700000762939453,
+        "0.5": 38.730000019073486,
+        "0.75": 65.12999999523163,
+        "0.95": 172.54399993419625
+      },
+      "motion_offset_within_180s": 0.9113924050632911,
+      "motion_offset_within_60s": 0.6835443037974683,
+      "regimes": {
+        "dark": {
+          "offset_iqr_s": 66.3374999165535,
+          "offset_quantiles_s": {
+            "0.05": -217.81099992990434,
+            "0.25": -2.1674998998641968,
+            "0.5": 32.480000019073486,
+            "0.75": 64.1700000166893,
+            "0.95": 129.95499992370563
+          },
+          "offset_std_s": 810.5022675077025,
+          "offset_within_60s": 0.6833333333333333,
+          "rmse_label_vs_adsb_taxi_centered_s": 828.0333691058343,
+          "rows": 60
+        },
+        "gate": {
+          "offset_iqr_s": 35.68999993801117,
+          "offset_quantiles_s": {
+            "0.05": -26.77999994754791,
+            "0.25": 27.735000014305115,
+            "0.5": 42.36999988555908,
+            "0.75": 63.424999952316284,
+            "0.95": 172.5439999341964
+          },
+          "offset_std_s": 59.54418905234874,
+          "offset_within_60s": 0.6842105263157895,
+          "rmse_label_vs_adsb_taxi_centered_s": 60.429730229792376,
+          "rows": 19
+        }
+      },
+      "rmse_adsb_taxi_vs_label_centered_s": 723.3788006341186,
+      "rmse_adsb_taxi_vs_label_s": 717.4246650893755,
+      "rmse_nm_proxy_vs_label_centered_s": 275.79895447796616,
+      "stop_end_offset_median_s": 30.41000008583069,
+      "takeoff_minus_last_ground_quantiles_s": {
+        "0.05": -29.36099989414215,
+        "0.5": -9.849999904632568,
+        "0.95": 21.032000017166133
+      }
+    },
+    "EGLL": {
+      "first_ground_offset_median_s": -2532.4000000953674,
+      "mae_adsb_taxi_vs_label_s": 1490.437547896557,
+      "matched": 261,
+      "motion_gap_median_s": 0.0,
+      "motion_offset_quantiles_s": {
+        "0.05": -7600.130000114441,
+        "0.25": 130.47000002861023,
+        "0.5": 350.77999997138977,
+        "0.75": 573.039999961853,
+        "0.95": 878.4300000667572
+      },
+      "motion_offset_within_180s": 0.1839080459770115,
+      "motion_offset_within_60s": 0.011494252873563218,
+      "regimes": {
+        "dark": {
+          "offset_iqr_s": 468.9500000476837,
+          "offset_quantiles_s": {
+            "0.05": -8131.0429999589915,
+            "0.25": 123.23500001430511,
+            "0.5": 315.8900001049042,
+            "0.75": 592.1850000619888,
+            "0.95": 900.4980000495905
+          },
+          "offset_std_s": 3102.1701274572365,
+          "offset_within_60s": 0.013452914798206279,
+          "rmse_label_vs_adsb_taxi_centered_s": 3345.7679166743633,
+          "rows": 223
+        },
+        "gate": {
+          "offset_iqr_s": 305.8000000715256,
+          "offset_quantiles_s": {
+            "0.05": -62.709000039100545,
+            "0.25": 145.5625,
+            "0.5": 369.88499999046326,
+            "0.75": 451.3625000715256,
+            "0.95": 771.1200000762939
+          },
+          "offset_std_s": 412.73941594789306,
+          "offset_within_60s": 0.0,
+          "rmse_label_vs_adsb_taxi_centered_s": 418.2566768846607,
+          "rows": 38
+        }
+      },
+      "rmse_adsb_taxi_vs_label_centered_s": 3108.901563776092,
+      "rmse_adsb_taxi_vs_label_s": 3001.8663016315545,
+      "rmse_nm_proxy_vs_label_centered_s": 299.3139153520458,
+      "stop_end_offset_median_s": 347.039999961853,
+      "takeoff_minus_last_ground_quantiles_s": {
+        "0.05": 104.50999999046326,
+        "0.5": 441.6300001144409,
+        "0.95": 8446.960000038147
+      }
+    },
+    "EHAM": {
+      "first_ground_offset_median_s": -4193.199999928474,
+      "mae_adsb_taxi_vs_label_s": 144.04822580775908,
+      "matched": 620,
+      "motion_gap_median_s": 0.0,
+      "motion_offset_quantiles_s": {
+        "0.05": -57.95350004434586,
+        "0.25": -13.039999961853027,
+        "0.5": 12.134999990463257,
+        "0.75": 243.48499995470047,
+        "0.95": 368.32549991607647
+      },
+      "motion_offset_within_180s": 0.5887096774193549,
+      "motion_offset_within_60s": 0.5112903225806451,
+      "regimes": {
+        "dark": {
+          "offset_iqr_s": 269.3449999690056,
+          "offset_quantiles_s": {
+            "0.05": -57.305999994277954,
+            "0.25": -14.68500006198883,
+            "0.5": 26.8400000333786,
+            "0.75": 254.65999990701675,
+            "0.95": 374.64849998950956
+          },
+          "offset_std_s": 269.73068056149066,
+          "offset_within_60s": 0.48484848484848486,
+          "rmse_label_vs_adsb_taxi_centered_s": 281.48133791592744,
+          "rows": 528
+        },
+        "gate": {
+          "offset_iqr_s": 154.72500002384186,
+          "offset_quantiles_s": {
+            "0.05": -52.076499938964844,
+            "0.25": -10.284999966621399,
+            "0.5": -2.549999952316284,
+            "0.75": 144.44000005722046,
+            "0.95": 312.23500007390976
+          },
+          "offset_std_s": 144.36845234635888,
+          "offset_within_60s": 0.6630434782608695,
+          "rmse_label_vs_adsb_taxi_centered_s": 155.10825256119531,
+          "rows": 92
+        }
+      },
+      "rmse_adsb_taxi_vs_label_centered_s": 270.23962285941013,
+      "rmse_adsb_taxi_vs_label_s": 274.40011425475655,
+      "rmse_nm_proxy_vs_label_centered_s": 265.52731163819374,
+      "stop_end_offset_median_s": 11.294999957084656,
+      "takeoff_minus_last_ground_quantiles_s": {
+        "0.05": 16.17400006055832,
+        "0.5": 37.544999957084656,
+        "0.95": 136.24600003957744
+      }
+    },
+    "LEBL": {
+      "first_ground_offset_median_s": -3234.710000038147,
+      "mae_adsb_taxi_vs_label_s": 581.3375057728131,
+      "matched": 433,
+      "motion_gap_median_s": 0.0,
+      "motion_offset_quantiles_s": {
+        "0.05": -3289.2200000286102,
+        "0.25": 53.579999923706055,
+        "0.5": 350.8599998950958,
+        "0.75": 451.25,
+        "0.95": 608.927999973297
+      },
+      "motion_offset_within_180s": 0.2840646651270208,
+      "motion_offset_within_60s": 0.19630484988452657,
+      "regimes": {
+        "dark": {
+          "offset_iqr_s": 395.5899999141693,
+          "offset_quantiles_s": {
+            "0.05": -3352.7280000209807,
+            "0.25": 60.00999999046326,
+            "0.5": 363.94000005722046,
+            "0.75": 455.59999990463257,
+            "0.95": 607.9839999675751
+          },
+          "offset_std_s": 1406.2590748346024,
+          "offset_within_60s": 0.17632241813602015,
+          "rmse_label_vs_adsb_taxi_centered_s": 1451.776458071368,
+          "rows": 397
+        },
+        "gate": {
+          "offset_iqr_s": 282.7449998855591,
+          "offset_quantiles_s": {
+            "0.05": 19.3649999499321,
+            "0.25": 38.39750003814697,
+            "0.5": 73.87999999523163,
+            "0.75": 321.14249992370605,
+            "0.95": 578.1699999570847
+          },
+          "offset_std_s": 201.20174626257102,
+          "offset_within_60s": 0.4166666666666667,
+          "rmse_label_vs_adsb_taxi_centered_s": 229.782232956978,
+          "rows": 36
+        }
+      },
+      "rmse_adsb_taxi_vs_label_centered_s": 1389.0950811763973,
+      "rmse_adsb_taxi_vs_label_s": 1348.838369499167,
+      "rmse_nm_proxy_vs_label_centered_s": 187.22172560105582,
+      "stop_end_offset_median_s": 349.1099998950958,
+      "takeoff_minus_last_ground_quantiles_s": {
+        "0.05": 17.34200005531311,
+        "0.5": 27.200000047683716,
+        "0.95": 4014.1579999446867
+      }
+    },
+    "LEMD": {
+      "first_ground_offset_median_s": -3706.7099999189377,
+      "mae_adsb_taxi_vs_label_s": 896.5126056368922,
+      "matched": 284,
+      "motion_gap_median_s": 0.0,
+      "motion_offset_quantiles_s": {
+        "0.05": -4064.9064999222755,
+        "0.25": 172.3125,
+        "0.5": 436.8050000667572,
+        "0.75": 589.067499935627,
+        "0.95": 910.0960000395775
+      },
+      "motion_offset_within_180s": 0.1619718309859155,
+      "motion_offset_within_60s": 0.02464788732394366,
+      "regimes": {
+        "dark": {
+          "offset_iqr_s": 398.4150000810623,
+          "offset_quantiles_s": {
+            "0.05": -4121.739000010491,
+            "0.25": 199.43999993801117,
+            "0.5": 444.1200000047684,
+            "0.75": 597.8550000190735,
+            "0.95": 931.1594999909395
+          },
+          "offset_std_s": 1760.1453903095512,
+          "offset_within_60s": 0.018518518518518517,
+          "rmse_label_vs_adsb_taxi_centered_s": 1827.905748598734,
+          "rows": 270
+        },
+        "gate": {
+          "offset_iqr_s": 176.62749993801117,
+          "offset_quantiles_s": {
+            "0.05": 45.280500042438504,
+            "0.25": 100.72250008583069,
+            "0.5": 118.39999997615814,
+            "0.75": 277.35000002384186,
+            "0.95": 433.3384999871254
+          },
+          "offset_std_s": 137.31705145422467,
+          "offset_within_60s": 0.14285714285714285,
+          "rmse_label_vs_adsb_taxi_centered_s": 153.12698728734665,
+          "rows": 14
+        }
+      },
+      "rmse_adsb_taxi_vs_label_centered_s": 1781.502034361769,
+      "rmse_adsb_taxi_vs_label_s": 1717.645138819361,
+      "rmse_nm_proxy_vs_label_centered_s": 280.2470552420328,
+      "stop_end_offset_median_s": 436.8050000667572,
+      "takeoff_minus_last_ground_quantiles_s": {
+        "0.05": 15.27299997806549,
+        "0.5": 28.81500005722046,
+        "0.95": 5117.267000055311
+      }
+    },
+    "LSZH": {
+      "first_ground_offset_median_s": -3652.8499999046326,
+      "mae_adsb_taxi_vs_label_s": 373.51966777433984,
+      "matched": 301,
+      "motion_gap_median_s": 0.0,
+      "motion_offset_quantiles_s": {
+        "0.05": -33.390000104904175,
+        "0.25": 32.21000003814697,
+        "0.5": 140.3199999332428,
+        "0.75": 354.05999994277954,
+        "0.95": 517.4700000286102
+      },
+      "motion_offset_within_180s": 0.4983388704318937,
+      "motion_offset_within_60s": 0.3787375415282392,
+      "regimes": {
+        "dark": {
+          "offset_iqr_s": 348.12999987602234,
+          "offset_quantiles_s": {
+            "0.05": -65.8889999866485,
+            "0.25": 37.200000047683716,
+            "0.5": 267.8699998855591,
+            "0.75": 385.32999992370605,
+            "0.95": 530.4920001029967
+          },
+          "offset_std_s": 1176.4229990281674,
+          "offset_within_60s": 0.2594142259414226,
+          "rmse_label_vs_adsb_taxi_centered_s": 1202.3266406803514,
+          "rows": 239
+        },
+        "gate": {
+          "offset_iqr_s": 16.715000092983246,
+          "offset_quantiles_s": {
+            "0.05": 18.31700007915497,
+            "0.25": 30.32749992609024,
+            "0.5": 37.49000000953674,
+            "0.75": 47.042500019073486,
+            "0.95": 217.6200000882147
+          },
+          "offset_std_s": 84.79514485022621,
+          "offset_within_60s": 0.8387096774193549,
+          "rmse_label_vs_adsb_taxi_centered_s": 88.2564153130233,
+          "rows": 62
+        }
+      },
+      "rmse_adsb_taxi_vs_label_centered_s": 1055.0877697591543,
+      "rmse_adsb_taxi_vs_label_s": 1049.5136003213272,
+      "rmse_nm_proxy_vs_label_centered_s": 215.69918760830723,
+      "stop_end_offset_median_s": 140.3199999332428,
+      "takeoff_minus_last_ground_quantiles_s": {
+        "0.05": 6.700000047683716,
+        "0.5": 17.390000104904175,
+        "0.95": 413.82999992370605
+      }
+    }
+  },
+  "coverage": {
+    "EDDF": [
+      {
+        "day": "20250310",
+        "departures": 24,
+        "match_rate": 0.9166666666666666,
+        "matched": 22,
+        "surface_rows": 8090
+      }
+    ],
+    "EDDM": [
+      {
+        "day": "20250310",
+        "departures": 79,
+        "match_rate": 1.0,
+        "matched": 79,
+        "surface_rows": 56168
+      }
+    ],
+    "EGLL": [
+      {
+        "day": "20250310",
+        "departures": 594,
+        "match_rate": 0.4393939393939394,
+        "matched": 261,
+        "surface_rows": 37860
+      }
+    ],
+    "EHAM": [
+      {
+        "day": "20250310",
+        "departures": 633,
+        "match_rate": 0.9794628751974723,
+        "matched": 620,
+        "surface_rows": 150975
+      }
+    ],
+    "LEBL": [
+      {
+        "day": "20250310",
+        "departures": 444,
+        "match_rate": 0.9752252252252253,
+        "matched": 433,
+        "surface_rows": 61214
+      }
+    ],
+    "LEMD": [
+      {
+        "day": "20250310",
+        "departures": 567,
+        "match_rate": 0.5008818342151675,
+        "matched": 284,
+        "surface_rows": 54697
+      }
+    ],
+    "LFPG": [
+      {
+        "day": "20250310",
+        "departures": 585,
+        "match_rate": 0.0,
+        "matched": 0,
+        "surface_rows": 7279
+      }
+    ],
+    "LIRF": [
+      {
+        "day": "20250310",
+        "departures": 409,
+        "match_rate": 0.0,
+        "matched": 0,
+        "surface_rows": 2062
+      }
+    ],
+    "LSZH": [
+      {
+        "day": "20250310",
+        "departures": 315,
+        "match_rate": 0.9555555555555556,
+        "matched": 301,
+        "surface_rows": 41919
+      }
+    ],
+    "LTFM": [
+      {
+        "day": "20250310",
+        "departures": 618,
+        "matched": 0,
+        "surface_rows": 0
+      }
+    ]
+  },
+  "created_at_utc": "2026-09-15T07:37:51.679430+00:00",
+  "days": [
+    "20250310"
+  ]
+}

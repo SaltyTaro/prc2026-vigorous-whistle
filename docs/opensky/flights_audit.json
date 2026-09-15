@@ -1,0 +1,92 @@
+{
+  "airports": {
+    "EDDF": {
+      "all_matched": {
+        "offset_quantiles_s": {
+          "0.05": 335.0,
+          "0.25": 618.0,
+          "0.5": 793.0,
+          "0.75": 1008.0,
+          "0.95": 1350.0
+        },
+        "offset_std_s": 312.10854638082645,
+        "offset_within_120s_share": 0.00035215400868646553,
+        "offset_within_300s_share": 0.035156708533865474,
+        "rows": 17038
+      },
+      "comparison_with_nm_proxy": {
+        "corr_firstseen_gap_minus_proxy_with_label_minus_proxy": 0.033187941868254286,
+        "mae_label_vs_firstseen_gap_centered": 239.87778103903727,
+        "mae_label_vs_nm_proxy_centered": 152.61127091282654,
+        "rmse_affine_both_in_sample": 217.77207558039188,
+        "rmse_label_vs_firstseen_gap_centered": 313.4604466270789,
+        "rmse_label_vs_nm_proxy_centered": 220.04912424837607,
+        "rows": 17035
+      },
+      "departures": 17636,
+      "flight_records": 17328,
+      "match_rate": 0.9660920843728736,
+      "matched": 17038,
+      "matched_first_seen_near_airport": 17032,
+      "near_airport": {
+        "offset_quantiles_s": {
+          "0.05": 335.0,
+          "0.25": 618.0,
+          "0.5": 792.5,
+          "0.75": 1008.0,
+          "0.95": 1350.0
+        },
+        "offset_std_s": 312.1221261358322,
+        "offset_within_120s_share": 0.0003522780648191639,
+        "offset_within_300s_share": 0.035169093471113196,
+        "rows": 17032
+      }
+    },
+    "LIRF": {
+      "all_matched": {
+        "offset_quantiles_s": {
+          "0.05": 613.0,
+          "0.25": 829.0,
+          "0.5": 1021.0,
+          "0.75": 1269.0,
+          "0.95": 1866.199999999999
+        },
+        "offset_std_s": 611.7597720059397,
+        "offset_within_120s_share": 0.0007354743809757293,
+        "offset_within_300s_share": 0.004903162539838196,
+        "rows": 12237
+      },
+      "comparison_with_nm_proxy": {
+        "corr_firstseen_gap_minus_proxy_with_label_minus_proxy": 0.08714421810930048,
+        "mae_label_vs_firstseen_gap_centered": 295.5198917234025,
+        "mae_label_vs_nm_proxy_centered": 276.10253465671394,
+        "rmse_affine_both_in_sample": 424.949194495647,
+        "rmse_label_vs_firstseen_gap_centered": 456.1815848319163,
+        "rmse_label_vs_nm_proxy_centered": 437.95570990557655,
+        "rows": 12191
+      },
+      "departures": 12544,
+      "flight_records": 12393,
+      "match_rate": 0.9755261479591837,
+      "matched": 12237,
+      "matched_first_seen_near_airport": 12233,
+      "near_airport": {
+        "offset_quantiles_s": {
+          "0.05": 613.0,
+          "0.25": 829.0,
+          "0.5": 1021.0,
+          "0.75": 1269.0,
+          "0.95": 1866.3999999999996
+        },
+        "offset_std_s": 611.8412375244517,
+        "offset_within_120s_share": 0.0007357148696149759,
+        "offset_within_300s_share": 0.004904765797433173,
+        "rows": 12233
+      }
+    }
+  },
+  "created_at_utc": "2026-09-15T07:08:54.466518+00:00",
+  "months": [
+    "2025-03"
+  ]
+}

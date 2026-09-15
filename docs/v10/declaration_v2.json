@@ -1,0 +1,219 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "cat_long": [
+      "cat_long_25"
+    ],
+    "cat_long_route": [
+      "cat_long_25",
+      "route_negative_proxy"
+    ],
+    "density": [
+      "density_classifier"
+    ],
+    "density_cat_long": [
+      "density_classifier",
+      "cat_long_25"
+    ],
+    "density_cat_long_route": [
+      "density_classifier",
+      "cat_long_25",
+      "route_negative_proxy"
+    ],
+    "density_route": [
+      "density_classifier",
+      "route_negative_proxy"
+    ],
+    "route": [
+      "route_negative_proxy"
+    ]
+  },
+  "cat_long_refit": {
+    "bundle": "data/nmclock/72e86725e23367ede5b5",
+    "bundle_id": "72e86725e23367ede5b558027cfc8eeb7ef6cfbaed23980537766ef6a34a7f34",
+    "description": "Jan-Nov refit of the ladder variant cat_long (CatBoost, nm_residual target, core_weather_nmclock features, clock_available route) at the ties-to-even rounded median of its two development best-iteration counts, on the same December-protected clock-present population as the frozen v6 refit. Fitted only if the selected candidate contains cat_long_25. Development scores use the two saved ladder development runs; nothing is refitted for development.",
+    "expected_clock_fit_ids_sha256": "89005020432dc360faba93b50308a864cd2c94f326204f45d9fd492c3680af95",
+    "expected_clock_fit_rows": 1898549,
+    "iterations": 9929,
+    "iterations_rule": "int(rint(median(9892, 9966)))",
+    "ladder_config": "configs/ladder_v1.json",
+    "reference_refit_run": "runs/azure_arcw0_nmclock/20260914T052244675761Z_refit_cat_residual_v5_100",
+    "threads": 16,
+    "variant": "cat_long",
+    "worker": "arcw0"
+  },
+  "classifier_bagging": {
+    "members": 8,
+    "reason": "The single-seed classifier's seasonal score varies with column subsampling alone: the eight members' density-only seasonal scores in the prototype ranged from -0.04% to -0.24% against v9 (forward -0.35% to -0.41%). Averaging removes that lottery from both the development scores and the export.",
+    "seed_rule": "member k uses the v9 classifier seed plus k (k = 0..7) for LightGBM's seed; every member gets its own date-grouped inner rounds by the v9 rule; class probabilities are the equal mean over members",
+    "seeds": [
+      20260915,
+      20260916,
+      20260917,
+      20260918,
+      20260919,
+      20260920,
+      20260921,
+      20260922
+    ]
+  },
+  "declared_at_utc": "2026-09-15T05:53:00+00:00",
+  "density_features": {
+    "delayed_threshold_seconds": 3600,
+    "description": "Six label-free day-level quantities added to the declared LIRF mixture classifier (all other classifier settings, features, bands, seed and the 0.75 mixture weight stay exactly as in configs/lirf_mixture_v1.json). Days are local Rome dates of the movement time. day_departures: LIRF departures that day; day_noclock_departures: LIRF departures that day with AOBT_3_flt and LOBT_flt both missing; day_delayed_share: share of LIRF departures that day whose schedule interval exceeds 3600 s; day_population_rows: population rows that day; day_population_mean_s: mean schedule interval of the population rows that day; window2h_population_rows: population rows whose movement time lies within two hours of the row's movement time (the row included). All are computable from supplied ranking rows; no label enters any of them.",
+    "names": [
+      "day_departures",
+      "day_noclock_departures",
+      "day_delayed_share",
+      "day_population_rows",
+      "day_population_mean_s",
+      "window2h_population_rows"
+    ],
+    "timezone": "Europe/Rome",
+    "window_seconds": 7200
+  },
+  "development_folds": [
+    "seasonal",
+    "forward"
+  ],
+  "development_native_fits": 18,
+  "execution": {
+    "automatic_submission": false,
+    "azure_only": true,
+    "development_host": "local-windows",
+    "new_workers": 0,
+    "refit_worker": "arcw0"
+  },
+  "experiment_id": "prc2026-v10-accumulation-v2",
+  "fallback_recipe": "cat_weather_v4_100",
+  "floor_rule": "Raise every prediction to at least the minimum departure label of the fitting rows (refit months for the export), applied last.",
+  "incumbent": {
+    "development_rmse_seconds": {
+      "forward": 219.87503896825768,
+      "seasonal": 314.23233863882206
+    },
+    "official_rmse_seconds": 267.4454,
+    "recipe": "full_timeline_v6_100 + lirf-turnaround-mixture-v1 mixture_75 + floor",
+    "submission": "vigorous-whistle_v9.parquet",
+    "submission_sha256": "25d3b296a2753852144f53a2c36a1e539031dbd6ef35b8be928d9e1fa7363521"
+  },
+  "items": {
+    "cat_long_25": {
+      "description": "On clock-available rows replace the incumbent prediction by 0.75 * incumbent + 0.25 * cat_long, where cat_long is the ladder variant's prediction (development: the saved fold predictions of the two hash-bound ladder runs; ranking: the declared Jan-Nov refit). Missing-clock rows are untouched.",
+      "weight": 0.25
+    },
+    "density_classifier": {
+      "description": "Replace the v9 LIRF turnaround mixture by the same mixture whose three-class classifier additionally receives the six declared day-level features. Population, turnaround features, label modes, normal component, bands, schedule threshold (43200 s), inner date-grouped rounds rule, seed and parameters are those of configs/lirf_mixture_v1.json; the mixture weight stays 0.75. Rows above 43200 s stay at the incumbent.",
+      "mixture_weight": 0.75
+    },
+    "route_negative_proxy": {
+      "description": "Where a Network Manager clock is available (AOBT_3_flt, else LOBT_flt) but MVT_TIME_UTC_mvt minus that clock is negative, replace the prediction by the no-clock fallback recipe cat_weather_v4_100 (development: the frozen weather fold predictions; ranking: the frozen v5 refit predictions). Applied after cat_long_25 on the same rows.",
+      "threshold_seconds": 0
+    }
+  },
+  "lirf_mixture_config": "configs/lirf_mixture_v1.json",
+  "minimum_improvement_fraction_each_fold": 0.0025,
+  "order_of_application": [
+    "density_classifier",
+    "cat_long_25",
+    "route_negative_proxy",
+    "floor"
+  ],
+  "parents": {
+    "fallback_ranking_predictions": {
+      "path": "runs/azure_arcw0_weather/20260914T024435836344Z_refit_cat_weather_v4_100/ranking_predictions.parquet",
+      "sha256": "0b745c873b4ee98a136fc518db5f8999010ced5fe23e22fd2f10f87849b669a5"
+    },
+    "fallback_refit_run": {
+      "path": "runs/azure_arcw0_weather/20260914T024435836344Z_refit_cat_weather_v4_100/run.json",
+      "sha256": "507b653bd67b671309f5b7aa257f1b6231a91b6a1669088718af30d7c76663b3"
+    },
+    "fallback_selection": {
+      "path": "runs/azure_arcw0_weather/selection.json",
+      "sha256": "1228b7b16d3bea90229da139fb51ee714cf323472f3796604d40b1a7178351f3"
+    },
+    "incumbent_ranking_predictions": {
+      "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/ranking_predictions.parquet",
+      "sha256": "cf0c62b5288de74a8262dbb07705e75792bc92059b1e0bb8d66ac0681ec875be"
+    },
+    "incumbent_refit_run": {
+      "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/run.json",
+      "sha256": "0c1a0fcd1c2aa6034e28eca1b56dadb567aff5269cac823067c4c097a84498e0"
+    },
+    "incumbent_selection": {
+      "path": "runs/azure_arcw0_surface_airports/selection.json",
+      "sha256": "3a6edb7beb178744acca53c92e269f2ee92fa1524115adbda74bf876cdd4d042"
+    },
+    "ladder_config": {
+      "path": "configs/ladder_v1.json",
+      "sha256": "070a59c6ad4707924b3b28dc2dba001fe5c2860ddc42d7237a0e74dee13a87e5"
+    },
+    "ladder_forward_cat_long_predictions": {
+      "path": "runs/azure_arcw0_ladder/20260914T153331229145Z_forward_cat_long/predictions.parquet",
+      "sha256": "373092f919d43f604cf4609ec15f6c6b5d94626bcc702eb9abe792856a82f9f7"
+    },
+    "ladder_forward_cat_long_run": {
+      "path": "runs/azure_arcw0_ladder/20260914T153331229145Z_forward_cat_long/run.json",
+      "sha256": "e82d52466d225610b127b052a61f7daf7b6feeb9b541c2c1cc4444e00ab891c7"
+    },
+    "ladder_seasonal_cat_long_predictions": {
+      "path": "runs/azure_arcw0_ladder/20260914T151133927621Z_seasonal_cat_long/predictions.parquet",
+      "sha256": "977c1c322fd937cb6602b01c1c896b8c9b8b57490fdd50064bc2755f2cbf6d16"
+    },
+    "ladder_seasonal_cat_long_run": {
+      "path": "runs/azure_arcw0_ladder/20260914T151133927621Z_seasonal_cat_long/run.json",
+      "sha256": "9029c8c3d2c19e4779911a90aa2495132db8f24baec7077dbb219141235191a7"
+    },
+    "ladder_selection": {
+      "path": "runs/azure_arcw0_ladder/selection.json",
+      "sha256": "274d811d51d692ee1fa357e237f9242fbb7f361bf23a64fcd92ac85f09c15d97"
+    },
+    "lirf_mixture_config": {
+      "path": "configs/lirf_mixture_v1.json",
+      "sha256": "69b2d7dd5f808ad5ba4d7d7d67bb32ff3de6ff72895844bfaa0f191883895502"
+    },
+    "lirf_mixture_selection": {
+      "path": "runs/lirf_mixture/selection.json",
+      "sha256": "67c95f9e89e57d9c8b759b95d82916533684c8969a2655968d7401b874b10aa7"
+    },
+    "timeline_selection": {
+      "path": "runs/azure_arcw0_timeline/selection.json",
+      "sha256": "4a51746cab6da283662dbff4650b6b29492d6e165e34fce34001232c1e396780"
+    },
+    "v10_v1_config": {
+      "path": "configs/v10_v1.json",
+      "sha256": "b9232da034bac3b2bfa27fc3cbc2c93acaba3e4089cea828fa7100c593c0c754"
+    },
+    "v10_v1_selection": {
+      "path": "runs/v10/selection.json",
+      "sha256": "26c1d6c3d515282709978f47ce1adfd97dba1850e244e6f1e87ab8d7a0839069"
+    },
+    "v9_export": {
+      "path": "runs/submissions/vigorous-whistle_v9.parquet",
+      "sha256": "25d3b296a2753852144f53a2c36a1e539031dbd6ef35b8be928d9e1fa7363521"
+    },
+    "v9_receipt": {
+      "path": "runs/submissions/vigorous-whistle_v9.receipt.json",
+      "sha256": "8b0bc7d79f24c839138787ebab8d45f5dc839b89807d6a2e7c1318729dc7ae67"
+    }
+  },
+  "prediction_postprocess": "v10-accumulation-v2",
+  "prior_evidence": "Declared after same-day scratch prototypes on the two development folds against the exactly reconstructed v9 (314.2323 / 219.8750). The plan in docs/v10_plan.md listed four items; two are dropped on evidence: (a) a LIRF clock-present schedule-fill mixture scored at best 313.93 / 219.83 (-0.10% / -0.02%, paired-day intervals including zero), because the main models already carry the fill hedge from the same clock features (classifier AUC 0.87 with or without stand turnaround); (b) EGLL/LTFM/LFPG clock-present fills have an oracle bound of 0.28% / 0.32% of fold SSE, too small to survive imperfect separation. The remaining plan items scored: cat_long_25 313.8031 / 219.4705 (-0.137% / -0.184%); route_negative_proxy 313.8782 / 219.7693 (-0.113% / -0.048%); both 313.5015 / 219.4397 (-0.233% / -0.198%). A new day-level feature family for the LIRF population classifier was found on fitting months (Jan-Nov 2025, labels of the population only): the schedule-fill share is 65-69% on days with one or two population rows and 30-37% on days with eight or more, and 67% versus 32% at low versus high LIRF no-NM shares. Its prototype scored 313.5238 / 219.1117 alone (-0.225% / -0.347%) and 312.7914 / 218.6748 with both plan items (-0.459% / -0.546%). The plan's promotion margin of 0.5% on each fold was set for native model replacement; the accumulation above misses it on the seasonal fold by 0.04 points, on a fold whose SSE is 30% two unpredictable LFPG rows (labels 84240 and 58206 s with schedule intervals under 35 minutes and no NM record). This declaration therefore fixes a smaller margin together with a paired-day interval requirement, before any declared candidate is scored; the declared implementation recomputes every number from scratch and the prototype figures above play no further role. RESULT OF THAT FIRST DECLARATION (configs/v10_v1.json, runs/v10/selection.json): no candidate was eligible. The single-seed declared classifier scored density alone 314.0717 / 219.0566 (-0.051% / -0.372%), density+cat_long+route 313.3406 / 218.6196 (-0.284% / -0.571%) with a seasonal paired-day interval of [-1.794, +0.022], failing the interval condition by 0.022 s; cat_long+route (313.5015 / 219.4397, -0.233% / -0.198%) failed the 0.25% margin. The scratch prototype's better seasonal density score came only from a different column order under feature subsampling. A same-day scratch prototype of an eight-seed bagged classifier scored density alone 313.7757 / 219.0386 (-0.145% / -0.380%) and density+cat_long+route 313.0439 / 218.6016 (-0.378% / -0.579%) with paired-day intervals [-2.221, -0.212] and [-2.176, -0.381]. This second declaration changes only the classifier to that bagged form; items, candidates, margin and interval rule are unchanged from the first declaration, and its scores are recomputed from scratch.",
+  "refit_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11"
+  ],
+  "seed": 20260915,
+  "selection": "Reconstruct v9 exactly on both complete folds (v7 from the frozen runs, then the declared v9 mixture refitted on the fold's fitting months; both scores must reproduce the recorded development scores to 1e-6). Score the seven fixed candidates with the declared eight-member bagged classifier. A candidate is eligible when, on EACH fold, its complete RMSE is at least 0.25% below v9 and the paired-day bootstrap 95% interval of its RMSE difference to v9 lies entirely below zero. Choose the eligible candidate with the lowest equally weighted mean RMSE ratio; otherwise select nothing. Classifier and floor parameters come from the fold's fitting months only; the cat_long and fallback fold predictions are the frozen saved runs; no scoring, stopping, December or ranking label enters any parameter. Common weights at all rows; no airport, threshold, weight or feature search.",
+  "target_filter": "none",
+  "threads": 4
+}

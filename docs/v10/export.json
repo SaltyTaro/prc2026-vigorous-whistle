@@ -1,0 +1,310 @@
+{
+  "absolute_change_quantiles_seconds": {
+    "0.5": 7.313980216560594,
+    "0.9": 23.131441426017886,
+    "0.99": 63.57831747490055,
+    "0.999": 217.27981702252967
+  },
+  "changed_by_airport": {
+    "EDDF": 34281,
+    "EDDM": 24592,
+    "EGLL": 38404,
+    "EHAM": 35377,
+    "LEBL": 28514,
+    "LEMD": 35086,
+    "LFPG": 37686,
+    "LIRF": 26147,
+    "LSZH": 21536,
+    "LTFM": 45531
+  },
+  "changed_rows_vs_v9": 327154,
+  "classifier": {
+    "feature_names": [
+      "schedule_interval_s",
+      "signed_log_schedule_interval",
+      "local_hour",
+      "scheduled_local_hour",
+      "date_shift_days",
+      "day_of_week",
+      "month",
+      "flight_missing",
+      "flight_doubled_prefix",
+      "flight_alpha_tail",
+      "schedule_minus_previous_inblock_s",
+      "takeoff_minus_previous_inblock_s",
+      "next_inblock_minus_takeoff_s",
+      "flight_prefix",
+      "stand_prefix",
+      "runway",
+      "destination_region",
+      "day_departures",
+      "day_noclock_departures",
+      "day_delayed_share",
+      "day_population_rows",
+      "day_population_mean_s",
+      "window2h_population_rows"
+    ],
+    "fitting_rows": 1399,
+    "floor_seconds": -12.0,
+    "mode_counts": {
+      "0": 655,
+      "1": 733,
+      "2": 11
+    },
+    "normal_component": {
+      "band_medians": {
+        "0": 4446.5,
+        "1": 5555.5,
+        "2": 1020.0,
+        "3": 1073.0,
+        "4": 1143.0,
+        "5": null
+      },
+      "bands_seconds": [
+        -1000000000.0,
+        1800.0,
+        3600.0,
+        7200.0,
+        14400.0,
+        43200.0,
+        1000000000.0
+      ],
+      "overall_median": 1031.0
+    },
+    "seeds": [
+      20260915,
+      20260916,
+      20260917,
+      20260918,
+      20260919,
+      20260920,
+      20260921,
+      20260922
+    ],
+    "v9_classifier_sha256": "c8ed40b1209ceafb94ca44484d4fe9c82b7aea9624bae302757301b10d52058e",
+    "v9_rounds": 454
+  },
+  "created_at_utc": "2026-09-15T06:37:56.816625+00:00",
+  "largest_changes": [],
+  "member_rounds": [
+    497,
+    407,
+    394,
+    463,
+    355,
+    288,
+    430,
+    403
+  ],
+  "output": "runs/submissions/vigorous-whistle_v10.parquet",
+  "p_fill_quantiles": {
+    "0.1": 0.026971204543840024,
+    "0.25": 0.08629227853163893,
+    "0.5": 0.4220405782310456,
+    "0.75": 0.8428199108417831,
+    "0.9": 0.9581828549208478
+  },
+  "p_fill_v9_quantiles": {
+    "0.1": 0.019393278100501826,
+    "0.25": 0.06670256782162176,
+    "0.5": 0.3935018464028193,
+    "0.75": 0.8490355253626061,
+    "0.9": 0.9638631754843138
+  },
+  "ranking_ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+  "ranking_population_rows": 383,
+  "ranking_rows": 344841,
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v10.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 120549,
+    "maximum_rounding_change_seconds": 0.49999911910913397,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 15,
+    "provenance": {
+      "audit_used": false,
+      "cat_long_refit": {
+        "iterations": 9929,
+        "ranking_predictions_sha256": "5b75c87a1f1194377d69ad3287eab32cae3dd2e914aaa18cae2c3fd6e85f93a5",
+        "run_id": "20260915T060119134146Z_refit_cat_long",
+        "run_sha256": "453beaa46eb3114e3419f01a968e36df56b2b658de863aa22e76c0441958c149"
+      },
+      "classifier_members_sha256": {
+        "20260915": "984febc2f1ef9a8bdf585b18f800d2bfb319f176a9f49e585e03b4fa164a08b5",
+        "20260916": "cc7fbb580fe2818ae4bf7130bf0e62500e93c78820e31a62de1541a2d7d09207",
+        "20260917": "e0c32080c740b23bcca7cb6ef000e16777dbc33fa7d7240a40ae99ce36707dc0",
+        "20260918": "754a730337794b59dea82e4359e55f3205bad88c987c18fe2c41427aa5e43c7d",
+        "20260919": "af395829efb7e506f1c71a4eabacfb93e93c35ee0c08468df592badff62f6dbf",
+        "20260920": "03bbd7e0d89626c2bfc1fd44f4da588094675087427a4f455e20a8da5852a6be",
+        "20260921": "12203ae9aa4fffcaadc5e4052d2fbead76ef870d367f1bdbe987a4efc135cb54",
+        "20260922": "e9724edb1ae2f34a5a0d57c80ca6e743981d7071191befc45709663832ac7f47"
+      },
+      "classifier_record_sha256": "225179be5fb4a3afc5985f06df1de3e4a57d078843a91d644b7928c1f3e77db2",
+      "config_sha256": "b2bd9410932e27020e9370ebb5653d8bff937d337cdc36e81ffbe7f055689fa5",
+      "experiment_id": "prc2026-v10-accumulation-v2",
+      "fitting_summary": {
+        "density_rounds": [
+          497,
+          407,
+          394,
+          463,
+          355,
+          288,
+          430,
+          403
+        ],
+        "fitting_population_rows": 1399,
+        "floor_seconds": -12.0,
+        "mode_counts": {
+          "0": 655,
+          "1": 733,
+          "2": 11
+        },
+        "v9_rounds": 454
+      },
+      "incumbent": {
+        "development_rmse_seconds": {
+          "forward": 219.87503896825768,
+          "seasonal": 314.23233863882206
+        },
+        "official_rmse_seconds": 267.4454,
+        "recipe": "full_timeline_v6_100 + lirf-turnaround-mixture-v1 mixture_75 + floor",
+        "submission": "vigorous-whistle_v9.parquet",
+        "submission_sha256": "25d3b296a2753852144f53a2c36a1e539031dbd6ef35b8be928d9e1fa7363521"
+      },
+      "items": [
+        "density_classifier",
+        "cat_long_25",
+        "route_negative_proxy"
+      ],
+      "model_code_sha256": "817cb72c9cd4312798a2c91f95fdf9959195d24389968934f089e442a6c54d6f",
+      "native_fit_count": 10,
+      "parents": {
+        "fallback_ranking_predictions": {
+          "path": "runs/azure_arcw0_weather/20260914T024435836344Z_refit_cat_weather_v4_100/ranking_predictions.parquet",
+          "sha256": "0b745c873b4ee98a136fc518db5f8999010ced5fe23e22fd2f10f87849b669a5"
+        },
+        "fallback_refit_run": {
+          "path": "runs/azure_arcw0_weather/20260914T024435836344Z_refit_cat_weather_v4_100/run.json",
+          "sha256": "507b653bd67b671309f5b7aa257f1b6231a91b6a1669088718af30d7c76663b3"
+        },
+        "fallback_selection": {
+          "path": "runs/azure_arcw0_weather/selection.json",
+          "sha256": "1228b7b16d3bea90229da139fb51ee714cf323472f3796604d40b1a7178351f3"
+        },
+        "incumbent_ranking_predictions": {
+          "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/ranking_predictions.parquet",
+          "sha256": "cf0c62b5288de74a8262dbb07705e75792bc92059b1e0bb8d66ac0681ec875be"
+        },
+        "incumbent_refit_run": {
+          "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/run.json",
+          "sha256": "0c1a0fcd1c2aa6034e28eca1b56dadb567aff5269cac823067c4c097a84498e0"
+        },
+        "incumbent_selection": {
+          "path": "runs/azure_arcw0_surface_airports/selection.json",
+          "sha256": "3a6edb7beb178744acca53c92e269f2ee92fa1524115adbda74bf876cdd4d042"
+        },
+        "ladder_config": {
+          "path": "configs/ladder_v1.json",
+          "sha256": "070a59c6ad4707924b3b28dc2dba001fe5c2860ddc42d7237a0e74dee13a87e5"
+        },
+        "ladder_forward_cat_long_predictions": {
+          "path": "runs/azure_arcw0_ladder/20260914T153331229145Z_forward_cat_long/predictions.parquet",
+          "sha256": "373092f919d43f604cf4609ec15f6c6b5d94626bcc702eb9abe792856a82f9f7"
+        },
+        "ladder_forward_cat_long_run": {
+          "path": "runs/azure_arcw0_ladder/20260914T153331229145Z_forward_cat_long/run.json",
+          "sha256": "e82d52466d225610b127b052a61f7daf7b6feeb9b541c2c1cc4444e00ab891c7"
+        },
+        "ladder_seasonal_cat_long_predictions": {
+          "path": "runs/azure_arcw0_ladder/20260914T151133927621Z_seasonal_cat_long/predictions.parquet",
+          "sha256": "977c1c322fd937cb6602b01c1c896b8c9b8b57490fdd50064bc2755f2cbf6d16"
+        },
+        "ladder_seasonal_cat_long_run": {
+          "path": "runs/azure_arcw0_ladder/20260914T151133927621Z_seasonal_cat_long/run.json",
+          "sha256": "9029c8c3d2c19e4779911a90aa2495132db8f24baec7077dbb219141235191a7"
+        },
+        "ladder_selection": {
+          "path": "runs/azure_arcw0_ladder/selection.json",
+          "sha256": "274d811d51d692ee1fa357e237f9242fbb7f361bf23a64fcd92ac85f09c15d97"
+        },
+        "lirf_mixture_config": {
+          "path": "configs/lirf_mixture_v1.json",
+          "sha256": "69b2d7dd5f808ad5ba4d7d7d67bb32ff3de6ff72895844bfaa0f191883895502"
+        },
+        "lirf_mixture_selection": {
+          "path": "runs/lirf_mixture/selection.json",
+          "sha256": "67c95f9e89e57d9c8b759b95d82916533684c8969a2655968d7401b874b10aa7"
+        },
+        "timeline_selection": {
+          "path": "runs/azure_arcw0_timeline/selection.json",
+          "sha256": "4a51746cab6da283662dbff4650b6b29492d6e165e34fce34001232c1e396780"
+        },
+        "v10_v1_config": {
+          "path": "configs/v10_v1.json",
+          "sha256": "b9232da034bac3b2bfa27fc3cbc2c93acaba3e4089cea828fa7100c593c0c754"
+        },
+        "v10_v1_selection": {
+          "path": "runs/v10/selection.json",
+          "sha256": "26c1d6c3d515282709978f47ce1adfd97dba1850e244e6f1e87ab8d7a0839069"
+        },
+        "v9_export": {
+          "path": "runs/submissions/vigorous-whistle_v9.parquet",
+          "sha256": "25d3b296a2753852144f53a2c36a1e539031dbd6ef35b8be928d9e1fa7363521"
+        },
+        "v9_receipt": {
+          "path": "runs/submissions/vigorous-whistle_v9.receipt.json",
+          "sha256": "8b0bc7d79f24c839138787ebab8d45f5dc839b89807d6a2e7c1318729dc7ae67"
+        }
+      },
+      "policy": "v10-accumulation-v2",
+      "refit_months": [
+        "2025-01",
+        "2025-02",
+        "2025-03",
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11"
+      ],
+      "row_counts": {
+        "cat_long_rows": 339551,
+        "floored_rows": 14,
+        "mixture_rows": 372,
+        "population_rows": 383,
+        "routed_rows": 169
+      },
+      "selected_candidate": "density_cat_long_route",
+      "selection_sha256": "ef1aed5a84b1844c10df6c2973c52aa027a10c0178e0eacded441ada3b0f6f6e"
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "45690fdb30297ff3ea17c96d92ca8a3db738136256226596cae07855097152f0",
+    "size_bytes": 1341699,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-15T06:37:56.803243+00:00",
+    "version": 10
+  },
+  "row_counts": {
+    "cat_long_rows": 339551,
+    "floored_rows": 14,
+    "mixture_rows": 372,
+    "population_rows": 383,
+    "routed_rows": 169
+  },
+  "untouched_rows_match_v9_export": true,
+  "v9_reproduced_from_scratch": true
+}
