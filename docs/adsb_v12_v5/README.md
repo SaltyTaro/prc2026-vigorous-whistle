@@ -32,3 +32,23 @@ intervals to v12: Jan [−3.32, −0.88] s, Jul [−2.08, −0.71] s, Nov [−6.
 Per airport on Nov 2025 versus v12: LEMD −10.7%, LEBL −5.1%, EDDM −4.1%,
 LFPG −3.9%, EHAM −3.8%, EGLL −2.9%, EDDF −1.8%, LTFM −1.0%, LSZH −0.6%.
 Exported as **v14**; it supersedes v13, which is not uploaded.
+
+## Export and verification ([`export.json`](export.json), [`verification.json`](verification.json))
+
+`tools/export_adsb_v11.py --config configs/adsb_v12_v5.json --selection
+runs/adsb_v12_v5/selection.json --version 14`: v9 rebuilt from scratch, the
+v12 residual refitted on the 271,115 in-scope rows (1,173 rounds), the two
+learners' refit ranking predictions averaged and blended at w = 0.6 on every
+non-LIRF row (317,942 rows touched; the 26,899 LIRF rows keep v9). Output
+`runs/submissions/vigorous-whistle_v14.parquet`, SHA-256
+**`8090314133572d0dde60e372097b43d8557af16740ae918d054b4923b1130e8f`**, 344,841
+rows, min −12, max 120,549 (inherited). Versus v12: 313,566 rows differ, RMS of
+the change 51 s, median absolute change 15 s, 99th percentile 184 s.
+
+Verification (`tools/verify_adsb_v11.py --version 14 --config
+configs/adsb_v12_v5.json --run-root runs/adsb_v12_v5`): receipts and parents
+re-checked, v9 reproduced from scratch, ADS-B features and the attached
+ensemble prediction reproduced, residual recomputed from the saved booster
+(difference 0.0), blend recomputed row by row, rows outside both scopes equal
+the uploaded v9, independent segment re-derivation **300/300**. Not uploaded at
+the time of writing; the next allowance opens at 00:00 UTC on 16 September.
