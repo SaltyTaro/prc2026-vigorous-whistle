@@ -1,0 +1,312 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "full_matched_no_lirf_100": {
+      "weight": 1.0,
+      "scope": "matched_no_lirf",
+      "features": "nbfull"
+    },
+    "full_matched_no_lirf_75": {
+      "weight": 0.75,
+      "scope": "matched_no_lirf",
+      "features": "nbfull"
+    },
+    "full_all_no_lirf_100": {
+      "weight": 1.0,
+      "scope": "all_no_lirf",
+      "features": "nbfull"
+    },
+    "full_all_no_lirf_75": {
+      "weight": 0.75,
+      "scope": "all_no_lirf",
+      "features": "nbfull"
+    }
+  },
+  "declared_at_utc": "2026-09-15T10:40:08+00:00",
+  "development_months": [
+    "2025-01",
+    "2025-07",
+    "2025-11"
+  ],
+  "development_scheme": "leave-one-month-out over the three scoring months that hold out-of-sample v9 predictions (Jan and Jul 2025 from the seasonal fold, Nov 2025 from the forward fold); for each variant (scope, feature set) the residual model is fitted on the other two months' in-scope rows and applied to the held-out month's in-scope rows; every other row keeps v9",
+  "development_baseline": {
+    "name": "v12 development predictions",
+    "parent": "v12_development_residuals",
+    "column": "residual_matched_no_lirf|nb",
+    "weight": 1.0,
+    "recipe": "v9 + 1.0 * v12 development residual (runs/adsb_v12_v2/development_residuals.parquet, nb_no_lirf_100, leave-one-month-out), floored; reproduces 332.993 / 274.585 / 198.544 on Jan / Jul / Nov 2025"
+  },
+  "execution": {
+    "automatic_submission": false,
+    "azure_only": true,
+    "development_host": "workstation",
+    "workers_used": [
+      "arcw1",
+      "arcw2",
+      "arcw3",
+      "arcw4",
+      "arcw5"
+    ]
+  },
+  "experiment_id": "prc2026-adsb-surface-residual-v12-v3",
+  "external_data": {
+    "source": "adsb.lol globe_history daily archives (GitHub releases adsblol/globe_history_2025 and globe_history_2026, tags vYYYY.MM.DD-planes-readsb-prod-0)",
+    "license": "Open Database License (ODbL) 1.0; feeder data CC0; licence files are inside every archive",
+    "extraction": "tools/adsb_extract_day.py keeps positions inside the ten aerodrome boxes that are on the ground or below 3,000 ft; per-day parquet with archive part hashes under data/external/adsblol/surface/ (the tool now skips and counts a corrupt archive member instead of aborting the day; the surface files used here predate that change and are unaffected)",
+    "matching": "tools/build_adsb_features.py: ICAO callsign (CALLSIGN_flt, else FLIGHT_mvt) and takeoff within the track's ground-to-air transition; stand positions learned label-free from covered segments of Jan/Mar/Apr/Jul/Nov 2025 (1,111 stands); the pass-2 matches and stands are exactly the v11 inputs, snapshotted under data/external/adsblol/matches_v11/ and hash-bound below",
+    "labels_used_in_features": false
+  },
+  "floor_seconds_rule": "minimum departure label over the refit months (-12), applied after the residual",
+  "incumbent": {
+    "official_rmse_seconds": 246.4831,
+    "recipe": "v12 = v9 + 1.0 * ADS-B surface residual with neighbour features on matched rows outside LIRF (configs/adsb_v12_v2.json, nb_no_lirf_100)",
+    "submission": "vigorous-whistle_v12.parquet",
+    "submission_sha256": "f3ae96a47a3f9c417d11d93285a393ccd5e7411c9d99b65849867980914471e6"
+  },
+  "matches_dir": "data/external/adsblol/matches_v11",
+  "parents": {
+    "incumbent_ranking_predictions": {
+      "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/ranking_predictions.parquet",
+      "sha256": "cf0c62b5288de74a8262dbb07705e75792bc92059b1e0bb8d66ac0681ec875be"
+    },
+    "lirf_mixture_selection": {
+      "path": "runs/lirf_mixture/selection.json",
+      "sha256": "67c95f9e89e57d9c8b759b95d82916533684c8969a2655968d7401b874b10aa7"
+    },
+    "v9_export": {
+      "path": "runs/submissions/vigorous-whistle_v9.parquet",
+      "sha256": "25d3b296a2753852144f53a2c36a1e539031dbd6ef35b8be928d9e1fa7363521"
+    },
+    "v9_receipt": {
+      "path": "runs/submissions/vigorous-whistle_v9.receipt.json",
+      "sha256": "8b0bc7d79f24c839138787ebab8d45f5dc839b89807d6a2e7c1318729dc7ae67"
+    },
+    "v11_export": {
+      "path": "runs/submissions/vigorous-whistle_v11.parquet",
+      "sha256": "98af50be5fb49d6cc42c8390b26be3220ba2ae24b693fc97c437ceb695c66b09"
+    },
+    "v11_receipt": {
+      "path": "runs/submissions/vigorous-whistle_v11.receipt.json",
+      "sha256": "681099293bb027e608105f8ead47f4596ec5e0b1ccd37a7a36c896235b56c52b"
+    },
+    "adsb_feature_code": {
+      "path": "src/prc2026_adsb/features.py",
+      "sha256": "cff4c56ae3a70fa8dee35453c42d26dd07f1bb6783ff0c18023aa4d3e46469b5"
+    },
+    "adsb_extract_code": {
+      "path": "tools/adsb_extract_day.py",
+      "sha256": "b737b62c9dac421a0ca5c6662ec8a3eabd0801f012211bd48ab3a87af7d5c796"
+    },
+    "adsb_match_code": {
+      "path": "tools/build_adsb_features.py",
+      "sha256": "a5f678a0426e28828b642ae9322e097b518dda235c3de42cbaa415e975def585"
+    },
+    "stands": {
+      "path": "data/external/adsblol/matches_v11/stands.parquet",
+      "sha256": "63502c9465e3742d537fca30bd3c03622623a3be047eb01ba068292a249d995d"
+    },
+    "matches_2025-01": {
+      "path": "data/external/adsblol/matches_v11/matches2_2025-01.parquet",
+      "sha256": "4a275586729c00bf676e3f3184669ce0f06df40d31fedd2b14eb5ebbc127075f"
+    },
+    "matches_2025-07": {
+      "path": "data/external/adsblol/matches_v11/matches2_2025-07.parquet",
+      "sha256": "6dbf3693870ccdcb25a87789e634aa95226fd06b6d57d0fa5113b264ac8cc9d7"
+    },
+    "matches_2025-11": {
+      "path": "data/external/adsblol/matches_v11/matches2_2025-11.parquet",
+      "sha256": "8d1cd1017659feb9c88bccf34b16ab166d2bb4aef8c2d823f87ecff50212b2e6"
+    },
+    "matches_2026-01": {
+      "path": "data/external/adsblol/matches_v11/matches2_2026-01.parquet",
+      "sha256": "6bf7cfa259bc26e048d1ba60a60fd9520aade34b72d64824ff8306d25c6ff2cb"
+    },
+    "matches_2026-07": {
+      "path": "data/external/adsblol/matches_v11/matches2_2026-07.parquet",
+      "sha256": "1947f2002dcaa765ed5f2b82f73cfe0f248e18e8f4b45098fe7a060dc56c026d"
+    },
+    "v12_export": {
+      "path": "runs/submissions/vigorous-whistle_v12.parquet",
+      "sha256": "f3ae96a47a3f9c417d11d93285a393ccd5e7411c9d99b65849867980914471e6"
+    },
+    "v12_receipt": {
+      "path": "runs/submissions/vigorous-whistle_v12.receipt.json",
+      "sha256": "c0ad739b72797a619ffbcc08065ee95bd56970d44c14e2debb28c2800910b844"
+    },
+    "v12_selection": {
+      "path": "runs/adsb_v12_v2/selection.json",
+      "sha256": "918631283768c182450f2672402999412112ff8777b3b4765bd8e1772ad20f27"
+    },
+    "v12_development_residuals": {
+      "path": "runs/adsb_v12_v2/development_residuals.parquet",
+      "sha256": "4c174aea141e796b693f8e066d02344460c0e524bf05901440c8e300c580b8ca"
+    },
+    "adsb_full_code": {
+      "path": "tools/run_adsb_full.py",
+      "sha256": "bf84441b5eccbb616e006a6fb7a5da7725f8847dc4fea58a20105cc7a527fc65"
+    },
+    "adsb_full_seasonal_run": {
+      "path": "runs/adsb_full_nolirf/seasonal/run.json",
+      "sha256": "1c468d303224bd09273e99b66a32e80fd8505ab528c14741e05083a612c28043"
+    },
+    "adsb_full_seasonal_predictions": {
+      "path": "runs/adsb_full_nolirf/seasonal/predictions.parquet",
+      "sha256": "ba654faa732f85f9690b061f9b3d60cf10ad6eac3f370f6c9b284bbe2186cc98"
+    },
+    "adsb_full_forward_run": {
+      "path": "runs/adsb_full_nolirf/forward/run.json",
+      "sha256": "4aaeab1923ce29839401c6487c301936b3a9e667b67e5e34335f1e80a643723a"
+    },
+    "adsb_full_forward_predictions": {
+      "path": "runs/adsb_full_nolirf/forward/predictions.parquet",
+      "sha256": "fa6354b702d9a448f59fbab705d6ba0562831e337ed961c632776c0e58a30e55"
+    },
+    "adsb_full_refit_run": {
+      "path": "runs/adsb_full_nolirf/refit/run.json",
+      "sha256": "e39f2ab4a2742ea52586426ad9a8ad63185dfc5d77367f82a7e51d1e5948c285"
+    },
+    "adsb_full_refit_predictions": {
+      "path": "runs/adsb_full_nolirf/refit/ranking_predictions.parquet",
+      "sha256": "219c1beac964455f35453c0339776fe15cc72d7ed52697e6ac7a9bf0ab5dccf6"
+    }
+  },
+  "prediction_postprocess": "adsb-surface-residual-v12-v3",
+  "prior_evidence": "Declared after v12 scored 246.4831 officially (3rd of 144; 2nd 245.2932, 1st 245.0207). Two full-data learner variants were fitted before this declaration (docs/adsb_full/README.md): with all airports (early stopping after ~225 rounds, LIRF dominating the RMSE) and without LIRF (1,419 rounds on the seasonal fold). The no-LIRF learner alone, on Jan / Jul 2025, beats v9 at the covered airports (Jan: EDDF 140 vs 178, EDDM 112 vs 168, EHAM 162 vs 198, LEBL 98 vs 144, LSZH 176 vs 207) and even v12 at EHAM/LEBL in Jan (162 vs 167, 98 vs 105), is slightly worse than v9 on unmatched rows (LTFM 226 vs 222) and useless at LIRF (1,230 / 2,157 s). A fixed 50/50 blend with the v12 development predictions on non-LIRF rows gives -0.3% / -0.1% (Jan / Jul); a learned stack should do better and avoid the unmatched-row losses. No number for the stacked residual existed before this declaration. Expected size on the ranking: 0.3-1%.",
+  "refit_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11"
+  ],
+  "residual_model": {
+    "scopes": {
+      "matched_no_lirf": "departures with a matched ADS-B surface segment at any airport except LIRF (adsb_matched == 1 and airport != LIRF)",
+      "all_no_lirf": "every departure at any airport except LIRF (matched or not); the full-data learner predicts every row"
+    },
+    "applies_to": "the candidate's scope, for training and prediction alike; every row outside the scope keeps the v9 prediction exactly. LIRF stays excluded (see v12_v2); the full-data learner is catastrophic there (Jan 802 s vs v9 408 s)",
+    "neighbour_features": true,
+    "features": [
+      "airport",
+      "v9",
+      "proxy_s",
+      "schedule_interval_s",
+      "hour",
+      "stand",
+      "runway",
+      "adsb_gate",
+      "adsb_first_point_s",
+      "adsb_motion_s",
+      "adsb_first_gs_kt",
+      "adsb_first_dist_stand_m",
+      "adsb_stop_seconds",
+      "adsb_taxi_path_m",
+      "adsb_taxi_stops",
+      "adsb_taxi_stopped_s",
+      "adsb_slow_start_s",
+      "adsb_gap_before_s",
+      "adsb_turnaround_s",
+      "adsb_anchor_dist_stand_m",
+      "adsb_last_ground_s",
+      "adsb_points",
+      "nb_runway_10m_count",
+      "nb_runway_10m_median_taxi_s",
+      "nb_runway_10m_max_taxi_s",
+      "nb_runway_10m_median_stopped_s",
+      "nb_airport_10m_count",
+      "nb_airport_10m_median_taxi_s",
+      "nb_runway_30m_count",
+      "nb_runway_30m_median_taxi_s",
+      "nb_runway_30m_median_first_point_s",
+      "nb_runway_prev_taxi_s",
+      "nb_runway_next_taxi_s",
+      "adsb_full",
+      "adsb_full_minus_v9"
+    ],
+    "categorical": [
+      "airport",
+      "stand",
+      "runway"
+    ],
+    "kind": "lightgbm",
+    "params": {
+      "objective": "regression",
+      "learning_rate": 0.03,
+      "num_leaves": 63,
+      "min_data_in_leaf": 100,
+      "feature_fraction": 0.9,
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1,
+      "lambda_l2": 10.0,
+      "verbose": -1,
+      "num_threads": 8,
+      "seed": 20260915,
+      "deterministic": true,
+      "force_row_wise": true
+    },
+    "rounds_rule": "development: rounds per held-out month and variant (scope, feature set) come from a 5-fold day-grouped inner split of the two training months (median best iteration, 200 rounds patience, at most 4000); the held-out month is never used for rounds; export: median of the selected variant's three development round counts",
+    "target": "label minus v9 prediction",
+    "prediction": "v9 + weight * residual on in-scope rows, then floor",
+    "feature_sets": {
+      "nbfull": [
+        "airport",
+        "v9",
+        "proxy_s",
+        "schedule_interval_s",
+        "hour",
+        "stand",
+        "runway",
+        "adsb_gate",
+        "adsb_first_point_s",
+        "adsb_motion_s",
+        "adsb_first_gs_kt",
+        "adsb_first_dist_stand_m",
+        "adsb_stop_seconds",
+        "adsb_taxi_path_m",
+        "adsb_taxi_stops",
+        "adsb_taxi_stopped_s",
+        "adsb_slow_start_s",
+        "adsb_gap_before_s",
+        "adsb_turnaround_s",
+        "adsb_anchor_dist_stand_m",
+        "adsb_last_ground_s",
+        "adsb_points",
+        "nb_runway_10m_count",
+        "nb_runway_10m_median_taxi_s",
+        "nb_runway_10m_max_taxi_s",
+        "nb_runway_10m_median_stopped_s",
+        "nb_airport_10m_count",
+        "nb_airport_10m_median_taxi_s",
+        "nb_runway_30m_count",
+        "nb_runway_30m_median_taxi_s",
+        "nb_runway_30m_median_first_point_s",
+        "nb_runway_prev_taxi_s",
+        "nb_runway_next_taxi_s",
+        "adsb_full",
+        "adsb_full_minus_v9"
+      ]
+    }
+  },
+  "selection": "For each candidate (scope, weight), RMSE of (v9 + weight * residual on the scope) on each held-out month versus the v12 development prediction on the same rows (all departures of the month). A candidate is eligible when it is not worse than v12 on ANY month (ratio <= 1.0) and its mean ratio over the three months is at most 0.997. Choose the eligible candidate with the lowest mean ratio to v12; otherwise select nothing. Ratios to v9, per-airport tables and the paired-day bootstrap interval of the RMSE difference to v12 are descriptive only.",
+  "seed": 20260915,
+  "target_filter": "none",
+  "threads": 8,
+  "minimum_mean_improvement_fraction": 0.003,
+  "extra_feature_tables": {
+    "adsb_full": {
+      "column": "adsb_full",
+      "development": [
+        "runs/adsb_full_nolirf/seasonal/predictions.parquet",
+        "runs/adsb_full_nolirf/forward/predictions.parquet"
+      ],
+      "ranking": "runs/adsb_full_nolirf/refit/ranking_predictions.parquet",
+      "description": "tools/run_adsb_full.py: LightGBM (timeline_v1 lightgbm parameters) on the timeline bundle's 276 model features plus the 27 ADS-B departure and neighbour features (pass-2 matches with 1,332 stands, data/external/adsblol/matches), target = label, fitted and early-stopped WITHOUT LIRF rows (--exclude-airports LIRF; runs/adsb_full_nolirf); seasonal and forward folds give out-of-sample predictions for Jan/Jul and Nov 2025; the refit on the eleven 2025 months at the median best iteration predicts the ranking. The derived feature adsb_full_minus_v9 is added by attach_extra."
+    }
+  }
+}
