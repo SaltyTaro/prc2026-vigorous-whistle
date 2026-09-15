@@ -63,3 +63,14 @@ residual recomputed from the saved booster (difference 0.0), the feature list
 identical between declaration, saved record and booster, rows outside the scope
 equal the uploaded v9, and the independent per-row segment re-derivation agrees
 on **300/300** sampled matched departures. Not uploaded at the time of writing.
+
+## Official result: 246.4831 — new best, 3rd place
+
+Uploaded with the user's approval at **10:18 UTC** (`tools/prc_submit.py upload
+--calendar-day`, the fifth upload of 15 September by UTC calendar day) and
+processed at 10:19:11 UTC: **246.4831 seconds RMSE on all 344,841 rows, 1.9537 s
+(0.79%) better than v11's 248.4368** ([`official_result.json`](official_result.json)),
+exactly the development mean (−0.78%). Standing at 10:20 UTC: **3rd of 144**
+(245.0207 / 245.2932 above; 247.0109 below) —
+[`leaderboard_snapshot.json`](leaderboard_snapshot.json). Second is 1.19 s
+(0.48%) away, first 1.46 s (0.59%). Never re-upload v1–v12.
