@@ -80,8 +80,15 @@ def main():
             chain.append(f"mkdir -p {output} && ln -sfn {REMOTE}/{args.feature_cache} {output}/features")
             for fold in FOLDS:
                 chain.append(f"echo \"=== {name} {fold} $(date -u +%FT%TZ)\" >> {output}/launch.log && {job_command(learners[name], output, fold)} >> {output}/launch.log 2>&1")
-        script = f"cd {REMOTE} && ({' && '.join(chain)}; echo \"=== chain done $(date -u +%FT%TZ)\" >> {root}/chain_{args.host}.log) > /dev/null 2>&1 &"
-        print(ssh(args.host, f"nohup bash -c {shlex.quote(script)} > /dev/null 2>&1; sleep 1; pgrep -f 'run_adsb_learner.py --fold' | wc -l")[-200:])
+        # The chain is written to a script on the worker (long chains exceed what a quoted `bash -c` argument carries safely).
+        script = f"cd {REMOTE} && mkdir -p {root} && ({' && '.join(chain)}; echo \"=== chain done $(date -u +%FT%TZ)\" >> {root}/chain_{args.host}.log) > /dev/null 2>&1\n"
+        local_script = ROOT / "runs" / f"chain_{args.host}.sh"
+        local_script.parent.mkdir(parents=True, exist_ok=True)
+        local_script.write_text(script, encoding="utf-8", newline="\n")
+        ssh(args.host, f"mkdir -p {REMOTE}/{root}")
+        subprocess.run(["scp", "-q", str(local_script), f"{args.host}:{REMOTE}/{root}/chain_{args.host}.sh"], check=True, timeout=300)
+        # stdin must be detached too, or the ssh session stays open for as long as the chain runs
+        print(ssh(args.host, f"cd {REMOTE} && nohup setsid bash {root}/chain_{args.host}.sh < /dev/null > /dev/null 2>&1 & sleep 2; pgrep -f 'run_adsb_learner.py --fold' | wc -l")[-200:])
     else:
         for name in args.names:
             for fold, files in FILES.items():
