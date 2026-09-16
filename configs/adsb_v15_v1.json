@@ -1,4 +1,6 @@
 {
+  "amended_at_utc": "2026-09-16T01:47:52+00:00",
+  "amendment": "Amended before any candidate was scored and before any ensemble was built (the seven original learner chains were already running on arcw1/arcw2/arcw4 with the runner at the hash recorded under parents.learner_code_run_adsb_learner): two learner variants with the ADS-B-residual target were added (target = label minus the observed ADS-B taxi, takeoff minus motion start, on matched rows; the plain label elsewhere; the offset is added back), fitted on arcw3 with the runner at the hash recorded under parents.learner_code_run_adsb_learner_amended; ensembles ens_v15_res and ens_v15_mix and their six blend candidates were added; nothing else changed. Rationale: a tree ensemble reproduces the near-identity relation between the label and the observed taxi only piecewise; fitting the gap removes that burden (the same device as the v12 residual on v9 and the NM-residual learner).",
   "audit_used": false,
   "candidates": {
     "ens_v15_all_60": {
@@ -54,6 +56,66 @@
     "ens_v15_bag_80": {
       "blend_with": {
         "name": "ens_v15_bag",
+        "scope": "all_no_lirf",
+        "weight": 0.8
+      },
+      "features": "nb",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v15_mix_60": {
+      "blend_with": {
+        "name": "ens_v15_mix",
+        "scope": "all_no_lirf",
+        "weight": 0.6
+      },
+      "features": "nb",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v15_mix_70": {
+      "blend_with": {
+        "name": "ens_v15_mix",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "features": "nb",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v15_mix_80": {
+      "blend_with": {
+        "name": "ens_v15_mix",
+        "scope": "all_no_lirf",
+        "weight": 0.8
+      },
+      "features": "nb",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v15_res_60": {
+      "blend_with": {
+        "name": "ens_v15_res",
+        "scope": "all_no_lirf",
+        "weight": 0.6
+      },
+      "features": "nb",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v15_res_70": {
+      "blend_with": {
+        "name": "ens_v15_res",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "features": "nb",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v15_res_80": {
+      "blend_with": {
+        "name": "ens_v15_res",
         "scope": "all_no_lirf",
         "weight": 0.8
       },
@@ -162,6 +224,20 @@
       ],
       "rule": "mean of finite predictions"
     },
+    "ens_v15_mix": {
+      "members": [
+        "runs/adsb_v15/ens_v15_bag",
+        "runs/adsb_v15/ens_v15_res"
+      ],
+      "rule": "mean of finite predictions of the two group means"
+    },
+    "ens_v15_res": {
+      "members": [
+        "runs/adsb_v15/lgb_adsbres",
+        "runs/adsb_v15/cat_adsbres"
+      ],
+      "rule": "mean of finite predictions"
+    },
     "ens_v15_seeds": {
       "members": [
         "runs/adsb_v15/ens_v15_lgb_seeds",
@@ -219,6 +295,24 @@
       ],
       "ranking": "runs/adsb_v15/ens_v15_bag/refit/ranking_predictions.parquet"
     },
+    "ens_v15_mix": {
+      "column": "adsb_full",
+      "description": "ensemble ens_v15_mix as declared in the amendment",
+      "development": [
+        "runs/adsb_v15/ens_v15_mix/seasonal/predictions.parquet",
+        "runs/adsb_v15/ens_v15_mix/forward/predictions.parquet"
+      ],
+      "ranking": "runs/adsb_v15/ens_v15_mix/refit/ranking_predictions.parquet"
+    },
+    "ens_v15_res": {
+      "column": "adsb_full",
+      "description": "ensemble ens_v15_res as declared in the amendment",
+      "development": [
+        "runs/adsb_v15/ens_v15_res/seasonal/predictions.parquet",
+        "runs/adsb_v15/ens_v15_res/forward/predictions.parquet"
+      ],
+      "ranking": "runs/adsb_v15/ens_v15_res/refit/ranking_predictions.parquet"
+    },
     "ens_v15_seeds": {
       "column": "adsb_full",
       "description": "ensemble ens_v15_seeds as declared above",
@@ -250,6 +344,13 @@
   },
   "learner_output_root": "runs/adsb_v15",
   "learners": {
+    "cat_adsbres": {
+      "kind": "catboost",
+      "parameters": {},
+      "rounds": 12000,
+      "seed": 20260915,
+      "target": "adsb_residual"
+    },
     "cat_long": {
       "kind": "catboost",
       "note": "the v14 CatBoost hit its 6,000-round cap on both folds while still improving; same parameters with a 20,000-round cap",
@@ -262,6 +363,13 @@
       "parameters": {},
       "rounds": 20000,
       "seed": 20260916
+    },
+    "lgb_adsbres": {
+      "kind": "lightgbm",
+      "note": "timeline_v1 parameters; target = label - adsb_motion_s on matched rows, label elsewhere",
+      "parameters": {},
+      "seed": 20260915,
+      "target": "adsb_residual"
     },
     "lgb_clean": {
       "kind": "lightgbm",
@@ -399,9 +507,13 @@
       "path": "tools/run_adsb_learner.py",
       "sha256": "3f74cab1004b8c0cc2100dd64b1c7bb0e592b8401e906d30699a53cdfd0e2aa1"
     },
+    "learner_code_run_adsb_learner_amended": {
+      "path": "tools/run_adsb_learner.py",
+      "sha256": "56232972f63b9704a99620cbdded0efff0a9f1c8c115bac6c372a8f7e51e7b2d"
+    },
     "learner_launcher": {
       "path": "tools/launch_adsb_learners.py",
-      "sha256": "91b974ce4d6b59e43deb820ccf73d54d34525dda6435b1031c3878866e9e21dd"
+      "sha256": "4d48d797050925c240b3359427f66c0b54936dcfe7e167ffd17ffe95710d4a70"
     },
     "lirf_mixture_selection": {
       "path": "runs/lirf_mixture/selection.json",

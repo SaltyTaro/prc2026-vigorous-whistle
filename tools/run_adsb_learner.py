@@ -1,7 +1,9 @@
 """Full-data ADS-B learners: LightGBM or CatBoost on the timeline bundle model features plus the ADS-B features, target = label or NM residual.
 
 Generalises run_adsb_full.py (kept unchanged while configs/adsb_v12_v3.json binds its hash): `--kind lightgbm|catboost` and
-`--target label|nm_residual`. With the NM-residual target, rows without the NM clock are neither fitted nor predicted (NaN).
+`--target label|nm_residual|adsb_residual`. With the NM-residual target, rows without the NM clock are neither fitted nor predicted (NaN).
+With the ADS-B-residual target the model learns label minus the observed ADS-B taxi (takeoff minus motion start) on matched rows and
+the plain label elsewhere; the offset is added back, so every row is predicted.
 The output column is always `adsb_full`; the residual stage binds each table under its own name.
 
 `--param key=value` (repeatable) overrides single learner parameters, `--rounds` the
@@ -182,7 +184,7 @@ def main():
     parser.add_argument("--output", type=Path, default=Path("runs/adsb_full"))
     parser.add_argument("--settings", type=Path, default=Path("configs/timeline_v1.json"), help="Learner parameters are taken from this declaration's lightgbm / catboost block")
     parser.add_argument("--kind", choices=["lightgbm", "catboost"], default="lightgbm")
-    parser.add_argument("--target", choices=["label", "nm_residual"], default="label")
+    parser.add_argument("--target", choices=["label", "nm_residual", "adsb_residual"], default="label")
     parser.add_argument("--threads", type=int, default=16)
     parser.add_argument("--seed", type=int, default=20260915)
     parser.add_argument("--exclude-airports", nargs="*", default=[], help="Airports left out of fitting and early stopping (their rows are still predicted)")
@@ -235,7 +237,12 @@ def main():
         return mask
 
     def offset(frame: pd.DataFrame) -> np.ndarray:
-        return frame["nmclock_proxy_s"].to_numpy(dtype=float) if args.target == "nm_residual" else np.zeros(len(frame))
+        if args.target == "nm_residual":
+            return frame["nmclock_proxy_s"].to_numpy(dtype=float)
+        if args.target == "adsb_residual":
+            motion = frame["adsb_motion_s"].to_numpy(dtype=float)
+            return np.where(np.isfinite(motion), motion, 0.0)
+        return np.zeros(len(frame))
     out.mkdir(parents=True, exist_ok=True)
     if args.fold in ("seasonal", "forward"):
         assignment = pd.read_parquet(parent / "splits" / f"{args.fold}.parquet")

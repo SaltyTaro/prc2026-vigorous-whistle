@@ -35,6 +35,8 @@ def job_command(spec: dict, output: str, fold: str) -> str:
              "--exclude-airports", "LIRF", "--output", output, "--matches-dir", "data/external/adsblol/matches"]
     for key, value in spec.get("parameters", {}).items():
         parts += ["--param", f"{key}={str(value).lower() if isinstance(value, bool) else value}"]
+    if spec.get("target"):
+        parts += ["--target", spec["target"]]
     if spec.get("rounds") is not None:
         parts += ["--rounds", str(spec["rounds"])]
     if spec.get("patience") is not None:
@@ -77,7 +79,7 @@ def main():
             for fold in FOLDS:
                 chain.append(f"echo \"=== {name} {fold} $(date -u +%FT%TZ)\" >> {output}/launch.log && {job_command(learners[name], output, fold)} >> {output}/launch.log 2>&1")
         script = f"cd {REMOTE} && ({' && '.join(chain)}; echo \"=== chain done $(date -u +%FT%TZ)\" >> {root}/chain_{args.host}.log) > /dev/null 2>&1 &"
-        print(ssh(args.host, f"nohup bash -c {shlex.quote(script)} > /dev/null 2>&1; sleep 1; pgrep -fa run_adsb_learner | head -3"))
+        print(ssh(args.host, f"nohup bash -c {shlex.quote(script)} > /dev/null 2>&1; sleep 1; pgrep -f 'run_adsb_learner.py --fold' | wc -l")[-200:])
     else:
         for name in args.names:
             for fold, files in FILES.items():
