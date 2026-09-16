@@ -1,6 +1,6 @@
 {
   "amended_at_utc": "2026-09-16T01:47:52+00:00",
-  "amendment": "Amended before any candidate was scored and before any ensemble was built (the seven original learner chains were already running on arcw1/arcw2/arcw4 with the runner at the hash recorded under parents.learner_code_run_adsb_learner): two learner variants with the ADS-B-residual target were added (target = label minus the observed ADS-B taxi, takeoff minus motion start, on matched rows; the plain label elsewhere; the offset is added back), fitted on arcw3 with the runner at the hash recorded under parents.learner_code_run_adsb_learner_amended; ensembles ens_v15_res and ens_v15_mix and their six blend candidates were added; nothing else changed. Rationale: a tree ensemble reproduces the near-identity relation between the label and the observed taxi only piecewise; fitting the gap removes that burden (the same device as the v12 residual on v9 and the NM-residual learner).",
+  "amendment": "Amended before any candidate was scored and before any ensemble was built (the seven original learner chains were already running on arcw1/arcw2/arcw4 with the runner at the hash recorded under parents.learner_code_run_adsb_learner): two learner variants with the ADS-B-residual target were added (target = label minus the observed ADS-B taxi, takeoff minus motion start, on matched rows; the plain label elsewhere; the offset is added back), fitted on arcw3 with the runner at the hash recorded under parents.learner_code_run_adsb_learner_amended; ensembles ens_v15_res and ens_v15_mix and their six blend candidates were added; nothing else changed. Rationale: a tree ensemble reproduces the near-identity relation between the label and the observed taxi only piecewise; fitting the gap removes that burden (the same device as the v12 residual on v9 and the NM-residual learner). Bookkeeping (02:05 UTC): the declared runner is snapshotted at docs/adsb_v15/run_adsb_learner_declared.py so that both hashes stay checkable; the nested ensembles are built with the unchanged tools/ensemble_adsb_full.py by listing members with multiplicities that reproduce the two-level mean exactly (every label-target learner predicts every row, so the flat mean over the multiset equals the mean of group means).",
   "audit_used": false,
   "candidates": {
     "ens_v15_all_60": {
@@ -504,7 +504,8 @@
       "sha256": "14045da02c1e41e76145a13df5ddb17063d1cafdb7e0f5b6abd5ae9680ee1e9f"
     },
     "learner_code_run_adsb_learner": {
-      "path": "tools/run_adsb_learner.py",
+      "note": "snapshot of tools/run_adsb_learner.py as declared (the file on disk is the amended runner, parents.learner_code_run_adsb_learner_amended); the arcw1/arcw2/arcw4 chains run this declared version",
+      "path": "docs/adsb_v15/run_adsb_learner_declared.py",
       "sha256": "3f74cab1004b8c0cc2100dd64b1c7bb0e592b8401e906d30699a53cdfd0e2aa1"
     },
     "learner_code_run_adsb_learner_amended": {
