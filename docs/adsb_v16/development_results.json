@@ -1,0 +1,3540 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "ens_v15_bag_60": {
+      "blend_with": {
+        "name": "ens_v15_bag",
+        "scope": "all_no_lirf",
+        "weight": 0.6
+      },
+      "eligible": false,
+      "feature_set": "nb",
+      "mean_ratio": 0.9978554407941779,
+      "mean_ratio_to_v9": 0.9296403414895028,
+      "months": {
+        "2025-01": {
+          "airports": {
+            "EDDF": {
+              "baseline": 131.32470556440097,
+              "candidate": 130.7458091093425,
+              "change_pct_vs_baseline": -0.44081306146510624,
+              "in_scope_share": 0.8975864739287558,
+              "matched_share": 0.8975864739287558,
+              "rows": 15496,
+              "v9": 177.74599937728885
+            },
+            "EDDM": {
+              "baseline": 91.23856431991915,
+              "candidate": 90.3812900024788,
+              "change_pct_vs_baseline": -0.9395964566412895,
+              "in_scope_share": 0.9492277649565063,
+              "matched_share": 0.9492277649565063,
+              "rows": 11266,
+              "v9": 167.6943979962656
+            },
+            "EGLL": {
+              "baseline": 213.7703350876801,
+              "candidate": 212.57238831720014,
+              "change_pct_vs_baseline": -0.5603896209399828,
+              "in_scope_share": 0.6992790937178167,
+              "matched_share": 0.6992790937178167,
+              "rows": 19420,
+              "v9": 244.0837298466052
+            },
+            "EHAM": {
+              "baseline": 153.4483783748065,
+              "candidate": 152.39716420185442,
+              "change_pct_vs_baseline": -0.685060464037246,
+              "in_scope_share": 0.9408450704225352,
+              "matched_share": 0.9408450704225352,
+              "rows": 18460,
+              "v9": 197.91559582360364
+            },
+            "LEBL": {
+              "baseline": 95.03392174164772,
+              "candidate": 94.49834792002363,
+              "change_pct_vs_baseline": -0.5635606863410914,
+              "in_scope_share": 0.9524276606179499,
+              "matched_share": 0.9524276606179499,
+              "rows": 12234,
+              "v9": 143.9439490252376
+            },
+            "LEMD": {
+              "baseline": 162.1517332076893,
+              "candidate": 161.50169077978515,
+              "change_pct_vs_baseline": -0.40088527889587944,
+              "in_scope_share": 6.0569351907934585e-05,
+              "matched_share": 6.0569351907934585e-05,
+              "rows": 16510,
+              "v9": 160.816833733706
+            },
+            "LFPG": {
+              "baseline": 800.079954325405,
+              "candidate": 799.7719365625702,
+              "change_pct_vs_baseline": -0.03849837271506784,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 17900,
+              "v9": 800.0118693591279
+            },
+            "LIRF": {
+              "baseline": 407.9919942214698,
+              "candidate": 407.9919942214698,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 11317,
+              "v9": 407.9919942214698
+            },
+            "LSZH": {
+              "baseline": 165.85641261235062,
+              "candidate": 165.23888122400328,
+              "change_pct_vs_baseline": -0.37232891910587984,
+              "in_scope_share": 0.9254237288135593,
+              "matched_share": 0.9254237288135593,
+              "rows": 9735,
+              "v9": 207.37369134724938
+            },
+            "LTFM": {
+              "baseline": 219.97783432735585,
+              "candidate": 219.4113875091368,
+              "change_pct_vs_baseline": -0.2575017705538918,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 21368,
+              "v9": 221.65558108735607
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 31,
+            "days_with_lower_squared_error": 30,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.6820681301242217,
+              -0.26865576447777784
+            ]
+          },
+          "ratio_to_baseline": 0.998790034113874,
+          "ratio_to_v9": 0.9622964455244917,
+          "rmse": 330.907978297734
+        },
+        "2025-07": {
+          "airports": {
+            "EDDF": {
+              "baseline": 130.99569679195753,
+              "candidate": 130.3618871146987,
+              "change_pct_vs_baseline": -0.48384007473575297,
+              "in_scope_share": 0.917268210368426,
+              "matched_share": 0.917268210368426,
+              "rows": 21334,
+              "v9": 189.91540339894027
+            },
+            "EDDM": {
+              "baseline": 151.55299790075466,
+              "candidate": 150.9538676329428,
+              "change_pct_vs_baseline": -0.3953272294911714,
+              "in_scope_share": 0.37541864139020537,
+              "matched_share": 0.37541864139020537,
+              "rows": 15825,
+              "v9": 177.5540817222785
+            },
+            "EGLL": {
+              "baseline": 284.12484082243543,
+              "candidate": 283.6179185255101,
+              "change_pct_vs_baseline": -0.17841533864408898,
+              "in_scope_share": 0.23193843193843194,
+              "matched_share": 0.23193843193843194,
+              "rows": 20790,
+              "v9": 293.0657427796838
+            },
+            "EHAM": {
+              "baseline": 118.0636567377104,
+              "candidate": 117.46952636275874,
+              "change_pct_vs_baseline": -0.5032288439715038,
+              "in_scope_share": 0.9541998310285028,
+              "matched_share": 0.9541998310285028,
+              "rows": 22489,
+              "v9": 167.51876758459142
+            },
+            "LEBL": {
+              "baseline": 230.8527325705319,
+              "candidate": 230.34102225605017,
+              "change_pct_vs_baseline": -0.22166093023195943,
+              "in_scope_share": 0.9340974212034384,
+              "matched_share": 0.9340974212034384,
+              "rows": 16752,
+              "v9": 263.67489462728884
+            },
+            "LEMD": {
+              "baseline": 171.92654401115576,
+              "candidate": 171.0704810063349,
+              "change_pct_vs_baseline": -0.49792369743982823,
+              "in_scope_share": 0.3689021149962802,
+              "matched_share": 0.3689021149962802,
+              "rows": 18818,
+              "v9": 188.73545714678528
+            },
+            "LFPG": {
+              "baseline": 250.88838345012414,
+              "candidate": 250.26161362444543,
+              "change_pct_vs_baseline": -0.24982018579721155,
+              "in_scope_share": 0.0722641857037583,
+              "matched_share": 0.0722641857037583,
+              "rows": 21712,
+              "v9": 255.19361697912296
+            },
+            "LIRF": {
+              "baseline": 652.0209210366305,
+              "candidate": 652.0209210366305,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.9389257773979357,
+              "rows": 15211,
+              "v9": 652.0209210366305
+            },
+            "LSZH": {
+              "baseline": 146.29054446198202,
+              "candidate": 144.7812350221796,
+              "change_pct_vs_baseline": -1.0317204337117358,
+              "in_scope_share": 0.9111093489810483,
+              "matched_share": 0.9111093489810483,
+              "rows": 12611,
+              "v9": 194.13163187553394
+            },
+            "LTFM": {
+              "baseline": 278.88436621982663,
+              "candidate": 277.9651205459896,
+              "change_pct_vs_baseline": -0.3296153478579922,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 25171,
+              "v9": 278.8403938951793
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 31,
+            "days_with_lower_squared_error": 31,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.5673325453858581,
+              -0.4009493869314682
+            ]
+          },
+          "ratio_to_baseline": 0.9982327454456592,
+          "ratio_to_v9": 0.9463927741188587,
+          "rmse": 272.68652935868835
+        },
+        "2025-11": {
+          "airports": {
+            "EDDF": {
+              "baseline": 115.67799777448342,
+              "candidate": 114.84708189274268,
+              "change_pct_vs_baseline": -0.7183007120858176,
+              "in_scope_share": 0.9552477651473348,
+              "matched_share": 0.9552477651473348,
+              "rows": 18122,
+              "v9": 181.79874733038181
+            },
+            "EDDM": {
+              "baseline": 77.22710636683635,
+              "candidate": 76.33914275236017,
+              "change_pct_vs_baseline": -1.1498082166360946,
+              "in_scope_share": 0.9750039802579207,
+              "matched_share": 0.9750039802579207,
+              "rows": 12562,
+              "v9": 158.96443116914236
+            },
+            "EGLL": {
+              "baseline": 177.3585928447856,
+              "candidate": 176.63988954787564,
+              "change_pct_vs_baseline": -0.40522609329615156,
+              "in_scope_share": 0.6943829480512794,
+              "matched_share": 0.6943829480512794,
+              "rows": 19423,
+              "v9": 200.46014688647037
+            },
+            "EHAM": {
+              "baseline": 95.57717411074775,
+              "candidate": 94.84512829300391,
+              "change_pct_vs_baseline": -0.7659211778908603,
+              "in_scope_share": 0.9633423460898503,
+              "matched_share": 0.9633423460898503,
+              "rows": 19232,
+              "v9": 157.09662243578427
+            },
+            "LEBL": {
+              "baseline": 117.22213500618282,
+              "candidate": 116.63824981224673,
+              "change_pct_vs_baseline": -0.4981014839094189,
+              "in_scope_share": 0.9655715571557155,
+              "matched_share": 0.9655715571557155,
+              "rows": 13332,
+              "v9": 161.93258057667416
+            },
+            "LEMD": {
+              "baseline": 127.90303792614101,
+              "candidate": 127.14304646600797,
+              "change_pct_vs_baseline": -0.5941934393864035,
+              "in_scope_share": 0.9606177162868133,
+              "matched_share": 0.9606177162868133,
+              "rows": 17419,
+              "v9": 170.98534224434866
+            },
+            "LFPG": {
+              "baseline": 251.23874880190385,
+              "candidate": 249.80820616586135,
+              "change_pct_vs_baseline": -0.5693957014451079,
+              "in_scope_share": 0.36452858521935,
+              "matched_share": 0.36452858521935,
+              "rows": 18646,
+              "v9": 264.4432960692415
+            },
+            "LIRF": {
+              "baseline": 451.66040253917885,
+              "candidate": 451.66040253917885,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.655808615819209,
+              "rows": 11328,
+              "v9": 451.66040253917885
+            },
+            "LSZH": {
+              "baseline": 110.75716273522485,
+              "candidate": 110.01330988181856,
+              "change_pct_vs_baseline": -0.6716069959146087,
+              "in_scope_share": 0.9412581861480452,
+              "matched_share": 0.9412581861480452,
+              "rows": 10078,
+              "v9": 155.98526270051826
+            },
+            "LTFM": {
+              "baseline": 205.73304978875538,
+              "candidate": 204.7195861220606,
+              "change_pct_vs_baseline": -0.4926110159429342,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 22190,
+              "v9": 207.73278307309056
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 30,
+            "days_with_lower_squared_error": 30,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.7973368173274011,
+              -0.5528900523071613
+            ]
+          },
+          "ratio_to_baseline": 0.9965435428230004,
+          "ratio_to_v9": 0.8802318048251576,
+          "rmse": 193.5410023870313
+        }
+      },
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v15_bag_70": {
+      "blend_with": {
+        "name": "ens_v15_bag",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "eligible": false,
+      "feature_set": "nb",
+      "mean_ratio": 0.9980522334517709,
+      "mean_ratio_to_v9": 0.9298401827378368,
+      "months": {
+        "2025-01": {
+          "airports": {
+            "EDDF": {
+              "baseline": 131.32470556440097,
+              "candidate": 131.6012140153408,
+              "change_pct_vs_baseline": 0.210553261666524,
+              "in_scope_share": 0.8975864739287558,
+              "matched_share": 0.8975864739287558,
+              "rows": 15496,
+              "v9": 177.74599937728885
+            },
+            "EDDM": {
+              "baseline": 91.23856431991915,
+              "candidate": 91.24166753458047,
+              "change_pct_vs_baseline": 0.003401209438624875,
+              "in_scope_share": 0.9492277649565063,
+              "matched_share": 0.9492277649565063,
+              "rows": 11266,
+              "v9": 167.6943979962656
+            },
+            "EGLL": {
+              "baseline": 213.7703350876801,
+              "candidate": 213.38125150394632,
+              "change_pct_vs_baseline": -0.1820100920804646,
+              "in_scope_share": 0.6992790937178167,
+              "matched_share": 0.6992790937178167,
+              "rows": 19420,
+              "v9": 244.0837298466052
+            },
+            "EHAM": {
+              "baseline": 153.4483783748065,
+              "candidate": 152.06129186327362,
+              "change_pct_vs_baseline": -0.90394341486284,
+              "in_scope_share": 0.9408450704225352,
+              "matched_share": 0.9408450704225352,
+              "rows": 18460,
+              "v9": 197.91559582360364
+            },
+            "LEBL": {
+              "baseline": 95.03392174164772,
+              "candidate": 93.77697108159194,
+              "change_pct_vs_baseline": -1.3226336838679909,
+              "in_scope_share": 0.9524276606179499,
+              "matched_share": 0.9524276606179499,
+              "rows": 12234,
+              "v9": 143.9439490252376
+            },
+            "LEMD": {
+              "baseline": 162.1517332076893,
+              "candidate": 161.9579499358572,
+              "change_pct_vs_baseline": -0.11950737004081669,
+              "in_scope_share": 6.0569351907934585e-05,
+              "matched_share": 6.0569351907934585e-05,
+              "rows": 16510,
+              "v9": 160.816833733706
+            },
+            "LFPG": {
+              "baseline": 800.079954325405,
+              "candidate": 799.9262307457726,
+              "change_pct_vs_baseline": -0.019213527198291835,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 17900,
+              "v9": 800.0118693591279
+            },
+            "LIRF": {
+              "baseline": 407.9919942214698,
+              "candidate": 407.9919942214698,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 11317,
+              "v9": 407.9919942214698
+            },
+            "LSZH": {
+              "baseline": 165.85641261235062,
+              "candidate": 166.10574635665947,
+              "change_pct_vs_baseline": 0.15033108481106172,
+              "in_scope_share": 0.9254237288135593,
+              "matched_share": 0.9254237288135593,
+              "rows": 9735,
+              "v9": 207.37369134724938
+            },
+            "LTFM": {
+              "baseline": 219.97783432735585,
+              "candidate": 219.30839383034294,
+              "change_pct_vs_baseline": -0.3043217963573097,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 21368,
+              "v9": 221.65558108735607
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 31,
+            "days_with_lower_squared_error": 27,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.44948102883446167,
+              -0.12158282899730197
+            ]
+          },
+          "ratio_to_baseline": 0.9992962495424257,
+          "ratio_to_v9": 0.9627841649559306,
+          "rmse": 331.07569194957654
+        },
+        "2025-07": {
+          "airports": {
+            "EDDF": {
+              "baseline": 130.99569679195753,
+              "candidate": 130.29043794286355,
+              "change_pct_vs_baseline": -0.5383832189648552,
+              "in_scope_share": 0.917268210368426,
+              "matched_share": 0.917268210368426,
+              "rows": 21334,
+              "v9": 189.91540339894027
+            },
+            "EDDM": {
+              "baseline": 151.55299790075466,
+              "candidate": 151.39579884687453,
+              "change_pct_vs_baseline": -0.10372546637650304,
+              "in_scope_share": 0.37541864139020537,
+              "matched_share": 0.37541864139020537,
+              "rows": 15825,
+              "v9": 177.5540817222785
+            },
+            "EGLL": {
+              "baseline": 284.12484082243543,
+              "candidate": 283.8283311279836,
+              "change_pct_vs_baseline": -0.10435894784615041,
+              "in_scope_share": 0.23193843193843194,
+              "matched_share": 0.23193843193843194,
+              "rows": 20790,
+              "v9": 293.0657427796838
+            },
+            "EHAM": {
+              "baseline": 118.0636567377104,
+              "candidate": 118.60531746790376,
+              "change_pct_vs_baseline": 0.45878701808863553,
+              "in_scope_share": 0.9541998310285028,
+              "matched_share": 0.9541998310285028,
+              "rows": 22489,
+              "v9": 167.51876758459142
+            },
+            "LEBL": {
+              "baseline": 230.8527325705319,
+              "candidate": 230.25861781392462,
+              "change_pct_vs_baseline": -0.25735660565584517,
+              "in_scope_share": 0.9340974212034384,
+              "matched_share": 0.9340974212034384,
+              "rows": 16752,
+              "v9": 263.67489462728884
+            },
+            "LEMD": {
+              "baseline": 171.92654401115576,
+              "candidate": 171.1288406679191,
+              "change_pct_vs_baseline": -0.4639791649536651,
+              "in_scope_share": 0.3689021149962802,
+              "matched_share": 0.3689021149962802,
+              "rows": 18818,
+              "v9": 188.73545714678528
+            },
+            "LFPG": {
+              "baseline": 250.88838345012414,
+              "candidate": 250.34400659812798,
+              "change_pct_vs_baseline": -0.21697969611430556,
+              "in_scope_share": 0.0722641857037583,
+              "matched_share": 0.0722641857037583,
+              "rows": 21712,
+              "v9": 255.19361697912296
+            },
+            "LIRF": {
+              "baseline": 652.0209210366305,
+              "candidate": 652.0209210366305,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.9389257773979357,
+              "rows": 15211,
+              "v9": 652.0209210366305
+            },
+            "LSZH": {
+              "baseline": 146.29054446198202,
+              "candidate": 145.30019261425608,
+              "change_pct_vs_baseline": -0.676975980483363,
+              "in_scope_share": 0.9111093489810483,
+              "matched_share": 0.9111093489810483,
+              "rows": 12611,
+              "v9": 194.13163187553394
+            },
+            "LTFM": {
+              "baseline": 278.88436621982663,
+              "candidate": 278.2274332644358,
+              "change_pct_vs_baseline": -0.23555746931795962,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 25171,
+              "v9": 278.8403938951793
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 31,
+            "days_with_lower_squared_error": 28,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.4497136837845915,
+              -0.185050436121432
+            ]
+          },
+          "ratio_to_baseline": 0.9988110542053157,
+          "ratio_to_v9": 0.9469410502937743,
+          "rmse": 272.84450555140285
+        },
+        "2025-11": {
+          "airports": {
+            "EDDF": {
+              "baseline": 115.67799777448342,
+              "candidate": 115.11810268980109,
+              "change_pct_vs_baseline": -0.4840117355539353,
+              "in_scope_share": 0.9552477651473348,
+              "matched_share": 0.9552477651473348,
+              "rows": 18122,
+              "v9": 181.79874733038181
+            },
+            "EDDM": {
+              "baseline": 77.22710636683635,
+              "candidate": 76.53075864528417,
+              "change_pct_vs_baseline": -0.9016882210301502,
+              "in_scope_share": 0.9750039802579207,
+              "matched_share": 0.9750039802579207,
+              "rows": 12562,
+              "v9": 158.96443116914236
+            },
+            "EGLL": {
+              "baseline": 177.3585928447856,
+              "candidate": 176.85594715806843,
+              "change_pct_vs_baseline": -0.2834064471615716,
+              "in_scope_share": 0.6943829480512794,
+              "matched_share": 0.6943829480512794,
+              "rows": 19423,
+              "v9": 200.46014688647037
+            },
+            "EHAM": {
+              "baseline": 95.57717411074775,
+              "candidate": 94.9352841649651,
+              "change_pct_vs_baseline": -0.6715933503525395,
+              "in_scope_share": 0.9633423460898503,
+              "matched_share": 0.9633423460898503,
+              "rows": 19232,
+              "v9": 157.09662243578427
+            },
+            "LEBL": {
+              "baseline": 117.22213500618282,
+              "candidate": 116.28898781021442,
+              "change_pct_vs_baseline": -0.796050332916376,
+              "in_scope_share": 0.9655715571557155,
+              "matched_share": 0.9655715571557155,
+              "rows": 13332,
+              "v9": 161.93258057667416
+            },
+            "LEMD": {
+              "baseline": 127.90303792614101,
+              "candidate": 125.80281086904179,
+              "change_pct_vs_baseline": -1.6420462650089784,
+              "in_scope_share": 0.9606177162868133,
+              "matched_share": 0.9606177162868133,
+              "rows": 17419,
+              "v9": 170.98534224434866
+            },
+            "LFPG": {
+              "baseline": 251.23874880190385,
+              "candidate": 249.44467233980444,
+              "change_pct_vs_baseline": -0.714092261108179,
+              "in_scope_share": 0.36452858521935,
+              "matched_share": 0.36452858521935,
+              "rows": 18646,
+              "v9": 264.4432960692415
+            },
+            "LIRF": {
+              "baseline": 451.66040253917885,
+              "candidate": 451.66040253917885,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.655808615819209,
+              "rows": 11328,
+              "v9": 451.66040253917885
+            },
+            "LSZH": {
+              "baseline": 110.75716273522485,
+              "candidate": 110.90166681697738,
+              "change_pct_vs_baseline": 0.13046928811093483,
+              "in_scope_share": 0.9412581861480452,
+              "matched_share": 0.9412581861480452,
+              "rows": 10078,
+              "v9": 155.98526270051826
+            },
+            "LTFM": {
+              "baseline": 205.73304978875538,
+              "candidate": 204.6158072407206,
+              "change_pct_vs_baseline": -0.5430544820980154,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 22190,
+              "v9": 207.73278307309056
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 30,
+            "days_with_lower_squared_error": 30,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.9590746431340896,
+              -0.616779716161669
+            ]
+          },
+          "ratio_to_baseline": 0.9960493966075713,
+          "ratio_to_v9": 0.8797953329638052,
+          "rmse": 193.4450331195079
+        }
+      },
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v16_bag_60": {
+      "blend_with": {
+        "name": "ens_v16_bag",
+        "scope": "all_no_lirf",
+        "weight": 0.6
+      },
+      "eligible": false,
+      "feature_set": "nb",
+      "mean_ratio": 0.9971184386859222,
+      "mean_ratio_to_v9": 0.9289700935481046,
+      "months": {
+        "2025-01": {
+          "airports": {
+            "EDDF": {
+              "baseline": 131.32470556440097,
+              "candidate": 130.38175947526528,
+              "change_pct_vs_baseline": -0.718026425479612,
+              "in_scope_share": 0.8975864739287558,
+              "matched_share": 0.8975864739287558,
+              "rows": 15496,
+              "v9": 177.74599937728885
+            },
+            "EDDM": {
+              "baseline": 91.23856431991915,
+              "candidate": 90.25358074581837,
+              "change_pct_vs_baseline": -1.0795693481618462,
+              "in_scope_share": 0.9492277649565063,
+              "matched_share": 0.9492277649565063,
+              "rows": 11266,
+              "v9": 167.6943979962656
+            },
+            "EGLL": {
+              "baseline": 213.7703350876801,
+              "candidate": 212.59873454820277,
+              "change_pct_vs_baseline": -0.5480650713284407,
+              "in_scope_share": 0.6992790937178167,
+              "matched_share": 0.6992790937178167,
+              "rows": 19420,
+              "v9": 244.0837298466052
+            },
+            "EHAM": {
+              "baseline": 153.4483783748065,
+              "candidate": 152.39398133055164,
+              "change_pct_vs_baseline": -0.6871346933881806,
+              "in_scope_share": 0.9408450704225352,
+              "matched_share": 0.9408450704225352,
+              "rows": 18460,
+              "v9": 197.91559582360364
+            },
+            "LEBL": {
+              "baseline": 95.03392174164772,
+              "candidate": 94.33234207346332,
+              "change_pct_vs_baseline": -0.7382413093417917,
+              "in_scope_share": 0.9524276606179499,
+              "matched_share": 0.9524276606179499,
+              "rows": 12234,
+              "v9": 143.9439490252376
+            },
+            "LEMD": {
+              "baseline": 162.1517332076893,
+              "candidate": 161.16797272546148,
+              "change_pct_vs_baseline": -0.6066913148364383,
+              "in_scope_share": 6.0569351907934585e-05,
+              "matched_share": 6.0569351907934585e-05,
+              "rows": 16510,
+              "v9": 160.816833733706
+            },
+            "LFPG": {
+              "baseline": 800.079954325405,
+              "candidate": 799.6399882526274,
+              "change_pct_vs_baseline": -0.05499026321045264,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 17900,
+              "v9": 800.0118693591279
+            },
+            "LIRF": {
+              "baseline": 407.9919942214698,
+              "candidate": 407.9919942214698,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 11317,
+              "v9": 407.9919942214698
+            },
+            "LSZH": {
+              "baseline": 165.85641261235062,
+              "candidate": 165.2198880401721,
+              "change_pct_vs_baseline": -0.3837805015512119,
+              "in_scope_share": 0.9254237288135593,
+              "matched_share": 0.9254237288135593,
+              "rows": 9735,
+              "v9": 207.37369134724938
+            },
+            "LTFM": {
+              "baseline": 219.97783432735585,
+              "candidate": 219.20067921162166,
+              "change_pct_vs_baseline": -0.35328792017185195,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 21368,
+              "v9": 221.65558108735607
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 31,
+            "days_with_lower_squared_error": 30,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.877325857290348,
+              -0.3004303853190082
+            ]
+          },
+          "ratio_to_baseline": 0.9985078720917538,
+          "ratio_to_v9": 0.9620245930813611,
+          "rmse": 330.81449552247284
+        },
+        "2025-07": {
+          "airports": {
+            "EDDF": {
+              "baseline": 130.99569679195753,
+              "candidate": 130.0871003066255,
+              "change_pct_vs_baseline": -0.6936078875743767,
+              "in_scope_share": 0.917268210368426,
+              "matched_share": 0.917268210368426,
+              "rows": 21334,
+              "v9": 189.91540339894027
+            },
+            "EDDM": {
+              "baseline": 151.55299790075466,
+              "candidate": 150.74661775445537,
+              "change_pct_vs_baseline": -0.5320779908473683,
+              "in_scope_share": 0.37541864139020537,
+              "matched_share": 0.37541864139020537,
+              "rows": 15825,
+              "v9": 177.5540817222785
+            },
+            "EGLL": {
+              "baseline": 284.12484082243543,
+              "candidate": 283.57521141533,
+              "change_pct_vs_baseline": -0.19344644611659634,
+              "in_scope_share": 0.23193843193843194,
+              "matched_share": 0.23193843193843194,
+              "rows": 20790,
+              "v9": 293.0657427796838
+            },
+            "EHAM": {
+              "baseline": 118.0636567377104,
+              "candidate": 117.19726173052133,
+              "change_pct_vs_baseline": -0.7338371782892095,
+              "in_scope_share": 0.9541998310285028,
+              "matched_share": 0.9541998310285028,
+              "rows": 22489,
+              "v9": 167.51876758459142
+            },
+            "LEBL": {
+              "baseline": 230.8527325705319,
+              "candidate": 230.1907879104784,
+              "change_pct_vs_baseline": -0.28673893208140955,
+              "in_scope_share": 0.9340974212034384,
+              "matched_share": 0.9340974212034384,
+              "rows": 16752,
+              "v9": 263.67489462728884
+            },
+            "LEMD": {
+              "baseline": 171.92654401115576,
+              "candidate": 170.77216687374153,
+              "change_pct_vs_baseline": -0.6714362485756298,
+              "in_scope_share": 0.3689021149962802,
+              "matched_share": 0.3689021149962802,
+              "rows": 18818,
+              "v9": 188.73545714678528
+            },
+            "LFPG": {
+              "baseline": 250.88838345012414,
+              "candidate": 250.03838045102924,
+              "change_pct_vs_baseline": -0.3387972720801047,
+              "in_scope_share": 0.0722641857037583,
+              "matched_share": 0.0722641857037583,
+              "rows": 21712,
+              "v9": 255.19361697912296
+            },
+            "LIRF": {
+              "baseline": 652.0209210366305,
+              "candidate": 652.0209210366305,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.9389257773979357,
+              "rows": 15211,
+              "v9": 652.0209210366305
+            },
+            "LSZH": {
+              "baseline": 146.29054446198202,
+              "candidate": 144.5085759861789,
+              "change_pct_vs_baseline": -1.218102292500678,
+              "in_scope_share": 0.9111093489810483,
+              "matched_share": 0.9111093489810483,
+              "rows": 12611,
+              "v9": 194.13163187553394
+            },
+            "LTFM": {
+              "baseline": 278.88436621982663,
+              "candidate": 277.64570674210415,
+              "change_pct_vs_baseline": -0.44414805121995027,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 25171,
+              "v9": 278.8403938951793
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 31,
+            "days_with_lower_squared_error": 31,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.7289945334309351,
+              -0.5367871119722025
+            ]
+          },
+          "ratio_to_baseline": 0.9976898217675203,
+          "ratio_to_v9": 0.9458780454163261,
+          "rmse": 272.5382192835342
+        },
+        "2025-11": {
+          "airports": {
+            "EDDF": {
+              "baseline": 115.67799777448342,
+              "candidate": 114.58275642547088,
+              "change_pct_vs_baseline": -0.9468017860645661,
+              "in_scope_share": 0.9552477651473348,
+              "matched_share": 0.9552477651473348,
+              "rows": 18122,
+              "v9": 181.79874733038181
+            },
+            "EDDM": {
+              "baseline": 77.22710636683635,
+              "candidate": 76.20853451064218,
+              "change_pct_vs_baseline": -1.3189304948910796,
+              "in_scope_share": 0.9750039802579207,
+              "matched_share": 0.9750039802579207,
+              "rows": 12562,
+              "v9": 158.96443116914236
+            },
+            "EGLL": {
+              "baseline": 177.3585928447856,
+              "candidate": 176.3009684480557,
+              "change_pct_vs_baseline": -0.5963197946972087,
+              "in_scope_share": 0.6943829480512794,
+              "matched_share": 0.6943829480512794,
+              "rows": 19423,
+              "v9": 200.46014688647037
+            },
+            "EHAM": {
+              "baseline": 95.57717411074775,
+              "candidate": 94.40933347864838,
+              "change_pct_vs_baseline": -1.2218823615209207,
+              "in_scope_share": 0.9633423460898503,
+              "matched_share": 0.9633423460898503,
+              "rows": 19232,
+              "v9": 157.09662243578427
+            },
+            "LEBL": {
+              "baseline": 117.22213500618282,
+              "candidate": 116.4245834644673,
+              "change_pct_vs_baseline": -0.6803762290061077,
+              "in_scope_share": 0.9655715571557155,
+              "matched_share": 0.9655715571557155,
+              "rows": 13332,
+              "v9": 161.93258057667416
+            },
+            "LEMD": {
+              "baseline": 127.90303792614101,
+              "candidate": 126.75139428763232,
+              "change_pct_vs_baseline": -0.9004036629479573,
+              "in_scope_share": 0.9606177162868133,
+              "matched_share": 0.9606177162868133,
+              "rows": 17419,
+              "v9": 170.98534224434866
+            },
+            "LFPG": {
+              "baseline": 251.23874880190385,
+              "candidate": 249.36238306551448,
+              "change_pct_vs_baseline": -0.746845677801411,
+              "in_scope_share": 0.36452858521935,
+              "matched_share": 0.36452858521935,
+              "rows": 18646,
+              "v9": 264.4432960692415
+            },
+            "LIRF": {
+              "baseline": 451.66040253917885,
+              "candidate": 451.66040253917885,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.655808615819209,
+              "rows": 11328,
+              "v9": 451.66040253917885
+            },
+            "LSZH": {
+              "baseline": 110.75716273522485,
+              "candidate": 109.67203337470627,
+              "change_pct_vs_baseline": -0.979737412660775,
+              "in_scope_share": 0.9412581861480452,
+              "matched_share": 0.9412581861480452,
+              "rows": 10078,
+              "v9": 155.98526270051826
+            },
+            "LTFM": {
+              "baseline": 205.73304978875538,
+              "candidate": 204.24119053787422,
+              "change_pct_vs_baseline": -0.7251432146721193,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 22190,
+              "v9": 207.73278307309056
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 30,
+            "days_with_lower_squared_error": 30,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.1127658204492292,
+              -0.790813651729458
+            ]
+          },
+          "ratio_to_baseline": 0.9951576221984927,
+          "ratio_to_v9": 0.8790076421466267,
+          "rmse": 193.27183957038585
+        }
+      },
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v16_bag_70": {
+      "blend_with": {
+        "name": "ens_v16_bag",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "eligible": false,
+      "feature_set": "nb",
+      "mean_ratio": 0.9971587790992387,
+      "mean_ratio_to_v9": 0.9290271628128122,
+      "months": {
+        "2025-01": {
+          "airports": {
+            "EDDF": {
+              "baseline": 131.32470556440097,
+              "candidate": 131.14759120306422,
+              "change_pct_vs_baseline": -0.1348675107060382,
+              "in_scope_share": 0.8975864739287558,
+              "matched_share": 0.8975864739287558,
+              "rows": 15496,
+              "v9": 177.74599937728885
+            },
+            "EDDM": {
+              "baseline": 91.23856431991915,
+              "candidate": 91.11642395827033,
+              "change_pct_vs_baseline": -0.13386922795117773,
+              "in_scope_share": 0.9492277649565063,
+              "matched_share": 0.9492277649565063,
+              "rows": 11266,
+              "v9": 167.6943979962656
+            },
+            "EGLL": {
+              "baseline": 213.7703350876801,
+              "candidate": 213.39645898557382,
+              "change_pct_vs_baseline": -0.1748961575762764,
+              "in_scope_share": 0.6992790937178167,
+              "matched_share": 0.6992790937178167,
+              "rows": 19420,
+              "v9": 244.0837298466052
+            },
+            "EHAM": {
+              "baseline": 153.4483783748065,
+              "candidate": 152.0485823339484,
+              "change_pct_vs_baseline": -0.9122260239460056,
+              "in_scope_share": 0.9408450704225352,
+              "matched_share": 0.9408450704225352,
+              "rows": 18460,
+              "v9": 197.91559582360364
+            },
+            "LEBL": {
+              "baseline": 95.03392174164772,
+              "candidate": 93.56123227645965,
+              "change_pct_vs_baseline": -1.549646103410962,
+              "in_scope_share": 0.9524276606179499,
+              "matched_share": 0.9524276606179499,
+              "rows": 12234,
+              "v9": 143.9439490252376
+            },
+            "LEMD": {
+              "baseline": 162.1517332076893,
+              "candidate": 161.55018887188734,
+              "change_pct_vs_baseline": -0.37097619859016717,
+              "in_scope_share": 6.0569351907934585e-05,
+              "matched_share": 6.0569351907934585e-05,
+              "rows": 16510,
+              "v9": 160.816833733706
+            },
+            "LFPG": {
+              "baseline": 800.079954325405,
+              "candidate": 799.7667527445519,
+              "change_pct_vs_baseline": -0.0391462852130986,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 17900,
+              "v9": 800.0118693591279
+            },
+            "LIRF": {
+              "baseline": 407.9919942214698,
+              "candidate": 407.9919942214698,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 11317,
+              "v9": 407.9919942214698
+            },
+            "LSZH": {
+              "baseline": 165.85641261235062,
+              "candidate": 166.02798586073752,
+              "change_pct_vs_baseline": 0.1034468584509396,
+              "in_scope_share": 0.9254237288135593,
+              "matched_share": 0.9254237288135593,
+              "rows": 9735,
+              "v9": 207.37369134724938
+            },
+            "LTFM": {
+              "baseline": 219.97783432735585,
+              "candidate": 219.0548274207146,
+              "change_pct_vs_baseline": -0.41959086899078235,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 21368,
+              "v9": 221.65558108735607
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 31,
+            "days_with_lower_squared_error": 28,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.6801809543406684,
+              -0.1679919214036815
+            ]
+          },
+          "ratio_to_baseline": 0.9989428289609359,
+          "ratio_to_v9": 0.9624436575842841,
+          "rmse": 330.9586005829077
+        },
+        "2025-07": {
+          "airports": {
+            "EDDF": {
+              "baseline": 130.99569679195753,
+              "candidate": 129.9554515530728,
+              "change_pct_vs_baseline": -0.7941064205618908,
+              "in_scope_share": 0.917268210368426,
+              "matched_share": 0.917268210368426,
+              "rows": 21334,
+              "v9": 189.91540339894027
+            },
+            "EDDM": {
+              "baseline": 151.55299790075466,
+              "candidate": 151.13898468807923,
+              "change_pct_vs_baseline": -0.2731804836658802,
+              "in_scope_share": 0.37541864139020537,
+              "matched_share": 0.37541864139020537,
+              "rows": 15825,
+              "v9": 177.5540817222785
+            },
+            "EGLL": {
+              "baseline": 284.12484082243543,
+              "candidate": 283.7668126381253,
+              "change_pct_vs_baseline": -0.1260108701772622,
+              "in_scope_share": 0.23193843193843194,
+              "matched_share": 0.23193843193843194,
+              "rows": 20790,
+              "v9": 293.0657427796838
+            },
+            "EHAM": {
+              "baseline": 118.0636567377104,
+              "candidate": 118.26777106442209,
+              "change_pct_vs_baseline": 0.17288497777530054,
+              "in_scope_share": 0.9541998310285028,
+              "matched_share": 0.9541998310285028,
+              "rows": 22489,
+              "v9": 167.51876758459142
+            },
+            "LEBL": {
+              "baseline": 230.8527325705319,
+              "candidate": 230.0722878374241,
+              "change_pct_vs_baseline": -0.3380703899051096,
+              "in_scope_share": 0.9340974212034384,
+              "matched_share": 0.9340974212034384,
+              "rows": 16752,
+              "v9": 263.67489462728884
+            },
+            "LEMD": {
+              "baseline": 171.92654401115576,
+              "candidate": 170.761304227593,
+              "change_pct_vs_baseline": -0.6777544388300805,
+              "in_scope_share": 0.3689021149962802,
+              "matched_share": 0.3689021149962802,
+              "rows": 18818,
+              "v9": 188.73545714678528
+            },
+            "LFPG": {
+              "baseline": 250.88838345012414,
+              "candidate": 250.0790869875555,
+              "change_pct_vs_baseline": -0.32257231340865333,
+              "in_scope_share": 0.0722641857037583,
+              "matched_share": 0.0722641857037583,
+              "rows": 21712,
+              "v9": 255.19361697912296
+            },
+            "LIRF": {
+              "baseline": 652.0209210366305,
+              "candidate": 652.0209210366305,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.9389257773979357,
+              "rows": 15211,
+              "v9": 652.0209210366305
+            },
+            "LSZH": {
+              "baseline": 146.29054446198202,
+              "candidate": 144.95612006748678,
+              "change_pct_vs_baseline": -0.9121740570471659,
+              "in_scope_share": 0.9111093489810483,
+              "matched_share": 0.9111093489810483,
+              "rows": 12611,
+              "v9": 194.13163187553394
+            },
+            "LTFM": {
+              "baseline": 278.88436621982663,
+              "candidate": 277.8417787158075,
+              "change_pct_vs_baseline": -0.37384221932230677,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 25171,
+              "v9": 278.8403938951793
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 31,
+            "days_with_lower_squared_error": 30,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.6415244714690772,
+              -0.3626360566478283
+            ]
+          },
+          "ratio_to_baseline": 0.9981442262687985,
+          "ratio_to_v9": 0.946308851897579,
+          "rmse": 272.6623486380799
+        },
+        "2025-11": {
+          "airports": {
+            "EDDF": {
+              "baseline": 115.67799777448342,
+              "candidate": 114.79992723365802,
+              "change_pct_vs_baseline": -0.7590644355179865,
+              "in_scope_share": 0.9552477651473348,
+              "matched_share": 0.9552477651473348,
+              "rows": 18122,
+              "v9": 181.79874733038181
+            },
+            "EDDM": {
+              "baseline": 77.22710636683635,
+              "candidate": 76.36678355094051,
+              "change_pct_vs_baseline": -1.1140166404904783,
+              "in_scope_share": 0.9750039802579207,
+              "matched_share": 0.9750039802579207,
+              "rows": 12562,
+              "v9": 158.96443116914236
+            },
+            "EGLL": {
+              "baseline": 177.3585928447856,
+              "candidate": 176.4440021201831,
+              "change_pct_vs_baseline": -0.515673196281452,
+              "in_scope_share": 0.6943829480512794,
+              "matched_share": 0.6943829480512794,
+              "rows": 19423,
+              "v9": 200.46014688647037
+            },
+            "EHAM": {
+              "baseline": 95.57717411074775,
+              "candidate": 94.4078607578214,
+              "change_pct_vs_baseline": -1.223423232383325,
+              "in_scope_share": 0.9633423460898503,
+              "matched_share": 0.9633423460898503,
+              "rows": 19232,
+              "v9": 157.09662243578427
+            },
+            "LEBL": {
+              "baseline": 117.22213500618282,
+              "candidate": 116.02100238213721,
+              "change_pct_vs_baseline": -1.0246636644028584,
+              "in_scope_share": 0.9655715571557155,
+              "matched_share": 0.9655715571557155,
+              "rows": 13332,
+              "v9": 161.93258057667416
+            },
+            "LEMD": {
+              "baseline": 127.90303792614101,
+              "candidate": 125.344229711955,
+              "change_pct_vs_baseline": -2.000584392423599,
+              "in_scope_share": 0.9606177162868133,
+              "matched_share": 0.9606177162868133,
+              "rows": 17419,
+              "v9": 170.98534224434866
+            },
+            "LFPG": {
+              "baseline": 251.23874880190385,
+              "candidate": 248.92510790509766,
+              "change_pct_vs_baseline": -0.9208933366526395,
+              "in_scope_share": 0.36452858521935,
+              "matched_share": 0.36452858521935,
+              "rows": 18646,
+              "v9": 264.4432960692415
+            },
+            "LIRF": {
+              "baseline": 451.66040253917885,
+              "candidate": 451.66040253917885,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.655808615819209,
+              "rows": 11328,
+              "v9": 451.66040253917885
+            },
+            "LSZH": {
+              "baseline": 110.75716273522485,
+              "candidate": 110.45307939421983,
+              "change_pct_vs_baseline": -0.274549594351714,
+              "in_scope_share": 0.9412581861480452,
+              "matched_share": 0.9412581861480452,
+              "rows": 10078,
+              "v9": 155.98526270051826
+            },
+            "LTFM": {
+              "baseline": 205.73304978875538,
+              "candidate": 204.0446649914545,
+              "change_pct_vs_baseline": -0.8206677532046958,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 22190,
+              "v9": 207.73278307309056
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 30,
+            "days_with_lower_squared_error": 30,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.3105229553417375,
+              -0.9124092557348256
+            ]
+          },
+          "ratio_to_baseline": 0.9943892820679816,
+          "ratio_to_v9": 0.8783289789565734,
+          "rmse": 193.12261847502654
+        }
+      },
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v16_bag_ap_60": {
+      "blend_with": {
+        "name": "ens_v16_bag_ap",
+        "scope": "all_no_lirf",
+        "weight": 0.6
+      },
+      "eligible": false,
+      "feature_set": "nb",
+      "mean_ratio": 0.9975186057607418,
+      "mean_ratio_to_v9": 0.9293486262623617,
+      "months": {
+        "2025-01": {
+          "airports": {
+            "EDDF": {
+              "baseline": 131.32470556440097,
+              "candidate": 130.14639558047406,
+              "change_pct_vs_baseline": -0.897249286691959,
+              "in_scope_share": 0.8975864739287558,
+              "matched_share": 0.8975864739287558,
+              "rows": 15496,
+              "v9": 177.74599937728885
+            },
+            "EDDM": {
+              "baseline": 91.23856431991915,
+              "candidate": 88.70009102547374,
+              "change_pct_vs_baseline": -2.782237218841477,
+              "in_scope_share": 0.9492277649565063,
+              "matched_share": 0.9492277649565063,
+              "rows": 11266,
+              "v9": 167.6943979962656
+            },
+            "EGLL": {
+              "baseline": 213.7703350876801,
+              "candidate": 212.8709809761573,
+              "change_pct_vs_baseline": -0.42071043728023616,
+              "in_scope_share": 0.6992790937178167,
+              "matched_share": 0.6992790937178167,
+              "rows": 19420,
+              "v9": 244.0837298466052
+            },
+            "EHAM": {
+              "baseline": 153.4483783748065,
+              "candidate": 154.6195823715275,
+              "change_pct_vs_baseline": 0.7632560272877287,
+              "in_scope_share": 0.9408450704225352,
+              "matched_share": 0.9408450704225352,
+              "rows": 18460,
+              "v9": 197.91559582360364
+            },
+            "LEBL": {
+              "baseline": 95.03392174164772,
+              "candidate": 94.02514621584251,
+              "change_pct_vs_baseline": -1.0614899472922823,
+              "in_scope_share": 0.9524276606179499,
+              "matched_share": 0.9524276606179499,
+              "rows": 12234,
+              "v9": 143.9439490252376
+            },
+            "LEMD": {
+              "baseline": 162.1517332076893,
+              "candidate": 160.6709083499586,
+              "change_pct_vs_baseline": -0.9132340607386435,
+              "in_scope_share": 6.0569351907934585e-05,
+              "matched_share": 6.0569351907934585e-05,
+              "rows": 16510,
+              "v9": 160.816833733706
+            },
+            "LFPG": {
+              "baseline": 800.079954325405,
+              "candidate": 799.8009224743803,
+              "change_pct_vs_baseline": -0.03487549581966398,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 17900,
+              "v9": 800.0118693591279
+            },
+            "LIRF": {
+              "baseline": 407.9919942214698,
+              "candidate": 407.9919942214698,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 11317,
+              "v9": 407.9919942214698
+            },
+            "LSZH": {
+              "baseline": 165.85641261235062,
+              "candidate": 167.5686048085167,
+              "change_pct_vs_baseline": 1.0323340347218934,
+              "in_scope_share": 0.9254237288135593,
+              "matched_share": 0.9254237288135593,
+              "rows": 9735,
+              "v9": 207.37369134724938
+            },
+            "LTFM": {
+              "baseline": 219.97783432735585,
+              "candidate": 219.55005342958373,
+              "change_pct_vs_baseline": -0.19446545561291328,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 21368,
+              "v9": 221.65558108735607
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 31,
+            "days_with_lower_squared_error": 25,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.8787716946512575,
+              0.19107533784573696
+            ]
+          },
+          "ratio_to_baseline": 0.9991880177496614,
+          "ratio_to_v9": 0.962679887714556,
+          "rmse": 331.03983379870607
+        },
+        "2025-07": {
+          "airports": {
+            "EDDF": {
+              "baseline": 130.99569679195753,
+              "candidate": 129.82736176169536,
+              "change_pct_vs_baseline": -0.8918880992844214,
+              "in_scope_share": 0.917268210368426,
+              "matched_share": 0.917268210368426,
+              "rows": 21334,
+              "v9": 189.91540339894027
+            },
+            "EDDM": {
+              "baseline": 151.55299790075466,
+              "candidate": 150.61391347095903,
+              "change_pct_vs_baseline": -0.6196409459419572,
+              "in_scope_share": 0.37541864139020537,
+              "matched_share": 0.37541864139020537,
+              "rows": 15825,
+              "v9": 177.5540817222785
+            },
+            "EGLL": {
+              "baseline": 284.12484082243543,
+              "candidate": 283.72245000597525,
+              "change_pct_vs_baseline": -0.14162465178877426,
+              "in_scope_share": 0.23193843193843194,
+              "matched_share": 0.23193843193843194,
+              "rows": 20790,
+              "v9": 293.0657427796838
+            },
+            "EHAM": {
+              "baseline": 118.0636567377104,
+              "candidate": 116.65638313758772,
+              "change_pct_vs_baseline": -1.1919617255707005,
+              "in_scope_share": 0.9541998310285028,
+              "matched_share": 0.9541998310285028,
+              "rows": 22489,
+              "v9": 167.51876758459142
+            },
+            "LEBL": {
+              "baseline": 230.8527325705319,
+              "candidate": 230.05604967055177,
+              "change_pct_vs_baseline": -0.34510438369480534,
+              "in_scope_share": 0.9340974212034384,
+              "matched_share": 0.9340974212034384,
+              "rows": 16752,
+              "v9": 263.67489462728884
+            },
+            "LEMD": {
+              "baseline": 171.92654401115576,
+              "candidate": 170.44555637178794,
+              "change_pct_vs_baseline": -0.861407206133169,
+              "in_scope_share": 0.3689021149962802,
+              "matched_share": 0.3689021149962802,
+              "rows": 18818,
+              "v9": 188.73545714678528
+            },
+            "LFPG": {
+              "baseline": 250.88838345012414,
+              "candidate": 251.03215886271477,
+              "change_pct_vs_baseline": 0.05730652436493067,
+              "in_scope_share": 0.0722641857037583,
+              "matched_share": 0.0722641857037583,
+              "rows": 21712,
+              "v9": 255.19361697912296
+            },
+            "LIRF": {
+              "baseline": 652.0209210366305,
+              "candidate": 652.0209210366305,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.9389257773979357,
+              "rows": 15211,
+              "v9": 652.0209210366305
+            },
+            "LSZH": {
+              "baseline": 146.29054446198202,
+              "candidate": 143.04559915533613,
+              "change_pct_vs_baseline": -2.218151090065279,
+              "in_scope_share": 0.9111093489810483,
+              "matched_share": 0.9111093489810483,
+              "rows": 12611,
+              "v9": 194.13163187553394
+            },
+            "LTFM": {
+              "baseline": 278.88436621982663,
+              "candidate": 278.3515041852132,
+              "change_pct_vs_baseline": -0.1910691667074027,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 25171,
+              "v9": 278.8403938951793
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 31,
+            "days_with_lower_squared_error": 26,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.7953845329438807,
+              -0.3045152446868301
+            ]
+          },
+          "ratio_to_baseline": 0.9980090597539801,
+          "ratio_to_v9": 0.9461807048161387,
+          "rmse": 272.62542529732644
+        },
+        "2025-11": {
+          "airports": {
+            "EDDF": {
+              "baseline": 115.67799777448342,
+              "candidate": 113.89094213224693,
+              "change_pct_vs_baseline": -1.544853538803792,
+              "in_scope_share": 0.9552477651473348,
+              "matched_share": 0.9552477651473348,
+              "rows": 18122,
+              "v9": 181.79874733038181
+            },
+            "EDDM": {
+              "baseline": 77.22710636683635,
+              "candidate": 75.75756510338014,
+              "change_pct_vs_baseline": -1.9028827216129862,
+              "in_scope_share": 0.9750039802579207,
+              "matched_share": 0.9750039802579207,
+              "rows": 12562,
+              "v9": 158.96443116914236
+            },
+            "EGLL": {
+              "baseline": 177.3585928447856,
+              "candidate": 176.44167764757992,
+              "change_pct_vs_baseline": -0.5169838024189244,
+              "in_scope_share": 0.6943829480512794,
+              "matched_share": 0.6943829480512794,
+              "rows": 19423,
+              "v9": 200.46014688647037
+            },
+            "EHAM": {
+              "baseline": 95.57717411074775,
+              "candidate": 92.96785386985857,
+              "change_pct_vs_baseline": -2.7300663209247955,
+              "in_scope_share": 0.9633423460898503,
+              "matched_share": 0.9633423460898503,
+              "rows": 19232,
+              "v9": 157.09662243578427
+            },
+            "LEBL": {
+              "baseline": 117.22213500618282,
+              "candidate": 116.50843192308379,
+              "change_pct_vs_baseline": -0.6088466850236007,
+              "in_scope_share": 0.9655715571557155,
+              "matched_share": 0.9655715571557155,
+              "rows": 13332,
+              "v9": 161.93258057667416
+            },
+            "LEMD": {
+              "baseline": 127.90303792614101,
+              "candidate": 126.30815598053218,
+              "change_pct_vs_baseline": -1.2469461018821293,
+              "in_scope_share": 0.9606177162868133,
+              "matched_share": 0.9606177162868133,
+              "rows": 17419,
+              "v9": 170.98534224434866
+            },
+            "LFPG": {
+              "baseline": 251.23874880190385,
+              "candidate": 250.50458559051242,
+              "change_pct_vs_baseline": -0.29221734899272933,
+              "in_scope_share": 0.36452858521935,
+              "matched_share": 0.36452858521935,
+              "rows": 18646,
+              "v9": 264.4432960692415
+            },
+            "LIRF": {
+              "baseline": 451.66040253917885,
+              "candidate": 451.66040253917885,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.655808615819209,
+              "rows": 11328,
+              "v9": 451.66040253917885
+            },
+            "LSZH": {
+              "baseline": 110.75716273522485,
+              "candidate": 109.21706771136668,
+              "change_pct_vs_baseline": -1.3905150563850333,
+              "in_scope_share": 0.9412581861480452,
+              "matched_share": 0.9412581861480452,
+              "rows": 10078,
+              "v9": 155.98526270051826
+            },
+            "LTFM": {
+              "baseline": 205.73304978875538,
+              "candidate": 204.51220077819843,
+              "change_pct_vs_baseline": -0.5934141411943816,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 22190,
+              "v9": 207.73278307309056
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 30,
+            "days_with_lower_squared_error": 29,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.2549756869846973,
+              -0.5144757886310508
+            ]
+          },
+          "ratio_to_baseline": 0.9953587397785835,
+          "ratio_to_v9": 0.8791852862563903,
+          "rmse": 193.3108990759426
+        }
+      },
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v16_bag_ap_70": {
+      "blend_with": {
+        "name": "ens_v16_bag_ap",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "eligible": false,
+      "feature_set": "nb",
+      "mean_ratio": 0.9974269928720557,
+      "mean_ratio_to_v9": 0.9292867341332967,
+      "months": {
+        "2025-01": {
+          "airports": {
+            "EDDF": {
+              "baseline": 131.32470556440097,
+              "candidate": 130.94327413374356,
+              "change_pct_vs_baseline": -0.2904491040114032,
+              "in_scope_share": 0.8975864739287558,
+              "matched_share": 0.8975864739287558,
+              "rows": 15496,
+              "v9": 177.74599937728885
+            },
+            "EDDM": {
+              "baseline": 91.23856431991915,
+              "candidate": 89.40232819358413,
+              "change_pct_vs_baseline": -2.0125657829253463,
+              "in_scope_share": 0.9492277649565063,
+              "matched_share": 0.9492277649565063,
+              "rows": 11266,
+              "v9": 167.6943979962656
+            },
+            "EGLL": {
+              "baseline": 213.7703350876801,
+              "candidate": 213.6195373352417,
+              "change_pct_vs_baseline": -0.07054194510972556,
+              "in_scope_share": 0.6992790937178167,
+              "matched_share": 0.6992790937178167,
+              "rows": 19420,
+              "v9": 244.0837298466052
+            },
+            "EHAM": {
+              "baseline": 153.4483783748065,
+              "candidate": 154.45769689664903,
+              "change_pct_vs_baseline": 0.6577576984079903,
+              "in_scope_share": 0.9408450704225352,
+              "matched_share": 0.9408450704225352,
+              "rows": 18460,
+              "v9": 197.91559582360364
+            },
+            "LEBL": {
+              "baseline": 95.03392174164772,
+              "candidate": 93.16126943481505,
+              "change_pct_vs_baseline": -1.97050934288866,
+              "in_scope_share": 0.9524276606179499,
+              "matched_share": 0.9524276606179499,
+              "rows": 12234,
+              "v9": 143.9439490252376
+            },
+            "LEMD": {
+              "baseline": 162.1517332076893,
+              "candidate": 160.901462534431,
+              "change_pct_vs_baseline": -0.7710498361783724,
+              "in_scope_share": 6.0569351907934585e-05,
+              "matched_share": 6.0569351907934585e-05,
+              "rows": 16510,
+              "v9": 160.816833733706
+            },
+            "LFPG": {
+              "baseline": 800.079954325405,
+              "candidate": 799.9075653262663,
+              "change_pct_vs_baseline": -0.021546471475342166,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 17900,
+              "v9": 800.0118693591279
+            },
+            "LIRF": {
+              "baseline": 407.9919942214698,
+              "candidate": 407.9919942214698,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 11317,
+              "v9": 407.9919942214698
+            },
+            "LSZH": {
+              "baseline": 165.85641261235062,
+              "candidate": 168.66951737450975,
+              "change_pct_vs_baseline": 1.6961085301742784,
+              "in_scope_share": 0.9254237288135593,
+              "matched_share": 0.9254237288135593,
+              "rows": 9735,
+              "v9": 207.37369134724938
+            },
+            "LTFM": {
+              "baseline": 219.97783432735585,
+              "candidate": 219.436944375605,
+              "change_pct_vs_baseline": -0.24588384252657303,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 21368,
+              "v9": 221.65558108735607
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 31,
+            "days_with_lower_squared_error": 24,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.7834737772359027,
+              0.4459784075156266
+            ]
+          },
+          "ratio_to_baseline": 0.9996254417059598,
+          "ratio_to_v9": 0.9631013291626644,
+          "rmse": 331.1847562269381
+        },
+        "2025-07": {
+          "airports": {
+            "EDDF": {
+              "baseline": 130.99569679195753,
+              "candidate": 129.58847926613018,
+              "change_pct_vs_baseline": -1.074247139631035,
+              "in_scope_share": 0.917268210368426,
+              "matched_share": 0.917268210368426,
+              "rows": 21334,
+              "v9": 189.91540339894027
+            },
+            "EDDM": {
+              "baseline": 151.55299790075466,
+              "candidate": 150.8811871700339,
+              "change_pct_vs_baseline": -0.44328435598528504,
+              "in_scope_share": 0.37541864139020537,
+              "matched_share": 0.37541864139020537,
+              "rows": 15825,
+              "v9": 177.5540817222785
+            },
+            "EGLL": {
+              "baseline": 284.12484082243543,
+              "candidate": 283.8775986105681,
+              "change_pct_vs_baseline": -0.0870188650705983,
+              "in_scope_share": 0.23193843193843194,
+              "matched_share": 0.23193843193843194,
+              "rows": 20790,
+              "v9": 293.0657427796838
+            },
+            "EHAM": {
+              "baseline": 118.0636567377104,
+              "candidate": 117.58609959569901,
+              "change_pct_vs_baseline": -0.40449123397247044,
+              "in_scope_share": 0.9541998310285028,
+              "matched_share": 0.9541998310285028,
+              "rows": 22489,
+              "v9": 167.51876758459142
+            },
+            "LEBL": {
+              "baseline": 230.8527325705319,
+              "candidate": 229.86549686871558,
+              "change_pct_vs_baseline": -0.42764739703252674,
+              "in_scope_share": 0.9340974212034384,
+              "matched_share": 0.9340974212034384,
+              "rows": 16752,
+              "v9": 263.67489462728884
+            },
+            "LEMD": {
+              "baseline": 171.92654401115576,
+              "candidate": 170.31891843959937,
+              "change_pct_vs_baseline": -0.9350653680632703,
+              "in_scope_share": 0.3689021149962802,
+              "matched_share": 0.3689021149962802,
+              "rows": 18818,
+              "v9": 188.73545714678528
+            },
+            "LFPG": {
+              "baseline": 250.88838345012414,
+              "candidate": 251.16836381159976,
+              "change_pct_vs_baseline": 0.11159558590374541,
+              "in_scope_share": 0.0722641857037583,
+              "matched_share": 0.0722641857037583,
+              "rows": 21712,
+              "v9": 255.19361697912296
+            },
+            "LIRF": {
+              "baseline": 652.0209210366305,
+              "candidate": 652.0209210366305,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.9389257773979357,
+              "rows": 15211,
+              "v9": 652.0209210366305
+            },
+            "LSZH": {
+              "baseline": 146.29054446198202,
+              "candidate": 142.9800072098701,
+              "change_pct_vs_baseline": -2.2629878535808223,
+              "in_scope_share": 0.9111093489810483,
+              "matched_share": 0.9111093489810483,
+              "rows": 12611,
+              "v9": 194.13163187553394
+            },
+            "LTFM": {
+              "baseline": 278.88436621982663,
+              "candidate": 278.6370843123493,
+              "change_pct_vs_baseline": -0.08866825732439798,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 25171,
+              "v9": 278.8403938951793
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 31,
+            "days_with_lower_squared_error": 24,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.7405396131237196,
+              -0.1586527170849758
+            ]
+          },
+          "ratio_to_baseline": 0.9983488526350954,
+          "ratio_to_v9": 0.9465028516589984,
+          "rmse": 272.71824627707775
+        },
+        "2025-11": {
+          "airports": {
+            "EDDF": {
+              "baseline": 115.67799777448342,
+              "candidate": 113.95284874000357,
+              "change_pct_vs_baseline": -1.4913372185461404,
+              "in_scope_share": 0.9552477651473348,
+              "matched_share": 0.9552477651473348,
+              "rows": 18122,
+              "v9": 181.79874733038181
+            },
+            "EDDM": {
+              "baseline": 77.22710636683635,
+              "candidate": 75.77485654973785,
+              "change_pct_vs_baseline": -1.8804923367194082,
+              "in_scope_share": 0.9750039802579207,
+              "matched_share": 0.9750039802579207,
+              "rows": 12562,
+              "v9": 158.96443116914236
+            },
+            "EGLL": {
+              "baseline": 177.3585928447856,
+              "candidate": 176.5872309754659,
+              "change_pct_vs_baseline": -0.43491654785214884,
+              "in_scope_share": 0.6943829480512794,
+              "matched_share": 0.6943829480512794,
+              "rows": 19423,
+              "v9": 200.46014688647037
+            },
+            "EHAM": {
+              "baseline": 95.57717411074775,
+              "candidate": 92.63909659459522,
+              "change_pct_vs_baseline": -3.0740368121243145,
+              "in_scope_share": 0.9633423460898503,
+              "matched_share": 0.9633423460898503,
+              "rows": 19232,
+              "v9": 157.09662243578427
+            },
+            "LEBL": {
+              "baseline": 117.22213500618282,
+              "candidate": 116.0918760408544,
+              "change_pct_vs_baseline": -0.9642026783327262,
+              "in_scope_share": 0.9655715571557155,
+              "matched_share": 0.9655715571557155,
+              "rows": 13332,
+              "v9": 161.93258057667416
+            },
+            "LEMD": {
+              "baseline": 127.90303792614101,
+              "candidate": 124.8740061118589,
+              "change_pct_vs_baseline": -2.368225073771313,
+              "in_scope_share": 0.9606177162868133,
+              "matched_share": 0.9606177162868133,
+              "rows": 17419,
+              "v9": 170.98534224434866
+            },
+            "LFPG": {
+              "baseline": 251.23874880190385,
+              "candidate": 249.94893846981557,
+              "change_pct_vs_baseline": -0.5133803357320721,
+              "in_scope_share": 0.36452858521935,
+              "matched_share": 0.36452858521935,
+              "rows": 18646,
+              "v9": 264.4432960692415
+            },
+            "LIRF": {
+              "baseline": 451.66040253917885,
+              "candidate": 451.66040253917885,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.655808615819209,
+              "rows": 11328,
+              "v9": 451.66040253917885
+            },
+            "LSZH": {
+              "baseline": 110.75716273522485,
+              "candidate": 109.83700127291873,
+              "change_pct_vs_baseline": -0.8307918328549602,
+              "in_scope_share": 0.9412581861480452,
+              "matched_share": 0.9412581861480452,
+              "rows": 10078,
+              "v9": 155.98526270051826
+            },
+            "LTFM": {
+              "baseline": 205.73304978875538,
+              "candidate": 204.3417204296123,
+              "change_pct_vs_baseline": -0.6762789744145015,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 22190,
+              "v9": 207.73278307309056
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 30,
+            "days_with_lower_squared_error": 29,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.409103057079315,
+              -0.822823145086504
+            ]
+          },
+          "ratio_to_baseline": 0.994306684275112,
+          "ratio_to_v9": 0.8782560215782271,
+          "rmse": 193.10657696861966
+        }
+      },
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v16_v15_ap_60": {
+      "blend_with": {
+        "name": "ens_v16_v15_ap",
+        "scope": "all_no_lirf",
+        "weight": 0.6
+      },
+      "eligible": false,
+      "feature_set": "nb",
+      "mean_ratio": 0.9990358795004762,
+      "mean_ratio_to_v9": 0.9307466383046609,
+      "months": {
+        "2025-01": {
+          "airports": {
+            "EDDF": {
+              "baseline": 131.32470556440097,
+              "candidate": 130.67108219814133,
+              "change_pct_vs_baseline": -0.4977154629439484,
+              "in_scope_share": 0.8975864739287558,
+              "matched_share": 0.8975864739287558,
+              "rows": 15496,
+              "v9": 177.74599937728885
+            },
+            "EDDM": {
+              "baseline": 91.23856431991915,
+              "candidate": 88.64757119307038,
+              "change_pct_vs_baseline": -2.8398004135221866,
+              "in_scope_share": 0.9492277649565063,
+              "matched_share": 0.9492277649565063,
+              "rows": 11266,
+              "v9": 167.6943979962656
+            },
+            "EGLL": {
+              "baseline": 213.7703350876801,
+              "candidate": 213.47283928827633,
+              "change_pct_vs_baseline": -0.13916608180538637,
+              "in_scope_share": 0.6992790937178167,
+              "matched_share": 0.6992790937178167,
+              "rows": 19420,
+              "v9": 244.0837298466052
+            },
+            "EHAM": {
+              "baseline": 153.4483783748065,
+              "candidate": 156.59306238514836,
+              "change_pct_vs_baseline": 2.0493432668677425,
+              "in_scope_share": 0.9408450704225352,
+              "matched_share": 0.9408450704225352,
+              "rows": 18460,
+              "v9": 197.91559582360364
+            },
+            "LEBL": {
+              "baseline": 95.03392174164772,
+              "candidate": 94.16616619705407,
+              "change_pct_vs_baseline": -0.9131008472455404,
+              "in_scope_share": 0.9524276606179499,
+              "matched_share": 0.9524276606179499,
+              "rows": 12234,
+              "v9": 143.9439490252376
+            },
+            "LEMD": {
+              "baseline": 162.1517332076893,
+              "candidate": 160.8172799988837,
+              "change_pct_vs_baseline": -0.8229657385754763,
+              "in_scope_share": 6.0569351907934585e-05,
+              "matched_share": 6.0569351907934585e-05,
+              "rows": 16510,
+              "v9": 160.816833733706
+            },
+            "LFPG": {
+              "baseline": 800.079954325405,
+              "candidate": 800.0985322929648,
+              "change_pct_vs_baseline": 0.002322013876154827,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 17900,
+              "v9": 800.0118693591279
+            },
+            "LIRF": {
+              "baseline": 407.9919942214698,
+              "candidate": 407.9919942214698,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 11317,
+              "v9": 407.9919942214698
+            },
+            "LSZH": {
+              "baseline": 165.85641261235062,
+              "candidate": 169.71005414440782,
+              "change_pct_vs_baseline": 2.3234805765780964,
+              "in_scope_share": 0.9254237288135593,
+              "matched_share": 0.9254237288135593,
+              "rows": 9735,
+              "v9": 207.37369134724938
+            },
+            "LTFM": {
+              "baseline": 219.97783432735585,
+              "candidate": 220.01721496222862,
+              "change_pct_vs_baseline": 0.01790209226906203,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 21368,
+              "v9": 221.65558108735607
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 31,
+            "days_with_lower_squared_error": 22,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.589181350973972,
+              0.8954150389928883
+            ]
+          },
+          "ratio_to_baseline": 1.0003553369941423,
+          "ratio_to_v9": 0.9638045556841889,
+          "rmse": 331.42657699600073
+        },
+        "2025-07": {
+          "airports": {
+            "EDDF": {
+              "baseline": 130.99569679195753,
+              "candidate": 130.23914731253393,
+              "change_pct_vs_baseline": -0.5775376580691161,
+              "in_scope_share": 0.917268210368426,
+              "matched_share": 0.917268210368426,
+              "rows": 21334,
+              "v9": 189.91540339894027
+            },
+            "EDDM": {
+              "baseline": 151.55299790075466,
+              "candidate": 151.01279621025603,
+              "change_pct_vs_baseline": -0.3564440809362246,
+              "in_scope_share": 0.37541864139020537,
+              "matched_share": 0.37541864139020537,
+              "rows": 15825,
+              "v9": 177.5540817222785
+            },
+            "EGLL": {
+              "baseline": 284.12484082243543,
+              "candidate": 284.1762872840156,
+              "change_pct_vs_baseline": 0.018106991782640414,
+              "in_scope_share": 0.23193843193843194,
+              "matched_share": 0.23193843193843194,
+              "rows": 20790,
+              "v9": 293.0657427796838
+            },
+            "EHAM": {
+              "baseline": 118.0636567377104,
+              "candidate": 116.77083811048823,
+              "change_pct_vs_baseline": -1.095018283309901,
+              "in_scope_share": 0.9541998310285028,
+              "matched_share": 0.9541998310285028,
+              "rows": 22489,
+              "v9": 167.51876758459142
+            },
+            "LEBL": {
+              "baseline": 230.8527325705319,
+              "candidate": 230.29104977071736,
+              "change_pct_vs_baseline": -0.24330784113327786,
+              "in_scope_share": 0.9340974212034384,
+              "matched_share": 0.9340974212034384,
+              "rows": 16752,
+              "v9": 263.67489462728884
+            },
+            "LEMD": {
+              "baseline": 171.92654401115576,
+              "candidate": 170.78257047338442,
+              "change_pct_vs_baseline": -0.6653850598527189,
+              "in_scope_share": 0.3689021149962802,
+              "matched_share": 0.3689021149962802,
+              "rows": 18818,
+              "v9": 188.73545714678528
+            },
+            "LFPG": {
+              "baseline": 250.88838345012414,
+              "candidate": 252.04949575399013,
+              "change_pct_vs_baseline": 0.4628003448780005,
+              "in_scope_share": 0.0722641857037583,
+              "matched_share": 0.0722641857037583,
+              "rows": 21712,
+              "v9": 255.19361697912296
+            },
+            "LIRF": {
+              "baseline": 652.0209210366305,
+              "candidate": 652.0209210366305,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.9389257773979357,
+              "rows": 15211,
+              "v9": 652.0209210366305
+            },
+            "LSZH": {
+              "baseline": 146.29054446198202,
+              "candidate": 142.8885490203459,
+              "change_pct_vs_baseline": -2.3255060360515944,
+              "in_scope_share": 0.9111093489810483,
+              "matched_share": 0.9111093489810483,
+              "rows": 12611,
+              "v9": 194.13163187553394
+            },
+            "LTFM": {
+              "baseline": 278.88436621982663,
+              "candidate": 279.0913348450435,
+              "change_pct_vs_baseline": 0.07421306114152593,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 25171,
+              "v9": 278.8403938951793
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 31,
+            "days_with_lower_squared_error": 21,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.5591350640014212,
+              0.15025017476113853
+            ]
+          },
+          "ratio_to_baseline": 0.9992422283575109,
+          "ratio_to_v9": 0.9473498328185773,
+          "rmse": 272.9622890880056
+        },
+        "2025-11": {
+          "airports": {
+            "EDDF": {
+              "baseline": 115.67799777448342,
+              "candidate": 113.9561076447542,
+              "change_pct_vs_baseline": -1.4885199976283126,
+              "in_scope_share": 0.9552477651473348,
+              "matched_share": 0.9552477651473348,
+              "rows": 18122,
+              "v9": 181.79874733038181
+            },
+            "EDDM": {
+              "baseline": 77.22710636683635,
+              "candidate": 75.89463691408547,
+              "change_pct_vs_baseline": -1.7253908833791187,
+              "in_scope_share": 0.9750039802579207,
+              "matched_share": 0.9750039802579207,
+              "rows": 12562,
+              "v9": 158.96443116914236
+            },
+            "EGLL": {
+              "baseline": 177.3585928447856,
+              "candidate": 176.94339173817792,
+              "change_pct_vs_baseline": -0.2341026165960991,
+              "in_scope_share": 0.6943829480512794,
+              "matched_share": 0.6943829480512794,
+              "rows": 19423,
+              "v9": 200.46014688647037
+            },
+            "EHAM": {
+              "baseline": 95.57717411074775,
+              "candidate": 92.73644328869668,
+              "change_pct_vs_baseline": -2.9721854077412235,
+              "in_scope_share": 0.9633423460898503,
+              "matched_share": 0.9633423460898503,
+              "rows": 19232,
+              "v9": 157.09662243578427
+            },
+            "LEBL": {
+              "baseline": 117.22213500618282,
+              "candidate": 116.90614337319747,
+              "change_pct_vs_baseline": -0.26956652254174207,
+              "in_scope_share": 0.9655715571557155,
+              "matched_share": 0.9655715571557155,
+              "rows": 13332,
+              "v9": 161.93258057667416
+            },
+            "LEMD": {
+              "baseline": 127.90303792614101,
+              "candidate": 126.56582674958163,
+              "change_pct_vs_baseline": -1.0454882059420356,
+              "in_scope_share": 0.9606177162868133,
+              "matched_share": 0.9606177162868133,
+              "rows": 17419,
+              "v9": 170.98534224434866
+            },
+            "LFPG": {
+              "baseline": 251.23874880190385,
+              "candidate": 252.0255182437124,
+              "change_pct_vs_baseline": 0.31315608979922693,
+              "in_scope_share": 0.36452858521935,
+              "matched_share": 0.36452858521935,
+              "rows": 18646,
+              "v9": 264.4432960692415
+            },
+            "LIRF": {
+              "baseline": 451.66040253917885,
+              "candidate": 451.66040253917885,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.655808615819209,
+              "rows": 11328,
+              "v9": 451.66040253917885
+            },
+            "LSZH": {
+              "baseline": 110.75716273522485,
+              "candidate": 109.72271658841254,
+              "change_pct_vs_baseline": -0.9339767481090666,
+              "in_scope_share": 0.9412581861480452,
+              "matched_share": 0.9412581861480452,
+              "rows": 10078,
+              "v9": 155.98526270051826
+            },
+            "LTFM": {
+              "baseline": 205.73304978875538,
+              "candidate": 205.10231638081345,
+              "change_pct_vs_baseline": -0.3065785534164589,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 22190,
+              "v9": 207.73278307309056
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 30,
+            "days_with_lower_squared_error": 28,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.9799697582615821,
+              0.17480609961281413
+            ]
+          },
+          "ratio_to_baseline": 0.9975100731497757,
+          "ratio_to_v9": 0.8810855264112165,
+          "rmse": 193.72871445403408
+        }
+      },
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v16_v15_ap_70": {
+      "blend_with": {
+        "name": "ens_v16_v15_ap",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "eligible": false,
+      "feature_set": "nb",
+      "mean_ratio": 0.9992994450676272,
+      "mean_ratio_to_v9": 0.9310124105395218,
+      "months": {
+        "2025-01": {
+          "airports": {
+            "EDDF": {
+              "baseline": 131.32470556440097,
+              "candidate": 131.69001568050038,
+              "change_pct_vs_baseline": 0.27817318495357846,
+              "in_scope_share": 0.8975864739287558,
+              "matched_share": 0.8975864739287558,
+              "rows": 15496,
+              "v9": 177.74599937728885
+            },
+            "EDDM": {
+              "baseline": 91.23856431991915,
+              "candidate": 89.50028837070573,
+              "change_pct_vs_baseline": -1.9051987086494693,
+              "in_scope_share": 0.9492277649565063,
+              "matched_share": 0.9492277649565063,
+              "rows": 11266,
+              "v9": 167.6943979962656
+            },
+            "EGLL": {
+              "baseline": 213.7703350876801,
+              "candidate": 214.37290553338534,
+              "change_pct_vs_baseline": 0.281877485694193,
+              "in_scope_share": 0.6992790937178167,
+              "matched_share": 0.6992790937178167,
+              "rows": 19420,
+              "v9": 244.0837298466052
+            },
+            "EHAM": {
+              "baseline": 153.4483783748065,
+              "candidate": 156.8393970634703,
+              "change_pct_vs_baseline": 2.2098758713376743,
+              "in_scope_share": 0.9408450704225352,
+              "matched_share": 0.9408450704225352,
+              "rows": 18460,
+              "v9": 197.91559582360364
+            },
+            "LEBL": {
+              "baseline": 95.03392174164772,
+              "candidate": 93.3598237270144,
+              "change_pct_vs_baseline": -1.7615794275904983,
+              "in_scope_share": 0.9524276606179499,
+              "matched_share": 0.9524276606179499,
+              "rows": 12234,
+              "v9": 143.9439490252376
+            },
+            "LEMD": {
+              "baseline": 162.1517332076893,
+              "candidate": 161.09092038289307,
+              "change_pct_vs_baseline": -0.6542099821020719,
+              "in_scope_share": 6.0569351907934585e-05,
+              "matched_share": 6.0569351907934585e-05,
+              "rows": 16510,
+              "v9": 160.816833733706
+            },
+            "LFPG": {
+              "baseline": 800.079954325405,
+              "candidate": 800.2634459660267,
+              "change_pct_vs_baseline": 0.0229341629708113,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 17900,
+              "v9": 800.0118693591279
+            },
+            "LIRF": {
+              "baseline": 407.9919942214698,
+              "candidate": 407.9919942214698,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 11317,
+              "v9": 407.9919942214698
+            },
+            "LSZH": {
+              "baseline": 165.85641261235062,
+              "candidate": 171.32205704662397,
+              "change_pct_vs_baseline": 3.295407363626013,
+              "in_scope_share": 0.9254237288135593,
+              "matched_share": 0.9254237288135593,
+              "rows": 9735,
+              "v9": 207.37369134724938
+            },
+            "LTFM": {
+              "baseline": 219.97783432735585,
+              "candidate": 220.00957338930053,
+              "change_pct_vs_baseline": 0.014428300033841879,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 21368,
+              "v9": 221.65558108735607
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 31,
+            "days_with_lower_squared_error": 20,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.4447924913019463,
+              1.340644435598638
+            ]
+          },
+          "ratio_to_baseline": 1.001076925681729,
+          "ratio_to_v9": 0.9644997791100127,
+          "rmse": 331.6656457147667
+        },
+        "2025-07": {
+          "airports": {
+            "EDDF": {
+              "baseline": 130.99569679195753,
+              "candidate": 130.1235661846536,
+              "change_pct_vs_baseline": -0.6657704250308316,
+              "in_scope_share": 0.917268210368426,
+              "matched_share": 0.917268210368426,
+              "rows": 21334,
+              "v9": 189.91540339894027
+            },
+            "EDDM": {
+              "baseline": 151.55299790075466,
+              "candidate": 151.3719717277612,
+              "change_pct_vs_baseline": -0.1194474378606536,
+              "in_scope_share": 0.37541864139020537,
+              "matched_share": 0.37541864139020537,
+              "rows": 15825,
+              "v9": 177.5540817222785
+            },
+            "EGLL": {
+              "baseline": 284.12484082243543,
+              "candidate": 284.451870555582,
+              "change_pct_vs_baseline": 0.1151007184728936,
+              "in_scope_share": 0.23193843193843194,
+              "matched_share": 0.23193843193843194,
+              "rows": 20790,
+              "v9": 293.0657427796838
+            },
+            "EHAM": {
+              "baseline": 118.0636567377104,
+              "candidate": 117.74992674614496,
+              "change_pct_vs_baseline": -0.26572952272893025,
+              "in_scope_share": 0.9541998310285028,
+              "matched_share": 0.9541998310285028,
+              "rows": 22489,
+              "v9": 167.51876758459142
+            },
+            "LEBL": {
+              "baseline": 230.8527325705319,
+              "candidate": 230.16481529564825,
+              "change_pct_vs_baseline": -0.2979896608646282,
+              "in_scope_share": 0.9340974212034384,
+              "matched_share": 0.9340974212034384,
+              "rows": 16752,
+              "v9": 263.67489462728884
+            },
+            "LEMD": {
+              "baseline": 171.92654401115576,
+              "candidate": 170.7597377590758,
+              "change_pct_vs_baseline": -0.6786655654546614,
+              "in_scope_share": 0.3689021149962802,
+              "matched_share": 0.3689021149962802,
+              "rows": 18818,
+              "v9": 188.73545714678528
+            },
+            "LFPG": {
+              "baseline": 250.88838345012414,
+              "candidate": 252.40158756519693,
+              "change_pct_vs_baseline": 0.6031383734327544,
+              "in_scope_share": 0.0722641857037583,
+              "matched_share": 0.0722641857037583,
+              "rows": 21712,
+              "v9": 255.19361697912296
+            },
+            "LIRF": {
+              "baseline": 652.0209210366305,
+              "candidate": 652.0209210366305,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.9389257773979357,
+              "rows": 15211,
+              "v9": 652.0209210366305
+            },
+            "LSZH": {
+              "baseline": 146.29054446198202,
+              "candidate": 142.75933291825106,
+              "change_pct_vs_baseline": -2.413834439346596,
+              "in_scope_share": 0.9111093489810483,
+              "matched_share": 0.9111093489810483,
+              "rows": 12611,
+              "v9": 194.13163187553394
+            },
+            "LTFM": {
+              "baseline": 278.88436621982663,
+              "candidate": 279.5364612429831,
+              "change_pct_vs_baseline": 0.23382272444860686,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 25171,
+              "v9": 278.8403938951793
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 31,
+            "days_with_lower_squared_error": 21,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.4453309681730545,
+              0.40141632852763803
+            ]
+          },
+          "ratio_to_baseline": 0.9998758970248527,
+          "ratio_to_v9": 0.9479505939644062,
+          "rmse": 273.1353879073432
+        },
+        "2025-11": {
+          "airports": {
+            "EDDF": {
+              "baseline": 115.67799777448342,
+              "candidate": 114.06774473950375,
+              "change_pct_vs_baseline": -1.3920132315212497,
+              "in_scope_share": 0.9552477651473348,
+              "matched_share": 0.9552477651473348,
+              "rows": 18122,
+              "v9": 181.79874733038181
+            },
+            "EDDM": {
+              "baseline": 77.22710636683635,
+              "candidate": 75.9651923623854,
+              "change_pct_vs_baseline": -1.6340298941886267,
+              "in_scope_share": 0.9750039802579207,
+              "matched_share": 0.9750039802579207,
+              "rows": 12562,
+              "v9": 158.96443116914236
+            },
+            "EGLL": {
+              "baseline": 177.3585928447856,
+              "candidate": 177.22087564708573,
+              "change_pct_vs_baseline": -0.07764901349909259,
+              "in_scope_share": 0.6943829480512794,
+              "matched_share": 0.6943829480512794,
+              "rows": 19423,
+              "v9": 200.46014688647037
+            },
+            "EHAM": {
+              "baseline": 95.57717411074775,
+              "candidate": 92.38890455359254,
+              "change_pct_vs_baseline": -3.335806469294522,
+              "in_scope_share": 0.9633423460898503,
+              "matched_share": 0.9633423460898503,
+              "rows": 19232,
+              "v9": 157.09662243578427
+            },
+            "LEBL": {
+              "baseline": 117.22213500618282,
+              "candidate": 116.60123923253002,
+              "change_pct_vs_baseline": -0.5296745137938763,
+              "in_scope_share": 0.9655715571557155,
+              "matched_share": 0.9655715571557155,
+              "rows": 13332,
+              "v9": 161.93258057667416
+            },
+            "LEMD": {
+              "baseline": 127.90303792614101,
+              "candidate": 125.25822557786005,
+              "change_pct_vs_baseline": -2.067826058837041,
+              "in_scope_share": 0.9606177162868133,
+              "matched_share": 0.9606177162868133,
+              "rows": 17419,
+              "v9": 170.98534224434866
+            },
+            "LFPG": {
+              "baseline": 251.23874880190385,
+              "candidate": 251.71337431180854,
+              "change_pct_vs_baseline": 0.18891413532668988,
+              "in_scope_share": 0.36452858521935,
+              "matched_share": 0.36452858521935,
+              "rows": 18646,
+              "v9": 264.4432960692415
+            },
+            "LIRF": {
+              "baseline": 451.66040253917885,
+              "candidate": 451.66040253917885,
+              "change_pct_vs_baseline": 0.0,
+              "in_scope_share": 0.0,
+              "matched_share": 0.655808615819209,
+              "rows": 11328,
+              "v9": 451.66040253917885
+            },
+            "LSZH": {
+              "baseline": 110.75716273522485,
+              "candidate": 110.51424331348628,
+              "change_pct_vs_baseline": -0.21932615077843165,
+              "in_scope_share": 0.9412581861480452,
+              "matched_share": 0.9412581861480452,
+              "rows": 10078,
+              "v9": 155.98526270051826
+            },
+            "LTFM": {
+              "baseline": 205.73304978875538,
+              "candidate": 205.06917839410832,
+              "change_pct_vs_baseline": -0.32268582774070964,
+              "in_scope_share": 0.0,
+              "matched_share": 0.0,
+              "rows": 22190,
+              "v9": 207.73278307309056
+            }
+          },
+          "paired_days_vs_baseline": {
+            "days": 30,
+            "days_with_lower_squared_error": 26,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.053728756988211,
+              -0.010706290377890051
+            ]
+          },
+          "ratio_to_baseline": 0.9969455124963,
+          "ratio_to_v9": 0.8805868585441463,
+          "rmse": 193.6190698373298
+        }
+      },
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    }
+  },
+  "config_sha256": "5b7bd5f2b9a3dbb8ce85e1e9fc5234b5b5c3784e2205d051bc8fdf2cde6ff6ec",
+  "configuration": {
+    "amended_at_utc": "2026-09-16T05:24:18+00:00",
+    "amendment": "05:12 UTC, before any ensemble or candidate was scored: the LTFM specialist's fold record failed on a NaN matched-row RMSE (LTFM has no ADS-B matches); the runner now records None there and lgb_ap_LTFM is refitted with the amended runner (hash recorded). The launcher's chain-submission mechanics changed (script file, detached stdin) without changing any job command. Nothing else changed.",
+    "audit_used": false,
+    "candidates": {
+      "ens_v15_bag_60": {
+        "blend_with": {
+          "name": "ens_v15_bag",
+          "scope": "all_no_lirf",
+          "weight": 0.6
+        },
+        "features": "nb",
+        "scope": "matched_no_lirf",
+        "weight": 1.0
+      },
+      "ens_v15_bag_70": {
+        "blend_with": {
+          "name": "ens_v15_bag",
+          "scope": "all_no_lirf",
+          "weight": 0.7
+        },
+        "features": "nb",
+        "scope": "matched_no_lirf",
+        "weight": 1.0
+      },
+      "ens_v16_bag_60": {
+        "blend_with": {
+          "name": "ens_v16_bag",
+          "scope": "all_no_lirf",
+          "weight": 0.6
+        },
+        "features": "nb",
+        "scope": "matched_no_lirf",
+        "weight": 1.0
+      },
+      "ens_v16_bag_70": {
+        "blend_with": {
+          "name": "ens_v16_bag",
+          "scope": "all_no_lirf",
+          "weight": 0.7
+        },
+        "features": "nb",
+        "scope": "matched_no_lirf",
+        "weight": 1.0
+      },
+      "ens_v16_bag_ap_60": {
+        "blend_with": {
+          "name": "ens_v16_bag_ap",
+          "scope": "all_no_lirf",
+          "weight": 0.6
+        },
+        "features": "nb",
+        "scope": "matched_no_lirf",
+        "weight": 1.0
+      },
+      "ens_v16_bag_ap_70": {
+        "blend_with": {
+          "name": "ens_v16_bag_ap",
+          "scope": "all_no_lirf",
+          "weight": 0.7
+        },
+        "features": "nb",
+        "scope": "matched_no_lirf",
+        "weight": 1.0
+      },
+      "ens_v16_v15_ap_60": {
+        "blend_with": {
+          "name": "ens_v16_v15_ap",
+          "scope": "all_no_lirf",
+          "weight": 0.6
+        },
+        "features": "nb",
+        "scope": "matched_no_lirf",
+        "weight": 1.0
+      },
+      "ens_v16_v15_ap_70": {
+        "blend_with": {
+          "name": "ens_v16_v15_ap",
+          "scope": "all_no_lirf",
+          "weight": 0.7
+        },
+        "features": "nb",
+        "scope": "matched_no_lirf",
+        "weight": 1.0
+      }
+    },
+    "declared_at_utc": "2026-09-16T04:48:01+00:00",
+    "development_baseline": {
+      "blend_with": {
+        "name": "adsb_full_v14",
+        "scope": "all_no_lirf",
+        "weight": 0.6
+      },
+      "column": "residual_matched_no_lirf|nb",
+      "name": "v14 development predictions",
+      "parent": "v12_development_residuals",
+      "recipe": "v9 + 1.0 * v12 development residual on matched rows outside LIRF, then (1 - 0.6) * that + 0.6 * adsb_full_v14 (runs/adsb_full_ens, the v14 learner mean, out-of-sample per fold) on every row outside LIRF, floored; reproduces 331.31 / 273.17 / 194.21 on Jan / Jul / Nov 2025 (docs/adsb_v12_v5/development_results.json, ens_all_60)",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "development_months": [
+      "2025-01",
+      "2025-07",
+      "2025-11"
+    ],
+    "development_scheme": "leave-one-month-out over the three scoring months that hold out-of-sample v9 predictions (Jan and Jul 2025 from the seasonal fold, Nov 2025 from the forward fold); for each variant (scope, feature set) the residual model is fitted on the other two months' in-scope rows and applied to the held-out month's in-scope rows; every other row keeps v9",
+    "ensembles": {
+      "ens_v15_bag": {
+        "members": [
+          "runs/adsb_v15/ens_v15_lgb",
+          "runs/adsb_v15/ens_v15_cat"
+        ],
+        "rule": "as declared in configs/adsb_v15_v1.json (mean of the LightGBM group mean and the CatBoost group mean; runs/adsb_v15/ens_v15_bag, hash-bound below)"
+      },
+      "ens_v16_bag": {
+        "members": [
+          "runs/adsb_v15/ens_v15_lgb",
+          "runs/adsb_v16/ens_v16_cat"
+        ],
+        "rule": "mean of the two group means"
+      },
+      "ens_v16_bag_ap": {
+        "members": [
+          "runs/adsb_v15/ens_v15_lgb",
+          "runs/adsb_v16/ens_v16_cat",
+          "runs/adsb_v16/ens_v16_lgb_ap"
+        ],
+        "rule": "mean of the three group means"
+      },
+      "ens_v16_cat": {
+        "members": [
+          "runs/adsb_full_cat",
+          "runs/adsb_v15/cat_long",
+          "runs/adsb_v15/cat_s16",
+          "runs/adsb_v16/cat_ctr2",
+          "runs/adsb_v16/cat_d10"
+        ],
+        "rule": "mean of finite predictions"
+      },
+      "ens_v16_lgb_ap": {
+        "members": [
+          "runs/adsb_v16/lgb_ap_EDDF",
+          "runs/adsb_v16/lgb_ap_EDDM",
+          "runs/adsb_v16/lgb_ap_EGLL",
+          "runs/adsb_v16/lgb_ap_EHAM",
+          "runs/adsb_v16/lgb_ap_LEBL",
+          "runs/adsb_v16/lgb_ap_LEMD",
+          "runs/adsb_v16/lgb_ap_LFPG",
+          "runs/adsb_v16/lgb_ap_LSZH",
+          "runs/adsb_v16/lgb_ap_LTFM"
+        ],
+        "rule": "mean of finite predictions (each row has exactly one specialist)"
+      },
+      "ens_v16_v15_ap": {
+        "members": [
+          "runs/adsb_v15/ens_v15_bag",
+          "runs/adsb_v16/ens_v16_lgb_ap"
+        ],
+        "rule": "mean of the two group means"
+      },
+      "missing_members": "if a learner variant fails to complete on all three folds it is dropped from every ensemble that lists it and the drop is recorded in the selection; no other change",
+      "tool": "tools/ensemble_adsb_full.py (per-row mean of finite member predictions, fold by fold); nested means are built by listing members with multiplicities that reproduce the group means exactly (all label-target learners predict every non-LIRF row; the specialists together predict every non-LIRF row exactly once)"
+    },
+    "execution": {
+      "automatic_submission": false,
+      "azure_only": true,
+      "development_host": "workstation",
+      "learner_fits_on_workers": "tools/launch_adsb_learners.py --config configs/adsb_v16_v1.json (16 threads per fit, one chain per worker)",
+      "workers_used": [
+        "arcw1",
+        "arcw2",
+        "arcw4"
+      ]
+    },
+    "experiment_id": "prc2026-adsb-surface-residual-v16-v1",
+    "external_data": {
+      "extraction": "tools/adsb_extract_day.py keeps positions inside the ten aerodrome boxes that are on the ground or below 3,000 ft; per-day parquet with archive part hashes under data/external/adsblol/surface/ (the tool now skips and counts a corrupt archive member instead of aborting the day; the surface files used here predate that change and are unaffected)",
+      "labels_used_in_features": false,
+      "license": "Open Database License (ODbL) 1.0; feeder data CC0; licence files are inside every archive",
+      "matching": "tools/build_adsb_features.py: ICAO callsign (CALLSIGN_flt, else FLIGHT_mvt) and takeoff within the track's ground-to-air transition; stand positions learned label-free from covered segments of Jan/Mar/Apr/Jul/Nov 2025 (1,111 stands); the pass-2 matches and stands are exactly the v11 inputs, snapshotted under data/external/adsblol/matches_v11/ and hash-bound below",
+      "source": "adsb.lol globe_history daily archives (GitHub releases adsblol/globe_history_2025 and globe_history_2026, tags vYYYY.MM.DD-planes-readsb-prod-0)"
+    },
+    "extra_feature_tables": {
+      "adsb_full_v14": {
+        "column": "adsb_full",
+        "description": "the v14 learner mean (LightGBM + CatBoost, no LIRF), used only to reproduce the v14 development baseline",
+        "development": [
+          "runs/adsb_full_ens/seasonal/predictions.parquet",
+          "runs/adsb_full_ens/forward/predictions.parquet"
+        ],
+        "ranking": "runs/adsb_full_ens/refit/ranking_predictions.parquet"
+      },
+      "ens_v15_bag": {
+        "column": "adsb_full",
+        "description": "ensemble ens_v15_bag as declared above",
+        "development": [
+          "runs/adsb_v15/ens_v15_bag/seasonal/predictions.parquet",
+          "runs/adsb_v15/ens_v15_bag/forward/predictions.parquet"
+        ],
+        "ranking": "runs/adsb_v15/ens_v15_bag/refit/ranking_predictions.parquet"
+      },
+      "ens_v16_bag": {
+        "column": "adsb_full",
+        "description": "ensemble ens_v16_bag as declared above",
+        "development": [
+          "runs/adsb_v16/ens_v16_bag/seasonal/predictions.parquet",
+          "runs/adsb_v16/ens_v16_bag/forward/predictions.parquet"
+        ],
+        "ranking": "runs/adsb_v16/ens_v16_bag/refit/ranking_predictions.parquet"
+      },
+      "ens_v16_bag_ap": {
+        "column": "adsb_full",
+        "description": "ensemble ens_v16_bag_ap as declared above",
+        "development": [
+          "runs/adsb_v16/ens_v16_bag_ap/seasonal/predictions.parquet",
+          "runs/adsb_v16/ens_v16_bag_ap/forward/predictions.parquet"
+        ],
+        "ranking": "runs/adsb_v16/ens_v16_bag_ap/refit/ranking_predictions.parquet"
+      },
+      "ens_v16_v15_ap": {
+        "column": "adsb_full",
+        "description": "ensemble ens_v16_v15_ap as declared above",
+        "development": [
+          "runs/adsb_v16/ens_v16_v15_ap/seasonal/predictions.parquet",
+          "runs/adsb_v16/ens_v16_v15_ap/forward/predictions.parquet"
+        ],
+        "ranking": "runs/adsb_v16/ens_v16_v15_ap/refit/ranking_predictions.parquet"
+      }
+    },
+    "floor_seconds_rule": "minimum departure label over the refit months (-12), applied after the residual",
+    "incumbent": {
+      "official_rank": "1st of 148 at 00:51 UTC 16 September 2026 (second 245.0207)",
+      "official_rmse_seconds": 243.5805,
+      "recipe": "v14 = (1 - 0.6) * (v9 + 1.0 * v12 ADS-B residual on matched rows outside LIRF) + 0.6 * mean(LightGBM, CatBoost full-data learners without LIRF) on every row outside LIRF, floored (configs/adsb_v12_v5.json, ens_all_60)",
+      "submission": "vigorous-whistle_v14.parquet",
+      "submission_sha256": "8090314133572d0dde60e372097b43d8557af16740ae918d054b4923b1130e8f"
+    },
+    "learner_common": {
+      "december": "never read",
+      "excluded_airports": [
+        "LIRF"
+      ],
+      "features": "timeline bundle CORE + FLOWN + SURFACE (276) + 27 ADS-B features from data/external/adsblol/matches (matches2_*, stands.parquet: exactly the tables the v14 learners used; hashes recorded in every run record)",
+      "folds": "seasonal and forward (out-of-sample fold predictions), refit on the eleven 2025 months at the median best iteration",
+      "runner": "tools/run_adsb_learner.py",
+      "settings": "configs/timeline_v1.json (lightgbm / catboost blocks; parameter overrides above)",
+      "specialists": "the nine airport specialists together predict every row outside LIRF exactly once; their per-row mean (tools/ensemble_adsb_full.py, mean of finite values) is the specialist table ens_v16_lgb_ap",
+      "target": "label"
+    },
+    "learner_output_root": "runs/adsb_v16",
+    "learners": {
+      "cat_ctr2": {
+        "kind": "catboost",
+        "note": "CatBoost with two-way categorical combinations (e.g. stand x runway, airport x operator); otherwise the cat_s16 recipe with the original seed",
+        "parameters": {
+          "max_ctr_complexity": 2
+        },
+        "rounds": 20000,
+        "seed": 20260915
+      },
+      "cat_d10": {
+        "kind": "catboost",
+        "note": "CatBoost depth 10 (capacity), the cat_s16 seed",
+        "parameters": {
+          "depth": 10
+        },
+        "rounds": 20000,
+        "seed": 20260916
+      },
+      "lgb_ap_EDDF": {
+        "airports": [
+          "EDDF"
+        ],
+        "kind": "lightgbm",
+        "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+        "parameters": {},
+        "seed": 20260915
+      },
+      "lgb_ap_EDDM": {
+        "airports": [
+          "EDDM"
+        ],
+        "kind": "lightgbm",
+        "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+        "parameters": {},
+        "seed": 20260915
+      },
+      "lgb_ap_EGLL": {
+        "airports": [
+          "EGLL"
+        ],
+        "kind": "lightgbm",
+        "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+        "parameters": {},
+        "seed": 20260915
+      },
+      "lgb_ap_EHAM": {
+        "airports": [
+          "EHAM"
+        ],
+        "kind": "lightgbm",
+        "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+        "parameters": {},
+        "seed": 20260915
+      },
+      "lgb_ap_LEBL": {
+        "airports": [
+          "LEBL"
+        ],
+        "kind": "lightgbm",
+        "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+        "parameters": {},
+        "seed": 20260915
+      },
+      "lgb_ap_LEMD": {
+        "airports": [
+          "LEMD"
+        ],
+        "kind": "lightgbm",
+        "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+        "parameters": {},
+        "seed": 20260915
+      },
+      "lgb_ap_LFPG": {
+        "airports": [
+          "LFPG"
+        ],
+        "kind": "lightgbm",
+        "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+        "parameters": {},
+        "seed": 20260915
+      },
+      "lgb_ap_LSZH": {
+        "airports": [
+          "LSZH"
+        ],
+        "kind": "lightgbm",
+        "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+        "parameters": {},
+        "seed": 20260915
+      },
+      "lgb_ap_LTFM": {
+        "airports": [
+          "LTFM"
+        ],
+        "kind": "lightgbm",
+        "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+        "parameters": {},
+        "seed": 20260915
+      }
+    },
+    "matches_dir": "data/external/adsblol/matches_v11",
+    "minimum_mean_improvement_fraction": 0.003,
+    "parents": {
+      "adsb_extract_code": {
+        "path": "tools/adsb_extract_day.py",
+        "sha256": "b737b62c9dac421a0ca5c6662ec8a3eabd0801f012211bd48ab3a87af7d5c796"
+      },
+      "adsb_feature_code": {
+        "path": "src/prc2026_adsb/features.py",
+        "sha256": "cff4c56ae3a70fa8dee35453c42d26dd07f1bb6783ff0c18023aa4d3e46469b5"
+      },
+      "adsb_full_cat_forward_predictions": {
+        "path": "runs/adsb_full_cat/forward/predictions.parquet",
+        "sha256": "276f504e494f90c345a4ce48748458fbeb982d1f953e12fbf496e1b15558d357"
+      },
+      "adsb_full_cat_forward_run": {
+        "path": "runs/adsb_full_cat/forward/run.json",
+        "sha256": "533af1ccf1ac48c7ccbf83ec9439ef7ff47a41e840768440ab8693d8be573860"
+      },
+      "adsb_full_cat_refit_predictions": {
+        "path": "runs/adsb_full_cat/refit/ranking_predictions.parquet",
+        "sha256": "52d898a19defda3485f7074bf385d7412fd24ad0226a0162fc5ee4da21c3445f"
+      },
+      "adsb_full_cat_refit_run": {
+        "path": "runs/adsb_full_cat/refit/run.json",
+        "sha256": "4c3ac298596eebd5b9c2e677e3692125ca9893d767362aa8ade37a9e9a52a841"
+      },
+      "adsb_full_cat_seasonal_predictions": {
+        "path": "runs/adsb_full_cat/seasonal/predictions.parquet",
+        "sha256": "81b8ce4ec4a51cf7e80b9e5ab594c67d7db394edc8450557307e412f3ca40fcf"
+      },
+      "adsb_full_cat_seasonal_run": {
+        "path": "runs/adsb_full_cat/seasonal/run.json",
+        "sha256": "ed94396d25266cd1420d027f80389b87d209da2127ef1ccf697a365183acf33b"
+      },
+      "adsb_full_nolirf_forward_predictions": {
+        "path": "runs/adsb_full_nolirf/forward/predictions.parquet",
+        "sha256": "fa6354b702d9a448f59fbab705d6ba0562831e337ed961c632776c0e58a30e55"
+      },
+      "adsb_full_nolirf_forward_run": {
+        "path": "runs/adsb_full_nolirf/forward/run.json",
+        "sha256": "4aaeab1923ce29839401c6487c301936b3a9e667b67e5e34335f1e80a643723a"
+      },
+      "adsb_full_nolirf_refit_predictions": {
+        "path": "runs/adsb_full_nolirf/refit/ranking_predictions.parquet",
+        "sha256": "219c1beac964455f35453c0339776fe15cc72d7ed52697e6ac7a9bf0ab5dccf6"
+      },
+      "adsb_full_nolirf_refit_run": {
+        "path": "runs/adsb_full_nolirf/refit/run.json",
+        "sha256": "e39f2ab4a2742ea52586426ad9a8ad63185dfc5d77367f82a7e51d1e5948c285"
+      },
+      "adsb_full_nolirf_seasonal_predictions": {
+        "path": "runs/adsb_full_nolirf/seasonal/predictions.parquet",
+        "sha256": "ba654faa732f85f9690b061f9b3d60cf10ad6eac3f370f6c9b284bbe2186cc98"
+      },
+      "adsb_full_nolirf_seasonal_run": {
+        "path": "runs/adsb_full_nolirf/seasonal/run.json",
+        "sha256": "1c468d303224bd09273e99b66a32e80fd8505ab528c14741e05083a612c28043"
+      },
+      "adsb_match_code": {
+        "path": "tools/build_adsb_features.py",
+        "sha256": "a5f678a0426e28828b642ae9322e097b518dda235c3de42cbaa415e975def585"
+      },
+      "cat_long_forward": {
+        "path": "runs/adsb_v15/cat_long/forward/predictions.parquet",
+        "sha256": "29ae03dae931fdf44d87c1c642bb70432d7c1dbe9159fa21f66d5217569d0708"
+      },
+      "cat_long_refit": {
+        "path": "runs/adsb_v15/cat_long/refit/ranking_predictions.parquet",
+        "sha256": "e20e4449cc116837bf008ec710be31a218d1b92f7bdf12b5ebd8840a518ac3aa"
+      },
+      "cat_long_seasonal": {
+        "path": "runs/adsb_v15/cat_long/seasonal/predictions.parquet",
+        "sha256": "5193f7f3f0a6e4fc289a4c5628e398b6c8779ddf51913e6a99a6ea800e376723"
+      },
+      "cat_s16_forward": {
+        "path": "runs/adsb_v15/cat_s16/forward/predictions.parquet",
+        "sha256": "787760539b10665fbc53402a925c7b8893be412083ebe41398ab4c83ec4c9870"
+      },
+      "cat_s16_refit": {
+        "path": "runs/adsb_v15/cat_s16/refit/ranking_predictions.parquet",
+        "sha256": "68da82307c870fd0869ec78c72298cfebbfa72329cf04d3acb057f072c7aa7ed"
+      },
+      "cat_s16_seasonal": {
+        "path": "runs/adsb_v15/cat_s16/seasonal/predictions.parquet",
+        "sha256": "df047c12b19f8e73301a183ff575b2ec847b9c9de33996089a84b9a1b7a8228a"
+      },
+      "ens_v15_bag_forward": {
+        "path": "runs/adsb_v15/ens_v15_bag/forward/predictions.parquet",
+        "sha256": "641a7cbdc3f67fdb14faac4d26c42da6290f322ff146f616ec4df3db61ca1085"
+      },
+      "ens_v15_bag_refit": {
+        "path": "runs/adsb_v15/ens_v15_bag/refit/ranking_predictions.parquet",
+        "sha256": "952087207a322bab901c8e551f3f3942c581343ae79ecf5c40dd7a3f525d961c"
+      },
+      "ens_v15_bag_run": {
+        "path": "runs/adsb_v15/ens_v15_bag/run.json",
+        "sha256": "78ceeec49a5c3a1b9750647dded926536e0648b691b8f84d85dc3cd6863caaa5"
+      },
+      "ens_v15_bag_seasonal": {
+        "path": "runs/adsb_v15/ens_v15_bag/seasonal/predictions.parquet",
+        "sha256": "3a2136722793849057523399377f3144cc4032902e62498884a0563921f02eea"
+      },
+      "ens_v15_lgb_forward": {
+        "path": "runs/adsb_v15/ens_v15_lgb/forward/predictions.parquet",
+        "sha256": "ad98b3b889fe53dd9defb86f8a5032c62978de4bbf75a90feb4add710bd14cda"
+      },
+      "ens_v15_lgb_refit": {
+        "path": "runs/adsb_v15/ens_v15_lgb/refit/ranking_predictions.parquet",
+        "sha256": "daa3e4038391892f19533aadc74fb3b0c245267f02fca7e76e8d9d2c90f2e17d"
+      },
+      "ens_v15_lgb_seasonal": {
+        "path": "runs/adsb_v15/ens_v15_lgb/seasonal/predictions.parquet",
+        "sha256": "d801365b734c6a7ce4d674a8d203c3916a00f18ba5f03236f45e49844617cac0"
+      },
+      "ensemble_code": {
+        "path": "tools/ensemble_adsb_full.py",
+        "sha256": "17fdbbad1c87e9cefaaf292d36cda7fa6ee020e28ac3719baf2b0e559a7283eb"
+      },
+      "ensemble_forward_predictions": {
+        "path": "runs/adsb_full_ens/forward/predictions.parquet",
+        "sha256": "0e2b18630eeeca91f7d04c212bfdb57ddf8010dd654c64bb51d0c5eafa7a1ad4"
+      },
+      "ensemble_refit_predictions": {
+        "path": "runs/adsb_full_ens/refit/ranking_predictions.parquet",
+        "sha256": "7fd4b84044fc5bb4bc0b86a9fa7a80329fc5d3276409625984e8b3cedfdf7bf9"
+      },
+      "ensemble_run": {
+        "path": "runs/adsb_full_ens/run.json",
+        "sha256": "481bb8edf087d2bd357dc88beea64b9ffb162bd6d008e258b90c51230359477d"
+      },
+      "ensemble_seasonal_predictions": {
+        "path": "runs/adsb_full_ens/seasonal/predictions.parquet",
+        "sha256": "7669dec6772815c4cb8f1c1ef2e4f8c150bfb69e481fd88f6258cffee5e508d1"
+      },
+      "incumbent_ranking_predictions": {
+        "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/ranking_predictions.parquet",
+        "sha256": "cf0c62b5288de74a8262dbb07705e75792bc92059b1e0bb8d66ac0681ec875be"
+      },
+      "learner_code_run_adsb_full": {
+        "path": "tools/run_adsb_full.py",
+        "sha256": "bf84441b5eccbb616e006a6fb7a5da7725f8847dc4fea58a20105cc7a527fc65"
+      },
+      "learner_code_run_adsb_full_nm": {
+        "path": "tools/run_adsb_full_nm.py",
+        "sha256": "14045da02c1e41e76145a13df5ddb17063d1cafdb7e0f5b6abd5ae9680ee1e9f"
+      },
+      "learner_code_run_adsb_learner": {
+        "note": "snapshot of the runner as declared; eight specialists, cat_ctr2 and cat_d10 run this version",
+        "path": "docs/adsb_v16/run_adsb_learner_declared.py",
+        "sha256": "72b9aec967e75a455c6544df8645a996f7e4347bf3d9fcd04ea6945b19fbcb07"
+      },
+      "learner_code_run_adsb_learner_amended": {
+        "note": "one-line fix: the fold record's matched/unmatched RMSE is None instead of NaN when the mask holds no finite prediction (the LTFM specialist crashed after writing its predictions because LTFM has no matched rows); lgb_ap_LTFM is refitted with this version; no model, feature or fold changes",
+        "path": "tools/run_adsb_learner.py",
+        "sha256": "576c328379a879abc3f101cde2965808b47fa60f9a9a5d1f173f227c09d8a6a8"
+      },
+      "learner_launcher": {
+        "note": "the launcher now writes each worker chain to a script file with a detached stdin (tooling only; job commands unchanged)",
+        "path": "tools/launch_adsb_learners.py",
+        "sha256": "ab214b93632b7cc02afa50f2024e5f4c9c79908dc8cac5fe37745685b503f275"
+      },
+      "lirf_mixture_selection": {
+        "path": "runs/lirf_mixture/selection.json",
+        "sha256": "67c95f9e89e57d9c8b759b95d82916533684c8969a2655968d7401b874b10aa7"
+      },
+      "matches_2025-01": {
+        "path": "data/external/adsblol/matches_v11/matches2_2025-01.parquet",
+        "sha256": "4a275586729c00bf676e3f3184669ce0f06df40d31fedd2b14eb5ebbc127075f"
+      },
+      "matches_2025-07": {
+        "path": "data/external/adsblol/matches_v11/matches2_2025-07.parquet",
+        "sha256": "6dbf3693870ccdcb25a87789e634aa95226fd06b6d57d0fa5113b264ac8cc9d7"
+      },
+      "matches_2025-11": {
+        "path": "data/external/adsblol/matches_v11/matches2_2025-11.parquet",
+        "sha256": "8d1cd1017659feb9c88bccf34b16ab166d2bb4aef8c2d823f87ecff50212b2e6"
+      },
+      "matches_2026-01": {
+        "path": "data/external/adsblol/matches_v11/matches2_2026-01.parquet",
+        "sha256": "6bf7cfa259bc26e048d1ba60a60fd9520aade34b72d64824ff8306d25c6ff2cb"
+      },
+      "matches_2026-07": {
+        "path": "data/external/adsblol/matches_v11/matches2_2026-07.parquet",
+        "sha256": "1947f2002dcaa765ed5f2b82f73cfe0f248e18e8f4b45098fe7a060dc56c026d"
+      },
+      "scratch_builder": {
+        "path": "tools/build_adsb_scratch.py",
+        "sha256": "478d5d48b9ec93411886f8d8d481c2a0847d3bc354f32b48bb119dc52d81c285"
+      },
+      "stands": {
+        "path": "data/external/adsblol/matches_v11/stands.parquet",
+        "sha256": "63502c9465e3742d537fca30bd3c03622623a3be047eb01ba068292a249d995d"
+      },
+      "timeline_settings": {
+        "path": "configs/timeline_v1.json",
+        "sha256": "0f3ccec8ae1e23d24eb8eef8c536eeeb8b1439b7e7fc248dccde37732ba8ddd3"
+      },
+      "v11_export": {
+        "path": "runs/submissions/vigorous-whistle_v11.parquet",
+        "sha256": "98af50be5fb49d6cc42c8390b26be3220ba2ae24b693fc97c437ceb695c66b09"
+      },
+      "v11_receipt": {
+        "path": "runs/submissions/vigorous-whistle_v11.receipt.json",
+        "sha256": "681099293bb027e608105f8ead47f4596ec5e0b1ccd37a7a36c896235b56c52b"
+      },
+      "v12_development_residuals": {
+        "path": "runs/adsb_v12_v2/development_residuals.parquet",
+        "sha256": "4c174aea141e796b693f8e066d02344460c0e524bf05901440c8e300c580b8ca"
+      },
+      "v12_export": {
+        "path": "runs/submissions/vigorous-whistle_v12.parquet",
+        "sha256": "f3ae96a47a3f9c417d11d93285a393ccd5e7411c9d99b65849867980914471e6"
+      },
+      "v12_receipt": {
+        "path": "runs/submissions/vigorous-whistle_v12.receipt.json",
+        "sha256": "c0ad739b72797a619ffbcc08065ee95bd56970d44c14e2debb28c2800910b844"
+      },
+      "v12_selection": {
+        "path": "runs/adsb_v12_v2/selection.json",
+        "sha256": "918631283768c182450f2672402999412112ff8777b3b4765bd8e1772ad20f27"
+      },
+      "v14_development_residuals": {
+        "path": "runs/adsb_v12_v5/development_residuals.parquet",
+        "sha256": "2e7f775870439cc0997dca0a214f4a4b79c6848d5a1178275b5ead67f4ba2b18"
+      },
+      "v14_export": {
+        "path": "runs/submissions/vigorous-whistle_v14.parquet",
+        "sha256": "8090314133572d0dde60e372097b43d8557af16740ae918d054b4923b1130e8f"
+      },
+      "v14_receipt": {
+        "path": "runs/submissions/vigorous-whistle_v14.receipt.json",
+        "sha256": "22df6bbab18ded7a1ceb9c7c63d28aa6aeb3276e9a0d290de35f3e747517c52e"
+      },
+      "v14_selection": {
+        "path": "runs/adsb_v12_v5/selection.json",
+        "sha256": "d2d2e695e22aeb32acdf0a7dedb70f48b6952927c1e2fb388dae4533f1f65855"
+      },
+      "v15_selection": {
+        "path": "runs/adsb_v15/selection.json",
+        "sha256": "e2ba3915aa26d6e1e3496962b26444069d043e832f23dc45caee2977eaa592f5"
+      },
+      "v9_export": {
+        "path": "runs/submissions/vigorous-whistle_v9.parquet",
+        "sha256": "25d3b296a2753852144f53a2c36a1e539031dbd6ef35b8be928d9e1fa7363521"
+      },
+      "v9_receipt": {
+        "path": "runs/submissions/vigorous-whistle_v9.receipt.json",
+        "sha256": "8b0bc7d79f24c839138787ebab8d45f5dc839b89807d6a2e7c1318729dc7ae67"
+      }
+    },
+    "prediction_postprocess": "adsb-surface-residual-v16-v1",
+    "prior_evidence": "Declared after adsb_v15_v1 selected nothing: its best candidate ens_v15_bag_60 improved v14 by 0.121 / 0.177 / 0.346% (mean 0.214%, paired-day intervals all below zero, 91 of 92 days), below the 0.3% bar. Learner-alone RMSE on the non-LIRF rows (seasonal / forward): v14 pair 269.91 / 160.94, ens_v15_bag 268.81 / 159.18; the individual v15 variants gained 0.1-0.7% on matched rows, the ADS-B-residual target lost. The items here are learner STRUCTURE rather than seeds: airport specialists (the v7 base gives its per-airport LightGBM 50% of the weight; ADS-B stand/runway/coverage interactions are airport-specific), CatBoost two-way categorical combinations (a learned stand x runway offset map for dark segments; the earlier CatBoosts use max_ctr_complexity 1) and CatBoost depth 10 (cat_s16, the best single learner, was still improving at 15k rounds). No learner listed here had been fitted before this declaration. Diagnostics closed on evidence on 16 September and disclosed in docs/adsb_v15/README.md: LIRF residual, LIRF fill mixture, first-point geometry, blend structure, complete-match scope, callsign fallback matching.",
+    "refit_months": [
+      "2025-01",
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11"
+    ],
+    "residual_model": {
+      "applies_to": "the residual model is exactly v12's (nb feature set, matched rows outside LIRF, weight 1.0); each candidate then blends the result with a declared ensemble, value = (1 - w) * (v9 + residual) + w * ensemble, on every row outside LIRF; rows outside both scopes keep v9 exactly.",
+      "blend": "post-hoc convex combination with the extra table adsb_full (candidate_values in tools/run_adsb_v11.py); a NaN learner value leaves the row unblended",
+      "categorical": [
+        "airport",
+        "stand",
+        "runway"
+      ],
+      "feature_sets": {
+        "nb": [
+          "airport",
+          "v9",
+          "proxy_s",
+          "schedule_interval_s",
+          "hour",
+          "stand",
+          "runway",
+          "adsb_gate",
+          "adsb_first_point_s",
+          "adsb_motion_s",
+          "adsb_first_gs_kt",
+          "adsb_first_dist_stand_m",
+          "adsb_stop_seconds",
+          "adsb_taxi_path_m",
+          "adsb_taxi_stops",
+          "adsb_taxi_stopped_s",
+          "adsb_slow_start_s",
+          "adsb_gap_before_s",
+          "adsb_turnaround_s",
+          "adsb_anchor_dist_stand_m",
+          "adsb_last_ground_s",
+          "adsb_points",
+          "nb_runway_10m_count",
+          "nb_runway_10m_median_taxi_s",
+          "nb_runway_10m_max_taxi_s",
+          "nb_runway_10m_median_stopped_s",
+          "nb_airport_10m_count",
+          "nb_airport_10m_median_taxi_s",
+          "nb_runway_30m_count",
+          "nb_runway_30m_median_taxi_s",
+          "nb_runway_30m_median_first_point_s",
+          "nb_runway_prev_taxi_s",
+          "nb_runway_next_taxi_s"
+        ]
+      },
+      "features": [
+        "airport",
+        "v9",
+        "proxy_s",
+        "schedule_interval_s",
+        "hour",
+        "stand",
+        "runway",
+        "adsb_gate",
+        "adsb_first_point_s",
+        "adsb_motion_s",
+        "adsb_first_gs_kt",
+        "adsb_first_dist_stand_m",
+        "adsb_stop_seconds",
+        "adsb_taxi_path_m",
+        "adsb_taxi_stops",
+        "adsb_taxi_stopped_s",
+        "adsb_slow_start_s",
+        "adsb_gap_before_s",
+        "adsb_turnaround_s",
+        "adsb_anchor_dist_stand_m",
+        "adsb_last_ground_s",
+        "adsb_points",
+        "nb_runway_10m_count",
+        "nb_runway_10m_median_taxi_s",
+        "nb_runway_10m_max_taxi_s",
+        "nb_runway_10m_median_stopped_s",
+        "nb_airport_10m_count",
+        "nb_airport_10m_median_taxi_s",
+        "nb_runway_30m_count",
+        "nb_runway_30m_median_taxi_s",
+        "nb_runway_30m_median_first_point_s",
+        "nb_runway_prev_taxi_s",
+        "nb_runway_next_taxi_s"
+      ],
+      "kind": "lightgbm",
+      "neighbour_features": true,
+      "params": {
+        "bagging_fraction": 0.8,
+        "bagging_freq": 1,
+        "deterministic": true,
+        "feature_fraction": 0.9,
+        "force_row_wise": true,
+        "lambda_l2": 10.0,
+        "learning_rate": 0.03,
+        "min_data_in_leaf": 100,
+        "num_leaves": 63,
+        "num_threads": 8,
+        "objective": "regression",
+        "seed": 20260915,
+        "verbose": -1
+      },
+      "prediction": "v9 + weight * residual on in-scope rows, then floor",
+      "rounds_rule": "development: rounds per held-out month and variant (scope, feature set) come from a 5-fold day-grouped inner split of the two training months (median best iteration, 200 rounds patience, at most 4000); the held-out month is never used for rounds; export: median of the selected variant's three development round counts",
+      "scopes": {
+        "all_no_lirf": "every departure at any airport except LIRF: a blend scope only (unmatched rows there become (1 - w) * v9 + w * adsb_full)",
+        "matched_no_lirf": "departures with a matched ADS-B surface segment at any airport except LIRF (adsb_matched == 1 and airport != LIRF): the residual model's training and prediction scope (exactly v12)"
+      },
+      "target": "label minus v9 prediction"
+    },
+    "seed": 20260915,
+    "selection": "For each candidate (ensemble, blend weight w), RMSE of the blended prediction on each held-out month versus the v14 development prediction on the same rows (all departures of the month). A candidate is eligible when it is not worse than v14 on ANY month (ratio <= 1.0) and its mean ratio over the three months is at most 0.997. Choose the eligible candidate with the lowest mean ratio to v14; otherwise select nothing. The ens_v15_bag candidates are included so that the v15 result is re-scored under this declaration; they cannot qualify on their own (mean ratio 0.99786 recorded in runs/adsb_v15/selection.json). Ratios to v9, per-airport tables and the paired-day bootstrap interval of the RMSE difference to v14 are descriptive only.",
+    "target_filter": "none",
+    "threads": 8
+  },
+  "created_at_utc": "2026-09-16T09:45:55.879646+00:00",
+  "environment": {
+    "disk_available_bytes": 36213014528,
+    "logical_cpus": 32,
+    "memory_total_bytes": 16858472448,
+    "packages": {
+      "numpy": "2.4.2",
+      "pandas": "3.0.0",
+      "psutil": "7.2.2",
+      "pyarrow": "23.0.1",
+      "tzdata": "2025.3"
+    },
+    "physical_cpus_reported": 24,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.2"
+  },
+  "floor_seconds": -12.0,
+  "model_code": {
+    "files": {
+      "src/prc2026_adsb/__init__.py": "6457ccf876297030ff245a38ba5571530883637beb89350749af9e7ef9bd7917",
+      "src/prc2026_adsb/features.py": "cff4c56ae3a70fa8dee35453c42d26dd07f1bb6783ff0c18023aa4d3e46469b5",
+      "tools/adsb_extract_day.py": "b737b62c9dac421a0ca5c6662ec8a3eabd0801f012211bd48ab3a87af7d5c796",
+      "tools/build_adsb_features.py": "a5f678a0426e28828b642ae9322e097b518dda235c3de42cbaa415e975def585",
+      "tools/run_adsb_v11.py": "41ab4bba85b1a2f414a72fbc02d6fc90ba4ea2a595383f362a81b121a3569484"
+    },
+    "sha256": "9e5f3c2c7baea638e045a68cb1ac703fb05b163bcae6c1285b8a5f16e1586e81"
+  },
+  "months": {
+    "2025-01": {
+      "airports": {},
+      "baseline": "v14 development predictions",
+      "baseline_rmse": 331.3088507048585,
+      "gate_share_of_matched": 0.338170653300618,
+      "matched_rows": 76213,
+      "matched_share": 0.49583620678438056,
+      "rows": 153706,
+      "scopes": {
+        "matched_no_lirf|nb": {
+          "feature_set": "nb",
+          "inner_best_iterations": [
+            1161,
+            1152,
+            1033,
+            1199,
+            868
+          ],
+          "rounds": 1152,
+          "rows_in_scope": 76213,
+          "scope": "matched_no_lirf",
+          "share_in_scope": 0.49583620678438056,
+          "training_rows": 194902
+        }
+      },
+      "v9_rmse": 343.87322101909604
+    },
+    "2025-07": {
+      "airports": {},
+      "baseline": "v14 development predictions",
+      "baseline_rmse": 273.1692890288306,
+      "gate_share_of_matched": 0.3346965258252885,
+      "matched_rows": 101722,
+      "matched_share": 0.5333773785740877,
+      "rows": 190713,
+      "scopes": {
+        "matched_no_lirf|nb": {
+          "feature_set": "nb",
+          "inner_best_iterations": [
+            1627,
+            1896,
+            1455,
+            1244,
+            1245
+          ],
+          "rounds": 1455,
+          "rows_in_scope": 87440,
+          "scope": "matched_no_lirf",
+          "share_in_scope": 0.4584899823294689,
+          "training_rows": 183675
+        }
+      },
+      "v9_rmse": 288.13251412720666
+    },
+    "2025-11": {
+      "airports": {},
+      "baseline": "v14 development predictions",
+      "baseline_rmse": 194.21228884667693,
+      "gate_share_of_matched": 0.3739370359732268,
+      "matched_rows": 114891,
+      "matched_share": 0.7077532464332356,
+      "rows": 162332,
+      "scopes": {
+        "matched_no_lirf|nb": {
+          "feature_set": "nb",
+          "inner_best_iterations": [
+            1173,
+            912,
+            1913,
+            1271,
+            912
+          ],
+          "rounds": 1173,
+          "rows_in_scope": 107462,
+          "scope": "matched_no_lirf",
+          "share_in_scope": 0.661989010176675,
+          "training_rows": 163653
+        }
+      },
+      "v9_rmse": 219.87503896825768
+    }
+  },
+  "native_fit_count": 18,
+  "policy": "adsb-surface-residual-v16-v1",
+  "refit_rounds": 1173,
+  "refit_rounds_by_variant": {
+    "matched_no_lirf|nb": 1173
+  },
+  "rule": "For each candidate (ensemble, blend weight w), RMSE of the blended prediction on each held-out month versus the v14 development prediction on the same rows (all departures of the month). A candidate is eligible when it is not worse than v14 on ANY month (ratio <= 1.0) and its mean ratio over the three months is at most 0.997. Choose the eligible candidate with the lowest mean ratio to v14; otherwise select nothing. The ens_v15_bag candidates are included so that the v15 result is re-scored under this declaration; they cannot qualify on their own (mean ratio 0.99786 recorded in runs/adsb_v15/selection.json). Ratios to v9, per-airport tables and the paired-day bootstrap interval of the RMSE difference to v14 are descriptive only.",
+  "selected_candidate": null,
+  "stands": 1111
+}
