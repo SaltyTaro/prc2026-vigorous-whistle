@@ -50,5 +50,16 @@ configs/adsb_v12_v5.json --run-root runs/adsb_v12_v5`): receipts and parents
 re-checked, v9 reproduced from scratch, ADS-B features and the attached
 ensemble prediction reproduced, residual recomputed from the saved booster
 (difference 0.0), blend recomputed row by row, rows outside both scopes equal
-the uploaded v9, independent segment re-derivation **300/300**. Not uploaded at
-the time of writing; the next allowance opens at 00:00 UTC on 16 September.
+the uploaded v9, independent segment re-derivation **300/300**.
+
+## Official result: 243.5805 — new best, 1st place
+
+Uploaded with the user's approval at **00:49 UTC on 16 September**
+(`tools/prc_submit.py upload --calendar-day`, the first upload of the day by UTC
+calendar day; the SHA-256 was re-checked against the receipt before the put) and
+processed at 00:49:46 UTC: **243.5805 seconds RMSE on all 344,841 rows, 2.9026 s
+(1.18%) better than v12's 246.4831** ([`official_result.json`](official_result.json)),
+slightly beyond the development mean (−1.07%). Standing at 00:51 UTC: **1st of 148**
+(245.0207 / 245.2932 / 247.0109 below) —
+[`leaderboard_snapshot.json`](leaderboard_snapshot.json). Second is 1.44 s
+(0.59%) behind, third 1.71 s (0.70%), fourth 3.43 s (1.41%). Never re-upload v1–v14.

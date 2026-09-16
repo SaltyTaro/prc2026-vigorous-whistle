@@ -1,17 +1,18 @@
-# After v12 (246.4831, 3rd of 144; 2nd 245.2932, 1st 245.0207): plan updated 15 September 2026 ~12:10 UTC
+# After v14 (243.5805, 1st of 148; 2nd 245.0207, 3rd 245.2932): plan updated 16 September 2026 ~00:55 UTC
 
-## Ready to upload (needs the user's approval; allowance reopens 00:00 UTC 16 Sep, `--calendar-day`)
+## Uploaded
 
 **v14** (`configs/adsb_v12_v5.json`, `ens_all_60`): v12's residual, then 60% of the
 mean of two full-data learners (LightGBM and CatBoost on the timeline bundle's
 276 model features + 27 ADS-B features, fitted without LIRF) on every non-LIRF
-row. Development −0.51 / −0.52 / −2.18% vs v12 (mean −1.07%); expected ≈243.8
-(first is 245.02). SHA-256 80903141…0e8f, verified. v13 (`adsb_v12_v4`,
-LightGBM alone at 30%, −0.67% mean) is the superseded fallback, never uploaded.
+row. Development −0.51 / −0.52 / −2.18% vs v12 (mean −1.07%); **official 243.5805
+at 00:49 UTC 16 Sep (−1.18% vs v12), 1st of 148**, 1.44 s ahead of second.
+SHA-256 80903141…0e8f. v13 (`adsb_v12_v4`, LightGBM alone at 30%) is superseded
+and never uploaded.
 
-## Done today
+## Done 15 September
 
-- v11 248.4368 (4th) → v12 246.4831 (3rd): ADS-B residual, LIRF excluded, neighbour features.
+- v11 248.4368 (4th) → v12 246.4831 (3rd) → v14 243.5805 (1st): ADS-B residual, LIRF excluded, neighbour features.
 - v12_v1 (neighbour scopes) and v12_v3 (learner as residual feature) were null results;
   fixed post-hoc blends (v12_v4, v12_v5) work. Learner tooling: `tools/run_adsb_full.py`,
   `run_adsb_full_nm.py`, `run_adsb_learner.py` (--kind lightgbm|catboost, --target
