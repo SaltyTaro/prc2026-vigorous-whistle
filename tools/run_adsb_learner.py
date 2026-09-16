@@ -271,7 +271,10 @@ def main():
         pd.DataFrame({ID: parts["score"][ID].to_numpy(), "adsb_full": prediction}).to_parquet(out / "predictions.parquet", index=False, compression="zstd")
         score = parts["score"]
         matched = score["adsb_matched"].eq(1).to_numpy()
-        rmse = lambda k: float(np.sqrt(np.nanmean((truths["score"][k] - prediction[k]) ** 2)))
+        def rmse(k: np.ndarray):
+            # None (not NaN, which the JSON record refuses) when the mask selects no finite prediction, e.g. a specialist at an airport without matches
+            errors = (truths["score"][k] - prediction[k]) ** 2
+            return float(np.sqrt(np.nanmean(errors))) if np.isfinite(errors).any() else None
         months = catalog.set_index(ID)[TIME].reindex(score[ID]).dt.strftime("%Y-%m").to_numpy()
         by_month = {m: rmse(months == m) for m in sorted(set(months))}
         record = {"created_at_utc": utc_now(), "fold": args.fold, "stage": "development", "best_iteration": best, "rows": {r: int(len(p)) for r, p in parts.items()},
