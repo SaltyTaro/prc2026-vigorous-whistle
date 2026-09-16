@@ -67,3 +67,32 @@ is behind its counterpart without them); the two new CatBoosts move the bag from
 −0.214% to −0.288%. **`ens_v16_bag_60` has mean ratio 0.99712 — 0.012 percentage points
 short of the declared 0.997 bar — so the rule selects nothing** and no export was made
 under this declaration. Every month and every interval is negative.
+
+## Re-declaration `configs/adsb_v16_v2.json`, export and official result: 242.5783
+
+At the user's direction ("ship it") the same candidate set was re-declared at 09:50 UTC
+with the mean-improvement bar lowered from 0.3% to 0.25%; the declaration records this
+as a post-hoc relaxation made with the v16_v1 scores in hand
+([`development_results_v2.json`](development_results_v2.json) reproduces them exactly).
+`ens_v16_bag_60` was selected (mean ratio 0.99712).
+
+`tools/export_adsb_v11.py --config configs/adsb_v16_v2.json --selection
+runs/adsb_v16_v2/selection.json --version 15`: v9 rebuilt from scratch, the v12 residual
+refitted on the 271,115 in-scope rows (1,173 rounds), `ens_v16_bag` blended at w = 0.6 on
+every non-LIRF row (317,942 rows; the 26,899 LIRF rows keep v9 exactly). Output
+`runs/submissions/vigorous-whistle_v15.parquet`, SHA-256
+**`480636355cf213df0df7541d1d2b7a516814be6c4d7a19261b485234e289d990`**, 344,841 rows,
+min −12, max 120,549 (inherited). Versus v14: 297,817 rows differ, RMS of the change
+10.5 s, median absolute change 4 s, 99th percentile 40 s ([`export.json`](export.json)).
+`tools/verify_adsb_v11.py --version 15` ([`verification.json`](verification.json)):
+receipts and parents re-checked, v9 reproduced from scratch, features and the
+ensemble reproduced, residual recomputed from the saved booster (difference 0.0), the
+blend recomputed row by row, rows outside the scope equal the uploaded v9, independent
+segment re-derivation 300/300.
+
+Uploaded with the user's approval at **10:13 UTC on 16 September** (`prc_submit.py
+upload --calendar-day`, the second upload of the UTC day) and processed at 10:13:45
+UTC: **242.5783 seconds RMSE on all 344,841 rows, 1.0022 s (0.41%) better than v14's
+243.5805** ([`official_result.json`](official_result.json)) — beyond the development
+mean of −0.29%, as v12_v5's gain also was. Never re-upload v1–v15. Per the user's
+standing rule, no leaderboard standing is recorded here.

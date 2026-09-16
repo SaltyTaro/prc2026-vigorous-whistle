@@ -1,6 +1,17 @@
-# After v14 (243.5805, 1st of 148; 2nd 245.0207, 3rd 245.2932): plan updated 16 September 2026 ~00:55 UTC
+# After v15 (242.5783; v14 243.5805): plan updated 16 September 2026 ~10:20 UTC
 
 ## Uploaded
+
+**v15** (`configs/adsb_v16_v2.json`, `ens_v16_bag_60`): v14's recipe with the learner mean
+replaced by the mean of six LightGBMs and five CatBoosts (v15/v16 campaigns; the two-way
+categorical CatBoost `cat_ctr2` is the strongest single learner). Development −0.15 /
+−0.23 / −0.48% vs v14; **official 242.5783 at 10:13 UTC 16 Sep (−0.41%)**. Shipped under a
+post-hoc 0.25% bar (recorded).
+
+Closed on evidence on 16 Sep (docs/adsb_v15/README.md, docs/adsb_v16/README.md): LIRF via
+ADS-B (label is not the pushback), LIRF fill mixture, first-point geometry, blend
+structure, complete-match scope, callsign fallback matching, airport specialists,
+ADS-B-residual target. Pending: OpenSky Trino access for LFPG surface data (requested).
 
 **v14** (`configs/adsb_v12_v5.json`, `ens_all_60`): v12's residual, then 60% of the
 mean of two full-data learners (LightGBM and CatBoost on the timeline bundle's
