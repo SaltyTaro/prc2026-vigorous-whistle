@@ -1,4 +1,6 @@
 {
+  "amended_at_utc": "2026-09-16T10:45:14+00:00",
+  "amendment": "Added before any v17 learner prediction existed (the four chains started 10:31-10:43 UTC and were mid-way through their first fold): one more ensemble, ens_v17_bag_ctr_c2 (one third LightGBM group, two thirds combination-CatBoost group), and its two candidates at w = 0.6 / 0.7. Reason: a descriptive scan on the recorded v15/v16 fold tables (learner-alone RMSE on the non-LIRF rows, no fitting) puts the best LightGBM share at 0.3-0.4 rather than 0.5: a * ens_v15_lgb + (1 - a) * cat_ctr2 gives 267.84 / 157.78 (seasonal / forward) at a = 0.3 and 268.20 / 157.92 at a = 0.5; with ens_v16_cat instead 268.19 / 158.50 at a = 0.3 and 268.51 / 158.53 at a = 0.5. The bar, the baseline, the learners and every other candidate are unchanged; the candidate count goes from 7 to 9.",
   "audit_used": false,
   "candidates": {
     "ens_v16_bag_60": {
@@ -71,6 +73,26 @@
       "features": "nb",
       "scope": "matched_no_lirf",
       "weight": 1.0
+    },
+    "ens_v17_bag_ctr_c2_60": {
+      "blend_with": {
+        "name": "ens_v17_bag_ctr_c2",
+        "scope": "all_no_lirf",
+        "weight": 0.6
+      },
+      "features": "nb",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v17_bag_ctr_c2_70": {
+      "blend_with": {
+        "name": "ens_v17_bag_ctr_c2",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "features": "nb",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
     }
   },
   "declared_at_utc": "2026-09-16T10:29:46+00:00",
@@ -123,6 +145,14 @@
       ],
       "rule": "mean of the two group means"
     },
+    "ens_v17_bag_ctr_c2": {
+      "members": [
+        "runs/adsb_v15/ens_v15_lgb",
+        "runs/adsb_v17/ens_v17_ctr",
+        "runs/adsb_v17/ens_v17_ctr"
+      ],
+      "rule": "one third of the LightGBM group mean plus two thirds of the combination-CatBoost group mean (amendment)"
+    },
     "ens_v17_cat": {
       "members": [
         "runs/adsb_full_cat",
@@ -157,7 +187,7 @@
       "rule": "mean of finite predictions (the four new CatBoosts; descriptive)"
     },
     "missing_members": "if a learner variant fails to complete on all three folds it is dropped from every ensemble that lists it and the drop is recorded in the selection; no other change",
-    "tool": "tools/ensemble_adsb_full.py (per-row mean of finite member predictions, fold by fold); nested means are built by listing members with multiplicities that reproduce the weighted group means exactly (ens_v17_bag: each of the six LightGBMs three times and each of the nine CatBoosts twice; ens_v17_bag_ctr: each LightGBM five times and each of the five CTR CatBoosts six times; ens_v17_bag_c2: each LightGBM three times and each of the nine CatBoosts four times); every learner predicts every non-LIRF row"
+    "tool": "tools/ensemble_adsb_full.py (per-row mean of finite member predictions, fold by fold); nested means are built by listing members with multiplicities that reproduce the weighted group means exactly (ens_v17_bag: each of the six LightGBMs three times and each of the nine CatBoosts twice; ens_v17_bag_ctr: each LightGBM five times and each of the five CTR CatBoosts six times; ens_v17_bag_c2: each LightGBM three times and each of the nine CatBoosts four times); every learner predicts every non-LIRF row; ens_v17_bag_ctr_c2: each LightGBM five times and each of the five CTR CatBoosts twelve times (90 entries)"
   },
   "execution": {
     "automatic_submission": false,
@@ -215,6 +245,15 @@
         "runs/adsb_v17/ens_v17_bag_ctr/forward/predictions.parquet"
       ],
       "ranking": "runs/adsb_v17/ens_v17_bag_ctr/refit/ranking_predictions.parquet"
+    },
+    "ens_v17_bag_ctr_c2": {
+      "column": "adsb_full",
+      "description": "ensemble ens_v17_bag_ctr_c2 as declared above (amendment)",
+      "development": [
+        "runs/adsb_v17/ens_v17_bag_ctr_c2/seasonal/predictions.parquet",
+        "runs/adsb_v17/ens_v17_bag_ctr_c2/forward/predictions.parquet"
+      ],
+      "ranking": "runs/adsb_v17/ens_v17_bag_ctr_c2/refit/ranking_predictions.parquet"
     }
   },
   "floor_seconds_rule": "minimum departure label over the refit months (-12), applied after the residual",
