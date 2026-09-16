@@ -82,14 +82,52 @@ residual; the residual model is exactly v12's. Baseline: the **v14 development
 predictions** (331.31 / 273.17 / 194.21 on Jan / Jul / Nov 2025). Rule: not worse than
 v14 on any month and mean ratio ≤ 0.997; lowest mean ratio wins; otherwise nothing.
 
-## Learner fits
+## Learner fits (01:41–04:30 UTC; every worker deallocated afterwards)
 
-_(filled in after the chains complete)_
+Fold scores below are on the rows the learners predict; "matched" / "unmatched" are
+the non-LIRF rows with and without a surface segment (the whole-set RMSE includes
+the untouched LIRF rows and is not informative). Reference: the v14 learners.
 
-## Development results and selection
+| variant | seasonal best iter | seasonal matched / unmatched | forward best iter | forward matched / unmatched | refit rounds |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| v14 LightGBM (`adsb_full_nolirf`) | 1,419 | 415.92 / 700.70 | 1,194 | 204.89 / 645.17 | 1,306 |
+| v14 CatBoost (`adsb_full_cat`) | 6,000 (cap) | 417.25 / 697.96 | 5,996 (cap) | 205.12 / 647.84 | 5,998 |
+| lgb_s16 / s17 / s18 | 1,710 / 1,738 / 1,600 | 415.84 / 415.84 / 416.00 | 1,217 / 1,207 / 1,019 | 205.29 / 204.83 / 205.32 | 1,464 / 1,472 / 1,310 |
+| lgb_deep | 2,728 | 415.80 / 699.95 | 2,018 | 203.7 / 644.6 | 2,373 |
+| lgb_clean | 1,665 | 415.03 / 700.04 | 1,546 | 204.31 / 644.20 | 1,606 |
+| cat_long | 9,742 | 416.68 / 697.42 | 12,694 | 203.74 / 647.17 | 11,218 |
+| cat_s16 | 13,870 | 416.34 / 696.64 | 15,284 | 202.23 / 645.88 | 14,577 |
+| lgb_adsbres | 1,696 | 424.63 / 701.29 | 1,464 | 216.10 / 645.91 | 1,580 |
+| cat_adsbres | 11,997 | 419.17 / 698.42 | 12,000 (cap) | 209.73 / 647.58 | 11,998 |
 
-_(filled in after `tools/run_adsb_v11.py --config configs/adsb_v15_v1.json`)_
+Single-variant gains are 0.1–0.7% on matched rows; the ADS-B-residual target is worse
+(the offset is garbage on the incomplete matches, which the label target simply ignores).
+Learner means alone on the non-LIRF rows of the two folds (seasonal / forward): v14
+pair 269.91 / 160.94; `ens_v15_lgb` 272.65 / 162.91; `ens_v15_cat` 270.14 / 162.10;
+**`ens_v15_bag` 268.81 / 159.18**; `ens_v15_seeds` 269.07 / 159.47; `ens_v15_all`
+269.52 / 159.69; `ens_v15_mix` 269.29 / 160.09; `ens_v15_res` 272.50 / 165.66. The
+nested means were built with the unchanged ensemble tool by listing members with
+multiplicities; each equals its two-level mean to 4e-12 s.
 
-## Export and verification
+## Development results and selection ([`development_results.json`](development_results.json))
 
-_(filled in after export)_
+`tools/run_adsb_v11.py --config configs/adsb_v15_v1.json`: the residual variant
+reproduces v12 exactly and the baseline reproduces v14 (331.309 / 273.169 / 194.212).
+Every label-target ensemble improves on v14 at w = 0.6; the ADS-B-residual ensemble
+loses at every weight. Best candidates versus v14 (Jan / Jul / Nov; paired-day 95%
+intervals in seconds):
+
+| candidate | Jan | Jul | Nov | mean | intervals |
+| --- | ---: | ---: | ---: | ---: | --- |
+| ens_v15_bag_60 | −0.121% | −0.177% | −0.346% | **−0.214%** | [−0.68, −0.27] / [−0.57, −0.40] / [−0.80, −0.55]; 91 of 92 days lower |
+| ens_v15_bag_70 | −0.070% | −0.119% | −0.395% | −0.195% | [−0.45, −0.12] / [−0.45, −0.19] / [−0.96, −0.62] |
+| ens_v15_seeds_60 | −0.096% | −0.132% | −0.295% | −0.174% | all below zero |
+| ens_v15_mix_60 | −0.136% | −0.097% | −0.263% | −0.165% | all below zero |
+| ens_v15_res_60 | +0.068% | +0.298% | +0.480% | +0.282% | — |
+
+`ens_v15_bag_60` improves every airport outside LIRF on every month (EDDM −0.9 / −0.4 /
+−1.1%, EHAM −0.7 / −0.5 / −0.8%, LSZH −0.4 / −1.0 / −0.7%, LTFM −0.3 / −0.3 / −0.5%),
+but its mean ratio 0.99786 is above the declared bar of 0.997. **The declared rule
+selects nothing**; no export was made under this declaration. The effect is real
+(intervals strictly negative, 91 of 92 days) and small: roughly 0.5 s on the ranking
+if it transfers like v12_v5 did.
