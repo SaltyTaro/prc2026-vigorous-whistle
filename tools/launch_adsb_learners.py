@@ -37,6 +37,8 @@ def job_command(spec: dict, output: str, fold: str) -> str:
         parts += ["--param", f"{key}={str(value).lower() if isinstance(value, bool) else value}"]
     if spec.get("target"):
         parts += ["--target", spec["target"]]
+    if spec.get("airports"):
+        parts += ["--airports", *spec["airports"]]
     if spec.get("rounds") is not None:
         parts += ["--rounds", str(spec["rounds"])]
     if spec.get("patience") is not None:
@@ -51,7 +53,7 @@ def main():
     parser.add_argument("command", choices=["launch", "status", "mirror"])
     parser.add_argument("host")
     parser.add_argument("names", nargs="*")
-    parser.add_argument("--config", type=Path, default=Path("configs/adsb_v15_v1.json"))
+    parser.add_argument("--config", type=Path, default=Path("configs/adsb_v16_v1.json"))
     parser.add_argument("--feature-cache", default="runs/adsb_full_cat/features", help="Existing remote ADS-B feature cache to link (built from the same matches and stands)")
     args = parser.parse_args()
     config = read_json(ROOT / args.config)

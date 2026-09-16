@@ -1,0 +1,718 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "ens_v15_bag_60": {
+      "blend_with": {
+        "name": "ens_v15_bag",
+        "scope": "all_no_lirf",
+        "weight": 0.6
+      },
+      "features": "nb",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v15_bag_70": {
+      "blend_with": {
+        "name": "ens_v15_bag",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "features": "nb",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v16_bag_60": {
+      "blend_with": {
+        "name": "ens_v16_bag",
+        "scope": "all_no_lirf",
+        "weight": 0.6
+      },
+      "features": "nb",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v16_bag_70": {
+      "blend_with": {
+        "name": "ens_v16_bag",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "features": "nb",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v16_bag_ap_60": {
+      "blend_with": {
+        "name": "ens_v16_bag_ap",
+        "scope": "all_no_lirf",
+        "weight": 0.6
+      },
+      "features": "nb",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v16_bag_ap_70": {
+      "blend_with": {
+        "name": "ens_v16_bag_ap",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "features": "nb",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v16_v15_ap_60": {
+      "blend_with": {
+        "name": "ens_v16_v15_ap",
+        "scope": "all_no_lirf",
+        "weight": 0.6
+      },
+      "features": "nb",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "ens_v16_v15_ap_70": {
+      "blend_with": {
+        "name": "ens_v16_v15_ap",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "features": "nb",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    }
+  },
+  "declared_at_utc": "2026-09-16T04:48:01+00:00",
+  "development_baseline": {
+    "blend_with": {
+      "name": "adsb_full_v14",
+      "scope": "all_no_lirf",
+      "weight": 0.6
+    },
+    "column": "residual_matched_no_lirf|nb",
+    "name": "v14 development predictions",
+    "parent": "v12_development_residuals",
+    "recipe": "v9 + 1.0 * v12 development residual on matched rows outside LIRF, then (1 - 0.6) * that + 0.6 * adsb_full_v14 (runs/adsb_full_ens, the v14 learner mean, out-of-sample per fold) on every row outside LIRF, floored; reproduces 331.31 / 273.17 / 194.21 on Jan / Jul / Nov 2025 (docs/adsb_v12_v5/development_results.json, ens_all_60)",
+    "scope": "matched_no_lirf",
+    "weight": 1.0
+  },
+  "development_months": [
+    "2025-01",
+    "2025-07",
+    "2025-11"
+  ],
+  "development_scheme": "leave-one-month-out over the three scoring months that hold out-of-sample v9 predictions (Jan and Jul 2025 from the seasonal fold, Nov 2025 from the forward fold); for each variant (scope, feature set) the residual model is fitted on the other two months' in-scope rows and applied to the held-out month's in-scope rows; every other row keeps v9",
+  "ensembles": {
+    "ens_v15_bag": {
+      "members": [
+        "runs/adsb_v15/ens_v15_lgb",
+        "runs/adsb_v15/ens_v15_cat"
+      ],
+      "rule": "as declared in configs/adsb_v15_v1.json (mean of the LightGBM group mean and the CatBoost group mean; runs/adsb_v15/ens_v15_bag, hash-bound below)"
+    },
+    "ens_v16_bag": {
+      "members": [
+        "runs/adsb_v15/ens_v15_lgb",
+        "runs/adsb_v16/ens_v16_cat"
+      ],
+      "rule": "mean of the two group means"
+    },
+    "ens_v16_bag_ap": {
+      "members": [
+        "runs/adsb_v15/ens_v15_lgb",
+        "runs/adsb_v16/ens_v16_cat",
+        "runs/adsb_v16/ens_v16_lgb_ap"
+      ],
+      "rule": "mean of the three group means"
+    },
+    "ens_v16_cat": {
+      "members": [
+        "runs/adsb_full_cat",
+        "runs/adsb_v15/cat_long",
+        "runs/adsb_v15/cat_s16",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v16/cat_d10"
+      ],
+      "rule": "mean of finite predictions"
+    },
+    "ens_v16_lgb_ap": {
+      "members": [
+        "runs/adsb_v16/lgb_ap_EDDF",
+        "runs/adsb_v16/lgb_ap_EDDM",
+        "runs/adsb_v16/lgb_ap_EGLL",
+        "runs/adsb_v16/lgb_ap_EHAM",
+        "runs/adsb_v16/lgb_ap_LEBL",
+        "runs/adsb_v16/lgb_ap_LEMD",
+        "runs/adsb_v16/lgb_ap_LFPG",
+        "runs/adsb_v16/lgb_ap_LSZH",
+        "runs/adsb_v16/lgb_ap_LTFM"
+      ],
+      "rule": "mean of finite predictions (each row has exactly one specialist)"
+    },
+    "ens_v16_v15_ap": {
+      "members": [
+        "runs/adsb_v15/ens_v15_bag",
+        "runs/adsb_v16/ens_v16_lgb_ap"
+      ],
+      "rule": "mean of the two group means"
+    },
+    "missing_members": "if a learner variant fails to complete on all three folds it is dropped from every ensemble that lists it and the drop is recorded in the selection; no other change",
+    "tool": "tools/ensemble_adsb_full.py (per-row mean of finite member predictions, fold by fold); nested means are built by listing members with multiplicities that reproduce the group means exactly (all label-target learners predict every non-LIRF row; the specialists together predict every non-LIRF row exactly once)"
+  },
+  "execution": {
+    "automatic_submission": false,
+    "azure_only": true,
+    "development_host": "workstation",
+    "learner_fits_on_workers": "tools/launch_adsb_learners.py --config configs/adsb_v16_v1.json (16 threads per fit, one chain per worker)",
+    "workers_used": [
+      "arcw1",
+      "arcw2",
+      "arcw4"
+    ]
+  },
+  "experiment_id": "prc2026-adsb-surface-residual-v16-v1",
+  "external_data": {
+    "extraction": "tools/adsb_extract_day.py keeps positions inside the ten aerodrome boxes that are on the ground or below 3,000 ft; per-day parquet with archive part hashes under data/external/adsblol/surface/ (the tool now skips and counts a corrupt archive member instead of aborting the day; the surface files used here predate that change and are unaffected)",
+    "labels_used_in_features": false,
+    "license": "Open Database License (ODbL) 1.0; feeder data CC0; licence files are inside every archive",
+    "matching": "tools/build_adsb_features.py: ICAO callsign (CALLSIGN_flt, else FLIGHT_mvt) and takeoff within the track's ground-to-air transition; stand positions learned label-free from covered segments of Jan/Mar/Apr/Jul/Nov 2025 (1,111 stands); the pass-2 matches and stands are exactly the v11 inputs, snapshotted under data/external/adsblol/matches_v11/ and hash-bound below",
+    "source": "adsb.lol globe_history daily archives (GitHub releases adsblol/globe_history_2025 and globe_history_2026, tags vYYYY.MM.DD-planes-readsb-prod-0)"
+  },
+  "extra_feature_tables": {
+    "adsb_full_v14": {
+      "column": "adsb_full",
+      "description": "the v14 learner mean (LightGBM + CatBoost, no LIRF), used only to reproduce the v14 development baseline",
+      "development": [
+        "runs/adsb_full_ens/seasonal/predictions.parquet",
+        "runs/adsb_full_ens/forward/predictions.parquet"
+      ],
+      "ranking": "runs/adsb_full_ens/refit/ranking_predictions.parquet"
+    },
+    "ens_v15_bag": {
+      "column": "adsb_full",
+      "description": "ensemble ens_v15_bag as declared above",
+      "development": [
+        "runs/adsb_v15/ens_v15_bag/seasonal/predictions.parquet",
+        "runs/adsb_v15/ens_v15_bag/forward/predictions.parquet"
+      ],
+      "ranking": "runs/adsb_v15/ens_v15_bag/refit/ranking_predictions.parquet"
+    },
+    "ens_v16_bag": {
+      "column": "adsb_full",
+      "description": "ensemble ens_v16_bag as declared above",
+      "development": [
+        "runs/adsb_v16/ens_v16_bag/seasonal/predictions.parquet",
+        "runs/adsb_v16/ens_v16_bag/forward/predictions.parquet"
+      ],
+      "ranking": "runs/adsb_v16/ens_v16_bag/refit/ranking_predictions.parquet"
+    },
+    "ens_v16_bag_ap": {
+      "column": "adsb_full",
+      "description": "ensemble ens_v16_bag_ap as declared above",
+      "development": [
+        "runs/adsb_v16/ens_v16_bag_ap/seasonal/predictions.parquet",
+        "runs/adsb_v16/ens_v16_bag_ap/forward/predictions.parquet"
+      ],
+      "ranking": "runs/adsb_v16/ens_v16_bag_ap/refit/ranking_predictions.parquet"
+    },
+    "ens_v16_v15_ap": {
+      "column": "adsb_full",
+      "description": "ensemble ens_v16_v15_ap as declared above",
+      "development": [
+        "runs/adsb_v16/ens_v16_v15_ap/seasonal/predictions.parquet",
+        "runs/adsb_v16/ens_v16_v15_ap/forward/predictions.parquet"
+      ],
+      "ranking": "runs/adsb_v16/ens_v16_v15_ap/refit/ranking_predictions.parquet"
+    }
+  },
+  "floor_seconds_rule": "minimum departure label over the refit months (-12), applied after the residual",
+  "incumbent": {
+    "official_rank": "1st of 148 at 00:51 UTC 16 September 2026 (second 245.0207)",
+    "official_rmse_seconds": 243.5805,
+    "recipe": "v14 = (1 - 0.6) * (v9 + 1.0 * v12 ADS-B residual on matched rows outside LIRF) + 0.6 * mean(LightGBM, CatBoost full-data learners without LIRF) on every row outside LIRF, floored (configs/adsb_v12_v5.json, ens_all_60)",
+    "submission": "vigorous-whistle_v14.parquet",
+    "submission_sha256": "8090314133572d0dde60e372097b43d8557af16740ae918d054b4923b1130e8f"
+  },
+  "learner_common": {
+    "december": "never read",
+    "excluded_airports": [
+      "LIRF"
+    ],
+    "features": "timeline bundle CORE + FLOWN + SURFACE (276) + 27 ADS-B features from data/external/adsblol/matches (matches2_*, stands.parquet: exactly the tables the v14 learners used; hashes recorded in every run record)",
+    "folds": "seasonal and forward (out-of-sample fold predictions), refit on the eleven 2025 months at the median best iteration",
+    "runner": "tools/run_adsb_learner.py",
+    "settings": "configs/timeline_v1.json (lightgbm / catboost blocks; parameter overrides above)",
+    "specialists": "the nine airport specialists together predict every row outside LIRF exactly once; their per-row mean (tools/ensemble_adsb_full.py, mean of finite values) is the specialist table ens_v16_lgb_ap",
+    "target": "label"
+  },
+  "learner_output_root": "runs/adsb_v16",
+  "learners": {
+    "cat_ctr2": {
+      "kind": "catboost",
+      "note": "CatBoost with two-way categorical combinations (e.g. stand x runway, airport x operator); otherwise the cat_s16 recipe with the original seed",
+      "parameters": {
+        "max_ctr_complexity": 2
+      },
+      "rounds": 20000,
+      "seed": 20260915
+    },
+    "cat_d10": {
+      "kind": "catboost",
+      "note": "CatBoost depth 10 (capacity), the cat_s16 seed",
+      "parameters": {
+        "depth": 10
+      },
+      "rounds": 20000,
+      "seed": 20260916
+    },
+    "lgb_ap_EDDF": {
+      "airports": [
+        "EDDF"
+      ],
+      "kind": "lightgbm",
+      "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+      "parameters": {},
+      "seed": 20260915
+    },
+    "lgb_ap_EDDM": {
+      "airports": [
+        "EDDM"
+      ],
+      "kind": "lightgbm",
+      "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+      "parameters": {},
+      "seed": 20260915
+    },
+    "lgb_ap_EGLL": {
+      "airports": [
+        "EGLL"
+      ],
+      "kind": "lightgbm",
+      "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+      "parameters": {},
+      "seed": 20260915
+    },
+    "lgb_ap_EHAM": {
+      "airports": [
+        "EHAM"
+      ],
+      "kind": "lightgbm",
+      "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+      "parameters": {},
+      "seed": 20260915
+    },
+    "lgb_ap_LEBL": {
+      "airports": [
+        "LEBL"
+      ],
+      "kind": "lightgbm",
+      "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+      "parameters": {},
+      "seed": 20260915
+    },
+    "lgb_ap_LEMD": {
+      "airports": [
+        "LEMD"
+      ],
+      "kind": "lightgbm",
+      "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+      "parameters": {},
+      "seed": 20260915
+    },
+    "lgb_ap_LFPG": {
+      "airports": [
+        "LFPG"
+      ],
+      "kind": "lightgbm",
+      "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+      "parameters": {},
+      "seed": 20260915
+    },
+    "lgb_ap_LSZH": {
+      "airports": [
+        "LSZH"
+      ],
+      "kind": "lightgbm",
+      "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+      "parameters": {},
+      "seed": 20260915
+    },
+    "lgb_ap_LTFM": {
+      "airports": [
+        "LTFM"
+      ],
+      "kind": "lightgbm",
+      "note": "airport specialist: timeline_v1 LightGBM parameters fitted, early-stopped and predicting only this airport's rows (NaN elsewhere)",
+      "parameters": {},
+      "seed": 20260915
+    }
+  },
+  "matches_dir": "data/external/adsblol/matches_v11",
+  "minimum_mean_improvement_fraction": 0.003,
+  "parents": {
+    "adsb_extract_code": {
+      "path": "tools/adsb_extract_day.py",
+      "sha256": "b737b62c9dac421a0ca5c6662ec8a3eabd0801f012211bd48ab3a87af7d5c796"
+    },
+    "adsb_feature_code": {
+      "path": "src/prc2026_adsb/features.py",
+      "sha256": "cff4c56ae3a70fa8dee35453c42d26dd07f1bb6783ff0c18023aa4d3e46469b5"
+    },
+    "adsb_full_cat_forward_predictions": {
+      "path": "runs/adsb_full_cat/forward/predictions.parquet",
+      "sha256": "276f504e494f90c345a4ce48748458fbeb982d1f953e12fbf496e1b15558d357"
+    },
+    "adsb_full_cat_forward_run": {
+      "path": "runs/adsb_full_cat/forward/run.json",
+      "sha256": "533af1ccf1ac48c7ccbf83ec9439ef7ff47a41e840768440ab8693d8be573860"
+    },
+    "adsb_full_cat_refit_predictions": {
+      "path": "runs/adsb_full_cat/refit/ranking_predictions.parquet",
+      "sha256": "52d898a19defda3485f7074bf385d7412fd24ad0226a0162fc5ee4da21c3445f"
+    },
+    "adsb_full_cat_refit_run": {
+      "path": "runs/adsb_full_cat/refit/run.json",
+      "sha256": "4c3ac298596eebd5b9c2e677e3692125ca9893d767362aa8ade37a9e9a52a841"
+    },
+    "adsb_full_cat_seasonal_predictions": {
+      "path": "runs/adsb_full_cat/seasonal/predictions.parquet",
+      "sha256": "81b8ce4ec4a51cf7e80b9e5ab594c67d7db394edc8450557307e412f3ca40fcf"
+    },
+    "adsb_full_cat_seasonal_run": {
+      "path": "runs/adsb_full_cat/seasonal/run.json",
+      "sha256": "ed94396d25266cd1420d027f80389b87d209da2127ef1ccf697a365183acf33b"
+    },
+    "adsb_full_nolirf_forward_predictions": {
+      "path": "runs/adsb_full_nolirf/forward/predictions.parquet",
+      "sha256": "fa6354b702d9a448f59fbab705d6ba0562831e337ed961c632776c0e58a30e55"
+    },
+    "adsb_full_nolirf_forward_run": {
+      "path": "runs/adsb_full_nolirf/forward/run.json",
+      "sha256": "4aaeab1923ce29839401c6487c301936b3a9e667b67e5e34335f1e80a643723a"
+    },
+    "adsb_full_nolirf_refit_predictions": {
+      "path": "runs/adsb_full_nolirf/refit/ranking_predictions.parquet",
+      "sha256": "219c1beac964455f35453c0339776fe15cc72d7ed52697e6ac7a9bf0ab5dccf6"
+    },
+    "adsb_full_nolirf_refit_run": {
+      "path": "runs/adsb_full_nolirf/refit/run.json",
+      "sha256": "e39f2ab4a2742ea52586426ad9a8ad63185dfc5d77367f82a7e51d1e5948c285"
+    },
+    "adsb_full_nolirf_seasonal_predictions": {
+      "path": "runs/adsb_full_nolirf/seasonal/predictions.parquet",
+      "sha256": "ba654faa732f85f9690b061f9b3d60cf10ad6eac3f370f6c9b284bbe2186cc98"
+    },
+    "adsb_full_nolirf_seasonal_run": {
+      "path": "runs/adsb_full_nolirf/seasonal/run.json",
+      "sha256": "1c468d303224bd09273e99b66a32e80fd8505ab528c14741e05083a612c28043"
+    },
+    "adsb_match_code": {
+      "path": "tools/build_adsb_features.py",
+      "sha256": "a5f678a0426e28828b642ae9322e097b518dda235c3de42cbaa415e975def585"
+    },
+    "cat_long_forward": {
+      "path": "runs/adsb_v15/cat_long/forward/predictions.parquet",
+      "sha256": "29ae03dae931fdf44d87c1c642bb70432d7c1dbe9159fa21f66d5217569d0708"
+    },
+    "cat_long_refit": {
+      "path": "runs/adsb_v15/cat_long/refit/ranking_predictions.parquet",
+      "sha256": "e20e4449cc116837bf008ec710be31a218d1b92f7bdf12b5ebd8840a518ac3aa"
+    },
+    "cat_long_seasonal": {
+      "path": "runs/adsb_v15/cat_long/seasonal/predictions.parquet",
+      "sha256": "5193f7f3f0a6e4fc289a4c5628e398b6c8779ddf51913e6a99a6ea800e376723"
+    },
+    "cat_s16_forward": {
+      "path": "runs/adsb_v15/cat_s16/forward/predictions.parquet",
+      "sha256": "787760539b10665fbc53402a925c7b8893be412083ebe41398ab4c83ec4c9870"
+    },
+    "cat_s16_refit": {
+      "path": "runs/adsb_v15/cat_s16/refit/ranking_predictions.parquet",
+      "sha256": "68da82307c870fd0869ec78c72298cfebbfa72329cf04d3acb057f072c7aa7ed"
+    },
+    "cat_s16_seasonal": {
+      "path": "runs/adsb_v15/cat_s16/seasonal/predictions.parquet",
+      "sha256": "df047c12b19f8e73301a183ff575b2ec847b9c9de33996089a84b9a1b7a8228a"
+    },
+    "ens_v15_bag_forward": {
+      "path": "runs/adsb_v15/ens_v15_bag/forward/predictions.parquet",
+      "sha256": "641a7cbdc3f67fdb14faac4d26c42da6290f322ff146f616ec4df3db61ca1085"
+    },
+    "ens_v15_bag_refit": {
+      "path": "runs/adsb_v15/ens_v15_bag/refit/ranking_predictions.parquet",
+      "sha256": "952087207a322bab901c8e551f3f3942c581343ae79ecf5c40dd7a3f525d961c"
+    },
+    "ens_v15_bag_run": {
+      "path": "runs/adsb_v15/ens_v15_bag/run.json",
+      "sha256": "78ceeec49a5c3a1b9750647dded926536e0648b691b8f84d85dc3cd6863caaa5"
+    },
+    "ens_v15_bag_seasonal": {
+      "path": "runs/adsb_v15/ens_v15_bag/seasonal/predictions.parquet",
+      "sha256": "3a2136722793849057523399377f3144cc4032902e62498884a0563921f02eea"
+    },
+    "ens_v15_lgb_forward": {
+      "path": "runs/adsb_v15/ens_v15_lgb/forward/predictions.parquet",
+      "sha256": "ad98b3b889fe53dd9defb86f8a5032c62978de4bbf75a90feb4add710bd14cda"
+    },
+    "ens_v15_lgb_refit": {
+      "path": "runs/adsb_v15/ens_v15_lgb/refit/ranking_predictions.parquet",
+      "sha256": "daa3e4038391892f19533aadc74fb3b0c245267f02fca7e76e8d9d2c90f2e17d"
+    },
+    "ens_v15_lgb_seasonal": {
+      "path": "runs/adsb_v15/ens_v15_lgb/seasonal/predictions.parquet",
+      "sha256": "d801365b734c6a7ce4d674a8d203c3916a00f18ba5f03236f45e49844617cac0"
+    },
+    "ensemble_code": {
+      "path": "tools/ensemble_adsb_full.py",
+      "sha256": "17fdbbad1c87e9cefaaf292d36cda7fa6ee020e28ac3719baf2b0e559a7283eb"
+    },
+    "ensemble_forward_predictions": {
+      "path": "runs/adsb_full_ens/forward/predictions.parquet",
+      "sha256": "0e2b18630eeeca91f7d04c212bfdb57ddf8010dd654c64bb51d0c5eafa7a1ad4"
+    },
+    "ensemble_refit_predictions": {
+      "path": "runs/adsb_full_ens/refit/ranking_predictions.parquet",
+      "sha256": "7fd4b84044fc5bb4bc0b86a9fa7a80329fc5d3276409625984e8b3cedfdf7bf9"
+    },
+    "ensemble_run": {
+      "path": "runs/adsb_full_ens/run.json",
+      "sha256": "481bb8edf087d2bd357dc88beea64b9ffb162bd6d008e258b90c51230359477d"
+    },
+    "ensemble_seasonal_predictions": {
+      "path": "runs/adsb_full_ens/seasonal/predictions.parquet",
+      "sha256": "7669dec6772815c4cb8f1c1ef2e4f8c150bfb69e481fd88f6258cffee5e508d1"
+    },
+    "incumbent_ranking_predictions": {
+      "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/ranking_predictions.parquet",
+      "sha256": "cf0c62b5288de74a8262dbb07705e75792bc92059b1e0bb8d66ac0681ec875be"
+    },
+    "learner_code_run_adsb_full": {
+      "path": "tools/run_adsb_full.py",
+      "sha256": "bf84441b5eccbb616e006a6fb7a5da7725f8847dc4fea58a20105cc7a527fc65"
+    },
+    "learner_code_run_adsb_full_nm": {
+      "path": "tools/run_adsb_full_nm.py",
+      "sha256": "14045da02c1e41e76145a13df5ddb17063d1cafdb7e0f5b6abd5ae9680ee1e9f"
+    },
+    "learner_code_run_adsb_learner": {
+      "path": "tools/run_adsb_learner.py",
+      "sha256": "72b9aec967e75a455c6544df8645a996f7e4347bf3d9fcd04ea6945b19fbcb07"
+    },
+    "learner_launcher": {
+      "path": "tools/launch_adsb_learners.py",
+      "sha256": "348083ba53979eecd734ef4e6eab9918f5c1f9b6d1af977b0b11494ad1e37670"
+    },
+    "lirf_mixture_selection": {
+      "path": "runs/lirf_mixture/selection.json",
+      "sha256": "67c95f9e89e57d9c8b759b95d82916533684c8969a2655968d7401b874b10aa7"
+    },
+    "matches_2025-01": {
+      "path": "data/external/adsblol/matches_v11/matches2_2025-01.parquet",
+      "sha256": "4a275586729c00bf676e3f3184669ce0f06df40d31fedd2b14eb5ebbc127075f"
+    },
+    "matches_2025-07": {
+      "path": "data/external/adsblol/matches_v11/matches2_2025-07.parquet",
+      "sha256": "6dbf3693870ccdcb25a87789e634aa95226fd06b6d57d0fa5113b264ac8cc9d7"
+    },
+    "matches_2025-11": {
+      "path": "data/external/adsblol/matches_v11/matches2_2025-11.parquet",
+      "sha256": "8d1cd1017659feb9c88bccf34b16ab166d2bb4aef8c2d823f87ecff50212b2e6"
+    },
+    "matches_2026-01": {
+      "path": "data/external/adsblol/matches_v11/matches2_2026-01.parquet",
+      "sha256": "6bf7cfa259bc26e048d1ba60a60fd9520aade34b72d64824ff8306d25c6ff2cb"
+    },
+    "matches_2026-07": {
+      "path": "data/external/adsblol/matches_v11/matches2_2026-07.parquet",
+      "sha256": "1947f2002dcaa765ed5f2b82f73cfe0f248e18e8f4b45098fe7a060dc56c026d"
+    },
+    "scratch_builder": {
+      "path": "tools/build_adsb_scratch.py",
+      "sha256": "478d5d48b9ec93411886f8d8d481c2a0847d3bc354f32b48bb119dc52d81c285"
+    },
+    "stands": {
+      "path": "data/external/adsblol/matches_v11/stands.parquet",
+      "sha256": "63502c9465e3742d537fca30bd3c03622623a3be047eb01ba068292a249d995d"
+    },
+    "timeline_settings": {
+      "path": "configs/timeline_v1.json",
+      "sha256": "0f3ccec8ae1e23d24eb8eef8c536eeeb8b1439b7e7fc248dccde37732ba8ddd3"
+    },
+    "v11_export": {
+      "path": "runs/submissions/vigorous-whistle_v11.parquet",
+      "sha256": "98af50be5fb49d6cc42c8390b26be3220ba2ae24b693fc97c437ceb695c66b09"
+    },
+    "v11_receipt": {
+      "path": "runs/submissions/vigorous-whistle_v11.receipt.json",
+      "sha256": "681099293bb027e608105f8ead47f4596ec5e0b1ccd37a7a36c896235b56c52b"
+    },
+    "v12_development_residuals": {
+      "path": "runs/adsb_v12_v2/development_residuals.parquet",
+      "sha256": "4c174aea141e796b693f8e066d02344460c0e524bf05901440c8e300c580b8ca"
+    },
+    "v12_export": {
+      "path": "runs/submissions/vigorous-whistle_v12.parquet",
+      "sha256": "f3ae96a47a3f9c417d11d93285a393ccd5e7411c9d99b65849867980914471e6"
+    },
+    "v12_receipt": {
+      "path": "runs/submissions/vigorous-whistle_v12.receipt.json",
+      "sha256": "c0ad739b72797a619ffbcc08065ee95bd56970d44c14e2debb28c2800910b844"
+    },
+    "v12_selection": {
+      "path": "runs/adsb_v12_v2/selection.json",
+      "sha256": "918631283768c182450f2672402999412112ff8777b3b4765bd8e1772ad20f27"
+    },
+    "v14_development_residuals": {
+      "path": "runs/adsb_v12_v5/development_residuals.parquet",
+      "sha256": "2e7f775870439cc0997dca0a214f4a4b79c6848d5a1178275b5ead67f4ba2b18"
+    },
+    "v14_export": {
+      "path": "runs/submissions/vigorous-whistle_v14.parquet",
+      "sha256": "8090314133572d0dde60e372097b43d8557af16740ae918d054b4923b1130e8f"
+    },
+    "v14_receipt": {
+      "path": "runs/submissions/vigorous-whistle_v14.receipt.json",
+      "sha256": "22df6bbab18ded7a1ceb9c7c63d28aa6aeb3276e9a0d290de35f3e747517c52e"
+    },
+    "v14_selection": {
+      "path": "runs/adsb_v12_v5/selection.json",
+      "sha256": "d2d2e695e22aeb32acdf0a7dedb70f48b6952927c1e2fb388dae4533f1f65855"
+    },
+    "v15_selection": {
+      "path": "runs/adsb_v15/selection.json",
+      "sha256": "e2ba3915aa26d6e1e3496962b26444069d043e832f23dc45caee2977eaa592f5"
+    },
+    "v9_export": {
+      "path": "runs/submissions/vigorous-whistle_v9.parquet",
+      "sha256": "25d3b296a2753852144f53a2c36a1e539031dbd6ef35b8be928d9e1fa7363521"
+    },
+    "v9_receipt": {
+      "path": "runs/submissions/vigorous-whistle_v9.receipt.json",
+      "sha256": "8b0bc7d79f24c839138787ebab8d45f5dc839b89807d6a2e7c1318729dc7ae67"
+    }
+  },
+  "prediction_postprocess": "adsb-surface-residual-v16-v1",
+  "prior_evidence": "Declared after adsb_v15_v1 selected nothing: its best candidate ens_v15_bag_60 improved v14 by 0.121 / 0.177 / 0.346% (mean 0.214%, paired-day intervals all below zero, 91 of 92 days), below the 0.3% bar. Learner-alone RMSE on the non-LIRF rows (seasonal / forward): v14 pair 269.91 / 160.94, ens_v15_bag 268.81 / 159.18; the individual v15 variants gained 0.1-0.7% on matched rows, the ADS-B-residual target lost. The items here are learner STRUCTURE rather than seeds: airport specialists (the v7 base gives its per-airport LightGBM 50% of the weight; ADS-B stand/runway/coverage interactions are airport-specific), CatBoost two-way categorical combinations (a learned stand x runway offset map for dark segments; the earlier CatBoosts use max_ctr_complexity 1) and CatBoost depth 10 (cat_s16, the best single learner, was still improving at 15k rounds). No learner listed here had been fitted before this declaration. Diagnostics closed on evidence on 16 September and disclosed in docs/adsb_v15/README.md: LIRF residual, LIRF fill mixture, first-point geometry, blend structure, complete-match scope, callsign fallback matching.",
+  "refit_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11"
+  ],
+  "residual_model": {
+    "applies_to": "the residual model is exactly v12's (nb feature set, matched rows outside LIRF, weight 1.0); each candidate then blends the result with a declared ensemble, value = (1 - w) * (v9 + residual) + w * ensemble, on every row outside LIRF; rows outside both scopes keep v9 exactly.",
+    "blend": "post-hoc convex combination with the extra table adsb_full (candidate_values in tools/run_adsb_v11.py); a NaN learner value leaves the row unblended",
+    "categorical": [
+      "airport",
+      "stand",
+      "runway"
+    ],
+    "feature_sets": {
+      "nb": [
+        "airport",
+        "v9",
+        "proxy_s",
+        "schedule_interval_s",
+        "hour",
+        "stand",
+        "runway",
+        "adsb_gate",
+        "adsb_first_point_s",
+        "adsb_motion_s",
+        "adsb_first_gs_kt",
+        "adsb_first_dist_stand_m",
+        "adsb_stop_seconds",
+        "adsb_taxi_path_m",
+        "adsb_taxi_stops",
+        "adsb_taxi_stopped_s",
+        "adsb_slow_start_s",
+        "adsb_gap_before_s",
+        "adsb_turnaround_s",
+        "adsb_anchor_dist_stand_m",
+        "adsb_last_ground_s",
+        "adsb_points",
+        "nb_runway_10m_count",
+        "nb_runway_10m_median_taxi_s",
+        "nb_runway_10m_max_taxi_s",
+        "nb_runway_10m_median_stopped_s",
+        "nb_airport_10m_count",
+        "nb_airport_10m_median_taxi_s",
+        "nb_runway_30m_count",
+        "nb_runway_30m_median_taxi_s",
+        "nb_runway_30m_median_first_point_s",
+        "nb_runway_prev_taxi_s",
+        "nb_runway_next_taxi_s"
+      ]
+    },
+    "features": [
+      "airport",
+      "v9",
+      "proxy_s",
+      "schedule_interval_s",
+      "hour",
+      "stand",
+      "runway",
+      "adsb_gate",
+      "adsb_first_point_s",
+      "adsb_motion_s",
+      "adsb_first_gs_kt",
+      "adsb_first_dist_stand_m",
+      "adsb_stop_seconds",
+      "adsb_taxi_path_m",
+      "adsb_taxi_stops",
+      "adsb_taxi_stopped_s",
+      "adsb_slow_start_s",
+      "adsb_gap_before_s",
+      "adsb_turnaround_s",
+      "adsb_anchor_dist_stand_m",
+      "adsb_last_ground_s",
+      "adsb_points",
+      "nb_runway_10m_count",
+      "nb_runway_10m_median_taxi_s",
+      "nb_runway_10m_max_taxi_s",
+      "nb_runway_10m_median_stopped_s",
+      "nb_airport_10m_count",
+      "nb_airport_10m_median_taxi_s",
+      "nb_runway_30m_count",
+      "nb_runway_30m_median_taxi_s",
+      "nb_runway_30m_median_first_point_s",
+      "nb_runway_prev_taxi_s",
+      "nb_runway_next_taxi_s"
+    ],
+    "kind": "lightgbm",
+    "neighbour_features": true,
+    "params": {
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1,
+      "deterministic": true,
+      "feature_fraction": 0.9,
+      "force_row_wise": true,
+      "lambda_l2": 10.0,
+      "learning_rate": 0.03,
+      "min_data_in_leaf": 100,
+      "num_leaves": 63,
+      "num_threads": 8,
+      "objective": "regression",
+      "seed": 20260915,
+      "verbose": -1
+    },
+    "prediction": "v9 + weight * residual on in-scope rows, then floor",
+    "rounds_rule": "development: rounds per held-out month and variant (scope, feature set) come from a 5-fold day-grouped inner split of the two training months (median best iteration, 200 rounds patience, at most 4000); the held-out month is never used for rounds; export: median of the selected variant's three development round counts",
+    "scopes": {
+      "all_no_lirf": "every departure at any airport except LIRF: a blend scope only (unmatched rows there become (1 - w) * v9 + w * adsb_full)",
+      "matched_no_lirf": "departures with a matched ADS-B surface segment at any airport except LIRF (adsb_matched == 1 and airport != LIRF): the residual model's training and prediction scope (exactly v12)"
+    },
+    "target": "label minus v9 prediction"
+  },
+  "seed": 20260915,
+  "selection": "For each candidate (ensemble, blend weight w), RMSE of the blended prediction on each held-out month versus the v14 development prediction on the same rows (all departures of the month). A candidate is eligible when it is not worse than v14 on ANY month (ratio <= 1.0) and its mean ratio over the three months is at most 0.997. Choose the eligible candidate with the lowest mean ratio to v14; otherwise select nothing. The ens_v15_bag candidates are included so that the v15 result is re-scored under this declaration; they cannot qualify on their own (mean ratio 0.99786 recorded in runs/adsb_v15/selection.json). Ratios to v9, per-airport tables and the paired-day bootstrap interval of the RMSE difference to v14 are descriptive only.",
+  "target_filter": "none",
+  "threads": 8
+}
