@@ -41,8 +41,17 @@ July; LTFM has no surface data at all; LFPG is 21% matched.
    before takeoff: the track is the *arrival's* landing rollout or a departure segment
    cut short by coverage. The learners saw thousands of such rows in 2025 (LEMD July
    2025: 87% of its matches) and carry `adsb_last_ground_s`, so they have learned the
-   pattern; a residual scope restricted to complete matches is tested below.
-6. **Seed variance of the LightGBM learner is small** (forward fold 389.054 vs 389.047,
+   pattern. Restricting the residual scope to complete matches is clearly worse
+   (incomplete rows 196.6 → 215.5 s on Jan, 232.0 → 243.5 on Jul, 196.8 → 205.9 on Nov;
+   whole months +0.20% / +0.24% / +0.28%): the arrival rollout and the partial
+   segment carry turnaround information that the models already use. No change.
+6. **LIRF fill mixture with ADS-B** (a second LIRF attempt, cross-month): a fill
+   classifier on the non-population matched rows (operator, type, hour, schedule
+   interval, ADS-B-observed delay, NM clocks, stand, runway; AUC 0.79 Jul→Nov, 0.82
+   Nov→Jul) with the exact fill value `MVT − SCHED` and a clean normal component is
+   much worse than v9's implicit hedge (+2.75% / +1.98% on the month; +0.60% / +0.37%
+   even at half weight). Closed.
+7. **Seed variance of the LightGBM learner is small** (forward fold 389.054 vs 389.047,
    matched rows 205.29 vs 204.89), so seed bagging alone cannot buy much; the longer
    CatBoost (the v14 CatBoost hit its 6,000-round cap on both folds while still
    improving) and diversity are where the remaining learner gain is.
