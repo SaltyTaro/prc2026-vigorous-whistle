@@ -1,4 +1,6 @@
 {
+  "amended_at_utc": "2026-09-16T05:24:18+00:00",
+  "amendment": "05:12 UTC, before any ensemble or candidate was scored: the LTFM specialist's fold record failed on a NaN matched-row RMSE (LTFM has no ADS-B matches); the runner now records None there and lgb_ap_LTFM is refitted with the amended runner (hash recorded). The launcher's chain-submission mechanics changed (script file, detached stdin) without changing any job command. Nothing else changed.",
   "audit_used": false,
   "candidates": {
     "ens_v15_bag_60": {
@@ -495,12 +497,19 @@
       "sha256": "14045da02c1e41e76145a13df5ddb17063d1cafdb7e0f5b6abd5ae9680ee1e9f"
     },
     "learner_code_run_adsb_learner": {
-      "path": "tools/run_adsb_learner.py",
+      "note": "snapshot of the runner as declared; eight specialists, cat_ctr2 and cat_d10 run this version",
+      "path": "docs/adsb_v16/run_adsb_learner_declared.py",
       "sha256": "72b9aec967e75a455c6544df8645a996f7e4347bf3d9fcd04ea6945b19fbcb07"
     },
+    "learner_code_run_adsb_learner_amended": {
+      "note": "one-line fix: the fold record's matched/unmatched RMSE is None instead of NaN when the mask holds no finite prediction (the LTFM specialist crashed after writing its predictions because LTFM has no matched rows); lgb_ap_LTFM is refitted with this version; no model, feature or fold changes",
+      "path": "tools/run_adsb_learner.py",
+      "sha256": "576c328379a879abc3f101cde2965808b47fa60f9a9a5d1f173f227c09d8a6a8"
+    },
     "learner_launcher": {
+      "note": "the launcher now writes each worker chain to a script file with a detached stdin (tooling only; job commands unchanged)",
       "path": "tools/launch_adsb_learners.py",
-      "sha256": "348083ba53979eecd734ef4e6eab9918f5c1f9b6d1af977b0b11494ad1e37670"
+      "sha256": "ab214b93632b7cc02afa50f2024e5f4c9c79908dc8cac5fe37745685b503f275"
     },
     "lirf_mixture_selection": {
       "path": "runs/lirf_mixture/selection.json",
