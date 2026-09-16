@@ -4,6 +4,11 @@ Generalises run_adsb_full.py (kept unchanged while configs/adsb_v12_v3.json bind
 `--target label|nm_residual`. With the NM-residual target, rows without the NM clock are neither fitted nor predicted (NaN).
 The output column is always `adsb_full`; the residual stage binds each table under its own name.
 
+`--param key=value` (repeatable) overrides single learner parameters, `--rounds` the
+round cap and `--patience` the early-stopping patience; `--max-label` drops fitting and
+early-stopping rows whose label exceeds the value (every row is still predicted). All
+overrides are recorded in the run's inputs; the defaults reproduce the earlier runs.
+
 `--fold seasonal|forward`: fit on the fold's fit partition (early stopping on its
 early-stop partition), predict the fold's score partition, and save the
 out-of-sample predictions (`predictions.parquet`: ID, adsb_full) with a run
@@ -42,6 +47,19 @@ BUNDLE_NAMES = [*CORE_NAMES, *FLOWN_NAMES, *SURFACE_NAMES]  # the timeline campa
 ADSB_NAMES = [*FEATURE_NAMES, *NEIGHBOUR_NAMES]
 TRAINING_MONTHS = [f"2025-{m:02}" for m in range(1, 12)]
 RANKING_MONTHS = ["2026-01", "2026-07"]
+
+
+def parse_value(raw: str):
+    """Numbers and booleans from the command line; anything else stays a string."""
+    if raw.lower() in ("true", "false"):
+        return raw.lower() == "true"
+    try:
+        return int(raw)
+    except ValueError:
+        try:
+            return float(raw)
+        except ValueError:
+            return raw
 
 
 def code_receipt() -> dict:
@@ -168,17 +186,30 @@ def main():
     parser.add_argument("--threads", type=int, default=16)
     parser.add_argument("--seed", type=int, default=20260915)
     parser.add_argument("--exclude-airports", nargs="*", default=[], help="Airports left out of fitting and early stopping (their rows are still predicted)")
+    parser.add_argument("--param", action="append", default=[], metavar="KEY=VALUE", help="Override one learner parameter (repeatable; numbers and true/false are parsed)")
+    parser.add_argument("--rounds", type=int, help="Override the declaration's round cap")
+    parser.add_argument("--patience", type=int, help="Override the declaration's early-stopping patience")
+    parser.add_argument("--max-label", type=float, help="Fit and early-stop only on rows whose label is at most this value (every row is still predicted)")
     args = parser.parse_args()
     started = time.time()
     out = ROOT / args.output / args.fold
     if (out / "run.json").exists():
         raise ValueError(f"Preserve the existing run: {out}")
-    settings = read_json(ROOT / args.settings)[args.kind]
+    settings = dict(read_json(ROOT / args.settings)[args.kind])
     params = dict(settings["parameters"])
     if args.kind == "lightgbm":
         params.update(num_threads=args.threads, seed=args.seed, feature_fraction_seed=args.seed, bagging_seed=args.seed, data_random_seed=args.seed, metric="rmse")
     else:
         params.update(thread_count=args.threads, random_seed=args.seed)
+    overrides = {}
+    for item in args.param:
+        key, _, raw = item.partition("=")
+        overrides[key] = parse_value(raw)
+    params.update(overrides)
+    if args.rounds is not None:
+        settings["rounds"] = args.rounds
+    if args.patience is not None:
+        settings["early_stopping_rounds"] = args.patience
     matches_root = ROOT / args.matches_dir
     stands = pd.read_parquet(matches_root / "stands.parquet")
     base = ROOT / read_json(ROOT / "data/timeline/latest.json")["bundle"]
@@ -191,13 +222,17 @@ def main():
     names = [*BUNDLE_NAMES, *ADSB_NAMES]
     inputs = {"bundle_id": manifest["bundle_id"], "stands_sha256": sha256_file(matches_root / "stands.parquet"),
               "matches_sha256": {m: sha256_file(matches_root / f"matches2_{m}.parquet") for m in TRAINING_MONTHS + RANKING_MONTHS},
-              "code": code_receipt(), "kind": args.kind, "parameters": params, "features": len(names), "adsb_features": ADSB_NAMES, "excluded_airports": sorted(args.exclude_airports), "target": args.target}
+              "code": code_receipt(), "kind": args.kind, "parameters": params, "features": len(names), "adsb_features": ADSB_NAMES, "excluded_airports": sorted(args.exclude_airports), "target": args.target,
+              "parameter_overrides": overrides, "rounds_cap": settings["rounds"], "early_stopping_rounds": settings["early_stopping_rounds"], "max_label": args.max_label, "seed": args.seed}
 
     def clock_mask(frame: pd.DataFrame) -> np.ndarray:
         return frame["nmclock_available"].to_numpy(dtype=float) == 1 if args.target == "nm_residual" else np.ones(len(frame), dtype=bool)
 
-    def keep(frame: pd.DataFrame) -> np.ndarray:
-        return clock_mask(frame) & ~frame["airport"].isin(args.exclude_airports).to_numpy()
+    def keep(frame: pd.DataFrame, labels: np.ndarray | None = None) -> np.ndarray:
+        mask = clock_mask(frame) & ~frame["airport"].isin(args.exclude_airports).to_numpy()
+        if args.max_label is not None and labels is not None:
+            mask &= labels <= args.max_label
+        return mask
 
     def offset(frame: pd.DataFrame) -> np.ndarray:
         return frame["nmclock_proxy_s"].to_numpy(dtype=float) if args.target == "nm_residual" else np.zeros(len(frame))
@@ -211,7 +246,7 @@ def main():
                 raise ValueError("Protected split populations changed.")
             parts[role] = attach(features, tables, catalog)
             truths[role] = aligned_truth(parts[role], truth)[TARGET].to_numpy(dtype=float)
-        fit_keep, stop_keep = keep(parts["fit"]), keep(parts["early_stop"])
+        fit_keep, stop_keep = keep(parts["fit"], truths["fit"]), keep(parts["early_stop"], truths["early_stop"])
         x, vocab = encode(parts["fit"][fit_keep].reset_index(drop=True), names)
         xs, _ = encode(parts["early_stop"][stop_keep].reset_index(drop=True), names, vocab)
         booster, history = fit(args.kind, params, x, truths["fit"][fit_keep] - offset(parts["fit"])[fit_keep], settings["rounds"], xs,
@@ -240,7 +275,8 @@ def main():
         folds = {f: read_json(ROOT / args.output / f / "run.json") for f in ["seasonal", "forward"]}
         for f, rec in folds.items():
             if (rec["inputs"]["code"]["sha256"] != inputs["code"]["sha256"] or rec["inputs"]["stands_sha256"] != inputs["stands_sha256"] or rec["inputs"]["matches_sha256"] != inputs["matches_sha256"]
-                    or rec["inputs"].get("excluded_airports", []) != inputs["excluded_airports"] or rec["inputs"].get("kind") != args.kind or rec["inputs"].get("target") != args.target):
+                    or rec["inputs"].get("excluded_airports", []) != inputs["excluded_airports"] or rec["inputs"].get("kind") != args.kind or rec["inputs"].get("target") != args.target
+                    or rec["inputs"].get("parameters") != inputs["parameters"] or rec["inputs"].get("max_label") != args.max_label):
                 raise ValueError(f"Development fold {f} used different inputs.")
         rounds = int(np.rint(np.median([rec["best_iteration"] for rec in folds.values()])))
         training = catalog[catalog["source_file"].isin([source_file(m) for m in TRAINING_MONTHS])]
@@ -250,7 +286,7 @@ def main():
         features, truth = load_partition(base, parent, catalog, assignment, "fit", BUNDLE_NAMES)
         frame = attach(features, tables, catalog)
         y = aligned_truth(frame, truth)[TARGET].to_numpy(dtype=float)
-        fit_keep = keep(frame)
+        fit_keep = keep(frame, y)
         x, vocab = encode(frame[fit_keep].reset_index(drop=True), names)
         booster, _ = fit(args.kind, params, x, y[fit_keep] - offset(frame)[fit_keep], rounds)
         ranking = pd.read_parquet(base / "features" / "ranking.parquet", columns=[ID, *BUNDLE_NAMES])

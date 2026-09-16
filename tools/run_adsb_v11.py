@@ -217,7 +217,12 @@ def main():
         label, v9 = test[TARGET].to_numpy(dtype=float), test["v9"].to_numpy(dtype=float)
         days = test[TIME].dt.strftime("%Y-%m-%d").to_numpy()
         if baseline_residual is not None:
-            baseline = np.maximum(v9 + baseline_spec["weight"] * baseline_residual.reindex(test[ID]).fillna(0.0).to_numpy(dtype=float), floor)
+            baseline_values = baseline_residual.reindex(test[ID]).fillna(0.0).to_numpy(dtype=float)
+            if baseline_spec.get("blend_with"):
+                # The baseline is itself a blended export (e.g. v14): residual on its scope, then the declared blend, then the floor.
+                baseline, _ = candidate_values(test, v9, baseline_values, {"weight": baseline_spec["weight"], "scope": baseline_spec["scope"], "blend_with": baseline_spec["blend_with"]}, floor)
+            else:
+                baseline = np.maximum(v9 + baseline_spec["weight"] * baseline_values, floor)
         else:
             baseline = v9
         matched = test["adsb_matched"].eq(1).to_numpy()
