@@ -1,0 +1,969 @@
+{
+  "absolute_change_quantiles_seconds": {
+    "0.5": 36.85097305397562,
+    "0.9": 163.18082786884884,
+    "0.99": 403.1295016821523,
+    "0.999": 844.2830998370988
+  },
+  "by_airport": {
+    "EDDF": {
+      "gate_share": 0.07108617689876788,
+      "in_scope": 36317,
+      "matched": 28163,
+      "rows": 36317
+    },
+    "EDDM": {
+      "gate_share": 0.6580463194692726,
+      "in_scope": 25966,
+      "matched": 25173,
+      "rows": 25966
+    },
+    "EGLL": {
+      "gate_share": 0.3897769617108603,
+      "in_scope": 39840,
+      "matched": 37034,
+      "rows": 39840
+    },
+    "EHAM": {
+      "gate_share": 0.6529134295227524,
+      "in_scope": 38182,
+      "matched": 36040,
+      "rows": 38182
+    },
+    "LEBL": {
+      "gate_share": 0.341946448390677,
+      "in_scope": 30080,
+      "matched": 28832,
+      "rows": 30080
+    },
+    "LEMD": {
+      "gate_share": 0.24555880368787947,
+      "in_scope": 36954,
+      "matched": 31129,
+      "rows": 36954
+    },
+    "LFPG": {
+      "gate_share": 0.010222489476849068,
+      "in_scope": 39872,
+      "matched": 8315,
+      "rows": 39872
+    },
+    "LIRF": {
+      "gate_share": 0.16035282144068755,
+      "in_scope": 0,
+      "matched": 8843,
+      "rows": 26899
+    },
+    "LSZH": {
+      "gate_share": 0.27645192440336597,
+      "in_scope": 23150,
+      "matched": 21747,
+      "rows": 23150
+    },
+    "LTFM": {
+      "gate_share": 0.0,
+      "in_scope": 47581,
+      "matched": 2,
+      "rows": 47581
+    }
+  },
+  "changed_rows_vs_v9": 315365,
+  "created_at_utc": "2026-09-18T15:07:30.989364+00:00",
+  "matched_rows": 225278,
+  "output": "runs/submissions/vigorous-whistle_v18.parquet",
+  "ranking_ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+  "ranking_rows": 344841,
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v18.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 120549,
+    "maximum_rounding_change_seconds": 0.4999905814659087,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 21,
+    "provenance": {
+      "audit_used": false,
+      "blend_with": {
+        "name": "ens_v20_bag_q_all",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "config_sha256": "26b16d38df2311ddd230f0d7562b51f5bf0c08047bef34b3006a09823e50e3c4",
+      "experiment_id": "prc2026-adsb-surface-residual-v20-v2",
+      "external_data": {
+        "extraction": "tools/adsb_extract_day.py keeps positions inside the ten aerodrome boxes that are on the ground or below 3,000 ft; per-day parquet with archive part hashes under data/external/adsblol/surface/ (the tool now skips and counts a corrupt archive member instead of aborting the day; the surface files used here predate that change and are unaffected)",
+        "labels_used_in_features": false,
+        "license": "Open Database License (ODbL) 1.0; feeder data CC0; licence files are inside every archive",
+        "matching": "tools/build_adsb_features.py: ICAO callsign (CALLSIGN_flt, else FLIGHT_mvt) and takeoff within the track's ground-to-air transition; stand positions learned label-free from covered segments of Jan/Mar/Apr/Jul/Nov 2025 (1,111 stands); the pass-2 matches and stands are exactly the v11 inputs, snapshotted under data/external/adsblol/matches_v11/ and hash-bound below",
+        "source": "adsb.lol globe_history daily archives (GitHub releases adsblol/globe_history_2025 and globe_history_2026, tags vYYYY.MM.DD-planes-readsb-prod-0)",
+        "v19_features": "label-free features derived from the same adsb.lol surface positions (ODbL), stand names and runway names; docs/adsb_v19_screen/README.md items A-C"
+      },
+      "feature_set": "nb",
+      "incumbent": {
+        "official_rank": "not recorded (the user's standing rule: no leaderboard checks)",
+        "official_rmse_seconds": 241.5068,
+        "recipe": "v17 = (1 - 0.7) * (v9 + 1.0 * v12 ADS-B residual on matched rows outside LIRF) + 0.7 * ens_v18_bag_q (one quarter of the six-LightGBM group mean, three quarters of the nine-member combination-CatBoost group mean, all without LIRF) on every row outside LIRF, floored (configs/adsb_v18_v2.json, ens_v18_bag_q_70; uploaded 08:26 UTC 18 September 2026)",
+        "submission": "vigorous-whistle_v17.parquet",
+        "submission_sha256": "fe0f08e4f6aa235b9550a8e4690662cfc8d20f7591b2f9e826c401fd20089649"
+      },
+      "model_code_sha256": "68af82986aa7cea477cbe8c46102cae6d1a5d4acc5e4a94fa25e71d6e12aa1b4",
+      "native_fit_count": 2,
+      "parents": {
+        "adsb_extract_code": {
+          "path": "tools/adsb_extract_day.py",
+          "sha256": "b737b62c9dac421a0ca5c6662ec8a3eabd0801f012211bd48ab3a87af7d5c796"
+        },
+        "adsb_feature_code": {
+          "path": "src/prc2026_adsb/features.py",
+          "sha256": "cff4c56ae3a70fa8dee35453c42d26dd07f1bb6783ff0c18023aa4d3e46469b5"
+        },
+        "adsb_full_cat_forward_predictions": {
+          "path": "runs/adsb_full_cat/forward/predictions.parquet",
+          "sha256": "276f504e494f90c345a4ce48748458fbeb982d1f953e12fbf496e1b15558d357"
+        },
+        "adsb_full_cat_forward_run": {
+          "path": "runs/adsb_full_cat/forward/run.json",
+          "sha256": "533af1ccf1ac48c7ccbf83ec9439ef7ff47a41e840768440ab8693d8be573860"
+        },
+        "adsb_full_cat_refit_predictions": {
+          "path": "runs/adsb_full_cat/refit/ranking_predictions.parquet",
+          "sha256": "52d898a19defda3485f7074bf385d7412fd24ad0226a0162fc5ee4da21c3445f"
+        },
+        "adsb_full_cat_refit_run": {
+          "path": "runs/adsb_full_cat/refit/run.json",
+          "sha256": "4c3ac298596eebd5b9c2e677e3692125ca9893d767362aa8ade37a9e9a52a841"
+        },
+        "adsb_full_cat_seasonal_predictions": {
+          "path": "runs/adsb_full_cat/seasonal/predictions.parquet",
+          "sha256": "81b8ce4ec4a51cf7e80b9e5ab594c67d7db394edc8450557307e412f3ca40fcf"
+        },
+        "adsb_full_cat_seasonal_run": {
+          "path": "runs/adsb_full_cat/seasonal/run.json",
+          "sha256": "ed94396d25266cd1420d027f80389b87d209da2127ef1ccf697a365183acf33b"
+        },
+        "adsb_full_nolirf_forward_predictions": {
+          "path": "runs/adsb_full_nolirf/forward/predictions.parquet",
+          "sha256": "fa6354b702d9a448f59fbab705d6ba0562831e337ed961c632776c0e58a30e55"
+        },
+        "adsb_full_nolirf_forward_run": {
+          "path": "runs/adsb_full_nolirf/forward/run.json",
+          "sha256": "4aaeab1923ce29839401c6487c301936b3a9e667b67e5e34335f1e80a643723a"
+        },
+        "adsb_full_nolirf_refit_predictions": {
+          "path": "runs/adsb_full_nolirf/refit/ranking_predictions.parquet",
+          "sha256": "219c1beac964455f35453c0339776fe15cc72d7ed52697e6ac7a9bf0ab5dccf6"
+        },
+        "adsb_full_nolirf_refit_run": {
+          "path": "runs/adsb_full_nolirf/refit/run.json",
+          "sha256": "e39f2ab4a2742ea52586426ad9a8ad63185dfc5d77367f82a7e51d1e5948c285"
+        },
+        "adsb_full_nolirf_seasonal_predictions": {
+          "path": "runs/adsb_full_nolirf/seasonal/predictions.parquet",
+          "sha256": "ba654faa732f85f9690b061f9b3d60cf10ad6eac3f370f6c9b284bbe2186cc98"
+        },
+        "adsb_full_nolirf_seasonal_run": {
+          "path": "runs/adsb_full_nolirf/seasonal/run.json",
+          "sha256": "1c468d303224bd09273e99b66a32e80fd8505ab528c14741e05083a612c28043"
+        },
+        "adsb_match_code": {
+          "path": "tools/build_adsb_features.py",
+          "sha256": "a5f678a0426e28828b642ae9322e097b518dda235c3de42cbaa415e975def585"
+        },
+        "cat_ctr2_d10_forward": {
+          "path": "runs/adsb_v17/cat_ctr2_d10/forward/predictions.parquet",
+          "sha256": "7deb733d77efec6c606d05bdc2fe12d36a4ca74376c07d649bf8b1a82c498e21"
+        },
+        "cat_ctr2_d10_refit": {
+          "path": "runs/adsb_v17/cat_ctr2_d10/refit/ranking_predictions.parquet",
+          "sha256": "e44da433ee51fc3637aea4e5a66ad59c257da7199f97cb5edee2aebf1fa7dc21"
+        },
+        "cat_ctr2_d10_seasonal": {
+          "path": "runs/adsb_v17/cat_ctr2_d10/seasonal/predictions.parquet",
+          "sha256": "f78a2b0fc5beeb9a0bf61d9e9e5053c81063e149c09cf1e07b2bfe1f851b9767"
+        },
+        "cat_ctr2_forward": {
+          "path": "runs/adsb_v16/cat_ctr2/forward/predictions.parquet",
+          "sha256": "c033eb3c68fb8f9b3b2fadf4d3a1cacbf70a6a4a3ef2978ca4feec438d3a032d"
+        },
+        "cat_ctr2_oh2_forward": {
+          "path": "runs/adsb_v17/cat_ctr2_oh2/forward/predictions.parquet",
+          "sha256": "db6c59bb88b985f38dd5422b62c7d7e4daa2e7225e0574a07ef69e3371bbdb39"
+        },
+        "cat_ctr2_oh2_refit": {
+          "path": "runs/adsb_v17/cat_ctr2_oh2/refit/ranking_predictions.parquet",
+          "sha256": "ca4c7eac3fba57f98f1897fd5d439f3709fb8bd6265df8c944a0e438aab72e6e"
+        },
+        "cat_ctr2_oh2_seasonal": {
+          "path": "runs/adsb_v17/cat_ctr2_oh2/seasonal/predictions.parquet",
+          "sha256": "c913def36d9e92fd8b473447f169ed6186017638bea8b9bac0b306bf55652b11"
+        },
+        "cat_ctr2_refit": {
+          "path": "runs/adsb_v16/cat_ctr2/refit/ranking_predictions.parquet",
+          "sha256": "ca67ad64c62298211d8963dd4285ea84206b252f007cc4e7978cf14ac498e855"
+        },
+        "cat_ctr2_s17_forward": {
+          "path": "runs/adsb_v17/cat_ctr2_s17/forward/predictions.parquet",
+          "sha256": "b04dcf1a4417521c3f9170d8def449ae02ac53519645ef4af1c087452d1bc8a5"
+        },
+        "cat_ctr2_s17_refit": {
+          "path": "runs/adsb_v17/cat_ctr2_s17/refit/ranking_predictions.parquet",
+          "sha256": "6d28e6b1f04eb643516d75f954c86fb89b70225047204ed823238687041cc754"
+        },
+        "cat_ctr2_s17_seasonal": {
+          "path": "runs/adsb_v17/cat_ctr2_s17/seasonal/predictions.parquet",
+          "sha256": "d234fc1e481fae2410615f405c2d82d96af868e54ff2e2afd894250aed4e8df3"
+        },
+        "cat_ctr2_s20_forward": {
+          "path": "runs/adsb_v18/cat_ctr2_s20/forward/predictions.parquet",
+          "sha256": "49fde6e2092622aba9cfd3d0b2ee401182e92676a52106656f8a73570dc42206"
+        },
+        "cat_ctr2_s20_refit": {
+          "path": "runs/adsb_v18/cat_ctr2_s20/refit/ranking_predictions.parquet",
+          "sha256": "cf52b0562cfe32d76af22fa95de9468c2d0543878645343a80d0a92c23ccb494"
+        },
+        "cat_ctr2_s20_seasonal": {
+          "path": "runs/adsb_v18/cat_ctr2_s20/seasonal/predictions.parquet",
+          "sha256": "e09480b4f23e543e3af023387a84d22d883b91294c712fd0873331f326a1d8ea"
+        },
+        "cat_ctr2_s21_forward": {
+          "path": "runs/adsb_v18/cat_ctr2_s21/forward/predictions.parquet",
+          "sha256": "98d55ffc916304951e75cc170ee5ed1a0bc4d8e1da8b7c0b8036981fbbae030a"
+        },
+        "cat_ctr2_s21_refit": {
+          "path": "runs/adsb_v18/cat_ctr2_s21/refit/ranking_predictions.parquet",
+          "sha256": "e6667860b657a5322ae6f5ed0e312e112c54f36c52afdb2bd255f3dd118ec702"
+        },
+        "cat_ctr2_s21_seasonal": {
+          "path": "runs/adsb_v18/cat_ctr2_s21/seasonal/predictions.parquet",
+          "sha256": "0f10dab301a14bab30d652d80094384035a410b42cba35f6cc2bf27b1f571bac"
+        },
+        "cat_ctr2_seasonal": {
+          "path": "runs/adsb_v16/cat_ctr2/seasonal/predictions.parquet",
+          "sha256": "821972c6a7c23e17a3fd96d571fb13b0d54dd2fe163a134fc753d6b04d575325"
+        },
+        "cat_ctr2_x19_s27_forward": {
+          "path": "runs/adsb_v20/cat_ctr2_x19_s27/forward/predictions.parquet",
+          "sha256": "2e610621315b97705a263229bc4ffaf947128e8eca327d7e2ab53cddb9853a91"
+        },
+        "cat_ctr2_x19_s27_refit": {
+          "path": "runs/adsb_v20/cat_ctr2_x19_s27/refit/ranking_predictions.parquet",
+          "sha256": "2e578ef1bf7245b15c21aff6a32fe6054aa20d00ef249130df81f52a021df909"
+        },
+        "cat_ctr2_x19_s27_seasonal": {
+          "path": "runs/adsb_v20/cat_ctr2_x19_s27/seasonal/predictions.parquet",
+          "sha256": "f691898469c7d35b4f471f57659eccbc60f224e5d418f8b8d6ab781e91fe6a56"
+        },
+        "cat_ctr2_x19_s28_forward": {
+          "path": "runs/adsb_v20/cat_ctr2_x19_s28/forward/predictions.parquet",
+          "sha256": "9ad3d7408de68162d70210d03d5ad1b80fd12aabbb176b0ba82333e9eadef3e9"
+        },
+        "cat_ctr2_x19_s28_refit": {
+          "path": "runs/adsb_v20/cat_ctr2_x19_s28/refit/ranking_predictions.parquet",
+          "sha256": "82c3f5efc0000638b0c5182ef3ff596ef0b064be9be23461758ec1953d504c41"
+        },
+        "cat_ctr2_x19_s28_seasonal": {
+          "path": "runs/adsb_v20/cat_ctr2_x19_s28/seasonal/predictions.parquet",
+          "sha256": "92aa057f397c652130d94e1ee9f43e18dd71cb978a662d612824d3b22e570b2c"
+        },
+        "cat_ctr2_x19_s30_forward": {
+          "path": "runs/adsb_v20/cat_ctr2_x19_s30/forward/predictions.parquet",
+          "sha256": "936fe2831614f5875f8b3c8b194909c3675e865d4f7a65deb75976c5006a8117"
+        },
+        "cat_ctr2_x19_s30_refit": {
+          "path": "runs/adsb_v20/cat_ctr2_x19_s30/refit/ranking_predictions.parquet",
+          "sha256": "41291a02ec48256995c30e9c9b645cc33a0cbc554e62f46a77853fc5a8dfae95"
+        },
+        "cat_ctr2_x19_s30_seasonal": {
+          "path": "runs/adsb_v20/cat_ctr2_x19_s30/seasonal/predictions.parquet",
+          "sha256": "985fd8fb28ed51460b9f5e32b2bbf5447b9e2f5c964514d4afda675e7bee98cb"
+        },
+        "cat_ctr3_forward": {
+          "path": "runs/adsb_v17/cat_ctr3/forward/predictions.parquet",
+          "sha256": "df7ebfaa71a542f32b96aa10f520e7eb82cc4168ff61c2ce9822d78e4de93582"
+        },
+        "cat_ctr3_refit": {
+          "path": "runs/adsb_v17/cat_ctr3/refit/ranking_predictions.parquet",
+          "sha256": "f271f535c1184f622d768f7465f22214b8ac8508883f1310775c232b345308e1"
+        },
+        "cat_ctr3_s22_forward": {
+          "path": "runs/adsb_v18/cat_ctr3_s22/forward/predictions.parquet",
+          "sha256": "c092dfaa99023f1e52e8374bd31a9af8ae79831de3ec73c35a0e7099d3edff38"
+        },
+        "cat_ctr3_s22_refit": {
+          "path": "runs/adsb_v18/cat_ctr3_s22/refit/ranking_predictions.parquet",
+          "sha256": "6fb2ec9fb29e70f647a1705a52b112383b5bdec395dbd180999e221f9dcf415b"
+        },
+        "cat_ctr3_s22_seasonal": {
+          "path": "runs/adsb_v18/cat_ctr3_s22/seasonal/predictions.parquet",
+          "sha256": "9059970da99a4f260ad242f8d1972cf22335cc12b5060d48694b25eb668cce0c"
+        },
+        "cat_ctr3_s23_forward": {
+          "path": "runs/adsb_v18/cat_ctr3_s23/forward/predictions.parquet",
+          "sha256": "ee0619fc2fa1ad61a92318aee9b3bbed3319f5d3a6b60823a6f945c6d3184787"
+        },
+        "cat_ctr3_s23_refit": {
+          "path": "runs/adsb_v18/cat_ctr3_s23/refit/ranking_predictions.parquet",
+          "sha256": "2f3e79a64709e66ca0df621af96fbbbd4ce3289af966bf7bd21f62863f9f827d"
+        },
+        "cat_ctr3_s23_seasonal": {
+          "path": "runs/adsb_v18/cat_ctr3_s23/seasonal/predictions.parquet",
+          "sha256": "127643ad54637f381ef0d84670d2d676bb1e4ef2fb2b4e9490740c58eed0424a"
+        },
+        "cat_ctr3_seasonal": {
+          "path": "runs/adsb_v17/cat_ctr3/seasonal/predictions.parquet",
+          "sha256": "ac10b95e7feb24596fed9694bf4012902827a6ce4b5dde83bee862220c4eaabc"
+        },
+        "cat_ctr3_x19_s29_forward": {
+          "path": "runs/adsb_v20/cat_ctr3_x19_s29/forward/predictions.parquet",
+          "sha256": "39298dae2933f1eda1da64f9f8c6908a4cf1558464d7a90c84977ee738241518"
+        },
+        "cat_ctr3_x19_s29_refit": {
+          "path": "runs/adsb_v20/cat_ctr3_x19_s29/refit/ranking_predictions.parquet",
+          "sha256": "28dc0ceec89f4971ce08495c95be3e3afb65a369b3e9a40d9a960feea031f06a"
+        },
+        "cat_ctr3_x19_s29_seasonal": {
+          "path": "runs/adsb_v20/cat_ctr3_x19_s29/seasonal/predictions.parquet",
+          "sha256": "583e80cf9b9884d4d58a080e12a3f20ead1faf388b327f45810c19a09764a3f6"
+        },
+        "cat_d10_forward": {
+          "path": "runs/adsb_v16/cat_d10/forward/predictions.parquet",
+          "sha256": "85dd1eb85f762deba1baba602b0c5cac4dd1f871c6265cd4e325869c0c6e3419"
+        },
+        "cat_d10_refit": {
+          "path": "runs/adsb_v16/cat_d10/refit/ranking_predictions.parquet",
+          "sha256": "23dbf8ee52af135a28b135027fc543893fba23abc2a70d07d70c1ab87bbd16f1"
+        },
+        "cat_d10_seasonal": {
+          "path": "runs/adsb_v16/cat_d10/seasonal/predictions.parquet",
+          "sha256": "189ac6baeef451594472e29131e7113a506f820ddf9c75ea6051d029e47dd1d8"
+        },
+        "cat_long_forward": {
+          "path": "runs/adsb_v15/cat_long/forward/predictions.parquet",
+          "sha256": "29ae03dae931fdf44d87c1c642bb70432d7c1dbe9159fa21f66d5217569d0708"
+        },
+        "cat_long_refit": {
+          "path": "runs/adsb_v15/cat_long/refit/ranking_predictions.parquet",
+          "sha256": "e20e4449cc116837bf008ec710be31a218d1b92f7bdf12b5ebd8840a518ac3aa"
+        },
+        "cat_long_seasonal": {
+          "path": "runs/adsb_v15/cat_long/seasonal/predictions.parquet",
+          "sha256": "5193f7f3f0a6e4fc289a4c5628e398b6c8779ddf51913e6a99a6ea800e376723"
+        },
+        "cat_s16_forward": {
+          "path": "runs/adsb_v15/cat_s16/forward/predictions.parquet",
+          "sha256": "787760539b10665fbc53402a925c7b8893be412083ebe41398ab4c83ec4c9870"
+        },
+        "cat_s16_refit": {
+          "path": "runs/adsb_v15/cat_s16/refit/ranking_predictions.parquet",
+          "sha256": "68da82307c870fd0869ec78c72298cfebbfa72329cf04d3acb057f072c7aa7ed"
+        },
+        "cat_s16_seasonal": {
+          "path": "runs/adsb_v15/cat_s16/seasonal/predictions.parquet",
+          "sha256": "df047c12b19f8e73301a183ff575b2ec847b9c9de33996089a84b9a1b7a8228a"
+        },
+        "ens_v15_bag_forward": {
+          "path": "runs/adsb_v15/ens_v15_bag/forward/predictions.parquet",
+          "sha256": "641a7cbdc3f67fdb14faac4d26c42da6290f322ff146f616ec4df3db61ca1085"
+        },
+        "ens_v15_bag_refit": {
+          "path": "runs/adsb_v15/ens_v15_bag/refit/ranking_predictions.parquet",
+          "sha256": "952087207a322bab901c8e551f3f3942c581343ae79ecf5c40dd7a3f525d961c"
+        },
+        "ens_v15_bag_run": {
+          "path": "runs/adsb_v15/ens_v15_bag/run.json",
+          "sha256": "78ceeec49a5c3a1b9750647dded926536e0648b691b8f84d85dc3cd6863caaa5"
+        },
+        "ens_v15_bag_seasonal": {
+          "path": "runs/adsb_v15/ens_v15_bag/seasonal/predictions.parquet",
+          "sha256": "3a2136722793849057523399377f3144cc4032902e62498884a0563921f02eea"
+        },
+        "ens_v15_lgb_forward": {
+          "path": "runs/adsb_v15/ens_v15_lgb/forward/predictions.parquet",
+          "sha256": "ad98b3b889fe53dd9defb86f8a5032c62978de4bbf75a90feb4add710bd14cda"
+        },
+        "ens_v15_lgb_refit": {
+          "path": "runs/adsb_v15/ens_v15_lgb/refit/ranking_predictions.parquet",
+          "sha256": "daa3e4038391892f19533aadc74fb3b0c245267f02fca7e76e8d9d2c90f2e17d"
+        },
+        "ens_v15_lgb_seasonal": {
+          "path": "runs/adsb_v15/ens_v15_lgb/seasonal/predictions.parquet",
+          "sha256": "d801365b734c6a7ce4d674a8d203c3916a00f18ba5f03236f45e49844617cac0"
+        },
+        "ens_v16_bag_forward": {
+          "path": "runs/adsb_v16/ens_v16_bag/forward/predictions.parquet",
+          "sha256": "c3678ee361858179a0a63d4c8b50b128eb8131dcae36f4527ddad0d25bd81c8e"
+        },
+        "ens_v16_bag_refit": {
+          "path": "runs/adsb_v16/ens_v16_bag/refit/ranking_predictions.parquet",
+          "sha256": "9aa1a5a0b65d8c2f0d93e64ffd639c9c08e13386fb2092344fda391efbd7418e"
+        },
+        "ens_v16_bag_run": {
+          "path": "runs/adsb_v16/ens_v16_bag/run.json",
+          "sha256": "a7d0576c1498c0838ab492a657da90a94954ab9c31bb3bfddc7637de291b1d99"
+        },
+        "ens_v16_bag_seasonal": {
+          "path": "runs/adsb_v16/ens_v16_bag/seasonal/predictions.parquet",
+          "sha256": "bc869dd9c9c79ba9057a4ea4f827cc83fb415eef52fa25ca777e587938a19c28"
+        },
+        "ens_v17_bag_ctr_c2_forward": {
+          "path": "runs/adsb_v17/ens_v17_bag_ctr_c2/forward/predictions.parquet",
+          "sha256": "497377708d0097b5e4c94a8b28557e8928fb0587fe3e75387411f0e795338270"
+        },
+        "ens_v17_bag_ctr_c2_refit": {
+          "path": "runs/adsb_v17/ens_v17_bag_ctr_c2/refit/ranking_predictions.parquet",
+          "sha256": "37cd28dca9fcdf298d4f7cc5b20eb1735b48222dd131ee843657d4311723de86"
+        },
+        "ens_v17_bag_ctr_c2_run": {
+          "path": "runs/adsb_v17/ens_v17_bag_ctr_c2/run.json",
+          "sha256": "93c94ccca01062db4e86db94c362857a1bf03e8cdf1330400e273768abfff1f0"
+        },
+        "ens_v17_bag_ctr_c2_seasonal": {
+          "path": "runs/adsb_v17/ens_v17_bag_ctr_c2/seasonal/predictions.parquet",
+          "sha256": "9dedcea64cb916c972e31f73d236245b1bea47e8fedd0af1827dc987525aad5b"
+        },
+        "ens_v17_ctr_forward": {
+          "path": "runs/adsb_v17/ens_v17_ctr/forward/predictions.parquet",
+          "sha256": "131a91bf6adfa07994f0c99601fbe57f5afeb77e05dd20899bb39af2eec19ffe"
+        },
+        "ens_v17_ctr_refit": {
+          "path": "runs/adsb_v17/ens_v17_ctr/refit/ranking_predictions.parquet",
+          "sha256": "00f4f726cccbedddca985dcbcd583ed6db3bfebdf4b07403b04633d9a93fdd1b"
+        },
+        "ens_v17_ctr_run": {
+          "path": "runs/adsb_v17/ens_v17_ctr/run.json",
+          "sha256": "f24d54f131b8983fe88576cf60fdb9ba56971c2ee53514fe7e7619340c4d0b2c"
+        },
+        "ens_v17_ctr_seasonal": {
+          "path": "runs/adsb_v17/ens_v17_ctr/seasonal/predictions.parquet",
+          "sha256": "b23b1a768f2883c8f47cf6171262872c112feb6922ea5162c4a778df0ecea344"
+        },
+        "ens_v18_bag_q_forward": {
+          "path": "runs/adsb_v18/ens_v18_bag_q/forward/predictions.parquet",
+          "sha256": "059e2c3184af61faaed586e138ec186a07854f36ec9ee57cd56e4db2a0a057f9"
+        },
+        "ens_v18_bag_q_refit": {
+          "path": "runs/adsb_v18/ens_v18_bag_q/refit/ranking_predictions.parquet",
+          "sha256": "07dc08f372b0eac03c4f8126a2a6a0ca0fea1d9b62b68b4a8501ca00789b93f6"
+        },
+        "ens_v18_bag_q_seasonal": {
+          "path": "runs/adsb_v18/ens_v18_bag_q/seasonal/predictions.parquet",
+          "sha256": "d294efa6989010274658a2a8b822b2f0b122ac46d7a1254404c6ee0074469175"
+        },
+        "ens_v18_ctr_forward": {
+          "path": "runs/adsb_v18/ens_v18_ctr/forward/predictions.parquet",
+          "sha256": "c7040953ccbe4fd2367bb37d54bf3ab09c3a600e2acc3950b70ab4de03da0a7f"
+        },
+        "ens_v18_ctr_refit": {
+          "path": "runs/adsb_v18/ens_v18_ctr/refit/ranking_predictions.parquet",
+          "sha256": "cf576f40e2037b56a882fc71b238b8f21860f9e9fe2014614393cbb082c6b7e1"
+        },
+        "ens_v18_ctr_seasonal": {
+          "path": "runs/adsb_v18/ens_v18_ctr/seasonal/predictions.parquet",
+          "sha256": "0b9120e3cbd4cce806ece2fa8bd48df9d059aba5fce55b70093b91507fa96337"
+        },
+        "ens_v20_bag_q_all_forward": {
+          "path": "runs/adsb_v20/ens_v20_bag_q_all/forward/predictions.parquet",
+          "sha256": "0834d3a8b48c6b6e138da31b4e0337bc5f98c5e0e38a24538bc9329a177a328e"
+        },
+        "ens_v20_bag_q_all_refit": {
+          "path": "runs/adsb_v20/ens_v20_bag_q_all/refit/ranking_predictions.parquet",
+          "sha256": "e61f1cfce457afd7adefee8cb16422a7ae3a8cfc9547dec59fb893a8ff57ec12"
+        },
+        "ens_v20_bag_q_all_run": {
+          "path": "runs/adsb_v20/ens_v20_bag_q_all/run.json",
+          "sha256": "69dcd6dfe9d47fd3e1d7050776722576077a4d0f77dc0af1abfe46c49d77eae8"
+        },
+        "ens_v20_bag_q_all_seasonal": {
+          "path": "runs/adsb_v20/ens_v20_bag_q_all/seasonal/predictions.parquet",
+          "sha256": "aa7c033909481a6729b86db69007a3cd912589550966cbbe3de318b36b543041"
+        },
+        "ens_v20_bag_q_ctr_forward": {
+          "path": "runs/adsb_v20/ens_v20_bag_q_ctr/forward/predictions.parquet",
+          "sha256": "5491bc77744d7afa7a036bbaf42fd15b98fdb087bc0a79e63efac4d8831b1fd2"
+        },
+        "ens_v20_bag_q_ctr_refit": {
+          "path": "runs/adsb_v20/ens_v20_bag_q_ctr/refit/ranking_predictions.parquet",
+          "sha256": "7f5574300baf9f6d1d2b6674fbb60f41a862b54832e245d728580c57ae7eede9"
+        },
+        "ens_v20_bag_q_ctr_run": {
+          "path": "runs/adsb_v20/ens_v20_bag_q_ctr/run.json",
+          "sha256": "6e750266142b2299f6b0f02006189a6e1540d7971d5cfee660c2be8b7233a32b"
+        },
+        "ens_v20_bag_q_ctr_seasonal": {
+          "path": "runs/adsb_v20/ens_v20_bag_q_ctr/seasonal/predictions.parquet",
+          "sha256": "926ca697fb74bf37d5e0a9d64d7b9410776a22269ef5fdde751803f97d3f1eae"
+        },
+        "ens_v20_bag_q_lgb_forward": {
+          "path": "runs/adsb_v20/ens_v20_bag_q_lgb/forward/predictions.parquet",
+          "sha256": "aa276c0ae8e8916b7d2e2e865829edcb02ce8d7e9fa881324a3ba43f969b78aa"
+        },
+        "ens_v20_bag_q_lgb_refit": {
+          "path": "runs/adsb_v20/ens_v20_bag_q_lgb/refit/ranking_predictions.parquet",
+          "sha256": "62e80e3bb004bc37626abe0d0e0b6e3c8553c5a2d5e0836af6489b779791e4cb"
+        },
+        "ens_v20_bag_q_lgb_run": {
+          "path": "runs/adsb_v20/ens_v20_bag_q_lgb/run.json",
+          "sha256": "37ab512f4e91579987a1e7a3eb61957d6457ae67ad026d7569be4a98c2c6e895"
+        },
+        "ens_v20_bag_q_lgb_seasonal": {
+          "path": "runs/adsb_v20/ens_v20_bag_q_lgb/seasonal/predictions.parquet",
+          "sha256": "5ce209d037124a7e705a3f128be1441b6f40485812a92bb292203b752c7ed6a2"
+        },
+        "ens_v20_bag_q_x19_forward": {
+          "path": "runs/adsb_v20/ens_v20_bag_q_x19/forward/predictions.parquet",
+          "sha256": "87b22843b2b0dabcb015623d3c609a3870e6ad25c9e3589b0c2bbb530f5ca08a"
+        },
+        "ens_v20_bag_q_x19_refit": {
+          "path": "runs/adsb_v20/ens_v20_bag_q_x19/refit/ranking_predictions.parquet",
+          "sha256": "aef6706791be1e9dd0b3728a30766d5f5c9abba9c5ddac340be6c8772c918eb3"
+        },
+        "ens_v20_bag_q_x19_run": {
+          "path": "runs/adsb_v20/ens_v20_bag_q_x19/run.json",
+          "sha256": "8cebf20d053e01abf2b9ef005ed28bc9e91f0af7c8716302ad0c6db7f60296d3"
+        },
+        "ens_v20_bag_q_x19_seasonal": {
+          "path": "runs/adsb_v20/ens_v20_bag_q_x19/seasonal/predictions.parquet",
+          "sha256": "672932ea7e882b23dc8feb44011974250f2b02805606343a911225b7044ac366"
+        },
+        "ens_v20_ctr_all_forward": {
+          "path": "runs/adsb_v20/ens_v20_ctr_all/forward/predictions.parquet",
+          "sha256": "567af4db5e5b117b692d20f6e1fa271cb5badb7ae31b16b058291ec03b5aa862"
+        },
+        "ens_v20_ctr_all_refit": {
+          "path": "runs/adsb_v20/ens_v20_ctr_all/refit/ranking_predictions.parquet",
+          "sha256": "b9cb2e139134910cf148a15de9ee5a2b5ac12ccbfe6e2d74f5b5c9d36e639266"
+        },
+        "ens_v20_ctr_all_run": {
+          "path": "runs/adsb_v20/ens_v20_ctr_all/run.json",
+          "sha256": "f1e24b9a8fde94d9c514adb253a311c158aa040b2eeaabd075f639c82467b1e5"
+        },
+        "ens_v20_ctr_all_seasonal": {
+          "path": "runs/adsb_v20/ens_v20_ctr_all/seasonal/predictions.parquet",
+          "sha256": "53b85610d439336587f6093434919fb58f1679e2c6bd4b5f2814f5daafbabd14"
+        },
+        "ens_v20_ctr_x19_forward": {
+          "path": "runs/adsb_v20/ens_v20_ctr_x19/forward/predictions.parquet",
+          "sha256": "bdf49186b4d2e86fccbedf3ee1fd4b536712973fa7aaceddea4b460fdca966fd"
+        },
+        "ens_v20_ctr_x19_refit": {
+          "path": "runs/adsb_v20/ens_v20_ctr_x19/refit/ranking_predictions.parquet",
+          "sha256": "97deabd928eb468e707613beb67b8816e844227c8ad148f2e894863b903c2bca"
+        },
+        "ens_v20_ctr_x19_run": {
+          "path": "runs/adsb_v20/ens_v20_ctr_x19/run.json",
+          "sha256": "fe8d4fc6d4252477339b22877af392625e5a8e16ed9d6cc11992020894c0b953"
+        },
+        "ens_v20_ctr_x19_seasonal": {
+          "path": "runs/adsb_v20/ens_v20_ctr_x19/seasonal/predictions.parquet",
+          "sha256": "db3c7473e3f9b72f1f0cdd7bc7c53b7a5012f11dc6380f476dd9a68c61782c62"
+        },
+        "ens_v20_lgb_all_forward": {
+          "path": "runs/adsb_v20/ens_v20_lgb_all/forward/predictions.parquet",
+          "sha256": "000b70dc67249a8ac43eb07b13a0d6ecdafadc826fcd901ab5560e06da92330d"
+        },
+        "ens_v20_lgb_all_refit": {
+          "path": "runs/adsb_v20/ens_v20_lgb_all/refit/ranking_predictions.parquet",
+          "sha256": "232499ec8c05137f17affb780e22254ce2414c5371a8e75b2c9f89a73d047bc8"
+        },
+        "ens_v20_lgb_all_run": {
+          "path": "runs/adsb_v20/ens_v20_lgb_all/run.json",
+          "sha256": "8365c9396251edcc6f368534c555b32bf2f3b1df7ddc04aea848f6ae46897fae"
+        },
+        "ens_v20_lgb_all_seasonal": {
+          "path": "runs/adsb_v20/ens_v20_lgb_all/seasonal/predictions.parquet",
+          "sha256": "568563beb6f6e84782fab9165c5a3087e665aceb499e7fcd42b8d415097edd79"
+        },
+        "ens_v20_lgb_x19_forward": {
+          "path": "runs/adsb_v20/ens_v20_lgb_x19/forward/predictions.parquet",
+          "sha256": "20a1659c94bffd135920bb6fd73fa200dd266635628c4a2d8b01ab779e894913"
+        },
+        "ens_v20_lgb_x19_refit": {
+          "path": "runs/adsb_v20/ens_v20_lgb_x19/refit/ranking_predictions.parquet",
+          "sha256": "62bac901b164a3f819e943ddeb44e868a391bbaf0adb061642802178a7691219"
+        },
+        "ens_v20_lgb_x19_run": {
+          "path": "runs/adsb_v20/ens_v20_lgb_x19/run.json",
+          "sha256": "a7f8eba7dc0907eefedeb3cecd69010f8f4d9468ad0a9f3871c213fc35578265"
+        },
+        "ens_v20_lgb_x19_seasonal": {
+          "path": "runs/adsb_v20/ens_v20_lgb_x19/seasonal/predictions.parquet",
+          "sha256": "3bdf1a9c49d3cd0d774ec8d418448844940ef577b21bda733470d7f38aa00033"
+        },
+        "ensemble_code": {
+          "path": "tools/ensemble_adsb_full.py",
+          "sha256": "17fdbbad1c87e9cefaaf292d36cda7fa6ee020e28ac3719baf2b0e559a7283eb"
+        },
+        "ensemble_forward_predictions": {
+          "path": "runs/adsb_full_ens/forward/predictions.parquet",
+          "sha256": "0e2b18630eeeca91f7d04c212bfdb57ddf8010dd654c64bb51d0c5eafa7a1ad4"
+        },
+        "ensemble_refit_predictions": {
+          "path": "runs/adsb_full_ens/refit/ranking_predictions.parquet",
+          "sha256": "7fd4b84044fc5bb4bc0b86a9fa7a80329fc5d3276409625984e8b3cedfdf7bf9"
+        },
+        "ensemble_run": {
+          "path": "runs/adsb_full_ens/run.json",
+          "sha256": "481bb8edf087d2bd357dc88beea64b9ffb162bd6d008e258b90c51230359477d"
+        },
+        "ensemble_seasonal_predictions": {
+          "path": "runs/adsb_full_ens/seasonal/predictions.parquet",
+          "sha256": "7669dec6772815c4cb8f1c1ef2e4f8c150bfb69e481fd88f6258cffee5e508d1"
+        },
+        "features_v19_2025-01": {
+          "path": "data/external/adsblol/features_v19/features_v19_2025-01.parquet",
+          "sha256": "a0580f718373637e83ae41f2252a70d96c47a97436de0da8fb92f6f1c0434723"
+        },
+        "features_v19_2025-02": {
+          "path": "data/external/adsblol/features_v19/features_v19_2025-02.parquet",
+          "sha256": "7775325a72489ba89c25066d2d9f4c6dec93a54b69d4fad668d6d7246305bdab"
+        },
+        "features_v19_2025-03": {
+          "path": "data/external/adsblol/features_v19/features_v19_2025-03.parquet",
+          "sha256": "9578519e2547c30c24676b590e8170087c908ddbba47f328d9f0a08454d82db7"
+        },
+        "features_v19_2025-04": {
+          "path": "data/external/adsblol/features_v19/features_v19_2025-04.parquet",
+          "sha256": "7da9573df06bf97f486a7d7a2f7ddffdd0d6539ed802f9f734851af2f2e34954"
+        },
+        "features_v19_2025-05": {
+          "path": "data/external/adsblol/features_v19/features_v19_2025-05.parquet",
+          "sha256": "ec5593d64ddbbc1d1ac0d0f6aa42fe33a3e3277ff8a2a1d11dc2e515b5eede72"
+        },
+        "features_v19_2025-06": {
+          "path": "data/external/adsblol/features_v19/features_v19_2025-06.parquet",
+          "sha256": "f6888d95b303652a8be75cc526c6732734beb141cb5ce138e5b3b798f504019a"
+        },
+        "features_v19_2025-07": {
+          "path": "data/external/adsblol/features_v19/features_v19_2025-07.parquet",
+          "sha256": "bdec17dbcc90dda437abc194dd304d072380bd36503806a065b46fa000da6e71"
+        },
+        "features_v19_2025-08": {
+          "path": "data/external/adsblol/features_v19/features_v19_2025-08.parquet",
+          "sha256": "8b15ab95572ca6962829305b72e4b87f7cb80850e021c822a2894e7475c3ae0d"
+        },
+        "features_v19_2025-09": {
+          "path": "data/external/adsblol/features_v19/features_v19_2025-09.parquet",
+          "sha256": "79219666557160506700d92dc9531dc78643a672a25596fa5f0a4496dfb5e844"
+        },
+        "features_v19_2025-10": {
+          "path": "data/external/adsblol/features_v19/features_v19_2025-10.parquet",
+          "sha256": "fc9fc97fcc4234f99855062608b41077b1a56fbcb9d626d5692819f1a254ef6e"
+        },
+        "features_v19_2025-11": {
+          "path": "data/external/adsblol/features_v19/features_v19_2025-11.parquet",
+          "sha256": "43acbf4a6fd2bb31ba917771c8f9a8e0b65e63bc9ecc5ea268b92bab9ba599db"
+        },
+        "features_v19_2026-01": {
+          "path": "data/external/adsblol/features_v19/features_v19_2026-01.parquet",
+          "sha256": "8bc247fc07a7af950a1a3ecd921155695afccc6529e262d9b2fc836e8e2a9a97"
+        },
+        "features_v19_2026-07": {
+          "path": "data/external/adsblol/features_v19/features_v19_2026-07.parquet",
+          "sha256": "8572eff9c5bc908d0539cd417dcb8736e4877c1e9060f94e9f1ac9c6ad1394eb"
+        },
+        "incumbent_ranking_predictions": {
+          "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/ranking_predictions.parquet",
+          "sha256": "cf0c62b5288de74a8262dbb07705e75792bc92059b1e0bb8d66ac0681ec875be"
+        },
+        "learner_code_run_adsb_full": {
+          "path": "tools/run_adsb_full.py",
+          "sha256": "bf84441b5eccbb616e006a6fb7a5da7725f8847dc4fea58a20105cc7a527fc65"
+        },
+        "learner_code_run_adsb_full_nm": {
+          "path": "tools/run_adsb_full_nm.py",
+          "sha256": "14045da02c1e41e76145a13df5ddb17063d1cafdb7e0f5b6abd5ae9680ee1e9f"
+        },
+        "learner_code_run_adsb_learner": {
+          "note": "--extra-features / --extra-tag added 18 September (commit c9f08ff)",
+          "path": "tools/run_adsb_learner.py",
+          "sha256": "3adc9b36f3ae42364e89e86243cfa40b89801e02d062e4d8458ebe277a3e08b2"
+        },
+        "learner_code_snapshot": {
+          "path": "docs/adsb_v20/run_adsb_learner_declared.py",
+          "sha256": "3adc9b36f3ae42364e89e86243cfa40b89801e02d062e4d8458ebe277a3e08b2"
+        },
+        "learner_launcher": {
+          "path": "tools/launch_adsb_learners.py",
+          "sha256": "501f9ac844b8592c2999dd6fa2dbf7b594f09b0e5ee52c6ac0a73c57e13e9f39"
+        },
+        "lgb_x19_s24_forward": {
+          "path": "runs/adsb_v20/lgb_x19_s24/forward/predictions.parquet",
+          "sha256": "fe31958c0e6af6e7f8b30ffea08809020e864cb99b4f6e556d9bfbde2fac8e29"
+        },
+        "lgb_x19_s24_refit": {
+          "path": "runs/adsb_v20/lgb_x19_s24/refit/ranking_predictions.parquet",
+          "sha256": "2bb7de8e13f573b15dd5185b8e27549433e499b73f959ffaf0457115fdb94f30"
+        },
+        "lgb_x19_s24_seasonal": {
+          "path": "runs/adsb_v20/lgb_x19_s24/seasonal/predictions.parquet",
+          "sha256": "cd95aa383b0a7905ab34cd005b8bf96e7fab69abe51130f1caa8bc8ab2f5f2a0"
+        },
+        "lgb_x19_s25_forward": {
+          "path": "runs/adsb_v20/lgb_x19_s25/forward/predictions.parquet",
+          "sha256": "2a6902a1e71810994e7518e4eef4ba913b1b3cdda6327015be665552e3a399ab"
+        },
+        "lgb_x19_s25_refit": {
+          "path": "runs/adsb_v20/lgb_x19_s25/refit/ranking_predictions.parquet",
+          "sha256": "374ef515ce3a21fed9434846a38604d5d208779ae9ab89a87ba81a217b1885ab"
+        },
+        "lgb_x19_s25_seasonal": {
+          "path": "runs/adsb_v20/lgb_x19_s25/seasonal/predictions.parquet",
+          "sha256": "46b7c1284e005c2885fcc7bc1e6a622a05e36bc5558dbb0d68cd652a6f77111f"
+        },
+        "lgb_x19_s26_forward": {
+          "path": "runs/adsb_v20/lgb_x19_s26/forward/predictions.parquet",
+          "sha256": "d36f95ddf035bb278fb20b2421002e5deb688af25ee2eee107374e23b33d424f"
+        },
+        "lgb_x19_s26_refit": {
+          "path": "runs/adsb_v20/lgb_x19_s26/refit/ranking_predictions.parquet",
+          "sha256": "a4ae6edff0f02fe997ec4faef37534330a5ece901e6eea23817a4acdc4bd1de8"
+        },
+        "lgb_x19_s26_seasonal": {
+          "path": "runs/adsb_v20/lgb_x19_s26/seasonal/predictions.parquet",
+          "sha256": "3062bc56232f9927bdd54f7c25aa00c7ec742948bf2874e6522da3c2eeac1bbe"
+        },
+        "lirf_mixture_selection": {
+          "path": "runs/lirf_mixture/selection.json",
+          "sha256": "67c95f9e89e57d9c8b759b95d82916533684c8969a2655968d7401b874b10aa7"
+        },
+        "matches_2025-01": {
+          "path": "data/external/adsblol/matches_v11/matches2_2025-01.parquet",
+          "sha256": "4a275586729c00bf676e3f3184669ce0f06df40d31fedd2b14eb5ebbc127075f"
+        },
+        "matches_2025-07": {
+          "path": "data/external/adsblol/matches_v11/matches2_2025-07.parquet",
+          "sha256": "6dbf3693870ccdcb25a87789e634aa95226fd06b6d57d0fa5113b264ac8cc9d7"
+        },
+        "matches_2025-11": {
+          "path": "data/external/adsblol/matches_v11/matches2_2025-11.parquet",
+          "sha256": "8d1cd1017659feb9c88bccf34b16ab166d2bb4aef8c2d823f87ecff50212b2e6"
+        },
+        "matches_2026-01": {
+          "path": "data/external/adsblol/matches_v11/matches2_2026-01.parquet",
+          "sha256": "6bf7cfa259bc26e048d1ba60a60fd9520aade34b72d64824ff8306d25c6ff2cb"
+        },
+        "matches_2026-07": {
+          "path": "data/external/adsblol/matches_v11/matches2_2026-07.parquet",
+          "sha256": "1947f2002dcaa765ed5f2b82f73cfe0f248e18e8f4b45098fe7a060dc56c026d"
+        },
+        "scratch_builder": {
+          "path": "tools/build_adsb_scratch.py",
+          "sha256": "478d5d48b9ec93411886f8d8d481c2a0847d3bc354f32b48bb119dc52d81c285"
+        },
+        "stands": {
+          "path": "data/external/adsblol/matches_v11/stands.parquet",
+          "sha256": "63502c9465e3742d537fca30bd3c03622623a3be047eb01ba068292a249d995d"
+        },
+        "timeline_settings": {
+          "path": "configs/timeline_v1.json",
+          "sha256": "0f3ccec8ae1e23d24eb8eef8c536eeeb8b1439b7e7fc248dccde37732ba8ddd3"
+        },
+        "v11_export": {
+          "path": "runs/submissions/vigorous-whistle_v11.parquet",
+          "sha256": "98af50be5fb49d6cc42c8390b26be3220ba2ae24b693fc97c437ceb695c66b09"
+        },
+        "v11_receipt": {
+          "path": "runs/submissions/vigorous-whistle_v11.receipt.json",
+          "sha256": "681099293bb027e608105f8ead47f4596ec5e0b1ccd37a7a36c896235b56c52b"
+        },
+        "v12_development_residuals": {
+          "path": "runs/adsb_v12_v2/development_residuals.parquet",
+          "sha256": "4c174aea141e796b693f8e066d02344460c0e524bf05901440c8e300c580b8ca"
+        },
+        "v12_export": {
+          "path": "runs/submissions/vigorous-whistle_v12.parquet",
+          "sha256": "f3ae96a47a3f9c417d11d93285a393ccd5e7411c9d99b65849867980914471e6"
+        },
+        "v12_receipt": {
+          "path": "runs/submissions/vigorous-whistle_v12.receipt.json",
+          "sha256": "c0ad739b72797a619ffbcc08065ee95bd56970d44c14e2debb28c2800910b844"
+        },
+        "v12_selection": {
+          "path": "runs/adsb_v12_v2/selection.json",
+          "sha256": "918631283768c182450f2672402999412112ff8777b3b4765bd8e1772ad20f27"
+        },
+        "v14_development_residuals": {
+          "path": "runs/adsb_v12_v5/development_residuals.parquet",
+          "sha256": "2e7f775870439cc0997dca0a214f4a4b79c6848d5a1178275b5ead67f4ba2b18"
+        },
+        "v14_export": {
+          "path": "runs/submissions/vigorous-whistle_v14.parquet",
+          "sha256": "8090314133572d0dde60e372097b43d8557af16740ae918d054b4923b1130e8f"
+        },
+        "v14_receipt": {
+          "path": "runs/submissions/vigorous-whistle_v14.receipt.json",
+          "sha256": "22df6bbab18ded7a1ceb9c7c63d28aa6aeb3276e9a0d290de35f3e747517c52e"
+        },
+        "v14_selection": {
+          "path": "runs/adsb_v12_v5/selection.json",
+          "sha256": "d2d2e695e22aeb32acdf0a7dedb70f48b6952927c1e2fb388dae4533f1f65855"
+        },
+        "v15_export": {
+          "path": "runs/submissions/vigorous-whistle_v15.parquet",
+          "sha256": "480636355cf213df0df7541d1d2b7a516814be6c4d7a19261b485234e289d990"
+        },
+        "v15_official_result": {
+          "path": "docs/adsb_v16/official_result.json",
+          "sha256": "b93c942fecd5adc1bbec4e7ccd173a1eefd16dda5dab2ba8df0c96baee773654"
+        },
+        "v15_receipt": {
+          "path": "runs/submissions/vigorous-whistle_v15.receipt.json",
+          "sha256": "3f960be9764a11b5eaac405771a842824604f41aedd2f421ea580d0574af2b3e"
+        },
+        "v15_selection": {
+          "path": "runs/adsb_v15/selection.json",
+          "sha256": "e2ba3915aa26d6e1e3496962b26444069d043e832f23dc45caee2977eaa592f5"
+        },
+        "v16_export": {
+          "path": "runs/submissions/vigorous-whistle_v16.parquet",
+          "sha256": "b6a7ef5e803da4ccd8e5bfbaf61011dd8a34e0e7f3aec8767068f4dfaed1ec23"
+        },
+        "v16_official_result": {
+          "path": "docs/adsb_v17/official_result.json",
+          "sha256": "f2f0aee1bf654787d47aca15226e2c9881698014ce7ad7998855bc1d89870c5d"
+        },
+        "v16_receipt": {
+          "path": "runs/submissions/vigorous-whistle_v16.receipt.json",
+          "sha256": "b89e06c4780da50cc7cddfcae6614bb89fe657b2920f05f0e187187284192857"
+        },
+        "v16_v1_declaration": {
+          "path": "configs/adsb_v16_v1.json",
+          "sha256": "b6e667f6dcff1cfd874a3d37a5b013d3213eb3e2ea604ec222249f16928a4447"
+        },
+        "v16_v1_selection": {
+          "path": "runs/adsb_v16/selection.json",
+          "sha256": "da2161c39ee703cd3b86cda1aec36380f0cf723d202c9be9000bf851f83f6781"
+        },
+        "v16_v2_declaration": {
+          "path": "configs/adsb_v16_v2.json",
+          "sha256": "2d79a2d3e477a0ed7257efb7b3edb34db7d4d416bce5f08f1ce8293b313369c7"
+        },
+        "v16_v2_selection": {
+          "path": "runs/adsb_v16_v2/selection.json",
+          "sha256": "ee0c8aba2cd0052ff110d9585d8f349570e23d651b8e9d2d9cb9b99c99490f4f"
+        },
+        "v17_declaration": {
+          "path": "configs/adsb_v17_v1.json",
+          "sha256": "9369f448c153a0b9550b4d2cbe34fdcc700ff0d29c3f8229b8c182f4315083be"
+        },
+        "v17_official_result": {
+          "path": "docs/adsb_v18_v2/official_result.json",
+          "sha256": "5e8b685ac46c8369cc431bd67cc337aaa339a55c9d7ea161f0af497f0672e80e"
+        },
+        "v17_selection": {
+          "path": "runs/adsb_v17_sel/selection.json",
+          "sha256": "70765f0d9d659da39738b7940affccf1946f0194b6d0742baa6c809d0325f8e6"
+        },
+        "v18_v1_declaration": {
+          "path": "configs/adsb_v18_v1.json",
+          "sha256": "f5eb8b3e9b92961fe7e91aae73c9f22be62dbdf5e5e65798d48d8c9ff04910e4"
+        },
+        "v18_v1_selection": {
+          "path": "runs/adsb_v18_sel/selection.json",
+          "sha256": "04697cc22c04962e68c7fe27e5b27e46b3d3688480efd37c382db3abc8061545"
+        },
+        "v18_v2_declaration": {
+          "path": "configs/adsb_v18_v2.json",
+          "sha256": "6b3623684122a82dcd55cb2efc2c00caebd12a9a2c50973715efc8bc761ddcb3"
+        },
+        "v18_v2_selection": {
+          "path": "runs/adsb_v18_v2/selection.json",
+          "sha256": "f3f2dea1f92c0d2b5919054d7e6e9d5efdaa095470df9f5d79eeb57d614021fb"
+        },
+        "v19_feature_builder": {
+          "path": "tools/build_adsb_v19_features.py",
+          "sha256": "98cd4cdb8218e2138eedde4ab935ce60201ffd83f095ea0e2d7fcb8ac5f762b7"
+        },
+        "v19_feature_code": {
+          "path": "src/prc2026_adsb/features_v19.py",
+          "sha256": "88e1c6b38c427083072a98a5f574f67474fc1216f4caf73dac430378f037a3e8"
+        },
+        "v19_screen_record": {
+          "path": "docs/adsb_v19_screen/screen_results.json",
+          "sha256": "3840f38dfa03c8a02aad3b82b0a1931aadcfb93ceb82e212792217b346ce2d47"
+        },
+        "v20_v1_declaration": {
+          "path": "configs/adsb_v20_v1.json",
+          "sha256": "5798210a80bf2d12eef15d1a4af6775f6743fa0f7caeee658261f1d834681f8a"
+        },
+        "v20_v1_selection": {
+          "path": "runs/adsb_v20_sel/selection.json",
+          "sha256": "5bc73fd7a9f415ddc0852c99464888ba175c7ba0b87f5eabd52512f4e9b50f3d"
+        },
+        "v9_export": {
+          "path": "runs/submissions/vigorous-whistle_v9.parquet",
+          "sha256": "25d3b296a2753852144f53a2c36a1e539031dbd6ef35b8be928d9e1fa7363521"
+        },
+        "v9_receipt": {
+          "path": "runs/submissions/vigorous-whistle_v9.receipt.json",
+          "sha256": "8b0bc7d79f24c839138787ebab8d45f5dc839b89807d6a2e7c1318729dc7ae67"
+        }
+      },
+      "policy": "adsb-surface-residual-v20-v2",
+      "ranking_matched_rows": 225278,
+      "ranking_rows_in_scope": 317942,
+      "refit_months": [
+        "2025-01",
+        "2025-02",
+        "2025-03",
+        "2025-04",
+        "2025-05",
+        "2025-06",
+        "2025-07",
+        "2025-08",
+        "2025-09",
+        "2025-10",
+        "2025-11"
+      ],
+      "residual_model_sha256": "026080e1e7d39235060677fbecb3fdd3b661c39e267a9093f0c404bab518a432",
+      "rounds": 1173,
+      "scope": "matched_no_lirf",
+      "selected_candidate": "ens_v20_bag_q_all_70",
+      "selection_sha256": "9017148f45694ff029767a3a3baf30b84ef982a8abb4558bb76bc832c97ccbc5",
+      "stands": 1111,
+      "training_rows": 271115,
+      "weight": 1.0
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "663e9d38a9f89064b5692932f9fd9bd11a8b71e3c018d6fdaf4d5036177e0807",
+    "size_bytes": 1352527,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-18T15:07:30.943238+00:00",
+    "version": 18
+  },
+  "residual_quantiles_in_scope": {
+    "0.01": -277.3116190690651,
+    "0.1": -108.394454298431,
+    "0.25": -37.3470184512925,
+    "0.5": 0.0,
+    "0.75": 28.551471097722,
+    "0.9": 120.12372312825222,
+    "0.99": 377.5133544490584
+  },
+  "rounds": 1173,
+  "rows_in_scope": 317942,
+  "rows_outside_scope_match_v9_export": true,
+  "scope": "matched_no_lirf",
+  "training_rows": 271115,
+  "v9_reproduced_from_scratch": true,
+  "versus_v11": {
+    "absolute_change_quantiles_seconds": {
+      "0.5": 21.0,
+      "0.9": 71.0,
+      "0.99": 207.0,
+      "0.999": 774.3199999999488
+    },
+    "changed_rows": 322610,
+    "changed_rows_outside_matched": 99843,
+    "rmse_of_change_seconds": 65.41877277696479
+  }
+}

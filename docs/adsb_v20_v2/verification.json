@@ -1,0 +1,44 @@
+{
+  "changed_rows_vs_v11": 322610,
+  "changed_rows_vs_v9": 315365,
+  "contract": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v18.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 120549,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 21,
+    "rows": 344841,
+    "sha256": "663e9d38a9f89064b5692932f9fd9bd11a8b71e3c018d6fdaf4d5036177e0807",
+    "size_bytes": 1352527,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-18T15:07:33.613627+00:00",
+    "version": 18
+  },
+  "features_reproduced": true,
+  "file": "runs/submissions/vigorous-whistle_v18.parquet",
+  "floor_seconds": -12.0,
+  "independent_recomputation_matches": true,
+  "matched_rows": 225278,
+  "max_saved_residual_difference": 0.0,
+  "rounds": 1173,
+  "rows_in_scope": 317942,
+  "rows_outside_scope_equal_v9": true,
+  "scope": "matched_no_lirf",
+  "segment_spot_check": {
+    "agreeing": 300,
+    "sampled": 300
+  },
+  "sha256": "663e9d38a9f89064b5692932f9fd9bd11a8b71e3c018d6fdaf4d5036177e0807",
+  "v9_reproduced_from_scratch": true,
+  "verified_at_utc": "2026-09-18T15:13:15.410480+00:00",
+  "weight": 1.0
+}
