@@ -266,6 +266,7 @@ def main():
             values, _ = candidate_values(test, v9, residual, item, floor)
             score = rmse(label, values)
             entry = {"rmse": score, "ratio_to_v9": score / months_report[held]["v9_rmse"], "ratio_to_baseline": score / months_report[held]["baseline_rmse"],
+                     "rows_differing_from_baseline": int((np.abs(values - baseline) > 1e-9).sum()),
                      "paired_days_vs_baseline": paired_days(days, label, values, baseline, config["seed"]), "airports": {}}
             for airport in sorted(test["airport"].unique()):
                 k = test["airport"].eq(airport).to_numpy()
@@ -284,8 +285,11 @@ def main():
         else:  # never worse on any month, and at least the declared mean improvement
             item["eligible"] = bool(all(r <= 1.0 for r in ratios) and item["mean_ratio"] <= 1 - mean_margin)
         if config.get("require_paired_day_intervals_below_zero"):  # every month's paired-day interval of the RMSE difference must lie below zero
-            item["eligible"] = bool(item["eligible"] and all(item["months"][m]["paired_days_vs_baseline"]["rmse_difference_95pct_interval_seconds"][1] < 0
-                                                             for m in config["development_months"]))
+            # (with interval_condition_touched_months_only: only months where the candidate differs from the baseline on at least one row)
+            months = [m for m in config["development_months"]
+                      if not config.get("interval_condition_touched_months_only") or item["months"][m]["rows_differing_from_baseline"] > 0]
+            item["interval_condition_months"] = months
+            item["eligible"] = bool(item["eligible"] and all(item["months"][m]["paired_days_vs_baseline"]["rmse_difference_95pct_interval_seconds"][1] < 0 for m in months))
     eligible = [n for n, item in candidates.items() if item["eligible"]]
     selected = min(eligible, key=lambda n: (candidates[n]["mean_ratio"], n)) if eligible else None
     selected_key = key_of(candidates[selected]["scope"], candidates[selected]["feature_set"]) if selected else key_of(*variants[0])
