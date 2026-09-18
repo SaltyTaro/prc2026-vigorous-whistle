@@ -260,6 +260,9 @@ def main():
             item["eligible"] = bool(all(r <= 1 - margin for r in ratios))
         else:  # never worse on any month, and at least the declared mean improvement
             item["eligible"] = bool(all(r <= 1.0 for r in ratios) and item["mean_ratio"] <= 1 - mean_margin)
+        if config.get("require_paired_day_intervals_below_zero"):  # every month's paired-day interval of the RMSE difference must lie below zero
+            item["eligible"] = bool(item["eligible"] and all(item["months"][m]["paired_days_vs_baseline"]["rmse_difference_95pct_interval_seconds"][1] < 0
+                                                             for m in config["development_months"]))
     eligible = [n for n, item in candidates.items() if item["eligible"]]
     selected = min(eligible, key=lambda n: (candidates[n]["mean_ratio"], n)) if eligible else None
     selected_key = key_of(candidates[selected]["scope"], candidates[selected]["feature_set"]) if selected else key_of(*variants[0])
