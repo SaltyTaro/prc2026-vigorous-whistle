@@ -1,6 +1,6 @@
 {
-  "amended_at_utc": "2026-09-18T16:55:30+00:00",
-  "amendment": "Amended before any candidate was scored by the selection tool and before the second learner finished: a preview of lgb_lirf_s31's seasonal fold on the LIRF non-population rows showed (1) the label-target learner cannot follow a day-long NM clock (the one-day LIRF row of July 2025, proxy 87,181 s, label 87,002 s, is predicted at 2,186 s where v9's clock-residual models give 86,891 s: 72% of the class's squared error in one row) and (2) without ADS-B (January 2025, LIRF unmatched) the learner loses to v9 (293.6 vs 284.2 s) while on matched rows it wins (July 2025: 429.7 vs 440.6 s, blend 0.5 427.9 s). The blend scope of the LIRF candidates is therefore restricted to lirf_nonpop_matched (matched segment, |NM proxy| and |schedule interval| under six hours; all label-free and ranking-available), one unrestricted candidate is kept as the record of the failure, and a third learner with the NM-residual target (label minus the NM clock, the way v9's clock-present models work) is added. The learners, the residual seed bag, the baseline and the rule are unchanged.",
+  "amended_at_utc": "2026-09-18T17:30:03+00:00",
+  "amendment": "Amended before any candidate was scored by the selection tool and before the second learner finished: a preview of lgb_lirf_s31's seasonal fold on the LIRF non-population rows showed (1) the label-target learner cannot follow a day-long NM clock (the one-day LIRF row of July 2025, proxy 87,181 s, label 87,002 s, is predicted at 2,186 s where v9's clock-residual models give 86,891 s: 72% of the class's squared error in one row) and (2) without ADS-B (January 2025, LIRF unmatched) the learner loses to v9 (293.6 vs 284.2 s) while on matched rows it wins (July 2025: 429.7 vs 440.6 s, blend 0.5 427.9 s). The blend scope of the LIRF candidates is therefore restricted to lirf_nonpop_matched (matched segment, |NM proxy| and |schedule interval| under six hours; all label-free and ranking-available), one unrestricted candidate is kept as the record of the failure, and a third learner with the NM-residual target (label minus the NM clock, the way v9's clock-present models work) is added. The learners, the residual seed bag, the baseline and the rule are unchanged. Second amendment (17:30 UTC, still before any scoring): the selection tool's extra-table coverage check now tests row identities instead of finite values, because the NM-residual learner's table is NaN by design on rows without the clock (a NaN value leaves the row unblended, as before); the tool had refused to start on that table.",
   "audit_used": false,
   "candidates": {
     "ens_v20_bag_q_all_70": {
@@ -1002,7 +1002,7 @@
     "selection_tool": {
       "note": "lirf_nonpop / lirf_nonpop_matched scopes, extra_blends, residual seed bag added 18 September",
       "path": "tools/run_adsb_v11.py",
-      "sha256": "e2729b908bc9d7b3cbf6fa3b09d4334f4defe824ee25e183c37f222407189b58"
+      "sha256": "526bc47ea7f3c7f64aa54b0c222430a1d5a79b9e6985825a07fd8750b7322c4f"
     },
     "stands": {
       "path": "data/external/adsblol/matches_v11/stands.parquet",

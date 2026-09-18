@@ -71,9 +71,9 @@ def attach_extra(table: pd.DataFrame, frames: list[pd.DataFrame]) -> pd.DataFram
     """Merge the extra tables one-to-one and add the declared derived differences to v9."""
     for frame in frames:
         name = [c for c in frame.columns if c != ID][0]
-        table = table.merge(frame, on=ID, how="left", validate="one_to_one")
-        if table[name].isna().any():
+        if not table[ID].isin(frame[ID]).all():
             raise ValueError(f"Extra feature table {name} does not cover every row.")
+        table = table.merge(frame, on=ID, how="left", validate="one_to_one")  # a NaN value (e.g. an NM-residual learner without the clock) leaves the row unblended
         table[f"{name}_minus_v9"] = table[name] - table["v9"]
     return table
 
