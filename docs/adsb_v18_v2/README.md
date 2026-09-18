@@ -47,6 +47,7 @@ the edits were set aside (git stash / checkout) and the files restored byte-for-
 their declared hashes before the verification that is recorded here. The export itself
 ran with every parent intact (its own `check_parents` passed at start).
 
-## Upload
+## Upload and official result
 
-Expected official effect ≈ −0.15 s.
+v17 (241.5068, SHA `fe0f08e4…9649`) is
+the incumbent. Never re-upload v1–v17.
