@@ -47,3 +47,19 @@ Chains launched 08:49–08:50 UTC 18 September on arcw1–arcw4 (D16ds_v7, 16 th
 First record (lgb_x19_s24 seasonal, 08:53 UTC): 314 features, best iteration 1,552,
 matched / unmatched 415.87 / 700.46 — indistinguishable from the v15 LightGBMs
 (415.8–415.9 / 700.0–700.7). Results table to follow.
+
+LightGBMs (all three fitted by 09:20 UTC, ~3.5 min per fold; mirrored, ensembles built by
+member multiplicities, `ens_v20_bag_q_lgb` equal to the ¼ / ¾ formula to 3.6e-12 s):
+
+| variant | seasonal matched / unmatched | forward matched / unmatched | refit rounds |
+| --- | --- | --- | ---: |
+| lgb_x19_s24 | 415.87 / 700.46 | 204.87 / 645.38 | 1,388 |
+| lgb_x19_s25 | 415.24 / 700.42 | 204.25 / 644.32 | 1,348 |
+| lgb_x19_s26 | 415.50 / 700.59 | 204.33 / 645.15 | 1,384 |
+| (v15 LightGBMs, for reference) | 415.8–415.9 / 700.0–700.7 | 204.1–205.3 / 644.9–645.2 | |
+
+Descriptive learner-level RMSE on the non-LIRF rows (Jan / Jul / Nov): ens_v15_lgb 328.47 /
+217.07 / 162.91; ens_v20_lgb_x19 328.99 / 218.00 / 163.68; ens_v20_lgb_all 328.48 / 217.12 /
+162.83; the LightGBM-refreshed committee ens_v20_bag_q_lgb 324.64 / 209.22 / 157.16 against
+v17's ens_v18_bag_q 324.63 / 209.22 / 157.19. The v19 features do nothing for the LightGBM
+learner; the round rests on the combination CatBoosts.
