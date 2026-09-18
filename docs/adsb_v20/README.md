@@ -63,3 +63,42 @@ Descriptive learner-level RMSE on the non-LIRF rows (Jan / Jul / Nov): ens_v15_l
 162.83; the LightGBM-refreshed committee ens_v20_bag_q_lgb 324.64 / 209.22 / 157.16 against
 v17's ens_v18_bag_q 324.63 / 209.22 / 157.19. The v19 features do nothing for the LightGBM
 learner; the round rests on the combination CatBoosts.
+
+CatBoosts (chains done 13:14–14:24 UTC; each worker mirrored and deallocated as it finished):
+
+| variant | seasonal best iter | seasonal matched / unmatched | forward best iter | forward matched / unmatched | refit rounds | hours |
+| --- | ---: | --- | ---: | --- | ---: | ---: |
+| cat_ctr2_x19_s27 | 12,985 | 415.70 / 695.95 | 14,308 | 201.40 / 645.55 | 13,646 | 5.4 |
+| cat_ctr2_x19_s28 | 11,749 | 417.83 / 701.10 | 10,867 | 202.84 / 646.05 | 11,308 | 4.4 |
+| cat_ctr3_x19_s29 | 12,063 | 415.75 / 699.55 | 13,307 | 202.50 / 645.65 | 12,685 | 5.0 |
+| cat_ctr2_x19_s30 | 14,083 | 410.68 / 692.79 | 12,294 | 202.31 / 645.76 | 13,188 | 5.1 |
+| (v18 seeds, reference) | | 414.9–419.7 / 696.7–700.5 | | 199.8–203.5 / 644.5–647.1 | | |
+
+Individually inside the recorded band (cat_ctr2_x19_s30's seasonal fold is the best of any
+CatBoost, its forward fold is mid-band). Ensembles by member multiplicities
+(`ens_v20_bag_q_all` 468 entries, `_x19` 48, `_ctr` 312, `_lgb` 36), each equal to its
+weighted-group formula to ≤ 3e-11 s. Learner-level RMSE on the non-LIRF rows (Jan / Jul /
+Nov): ens_v18_ctr 325.19 / 209.48 / 158.24; the four new CatBoosts alone 325.08 / 209.46 /
+158.35 (four learners matching nine — the features help per learner); all thirteen 325.04 /
+209.31 / 158.01; the committees: v17's ens_v18_bag_q 324.63 / 209.22 / 157.19,
+ens_v20_bag_q_all 324.53 / 209.11 / 157.00.
+
+## Selection ([`development_results.json`](development_results.json)): nothing qualifies
+
+`tools/run_adsb_v11.py --config configs/adsb_v20_v1.json` (14:35 UTC; the reproduction
+check ens_v18_bag_q_70 scores ratio 1.00000):
+
+| candidate | Jan | Jul | Nov | mean | paired-day intervals (s) |
+| --- | ---: | ---: | ---: | ---: | --- |
+| ens_v20_bag_q_all_70 | −0.021% | −0.020% | −0.046% | **−0.029%** | [−0.16, −0.02] / [−0.08, −0.03] / [−0.14, −0.04] |
+| ens_v20_bag_q_ctr_70 | −0.022% | −0.021% | −0.044% | −0.029% | all below zero |
+| ens_v20_bag_q_x19_70 | −0.033% | −0.017% | −0.022% | −0.024% | Jan / Jul / Nov include zero |
+| ens_v20_bag_q_lgb_70 | +0.001% | +0.000% | −0.005% | −0.001% | include zero |
+
+The pre-registered bar (mean ratio ≤ 0.9995 with every interval below zero) is not met:
+the best candidate is 0.02 percentage points short. Readings: (1) the v19 features are null
+inside the LightGBM learner and small inside CatBoost — four feature-bearing CatBoosts equal
+the nine-member group, but the whole committee moves only 0.03%; (2) what is left is
+committee growth, at a quarter of v18's step, which was a quarter of v17's. **No export,
+no upload; v17 (241.5068) remains the incumbent.** The seven learners are banked in
+`runs/adsb_v20/`. All workers deallocated by 14:30 UTC.
