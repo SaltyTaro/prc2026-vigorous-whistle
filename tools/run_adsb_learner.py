@@ -193,6 +193,8 @@ def main():
     parser.add_argument("--rounds", type=int, help="Override the declaration's round cap")
     parser.add_argument("--patience", type=int, help="Override the declaration's early-stopping patience")
     parser.add_argument("--max-label", type=float, help="Fit and early-stop only on rows whose label is at most this value (every row is still predicted)")
+    parser.add_argument("--extra-features", type=Path, help="Directory of label-free per-month feature tables features_<tag>_<YYYY-MM>.parquet (ID plus feature columns) joined onto every row; their columns join the feature list")
+    parser.add_argument("--extra-tag", default="v19", help="Tag in the extra feature file names")
     args = parser.parse_args()
     started = time.time()
     out = ROOT / args.output / args.fold
@@ -222,10 +224,21 @@ def main():
     with mp.Pool(min(len(jobs), max(1, args.threads // 2))) as pool:
         built = pool.starmap(adsb_table, jobs)
     tables = {job[1]: table for job, table in zip(jobs, built)}
-    names = [*BUNDLE_NAMES, *ADSB_NAMES]
+    extra_names, extra_hashes = [], {}
+    if args.extra_features is not None:
+        extra_root = ROOT / args.extra_features
+        for months, raw_name in [([m], source_file(m)) for m in TRAINING_MONTHS] + [(RANKING_MONTHS, "ranking.parquet")]:
+            parts = [pd.read_parquet(extra_root / f"features_{args.extra_tag}_{month}.parquet") for month in months]
+            extra = pd.concat(parts, ignore_index=True)
+            extra_names = extra_names or [c for c in extra.columns if c != ID]
+            if [c for c in extra.columns if c != ID] != extra_names:
+                raise ValueError(f"Extra feature columns differ in {raw_name}.")
+            tables[raw_name] = tables[raw_name].merge(extra, on=ID, how="left", validate="one_to_one")
+            extra_hashes.update({f"features_{args.extra_tag}_{month}.parquet": sha256_file(extra_root / f"features_{args.extra_tag}_{month}.parquet") for month in months})
+    names = [*BUNDLE_NAMES, *ADSB_NAMES, *extra_names]
     inputs = {"bundle_id": manifest["bundle_id"], "stands_sha256": sha256_file(matches_root / "stands.parquet"),
               "matches_sha256": {m: sha256_file(matches_root / f"matches2_{m}.parquet") for m in TRAINING_MONTHS + RANKING_MONTHS},
-              "code": code_receipt(), "kind": args.kind, "parameters": params, "features": len(names), "adsb_features": ADSB_NAMES, "excluded_airports": sorted(args.exclude_airports), "target": args.target,
+              "code": code_receipt(), "kind": args.kind, "parameters": params, "features": len(names), "adsb_features": ADSB_NAMES, "extra_features": extra_names, "extra_feature_tables_sha256": extra_hashes, "excluded_airports": sorted(args.exclude_airports), "target": args.target,
               "parameter_overrides": overrides, "rounds_cap": settings["rounds"], "early_stopping_rounds": settings["early_stopping_rounds"], "max_label": args.max_label, "seed": args.seed,
               "specialist_airports": sorted(args.airports)}
 

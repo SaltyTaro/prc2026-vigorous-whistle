@@ -45,6 +45,8 @@ def job_command(spec: dict, output: str, fold: str) -> str:
         parts += ["--patience", str(spec["patience"])]
     if spec.get("max_label") is not None:
         parts += ["--max-label", str(spec["max_label"])]
+    if spec.get("extra_features"):
+        parts += ["--extra-features", spec["extra_features"], "--extra-tag", spec.get("extra_tag", "v19")]
     return ".venv/bin/python -u " + " ".join(shlex.quote(p) for p in parts)
 
 
@@ -74,6 +76,9 @@ def main():
         local = subprocess.run(["sha256sum", "tools/run_adsb_learner.py", "src/prc2026_adsb/features.py"], capture_output=True, text=True, cwd=ROOT).stdout.split()
         if remote_hash[0] != local[0] or remote_hash[2] != local[2]:
             raise SystemExit("Remote runner or feature code differs from the local copy.")
+        for directory in sorted({learners[n]["extra_features"] for n in args.names if learners[n].get("extra_features")}):
+            ssh(args.host, f"mkdir -p {REMOTE}/{directory}")
+            subprocess.run(["scp", "-q", *[str(p) for p in sorted((ROOT / directory).glob("*.parquet"))], f"{args.host}:{REMOTE}/{directory}/"], check=True, timeout=1800)
         chain = []
         for name in args.names:
             output = f"{root}/{name}"
