@@ -37,8 +37,9 @@ anchor on about a third of their matched rows.
 C. Surface congestion, every departure at a covered airport, matched or not
 (`surface_congestion`): distinct other aircraft on the ground in the aerodrome box in the
 window before take-off — `sfc_ground_10m`, `sfc_moving_10m` (gs ≥ 5 kt), `sfc_moving_20m` —
-and near the departure runway's lift-off point (median of matched departures' last
-ground points per airport-runway-month, radius 1,500 m): `sfc_rwy_queue_5m`,
+and near the departure runway's take-off roll start (median per airport-runway-month of
+matched departures' first point at 30 kt or more in their last three minutes on the
+ground, radius 1,200 m): `sfc_rwy_queue_5m`,
 `sfc_rwy_queue_10m`. The departure's own aircraft is excluded where matched.
 
 ## Screen
