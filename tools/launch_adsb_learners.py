@@ -5,8 +5,9 @@ Usage: launch_adsb_learners.py launch HOST VARIANT [VARIANT ...]   sync the runn
        launch_adsb_learners.py mirror HOST VARIANT [VARIANT ...]    copy predictions, models and run records to runs/adsb_v15/<variant>/
 
 Variants come from the declaration's `learners` block (configs/adsb_v15_v1.json by default): kind, seed,
-parameter overrides, round cap, patience and label cap. Every variant fits without LIRF on the timeline
-bundle plus the ADS-B features of data/external/adsblol/matches. Nothing is uploaded.
+parameter overrides, round cap, patience, label cap, excluded airports (LIRF unless the variant says
+otherwise) and the LIRF-population exclusion. Every variant fits on the timeline bundle plus the ADS-B
+features of data/external/adsblol/matches. Nothing is uploaded.
 """
 from __future__ import annotations
 
@@ -32,7 +33,9 @@ def ssh(host: str, command: str, timeout: int = 600) -> str:
 
 def job_command(spec: dict, output: str, fold: str) -> str:
     parts = ["tools/run_adsb_learner.py", "--fold", fold, "--kind", spec["kind"], "--seed", str(spec["seed"]), "--threads", "16",
-             "--exclude-airports", "LIRF", "--output", output, "--matches-dir", "data/external/adsblol/matches"]
+             "--exclude-airports", *spec.get("exclude_airports", ["LIRF"]), "--output", output, "--matches-dir", "data/external/adsblol/matches"]
+    if spec.get("exclude_population"):
+        parts.append("--exclude-population")
     for key, value in spec.get("parameters", {}).items():
         parts += ["--param", f"{key}={str(value).lower() if isinstance(value, bool) else value}"]
     if spec.get("target"):

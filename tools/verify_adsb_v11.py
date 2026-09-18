@@ -75,9 +75,13 @@ def main():
     scope = receipt["provenance"].get("scope", "matched")
     feature_set = receipt["provenance"].get("feature_set")
     candidate = config["candidates"][receipt["provenance"]["selected_candidate"]]
-    if scope != candidate.get("scope", "matched") or feature_set != candidate.get("features") or receipt["provenance"].get("blend_with") != candidate.get("blend_with"):
+    if (scope != candidate.get("scope", "matched") or feature_set != candidate.get("features") or receipt["provenance"].get("blend_with") != candidate.get("blend_with")
+            or receipt["provenance"].get("extra_blends", []) != candidate.get("extra_blends", [])):
         raise ValueError("Exported scope, feature set or blend differs from the selected candidate's declaration.")
-    item = {"weight": weight, "scope": scope, "blend_with": candidate.get("blend_with")}
+    item = {"weight": weight, "scope": scope, "blend_with": candidate.get("blend_with"), "extra_blends": candidate.get("extra_blends", [])}
+    model_files = saved.get("models", ["residual_model.txt"])
+    if [sha256_file(run_dir / f) for f in model_files] != receipt["provenance"].get("residual_models_sha256", [receipt["provenance"]["residual_model_sha256"]]):
+        raise ValueError("Saved residual seed-bag models differ from the export receipt.")
     mixture_config = read_json(ROOT / "configs/lirf_mixture_v1.json")
     fitting = movements(config["refit_months"])
     v9_model, v9_component, v9_summary = fit_population_model(fitting, mixture_config)
@@ -100,14 +104,14 @@ def main():
     diff = np.nanmax(np.abs(table.set_index(ID)[columns].to_numpy(dtype=float) - saved_features[columns].to_numpy(dtype=float)))
     if not (diff == 0 or np.isnan(diff)):
         raise ValueError("Recomputed ADS-B features differ from the saved export features.")
-    booster = lgb.Booster(model_file=str(run_dir / "residual_model.txt"))
+    boosters = [lgb.Booster(model_file=str(run_dir / f)) for f in model_files]
     inside = scope_mask(table, scope)
     matched = table["adsb_matched"].eq(1).to_numpy()
     residual = np.zeros(len(table))
     x, _ = prepare_matrix(table[inside], config, saved["categories"], feature_set)
-    if list(x.columns) != saved["features"] or booster.feature_name() != saved["features"]:
+    if list(x.columns) != saved["features"] or any(booster.feature_name() != saved["features"] for booster in boosters):
         raise ValueError("Feature list differs between the declaration, the saved model record and the booster.")
-    residual[inside] = booster.predict(x)
+    residual[inside] = np.mean([booster.predict(x) for booster in boosters], axis=0)
     expected, inside = candidate_values(table, v9, residual, item, floor)
     exported = pd.read_parquet(output).set_index(ID)[TARGET].reindex(ids).to_numpy()
     if not np.array_equal(np.rint(expected).astype(np.int32), exported):

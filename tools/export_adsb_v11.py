@@ -27,7 +27,7 @@ from prc2026_adsb.features import DEPARTURE_COLUMNS, FEATURE_NAMES, NEIGHBOUR_NA
 from prc2026_lirf_mixture.model import apply_candidate
 from prc2026_postprocess.rules import row_context
 from prc2026_submission.contract import export_submission
-from run_adsb_v11 import attach_extra, candidate_values, check_parents, extra_tables, feature_list, matches_dir, model_code_receipt, month_table, predict_residual, prepare_matrix, scope_mask
+from run_adsb_v11 import attach_extra, candidate_values, check_parents, extra_tables, feature_list, fit_boosters, matches_dir, model_code_receipt, month_table, predict_residual, prepare_matrix, scope_mask
 from run_lirf_mixture import MOVEMENT_COLUMNS, fit_population_model, movements, score_population
 import lightgbm as lgb
 
@@ -46,6 +46,7 @@ def ranking_table(config: dict, departures: pd.DataFrame, stands: pd.DataFrame, 
     table["v9"] = v9
     table["proxy_s"] = context["proxy_s"].to_numpy()
     table["schedule_interval_s"] = context["schedule_interval_s"].to_numpy()
+    table["population"] = context["hedge_population"].to_numpy()  # the v9 mixture's LIRF fill population (scope lirf_nonpop excludes it)
     table["hour"] = departures[TIME].dt.hour + departures[TIME].dt.minute / 60
     return attach_extra(table, extra_tables(config, "ranking")), matches
 
@@ -73,7 +74,7 @@ def main():
         raise ValueError("No candidate was selected; nothing to export.")
     candidate = config["candidates"][selection["selected_candidate"]]
     weight, scope, feature_set = candidate["weight"], candidate.get("scope", "matched"), candidate.get("features")
-    item = {"weight": weight, "scope": scope, "blend_with": candidate.get("blend_with")}
+    item = {"weight": weight, "scope": scope, "blend_with": candidate.get("blend_with"), "extra_blends": candidate.get("extra_blends", [])}
     neighbours = bool(config["residual_model"].get("neighbour_features", False))
     check_parents(config)
     mixture_config = read_json(ROOT / "configs/lirf_mixture_v1.json")
@@ -104,8 +105,9 @@ def main():
     x, categories = prepare_matrix(scoped_train, config, feature_set=feature_set)
     y = (scoped_train[TARGET] - scoped_train["v9"]).to_numpy(dtype=float)
     rounds = int(selection["refit_rounds"])
-    booster = lgb.train(dict(spec["params"]), lgb.Dataset(x, y, categorical_feature=spec["categorical"]), rounds)
-    model = {"booster": booster, "categories": categories, "rounds": rounds, "feature_set": feature_set}
+    boosters = fit_boosters(spec, x, y, rounds)
+    booster = boosters[0]
+    model = {"boosters": boosters, "booster": booster, "categories": categories, "rounds": rounds, "feature_set": feature_set}
     # Ranking ADS-B features and residual.
     table, _ = ranking_table(config, departures, stands, v9)
     residual = predict_residual(model, table, config, scope)
@@ -115,8 +117,11 @@ def main():
         raise ValueError("Rows outside the scope differ from the uploaded v9 export.")
     run_dir = ROOT / args.selection.parent / f"export_v{args.version}"
     run_dir.mkdir(parents=True, exist_ok=True)
-    booster.save_model(str(run_dir / "residual_model.txt"), num_iteration=rounds)
-    write_json(run_dir / "residual_model.json", {"categories": categories, "rounds": rounds, "training_rows": int(len(scoped_train)), "scope": scope, "feature_set": feature_set, "blend_with": candidate.get("blend_with"), "features": feature_list(config, feature_set),
+    model_files = ["residual_model.txt"] + [f"residual_model_{k}.txt" for k in range(1, len(boosters))]
+    for member, file in zip(boosters, model_files):
+        member.save_model(str(run_dir / file), num_iteration=rounds)
+    write_json(run_dir / "residual_model.json", {"categories": categories, "rounds": rounds, "training_rows": int(len(scoped_train)), "scope": scope, "feature_set": feature_set, "blend_with": candidate.get("blend_with"),
+                                                  "extra_blends": candidate.get("extra_blends", []), "seeds": list(spec.get("seeds") or []), "models": model_files, "features": feature_list(config, feature_set),
                                                   "weight": weight, "floor_seconds": floor, "feature_importance_gain": dict(zip(booster.feature_name(), map(float, booster.feature_importance("gain"))))})
     detail = table[[ID, "airport", *feature_columns(config)]].copy()
     detail["v9"] = v9; detail["residual"] = residual; detail["in_scope"] = inside; detail[f"v{args.version}"] = values
@@ -124,10 +129,11 @@ def main():
     output = ROOT / "runs/submissions" / f"vigorous-whistle_v{args.version}.parquet"
     provenance = {"policy": config["prediction_postprocess"], "experiment_id": config["experiment_id"], "config_sha256": object_hash(config),
                   "selection_sha256": sha256_file(ROOT / args.selection), "selected_candidate": selection["selected_candidate"], "weight": weight, "scope": scope, "feature_set": feature_set, "blend_with": candidate.get("blend_with"),
-                  "residual_model_sha256": sha256_file(run_dir / "residual_model.txt"), "rounds": rounds, "training_rows": int(len(scoped_train)),
+                  "extra_blends": candidate.get("extra_blends", []), "residual_model_sha256": sha256_file(run_dir / "residual_model.txt"), "residual_models_sha256": [sha256_file(run_dir / f) for f in model_files],
+                  "rounds": rounds, "training_rows": int(len(scoped_train)),
                   "ranking_rows_in_scope": int(inside.sum()), "ranking_matched_rows": int(matched.sum()), "stands": int(len(stands)), "external_data": config["external_data"],
                   "parents": config["parents"], "incumbent": config["incumbent"], "model_code_sha256": selection["model_code"]["sha256"],
-                  "audit_used": False, "refit_months": config["refit_months"], "native_fit_count": 2}
+                  "audit_used": False, "refit_months": config["refit_months"], "native_fit_count": 1 + len(boosters)}
     receipt = export_submission(pd.DataFrame({ID: ids, "prediction": values}), ROOT / "data/raw/submitting.parquet", output, provenance)
     exported = np.rint(values).astype(np.int32)
     changed = exported != uploaded_v9

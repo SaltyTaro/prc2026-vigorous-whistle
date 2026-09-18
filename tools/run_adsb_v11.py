@@ -31,7 +31,8 @@ MATCHES = ROOT / "data/external/adsblol/matches"
 SCOPES = {"matched": lambda t: t["adsb_matched"].eq(1),
           "context": lambda t: t["adsb_matched"].eq(1) | t["nb_runway_30m_count"].fillna(0).gt(0),
           "matched_no_lirf": lambda t: t["adsb_matched"].eq(1) & t["airport"].ne("LIRF"),
-          "all_no_lirf": lambda t: t["airport"].ne("LIRF")}
+          "all_no_lirf": lambda t: t["airport"].ne("LIRF"),
+          "lirf_nonpop": lambda t: t["airport"].eq("LIRF") & ~t["population"].astype(bool)}  # LIRF rows outside the v9 mixture's fill population
 
 
 def model_code_receipt(root: Path) -> dict:
@@ -116,8 +117,21 @@ def prepare_matrix(table: pd.DataFrame, config: dict, categories: dict | None = 
     return x, categories
 
 
+def seed_params(params: dict, seed: int | None) -> dict:
+    """The declared parameters with every LightGBM seed set to `seed` (None keeps the declared seed)."""
+    out = dict(params)
+    if seed is not None:
+        out.update(seed=seed, bagging_seed=seed, feature_fraction_seed=seed, data_random_seed=seed)
+    return out
+
+
+def fit_boosters(spec: dict, x: pd.DataFrame, y: np.ndarray, rounds: int) -> list:
+    """One booster per declared seed (`residual_model.seeds`; without the key, the single declared parameter set), all at the same rounds."""
+    return [lgb.train(seed_params(spec["params"], seed), lgb.Dataset(x, y, categorical_feature=spec["categorical"]), rounds) for seed in (spec.get("seeds") or [None])]
+
+
 def fit_residual(train: pd.DataFrame, config: dict, scope: str = "matched", feature_set: str | None = None) -> dict:
-    """Fit on in-scope rows; rounds from a 5-fold day-grouped inner split (median best iteration)."""
+    """Fit on in-scope rows; rounds from a 5-fold day-grouped inner split (median best iteration) with the declared parameters; a seed bag if declared."""
     spec = config["residual_model"]
     rows = train[scope_mask(train, scope)].reset_index(drop=True)
     x, categories = prepare_matrix(rows, config, feature_set=feature_set)
@@ -130,17 +144,18 @@ def fit_residual(train: pd.DataFrame, config: dict, scope: str = "matched", feat
                             valid_sets=[lgb.Dataset(x.iloc[va], y[va], categorical_feature=spec["categorical"])], callbacks=[lgb.early_stopping(200, verbose=False)])
         best.append(int(booster.best_iteration))
     rounds = max(50, int(np.rint(np.median(best))))
-    booster = lgb.train(params, lgb.Dataset(x, y, categorical_feature=spec["categorical"]), rounds)
-    return {"booster": booster, "categories": categories, "rounds": rounds, "inner_best_iterations": best, "rows": int(len(rows)), "scope": scope, "feature_set": feature_set}
+    boosters = fit_boosters(spec, x, y, rounds)
+    return {"boosters": boosters, "booster": boosters[0], "categories": categories, "rounds": rounds, "inner_best_iterations": best, "rows": int(len(rows)), "scope": scope, "feature_set": feature_set,
+            "seeds": list(spec.get("seeds") or [])}
 
 
 def predict_residual(model: dict, table: pd.DataFrame, config: dict, scope: str = "matched") -> np.ndarray:
-    """Residual for every row of the table; zero outside the scope."""
+    """Residual for every row of the table (mean over the seed bag); zero outside the scope."""
     out = np.zeros(len(table))
     inside = scope_mask(table, scope)
     if inside.any():
         x, _ = prepare_matrix(table[inside], config, model["categories"], model.get("feature_set"))
-        out[inside] = model["booster"].predict(x, num_iteration=model["rounds"])
+        out[inside] = np.mean([booster.predict(x, num_iteration=model["rounds"]) for booster in model.get("boosters", [model["booster"]])], axis=0)
     return out
 
 
@@ -149,15 +164,16 @@ def rmse(a: np.ndarray, b: np.ndarray) -> float:
 
 
 def candidate_values(table: pd.DataFrame, v9: np.ndarray, residual: np.ndarray, item: dict, floor: float) -> tuple[np.ndarray, np.ndarray]:
-    """v9 + weight * residual on the residual scope, then the declared blend with an extra table on the blend scope; floored.
+    """v9 + weight * residual on the residual scope, then the declared blend(s) with extra tables on their blend scopes, in order; floored.
 
-    Returns the values and the mask of rows that may differ from v9 (residual scope or blend scope with a finite blend value).
+    `blend_with` is the primary blend; `extra_blends` (optional list of {name, scope, weight}) follow it, each a convex combination of the
+    running value with its table on its own scope. Returns the values and the mask of rows that may differ from v9 (residual scope or a
+    blend scope with a finite blend value).
     """
     inside = scope_mask(table, item["scope"])
     values = np.where(inside, v9 + item["weight"] * residual, v9)
     touched = inside.copy()
-    blend = item.get("blend_with")
-    if blend:
+    for blend in [b for b in [item.get("blend_with"), *(item.get("extra_blends") or [])] if b]:
         partner = table[blend["name"]].to_numpy(dtype=float)
         where = scope_mask(table, blend.get("scope", item["scope"])) & np.isfinite(partner)
         values = np.where(where, (1 - blend["weight"]) * values + blend["weight"] * partner, values)
@@ -206,7 +222,8 @@ def main():
     if baseline_spec:
         parent = config["parents"][baseline_spec.get("parent", "v11_development_residuals")]["path"]
         baseline_residual = pd.read_parquet(ROOT / parent).set_index(ID)[baseline_spec.get("column", "residual")]
-    candidates = {name: {"weight": item["weight"], "scope": item.get("scope", "matched"), "feature_set": item.get("features"), "blend_with": item.get("blend_with"), "months": {}}
+    candidates = {name: {"weight": item["weight"], "scope": item.get("scope", "matched"), "feature_set": item.get("features"), "blend_with": item.get("blend_with"),
+                         "extra_blends": item.get("extra_blends", []), "months": {}}
                   for name, item in config["candidates"].items()}
     variants = sorted({(item["scope"], item["feature_set"]) for item in candidates.values()}, key=lambda v: (v[0], v[1] or ""))
     key_of = lambda scope, feature_set: scope + (f"|{feature_set}" if feature_set else "")
@@ -220,7 +237,8 @@ def main():
             baseline_values = baseline_residual.reindex(test[ID]).fillna(0.0).to_numpy(dtype=float)
             if baseline_spec.get("blend_with"):
                 # The baseline is itself a blended export (e.g. v14): residual on its scope, then the declared blend, then the floor.
-                baseline, _ = candidate_values(test, v9, baseline_values, {"weight": baseline_spec["weight"], "scope": baseline_spec["scope"], "blend_with": baseline_spec["blend_with"]}, floor)
+                baseline, _ = candidate_values(test, v9, baseline_values, {"weight": baseline_spec["weight"], "scope": baseline_spec["scope"], "blend_with": baseline_spec["blend_with"],
+                                                                           "extra_blends": baseline_spec.get("extra_blends", [])}, floor)
             else:
                 baseline = np.maximum(v9 + baseline_spec["weight"] * baseline_values, floor)
         else:
@@ -237,7 +255,8 @@ def main():
             residuals[held][key] = predict_residual(models[key], test, config, scope)
             inside = scope_mask(test, scope)
             months_report[held]["scopes"][key] = {"scope": scope, "feature_set": feature_set, "rows_in_scope": int(inside.sum()), "share_in_scope": float(inside.mean()),
-                                                  "training_rows": models[key]["rows"], "rounds": models[key]["rounds"], "inner_best_iterations": models[key]["inner_best_iterations"]}
+                                                  "training_rows": models[key]["rows"], "rounds": models[key]["rounds"], "inner_best_iterations": models[key]["inner_best_iterations"],
+                                                  "seeds": models[key]["seeds"]}
         for item in candidates.values():
             residual = residuals[held][key_of(item["scope"], item["feature_set"])]
             values, _ = candidate_values(test, v9, residual, item, floor)

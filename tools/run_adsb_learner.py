@@ -8,7 +8,9 @@ The output column is always `adsb_full`; the residual stage binds each table und
 
 `--param key=value` (repeatable) overrides single learner parameters, `--rounds` the
 round cap and `--patience` the early-stopping patience; `--max-label` drops fitting and
-early-stopping rows whose label exceeds the value (every row is still predicted). All
+early-stopping rows whose label exceeds the value (every row is still predicted);
+`--exclude-population` drops the LIRF fill population (LIRF, no NM clock, no aircraft type)
+from fitting and early stopping so that LIRF's ordinary rows can be fitted. All
 overrides are recorded in the run's inputs; the defaults reproduce the earlier runs.
 
 `--fold seasonal|forward`: fit on the fold's fit partition (early stopping on its
@@ -188,6 +190,7 @@ def main():
     parser.add_argument("--threads", type=int, default=16)
     parser.add_argument("--seed", type=int, default=20260915)
     parser.add_argument("--exclude-airports", nargs="*", default=[], help="Airports left out of fitting and early stopping (their rows are still predicted)")
+    parser.add_argument("--exclude-population", action="store_true", help="Leave the LIRF fill population (LIRF, no AOBT/LOBT clock, no aircraft type; the v9 mixture's rows) out of fitting and early stopping (still predicted)")
     parser.add_argument("--airports", nargs="*", default=[], help="Specialist: fit, early-stop and predict ONLY these airports (other rows get NaN)")
     parser.add_argument("--param", action="append", default=[], metavar="KEY=VALUE", help="Override one learner parameter (repeatable; numbers and true/false are parsed)")
     parser.add_argument("--rounds", type=int, help="Override the declaration's round cap")
@@ -240,7 +243,7 @@ def main():
               "matches_sha256": {m: sha256_file(matches_root / f"matches2_{m}.parquet") for m in TRAINING_MONTHS + RANKING_MONTHS},
               "code": code_receipt(), "kind": args.kind, "parameters": params, "features": len(names), "adsb_features": ADSB_NAMES, "extra_features": extra_names, "extra_feature_tables_sha256": extra_hashes, "excluded_airports": sorted(args.exclude_airports), "target": args.target,
               "parameter_overrides": overrides, "rounds_cap": settings["rounds"], "early_stopping_rounds": settings["early_stopping_rounds"], "max_label": args.max_label, "seed": args.seed,
-              "specialist_airports": sorted(args.airports)}
+              "specialist_airports": sorted(args.airports), "exclude_population": bool(args.exclude_population)}
 
     def clock_mask(frame: pd.DataFrame) -> np.ndarray:
         mask = frame["nmclock_available"].to_numpy(dtype=float) == 1 if args.target == "nm_residual" else np.ones(len(frame), dtype=bool)
@@ -250,6 +253,8 @@ def main():
 
     def keep(frame: pd.DataFrame, labels: np.ndarray | None = None) -> np.ndarray:
         mask = clock_mask(frame) & ~frame["airport"].isin(args.exclude_airports).to_numpy()
+        if args.exclude_population:  # the same rows as the mixture's population (checked equal on the ranking and development rows)
+            mask &= ~(frame["airport"].eq("LIRF") & frame["nmclock_available"].eq(0) & frame["aircraft_missing"].eq(1)).to_numpy()
         if args.max_label is not None and labels is not None:
             mask &= labels <= args.max_label
         return mask
@@ -305,7 +310,7 @@ def main():
             if (rec["inputs"]["code"]["sha256"] != inputs["code"]["sha256"] or rec["inputs"]["stands_sha256"] != inputs["stands_sha256"] or rec["inputs"]["matches_sha256"] != inputs["matches_sha256"]
                     or rec["inputs"].get("excluded_airports", []) != inputs["excluded_airports"] or rec["inputs"].get("kind") != args.kind or rec["inputs"].get("target") != args.target
                     or rec["inputs"].get("parameters") != inputs["parameters"] or rec["inputs"].get("max_label") != args.max_label
-                    or rec["inputs"].get("specialist_airports", []) != inputs["specialist_airports"]):
+                    or rec["inputs"].get("specialist_airports", []) != inputs["specialist_airports"] or rec["inputs"].get("exclude_population", False) != inputs["exclude_population"]):
                 raise ValueError(f"Development fold {f} used different inputs.")
         rounds = int(np.rint(np.median([rec["best_iteration"] for rec in folds.values()])))
         training = catalog[catalog["source_file"].isin([source_file(m) for m in TRAINING_MONTHS])]
