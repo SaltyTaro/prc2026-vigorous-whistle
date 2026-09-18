@@ -50,6 +50,25 @@ failure, and the NM-residual variant lgb_lirf_nm_s33 was added. Learners, residu
 rule are unchanged. Ranking scope: LIRF is 80% matched in January 2026 and 0.2% in July 2026, so a
 selected candidate acts on January's LIRF rows.
 
-## Results
+## Results (`development_results.json`, 17:41 UTC)
 
-(to follow)
+| candidate | Jan | Jul | Nov | mean | intervals |
+| --- | ---: | ---: | ---: | ---: | --- |
+| ens_v20_bag_q_all_70 (residual seed bag alone) | −0.002% | −0.002% | −0.004% | −0.002% | all include zero |
+| lirf_ens3_70 | −0.002% | **−0.744%** | **−0.165%** | **−0.304%** | Jan [−0.03, 0.01]; Jul [−3.54, −1.00]; Nov [−0.58, −0.09] |
+| lirf_nm_50 | −0.002% | −0.674% | −0.155% | −0.277% | Jan includes zero; Jul, Nov below |
+| lirf_ens3_50 | −0.002% | −0.644% | −0.169% | −0.272% | idem |
+| lirf_ens_70 / lirf_ens_50 / lirf_cap_50 / lirf_s31_50 / lirf_ens_30 | −0.002% | −0.65 / −0.59 / −0.59 / −0.55 / −0.43% | −0.15 / −0.16 / −0.16 / −0.15 / −0.13% | −0.27 … −0.19% | idem |
+| lirf_ens_50_all (unrestricted scope, the record) | +0.030% | **+5.68%** | −0.12% | +1.87% | Jul [−2.37, +49.4] |
+
+LIRF per airport: July 652.0 → 641.4 s (−1.62%) and November 451.7 → 449.8 s (−0.42%) for
+lirf_ens3_70. Every LIRF candidate on the restricted scope beats the 0.02% bar by an order of
+magnitude, with July's and November's intervals below zero; **nothing qualifies** only because
+January 2025 has no row in the blend scope (LIRF entirely unmatched that month), so January's
+candidate differs from v18 by the residual seed bag alone and its interval [−0.03, 0.01] includes
+zero. The seed bag itself is null (−0.002%): the residual stage's seed variance is negligible;
+closed. The LightGBM learners' seasonal-fold best iterations were 1,659 / 1,970 / 1,596, refit
+rounds 1,584 / 1,767 / 1,744; each fit took about four minutes. arcw4 deallocated 17:26 UTC.
+
+Continuation: `docs/adsb_v21_v2/README.md` (recorded post-hoc rule clarification: interval
+condition on touched months; no seed bag) → export v19.
