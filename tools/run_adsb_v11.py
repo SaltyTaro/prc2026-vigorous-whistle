@@ -32,7 +32,11 @@ SCOPES = {"matched": lambda t: t["adsb_matched"].eq(1),
           "context": lambda t: t["adsb_matched"].eq(1) | t["nb_runway_30m_count"].fillna(0).gt(0),
           "matched_no_lirf": lambda t: t["adsb_matched"].eq(1) & t["airport"].ne("LIRF"),
           "all_no_lirf": lambda t: t["airport"].ne("LIRF"),
-          "lirf_nonpop": lambda t: t["airport"].eq("LIRF") & ~t["population"].astype(bool)}  # LIRF rows outside the v9 mixture's fill population
+          "lirf_nonpop": lambda t: t["airport"].eq("LIRF") & ~t["population"].astype(bool),  # LIRF rows outside the v9 mixture's fill population
+          # ... with a matched surface segment and an ordinary NM clock and schedule interval (both under six hours): the label-target learners
+          # cannot follow a day-long clock (a one-day LIRF row with proxy 87,181 s was predicted at 2,186 s), and without ADS-B they lose to v9
+          "lirf_nonpop_matched": lambda t: (t["airport"].eq("LIRF") & ~t["population"].astype(bool) & t["adsb_matched"].eq(1)
+                                            & t["proxy_s"].abs().lt(21600) & t["schedule_interval_s"].abs().lt(21600))}
 
 
 def model_code_receipt(root: Path) -> dict:

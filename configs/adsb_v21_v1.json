@@ -1,4 +1,6 @@
 {
+  "amended_at_utc": "2026-09-18T16:55:30+00:00",
+  "amendment": "Amended before any candidate was scored by the selection tool and before the second learner finished: a preview of lgb_lirf_s31's seasonal fold on the LIRF non-population rows showed (1) the label-target learner cannot follow a day-long NM clock (the one-day LIRF row of July 2025, proxy 87,181 s, label 87,002 s, is predicted at 2,186 s where v9's clock-residual models give 86,891 s: 72% of the class's squared error in one row) and (2) without ADS-B (January 2025, LIRF unmatched) the learner loses to v9 (293.6 vs 284.2 s) while on matched rows it wins (July 2025: 429.7 vs 440.6 s, blend 0.5 427.9 s). The blend scope of the LIRF candidates is therefore restricted to lirf_nonpop_matched (matched segment, |NM proxy| and |schedule interval| under six hours; all label-free and ranking-available), one unrestricted candidate is kept as the record of the failure, and a third learner with the NM-residual target (label minus the NM clock, the way v9's clock-present models work) is added. The learners, the residual seed bag, the baseline and the rule are unchanged.",
   "audit_used": false,
   "candidates": {
     "ens_v20_bag_q_all_70": {
@@ -21,12 +23,48 @@
       "extra_blends": [
         {
           "name": "lgb_lirf_cap_s32",
-          "scope": "lirf_nonpop",
+          "scope": "lirf_nonpop_matched",
           "weight": 0.5
         }
       ],
       "features": "nb",
-      "note": "incumbent + 0.5 * lgb_lirf_cap_s32 on LIRF non-population rows",
+      "note": "incumbent + 0.5 * lgb_lirf_cap_s32 on matched LIRF non-population rows with ordinary clocks",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "lirf_ens3_50": {
+      "blend_with": {
+        "name": "ens_v20_bag_q_all",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "extra_blends": [
+        {
+          "name": "ens_v21_lgb_lirf3",
+          "scope": "lirf_nonpop_matched",
+          "weight": 0.5
+        }
+      ],
+      "features": "nb",
+      "note": "incumbent + 0.5 * ens_v21_lgb_lirf3 on matched LIRF non-population rows with ordinary clocks (amendment)",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "lirf_ens3_70": {
+      "blend_with": {
+        "name": "ens_v20_bag_q_all",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "extra_blends": [
+        {
+          "name": "ens_v21_lgb_lirf3",
+          "scope": "lirf_nonpop_matched",
+          "weight": 0.7
+        }
+      ],
+      "features": "nb",
+      "note": "incumbent + 0.7 * ens_v21_lgb_lirf3 on matched LIRF non-population rows with ordinary clocks (amendment)",
       "scope": "matched_no_lirf",
       "weight": 1.0
     },
@@ -39,12 +77,12 @@
       "extra_blends": [
         {
           "name": "ens_v21_lgb_lirf",
-          "scope": "lirf_nonpop",
+          "scope": "lirf_nonpop_matched",
           "weight": 0.3
         }
       ],
       "features": "nb",
-      "note": "incumbent + 0.3 * ens_v21_lgb_lirf on LIRF non-population rows",
+      "note": "incumbent + 0.3 * ens_v21_lgb_lirf on matched LIRF non-population rows with ordinary clocks",
       "scope": "matched_no_lirf",
       "weight": 1.0
     },
@@ -57,12 +95,30 @@
       "extra_blends": [
         {
           "name": "ens_v21_lgb_lirf",
+          "scope": "lirf_nonpop_matched",
+          "weight": 0.5
+        }
+      ],
+      "features": "nb",
+      "note": "incumbent + 0.5 * ens_v21_lgb_lirf on matched LIRF non-population rows with ordinary clocks",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "lirf_ens_50_all": {
+      "blend_with": {
+        "name": "ens_v20_bag_q_all",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "extra_blends": [
+        {
+          "name": "ens_v21_lgb_lirf",
           "scope": "lirf_nonpop",
           "weight": 0.5
         }
       ],
       "features": "nb",
-      "note": "incumbent + 0.5 * ens_v21_lgb_lirf on LIRF non-population rows",
+      "note": "incumbent + 0.5 * ens_v21_lgb_lirf on EVERY LIRF non-population row (the original scope, kept as the record of the day-long-clock failure)",
       "scope": "matched_no_lirf",
       "weight": 1.0
     },
@@ -75,12 +131,30 @@
       "extra_blends": [
         {
           "name": "ens_v21_lgb_lirf",
-          "scope": "lirf_nonpop",
+          "scope": "lirf_nonpop_matched",
           "weight": 0.7
         }
       ],
       "features": "nb",
-      "note": "incumbent + 0.7 * ens_v21_lgb_lirf on LIRF non-population rows",
+      "note": "incumbent + 0.7 * ens_v21_lgb_lirf on matched LIRF non-population rows with ordinary clocks",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    },
+    "lirf_nm_50": {
+      "blend_with": {
+        "name": "ens_v20_bag_q_all",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "extra_blends": [
+        {
+          "name": "lgb_lirf_nm_s33",
+          "scope": "lirf_nonpop_matched",
+          "weight": 0.5
+        }
+      ],
+      "features": "nb",
+      "note": "incumbent + 0.5 * lgb_lirf_nm_s33 on matched LIRF non-population rows with ordinary clocks (amendment)",
       "scope": "matched_no_lirf",
       "weight": 1.0
     },
@@ -93,12 +167,12 @@
       "extra_blends": [
         {
           "name": "lgb_lirf_s31",
-          "scope": "lirf_nonpop",
+          "scope": "lirf_nonpop_matched",
           "weight": 0.5
         }
       ],
       "features": "nb",
-      "note": "incumbent + 0.5 * lgb_lirf_s31 on LIRF non-population rows",
+      "note": "incumbent + 0.5 * lgb_lirf_s31 on matched LIRF non-population rows with ordinary clocks",
       "scope": "matched_no_lirf",
       "weight": 1.0
     }
@@ -138,7 +212,15 @@
         "runs/adsb_v21/lgb_lirf_s31",
         "runs/adsb_v21/lgb_lirf_cap_s32"
       ],
-      "rule": "mean of finite predictions of the two LIRF-inclusive LightGBMs"
+      "rule": "mean of finite predictions of the two label-target LIRF-inclusive LightGBMs"
+    },
+    "ens_v21_lgb_lirf3": {
+      "members": [
+        "runs/adsb_v21/lgb_lirf_s31",
+        "runs/adsb_v21/lgb_lirf_cap_s32",
+        "runs/adsb_v21/lgb_lirf_nm_s33"
+      ],
+      "rule": "mean of finite predictions of all three LIRF-inclusive LightGBMs (amendment)"
     },
     "missing_members": "if a learner variant fails to complete on all three folds it is dropped from every ensemble that lists it and the drop is recorded in the selection; no other change",
     "tool": "tools/ensemble_adsb_full.py (per-row mean of finite member predictions, fold by fold); nested means are built by listing members with multiplicities that reproduce the weighted group means exactly (ens_v17_bag_ctr_q: each LightGBM five times and each of the five combination CatBoosts eighteen times, 120 entries; ens_v18_bag_c2: each LightGBM three times and each of the nine combination CatBoosts four times, 54 entries; ens_v18_bag_q: each LightGBM once and each of the nine combination CatBoosts twice, 24 entries); every learner predicts every non-LIRF row"
@@ -180,6 +262,15 @@
       ],
       "ranking": "runs/adsb_v21/ens_v21_lgb_lirf/refit/ranking_predictions.parquet"
     },
+    "ens_v21_lgb_lirf3": {
+      "column": "adsb_full",
+      "description": "ensemble ens_v21_lgb_lirf3 as declared above (amendment)",
+      "development": [
+        "runs/adsb_v21/ens_v21_lgb_lirf3/seasonal/predictions.parquet",
+        "runs/adsb_v21/ens_v21_lgb_lirf3/forward/predictions.parquet"
+      ],
+      "ranking": "runs/adsb_v21/ens_v21_lgb_lirf3/refit/ranking_predictions.parquet"
+    },
     "lgb_lirf_cap_s32": {
       "column": "adsb_full",
       "description": "learner lgb_lirf_cap_s32 alone",
@@ -188,6 +279,15 @@
         "runs/adsb_v21/lgb_lirf_cap_s32/forward/predictions.parquet"
       ],
       "ranking": "runs/adsb_v21/lgb_lirf_cap_s32/refit/ranking_predictions.parquet"
+    },
+    "lgb_lirf_nm_s33": {
+      "column": "adsb_full",
+      "description": "learner lgb_lirf_nm_s33 alone (amendment)",
+      "development": [
+        "runs/adsb_v21/lgb_lirf_nm_s33/seasonal/predictions.parquet",
+        "runs/adsb_v21/lgb_lirf_nm_s33/forward/predictions.parquet"
+      ],
+      "ranking": "runs/adsb_v21/lgb_lirf_nm_s33/refit/ranking_predictions.parquet"
     },
     "lgb_lirf_s31": {
       "column": "adsb_full",
@@ -227,6 +327,15 @@
       "note": "as lgb_lirf_s31 plus --max-label 21600 (fitting and early-stopping rows with labels above six hours left out; every row predicted), seed 20260932",
       "parameters": {},
       "seed": 20260932
+    },
+    "lgb_lirf_nm_s33": {
+      "exclude_airports": [],
+      "exclude_population": true,
+      "kind": "lightgbm",
+      "note": "as lgb_lirf_s31 with --target nm_residual (label minus the NM clock; rows without the clock are neither fitted nor predicted), seed 20260933 (amendment)",
+      "parameters": {},
+      "seed": 20260933,
+      "target": "nm_residual"
     },
     "lgb_lirf_s31": {
       "exclude_airports": [],
@@ -891,9 +1000,9 @@
       "sha256": "478d5d48b9ec93411886f8d8d481c2a0847d3bc354f32b48bb119dc52d81c285"
     },
     "selection_tool": {
-      "note": "lirf_nonpop scope, extra_blends, residual seed bag added 18 September",
+      "note": "lirf_nonpop / lirf_nonpop_matched scopes, extra_blends, residual seed bag added 18 September",
       "path": "tools/run_adsb_v11.py",
-      "sha256": "615b16049c4859f64a812f8076639c04bd2dd949f4d8db57260e58d884d6270c"
+      "sha256": "e2729b908bc9d7b3cbf6fa3b09d4334f4defe824ee25e183c37f222407189b58"
     },
     "stands": {
       "path": "data/external/adsblol/matches_v11/stands.parquet",
@@ -1182,6 +1291,7 @@
     "scopes": {
       "all_no_lirf": "every departure at any airport except LIRF: a blend scope only (unmatched rows there become (1 - w) * v9 + w * adsb_full)",
       "lirf_nonpop": "every LIRF departure outside the v9 mixture's fill population (airport == LIRF and not population): a blend scope only; rows there are (1 - w) * v9 + w * <table>, the population rows stay v9",
+      "lirf_nonpop_matched": "LIRF departures outside the fill population with a matched ADS-B surface segment (adsb_matched == 1) whose NM proxy and schedule interval are both under six hours in absolute value (label-free, available on the ranking rows): the LIRF blend scope after the amendment; every other LIRF row stays v9",
       "matched_no_lirf": "departures with a matched ADS-B surface segment at any airport except LIRF (adsb_matched == 1 and airport != LIRF): the residual model's training and prediction scope (exactly v12)"
     },
     "seed_bag": "five boosters with the declared parameters and every LightGBM seed (seed, bagging_seed, feature_fraction_seed, data_random_seed) set to each of `seeds`, all at the rounds chosen by the inner split with the declared parameters; the residual is their mean (fit_boosters / predict_residual in tools/run_adsb_v11.py; the export fits the same bag at the selected refit rounds and saves every member). The first member sets its seeds explicitly, so it is not bit-identical to the recorded single-seed residual; the reproduction candidate quantifies the bag.",
