@@ -64,7 +64,7 @@ before any feature work.
 ## Result (18 September 2026, [`screen_results.json`](screen_results.json)): no-go
 
 Features built for the three development months by `tools/build_adsb_v19_features.py`
-(`data/external/adsblol/features_v19/`, git-ignored; coverage on the 468,895 non-LIRF
+(`data/external/adsblol/features_v19_screen/`, git-ignored, built from the residual stage's `matches_v11` tables; coverage on the 468,895 non-LIRF
 rows: timing 58%, stand distance 55%, congestion 81%, runway queue 76%; 26–36 roll-start
 points per month; 495–512 stand codes imputed per month). Screen by
 `tools/screen_adsb_v19.py`:

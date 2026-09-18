@@ -94,7 +94,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--learner", default="runs/adsb_v17/ens_v17_bag_ctr_c2")
     parser.add_argument("--residual-run", default="runs/adsb_v17_sel")
-    parser.add_argument("--features-dir", default="data/external/adsblol/features_v19")
+    parser.add_argument("--features-dir", default="data/external/adsblol/features_v19_screen", help="tables built from matches_v11 (the residual stage's inputs); the VM round uses features_v19/ built from matches/")
     parser.add_argument("--report", required=True)
     args = parser.parse_args()
 

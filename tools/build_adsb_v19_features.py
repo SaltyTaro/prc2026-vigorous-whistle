@@ -7,7 +7,7 @@ congestion for every departure at an airport with surface data that day. Stand
 imputation is month-level. Output: data/external/adsblol/features_v19/features_v19_<month>.parquet
 with MVT_ID_mvt and the eleven features (NaN where not applicable). Label-free.
 
-    python tools/build_adsb_v19_features.py --months 2025-01 2025-07 2025-11 --workers 6
+    python tools/build_adsb_v19_features.py --months 2025-01 2025-07 2025-11 --workers 6 [--matches-dir ... --output ...]
 """
 from __future__ import annotations
 
@@ -29,8 +29,8 @@ from prc2026_adsb.features_v19 import (CONGESTION_NAMES, FEATURE_NAMES_V19, TIMI
 from build_adsb_features import raw_path  # noqa: E402
 
 SURFACE = ROOT / "data/external/adsblol/surface"
-MATCHES = ROOT / "data/external/adsblol/matches_v11"
-OUTPUT = ROOT / "data/external/adsblol/features_v19"
+DEFAULT_MATCHES = "data/external/adsblol/matches"  # the VM learners' pass-2 tables (1,332 stands); the screen used matches_v11
+DEFAULT_OUTPUT = "data/external/adsblol/features_v19"
 
 
 def pass_one(args):
@@ -65,7 +65,10 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--months", nargs="+", required=True)
     parser.add_argument("--workers", type=int, default=6)
+    parser.add_argument("--matches-dir", default=DEFAULT_MATCHES)
+    parser.add_argument("--output", default=DEFAULT_OUTPUT)
     args = parser.parse_args()
+    MATCHES, OUTPUT = ROOT / args.matches_dir, ROOT / args.output
     OUTPUT.mkdir(parents=True, exist_ok=True)
     stands = pd.read_parquet(MATCHES / "stands.parquet")
     for month in args.months:
