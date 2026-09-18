@@ -47,7 +47,9 @@ ground, radius 1,200 m): `sfc_rwy_queue_5m`,
 LightGBM on the incumbent's residual (label − v16 development prediction), rows outside
 LIRF, leave-one-month-out over Jan/Jul/Nov 2025 (fit on two months, predict the third;
 fixed 400 rounds, learning rate 0.03, 63 leaves, min_data_in_leaf 200, feature_fraction
-0.8, λ₂ 10, seed 20260918). Two feature sets: **base** = the 27 recorded ADS-B/neighbour
+0.8, λ₂ 10, bagging 0.9, seed 20260918; fitting rows restricted to labels ≤ 43,200 s so the
+garbage one-day rows do not dominate the L2 fit, every row evaluated; amendment written
+before any screen output existed). Two feature sets: **base** = the 27 recorded ADS-B/neighbour
 features plus airport, hour, weekday, schedule interval, NM proxy, clock flag; **new** =
 base plus A–C. Reported per month: RMSE of the incumbent, incumbent + base screen,
 incumbent + new screen; by row kind (gate / dark / unmatched) and by airport.
@@ -58,3 +60,33 @@ unmatched rows. Otherwise the features are recorded as null and no round is decl
 The base screen also reports how much residual structure the incumbent leaves for a
 second-stage model at all; a large base gain would itself be a finding to investigate
 before any feature work.
+
+## Result (18 September 2026, [`screen_results.json`](screen_results.json)): no-go
+
+Features built for the three development months by `tools/build_adsb_v19_features.py`
+(`data/external/adsblol/features_v19/`, git-ignored; coverage on the 468,895 non-LIRF
+rows: timing 58%, stand distance 55%, congestion 81%, runway queue 76%; 26–36 roll-start
+points per month; 495–512 stand codes imputed per month). Screen by
+`tools/screen_adsb_v19.py`:
+
+| month | incumbent | incumbent + base second stage | incumbent + new features | new vs base |
+| --- | ---: | ---: | ---: | ---: |
+| 2025-01 | 323.511 | 324.020 | 324.014 | −0.002% |
+| 2025-07 | 208.377 | 210.766 | 210.453 | −0.148% |
+| 2025-11 | 156.519 | 157.951 | 157.721 | −0.146% |
+
+By row kind (base → new, all months): gate 99.9 → 99.5, dark 159.0 → 158.6, unmatched
+327.4 → 327.4. Gain share of the new features in the all-months fit: every one below 2.2%
+(`adsb_first_dist_stand_imp_m` 2.1%, `sfc_moving_20m` 1.8%, `adsb_first_motion_s` 1.8%,
+`sfc_rwy_queue_10m` 1.5%, the rest ≤ 1.5%).
+
+Readings. (1) A second-stage model on the incumbent's residual is worse than the
+incumbent on every month (+0.16% / +1.15% / +0.91%): the committee leaves no structure
+that these inputs can recover out of month, which is what a well-fitted ensemble should
+look like. (2) The eleven new features move that second stage by 0.15% on July and
+November and by nothing on January — the coverage-thin month that most resembles the
+ranking's EDDF regime — with the gain on gate and dark rows only; the congestion counts
+add nothing on unmatched rows beyond the timeline features. The 0.3%-on-every-month bar
+is not met; **no `adsb_v19_v1` round is declared, nothing is fitted on the VMs.** The
+feature code stays in the repository as a record; the lever "surface features for dark
+and unmatched rows" is closed on this evidence. v16 (241.75) remains the incumbent.
