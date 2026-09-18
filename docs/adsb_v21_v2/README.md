@@ -52,6 +52,12 @@ than 600 s (fill-hedge rows where both models sit between the NM clock and the s
 interval), none by more than 1,800 s; extremes, negative-proxy rows, the LIRF population and the
 disruption days are unchanged from v18.
 
-## Upload
+## Upload and official result
 
-Pending the user's approval. (Recorded when done.)
+Uploaded with the user's approval at 18:19 UTC on 18 September 2026,
+processed at 18:20:32 UTC: **official 241.1789 (−0.2288 s, −0.095% vs v18's 241.4077)**
+([`official_result.json`](official_result.json)). The development mean was −0.30%, carried by
+July 2025 (−0.74%, LIRF 94% matched) and November (−0.16%, 66% matched); the ranking's LIRF
+rows in scope are January 2026's (80% matched, 8,669 rows), and January's gain transferred at
+about a third of July's rate. v19 (241.1789, SHA `27a3a8fc…11b3`) is the incumbent. Never
+re-upload v1–v19.
