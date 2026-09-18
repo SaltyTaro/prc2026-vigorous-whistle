@@ -37,7 +37,6 @@ hash-bound file was touched while it ran. `tools/audit_export.py --version 18`
 (no row moved by more than 600 s), to v16 7.4 s; extremes, negative-proxy rows and
 disruption days unchanged.
 
-## Upload
+## Upload and official result
 
-Prepared for the user's upload decision (would be the second of the five slots of 18
-September UTC). Expected official effect ≈ −0.07 s.
+v18 (241.4077, SHA `663e9d38…0807`) is the incumbent. Never re-upload v1–v18.
