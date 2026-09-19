@@ -1,0 +1,9 @@
+{
+  "cause": "The verifier built its independent ranking feature frame with prc2026_december.scoring.adsb_table, which is December-specific (it reads matches2_2025-12.parquet by name), so every ranking row was treated as unmatched: 2,948 of the 3,000 sampled rows differed, all with adsb_matched == 0 in the verifier's frame; the twelve-month categorical vocabularies were identical to the mirrored models' pandas categories. The workers' fits and predictions used the frozen tools/run_adsb_learner.py::adsb_table with the ranking months' match tables and were not affected.",
+  "correction": "Verifier only: ranking_adsb_table() rebuilds the 27 ADS-B features for the ranking departures from the frozen prc2026_adsb.features.departure_features / neighbour_features with matches2_2026-01 and matches2_2026-07 and stands.parquet from data/external/adsblol/matches (the learners' match directory), and every refit record's stands_sha256 / matches_sha256 must equal those files' hashes. No model, prediction, table, residual, export or declaration changed; src/prc2026_december/scoring.py (a hash-bound parent) is untouched.",
+  "created_at_utc": "2026-09-19T18:34:10.660580+00:00",
+  "rerun": "tools/verify_december_refit.py --version 21 passed at 18:32 UTC: 29 leaves with maximum sampled difference 0.0, residual difference 0.0, independent recomputation equal to the export, rows outside the scopes equal to v9.",
+  "scoring_module_sha256": "598a2aa68af5ecce7dfd340d2c97511f2de6df12dd43cb1572aa30710413279b",
+  "verifier_sha256_after": "539f5eb621aecc55e2ac167cbb51f9d84a196eb08ca38d95f615d7bc44cf82c8",
+  "what_failed": "tools/verify_december_refit.py --version 21 (first run, 18:20 UTC 19 September 2026) raised: runs/adsb_full_nolirf: mirrored model re-prediction differs by 976.7423002219793."
+}

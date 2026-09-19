@@ -23,8 +23,8 @@ sys.path.insert(0, str(ROOT / "tools"))
 from prc2026.artifacts import object_hash, read_json, sha256_file, utc_now, write_json
 from prc2026.features import ID, PHASE, TARGET
 from prc2026.validation import identity_hash
-from prc2026_adsb.features import DEPARTURE_COLUMNS
-from prc2026_december.scoring import ADSB_NAMES, BUNDLE_NAMES, MISSING, adsb_table, encode
+from prc2026_adsb.features import DEPARTURE_COLUMNS, departure_features, neighbour_features
+from prc2026_december.scoring import ADSB_NAMES, BUNDLE_NAMES, MISSING, encode
 from prc2026_lirf_mixture.model import apply_candidate
 from prc2026_timeline.features import CATEGORICAL_COLUMNS
 from export_adsb_v11 import ranking_table
@@ -33,6 +33,20 @@ from run_adsb_v11 import candidate_values, check_parents, matches_dir, predict_r
 from run_lirf_mixture import MOVEMENT_COLUMNS, fit_population_model, movements, score_population
 
 TRAINING = [f"2025-{m:02}" for m in range(1, 12)]
+RANKING_MONTHS = ["2026-01", "2026-07"]
+LEARNER_MATCHES = Path("data/external/adsblol/matches")  # the learners' match tables (tools/run_adsb_learner_dec.py --matches-dir default); the residual uses config["matches_dir"]
+
+
+def ranking_adsb_table(departures: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+    """The learners' 27 label-free ADS-B features for the ranking departures, rebuilt here from the frozen feature functions and the
+    ranking months' match tables (tools/run_adsb_learner.py::adsb_table without its cache); returns the table and the input hashes."""
+    stands = pd.read_parquet(ROOT / LEARNER_MATCHES / "stands.parquet")
+    matches = pd.concat([pd.read_parquet(ROOT / LEARNER_MATCHES / f"matches2_{m}.parquet") for m in RANKING_MONTHS], ignore_index=True)
+    feats = departure_features(departures, matches, stands).merge(neighbour_features(departures, matches), on=ID, validate="one_to_one")
+    if list(feats.columns) != [ID, *ADSB_NAMES]:
+        raise ValueError("Unexpected ADS-B feature columns.")
+    hashes = {"stands_sha256": sha256_file(ROOT / LEARNER_MATCHES / "stands.parquet"), "matches_sha256": {m: sha256_file(ROOT / LEARNER_MATCHES / f"matches2_{m}.parquet") for m in RANKING_MONTHS}}
+    return feats, hashes
 
 
 def source_file(month: str) -> str:
@@ -100,7 +114,10 @@ def main():
     if not np.array_equal(departures[ID].to_numpy(), ids):
         raise ValueError("Export rows are not the ranking departures in template order.")
     bundle = ROOT / read_json(ROOT / "data/timeline/latest.json")["bundle"]
-    frame = pd.read_parquet(bundle / "features/ranking.parquet", columns=[ID, *BUNDLE_NAMES]).merge(adsb_table(ROOT, departures, Path("data/external/adsblol/matches")), on=ID, how="left", validate="one_to_one")
+    adsb, adsb_hashes = ranking_adsb_table(departures)
+    frame = pd.read_parquet(bundle / "features/ranking.parquet", columns=[ID, *BUNDLE_NAMES]).merge(adsb, on=ID, how="left", validate="one_to_one")
+    if frame["adsb_matched"].isna().any():
+        raise ValueError("The rebuilt ADS-B table does not cover every ranking row.")
     frame = frame.merge(pd.concat([pd.read_parquet(ROOT / f"data/external/adsblol/features_v19/features_v19_{m}.parquet") for m in ["2026-01", "2026-07"]], ignore_index=True), on=ID, how="left", validate="one_to_one")
     if not np.array_equal(frame[ID].to_numpy(), ids):
         raise ValueError("Ranking feature frame order differs from the export.")
@@ -126,6 +143,8 @@ def main():
             problems.append("recipe")
         if inputs["source_fold_records_sha256"] != {f: sha256_file(ROOT / leaf / f / "run.json") for f in folds} or inputs["december_ids_sha256"] != december_manifest["ids_sha256"]:
             problems.append("fold records / December identity")
+        if inputs["stands_sha256"] != adsb_hashes["stands_sha256"] or any(inputs["matches_sha256"][m] != adsb_hashes["matches_sha256"][m] for m in RANKING_MONTHS):
+            problems.append("ranking match tables / stands")
         if inputs["code"]["files"]["tools/run_adsb_learner_dec.py"] != config["parents"]["runner_twelve_months"]["sha256"] or inputs["code"]["files"]["tools/run_adsb_learner.py"] != config["parents"]["runner_frozen"]["sha256"] \
                 or inputs["code"]["files"]["src/prc2026_adsb/features.py"] != config["parents"]["adsb_feature_code"]["sha256"]:
             problems.append("code")
