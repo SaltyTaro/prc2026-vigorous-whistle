@@ -1,0 +1,756 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "lirf_q_85": {
+      "blend_with": {
+        "name": "ens_v20_bag_q_all",
+        "scope": "all_no_lirf",
+        "weight": 0.7
+      },
+      "extra_blends": [
+        {
+          "name": "ens_v22_lirf_q",
+          "scope": "lirf_nonpop_matched",
+          "weight": 0.85
+        }
+      ],
+      "features": "nb",
+      "note": "v18 recipe outside LIRF; (1 - 0.85) * v9 + 0.85 * ens_v22_lirf_q (quarter LightGBM group / three-quarter CatBoost group) on matched LIRF non-population rows with ordinary clocks; every other LIRF row v9",
+      "scope": "matched_no_lirf",
+      "weight": 1.0
+    }
+  },
+  "december_build": {
+    "december_scratch": "scratch/december.parquet (v7 / v9 on December from the January-November stack; docs/december/README.md)",
+    "features_sha256": "92d91b97d788254dd8ab242e079f40ff1b3b6b04aae12c5459c27def8a328e06",
+    "labels_sha256": "370a335fefd6d91d3ff7ce702e35f0861f5a846dba9a7bbd68ac0ced563421f2",
+    "path": "data/december/d198dea10625b0a75977/manifest.json",
+    "sha256": "9c8956a5ae504ee89d4c0bef9f3cd70eaf50752c82d35e6a65909bce9d4f93e1"
+  },
+  "declared_at_utc": "2026-09-19T11:16:44.136213+00:00",
+  "development_baseline": {
+    "blend_with": {
+      "name": "ens_v20_bag_q_all",
+      "scope": "all_no_lirf",
+      "weight": 0.7
+    },
+    "column": "residual_matched_no_lirf|nb",
+    "extra_blends": [
+      {
+        "name": "ens_v21_lgb_lirf3",
+        "scope": "lirf_nonpop_matched",
+        "weight": 0.7
+      }
+    ],
+    "name": "v19 development predictions",
+    "parent": "v12_development_residuals",
+    "recipe": "v9 + 1.0 * v12 development residual on matched rows outside LIRF, then (1 - 0.7) * that + 0.7 * ens_v20_bag_q_all (out-of-sample per fold) on every row outside LIRF, then 0.3 * v9 + 0.7 * ens_v21_lgb_lirf3 on matched LIRF non-population rows with ordinary clocks, floored; reproduces 330.302 / 269.512 / 191.878 on Jan / Jul / Nov 2025 (runs/adsb_v21_v2/selection.json, lirf_ens3_70). The baseline uses the recorded single-seed v12 development residual (parent v12_development_residuals); the residual model refitted here is the same single booster, so the reproduction candidate is exact.",
+    "scope": "matched_no_lirf",
+    "weight": 1.0
+  },
+  "development_months": [
+    "2025-01",
+    "2025-07",
+    "2025-11"
+  ],
+  "development_scheme": "leave-one-month-out over the three scoring months that hold out-of-sample v9 predictions (Jan and Jul 2025 from the seasonal fold, Nov 2025 from the forward fold); for each variant (scope, feature set) the residual model is fitted on the other two months' in-scope rows and applied to the held-out month's in-scope rows; every other row keeps v9",
+  "ensembles": {
+    "ens_v20_bag_q_all": {
+      "members": [
+        "runs/adsb_v20/ens_v20_lgb_all",
+        "runs/adsb_v20/ens_v20_ctr_all",
+        "runs/adsb_v20/ens_v20_ctr_all",
+        "runs/adsb_v20/ens_v20_ctr_all"
+      ],
+      "rule": "the incumbent committee (existing, hash-bound, not rebuilt)"
+    },
+    "ens_v21_lgb_lirf3": {
+      "members": [
+        "runs/adsb_v21/lgb_lirf_s31",
+        "runs/adsb_v21/lgb_lirf_cap_s32",
+        "runs/adsb_v21/lgb_lirf_nm_s33"
+      ],
+      "rule": "the v19 LIRF LightGBM group (existing, hash-bound, not rebuilt): mean of lgb_lirf_s31, lgb_lirf_cap_s32, lgb_lirf_nm_s33"
+    },
+    "ens_v22_cat_lirf4": {
+      "members": [
+        "runs/adsb_v22/cat_lirf_ctr2_s34",
+        "runs/adsb_v22/cat_lirf_ctr3_s35",
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37"
+      ],
+      "rule": "mean of finite predictions of all four LIRF-inclusive CatBoosts"
+    },
+    "ens_v22_cat_lirf_label": {
+      "members": [
+        "runs/adsb_v22/cat_lirf_ctr2_s34",
+        "runs/adsb_v22/cat_lirf_ctr3_s35"
+      ],
+      "rule": "mean of the two label-target LIRF-inclusive CatBoosts"
+    },
+    "ens_v22_cat_lirf_nm": {
+      "members": [
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37"
+      ],
+      "rule": "mean of finite predictions of the two NM-residual LIRF-inclusive CatBoosts (NaN where the clock is missing)"
+    },
+    "ens_v22_lirf_half": {
+      "members": [
+        "runs/adsb_v21/ens_v21_lgb_lirf3",
+        "runs/adsb_v22/ens_v22_cat_lirf4"
+      ],
+      "rule": "one half of the v19 LightGBM group mean plus one half of ens_v22_cat_lirf4"
+    },
+    "ens_v22_lirf_q": {
+      "members": [
+        "runs/adsb_v21/ens_v21_lgb_lirf3",
+        "runs/adsb_v22/ens_v22_cat_lirf4",
+        "runs/adsb_v22/ens_v22_cat_lirf4",
+        "runs/adsb_v22/ens_v22_cat_lirf4"
+      ],
+      "rule": "one quarter of the v19 LightGBM group mean plus three quarters of ens_v22_cat_lirf4 (the incumbent committee's quarter / three-quarter rule)"
+    },
+    "missing_members": "if a learner variant fails to complete on all three folds it is dropped from every ensemble that lists it and the drop is recorded in the selection; no other change",
+    "tool": "tools/ensemble_adsb_full.py (per-row mean of finite member predictions, fold by fold); nested means are built by listing members with multiplicities that reproduce the weighted group means exactly (ens_v22_lirf_q: the LightGBM group once and the CatBoost group three times); every label-target learner predicts every row and every NM-residual learner predicts every row with the clock",
+    "twelve_month_rule": "each declared table is rebuilt for the ranking as the per-row mean of finite twelve-month refit predictions over the flattened leaf list its frozen run record averaged (multiplicities preserved), written to runs/adsb_v23/ens/<name>/refit/ranking_predictions.parquet"
+  },
+  "evidence": {
+    "december_committee_screen": "the LIRF-inclusive CatBoosts added to the non-LIRF committee change December by at most 0.01%: the committee lever stays closed; not declared",
+    "december_reads": "docs/december/score_adsb_v22_v1.json (v19 177.88 -> v20 176.99, -0.50%, which predicted v20's official -0.29 s)",
+    "month_value": "docs/december/month_value.json: on December (out-of-sample for both), the recipe with the forward-fold learners (fitted January-September, October stopping) scores 180.68 (v19 recipe) / 180.13 (v20 recipe); with the January-November refit learners 177.88 / 176.99, i.e. the two adjacent months bought -1.55% / -1.74%. Adding December (one adjacent month, +8.6% rows) for January 2026 is expected to be worth a fraction of that on the ranking's January half."
+  },
+  "execution": {
+    "automatic_submission": false,
+    "azure_only": true,
+    "development_host": "workstation",
+    "inputs_on_workers": "frozen bundles / raw files / code fanned out VM-to-VM from arcw0 with an ephemeral key; December build, December match table, December v19 features, the runner and the 29 leaf fold records shipped from the workstation",
+    "learner_fits_on_workers": "tools/launch_december_refit.py launch HOST LEAF... (16 threads per fit, one chain per worker, LightGBMs before CatBoosts)",
+    "workers_used": [
+      "arcw0",
+      "arcw1",
+      "arcw2",
+      "arcw3",
+      "arcw4",
+      "arcw5",
+      "arcw6",
+      "arcw7"
+    ]
+  },
+  "experiment_id": "prc2026-adsb-december-refit-v23-v1",
+  "external_data": {
+    "extraction": "tools/adsb_extract_day.py keeps positions inside the ten aerodrome boxes that are on the ground or below 3,000 ft; per-day parquet with archive part hashes under data/external/adsblol/surface/ (the tool now skips and counts a corrupt archive member instead of aborting the day; the surface files used here predate that change and are unaffected)",
+    "labels_used_in_features": false,
+    "license": "Open Database License (ODbL) 1.0; feeder data CC0; licence files are inside every archive",
+    "matching": "tools/build_adsb_features.py: ICAO callsign (CALLSIGN_flt, else FLIGHT_mvt) and takeoff within the track's ground-to-air transition; stand positions learned label-free from covered segments of Jan/Mar/Apr/Jul/Nov 2025 (1,111 stands); the pass-2 matches and stands are exactly the v11 inputs, snapshotted under data/external/adsblol/matches_v11/ and hash-bound below",
+    "source": "adsb.lol globe_history daily archives (GitHub releases adsblol/globe_history_2025 and globe_history_2026, tags vYYYY.MM.DD-planes-readsb-prod-0)",
+    "v19_features": "label-free features derived from the same adsb.lol surface positions (ODbL), stand names and runway names; docs/adsb_v19_screen/README.md items A-C"
+  },
+  "extra_feature_tables": {
+    "cat_lirf_ctr2_nm_s36": {
+      "column": "adsb_full",
+      "description": "learner cat_lirf_ctr2_nm_s36 alone",
+      "development": [
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36/seasonal/predictions.parquet",
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36/forward/predictions.parquet"
+      ],
+      "leaf_members": null,
+      "ranking": "runs/adsb_v23/ens/cat_lirf_ctr2_nm_s36/refit/ranking_predictions.parquet"
+    },
+    "cat_lirf_ctr2_s34": {
+      "column": "adsb_full",
+      "description": "learner cat_lirf_ctr2_s34 alone",
+      "development": [
+        "runs/adsb_v22/cat_lirf_ctr2_s34/seasonal/predictions.parquet",
+        "runs/adsb_v22/cat_lirf_ctr2_s34/forward/predictions.parquet"
+      ],
+      "leaf_members": null,
+      "ranking": "runs/adsb_v23/ens/cat_lirf_ctr2_s34/refit/ranking_predictions.parquet"
+    },
+    "cat_lirf_ctr3_nm_s37": {
+      "column": "adsb_full",
+      "description": "learner cat_lirf_ctr3_nm_s37 alone",
+      "development": [
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37/seasonal/predictions.parquet",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37/forward/predictions.parquet"
+      ],
+      "leaf_members": null,
+      "ranking": "runs/adsb_v23/ens/cat_lirf_ctr3_nm_s37/refit/ranking_predictions.parquet"
+    },
+    "cat_lirf_ctr3_s35": {
+      "column": "adsb_full",
+      "description": "learner cat_lirf_ctr3_s35 alone",
+      "development": [
+        "runs/adsb_v22/cat_lirf_ctr3_s35/seasonal/predictions.parquet",
+        "runs/adsb_v22/cat_lirf_ctr3_s35/forward/predictions.parquet"
+      ],
+      "leaf_members": null,
+      "ranking": "runs/adsb_v23/ens/cat_lirf_ctr3_s35/refit/ranking_predictions.parquet"
+    },
+    "ens_v20_bag_q_all": {
+      "column": "adsb_full",
+      "description": "the incumbent committee as declared above",
+      "development": [
+        "runs/adsb_v20/ens_v20_bag_q_all/seasonal/predictions.parquet",
+        "runs/adsb_v20/ens_v20_bag_q_all/forward/predictions.parquet"
+      ],
+      "leaf_members": null,
+      "ranking": "runs/adsb_v23/ens/ens_v20_bag_q_all/refit/ranking_predictions.parquet"
+    },
+    "ens_v21_lgb_lirf3": {
+      "column": "adsb_full",
+      "description": "ensemble ens_v21_lgb_lirf3 as declared above (amendment)",
+      "development": [
+        "runs/adsb_v21/ens_v21_lgb_lirf3/seasonal/predictions.parquet",
+        "runs/adsb_v21/ens_v21_lgb_lirf3/forward/predictions.parquet"
+      ],
+      "leaf_members": null,
+      "ranking": "runs/adsb_v23/ens/ens_v21_lgb_lirf3/refit/ranking_predictions.parquet"
+    },
+    "ens_v22_cat_lirf4": {
+      "column": "adsb_full",
+      "description": "ensemble ens_v22_cat_lirf4 as declared above",
+      "development": [
+        "runs/adsb_v22/ens_v22_cat_lirf4/seasonal/predictions.parquet",
+        "runs/adsb_v22/ens_v22_cat_lirf4/forward/predictions.parquet"
+      ],
+      "leaf_members": null,
+      "ranking": "runs/adsb_v23/ens/ens_v22_cat_lirf4/refit/ranking_predictions.parquet"
+    },
+    "ens_v22_cat_lirf_label": {
+      "column": "adsb_full",
+      "description": "ensemble ens_v22_cat_lirf_label as declared above",
+      "development": [
+        "runs/adsb_v22/ens_v22_cat_lirf_label/seasonal/predictions.parquet",
+        "runs/adsb_v22/ens_v22_cat_lirf_label/forward/predictions.parquet"
+      ],
+      "leaf_members": null,
+      "ranking": "runs/adsb_v23/ens/ens_v22_cat_lirf_label/refit/ranking_predictions.parquet"
+    },
+    "ens_v22_cat_lirf_nm": {
+      "column": "adsb_full",
+      "description": "ensemble ens_v22_cat_lirf_nm as declared above",
+      "development": [
+        "runs/adsb_v22/ens_v22_cat_lirf_nm/seasonal/predictions.parquet",
+        "runs/adsb_v22/ens_v22_cat_lirf_nm/forward/predictions.parquet"
+      ],
+      "leaf_members": null,
+      "ranking": "runs/adsb_v23/ens/ens_v22_cat_lirf_nm/refit/ranking_predictions.parquet"
+    },
+    "ens_v22_lirf_half": {
+      "column": "adsb_full",
+      "description": "ensemble ens_v22_lirf_half as declared above",
+      "development": [
+        "runs/adsb_v22/ens_v22_lirf_half/seasonal/predictions.parquet",
+        "runs/adsb_v22/ens_v22_lirf_half/forward/predictions.parquet"
+      ],
+      "leaf_members": null,
+      "ranking": "runs/adsb_v23/ens/ens_v22_lirf_half/refit/ranking_predictions.parquet"
+    },
+    "ens_v22_lirf_q": {
+      "column": "adsb_full",
+      "description": "ensemble ens_v22_lirf_q as declared above",
+      "development": [
+        "runs/adsb_v22/ens_v22_lirf_q/seasonal/predictions.parquet",
+        "runs/adsb_v22/ens_v22_lirf_q/forward/predictions.parquet"
+      ],
+      "leaf_members": null,
+      "ranking": "runs/adsb_v23/ens/ens_v22_lirf_q/refit/ranking_predictions.parquet"
+    }
+  },
+  "floor_seconds_rule": "minimum departure label over the refit months (-12), applied after the residual",
+  "incumbent": {
+    "official_rank": "user-reported rank 2 before v20 (rank 1 at 240.7357); the assistant does not poll the standings",
+    "official_rmse_seconds": 240.89,
+    "recipe": "v20 = configs/adsb_v22_v1.json candidate lirf_q_85: (1 - 0.7) * (v9 + 1.0 * v12 ADS-B residual on matched rows outside LIRF) + 0.7 * ens_v20_bag_q_all on every row outside LIRF; 0.15 * v9 + 0.85 * ens_v22_lirf_q on matched LIRF non-population rows with ordinary clocks; every other LIRF row v9; floored at -12 (uploaded 10:29 UTC 19 September 2026)",
+    "submission": "vigorous-whistle_v20.parquet",
+    "submission_sha256": "20516971c44a03aa658acf132259cb1e58643e468552d5371a9b6f9d5dbaf78a"
+  },
+  "leaf_learners": {
+    "runs/adsb_full_nolirf": {
+      "forward_record_sha256": "4aaeab1923ce29839401c6487c301936b3a9e667b67e5e34335f1e80a643723a",
+      "kind": "lightgbm",
+      "refit_output": "runs/adsb_v23/adsb_full_nolirf/refit",
+      "seasonal_record_sha256": "1c468d303224bd09273e99b66a32e80fd8505ab528c14741e05083a612c28043"
+    },
+    "runs/adsb_v15/lgb_clean": {
+      "forward_record_sha256": "77372b627b72327d5834f04e5710678672ca1782757056d250d32b4aa158bac4",
+      "kind": "lightgbm",
+      "refit_output": "runs/adsb_v23/adsb_v15__lgb_clean/refit",
+      "seasonal_record_sha256": "9d0497227468106bf7760f68a7df77e314e901fc338fb440ffaca321241cec00"
+    },
+    "runs/adsb_v15/lgb_deep": {
+      "forward_record_sha256": "35d7a033d19fda9eceee54d97b2affb559033ac6cf72eb6434bd53ae19bb4220",
+      "kind": "lightgbm",
+      "refit_output": "runs/adsb_v23/adsb_v15__lgb_deep/refit",
+      "seasonal_record_sha256": "ef654bcdecaa2d6b1987d73325f20ddd7f1f91b7d9805e4a01f178ff5d912ca9"
+    },
+    "runs/adsb_v15/lgb_s16": {
+      "forward_record_sha256": "ac6eeb9cee7d4882144abdf4335649705fcfd022d675c57d037099ffdbc48166",
+      "kind": "lightgbm",
+      "refit_output": "runs/adsb_v23/adsb_v15__lgb_s16/refit",
+      "seasonal_record_sha256": "5408973c139f90133549306b16a4a5a23c8278e96eeb3e553666bb9d135d53c1"
+    },
+    "runs/adsb_v15/lgb_s17": {
+      "forward_record_sha256": "3d5738543bf8a3096e205c303e2a284bbb4003eea84227caa074b71e4cebb165",
+      "kind": "lightgbm",
+      "refit_output": "runs/adsb_v23/adsb_v15__lgb_s17/refit",
+      "seasonal_record_sha256": "25157ddbe79bf2de6092e22f6a5e4ff2e3dbfbbc43438651fbdc15031af87ed4"
+    },
+    "runs/adsb_v15/lgb_s18": {
+      "forward_record_sha256": "edffefa1a015aae25228ab9b1b135425f5b0dcd9858fff9d666b9f09b7999581",
+      "kind": "lightgbm",
+      "refit_output": "runs/adsb_v23/adsb_v15__lgb_s18/refit",
+      "seasonal_record_sha256": "e855f67735d3aa1daa7c9a9a6519ba2627d9fa14d62277fcc5fbbb40bed2c181"
+    },
+    "runs/adsb_v16/cat_ctr2": {
+      "forward_record_sha256": "175050b65be942768333b31a9d60e6fd38ab28b08ee6e69153e21e8290d552d9",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v16__cat_ctr2/refit",
+      "seasonal_record_sha256": "b65e3c6f4215134ab91adeaf24ec1a8b15f4fbbe374c8ecbe11707104ba232fe"
+    },
+    "runs/adsb_v17/cat_ctr2_d10": {
+      "forward_record_sha256": "657f030913d4b308528258d414064e1d8825b7706f7280617f7e6a5f1c539cde",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v17__cat_ctr2_d10/refit",
+      "seasonal_record_sha256": "75c39c46b949872a0585f9fbf221a8f5354166001bb35b2293d8129f77460a61"
+    },
+    "runs/adsb_v17/cat_ctr2_oh2": {
+      "forward_record_sha256": "3b202dfedc08a2b98b5c1ad8bbb35a189fa1258bdb46135738fdab7ed329e3be",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v17__cat_ctr2_oh2/refit",
+      "seasonal_record_sha256": "7ab1b45e8376067f050409f123fe8773c460993afdbd0e81f0a818ea39f52a72"
+    },
+    "runs/adsb_v17/cat_ctr2_s17": {
+      "forward_record_sha256": "58c8d8a7931e3dd013dd4a669ab834f1e9055a714bc5f42409a41da698b90bdf",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v17__cat_ctr2_s17/refit",
+      "seasonal_record_sha256": "a43db7f0a6a101c85da318d5166789af11d6c4018c2ba01fbd764523d45e3baa"
+    },
+    "runs/adsb_v17/cat_ctr3": {
+      "forward_record_sha256": "4c221519c53fa612e412d17ccd139c49b3585d6d45b42432f621a11404450802",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v17__cat_ctr3/refit",
+      "seasonal_record_sha256": "f9148de25ba70bcd61f67ddadeb3a2e5749bfcfd0e1d1974e0773083319b51a8"
+    },
+    "runs/adsb_v18/cat_ctr2_s20": {
+      "forward_record_sha256": "2872ffff043b3d3deb40af02d473622b0d2266ea83e7bc2d878d21e798acc731",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v18__cat_ctr2_s20/refit",
+      "seasonal_record_sha256": "b5fc840fb5a2878de2b4cda16ccd0593a74d8c8d0b44ecf4d506870705368b75"
+    },
+    "runs/adsb_v18/cat_ctr2_s21": {
+      "forward_record_sha256": "c4387a80b23731cf9780826bb180082dd78bbb2609ce93108cd55731cd47f0d7",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v18__cat_ctr2_s21/refit",
+      "seasonal_record_sha256": "39ae4148c09dd6945f7d6d7cfefa22f456e6961b3cc4b2775c0dc1843397cc4f"
+    },
+    "runs/adsb_v18/cat_ctr3_s22": {
+      "forward_record_sha256": "767310b2a1c51a731691d24b27b2feea1a02a8d6bf342508da5279086b556360",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v18__cat_ctr3_s22/refit",
+      "seasonal_record_sha256": "994bfdabacae85b2797c3f36ec6950ccefe6b6e6bba4ce24c0d915432d578871"
+    },
+    "runs/adsb_v18/cat_ctr3_s23": {
+      "forward_record_sha256": "d98e2709a95382832a108c68267f7c93ab555b8716a52e2b9ae3ef37691d8c25",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v18__cat_ctr3_s23/refit",
+      "seasonal_record_sha256": "e4a1efce594312496c468a638433a4f70163c12a77917998b112b3e56a9f621e"
+    },
+    "runs/adsb_v20/cat_ctr2_x19_s27": {
+      "forward_record_sha256": "db1eeb1754fa07f27896e8e5d2f5980610259f1b33eb9f201102a54dd236a1b4",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v20__cat_ctr2_x19_s27/refit",
+      "seasonal_record_sha256": "c0d754e0d7f8a7ae54de3d506ff477b0a2b10042b3dec2fd4d88794f96a8a27c"
+    },
+    "runs/adsb_v20/cat_ctr2_x19_s28": {
+      "forward_record_sha256": "462a23fd05ba9fbf53f39037738593d46c36f0c091daf6750b5eae683b1e86cd",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v20__cat_ctr2_x19_s28/refit",
+      "seasonal_record_sha256": "e00c3c51e9a22f7411d8d8dd7727d5b0c6a05694001e824a60fccbb352926f50"
+    },
+    "runs/adsb_v20/cat_ctr2_x19_s30": {
+      "forward_record_sha256": "d8873d4ebeb6216fa710f0155b2432492ff40c438894a7a5bbb90343fa6c7430",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v20__cat_ctr2_x19_s30/refit",
+      "seasonal_record_sha256": "4e1a923c718810bc4b6231dedb88fc5a1629a9d26b0559082ab40be6cf90e1dc"
+    },
+    "runs/adsb_v20/cat_ctr3_x19_s29": {
+      "forward_record_sha256": "e2dd64117d7c915facf9b5ff2137d05be4567d252a7c621c485ef81662d7bd86",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v20__cat_ctr3_x19_s29/refit",
+      "seasonal_record_sha256": "672e9d8be7b1b7fbba56f68293aafb53d83c9e3fc45c197d193f9445bd13d086"
+    },
+    "runs/adsb_v20/lgb_x19_s24": {
+      "forward_record_sha256": "14aac4cf6160ddf25a921f313e7650345492412bf78e322a38b2aeaccd01978d",
+      "kind": "lightgbm",
+      "refit_output": "runs/adsb_v23/adsb_v20__lgb_x19_s24/refit",
+      "seasonal_record_sha256": "27bb40ae6070a97f92319a6da3c983cdba85a1765a532f1c02202b3821eb3c03"
+    },
+    "runs/adsb_v20/lgb_x19_s25": {
+      "forward_record_sha256": "c132ca2920a48d073f668a3321adaec4e6f99263b060e4115c9541ffb612d2ff",
+      "kind": "lightgbm",
+      "refit_output": "runs/adsb_v23/adsb_v20__lgb_x19_s25/refit",
+      "seasonal_record_sha256": "b33389351fef8ca3239f4a894e600989df6403efd322d32ee4d3a20b33f11bed"
+    },
+    "runs/adsb_v20/lgb_x19_s26": {
+      "forward_record_sha256": "dd7e30ec5a98ca8e348761078c6712da8b6e327bbebd9ff2bd1d55f75bfb1ee4",
+      "kind": "lightgbm",
+      "refit_output": "runs/adsb_v23/adsb_v20__lgb_x19_s26/refit",
+      "seasonal_record_sha256": "2e96f2c4c6fe6afb65e987624b82e161c7e26ff890ee2e9ce75b38460a4390aa"
+    },
+    "runs/adsb_v21/lgb_lirf_cap_s32": {
+      "forward_record_sha256": "885924dbd3a08fd828a7f25f2bb70fd98fd2f7e76ad2b5ec3f8bd1a878e3a291",
+      "kind": "lightgbm",
+      "refit_output": "runs/adsb_v23/adsb_v21__lgb_lirf_cap_s32/refit",
+      "seasonal_record_sha256": "4fff88bf75e816f1903e41203370438773f442e1dd4b6155b65c8f798ab8e293"
+    },
+    "runs/adsb_v21/lgb_lirf_nm_s33": {
+      "forward_record_sha256": "3fc55e22f89053cb3b85de01e1c9a093e53c0a1d4ff2136055bc5eebf3dbebce",
+      "kind": "lightgbm",
+      "refit_output": "runs/adsb_v23/adsb_v21__lgb_lirf_nm_s33/refit",
+      "seasonal_record_sha256": "7635f3e1b40f9e5e98acd2b55a5c363bf2a351431e26d5ca83db9b90d8b28d98"
+    },
+    "runs/adsb_v21/lgb_lirf_s31": {
+      "forward_record_sha256": "a959c00a4f33cff0953e8b626c4346c50d839183dda3ce3e740c52e22b3387fd",
+      "kind": "lightgbm",
+      "refit_output": "runs/adsb_v23/adsb_v21__lgb_lirf_s31/refit",
+      "seasonal_record_sha256": "53038518195ab24732d8e69e87793de1f1f8a23465169ad67f6cf17c52936b80"
+    },
+    "runs/adsb_v22/cat_lirf_ctr2_nm_s36": {
+      "forward_record_sha256": "52c9dcfcb843a20715d296fc14b30d350cc32227b76808fb2840fec984b26b88",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v22__cat_lirf_ctr2_nm_s36/refit",
+      "seasonal_record_sha256": "1b66b3765cb77bebb7655ef5e1b59b22c86eaaed3448bfca99bc941ddf05780a"
+    },
+    "runs/adsb_v22/cat_lirf_ctr2_s34": {
+      "forward_record_sha256": "453566c47e619d686f762bdf8aaaff5c0c02669ec4bcae437b9510498e25d267",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v22__cat_lirf_ctr2_s34/refit",
+      "seasonal_record_sha256": "41d24d59de1f7f1da394b8289d07b1a98f49a747c10f506f5cce387204d9d09d"
+    },
+    "runs/adsb_v22/cat_lirf_ctr3_nm_s37": {
+      "forward_record_sha256": "b86e9b4431b7bb731fe199738e9e24f57ecd6e0791acb3291b6035c16552f2c7",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v22__cat_lirf_ctr3_nm_s37/refit",
+      "seasonal_record_sha256": "74b81e8747d6d9756ae76d6cdd903c9accb6f787f551f2b320560b7eaa24bd31"
+    },
+    "runs/adsb_v22/cat_lirf_ctr3_s35": {
+      "forward_record_sha256": "5ced8976110898916c965696ba68da3fbebde2d2b9a8fe0aedfed2735fc3e1f4",
+      "kind": "catboost",
+      "refit_output": "runs/adsb_v23/adsb_v22__cat_lirf_ctr3_s35/refit",
+      "seasonal_record_sha256": "b891bc2aeea2e98d3ce43cd8527465da52d1d9f3d8bac17a81f62688fdd2b216"
+    }
+  },
+  "learner_common": {
+    "catboost_base": "configs/timeline_v1.json catboost block (depth 8, learning rate 0.055, l2 10, Bernoulli 0.8, rsm 0.9, max_ctr_complexity 1, one_hot_max_size 10, early stopping 200) with the overrides above and a 20,000-round cap",
+    "december": "never read",
+    "excluded_airports": "none for the v22 learners (LIRF included); the LIRF fill population (LIRF, no AOBT_3/LOBT clock, no aircraft type: exactly the v9 mixture's rows, 449 of the 506,751 development rows, 383 ranking rows) is left out of fitting and early stopping through the runner's --exclude-population option; every row is still predicted (the NM-residual learners predict NaN on rows without the clock, which are outside every blend scope)",
+    "features": "timeline bundle CORE + FLOWN + SURFACE (276) + 27 ADS-B features from data/external/adsblol/matches (matches2_*, stands.parquet; hashes recorded in every run record); no v19 features (null inside LightGBM in v20)",
+    "folds": "seasonal and forward (out-of-sample fold predictions), refit on the eleven 2025 months at the median best iteration",
+    "runner": "tools/run_adsb_learner.py",
+    "settings": "configs/timeline_v1.json (lightgbm / catboost blocks; parameter overrides above)",
+    "target": "label (cat_lirf_ctr2_s34, cat_lirf_ctr3_s35) or nm_residual = label minus the NM clock proxy (cat_lirf_ctr2_nm_s36, cat_lirf_ctr3_nm_s37)"
+  },
+  "matches_dir": "data/external/adsblol/matches_v11",
+  "parents": {
+    "adsb_feature_code": {
+      "path": "src/prc2026_adsb/features.py",
+      "sha256": "cff4c56ae3a70fa8dee35453c42d26dd07f1bb6783ff0c18023aa4d3e46469b5"
+    },
+    "december_authorization": {
+      "path": "docs/december/authorization_20260919.json",
+      "sha256": "787672c0f52bfef2857639f65e7fb1e545364cb31343419d1c23d05b01bbd882"
+    },
+    "december_matches": {
+      "path": "data/external/adsblol/matches/matches2_2025-12.parquet",
+      "sha256": "412f11ff82e93948bc50cb88be116a4fceeb6e9e69379dfdd7e1fe9b32d024a8"
+    },
+    "december_matches_record": {
+      "path": "data/external/adsblol/matches/matches2_2025-12.json",
+      "sha256": "67de39b0c6eccbafdb4a70eb111a1d5efe7f900ccf3ceccd9552a0acdf7b9e0a"
+    },
+    "december_matches_v11": {
+      "path": "data/external/adsblol/matches_v11/matches2_2025-12.parquet",
+      "sha256": "5d96f59a62946aa429b7e51307311cb42d0823760d6df94ea57354b9ab5bc766"
+    },
+    "december_package_features": {
+      "path": "src/prc2026_december/features.py",
+      "sha256": "cd68e88d69b9c8b176e2202bda5e5d42d4ff985d56265de83ae7deae514ea56e"
+    },
+    "december_package_patched": {
+      "path": "src/prc2026_december/patched.py",
+      "sha256": "2b6b49f4a473f5c4560eb4763ea2efcc7479c4c705df400cbd21c8e2237ca052"
+    },
+    "december_package_scoring": {
+      "path": "src/prc2026_december/scoring.py",
+      "sha256": "598a2aa68af5ecce7dfd340d2c97511f2de6df12dd43cb1572aa30710413279b"
+    },
+    "december_score": {
+      "path": "docs/december/score_adsb_v22_v1.json",
+      "sha256": "4d428786093d1547ea218cfe87c901f7858583ba6d0bf71ef9f4b3a31215f8fe"
+    },
+    "december_scratch": {
+      "path": "scratch/december.parquet",
+      "sha256": "8de89c0dd5c314086e466a9f032ccfd723445ad657766d4a6ed52be852fba40e"
+    },
+    "december_scratch_record": {
+      "path": "scratch/december.json",
+      "sha256": "b69af75c49ac99775caecbe1884b1f73760e7ee76d4cb969f9172f81713ac7d8"
+    },
+    "december_v19_features": {
+      "path": "data/external/adsblol/features_v19/features_v19_2025-12.parquet",
+      "sha256": "c10c0a3100b2cf0eb6b0c6e89d6ba66775bee84e25f3392d36914fd508858a09"
+    },
+    "december_weather_inventory": {
+      "path": "docs/december/weather_inventory.json",
+      "sha256": "432586fb1661a7b85d722654674161bee77f4e3f248c1896bab66dbc6f95e2ba"
+    },
+    "incumbent_ranking_predictions": {
+      "path": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/ranking_predictions.parquet",
+      "sha256": "cf0c62b5288de74a8262dbb07705e75792bc92059b1e0bb8d66ac0681ec875be"
+    },
+    "launcher": {
+      "path": "tools/launch_december_refit.py",
+      "sha256": "fbc46c495f7a7a2d448638661d39d1f5532415ec0d4096d5e22dc1008d9d57d1"
+    },
+    "lirf_mixture_selection": {
+      "path": "runs/lirf_mixture/selection.json",
+      "sha256": "67c95f9e89e57d9c8b759b95d82916533684c8969a2655968d7401b874b10aa7"
+    },
+    "matches_2025-01": {
+      "path": "data/external/adsblol/matches_v11/matches2_2025-01.parquet",
+      "sha256": "4a275586729c00bf676e3f3184669ce0f06df40d31fedd2b14eb5ebbc127075f"
+    },
+    "matches_2025-07": {
+      "path": "data/external/adsblol/matches_v11/matches2_2025-07.parquet",
+      "sha256": "6dbf3693870ccdcb25a87789e634aa95226fd06b6d57d0fa5113b264ac8cc9d7"
+    },
+    "matches_2025-11": {
+      "path": "data/external/adsblol/matches_v11/matches2_2025-11.parquet",
+      "sha256": "8d1cd1017659feb9c88bccf34b16ab166d2bb4aef8c2d823f87ecff50212b2e6"
+    },
+    "matches_2026-01": {
+      "path": "data/external/adsblol/matches_v11/matches2_2026-01.parquet",
+      "sha256": "6bf7cfa259bc26e048d1ba60a60fd9520aade34b72d64824ff8306d25c6ff2cb"
+    },
+    "matches_2026-07": {
+      "path": "data/external/adsblol/matches_v11/matches2_2026-07.parquet",
+      "sha256": "1947f2002dcaa765ed5f2b82f73cfe0f248e18e8f4b45098fe7a060dc56c026d"
+    },
+    "month_value": {
+      "path": "docs/december/month_value.json",
+      "sha256": "867c9d868563a78be9528ce31f8147bc68f3f1a524e91db44da77069b0c23300"
+    },
+    "runner_frozen": {
+      "path": "tools/run_adsb_learner.py",
+      "sha256": "171ace87e364098259ef5b0e8977914878f8d14ece9e35f3e1709b3b910889c1"
+    },
+    "runner_twelve_months": {
+      "path": "tools/run_adsb_learner_dec.py",
+      "sha256": "399aeb18098bdcfe5b84a3df9d5f8ee2cf71fa413e7049b430d75f6536b87090"
+    },
+    "stands": {
+      "path": "data/external/adsblol/matches/stands.parquet",
+      "sha256": "e7cd82b1ed372b4e04b8ce0aa049901407aa6bba989b466a468b9e3a6f824217"
+    },
+    "stands_v11": {
+      "path": "data/external/adsblol/matches_v11/stands.parquet",
+      "sha256": "63502c9465e3742d537fca30bd3c03622623a3be047eb01ba068292a249d995d"
+    },
+    "timeline_settings": {
+      "path": "configs/timeline_v1.json",
+      "sha256": "0f3ccec8ae1e23d24eb8eef8c536eeeb8b1439b7e7fc248dccde37732ba8ddd3"
+    },
+    "v11_export": {
+      "path": "runs/submissions/vigorous-whistle_v11.parquet",
+      "sha256": "98af50be5fb49d6cc42c8390b26be3220ba2ae24b693fc97c437ceb695c66b09"
+    },
+    "v11_receipt": {
+      "path": "runs/submissions/vigorous-whistle_v11.receipt.json",
+      "sha256": "681099293bb027e608105f8ead47f4596ec5e0b1ccd37a7a36c896235b56c52b"
+    },
+    "v12_development_residuals": {
+      "path": "runs/adsb_v12_v2/development_residuals.parquet",
+      "sha256": "4c174aea141e796b693f8e066d02344460c0e524bf05901440c8e300c580b8ca"
+    },
+    "v20_export": {
+      "path": "runs/submissions/vigorous-whistle_v20.parquet",
+      "sha256": "20516971c44a03aa658acf132259cb1e58643e468552d5371a9b6f9d5dbaf78a"
+    },
+    "v20_export_record": {
+      "path": "docs/adsb_v22/export.json",
+      "sha256": "33a478606a4fb28f73f83bc2a5fa3f7276096abce7981a2477c5678c0014136b"
+    },
+    "v20_official_result": {
+      "path": "docs/adsb_v22/official_result.json",
+      "sha256": "3faae0c5db050cd30d98533a9b987d8462332b5ab4d5400b129ba3bd3360826c"
+    },
+    "v20_receipt": {
+      "path": "runs/submissions/vigorous-whistle_v20.receipt.json",
+      "sha256": "dec0712e03ce578862e033b6f44a65a186957aec91963c5facaf1a751a5b40c6"
+    },
+    "v20_residual_model": {
+      "path": "runs/adsb_v22_v1/export_v20/residual_model.txt",
+      "sha256": "026080e1e7d39235060677fbecb3fdd3b661c39e267a9093f0c404bab518a432"
+    },
+    "v20_residual_record": {
+      "path": "runs/adsb_v22_v1/export_v20/residual_model.json",
+      "sha256": "3a150bfe8ea3635186f4aaac9defe624bc965dbfe344b4f8ec2077bb7b26c096"
+    },
+    "v20_verification": {
+      "path": "docs/adsb_v22/verification.json",
+      "sha256": "a53eecc0100d17b9681a86ea6a063e33cf52787fe08fd3e30cad892e6bf0c4f0"
+    },
+    "v22_v1_declaration": {
+      "path": "configs/adsb_v22_v1.json",
+      "sha256": "965a28320d5ec8dde172b577161f59eabfe3dd3c5c269280df0a3f0f52792b9d"
+    },
+    "v22_v1_selection": {
+      "path": "runs/adsb_v22_v1/selection.json",
+      "sha256": "48311580aa1c82e8790124ea76d7358f4f1d82ad9293f6f6f6633d1c6b70732f"
+    },
+    "v9_export": {
+      "path": "runs/submissions/vigorous-whistle_v9.parquet",
+      "sha256": "25d3b296a2753852144f53a2c36a1e539031dbd6ef35b8be928d9e1fa7363521"
+    },
+    "v9_receipt": {
+      "path": "runs/submissions/vigorous-whistle_v9.receipt.json",
+      "sha256": "8b0bc7d79f24c839138787ebab8d45f5dc839b89807d6a2e7c1318729dc7ae67"
+    }
+  },
+  "prediction_postprocess": "adsb-december-refit-v23-v1",
+  "refit_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11",
+    "2025-12"
+  ],
+  "residual_model": {
+    "applies_to": "the residual model is exactly v12's (nb feature set, matched rows outside LIRF, weight 1.0, single booster); each candidate then blends the result with ens_v20_bag_q_all at 0.7 on every row outside LIRF (the incumbent's blend), and adds a second blend on the lirf_nonpop_matched scope with one v21 / v22 table: value = (1 - w) * v9 + w * table there (the table REPLACES the incumbent's LIRF blend, it is not stacked on it); every other LIRF row keeps v9 exactly.",
+    "blend": "post-hoc convex combination with the extra table adsb_full (candidate_values in tools/run_adsb_v11.py); a NaN learner value leaves the row unblended",
+    "categorical": [
+      "airport",
+      "stand",
+      "runway"
+    ],
+    "feature_sets": {
+      "nb": [
+        "airport",
+        "v9",
+        "proxy_s",
+        "schedule_interval_s",
+        "hour",
+        "stand",
+        "runway",
+        "adsb_gate",
+        "adsb_first_point_s",
+        "adsb_motion_s",
+        "adsb_first_gs_kt",
+        "adsb_first_dist_stand_m",
+        "adsb_stop_seconds",
+        "adsb_taxi_path_m",
+        "adsb_taxi_stops",
+        "adsb_taxi_stopped_s",
+        "adsb_slow_start_s",
+        "adsb_gap_before_s",
+        "adsb_turnaround_s",
+        "adsb_anchor_dist_stand_m",
+        "adsb_last_ground_s",
+        "adsb_points",
+        "nb_runway_10m_count",
+        "nb_runway_10m_median_taxi_s",
+        "nb_runway_10m_max_taxi_s",
+        "nb_runway_10m_median_stopped_s",
+        "nb_airport_10m_count",
+        "nb_airport_10m_median_taxi_s",
+        "nb_runway_30m_count",
+        "nb_runway_30m_median_taxi_s",
+        "nb_runway_30m_median_first_point_s",
+        "nb_runway_prev_taxi_s",
+        "nb_runway_next_taxi_s"
+      ]
+    },
+    "features": [
+      "airport",
+      "v9",
+      "proxy_s",
+      "schedule_interval_s",
+      "hour",
+      "stand",
+      "runway",
+      "adsb_gate",
+      "adsb_first_point_s",
+      "adsb_motion_s",
+      "adsb_first_gs_kt",
+      "adsb_first_dist_stand_m",
+      "adsb_stop_seconds",
+      "adsb_taxi_path_m",
+      "adsb_taxi_stops",
+      "adsb_taxi_stopped_s",
+      "adsb_slow_start_s",
+      "adsb_gap_before_s",
+      "adsb_turnaround_s",
+      "adsb_anchor_dist_stand_m",
+      "adsb_last_ground_s",
+      "adsb_points",
+      "nb_runway_10m_count",
+      "nb_runway_10m_median_taxi_s",
+      "nb_runway_10m_max_taxi_s",
+      "nb_runway_10m_median_stopped_s",
+      "nb_airport_10m_count",
+      "nb_airport_10m_median_taxi_s",
+      "nb_runway_30m_count",
+      "nb_runway_30m_median_taxi_s",
+      "nb_runway_30m_median_first_point_s",
+      "nb_runway_prev_taxi_s",
+      "nb_runway_next_taxi_s"
+    ],
+    "kind": "lightgbm",
+    "neighbour_features": true,
+    "params": {
+      "bagging_fraction": 0.8,
+      "bagging_freq": 1,
+      "deterministic": true,
+      "feature_fraction": 0.9,
+      "force_row_wise": true,
+      "lambda_l2": 10.0,
+      "learning_rate": 0.03,
+      "min_data_in_leaf": 100,
+      "num_leaves": 63,
+      "num_threads": 8,
+      "objective": "regression",
+      "seed": 20260915,
+      "verbose": -1
+    },
+    "prediction": "v9 + weight * residual on in-scope rows, then floor",
+    "rounds_rule": "development: rounds per held-out month and variant (scope, feature set) come from a 5-fold day-grouped inner split of the two training months (median best iteration, 200 rounds patience, at most 4000); the held-out month is never used for rounds; export: median of the selected variant's three development round counts",
+    "scopes": {
+      "all_no_lirf": "every departure at any airport except LIRF: a blend scope only (unmatched rows there become (1 - w) * v9 + w * adsb_full)",
+      "lirf_nonpop": "every LIRF departure outside the v9 mixture's fill population (airport == LIRF and not population): a blend scope only; rows there are (1 - w) * v9 + w * <table>, the population rows stay v9",
+      "lirf_nonpop_matched": "LIRF departures outside the fill population with a matched ADS-B surface segment (adsb_matched == 1) whose NM proxy and schedule interval are both under six hours in absolute value (label-free, available on the ranking rows): the LIRF blend scope after the amendment; every other LIRF row stays v9",
+      "matched_no_lirf": "departures with a matched ADS-B surface segment at any airport except LIRF (adsb_matched == 1 and airport != LIRF): the residual model's training and prediction scope (exactly v12)"
+    },
+    "seed_bag": "none: v21_v1 measured the five-seed bag at -0.002% on every month (runs/adsb_v21_v1/selection.json, candidate ens_v20_bag_q_all_70); the residual is the single declared booster again, exactly as in v12-v20",
+    "target": "label minus v9 prediction"
+  },
+  "residual_months": [
+    "2025-01",
+    "2025-07",
+    "2025-11",
+    "2025-12"
+  ],
+  "seed": 20260915,
+  "selected_candidate": "lirf_q_85",
+  "threads": 8,
+  "validation": "By construction no held-out month exists for a twelve-month refit (December is inside the fit and the 2025 folds are inside it too). The declared test is the official score against v20 (240.89): if v21 is not better, v20 remains the incumbent and the slot is spent. No candidate search, no weight, member or scope choice.",
+  "what_changes": "Nothing in the recipe, weights, scopes, features or v9. Every one of the 29 leaf learners behind the recipe's tables is refit once on the twelve months January-December 2025 (the frozen January-November refit population of 1,919,370 rows plus December's 165,677 departures from the opened December build) at exactly its recorded rounds (median best iteration of its seasonal and forward folds, the frozen refit rule; no fold saw December) with its recorded kind, seed, parameters, exclusions, target and extra features (tools/run_adsb_learner_dec.py, which imports the frozen tools/run_adsb_learner.py). The residual stage (v12's nb model, matched rows outside LIRF) is refit on the in-scope rows of January, July, November AND December 2025 with rounds from the same day-grouped five-fold inner rule applied once to that four-month training set. v7, the LIRF mixture (v9) and the -12 floor stay at their January-November fits."
+}
