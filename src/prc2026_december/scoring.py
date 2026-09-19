@@ -103,13 +103,13 @@ class VocabularyCache:
         cats = [c for c in BUNDLE_NAMES if c in CATEGORICAL_COLUMNS]
         parts, labels = [], []
         for month in TRAINING_MONTHS:
-            parts.append(pd.read_parquet(base / "features" / source_file(month), columns=[ID, *cats, "airport", "nmclock_available", "aircraft_missing"]))
+            parts.append(pd.read_parquet(base / "features" / source_file(month), columns=list(dict.fromkeys([ID, *cats, "airport", "nmclock_available", "aircraft_missing"]))))
             labels.append(pd.read_parquet(parent / "labels" / source_file(month)))
         self.frame = pd.concat(parts, ignore_index=True)
         self.labels = pd.concat(labels, ignore_index=True).set_index(ID)[TARGET].reindex(self.frame[ID]).to_numpy(dtype=float)
         if len(self.frame) != 1919370 or np.isnan(self.labels).any():
             raise ValueError("The refit population must be the 1,919,370 January-November departures with labels.")
-        self.cats, self.cache = cats, {}
+        self.cats, self.cache, self.parent = cats, {}, parent
 
     def keep(self, inputs: dict) -> np.ndarray:
         frame = self.frame
@@ -125,30 +125,39 @@ class VocabularyCache:
             mask &= self.labels <= inputs["max_label"]
         return mask
 
-    def vocabulary(self, inputs: dict) -> dict:
-        key = (tuple(sorted(inputs.get("excluded_airports") or [])), bool(inputs.get("exclude_population")), inputs.get("max_label"), inputs.get("target") or "label", tuple(inputs.get("specialist_airports") or []))
+    def vocabulary(self, inputs: dict, subset: str | None = None) -> dict:
+        """`subset` names a frozen fold whose fit partition restricts the rows (the fold models' vocabularies); None is the refit population."""
+        key = (tuple(sorted(inputs.get("excluded_airports") or [])), bool(inputs.get("exclude_population")), inputs.get("max_label"), inputs.get("target") or "label", tuple(inputs.get("specialist_airports") or []), subset)
         if key not in self.cache:
-            rows = self.frame.loc[self.keep(inputs)]
+            mask = self.keep(inputs)
+            if subset is not None:
+                assignment = pd.read_parquet(self.parent / "splits" / f"{subset}.parquet")
+                mask &= self.frame[ID].isin(assignment.loc[assignment["partition"].eq("fit"), ID]).to_numpy()
+            rows = self.frame.loc[mask]
             self.cache[key] = {c: sorted(set(rows[c].astype("string").fillna(MISSING)) | {MISSING}) for c in self.cats}
         return self.cache[key]
 
 
-def learner_prediction(root: Path, run_dir: Path, frame: pd.DataFrame, vocab: VocabularyCache, threads: int) -> tuple[np.ndarray, dict]:
-    """A banked refit learner applied to December (NaN where its route excludes the row), exactly as tools/run_adsb_learner.py predicts the ranking."""
-    record = read_json(root / run_dir / "refit" / "run.json")
+def learner_prediction(root: Path, run_dir: Path, frame: pd.DataFrame, vocab: VocabularyCache, threads: int, fold: str = "refit") -> tuple[np.ndarray, dict]:
+    """A banked learner applied to December (NaN where its route excludes the row), exactly as tools/run_adsb_learner.py predicts the ranking.
+
+    `fold="refit"` is the shipped January-November model; "seasonal" / "forward" are the development-fold models (fitted on the fold's
+    fit partition, early-stopped on October), which December also lies outside of.
+    """
+    record = read_json(root / run_dir / fold / "run.json")
     inputs = record["inputs"]
     kind, target = inputs.get("kind") or "lightgbm", inputs.get("target") or "label"
     names = [*BUNDLE_NAMES, *ADSB_NAMES, *(inputs.get("extra_features") or [])]
-    x = encode(frame, names, vocab.vocabulary(inputs))
+    x = encode(frame, names, vocab.vocabulary(inputs, None if fold == "refit" else fold))
     if kind == "lightgbm":
-        booster = lgb.Booster(model_file=str(root / run_dir / "refit" / "model.txt"))
+        booster = lgb.Booster(model_file=str(root / run_dir / fold / "model.txt"))
         if booster.feature_name() != names:
             raise ValueError(f"{run_dir}: feature names differ from the December frame.")
         values = booster.predict(x, num_threads=threads)
     else:
         from catboost import CatBoostRegressor
         model = CatBoostRegressor()
-        model.load_model(str(root / run_dir / "refit" / "model.cbm"))
+        model.load_model(str(root / run_dir / fold / "model.cbm"))
         if list(model.feature_names_) != names:
             raise ValueError(f"{run_dir}: feature names differ from the December frame.")
         cat_frame = x.copy()
@@ -164,8 +173,9 @@ def learner_prediction(root: Path, run_dir: Path, frame: pd.DataFrame, vocab: Vo
         motion = frame["adsb_motion_s"].to_numpy(dtype=float)
         offset = np.where(np.isfinite(motion), motion, 0.0)
     prediction = np.where(clock, offset + values, np.nan)
-    return prediction, {"kind": kind, "target": target, "features": len(names), "rounds": record.get("rounds"), "model_sha256": sha256_file(root / run_dir / "refit" / ("model.txt" if kind == "lightgbm" else "model.cbm")),
-                        "run_sha256": sha256_file(root / run_dir / "refit" / "run.json"), "finite_rows": int(np.isfinite(prediction).sum())}
+    return prediction, {"kind": kind, "target": target, "fold": fold, "features": len(names), "rounds": record.get("rounds", record.get("best_iteration")), "fitted_rows": record.get("fitted_rows"),
+                        "model_sha256": sha256_file(root / run_dir / fold / ("model.txt" if kind == "lightgbm" else "model.cbm")),
+                        "run_sha256": sha256_file(root / run_dir / fold / "run.json"), "finite_rows": int(np.isfinite(prediction).sum())}
 
 
 def leaf_members(root: Path, run_dir: str) -> list[str]:

@@ -1,0 +1,2154 @@
+{
+  "audit_used": false,
+  "baseline": {
+    "name": "v19 development predictions",
+    "recipe": "v9 + 1.0 * v12 development residual on matched rows outside LIRF, then (1 - 0.7) * that + 0.7 * ens_v20_bag_q_all (out-of-sample per fold) on every row outside LIRF, then 0.3 * v9 + 0.7 * ens_v21_lgb_lirf3 on matched LIRF non-population rows with ordinary clocks, floored; reproduces 330.302 / 269.512 / 191.878 on Jan / Jul / Nov 2025 (runs/adsb_v21_v2/selection.json, lirf_ens3_70). The baseline uses the recorded single-seed v12 development residual (parent v12_development_residuals); the residual model refitted here is the same single booster, so the reproduction candidate is exact.",
+    "rmse": 177.8805320376113
+  },
+  "candidates": {
+    "lirf_cat4_100": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 348.09427357073054,
+          "change_pct_vs_baseline": -1.8654420148888073,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.9946328333883468,
+      "ratio_to_v9": 0.8450601533439517,
+      "rmse": 176.92581758519592,
+      "rows_differing_from_baseline": 9506
+    },
+    "lirf_cat4_70": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 348.58552560105113,
+          "change_pct_vs_baseline": -1.7269484959915316,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.9950288146067621,
+      "ratio_to_v9": 0.8453965869885313,
+      "rmse": 176.99625493500452,
+      "rows_differing_from_baseline": 9506
+    },
+    "lirf_cat4_85": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 348.0594299349048,
+          "change_pct_vs_baseline": -1.8752651147211474,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.9946047623688832,
+      "ratio_to_v9": 0.845036303638597,
+      "rmse": 176.9208242973189,
+      "rows_differing_from_baseline": 9506
+    },
+    "lirf_ctr2_nm_s36_70": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 349.60367195137195,
+          "change_pct_vs_baseline": -1.4399132022822725,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.9958507819780301,
+      "ratio_to_v9": 0.8460949470762847,
+      "rmse": 177.14246692832324,
+      "rows_differing_from_baseline": 9506
+    },
+    "lirf_ctr2_s34_70": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 349.92765139896466,
+          "change_pct_vs_baseline": -1.3485770835934052,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.9961126964494688,
+      "ratio_to_v9": 0.8463174749036065,
+      "rmse": 177.1890564138511,
+      "rows_differing_from_baseline": 9506
+    },
+    "lirf_ctr3_nm_s37_70": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 348.0773297137418,
+          "change_pct_vs_baseline": -1.8702188183078783,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.9946191826854373,
+      "ratio_to_v9": 0.8450485554309262,
+      "rmse": 176.92338939089967,
+      "rows_differing_from_baseline": 9506
+    },
+    "lirf_ctr3_s35_70": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 349.26898674040154,
+          "change_pct_vs_baseline": -1.5342674842583004,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.9955803951627026,
+      "ratio_to_v9": 0.845865220974398,
+      "rmse": 177.09437037775683,
+      "rows_differing_from_baseline": 9506
+    },
+    "lirf_ens3_70": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 354.71120542830874,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 1.0,
+      "ratio_to_v9": 0.8496202065491281,
+      "rmse": 177.8805320376113,
+      "rows_differing_from_baseline": 0
+    },
+    "lirf_half_100": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 349.68577636824233,
+          "change_pct_vs_baseline": -1.4167663674448328,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.9959171411567239,
+      "ratio_to_v9": 0.846151327175393,
+      "rmse": 177.15427093433487,
+      "rows_differing_from_baseline": 9506
+    },
+    "lirf_half_70": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 350.4816462648131,
+          "change_pct_vs_baseline": -1.19239513688002,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.9965609644130206,
+      "ratio_to_v9": 0.8466983324233888,
+      "rmse": 177.2687945577031,
+      "rows_differing_from_baseline": 9506
+    },
+    "lirf_half_85": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 349.8887175875716,
+          "change_pct_vs_baseline": -1.3595532836111146,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.9960812120329277,
+      "ratio_to_v9": 0.8462907251071219,
+      "rmse": 177.18345594908587,
+      "rows_differing_from_baseline": 9506
+    },
+    "lirf_label_70": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 349.30925182732096,
+          "change_pct_vs_baseline": -1.5229159717311425,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.995612914861116,
+      "ratio_to_v9": 0.8458928503672809,
+      "rmse": 177.10015499901232,
+      "rows_differing_from_baseline": 9506
+    },
+    "lirf_label_85": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 349.0433491969308,
+          "change_pct_vs_baseline": -1.5978791040824558,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.9953982109569411,
+      "ratio_to_v9": 0.8457104335918689,
+      "rmse": 177.06196335430712,
+      "rows_differing_from_baseline": 9506
+    },
+    "lirf_nm_70": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 348.53178316276836,
+          "change_pct_vs_baseline": -1.7420995364606062,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.9949854751685516,
+      "ratio_to_v9": 0.8453597649260872,
+      "rmse": 176.98854569267743,
+      "rows_differing_from_baseline": 9506
+    },
+    "lirf_nm_85": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 348.06461295029953,
+          "change_pct_vs_baseline": -1.8738039216955493,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.9946089378250698,
+      "ratio_to_v9": 0.8450398511905447,
+      "rmse": 176.92156702968686,
+      "rows_differing_from_baseline": 9506
+    },
+    "lirf_q_100": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 348.2845720919585,
+          "change_pct_vs_baseline": -1.811793153980057,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.9947861788612952,
+      "ratio_to_v9": 0.8451904387563515,
+      "rmse": 176.95309475950953,
+      "rows_differing_from_baseline": 9506
+    },
+    "lirf_q_70": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 349.23843447747856,
+          "change_pct_vs_baseline": -1.542880762456289,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.995555721723053,
+      "ratio_to_v9": 0.8458442579215065,
+      "rmse": 177.08998145318475,
+      "rows_differing_from_baseline": 9506
+    },
+    "lirf_q_85": {
+      "airports": {
+        "EDDF": {
+          "baseline": 89.7301837295907,
+          "candidate": 89.7301837295907,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17324
+        },
+        "EDDM": {
+          "baseline": 101.37241810726809,
+          "candidate": 101.37241810726809,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 12035
+        },
+        "EGLL": {
+          "baseline": 187.58123429894545,
+          "candidate": 187.58123429894545,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 20000
+        },
+        "EHAM": {
+          "baseline": 87.69123987613531,
+          "candidate": 87.69123987613531,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19458
+        },
+        "LEBL": {
+          "baseline": 126.81707904784308,
+          "candidate": 126.81707904784308,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 13835
+        },
+        "LEMD": {
+          "baseline": 110.08744199238757,
+          "candidate": 110.08744199238757,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 17985
+        },
+        "LFPG": {
+          "baseline": 235.76320011907325,
+          "candidate": 235.76320011907325,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 19778
+        },
+        "LIRF": {
+          "baseline": 354.71120542830874,
+          "candidate": 348.5373887831836,
+          "change_pct_vs_baseline": -1.7405192028456917,
+          "rows": 12068
+        },
+        "LSZH": {
+          "baseline": 89.55759600693509,
+          "candidate": 89.55759600693509,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 10585
+        },
+        "LTFM": {
+          "baseline": 208.47593211744405,
+          "candidate": 208.47593211744405,
+          "change_pct_vs_baseline": 0.0,
+          "rows": 22609
+        }
+      },
+      "ratio_to_baseline": 0.9949899954770943,
+      "ratio_to_v9": 0.8453636054715649,
+      "rmse": 176.98934976756598,
+      "rows_differing_from_baseline": 9506
+    }
+  },
+  "config": "configs/adsb_v22_v1.json",
+  "config_sha256": "2bc6e84071e6f106661cefb8e1bc05459ac1f8fce0a0cfde4149a7458e5cfe59",
+  "created_at_utc": "2026-09-19T10:06:11.410102+00:00",
+  "features_dir": "data/december/d198dea10625b0a75977",
+  "features_manifest_sha256": "9c8956a5ae504ee89d4c0bef9f3cd70eaf50752c82d35e6a65909bce9d4f93e1",
+  "gate_share_of_matched": 0.391284604114366,
+  "ids_sha256": "d198dea10625b0a75977f0f004a5cb47b99e239bc44d0bea06c60da8b3cbb4ab",
+  "learners": {
+    "runs/adsb_full_nolirf": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "lightgbm",
+      "model_sha256": "fc3131853c994819cea24fb26d561b9d920353606a6a6d42aa4e81186d738b8c",
+      "rounds": 1306,
+      "run_sha256": "e39f2ab4a2742ea52586426ad9a8ad63185dfc5d77367f82a7e51d1e5948c285",
+      "target": "label"
+    },
+    "runs/adsb_v15/lgb_clean": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "lightgbm",
+      "model_sha256": "fab125110fecf3e4a74f5b069a401a92f955fc42cac10eabf251ee04ec533532",
+      "rounds": 1606,
+      "run_sha256": "ec69f4bff4a482ffc63de66bbe7f34236a1edd43ea1dc4a1ad9685c3ba5865fd",
+      "target": "label"
+    },
+    "runs/adsb_v15/lgb_deep": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "lightgbm",
+      "model_sha256": "32d02a38e01f5c22eec9f5e4e41d318f30e2d9c44e0ea5c1bf16635ec378bd59",
+      "rounds": 2373,
+      "run_sha256": "bf8d4f3d748a08c18942119dd50a0b55d967a38afa48c61ba26dc6677928bb93",
+      "target": "label"
+    },
+    "runs/adsb_v15/lgb_s16": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "lightgbm",
+      "model_sha256": "18ee1b6f56f6ee862eece416cea2ca53666a077d4f6f287ac3085d782c3d56ea",
+      "rounds": 1464,
+      "run_sha256": "581d34a7b188f01327b6bfc69910d430e73e60a7e5ce62bd04d36f1a5d765adb",
+      "target": "label"
+    },
+    "runs/adsb_v15/lgb_s17": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "lightgbm",
+      "model_sha256": "0eef1010c6c99435f4c89513f9e8b40e7f5545042ac80bc81b0688d4da336ed9",
+      "rounds": 1472,
+      "run_sha256": "e35d4654791e77f862d67175a47da766e9dd59f196ae3fb458cb7153da604d32",
+      "target": "label"
+    },
+    "runs/adsb_v15/lgb_s18": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "lightgbm",
+      "model_sha256": "2611651dba498195a0a56f308414938a48aadea43599ab96be697251fea0a6e3",
+      "rounds": 1310,
+      "run_sha256": "6759b2ced81e8226e09bd4e2dcb3acaf3b294dc7adcc166369fac470eea34b2e",
+      "target": "label"
+    },
+    "runs/adsb_v16/cat_ctr2": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "catboost",
+      "model_sha256": "9bbffc0d26af2722f8d03777ba75978af82271190b4b647e8b5d8a943ffa84aa",
+      "rounds": 11034,
+      "run_sha256": "50b9ef485c6be92685990fce99f705eb8fafafc2baa4dab96c691dd0a1dd43f9",
+      "target": "label"
+    },
+    "runs/adsb_v17/cat_ctr2_d10": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "catboost",
+      "model_sha256": "263f0cb475e63909336fec67e0454270aeaa5ef4eadd8600d411b762dc5e1a95",
+      "rounds": 9286,
+      "run_sha256": "fe58d2d36720c54800b509059c778dfb3adcf9d4f7b8c68dff0b5a42681bfeb1",
+      "target": "label"
+    },
+    "runs/adsb_v17/cat_ctr2_oh2": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "catboost",
+      "model_sha256": "9547fdf06285b32452426b9c5685abf76c4848b0cf7fcfe0f825c363f62cfec0",
+      "rounds": 14036,
+      "run_sha256": "5091fdb2aa4218e23a457a3167c773ed46fd71c2a98dd6a508dfa02c628eacd0",
+      "target": "label"
+    },
+    "runs/adsb_v17/cat_ctr2_s17": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "catboost",
+      "model_sha256": "908f9356dcd867c4c63a3f1149aa202db6acfe3966d54ebebb8367b24a25e87e",
+      "rounds": 10088,
+      "run_sha256": "3afd5dddf3ee34d6316575826ae477abf50e9aa95eb250e83c7f25927b67052b",
+      "target": "label"
+    },
+    "runs/adsb_v17/cat_ctr3": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "catboost",
+      "model_sha256": "ccc14c4a84feb4fbc0e215a81e0fc8698c7debc3d97d047b6d88b0a2f43f97f0",
+      "rounds": 11169,
+      "run_sha256": "b7fcbb835b1ddb3b857be29540f91e34e997fa87e787dee762fa2dcb8a8069c4",
+      "target": "label"
+    },
+    "runs/adsb_v18/cat_ctr2_s20": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "catboost",
+      "model_sha256": "c3b89d46b90d7c762ec7c5c97d88035361b33e81026eb024744a25f50e9ae274",
+      "rounds": 12230,
+      "run_sha256": "f0c0888f4b5a1c28387a0d1b71df332dfc1d9d5f0ecc56c5d42181b3e442a901",
+      "target": "label"
+    },
+    "runs/adsb_v18/cat_ctr2_s21": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "catboost",
+      "model_sha256": "6c2eacb17581275a8ddb3ca2f47bea75068aa0700a2cfc780c9306b921cc6992",
+      "rounds": 12290,
+      "run_sha256": "49399fa70bc3abec0710223e1f06adfd9256921ddeb75335526f17f08223c49c",
+      "target": "label"
+    },
+    "runs/adsb_v18/cat_ctr3_s22": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "catboost",
+      "model_sha256": "e9643a797d827a3b23385d3969a02284fef96bab2a47d2ea675d4d33615d72a1",
+      "rounds": 13466,
+      "run_sha256": "24325e217f0ed73b6f1a721a3dcdb5950737c95bdff587b82c9f5c7b7268f69b",
+      "target": "label"
+    },
+    "runs/adsb_v18/cat_ctr3_s23": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "catboost",
+      "model_sha256": "ea0016c27f3f96f578e2904944b28ed31fb89d213330ed322bdd16f66dfa8882",
+      "rounds": 12672,
+      "run_sha256": "056da912f7a8a8472dcc6d4cc63049a1f9202a287afb9e5cc1ee64d63e510aa9",
+      "target": "label"
+    },
+    "runs/adsb_v20/cat_ctr2_x19_s27": {
+      "features": 314,
+      "finite_rows": 165677,
+      "kind": "catboost",
+      "model_sha256": "7975c18d62c86b4658c3a5052c15605b8d7f56cf9c8c9d06561c826e9467b921",
+      "rounds": 13646,
+      "run_sha256": "62acff80985f309a742e7399cb5b264d1c1236143a2e1e358be6ee4b8c1d8c0d",
+      "target": "label"
+    },
+    "runs/adsb_v20/cat_ctr2_x19_s28": {
+      "features": 314,
+      "finite_rows": 165677,
+      "kind": "catboost",
+      "model_sha256": "bf2164a2f1f03fdbee0193b16d0b26a11ea16cf47c6a720fd0fb10e6a4daf868",
+      "rounds": 11308,
+      "run_sha256": "8f2d6676aeda642d560ae61b35edcdb49a86e82baf89056a62be0499949988d4",
+      "target": "label"
+    },
+    "runs/adsb_v20/cat_ctr2_x19_s30": {
+      "features": 314,
+      "finite_rows": 165677,
+      "kind": "catboost",
+      "model_sha256": "ccb545f5c1e8dc3e3b3ffda1735280f6ea17b8fc25652e64f4d61e562a970c83",
+      "rounds": 13188,
+      "run_sha256": "e2899827441bf80de53c8b6920fa285c8ab850941d1355d480f4c24271808543",
+      "target": "label"
+    },
+    "runs/adsb_v20/cat_ctr3_x19_s29": {
+      "features": 314,
+      "finite_rows": 165677,
+      "kind": "catboost",
+      "model_sha256": "b7ed61b3e55fd49a54c63213f40e49eba1b0ecafd6af813b720afa390253ecea",
+      "rounds": 12685,
+      "run_sha256": "7c685931217fbefb8f19c0ee1752aa94b247ae5d0ade5e5f222909ec8931983b",
+      "target": "label"
+    },
+    "runs/adsb_v20/lgb_x19_s24": {
+      "features": 314,
+      "finite_rows": 165677,
+      "kind": "lightgbm",
+      "model_sha256": "ab972f3ab4ebf9e288607eeeb7a6a79863a261627b0015a750372971ed028d86",
+      "rounds": 1388,
+      "run_sha256": "dd28d3cc67434da17cd9e61758f47e41e76c01fe04e2cf6ff8348ddbaa89ac8d",
+      "target": "label"
+    },
+    "runs/adsb_v20/lgb_x19_s25": {
+      "features": 314,
+      "finite_rows": 165677,
+      "kind": "lightgbm",
+      "model_sha256": "88e3609f2dba8bb7afe56ea268f2ebd2a3fae5ec7d680a7697cd8ef5579c3a41",
+      "rounds": 1348,
+      "run_sha256": "4ffdffce77b846bb2c73050fad3722bc3d18af94b1dd8e8b41fe5844cc04a3b6",
+      "target": "label"
+    },
+    "runs/adsb_v20/lgb_x19_s26": {
+      "features": 314,
+      "finite_rows": 165677,
+      "kind": "lightgbm",
+      "model_sha256": "2af964865748bf2dca6accc5d2d846901991615b5c4b5aad018c596190ec89e3",
+      "rounds": 1384,
+      "run_sha256": "a5071bb06b93295e03694da75be081cd7ae3c159b98a4d6cd3c762ce07d04834",
+      "target": "label"
+    },
+    "runs/adsb_v21/lgb_lirf_cap_s32": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "lightgbm",
+      "model_sha256": "223512fed34075ea5adf6865abc04e2c333d4a0c5b907b8978d839c5a761b59a",
+      "rounds": 1767,
+      "run_sha256": "6ac7e8f8e1f662668da55bfb6ae8b478eb91db15bd83bc5600ae153b470b565b",
+      "target": "label"
+    },
+    "runs/adsb_v21/lgb_lirf_nm_s33": {
+      "features": 303,
+      "finite_rows": 164028,
+      "kind": "lightgbm",
+      "model_sha256": "6cf1f3735a887e7ced01466ad1b2a5119a4421f447856d23e41ee2fd75a08481",
+      "rounds": 1744,
+      "run_sha256": "ee0c0e6fabbead31fec1681ef7a7a6663a1d36dbba8f541cb6e00f1790a73435",
+      "target": "nm_residual"
+    },
+    "runs/adsb_v21/lgb_lirf_s31": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "lightgbm",
+      "model_sha256": "00715f8fd9e9e1b64430d680bfdf1afb77edfe5eaf93c97efcfdcb144df2241d",
+      "rounds": 1584,
+      "run_sha256": "96a1d297872035780e8739fa18222db5f386f78d633174ab705d5b45ba4ab3ba",
+      "target": "label"
+    },
+    "runs/adsb_v22/cat_lirf_ctr2_nm_s36": {
+      "features": 303,
+      "finite_rows": 164028,
+      "kind": "catboost",
+      "model_sha256": "2faf6cd4864710f0977307ed063981e6e40403d4793df8f205a8c5891cae33b7",
+      "rounds": 13060,
+      "run_sha256": "f5fb582b4d772a9e4d294e56235c8f3225e7c70d4bae11fcaa4fa75534fbf941",
+      "target": "nm_residual"
+    },
+    "runs/adsb_v22/cat_lirf_ctr2_s34": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "catboost",
+      "model_sha256": "135c6d1decb080035be341d661c3237fda6fdf2dbb44b06279d0e18d2200c2da",
+      "rounds": 13048,
+      "run_sha256": "f99fbd8fd522a88979324a32c26ce1d5a950fa24beeac5255185a7ca8cfbd424",
+      "target": "label"
+    },
+    "runs/adsb_v22/cat_lirf_ctr3_nm_s37": {
+      "features": 303,
+      "finite_rows": 164028,
+      "kind": "catboost",
+      "model_sha256": "d07c19905aeba3ed3528b8d8f6a1c5a3039ad5d9c71d40e23541a7ef7d384939",
+      "rounds": 13144,
+      "run_sha256": "5db23580e93e91fe35b77cda3ed93ce2a80d23dcf31739b227e5ac206d416433",
+      "target": "nm_residual"
+    },
+    "runs/adsb_v22/cat_lirf_ctr3_s35": {
+      "features": 303,
+      "finite_rows": 165677,
+      "kind": "catboost",
+      "model_sha256": "6d82d3f1ef9fa9a32341922beefddb6ab3f26261a0815f4015c0e1d75894643c",
+      "rounds": 13100,
+      "run_sha256": "46379424d00d2a8e2cce53bad9bba2022b2dcfce50cd843f40fe0ea5942a339d",
+      "target": "label"
+    }
+  },
+  "matched_share": 0.7044610899521357,
+  "month": "2025-12",
+  "note": "December is out-of-sample for every model here; this is an honest single-month read, not a selection under the declared rule.",
+  "references": {
+    "baseline": 177.8805320376113,
+    "baseline_without_extra_blends": 178.4057208896945,
+    "v7": 211.80224288253197,
+    "v9": 209.3647616505053,
+    "v9_plus_residual_only": 182.38894028091448
+  },
+  "residual": {
+    "export": "runs/adsb_v21_v2/export_v19",
+    "models_sha256": [
+      "026080e1e7d39235060677fbecb3fdd3b661c39e267a9093f0c404bab518a432"
+    ],
+    "rounds": 1173,
+    "rows_in_scope": 107155,
+    "scope": "matched_no_lirf"
+  },
+  "rows": 165677,
+  "seconds": 491.5,
+  "stack": {
+    "created_at_utc": "2026-09-19T09:56:01.938017+00:00",
+    "features_dir": "data/december/d198dea10625b0a75977",
+    "features_manifest_sha256": "9c8956a5ae504ee89d4c0bef9f3cd70eaf50752c82d35e6a65909bce9d4f93e1",
+    "floor_seconds": -12.0,
+    "mixture": {
+      "changed_rows": 105,
+      "floored_rows": 19,
+      "mixture_rows": 86,
+      "population_rows": 88
+    },
+    "pipeline_sha256": "6b76e73e0403999a4e820cd84b72d61bc0cf5d0ce05f5a62c745df8b238fe269",
+    "population_rows": 88,
+    "surface_refit_run": "runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100",
+    "v7_rmse": 211.80224288253197,
+    "v9_rmse": 209.3647616505053
+  },
+  "tables": {
+    "cat_lirf_ctr2_nm_s36": {
+      "leaf_members": [
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36"
+      ],
+      "run_dir": "runs/adsb_v22/cat_lirf_ctr2_nm_s36"
+    },
+    "cat_lirf_ctr2_s34": {
+      "leaf_members": [
+        "runs/adsb_v22/cat_lirf_ctr2_s34"
+      ],
+      "run_dir": "runs/adsb_v22/cat_lirf_ctr2_s34"
+    },
+    "cat_lirf_ctr3_nm_s37": {
+      "leaf_members": [
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37"
+      ],
+      "run_dir": "runs/adsb_v22/cat_lirf_ctr3_nm_s37"
+    },
+    "cat_lirf_ctr3_s35": {
+      "leaf_members": [
+        "runs/adsb_v22/cat_lirf_ctr3_s35"
+      ],
+      "run_dir": "runs/adsb_v22/cat_lirf_ctr3_s35"
+    },
+    "ens_v20_bag_q_all": {
+      "leaf_members": [
+        "runs/adsb_full_nolirf",
+        "runs/adsb_v15/lgb_s16",
+        "runs/adsb_v15/lgb_s17",
+        "runs/adsb_v15/lgb_s18",
+        "runs/adsb_v15/lgb_deep",
+        "runs/adsb_v15/lgb_clean",
+        "runs/adsb_v20/lgb_x19_s24",
+        "runs/adsb_v20/lgb_x19_s25",
+        "runs/adsb_v20/lgb_x19_s26",
+        "runs/adsb_full_nolirf",
+        "runs/adsb_v15/lgb_s16",
+        "runs/adsb_v15/lgb_s17",
+        "runs/adsb_v15/lgb_s18",
+        "runs/adsb_v15/lgb_deep",
+        "runs/adsb_v15/lgb_clean",
+        "runs/adsb_v20/lgb_x19_s24",
+        "runs/adsb_v20/lgb_x19_s25",
+        "runs/adsb_v20/lgb_x19_s26",
+        "runs/adsb_full_nolirf",
+        "runs/adsb_v15/lgb_s16",
+        "runs/adsb_v15/lgb_s17",
+        "runs/adsb_v15/lgb_s18",
+        "runs/adsb_v15/lgb_deep",
+        "runs/adsb_v15/lgb_clean",
+        "runs/adsb_v20/lgb_x19_s24",
+        "runs/adsb_v20/lgb_x19_s25",
+        "runs/adsb_v20/lgb_x19_s26",
+        "runs/adsb_full_nolirf",
+        "runs/adsb_v15/lgb_s16",
+        "runs/adsb_v15/lgb_s17",
+        "runs/adsb_v15/lgb_s18",
+        "runs/adsb_v15/lgb_deep",
+        "runs/adsb_v15/lgb_clean",
+        "runs/adsb_v20/lgb_x19_s24",
+        "runs/adsb_v20/lgb_x19_s25",
+        "runs/adsb_v20/lgb_x19_s26",
+        "runs/adsb_full_nolirf",
+        "runs/adsb_v15/lgb_s16",
+        "runs/adsb_v15/lgb_s17",
+        "runs/adsb_v15/lgb_s18",
+        "runs/adsb_v15/lgb_deep",
+        "runs/adsb_v15/lgb_clean",
+        "runs/adsb_v20/lgb_x19_s24",
+        "runs/adsb_v20/lgb_x19_s25",
+        "runs/adsb_v20/lgb_x19_s26",
+        "runs/adsb_full_nolirf",
+        "runs/adsb_v15/lgb_s16",
+        "runs/adsb_v15/lgb_s17",
+        "runs/adsb_v15/lgb_s18",
+        "runs/adsb_v15/lgb_deep",
+        "runs/adsb_v15/lgb_clean",
+        "runs/adsb_v20/lgb_x19_s24",
+        "runs/adsb_v20/lgb_x19_s25",
+        "runs/adsb_v20/lgb_x19_s26",
+        "runs/adsb_full_nolirf",
+        "runs/adsb_v15/lgb_s16",
+        "runs/adsb_v15/lgb_s17",
+        "runs/adsb_v15/lgb_s18",
+        "runs/adsb_v15/lgb_deep",
+        "runs/adsb_v15/lgb_clean",
+        "runs/adsb_v20/lgb_x19_s24",
+        "runs/adsb_v20/lgb_x19_s25",
+        "runs/adsb_v20/lgb_x19_s26",
+        "runs/adsb_full_nolirf",
+        "runs/adsb_v15/lgb_s16",
+        "runs/adsb_v15/lgb_s17",
+        "runs/adsb_v15/lgb_s18",
+        "runs/adsb_v15/lgb_deep",
+        "runs/adsb_v15/lgb_clean",
+        "runs/adsb_v20/lgb_x19_s24",
+        "runs/adsb_v20/lgb_x19_s25",
+        "runs/adsb_v20/lgb_x19_s26",
+        "runs/adsb_full_nolirf",
+        "runs/adsb_v15/lgb_s16",
+        "runs/adsb_v15/lgb_s17",
+        "runs/adsb_v15/lgb_s18",
+        "runs/adsb_v15/lgb_deep",
+        "runs/adsb_v15/lgb_clean",
+        "runs/adsb_v20/lgb_x19_s24",
+        "runs/adsb_v20/lgb_x19_s25",
+        "runs/adsb_v20/lgb_x19_s26",
+        "runs/adsb_full_nolirf",
+        "runs/adsb_v15/lgb_s16",
+        "runs/adsb_v15/lgb_s17",
+        "runs/adsb_v15/lgb_s18",
+        "runs/adsb_v15/lgb_deep",
+        "runs/adsb_v15/lgb_clean",
+        "runs/adsb_v20/lgb_x19_s24",
+        "runs/adsb_v20/lgb_x19_s25",
+        "runs/adsb_v20/lgb_x19_s26",
+        "runs/adsb_full_nolirf",
+        "runs/adsb_v15/lgb_s16",
+        "runs/adsb_v15/lgb_s17",
+        "runs/adsb_v15/lgb_s18",
+        "runs/adsb_v15/lgb_deep",
+        "runs/adsb_v15/lgb_clean",
+        "runs/adsb_v20/lgb_x19_s24",
+        "runs/adsb_v20/lgb_x19_s25",
+        "runs/adsb_v20/lgb_x19_s26",
+        "runs/adsb_full_nolirf",
+        "runs/adsb_v15/lgb_s16",
+        "runs/adsb_v15/lgb_s17",
+        "runs/adsb_v15/lgb_s18",
+        "runs/adsb_v15/lgb_deep",
+        "runs/adsb_v15/lgb_clean",
+        "runs/adsb_v20/lgb_x19_s24",
+        "runs/adsb_v20/lgb_x19_s25",
+        "runs/adsb_v20/lgb_x19_s26",
+        "runs/adsb_full_nolirf",
+        "runs/adsb_v15/lgb_s16",
+        "runs/adsb_v15/lgb_s17",
+        "runs/adsb_v15/lgb_s18",
+        "runs/adsb_v15/lgb_deep",
+        "runs/adsb_v15/lgb_clean",
+        "runs/adsb_v20/lgb_x19_s24",
+        "runs/adsb_v20/lgb_x19_s25",
+        "runs/adsb_v20/lgb_x19_s26",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30",
+        "runs/adsb_v16/cat_ctr2",
+        "runs/adsb_v17/cat_ctr2_s17",
+        "runs/adsb_v17/cat_ctr3",
+        "runs/adsb_v17/cat_ctr2_d10",
+        "runs/adsb_v17/cat_ctr2_oh2",
+        "runs/adsb_v18/cat_ctr2_s20",
+        "runs/adsb_v18/cat_ctr2_s21",
+        "runs/adsb_v18/cat_ctr3_s22",
+        "runs/adsb_v18/cat_ctr3_s23",
+        "runs/adsb_v20/cat_ctr2_x19_s27",
+        "runs/adsb_v20/cat_ctr2_x19_s28",
+        "runs/adsb_v20/cat_ctr3_x19_s29",
+        "runs/adsb_v20/cat_ctr2_x19_s30"
+      ],
+      "run_dir": "runs/adsb_v20/ens_v20_bag_q_all"
+    },
+    "ens_v21_lgb_lirf3": {
+      "leaf_members": [
+        "runs/adsb_v21/lgb_lirf_s31",
+        "runs/adsb_v21/lgb_lirf_cap_s32",
+        "runs/adsb_v21/lgb_lirf_nm_s33"
+      ],
+      "run_dir": "runs/adsb_v21/ens_v21_lgb_lirf3"
+    },
+    "ens_v22_cat_lirf4": {
+      "leaf_members": [
+        "runs/adsb_v22/cat_lirf_ctr2_s34",
+        "runs/adsb_v22/cat_lirf_ctr3_s35",
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37"
+      ],
+      "run_dir": "runs/adsb_v22/ens_v22_cat_lirf4"
+    },
+    "ens_v22_cat_lirf_label": {
+      "leaf_members": [
+        "runs/adsb_v22/cat_lirf_ctr2_s34",
+        "runs/adsb_v22/cat_lirf_ctr3_s35"
+      ],
+      "run_dir": "runs/adsb_v22/ens_v22_cat_lirf_label"
+    },
+    "ens_v22_cat_lirf_nm": {
+      "leaf_members": [
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37"
+      ],
+      "run_dir": "runs/adsb_v22/ens_v22_cat_lirf_nm"
+    },
+    "ens_v22_lirf_half": {
+      "leaf_members": [
+        "runs/adsb_v21/lgb_lirf_s31",
+        "runs/adsb_v21/lgb_lirf_cap_s32",
+        "runs/adsb_v21/lgb_lirf_nm_s33",
+        "runs/adsb_v21/lgb_lirf_s31",
+        "runs/adsb_v21/lgb_lirf_cap_s32",
+        "runs/adsb_v21/lgb_lirf_nm_s33",
+        "runs/adsb_v21/lgb_lirf_s31",
+        "runs/adsb_v21/lgb_lirf_cap_s32",
+        "runs/adsb_v21/lgb_lirf_nm_s33",
+        "runs/adsb_v21/lgb_lirf_s31",
+        "runs/adsb_v21/lgb_lirf_cap_s32",
+        "runs/adsb_v21/lgb_lirf_nm_s33",
+        "runs/adsb_v22/cat_lirf_ctr2_s34",
+        "runs/adsb_v22/cat_lirf_ctr3_s35",
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37",
+        "runs/adsb_v22/cat_lirf_ctr2_s34",
+        "runs/adsb_v22/cat_lirf_ctr3_s35",
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37",
+        "runs/adsb_v22/cat_lirf_ctr2_s34",
+        "runs/adsb_v22/cat_lirf_ctr3_s35",
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37"
+      ],
+      "run_dir": "runs/adsb_v22/ens_v22_lirf_half"
+    },
+    "ens_v22_lirf_q": {
+      "leaf_members": [
+        "runs/adsb_v21/lgb_lirf_s31",
+        "runs/adsb_v21/lgb_lirf_cap_s32",
+        "runs/adsb_v21/lgb_lirf_nm_s33",
+        "runs/adsb_v21/lgb_lirf_s31",
+        "runs/adsb_v21/lgb_lirf_cap_s32",
+        "runs/adsb_v21/lgb_lirf_nm_s33",
+        "runs/adsb_v21/lgb_lirf_s31",
+        "runs/adsb_v21/lgb_lirf_cap_s32",
+        "runs/adsb_v21/lgb_lirf_nm_s33",
+        "runs/adsb_v21/lgb_lirf_s31",
+        "runs/adsb_v21/lgb_lirf_cap_s32",
+        "runs/adsb_v21/lgb_lirf_nm_s33",
+        "runs/adsb_v22/cat_lirf_ctr2_s34",
+        "runs/adsb_v22/cat_lirf_ctr3_s35",
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37",
+        "runs/adsb_v22/cat_lirf_ctr2_s34",
+        "runs/adsb_v22/cat_lirf_ctr3_s35",
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37",
+        "runs/adsb_v22/cat_lirf_ctr2_s34",
+        "runs/adsb_v22/cat_lirf_ctr3_s35",
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37",
+        "runs/adsb_v22/cat_lirf_ctr2_s34",
+        "runs/adsb_v22/cat_lirf_ctr3_s35",
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37",
+        "runs/adsb_v22/cat_lirf_ctr2_s34",
+        "runs/adsb_v22/cat_lirf_ctr3_s35",
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37",
+        "runs/adsb_v22/cat_lirf_ctr2_s34",
+        "runs/adsb_v22/cat_lirf_ctr3_s35",
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37",
+        "runs/adsb_v22/cat_lirf_ctr2_s34",
+        "runs/adsb_v22/cat_lirf_ctr3_s35",
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37",
+        "runs/adsb_v22/cat_lirf_ctr2_s34",
+        "runs/adsb_v22/cat_lirf_ctr3_s35",
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37",
+        "runs/adsb_v22/cat_lirf_ctr2_s34",
+        "runs/adsb_v22/cat_lirf_ctr3_s35",
+        "runs/adsb_v22/cat_lirf_ctr2_nm_s36",
+        "runs/adsb_v22/cat_lirf_ctr3_nm_s37"
+      ],
+      "run_dir": "runs/adsb_v22/ens_v22_lirf_q"
+    }
+  }
+}
