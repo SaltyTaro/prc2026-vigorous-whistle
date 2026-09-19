@@ -120,4 +120,12 @@ disruption days slightly lower (EHAM 3 January 2,045 s vs 2,074 s).
 
 ## Upload and official result
 
-Pending the user's decision. Never re-upload v1–v20.
+Uploaded with the user's approval at 18:36:18 UTC on 19 September 2026, processed at
+18:37:01 UTC: **official 239.5766 on all 344,841 rows — −1.3134 s (−0.545%) vs v20's 240.89**
+([`official_result.json`](official_result.json)). The declared test passes; **v21 (239.5766, SHA `d3173e24…1dc`) is the
+incumbent.** Never re-upload v1–v21. The user had reported rank 1 at 240.7357 earlier that day, so v21 sits 1.16 s under that
+figure (the assistant does not poll the standings). December's month-value read (two adjacent months worth −1.74% on December)
+called the direction and the order of magnitude: one adjacent month for the January half and 8.6% more rows for everything else
+bought 0.545% on the ranking, the largest single step since the CatBoost committee (v14 → v17, 1%). From here every future lever
+is developed on the folds plus December (fold models never see December) and its learners are refit on twelve months before
+shipping; December reads of the *shipped* stack are no longer out-of-sample.
