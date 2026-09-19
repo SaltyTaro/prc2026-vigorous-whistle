@@ -1,0 +1,79 @@
+{
+  "artifacts": {
+    "features/training_2025-12-01_2026-01-01.parquet": "92d91b97d788254dd8ab242e079f40ff1b3b6b04aae12c5459c27def8a328e06",
+    "labels/training_2025-12-01_2026-01-01.parquet": "370a335fefd6d91d3ff7ce702e35f0861f5a846dba9a7bbd68ac0ced563421f2"
+  },
+  "audit_used": false,
+  "build_id": "158ebf96c9d2a50f1a2a2150f0a0d71870b39a9449dc1570150016e61161f6ed",
+  "columns": 335,
+  "context_files": [
+    "training_2025-01-01_2025-02-01.parquet",
+    "training_2025-02-01_2025-03-01.parquet",
+    "training_2025-03-01_2025-04-01.parquet",
+    "training_2025-04-01_2025-05-01.parquet",
+    "training_2025-05-01_2025-06-01.parquet",
+    "training_2025-06-01_2025-07-01.parquet",
+    "training_2025-07-01_2025-08-01.parquet",
+    "training_2025-08-01_2025-09-01.parquet",
+    "training_2025-09-01_2025-10-01.parquet",
+    "training_2025-10-01_2025-11-01.parquet",
+    "training_2025-11-01_2025-12-01.parquet",
+    "training_2025-12-01_2026-01-01.parquet"
+  ],
+  "context_months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11",
+    "2025-12"
+  ],
+  "created_at_utc": "2026-09-19T09:19:46.666965+00:00",
+  "environment": {
+    "disk_available_bytes": 52982788096,
+    "logical_cpus": 32,
+    "memory_total_bytes": 16858472448,
+    "packages": {
+      "numpy": "2.4.2",
+      "pandas": "3.0.0",
+      "psutil": "7.2.2",
+      "pyarrow": "23.0.1",
+      "tzdata": "2025.3"
+    },
+    "physical_cpus_reported": 24,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.2"
+  },
+  "guard_replacement": "pass  # December opened on 2026-09-19 (docs/december/authorization_20260919.json); guard lifted in this loaded copy only",
+  "ids_sha256": "d198dea10625b0a75977f0f004a5cb47b99e239bc44d0bea06c60da8b3cbb4ab",
+  "label_rows": 165677,
+  "month": "2025-12",
+  "patched_sources": {
+    "src/prc2026_nmclock/features.py": "5ec5f82602af5e29f307bafba52c75e408049017a9a05703bcebfb8c8a8fdf67",
+    "src/prc2026_phase4/features.py": "50ba225f588b4d8f4082d934a13df495af622e5efbe17fee4d9cb028738c5d9a",
+    "src/prc2026_phase5r/features.py": "a98f769a9597637576e14ce0ff70c357295dc57b759c34f656cc1f414e1eadfd",
+    "src/prc2026_timeline/features.py": "6f29caf14c626fe7d6a93b5cb3cd0507603f7e16e3e04a4b37ab6cd1eeee54ed",
+    "src/prc2026_weather/features.py": "b0d0af762882f87dade2aafa1690c2faf91d6607812274889ca5380576305b1f"
+  },
+  "phase1_bundle": "data/phase1/58d621b245de3f5e12dd",
+  "phase1_bundle_id": "58d621b245de3f5e12dd3b50b0a90a87ea8ac3dc96aa2c274ffa7ea0af96b2e0",
+  "rows": 165677,
+  "source": "training_2025-12-01_2026-01-01.parquet",
+  "timeline_bundle_id": "ce42240e5e43eee1713f1f8dbc23cfa4511076e510bdc9aec6853fad30cf134c",
+  "weather_inventories": [
+    {
+      "first": "data/external/iem/EDDF_ranking_january.csv",
+      "objects": 30
+    },
+    {
+      "first": "data/external/iem_december/EDDF_december.csv",
+      "objects": 10
+    }
+  ]
+}
