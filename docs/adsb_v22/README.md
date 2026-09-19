@@ -103,3 +103,10 @@ equal to v9, 300 of 300 segment re-derivations agree. `tools/audit_export.py --v
 ([`export_audit_v20.json`](export_audit_v20.json)): identical to v19 outside LIRF; on LIRF RMS difference 35.7 s
 (one row moved by more than 1,800 s: a fill-hedge row where both models sit between the NM clock and the
 schedule interval); extremes, negative-proxy rows, the LIRF population and the disruption days unchanged from v19.
+
+## Upload and official result
+
+The development mean was −0.17%; December's
+out-of-sample read (−0.50%, the January-2026 coverage regime) and its SSE transfer (−0.25 … −0.35 s) predicted
+the official change; July 2025's −0.40% did not. **v20 (240.89, SHA `20516971…af78a`) is the incumbent.** Never
+re-upload v1–v20. The user had reported rank 2 behind 240.7357 before this upload.
