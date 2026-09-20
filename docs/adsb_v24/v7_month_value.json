@@ -1,0 +1,174 @@
+{
+  "clock_rows": 164028,
+  "created_at_utc": "2026-09-20T15:17:32.626956+00:00",
+  "december_build_id": "158ebf96c9d2a50f1a2a2150f0a0d71870b39a9449dc1570150016e61161f6ed",
+  "floor_seconds": -12.0,
+  "folds": {
+    "forward": {
+      "by_airport": {
+        "EDDF": {
+          "fold": 167.91326226557774,
+          "refit": 165.00587892627698
+        },
+        "EDDM": {
+          "fold": 189.8700866864953,
+          "refit": 185.52507902373748
+        },
+        "EGLL": {
+          "fold": 219.62936318198393,
+          "refit": 217.04608344415007
+        },
+        "EHAM": {
+          "fold": 149.11953532142422,
+          "refit": 147.4582603817472
+        },
+        "LEBL": {
+          "fold": 177.52509379482345,
+          "refit": 175.71944228864575
+        },
+        "LEMD": {
+          "fold": 161.7392296211472,
+          "refit": 160.1197549901419
+        },
+        "LFPG": {
+          "fold": 225.1011879790773,
+          "refit": 223.19375823525664
+        },
+        "LIRF": {
+          "fold": 306.00898637567974,
+          "refit": 296.4359899648062
+        },
+        "LSZH": {
+          "fold": 154.67332262052832,
+          "refit": 152.6302411083225
+        },
+        "LTFM": {
+          "fold": 210.78103462334306,
+          "refit": 207.22196786077114
+        }
+      },
+      "components": {
+        "cat_combined": {
+          "iterations": 5998,
+          "run": "runs/azure_arcw0_timeline/20260914T175404122986Z_forward_cat_combined",
+          "run_sha256": "1ea8d58c9602db9213a8112491ec841fb283444a68388db6f2cd391ea596edff"
+        },
+        "lgb_combined": {
+          "iterations": 1580,
+          "run": "runs/azure_arcw0_timeline/20260914T175046387442Z_forward_lgb_combined",
+          "run_sha256": "489c625b4f08a30dfe892739faa22b0c1da676ffe97cec555850ee93b686849d"
+        },
+        "surface_airports": {
+          "iterations": {
+            "EDDF": 936,
+            "EDDM": 1129,
+            "EGLL": 1063,
+            "EHAM": 612,
+            "LEBL": 740,
+            "LEMD": 1001,
+            "LFPG": 1657,
+            "LIRF": 945,
+            "LSZH": 666,
+            "LTFM": 1048
+          },
+          "run": "runs/azure_arcw0_surface_airports/20260914T183615867461Z_forward_surface_airports",
+          "run_sha256": "9e7bea4da233ee52364f450e68d56c782bcae82d0d30970c342e56997ac92983"
+        }
+      },
+      "fit_months": "January-September, October stopping",
+      "refit_vs_fold_pct": -1.627852641325389,
+      "rmse": 199.83202320749558
+    },
+    "seasonal": {
+      "by_airport": {
+        "EDDF": {
+          "fold": 171.94615155911652,
+          "refit": 165.00587892627698
+        },
+        "EDDM": {
+          "fold": 192.12268136326244,
+          "refit": 185.52507902373748
+        },
+        "EGLL": {
+          "fold": 224.43539846537826,
+          "refit": 217.04608344415007
+        },
+        "EHAM": {
+          "fold": 150.69991396697156,
+          "refit": 147.4582603817472
+        },
+        "LEBL": {
+          "fold": 180.0853459302626,
+          "refit": 175.71944228864575
+        },
+        "LEMD": {
+          "fold": 165.9703848649329,
+          "refit": 160.1197549901419
+        },
+        "LFPG": {
+          "fold": 227.0997492167958,
+          "refit": 223.19375823525664
+        },
+        "LIRF": {
+          "fold": 308.31917110808433,
+          "refit": 296.4359899648062
+        },
+        "LSZH": {
+          "fold": 155.356519703986,
+          "refit": 152.6302411083225
+        },
+        "LTFM": {
+          "fold": 215.87501301969073,
+          "refit": 207.22196786077114
+        }
+      },
+      "components": {
+        "cat_combined": {
+          "iterations": 5944,
+          "run": "runs/azure_arcw0_timeline/20260914T172859368186Z_seasonal_cat_combined",
+          "run_sha256": "941c64b9fb1f8f77b5c501842162f5523c840f60b8ecffbaebb39d47c19af52e"
+        },
+        "lgb_combined": {
+          "iterations": 1644,
+          "run": "runs/azure_arcw0_timeline/20260914T172558163407Z_seasonal_lgb_combined",
+          "run_sha256": "358e8b2cd14d7f96ba8aa740e501ff380823ac4f2d48d8a47a59514a6b80289a"
+        },
+        "surface_airports": {
+          "iterations": {
+            "EDDF": 869,
+            "EDDM": 1156,
+            "EGLL": 1282,
+            "EHAM": 875,
+            "LEBL": 806,
+            "LEMD": 1028,
+            "LFPG": 797,
+            "LIRF": 816,
+            "LSZH": 829,
+            "LTFM": 956
+          },
+          "run": "runs/azure_arcw0_surface_airports/20260914T183414796232Z_seasonal_surface_airports",
+          "run_sha256": "2f0a1e6f88666fec0fc032595f4e4a7015bbd377f87f3448bd436f5c84d95b6d"
+        }
+      },
+      "fit_months": "February-June and August-September, October stopping",
+      "refit_vs_fold_pct": -3.1536352195337014,
+      "rmse": 202.9803109131753
+    }
+  },
+  "refit": {
+    "by_airport": {
+      "EDDF": 165.00587892627698,
+      "EDDM": 185.52507902373748,
+      "EGLL": 217.04608344415007,
+      "EHAM": 147.4582603817472,
+      "LEBL": 175.71944228864575,
+      "LEMD": 160.1197549901419,
+      "LFPG": 223.19375823525664,
+      "LIRF": 296.4359899648062,
+      "LSZH": 152.6302411083225,
+      "LTFM": 207.22196786077114
+    },
+    "rmse": 196.5790523394984,
+    "source": "scratch/december.parquet v7 (runs/azure_arcw0_surface_refit, January-November)"
+  }
+}
