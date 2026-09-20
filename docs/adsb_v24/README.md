@@ -101,3 +101,42 @@ eleven-month refit (+0.16% on clock rows) and the combined candidate still gains
 January half of the ranking. The 1,332-stand tables and the season feature buy nothing; the 0.25 blend on unmatched LIRF rows is a
 small, mostly positive hedge (Jan −0.19% on LIRF, Nov +0.03%) that the rule selected by 0.001 pp over 0.5 and 0.013 pp over none.
 Expected official transfer: of the order of −0.2…−0.4% (0.5–1 s), the December read being the honest anchor.
+
+## Ship: twelve-month v7 refit, export, verification, audit, upload
+
+- **Twelve-month v7 refit** (`runs/adsb_v24/v7/refit/`, arcw0, 16:38–17:12 UTC): the twelve components at the frozen counts on all
+  2,062,577 clock-present rows of the twelve-month population; 1,970 s, peak RSS 17.8 GB, reload difference 0.0; 339,551 clock-present
+  ranking rows predicted; models, encoders and record mirrored (101 MB). arcw0 deallocated afterwards; arcw1–3 after the development jobs.
+- **Export** (`tools/export_adsb_v24.py --version 22`, `export.json`): v9 reproduced from scratch (rounding equal to the uploaded v9);
+  v9 = max(twelve-month v7, −12) on the 339,551 clock-present rows (339,539 change), the fill population and missing-clock rows at the
+  reproduced v9; residual `r12x` refit on 1,113,566 in-scope rows of the twelve months (inner best iterations 3,210 / 2,330 / 2,930 /
+  2,727 / 3,530 → 2,930 rounds); blends 0.7 / 0.85 with the v23 twelve-month ranking tables and 0.25 `ens_v22_lirf_q` on 
+  `lirf_nonpop_unmatched`; floor. **`runs/submissions/vigorous-whistle_v22.parquet`, SHA-256
+  `3dc8c228da15c0b76a7207d079799c412cbae3fd01faf18b02b12c3838510ad6`**, min −12, max 120,549. Versus v21: 315,998 rows change, RMS
+  14.6 s (LIRF 31.6, LTFM 8.7), median |Δ| 4 s, one row above 600 s, none above 1,800 s, mean +0.47 s. The first export stamped its
+  receipt with the hash of a config it had mutated in memory (the runtime `matches_dir` key); the tool now takes the declaration's hash
+  first, and the second export is byte-identical (`runs/adsb_v24/export_v22_first_attempt/` preserves the first).
+- **Verification** (`tools/verify_adsb_v24.py --version 22`, `verification.json`): declaration parents and receipt; selection bound to the
+  declaration; the refit record (no held-out month, twelve fit months, the frozen counts, ranking identity) and the mirrored nodes
+  re-predicting 3,000 sampled clock-present rows with **difference 0.0**; v9 from scratch; the export's v9 equal to the independently
+  derived v9; the residual recomputed from the saved booster on an independently rebuilt table (frozen feature functions, matches_v11,
+  `season_cos` from the movement clock) with **difference 0.0**; the blend recomputed with plain arithmetic **equal to the export on
+  every row**; the LIRF fill population equal to the uploaded v9 and missing-clock LIRF rows equal to v21; 1,113,566 residual training
+  rows recounted from the scratch tables and match tables. (The first verifier run was stopped by the workstation's memory guard;
+  re-run at the user's request.)
+- **Audit** (`tools/audit_export.py --version 22 --compare 21 20 9`, `export_audit_v22.json`): IDs exact, no NaN, 17 negative
+  predictions (none below −12); extremes 941 / 37 / 12 / 2 rows above 1 h / 4 h / 12 h / 24 h (v21: 945 / 37 / 12 / 2); the same five
+  January airport-months above the 2025 development means; the EHAM 2–4 January and LFPG 7 January disruption days as in v21; the LIRF
+  fill population (383 rows) unchanged; negative-proxy rows p50 1,078 s.
+- **Upload** (user: "upload it"): 18:22 UTC 20 September (first slot of the UTC day), processed 18:23:58 UTC:
+  **official 239.1335 on all 344,841 rows — −0.4431 s (−0.185%) versus v21's 239.5766** (`official_result.json`). The folds' mean was
+  −0.535%, the December anchor −0.253%; the ranking transfer is positive and closer to the conservative read. **v22 is the incumbent.
+  Never re-upload v1–v22.** Standings snapshot after scoring: `leaderboard_after_v22.json` (first of 167; the user asked for the
+  standings earlier today, `leaderboard_snapshot_20260920.json`).
+
+## What this says for the next round
+
+The twelve-month residual and the twelve-month v7 are now shipped; the cross-fitted v9 for all of 2025 (`scratch/v24/`) and the four
+fold models remain available for any later residual work (a twelve-month LOMO is now possible for that stage). The season feature and
+the 1,332-stand tables are closed (no gain). Remaining small items: refit rounds scaled to the fitting set, the day±1 surface loading
+at the match stage, CatBoost variants; the only large ceiling remains LFPG/LTFM surface coverage (OpenSky Trino, pending).
