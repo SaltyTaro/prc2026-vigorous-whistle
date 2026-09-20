@@ -13,6 +13,11 @@ frozen) on the v23 twelve-month population (the frozen January-November refit ro
 
 Nothing is early-stopped, nothing is uploaded, no label of a held-out month is read for fitting. Fold months (declared):
 A = 01/05/09, B = 02/06/10, C = 03/07/11, D = 04/08/12.
+
+Correction (20 September, after the four folds' twelve components were fitted): the first version tagged the prediction rows with a string column
+named `month`, which is also the name of a frozen timeline predictor, so the prediction stage failed on every fold before any value was computed
+(`launch.log` of each fold keeps the traceback). The tag is now `held_month`; `--resume` performs the prediction stage from the saved nodes of a
+run directory whose twelve components are complete (nodes.json present, no run.json), which is recorded in run.json. The fitting code is unchanged.
 """
 from __future__ import annotations
 
@@ -86,11 +91,14 @@ def main():
     parser.add_argument("--output", type=Path, default=Path("runs/adsb_v24/v7"))
     parser.add_argument("--december", type=Path, default=Path("data/december/d198dea10625b0a75977"))
     parser.add_argument("--threads", type=int, default=None, help="override the frozen thread count (does not change the fit)")
+    parser.add_argument("--resume", action="store_true", help="prediction stage only, from the saved nodes of a complete fit (nodes.json present, no run.json)")
     args = parser.parse_args()
     started = time.time()
     run = ROOT / args.output / args.fold
-    if (run / "run.json").exists() or (run.exists() and any(run.iterdir())):
+    if (run / "run.json").exists():
         raise ValueError(f"Preserve the existing run: {run}")
+    if args.resume != (run / "nodes.json").exists() or (not args.resume and run.exists() and any(run.iterdir())):
+        raise ValueError(f"--resume requires a complete fit without run.json in {run}; a fresh fit requires an empty directory.")
     held_out = FOLDS[args.fold]
     spec = recipe()
     if args.threads:
@@ -127,13 +135,20 @@ def main():
         del fit_features, fit_truth
         gc.collect()
         run.mkdir(parents=True, exist_ok=True)
-        nodes = {"globals": {}, "airports": {}}
-        for name in ["cat_combined", "lgb_combined"]:
+        nodes = read_json(run / "nodes.json") if args.resume else {"globals": {}, "airports": {}}
+        if args.resume:
+            if set(nodes["globals"]) != {"cat_combined", "lgb_combined"} or list(nodes["airports"]) != spec["airports"]:
+                raise ValueError("The saved nodes are incomplete.")
+            for name, card in [*nodes["globals"].items(), *nodes["airports"].items()]:
+                expected = spec["iterations"]["globals"][name] if name in nodes["globals"] else spec["iterations"]["airports"][name]
+                if card["iterations"] != expected or card["fit_ids_sha256"] != identity_hash(routed[ID] if name in nodes["globals"] else routed.loc[routed.airport.eq(name), ID]):
+                    raise ValueError(f"Saved node {name} does not match the fold's fitting rows or the frozen count.")
+        for name in [] if args.resume else ["cat_combined", "lgb_combined"]:
             nodes["globals"][name] = fit_node(run, name, spec["globals"][name], spec["globals_settings"], routed, routed_truth, iterations=spec["iterations"]["globals"][name])
             write_json(run / "nodes_progress.json", nodes)
             print(f"{args.fold}: {name} {nodes['globals'][name]['iterations']} rounds on {len(routed)} rows, {round(time.time() - started)} s", flush=True)
             gc.collect()
-        for airport in spec["airports"]:
+        for airport in [] if args.resume else spec["airports"]:
             mask = routed.airport.eq(airport)
             nodes["airports"][airport] = fit_node(run, "airport_" + airport, spec["airport_spec"], spec["airport_settings"], routed.loc[mask].reset_index(drop=True),
                                                   routed_truth.loc[mask].reset_index(drop=True), iterations=spec["iterations"]["airports"][airport])
@@ -153,16 +168,16 @@ def main():
                 assignment["partition"] = np.where(catalog[TIME].dt.strftime("%Y-%m").isin(extra_months), "heldout", "other")
                 held_features, _ = load_partition(spec["bundle"], parent, catalog, assignment, "heldout", FEATURE_NAMES)
                 held_month = catalog.set_index(ID)[TIME].reindex(held_features[ID]).dt.strftime("%Y-%m").to_numpy()
-                parts.append(held_features.assign(month=held_month))
+                parts.append(held_features.assign(held_month=held_month))  # `month` is a frozen predictor; the tag must not shadow it
             if DECEMBER in held_out:
-                parts.append(dec_features.assign(month=DECEMBER))
+                parts.append(dec_features.assign(held_month=DECEMBER))
             target = pd.concat(parts, ignore_index=True)
             out_name = "predictions.parquet"
         else:
             ranking = pd.read_parquet(spec["bundle"] / "features" / "ranking.parquet", columns=[ID, *FEATURE_NAMES])
             if identity_hash(ranking[ID]) != original["ranking_ids_sha256"]:
                 raise ValueError("Ranking movement identities changed.")
-            target = ranking.assign(month=pd.to_datetime(ranking[TIME]).dt.strftime("%Y-%m").to_numpy() if TIME in ranking else "ranking")
+            target = ranking.assign(held_month="ranking")
             out_name = "ranking_predictions.parquet"
         del features, truth, dec_features, dec_truth
         gc.collect()
@@ -176,7 +191,7 @@ def main():
         delta = float(np.max(np.abs(prediction[clock][:2000] - restored))) if len(sample) else 0.0
         if delta > 1e-8:
             raise ValueError("The saved nodes do not reproduce.")
-        pd.DataFrame({ID: target[ID].to_numpy(), "month": target["month"].to_numpy(), "prediction": prediction}).to_parquet(run / out_name, index=False, compression="zstd")
+        pd.DataFrame({ID: target[ID].to_numpy(), "month": target["held_month"].to_numpy(), "prediction": prediction}).to_parquet(run / out_name, index=False, compression="zstd")
     report = {"created_at_utc": utc_now(), "fold": args.fold, "held_out_months": held_out, "fit_months": fit_months, "stage": "cross_fit" if held_out else "refit_twelve_months",
               "recipe": "full_timeline_v6_100 clock-present components (0.25 cat_combined + 0.25 lgb_combined + 0.5 airport LightGBM), NM-residual targets, frozen 276 predictors",
               "component_iterations": spec["iterations"], "iterations_rule": "the frozen October-selected counts of configs/surface_refit_v1.json, unchanged", "seed": spec["globals_settings"]["seed"],
@@ -184,7 +199,8 @@ def main():
               "clock_fit_rows": clock_fit_rows, "clock_fit_ids_sha256": fit_ids_sha256, "predicted_rows": int(len(target)), "predicted_clock_rows": int(clock.sum()), "predicted_ids_sha256": identity_hash(target[ID]),
               "prediction_quantiles": {str(q): float(np.nanquantile(prediction, q)) for q in [0.01, 0.1, 0.5, 0.9, 0.99]}, "max_reload_difference_seconds": delta, "reload_sample_rows": int(len(sample)),
               "bundle_id": manifest["bundle_id"], "december_build_id": december["build_id"], "december_ids_sha256": december["ids_sha256"], "config_sha256": spec["config_sha256"],
-              "code": code_receipt(), "threads": threads, "audit_used": False, "seconds": round(time.time() - started, 1), "resources": monitor.stats, "environment": environment(ROOT)}
+              "code": code_receipt(), "threads": threads, "audit_used": False, "seconds": round(time.time() - started, 1), "resources": monitor.stats, "environment": environment(ROOT),
+              "resumed_prediction_after_correction": bool(args.resume), "correction": "the first runner shadowed the frozen predictor `month` with the held-out tag at prediction time; the components were fitted once by that runner and predicted by this one" if args.resume else None}
     write_json(run / "run.json", report)
     print({k: report[k] for k in ["fold", "held_out_months", "clock_fit_rows", "predicted_rows", "predicted_clock_rows", "prediction_quantiles", "max_reload_difference_seconds", "seconds"]}, flush=True)
 
