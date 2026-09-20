@@ -13,6 +13,23 @@
       "builder_sha256_after": "c229d98586c791ddbeace1d3d32ba497e63817c9f3abd20d551e409fb6b75c86",
       "builder_sha256_before": "72e9827872f85b1b1ae59b4d44233547dc386c5454b2eb5b64b0cbf19d92bd26",
       "what": "tools/build_v24_scratch.py coverage check corrected for the eight months without a development fold: it compared the count of ALL fold prediction rows (which include NaN missing-clock rows and, for February, one catalog row that sits in another month's raw file) with the count of clock-present raw departures; it now requires the finite predictions' identities to equal the clock-present departures' identities exactly. No value changes; the first run stopped at February after writing January."
+    },
+    {
+      "at_utc": "2026-09-20T16:12:06.725811+00:00",
+      "before": "any candidate score (the three January/July/November development jobs stopped at the baseline reproduction check; December's job, whose recorded value was already exact, continued)",
+      "recorded_rmse_after": {
+        "2025-01": 330.3018089992537,
+        "2025-07": 268.42373947663907,
+        "2025-11": 191.66208021350252,
+        "2025-12": 176.98934976756598
+      },
+      "recorded_rmse_before": {
+        "2025-01": 330.3018,
+        "2025-07": 268.4237,
+        "2025-11": 191.6621,
+        "2025-12": 176.98934976756598
+      },
+      "what": "development_baseline.recorded_rmse for January/July/November were the four-decimal figures of runs/adsb_v22_v1/selection.json; the tool checks reproduction to 1e-6, and the reproduced values (330.3018089992537 / 268.42373947663907 / 191.66208021350252) are the selection's full-precision values. The declaration now carries the full-precision values from that selection; nothing else changes."
     }
   ],
   "audit_used": false,
@@ -128,9 +145,9 @@
     "parent": "v12_development_residuals",
     "recipe": "v9 (fold) + 1.0 * v12 development residual on matched rows outside LIRF, then 0.3 * that + 0.7 * ens_v20_bag_q_all on every row outside LIRF, then 0.15 * v9 + 0.85 * ens_v22_lirf_q on matched LIRF non-population rows with ordinary clocks, floored: the v22 selection's lirf_q_85 on January/July/November (runs/adsb_v22_v1/selection.json) and the v20-recipe December read (docs/december/score_adsb_v22_v1.json, the v19 export's residual booster applied to December). The tool refuses to run if these do not reproduce.",
     "recorded_rmse": {
-      "2025-01": 330.3018,
-      "2025-07": 268.4237,
-      "2025-11": 191.6621,
+      "2025-01": 330.3018089992537,
+      "2025-07": 268.42373947663907,
+      "2025-11": 191.66208021350252,
       "2025-12": 176.98934976756598
     },
     "scope": "matched_no_lirf",
