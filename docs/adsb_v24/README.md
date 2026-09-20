@@ -53,4 +53,22 @@ than hold them (best-submission scoring, no separate final phase, serial confirm
 
 ## Execution
 
-(to be completed)
+- **Cross-fit** (arcw0–arcw3, 15:29–16:00 UTC): CatBoost globals 1,202–1,270 s per fold on 1.53–1.56 M clock-present rows, then the
+  LightGBM global and ten airport models; every node reproduces after reload (difference 0.0). The first runner tagged the prediction
+  rows with a column named `month` — also the name of a frozen predictor — so every fold failed at the prediction stage after its
+  twelve components were fitted (each fold's `launch.log` keeps the traceback). The tag was renamed `held_month` and the prediction
+  stage resumed from the saved nodes (`--resume`, checked against the fold's fitting-row identities and the frozen counts; recorded in
+  each `run.json`). Amendment recorded in the declaration before any prediction or score; the fitting code is unchanged. Predicted
+  rows A 522,858 / B 512,548 / C 517,494 / D 532,147 (2,085,047 in total; clock-present 517,353 / 507,023 / 511,118 / 527,083).
+- **Scratch tables** (`scratch_build.json`): on the development months' clock-present rows the cross-fit v9 (nine-month models) scores
+  Jan 199.94 vs 204.51 for the seasonal-fold v9 (−2.24%), Jul 243.24 vs 244.73 (−0.61%), Nov 192.32 vs 195.45 (−1.60%); December
+  196.89 vs 196.58 for the eleven-month refit (+0.16%, the cross-fit lacks April and August). The eight other months contribute
+  142,622–188,852 clock-present rows each. A second amendment corrected the builder's coverage check (finite predictions versus
+  clock-present departures; February's catalog holds one row that sits in another month's raw file); no value changed.
+- **matches_v11 month tables** (`tools/build_month_matches.py`, workstation): February–June and August–October built with the frozen
+  1,111-stand table (matched 38.5% in June, whose surface archive has 20 days, to 64.9% in October).
+- **Development** (`tools/run_adsb_v24.py --held-out MONTH --threads 16`, one month per worker, launched 16:10–16:14 UTC): the three
+  January/July/November jobs first stopped at the baseline reproduction check because the declaration carried four-decimal baseline
+  figures against a 1e-6 tolerance; the reproduced values are the v22 selection's own full-precision values, the declaration now carries
+  them (third amendment) and the jobs were relaunched. December's job (whose recorded value was exact) ran on under the pre-amendment
+  file; the amended fields do not enter its computation.
