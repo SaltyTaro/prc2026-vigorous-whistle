@@ -48,8 +48,9 @@ def main():
     if config["audit_used"]:
         raise ValueError("Declaration does not respect its own contract.")
     check_parents(config)
+    config_sha256 = object_hash(config)  # the declaration's hash, taken before the runtime `matches_dir` key is added below
     selection = read_json(ROOT / args.selection)
-    if selection["config_sha256"] != object_hash(config) or not selection["selected_candidate"]:
+    if selection["config_sha256"] != config_sha256 or not selection["selected_candidate"]:
         raise ValueError("The selection does not belong to this declaration or selected nothing.")
     name = selection["selected_candidate"]
     candidate = config["candidates"][name]
@@ -123,7 +124,7 @@ def main():
     detail = pd.DataFrame({ID: ids, "airport": table["airport"].to_numpy(), "v9_frozen": v9_frozen, "v9": v9, "residual": residual, "in_scope": inside, "touched": touched, f"v{args.version}": values})
     detail.to_parquet(run_dir / "ranking_values.parquet", index=False, compression="zstd")
     output = ROOT / "runs/submissions" / f"vigorous-whistle_v{args.version}.parquet"
-    provenance = {"policy": config["prediction_postprocess"], "experiment_id": config["experiment_id"], "config_sha256": object_hash(config), "selection_sha256": sha256_file(ROOT / args.selection),
+    provenance = {"policy": config["prediction_postprocess"], "experiment_id": config["experiment_id"], "config_sha256": config_sha256, "selection_sha256": sha256_file(ROOT / args.selection),
                   "selected_candidate": name, "v9_provenance": candidate["v9"], "twelve_month_v7": v7_record, "residual": {"variant": candidate["residual"], "feature_set": feature_set, "matches_dir": config["matches_dirs"][dir_key],
                   "rounds": rounds, "training_rows": scoped_rows, "training_months": training_months, "residual_model_sha256": sha256_file(run_dir / "residual_model.txt")},
                   "residual_model_sha256": sha256_file(run_dir / "residual_model.txt"), "residual_models_sha256": [sha256_file(run_dir / "residual_model.txt")], "rounds": rounds, "training_rows": scoped_rows,
