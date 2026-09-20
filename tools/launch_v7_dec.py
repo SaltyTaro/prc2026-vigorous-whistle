@@ -61,9 +61,11 @@ def main():
     else:
         target = ROOT / OUTPUT_ROOT / args.fold
         target.mkdir(parents=True, exist_ok=True)
-        files = ["run.json", "nodes.json", "predictions.parquet" if args.fold != "refit" else "ranking_predictions.parquet"]
-        for file in files:
-            subprocess.run(["scp", "-q", f"{args.host}:{REMOTE}/{OUTPUT_ROOT}/{args.fold}/{file}", str(target / file)], check=True, timeout=1800)
+        if args.fold == "refit":  # the twelve-month models and encoders are mirrored too: the verifier re-predicts from them
+            subprocess.run(["scp", "-q", "-r", f"{args.host}:{REMOTE}/{OUTPUT_ROOT}/{args.fold}/.", str(target)], check=True, timeout=3600)
+        else:
+            for file in ["run.json", "nodes.json", "predictions.parquet"]:
+                subprocess.run(["scp", "-q", f"{args.host}:{REMOTE}/{OUTPUT_ROOT}/{args.fold}/{file}", str(target / file)], check=True, timeout=1800)
         subprocess.run(["scp", "-q", f"{args.host}:{REMOTE}/{OUTPUT_ROOT}/launch_{args.fold}.log", str(target / "launch.log")], check=True, timeout=300)
         print("mirrored fold", args.fold, "from", args.host, "->", target)
 

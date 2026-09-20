@@ -72,3 +72,32 @@ than hold them (best-submission scoring, no separate final phase, serial confirm
   figures against a 1e-6 tolerance; the reproduced values are the v22 selection's own full-precision values, the declaration now carries
   them (third amendment) and the jobs were relaunched. December's job (whose recorded value was exact) ran on under the pre-amendment
   file; the amended fields do not enter its computation.
+
+## Development results (`development_results.json`, `runs/adsb_v24/dev/`)
+
+Baseline = the v21 recipe's development predictions: 330.3018 / 268.4237 / 191.6621 / 176.9893 (Jan / Jul / Nov / Dec), reproduced
+exactly by the tool. Fold v9 → cross-fit v9 on the whole month: 343.87 → 341.20 / 288.13 → 286.89 / 219.88 → 217.13 / 209.36 → 209.65.
+
+| candidate | Jan | Jul | Nov | Dec | mean | eligible |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| incumbent_repro (check) | 0.000% | 0.000% | 0.000% | −0.024% | −0.006% | (check) |
+| v7x_r3 — v7 from more months alone | −0.294% | −0.143% | −0.486% | −0.046% | −0.242% | no (Dec interval crosses zero) |
+| r12 — twelve-month residual alone | −0.131% | −0.159% | −0.713% | −0.221% | −0.306% | yes |
+| v7x_r12x — both | −0.424% | −0.292% | −1.148% | −0.221% | −0.521% | yes |
+| **v7x_r12x_lirf25 — selected** | **−0.445%** | **−0.304%** | **−1.137%** | **−0.253%** | **−0.535%** | yes |
+| v7x_r12x_lirf50 | −0.447% | −0.310% | −1.108% | −0.273% | −0.534% | yes |
+| v7x_r12x_m1332 (1,332-stand tables) | −0.441% | −0.308% | −1.116% | −0.192% | −0.514% | yes |
+| v7x_r12x_season (season_cos) | −0.416% | −0.301% | −1.153% | −0.168% | −0.509% | yes |
+
+Paired-day 95% intervals of the RMSE difference are below zero on every month for every eligible candidate (selected: [−2.60, −0.96] /
+[−1.03, −0.61] / [−2.60, −1.79] / [−0.62, −0.28] s). Every airport improves in every month for the selected candidate (EGLL December
+unchanged); LIRF 408.0 → 404.1 / 635.7 → 635.0 / 448.5 → 445.5 / 348.5 → 347.9. Ordinary rows (label ≤ 6 h): 196.66 → 194.18 /
+260.84 → 259.99 / 171.61 → 169.17 / 174.05 → 173.59. Twelve-month residual rounds (median of the four months): r12x 2,882.
+
+Reading. The twelve-month residual is worth −0.31% on its own and −0.22% on December; November gains most (−0.71%) because the
+cross-fitted October and December sit next to it — the mechanism the learning curve predicted. The cross-fit v7 adds about −0.2%
+where it replaces a seven- or nine-month fold model (January, July, November); on December it is slightly weaker than the shipped
+eleven-month refit (+0.16% on clock rows) and the combined candidate still gains −0.25%, so December is the conservative read for the
+January half of the ranking. The 1,332-stand tables and the season feature buy nothing; the 0.25 blend on unmatched LIRF rows is a
+small, mostly positive hedge (Jan −0.19% on LIRF, Nov +0.03%) that the rule selected by 0.001 pp over 0.5 and 0.013 pp over none.
+Expected official transfer: of the order of −0.2…−0.4% (0.5–1 s), the December read being the honest anchor.
