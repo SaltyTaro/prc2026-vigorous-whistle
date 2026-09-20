@@ -32,6 +32,7 @@ def main():
     parser.add_argument("host")
     parser.add_argument("fold", nargs="?")
     parser.add_argument("--threads", type=int, default=16)
+    parser.add_argument("--resume", action="store_true", help="prediction stage only from the saved nodes (tools/run_v7_dec.py --resume)")
     args = parser.parse_args()
     if args.command == "status":
         for host in [args.host, *([args.fold] if args.fold else [])]:
@@ -46,8 +47,8 @@ def main():
         local = subprocess.run(["sha256sum", *FILES], capture_output=True, text=True, cwd=ROOT).stdout.split()
         if remote[0::2] != local[0::2]:
             raise SystemExit(f"Runner, frozen module or config differs on {args.host}:\n{remote}\n{local}")
-        job = f"tools/run_v7_dec.py --fold {args.fold} --output {OUTPUT_ROOT} --december {DECEMBER} --threads {args.threads}"
-        script = (f"cd {REMOTE} && mkdir -p {OUTPUT_ROOT} && (echo \"=== fold {args.fold} $(date -u +%FT%TZ)\" >> {OUTPUT_ROOT}/launch_{args.fold}.log && "
+        job = f"tools/run_v7_dec.py --fold {args.fold} --output {OUTPUT_ROOT} --december {DECEMBER} --threads {args.threads}" + (" --resume" if args.resume else "")
+        script = (f"cd {REMOTE} && mkdir -p {OUTPUT_ROOT} && (echo \"=== fold {args.fold}{' resume' if args.resume else ''} $(date -u +%FT%TZ)\" >> {OUTPUT_ROOT}/launch_{args.fold}.log && "
                   f".venv/bin/python -u {job} >> {OUTPUT_ROOT}/launch_{args.fold}.log 2>&1; echo \"=== fold {args.fold} done $(date -u +%FT%TZ)\" >> {OUTPUT_ROOT}/launch_{args.fold}.log) > /dev/null 2>&1\n")
         local_script = ROOT / "runs" / f"chain24_{args.host}_{args.fold}.sh"
         local_script.write_text(script, encoding="utf-8", newline="\n")

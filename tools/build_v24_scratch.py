@@ -87,7 +87,8 @@ def main():
             rows = raw.loc[clock].reset_index(drop=True)
             ctx = context.loc[clock]
             cross = pred.reindex(rows[ID]).to_numpy(dtype=float)
-            if np.isnan(cross).any() or len(pred) != int(clock.sum()):
+            finite = pred[np.isfinite(pred.to_numpy(dtype=float))]
+            if np.isnan(cross).any() or set(finite.index) != set(rows[ID]):  # the fold predicts the catalog's rows of the month; one catalog row can sit in another month's raw file
                 raise ValueError(f"Cross-fit predictions do not cover exactly the clock-present departures of {month}.")
             if ctx["hedge_population"].any():
                 raise ValueError("A clock-present row cannot belong to the fill population.")

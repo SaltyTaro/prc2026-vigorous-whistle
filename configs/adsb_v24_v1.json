@@ -6,6 +6,13 @@
       "runner_sha256_after": "bb32ad72ee904b89a144bf277f16f73c5535a1bdba62040a3086faf67cf6ac3b",
       "runner_sha256_before": "7c3b52d4aef5641f358c8f806722f19e679b6c351537e59569482acc5125d0a2",
       "what": "tools/run_v7_dec.py corrected: the prediction stage tagged the held-out rows with a string column named `month`, the name of a frozen timeline predictor, so every fold's prediction stage failed after its twelve components were fitted (the folds' launch.log keep the traceback); the tag is now `held_month` and a --resume mode performs the prediction stage from the saved nodes of a complete fit (checked against the fold's fitting-row identities and the frozen counts; recorded in run.json). The fitting code path is unchanged; no component is refit."
+    },
+    {
+      "at_utc": "2026-09-20T16:02:44.711664+00:00",
+      "before": "any candidate score",
+      "builder_sha256_after": "c229d98586c791ddbeace1d3d32ba497e63817c9f3abd20d551e409fb6b75c86",
+      "builder_sha256_before": "72e9827872f85b1b1ae59b4d44233547dc386c5454b2eb5b64b0cbf19d92bd26",
+      "what": "tools/build_v24_scratch.py coverage check corrected for the eight months without a development fold: it compared the count of ALL fold prediction rows (which include NaN missing-clock rows and, for February, one catalog row that sits in another month's raw file) with the count of clock-present raw departures; it now requires the finite predictions' identities to equal the clock-present departures' identities exactly. No value changes; the first run stopped at February after writing January."
     }
   ],
   "audit_used": false,
@@ -475,7 +482,7 @@
     },
     "scratch_builder": {
       "path": "tools/build_v24_scratch.py",
-      "sha256": "72e9827872f85b1b1ae59b4d44233547dc386c5454b2eb5b64b0cbf19d92bd26"
+      "sha256": "c229d98586c791ddbeace1d3d32ba497e63817c9f3abd20d551e409fb6b75c86"
     },
     "scratch_december": {
       "path": "scratch/december.parquet",
