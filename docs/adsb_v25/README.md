@@ -113,3 +113,11 @@ gain is a 0.06–0.11% recipe gain. Expected official transfer: of the order of 
   same five January airport-months above the 2025 development means; the EHAM 2–7 January and LFPG 7 January disruption days as in
   v22; the LIRF fill population (383 rows) unchanged; negative-proxy rows p50 1,088 s; no row moved by more than 600 s.
 - Upload only with the user's approval; the official score against v22 (239.1335) is the final test.
+- The four-month development mean was −0.057%, the December anchor −0.109%; the transfer is
+  again at or above the December read (v20: −0.50% → −0.29 s; v21: December-driven; v22: −0.25% → −0.19%; v23: −0.11% → −0.13%).
+  **v23 is the incumbent. Never re-upload v1–v23.** Standings snapshot after scoring: `leaderboard_after_v23.txt` (first of 174,
+  0.50 s ahead of second; the second- and third-placed teams both improved earlier today).
+- Reading for the next round: the CatBoost residual was still improving at its 8,000-round cap on every inner fold of every month and
+  every refit; a declared follow-up with a higher cap (or learning rate 0.1) and a second seed is the cheapest remaining item, after
+  which the committee's CatBoost kinds are the next VM round. The month-distance weights are marginal on their own (7 of 12 months)
+  and `adj4` is worse than uniform: no reason to weight the committee refits.
