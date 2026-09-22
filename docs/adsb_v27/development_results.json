@@ -1,0 +1,440 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "adj2_cat_long": {
+      "conditions": {
+        "mean_ratio_at_most_0.9998": false,
+        "not_worse_on_any_recipe_month": true,
+        "paired_day_interval_below_zero_on_touched_months": false,
+        "pooled_twelve_month_scope_below_control": null,
+        "selectable": true
+      },
+      "eligible": false,
+      "mean_change_pct": -0.008596125424165102,
+      "mean_ratio": 0.9999140387457583,
+      "members": [
+        "adj2",
+        "cat",
+        "cat_long"
+      ],
+      "months": {
+        "2025-01": {
+          "change_pct": -0.004915553881779111,
+          "paired_day_95pct_interval_seconds": [
+            -0.03426305495149009,
+            -0.004739839774946122
+          ],
+          "rmse": 328.73626067410726,
+          "rows_differing_from_baseline": 76213
+        },
+        "2025-07": {
+          "change_pct": -0.00792492020633695,
+          "paired_day_95pct_interval_seconds": [
+            -0.03220072744666709,
+            -0.008360591994624415
+          ],
+          "rmse": 267.51398623008663,
+          "rows_differing_from_baseline": 87440
+        },
+        "2025-11": {
+          "change_pct": -0.0004199352313771776,
+          "paired_day_95pct_interval_seconds": [
+            -0.019209921258259044,
+            0.018087311677169263
+          ],
+          "rmse": 189.35183492886657,
+          "rows_differing_from_baseline": 107462
+        },
+        "2025-12": {
+          "change_pct": -0.021124092377156067,
+          "paired_day_95pct_interval_seconds": [
+            -0.05958934935218565,
+            -0.017404616918287288
+          ],
+          "rmse": 176.31244937464817,
+          "rows_differing_from_baseline": 107155
+        }
+      }
+    },
+    "adj2_long": {
+      "conditions": {
+        "mean_ratio_at_most_0.9998": false,
+        "not_worse_on_any_recipe_month": true,
+        "paired_day_interval_below_zero_on_touched_months": true,
+        "pooled_twelve_month_scope_below_control": null,
+        "selectable": true
+      },
+      "eligible": false,
+      "mean_change_pct": -0.013455605648071689,
+      "mean_ratio": 0.9998654439435193,
+      "members": [
+        "adj2",
+        "cat_long"
+      ],
+      "months": {
+        "2025-01": {
+          "change_pct": -0.007724728932723135,
+          "paired_day_95pct_interval_seconds": [
+            -0.044965262232615544,
+            -0.015844393051636985
+          ],
+          "rmse": 328.72702544312625,
+          "rows_differing_from_baseline": 76213
+        },
+        "2025-07": {
+          "change_pct": -0.009894994153469838,
+          "paired_day_95pct_interval_seconds": [
+            -0.03193377525716699,
+            -0.020847956611737575
+          ],
+          "rmse": 267.50871558904487,
+          "rows_differing_from_baseline": 87440
+        },
+        "2025-11": {
+          "change_pct": -0.014689537236078909,
+          "paired_day_95pct_interval_seconds": [
+            -0.033433267859263795,
+            -0.023108937764142468
+          ],
+          "rmse": 189.3248150621677,
+          "rows_differing_from_baseline": 107462
+        },
+        "2025-12": {
+          "change_pct": -0.02151316227000377,
+          "paired_day_95pct_interval_seconds": [
+            -0.04304326375650476,
+            -0.03313311867223235
+          ],
+          "rmse": 176.31176325105292,
+          "rows_differing_from_baseline": 107155
+        }
+      }
+    },
+    "long_only": {
+      "conditions": {
+        "mean_ratio_at_most_0.9998": false,
+        "not_worse_on_any_recipe_month": false,
+        "paired_day_interval_below_zero_on_touched_months": false,
+        "pooled_twelve_month_scope_below_control": null,
+        "selectable": true
+      },
+      "eligible": false,
+      "mean_change_pct": -0.006918717619508463,
+      "mean_ratio": 0.9999308128238049,
+      "members": [
+        "cat_long"
+      ],
+      "months": {
+        "2025-01": {
+          "change_pct": -0.006988561923004788,
+          "paired_day_95pct_interval_seconds": [
+            -0.06690276965071433,
+            0.007888458190227208
+          ],
+          "rmse": 328.72944560999093,
+          "rows_differing_from_baseline": 76213
+        },
+        "2025-07": {
+          "change_pct": -0.014398038128204949,
+          "paired_day_95pct_interval_seconds": [
+            -0.07093952096134189,
+            -0.0005798904240876567
+          ],
+          "rmse": 267.4966683618732,
+          "rows_differing_from_baseline": 87440
+        },
+        "2025-11": {
+          "change_pct": 0.02509608805731922,
+          "paired_day_95pct_interval_seconds": [
+            -0.007106720605295889,
+            0.11038536192799384
+          ],
+          "rmse": 189.4001501900574,
+          "rows_differing_from_baseline": 107462
+        },
+        "2025-12": {
+          "change_pct": -0.03138435848414334,
+          "paired_day_95pct_interval_seconds": [
+            -0.11632328852791644,
+            0.0014192314486784455
+          ],
+          "rmse": 176.29435542598014,
+          "rows_differing_from_baseline": 107155
+        }
+      }
+    },
+    "repro": {
+      "conditions": {
+        "mean_ratio_at_most_0.9998": false,
+        "not_worse_on_any_recipe_month": true,
+        "paired_day_interval_below_zero_on_touched_months": true,
+        "pooled_twelve_month_scope_below_control": null,
+        "selectable": false
+      },
+      "eligible": false,
+      "mean_change_pct": 0.0,
+      "mean_ratio": 1.0,
+      "members": [
+        "adj2",
+        "cat"
+      ],
+      "months": {
+        "2025-01": {
+          "change_pct": 0.0,
+          "paired_day_95pct_interval_seconds": [
+            0.0,
+            0.0
+          ],
+          "rmse": 328.75242067648327,
+          "rows_differing_from_baseline": 0
+        },
+        "2025-07": {
+          "change_pct": 0.0,
+          "paired_day_95pct_interval_seconds": [
+            0.0,
+            0.0
+          ],
+          "rmse": 267.5351881802738,
+          "rows_differing_from_baseline": 0
+        },
+        "2025-11": {
+          "change_pct": 0.0,
+          "paired_day_95pct_interval_seconds": [
+            0.0,
+            0.0
+          ],
+          "rmse": 189.35263008727185,
+          "rows_differing_from_baseline": 0
+        },
+        "2025-12": {
+          "change_pct": 0.0,
+          "paired_day_95pct_interval_seconds": [
+            0.0,
+            0.0
+          ],
+          "rmse": 176.34970164853124,
+          "rows_differing_from_baseline": 0
+        }
+      }
+    }
+  },
+  "config_sha256": "325c18b5d0cc026af913b1157c242f5b967d1d021e6ef4bd78f27b7874df8778",
+  "created_at_utc": "2026-09-22T15:49:36.616846+00:00",
+  "cut_reason": "The mean-ratio condition is computed over the four recipe months alone and all four were final at 15:46 UTC; no result from the remaining months can make an ineligible candidate eligible. The second-wave fits on arcw0-arcw3 were stopped 7-36 minutes in.",
+  "declaration": "configs/adsb_v27_v1.json",
+  "environment": {
+    "disk_available_bytes": 28072968192,
+    "logical_cpus": 32,
+    "memory_total_bytes": 16858472448,
+    "packages": {
+      "numpy": "2.4.2",
+      "pandas": "3.0.0",
+      "psutil": "7.2.2",
+      "pyarrow": "23.0.1",
+      "tzdata": "2025.3"
+    },
+    "physical_cpus_reported": 24,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.2"
+  },
+  "inner_rounds_finding": "At cap 8,000 every inner fold of every month stopped at the cap (7,898-8,000). At cap 16,000 the folds stop at 6,545-16,000 (one fold at the cap, in July), with month medians 10,723-13,574: the model does want more rounds than 8,000, and converges around 11,000-13,000. The gain it buys on the residual scope is real but an order of magnitude too small at the recipe level, where the residual carries weight 0.3 and is blended with the committee on the same rows.",
+  "model_code": {
+    "src/prc2026_adsb/features.py": "cff4c56ae3a70fa8dee35453c42d26dd07f1bb6783ff0c18023aa4d3e46469b5",
+    "tools/run_adsb_v11.py": "da79c6fdee46f2ab30619b706fbdf3879b5fbae748805ba444e75786415865d2",
+    "tools/run_adsb_v24.py": "25714160fee45ae51e7bf5cfaacbf20f68d8fa71ebaec52e7f474cef83130795",
+    "tools/run_adsb_v25.py": "5a873bdd96793b5706af1b5deb8b5168ac53915027698a8d62cd953f99f2fe58",
+    "tools/run_adsb_v26.py": "21b059109d73fd9bff11bb67f59dea91a7092db2a22e915160bdad4059fb13d9"
+  },
+  "month_reports": {
+    "2025-01": "5c13afb5eededa44d24d41de34768093ac4a42cb7cac1b4fd819931b6d340df9",
+    "2025-02": "1d746986ed792277e76db8762aa4a868d9626d8a28457cfebd4531952cfd4e74",
+    "2025-04": "29dca77a93a5f179f348b4454f2719ba9d79fd08e4c7f7a5de099cfc595c9bc2",
+    "2025-06": "81efb38c0fe04d93db9b8281b869a858ae3dc49b5dbde32e6cbb53f5bb73ca6e",
+    "2025-07": "a3525cc85bbd1eeaf04e49a755c7699bb3acc39acbf192eca173ad16d6952198",
+    "2025-09": "d3271854d1b6b05e0840a30bd565ab0f65f42149a385357b8c8606310b31acdb",
+    "2025-11": "ae1976f2cac513698e6371bc73b7f81d6199eb20c5cd614f858e69a81e2c08d5",
+    "2025-12": "18dc28afac2d3f700e6384a2fd589d2ab7ec0c8d4ae0c9cf133b36224a30fd88"
+  },
+  "months_cut_after_the_outcome_was_determined": [
+    "2025-03",
+    "2025-05",
+    "2025-08",
+    "2025-10"
+  ],
+  "months_fitted": [
+    "2025-01",
+    "2025-02",
+    "2025-04",
+    "2025-06",
+    "2025-07",
+    "2025-09",
+    "2025-11",
+    "2025-12"
+  ],
+  "outcome": "Nothing selected; vigorous-whistle_v23 (238.8197) stands. cat_long (the shipped CatBoost residual at learning rate 0.05 with the cap raised from 8,000 to 16,000) is better than the shipped cat member on the residual scope in 8 of 8 months fitted (pooled -0.218%), and the best candidate adj2_long = mean(adj2, cat_long) improves every one of the four recipe months with its paired-day interval below zero on each. Its mean improvement is 0.0135%, short of the declared 0.02% bar, so the rule's mean-ratio condition fails. The four recipe months are final, so that condition cannot change; the remaining four months were cut.",
+  "partials": {
+    "2025-01": "4f1efe0309dbb0d9505d8028f35a1cb4bc45354f4717be0ac29f8786725ffbf9",
+    "2025-02": "4713e60ac4bb349792f3e591bd481cdc5698e951aa61b6df703ac24763f9543e",
+    "2025-04": "bedfa719c7661d250ac85103e4d64d56cb3623bab6cd0f07d55f1dd3395a5a4c",
+    "2025-06": "8d4a87c38232764adda2318e63c70fa3e4b06165f6c5105eb837cf85d4bcf6a8",
+    "2025-07": "bd8cc7ca0aaca2448b8f2e7da043e24efe4b9a4c2d0940f584b53524db7e9f4f",
+    "2025-09": "79ebc3fd8d1546abc19a236789a4ed126840175da48af198959b4519facda381",
+    "2025-11": "86aa370677805dc32a6814420d29596e19de562e14ec69edf1c279a698602890",
+    "2025-12": "f1b6e5cb19f7eccb56cc64454a472af7873ec6659910f3acec489a324b0ed0a5"
+  },
+  "pooled_scope_note": "The declared pooled condition is over twelve months; the eight-month figures here are descriptive and are not that condition.",
+  "residual_variants": {
+    "adj2": {
+      "inner_best_iterations_by_month": {
+        "2025-01": null,
+        "2025-02": null,
+        "2025-04": null,
+        "2025-06": null,
+        "2025-07": null,
+        "2025-09": null,
+        "2025-11": null,
+        "2025-12": null
+      },
+      "pooled_scope_ratio_to_cat": 1.0151396945202564,
+      "pooled_scope_rmse_eight_months": 123.09014940497526,
+      "rounds_by_month": {
+        "2025-01": null,
+        "2025-02": null,
+        "2025-04": null,
+        "2025-06": null,
+        "2025-07": null,
+        "2025-09": null,
+        "2025-11": null,
+        "2025-12": null
+      },
+      "scope_rmse_by_month": {
+        "2025-01": 127.37078208650182,
+        "2025-02": 102.08876925958222,
+        "2025-04": 107.08326831982336,
+        "2025-06": 110.92085744413419,
+        "2025-07": 158.40848111519733,
+        "2025-09": 125.99698771843585,
+        "2025-11": 120.44476390327362,
+        "2025-12": 120.62996877338995
+      }
+    },
+    "cat": {
+      "inner_best_iterations_by_month": {
+        "2025-01": null,
+        "2025-02": null,
+        "2025-04": null,
+        "2025-06": null,
+        "2025-07": null,
+        "2025-09": null,
+        "2025-11": null,
+        "2025-12": null
+      },
+      "pooled_scope_ratio_to_cat": 1.0,
+      "pooled_scope_rmse_eight_months": 121.25439490684707,
+      "rounds_by_month": {
+        "2025-01": null,
+        "2025-02": null,
+        "2025-04": null,
+        "2025-06": null,
+        "2025-07": null,
+        "2025-09": null,
+        "2025-11": null,
+        "2025-12": null
+      },
+      "scope_rmse_by_month": {
+        "2025-01": 125.34593762899848,
+        "2025-02": 101.16916637812074,
+        "2025-04": 103.67118894999211,
+        "2025-06": 108.49640870939176,
+        "2025-07": 157.2385311081548,
+        "2025-09": 124.07899841760516,
+        "2025-11": 119.3319075900566,
+        "2025-12": 118.51055038187718
+      }
+    },
+    "cat_long": {
+      "inner_best_iterations_by_month": {
+        "2025-01": [
+          9345,
+          14532,
+          11792,
+          13574,
+          15987
+        ],
+        "2025-02": [
+          9994,
+          12101,
+          11621,
+          6545,
+          13587
+        ],
+        "2025-04": [
+          10928,
+          11512,
+          10052,
+          11369,
+          10541
+        ],
+        "2025-06": [
+          13168,
+          10988,
+          13817,
+          9274,
+          10501
+        ],
+        "2025-07": [
+          13225,
+          10188,
+          15147,
+          16000,
+          10806
+        ],
+        "2025-09": [
+          14125,
+          12142,
+          11571,
+          11405,
+          13070
+        ],
+        "2025-11": [
+          11328,
+          9837,
+          10723,
+          13639,
+          10531
+        ],
+        "2025-12": [
+          11310,
+          12044,
+          11507,
+          12482,
+          8972
+        ]
+      },
+      "pooled_scope_ratio_to_cat": 0.9978241954961076,
+      "pooled_scope_rmse_eight_months": 120.990569048292,
+      "rounds_by_month": {
+        "2025-01": 13574,
+        "2025-02": 11621,
+        "2025-04": 10928,
+        "2025-06": 10988,
+        "2025-07": 13225,
+        "2025-09": 12142,
+        "2025-11": 10723,
+        "2025-12": 11507
+      },
+      "scope_rmse_by_month": {
+        "2025-01": 125.04373275232422,
+        "2025-02": 100.88192344452433,
+        "2025-04": 103.02675720827624,
+        "2025-06": 108.21882589702673,
+        "2025-07": 157.0371167102899,
+        "2025-09": 123.85105697242439,
+        "2025-11": 119.24399934664454,
+        "2025-12": 118.30435195293919
+      }
+    }
+  },
+  "rule": "For each candidate: RMSE on each of the four recipe months versus the incumbent's development prediction, and the pooled twelve-month residual-scope RMSE of its residual mean versus the control's (the incumbent's mean of adj2 and cat on the same rows). Eligible when not worse on ANY recipe month (ratio <= 1.0), mean ratio over the four recipe months at most 0.9998 (0.02%), the paired-day bootstrap interval of the RMSE difference below zero on every recipe month where the candidate differs from the baseline on at least one row, and the pooled residual-scope RMSE strictly below the control's. Choose the eligible candidate with the lowest mean ratio over the four recipe months (ties by name); otherwise select nothing and keep v23. repro is a check and cannot be selected. Per-airport, ordinary-row and per-month scope figures are descriptive.",
+  "selected_candidate": null
+}

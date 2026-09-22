@@ -76,6 +76,50 @@ reproduced the incumbent's recorded November RMSE (189.35263008727185) exactly. 
 no candidate at protocol and are not development results. The development tool
 (`tools/run_adsb_v26.py`) is byte-identical to adsb_v26's and is hash-bound as a parent.
 
-## Result
+## Result — nothing selected; v23 stands
 
-Pending — nothing has been scored at protocol yet.
+`docs/adsb_v27/development_results.json`. Eight of the twelve months were fitted (13:12–15:46 UTC);
+the remaining four were cut once the rule's outcome was determined (below).
+
+**The cap evidence was right, and the effect is real but too small.** At cap 8,000 every inner fold
+of every month stopped at the cap (7,898–8,000). At cap 16,000 the folds stop at 6,545–16,000 — only
+one fold, in July, still reaches the cap — with month medians 10,723–13,574. So the model did want
+more rounds than 8,000, and it converges around 11,000–13,000. On the residual scope `cat_long`
+beats the shipped `cat` in **8 of 8** months:
+
+| month | rows in scope | `cat` (8k) | `cat_long` (16k) | change | rounds | inner best |
+|---|---|---|---|---|---|---|
+| 2025-01 | 76,213 | 125.346 | 125.044 | −0.241% | 13,574 | 9,345–15,987 |
+| 2025-02 | 75,113 | 101.169 | 100.882 | −0.284% | 11,621 | 6,545–13,587 |
+| 2025-04 | 98,611 | 103.671 | 103.027 | −0.622% | 10,928 | 10,052–11,512 |
+| 2025-06 | 61,384 | 108.496 | 108.219 | −0.256% | 10,988 | 9,274–13,817 |
+| 2025-07 | 87,440 | 157.239 | 157.037 | −0.128% | 13,225 | 10,188–16,000 |
+| 2025-09 | 104,655 | 124.079 | 123.851 | −0.184% | 12,142 | 11,405–14,125 |
+| 2025-11 | 107,462 | 119.332 | 119.244 | −0.074% | 10,723 | 9,837–13,639 |
+| 2025-12 | 107,155 | 118.511 | 118.304 | −0.174% | 11,507 | 8,972–12,482 |
+| **pooled (8 months)** | 718,033 | **121.2544** | **120.9906** | **−0.218%** | | |
+
+(Descriptive: the declared pooled condition is over twelve months, and only eight were fitted.)
+
+At the recipe level that −0.218% on the scope becomes about −0.013%, the familiar ~20:1 damping from
+the residual's 0.3 weight and the committee blend on the same rows:
+
+| candidate | 2025-01 | 2025-07 | 2025-11 | 2025-12 | mean | verdict |
+|---|---|---|---|---|---|---|
+| `repro` (check) | 0.0000% | 0.0000% | 0.0000% | 0.0000% | 0.0000% | reproduces the incumbent to the row |
+| **`adj2_long`** | −0.0077% | −0.0099% | −0.0147% | −0.0215% | **−0.0135%** | better on all four, every interval below zero — but the mean misses the 0.02% bar |
+| `adj2_cat_long` | −0.0049% | −0.0079% | −0.0004% | −0.0211% | −0.0086% | November's interval includes zero |
+| `long_only` | −0.0070% | −0.0144% | +0.0251% | −0.0314% | −0.0069% | worse on November |
+
+**No candidate is eligible.** The best, `adj2_long`, satisfies every condition except the declared
+mean: 0.0135% against a 0.02% bar. That condition is computed over the four recipe months alone and
+all four were final, so no further month could change it — which is why the second-wave fits
+(2025-03, 2025-05, 2025-08, 2025-10) were stopped 7–36 minutes in rather than run for another
+~2 hours each. `v23` remains the incumbent at 238.8197 s. Nothing was refitted, exported or uploaded.
+
+**Reading.** Two rounds now agree on the shape of this lever: the CatBoost residual is a genuine
+source of gain (v25's −1.38% on the scope became −0.131% officially), but it is close to exhausted.
+Doubling its rounds buys a seventh of what the member itself bought, and the residual stage is
+separated from the ranking score by the 0.3 weight and the committee. Further tuning of this model —
+more rounds again, more seeds, another learning rate (v26) — is not where the next 0.3 s is.
+
