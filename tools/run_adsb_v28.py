@@ -25,7 +25,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 from prc2026.artifacts import environment, object_hash, read_json, sha256_file, utc_now, write_json  # noqa: E402
 from prc2026.features import ID, TARGET, TIME  # noqa: E402
 from run_adsb_v11 import candidate_values, check_parents, rmse, scope_mask  # noqa: E402
-from run_adsb_v24 import ALL_MONTHS, adsb_features, extra_columns, load_frame, month_table  # noqa: E402
+from run_adsb_v24 import adsb_features, extra_columns, load_frame, month_table  # noqa: E402
 
 
 def paired_day_interval(days, label, candidate, baseline, mask, seed, draws=2000):
@@ -59,7 +59,7 @@ def score(config: dict, out_dir: Path, cache: Path) -> None:
     matches_root = ROOT / config["matches_dirs"]["v11"]
     out_dir.mkdir(parents=True, exist_ok=True)
     control = config["control_candidate"]
-    for month in ALL_MONTHS:
+    for month in config["development_months"]:
         target = out_dir / f"month_{month}.json"
         if target.exists():
             print(month, "exists", flush=True)
@@ -104,7 +104,8 @@ def score(config: dict, out_dir: Path, cache: Path) -> None:
 def select(config: dict, out_dir: Path, report_path: Path) -> None:
     if (out_dir / "selection.json").exists():
         raise ValueError("Preserve the original selection.")
-    reports = {m: read_json(out_dir / f"month_{m}.json") for m in ALL_MONTHS}
+    months = config["development_months"]
+    reports = {m: read_json(out_dir / f"month_{m}.json") for m in months}
     for month, report in reports.items():
         if report["config_sha256"] != object_hash(config):
             raise ValueError(f"{month} was scored under another declaration.")
@@ -112,20 +113,20 @@ def select(config: dict, out_dir: Path, report_path: Path) -> None:
     recipe = config["recipe_months"]
     candidates = {}
     for name in config["candidates"]:
-        sse = sum(reports[m]["candidates"][name]["sse_touched_scope"] for m in ALL_MONTHS)
-        rows = sum(reports[m]["rows_touched"] for m in ALL_MONTHS)
-        entry = {"weight": reports[ALL_MONTHS[0]]["candidates"][name]["weight"],
+        sse = sum(reports[m]["candidates"][name]["sse_touched_scope"] for m in months)
+        rows = sum(reports[m]["rows_touched"] for m in months)
+        entry = {"weight": reports[months[0]]["candidates"][name]["weight"],
                  "pooled_scope_rmse": float(np.sqrt(sse / rows)), "pooled_scope_rows": rows,
                  "months": {m: {"scope_rmse": reports[m]["candidates"][name]["rmse_touched_scope"],
                                 "all_rows_rmse": reports[m]["candidates"][name]["rmse_all_rows"],
                                 "ratio_all_rows": reports[m]["candidates"][name]["ratio_all_rows"],
-                                "paired_day_interval_touched": reports[m]["candidates"][name]["paired_day_interval_touched"]} for m in ALL_MONTHS}}
+                                "paired_day_interval_touched": reports[m]["candidates"][name]["paired_day_interval_touched"]} for m in months}}
         candidates[name] = entry
     control_pooled = candidates[control]["pooled_scope_rmse"]
     for name, entry in candidates.items():
         entry["pooled_scope_ratio"] = entry["pooled_scope_rmse"] / control_pooled
         worst_recipe = max(entry["months"][m]["ratio_all_rows"] for m in recipe)
-        touched_months = [m for m in ALL_MONTHS if reports[m]["candidates"][name]["rows_differing_from_control"] > 0]
+        touched_months = [m for m in months if reports[m]["candidates"][name]["rows_differing_from_control"] > 0]
         below_zero = [m for m in touched_months if entry["months"][m]["paired_day_interval_touched"][1] < 0]
         entry["worst_recipe_month_ratio"] = worst_recipe
         entry["months_touched"] = touched_months

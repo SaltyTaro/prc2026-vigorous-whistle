@@ -1,4 +1,4 @@
-"""Write the adsb_v28_v1 declaration (configs/adsb_v28_v1.json) with its parent hashes, before any candidate is scored.
+"""Write the adsb_v28_v2 declaration (configs/adsb_v28_v2.json) with its parent hashes, before any candidate is scored.
 
 One number changes: the weight of the LIRF learner table on LIRF non-population rows that have no ADS-B match.
 No model is fitted; every candidate is rebuilt from artifacts that already exist.
@@ -19,7 +19,7 @@ RECIPE_MONTHS = ["2025-01", "2025-07", "2025-11", "2025-12"]
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--output", type=Path, default=ROOT / "configs/adsb_v28_v1.json")
+    parser.add_argument("--output", type=Path, default=ROOT / "configs/adsb_v28_v2.json")
     parser.add_argument("--smoke-note", default=None)
     args = parser.parse_args()
     if args.output.exists():
@@ -59,25 +59,31 @@ def main() -> None:
         if name.startswith("december_leaf_runs__"):
             parents[name] = path["path"]
     config = {
-        "experiment_id": "prc2026-adsb-v28-v1", "prediction_postprocess": "adsb-v28-v1", "declared_at_utc": utc_now(), "audit_used": False,
+        "experiment_id": "prc2026-adsb-v28-v2", "prediction_postprocess": "adsb-v28-v2", "declared_at_utc": utc_now(), "audit_used": False,
         "purpose": ("The blend weight on LIRF non-population rows WITHOUT an ADS-B match. The coverage census "
                     "(docs/adsb_coverage/README.md) found that LIRF loses its surface coverage entirely in the July 2026 ranking month "
                     "(403k ground points in January 2026 against 2.1k over seven days in July; 0.0% gate, 0.2% dark, 72.1% never seen on "
                     "the ground), so essentially every LIRF non-population row of that month takes this branch, and LIRF is the "
                     "highest-error airport in the submission. The weight in force, 0.25, was chosen in adsb_v24 against 0.50 by a mean "
                     "ratio of 0.994652 to 0.994657 - a margin of five parts in a million on whole-month RMSE, when those months were "
-                    "mostly LIRF-matched. The twelve development months contain 75,602 rows of this scope (11,254 in January 2025, when "
-                    "LIRF had no ADS-B coverage at all), which is enough to decide the weight on the regime that actually matters. "
+                    "mostly LIRF-matched. The four months that carry the out-of-sample committee and LIRF tables hold 18,463 rows of "
+                    "this scope, of which 11,254 are January 2025, when LIRF had no ADS-B coverage at all and its rows are therefore the "
+                    "same regime as July 2026. That is enough to decide the weight on the regime that actually matters. "
                     "Nothing else in the recipe changes and no model is fitted."),
         "incumbent": {"submission": "vigorous-whistle_v23.parquet", "submission_sha256": v23_receipt["sha256"], "official_rmse_seconds": 238.8197,
                       "recipe": "configs/adsb_v25_v1.json candidate mean_adj2_cat, with 0.85 * ens_v22_lirf_q on matched LIRF non-population rows and 0.25 on unmatched ones",
                       "official_rank": "not polled for this campaign"},
-        "development_months": ALL_MONTHS, "recipe_months": RECIPE_MONTHS,
-        "development_scheme": ("No fit. For each of the twelve months the shipped recipe is rebuilt from the cross-fitted v9 frame "
+        "development_months": RECIPE_MONTHS, "recipe_months": RECIPE_MONTHS,
+        "supersedes": {"declaration": "configs/adsb_v28_v1.json", "reason": ("adsb_v28_v1 declared a pooled reading over all twelve months, which cannot be computed: the committee and LIRF learner "
+                                    "development predictions are fold outputs and exist only for the four recipe months (tools/run_adsb_v24.FRAME_OF), so the eight other months have no "
+                                    "out-of-sample table to blend. Producing them would require refitting the 29-learner committee leave-one-month-out. That declaration was scored on no month "
+                                    "and is preserved unchanged; this one restates the same candidates and readings over the four months that have the tables (18,463 rows of the touched scope, "
+                                    "of which January 2025 carries 11,254).")},
+        "development_scheme": ("No fit. For each of the four months the shipped recipe is rebuilt from the cross-fitted v9 frame "
                                "(scratch/v24), the v23 residual columns (runs/adsb_v25/dev/predictions_*.parquet, members adj2 and cat, "
                                "row-wise mean) and the declared committee and LIRF development tables, with the weight on the touched "
                                "scope set to each candidate's value. Reading 1: RMSE on the touched scope, per month and pooled by rows "
-                               "over all twelve months. Reading 2: RMSE on ALL rows of each month, which guards the rest of the recipe. "
+                               "over the four months. Reading 2: RMSE on ALL rows of each month, which guards the rest of the recipe. "
                                "The control candidate reproduces the incumbent and its predictions are the baseline for every comparison."),
         "touched_scope": "lirf_nonpop_unmatched", "residual_scope": "matched_no_lirf", "residual_members": ["adj2", "cat"],
         "residual_columns": {m: f"runs/adsb_v25/dev/predictions_{m}.parquet" for m in ALL_MONTHS},
@@ -85,13 +91,16 @@ def main() -> None:
         "blend_with": v27["blend_with"], "extra_blends": v27["extra_blends"], "extra_feature_tables": v27["extra_feature_tables"],
         "candidates": {"w25": 0.25, "w40": 0.40, "w50": 0.50, "w60": 0.60, "w75": 0.75, "w100": 1.00},
         "control_candidate": "w25",
-        "selection": ("A candidate is eligible when: no recipe month is worse on ALL rows (ratio <= 1.0); the pooled twelve-month RMSE on "
+        "selection": ("A candidate is eligible when: no recipe month is worse on ALL rows (ratio <= 1.0); the pooled four-month RMSE on "
                       "the touched scope is at least 0.5% below the control's; and the paired-day bootstrap 95% interval of the scope RMSE "
-                      "difference against the control lies below zero in at least 8 of the twelve months. Among eligible candidates choose "
+                      "difference against the control lies below zero in at least 3 of the four months. Among eligible candidates choose "
                       "the lowest pooled scope RMSE (ties by name); otherwise select nothing and keep v23. The bar is set on the touched "
                       "scope rather than on whole-month RMSE because the scope is a small part of most development months and a large part "
                       "of the July 2026 ranking month; the whole-row condition on the recipe months is what protects the rest of the recipe."),
-        "minimum_scope_improvement_fraction": 0.005, "minimum_months_with_interval_below_zero": 8,
+        "regime_note": ("The four months are not one population. LIRF had no ADS-B coverage at all in January 2025, so its 11,254 touched rows are the same regime as "
+                        "July 2026 (nothing observable). In November and December 2025 LIRF is mostly matched, so their 3,871 and 2,474 touched rows are flights missed "
+                        "DESPITE coverage, which need not behave the same way. This is stated before scoring and is not a reason to reweight the months after the fact."),
+        "minimum_scope_improvement_fraction": 0.005, "minimum_months_with_interval_below_zero": 3,
         "seed": 20260915, "threads": {"development": 1},
         "floor_seconds_rule": "minimum departure label over the refit months (-12), applied after the residual and blends",
         "ship": ("If a candidate is selected: the shipped v23 export is rebuilt with the same v9, residual models (the shipped v23 files, "
@@ -108,7 +117,8 @@ def main() -> None:
                           "preferred 0.50. This declaration discloses that those two numbers were read before it was written; no other weight "
                           "has ever been scored on any month."),
             "coverage": ("docs/adsb_coverage/README.md: LIRF is 0.0% gate / 0.2% dark in the July 2026 ranking month; the touched scope holds "
-                         "11,254 / 10,640 / 12,482 / 13,952 rows in January-April 2025 and 864-8,350 in the rest, 75,602 in total."),
+                         "11,254 / 10,640 / 12,482 / 13,952 rows in January-April 2025 and 864-8,350 in the rest, 75,602 over the twelve "
+                         "months; the four months scored here hold 18,463 of them (January 11,254, July 864, November 3,871, December 2,474)."),
             "closed": ("residual model tuning (v25 shipped, v26 and v27 null), the committee, calibration, test-time adaptation, the context "
                        "scope over unmatched rows (v12), and the matcher fixes (docs/adsb_coverage/README.md); none is re-tested here."),
             "no_candidate_scored": "no weight other than 0.25 and 0.50 has been scored on any month, and neither on this scope alone",
