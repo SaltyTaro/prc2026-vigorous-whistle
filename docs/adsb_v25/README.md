@@ -46,3 +46,48 @@ feature caches) make a twelve-fold leave-one-month-out of this stage possible fo
 - The reproduction check `r12x_repro` equals the incumbent's development prediction on every row of December, January and November
   (0 differing rows): the pipeline and LightGBM determinism are confirmed. `cap8k` is identical to the control on those months (the
   8,000 cap only changed non-median inner folds).
+- All twelve months finished between 07:23 and 07:36 UTC; each mirrored (`runs/adsb_v25/dev/`) and the worker deallocated as it
+  finished. arcw0 was kept for the export.
+
+## Development results (`development_results.json`, `runs/adsb_v25/dev/selection.json`)
+
+Residual-scope RMSE (v9 + r on matched non-LIRF rows, out of sample), pooled over the twelve held-out months:
+
+| variant | pooled scope RMSE | vs control | months better than control |
+| --- | ---: | ---: | ---: |
+| `r12x` (control) | 119.655 | — | — |
+| `cap8k` | 119.655 | 0.000% | 0 (identical: the cap only moved non-median inner folds) |
+| `adj2` | 119.610 | −0.038% | 7 / 12 |
+| `adj4` | 119.921 | +0.222% | 3 / 12 |
+| `cat` | 118.004 | −1.380% | 12 / 12 (every inner fold ran to the 8,000 cap) |
+| mean(`adj2`, `cat`) | 117.309 | −1.961% | — |
+| mean(`r12x`, `cat`) | 117.397 | −1.887% | — |
+
+Full recipe on the four recipe months versus the v22 development predictions (328.8317 / 267.6083 / 189.4823 / 176.5416):
+
+| candidate | Jan | Jul | Nov | Dec | mean | eligible |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| `r12x_repro` (check) | 0 rows differ | 0 | 0 | 0 | 0.000% | check |
+| `cap8k` | 0 | 0 | 0 | 0 | 0.000% | no |
+| `adj2` | −0.011% | −0.008% | −0.048% | −0.030% | −0.024% | no (July interval reaches 0) |
+| `adj4` | −0.004% | +0.005% | −0.056% | −0.028% | −0.021% | no |
+| `cat` | −0.016% | −0.023% | −0.016% | −0.099% | −0.039% | no (Jan / Nov intervals cross 0) |
+| **`mean_adj2_cat`** | **−0.024%** | **−0.027%** | **−0.068%** | **−0.109%** | **−0.057%** | **yes — selected** |
+| `mean_r12x_cat` | −0.018% | −0.022% | −0.043% | −0.092% | −0.044% | yes |
+
+Selected `mean_adj2_cat`: paired-day intervals [−0.15, −0.04] / [−0.10, −0.04] / [−0.18, −0.07] / [−0.27, −0.12] s, 22/31, 26/31,
+27/30, 26/31 days better; no airport worse than +0.014% on any month. Reading: the CatBoost residual is the real gain (better on all
+twelve months on its own scope, still improving at the cap) and the mean with the weighted LightGBM adds the ensemble effect; the
+month-distance weights alone are marginal (7 of 12 months), `adj4` is worse than uniform, and a longer LightGBM cap changes nothing.
+The 20:1 damping between the residual's own error and the full recipe (0.3 weight, the committee on the same rows) is why a 2% scope
+gain is a 0.06–0.11% recipe gain. Expected official transfer: of the order of −0.1 to −0.25 s, December being the anchor.
+
+## Ship
+
+- `tools/export_adsb_v25.py --version 23 --stage fit --threads 16` on arcw0 from 07:40 UTC: the `adj2` member refit twice (January and
+  July target weights) and the `cat` member once, on all twelve months' in-scope rows under the inner rule. The export's first attempt on
+  arcw0 stopped at the v9-from-scratch check: on Linux the v9 LIRF mixture classifier early-stops differently (358 rounds against the
+  shipped 454; 370 of 383 population rows round differently, up to 1,430 s), so the uploaded v9 reproduces only on the workstation, as
+  it did for v22. The tool was therefore split into a fit stage (models saved with a hash-bound fit record) and an assemble stage that
+  reloads exactly those models; the assemble stage, the verifier and the audit run on the workstation. `export_failed_v9_check.log`
+  on arcw0 preserves the first attempt.
