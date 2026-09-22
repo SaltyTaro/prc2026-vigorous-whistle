@@ -1,0 +1,143 @@
+{
+  "audit_used": false,
+  "base_reproduces_frozen_matcher": true,
+  "configurations": {
+    "all": {
+      "counts": {
+        "dark": 8822,
+        "gate": 6085,
+        "unmatched": 4950
+      },
+      "matched_pct": 75.07,
+      "options": {
+        "callsign_variant": true,
+        "min_ground_points": 1,
+        "stand_radius_m": 100.0
+      },
+      "pct": {
+        "dark": 44.43,
+        "gate": 30.64,
+        "unmatched": 24.93
+      },
+      "vs_frozen": {
+        "gate_pct_gained": 7.4,
+        "gate_rows_gained": 1469,
+        "matched_pct_gained": 5.06,
+        "matched_rows_gained": 1005
+      }
+    },
+    "base": {
+      "counts": {
+        "dark": 9286,
+        "gate": 4616,
+        "unmatched": 5955
+      },
+      "matched_pct": 70.01,
+      "options": {},
+      "pct": {
+        "dark": 46.76,
+        "gate": 23.25,
+        "unmatched": 29.99
+      },
+      "vs_frozen": {
+        "gate_pct_gained": 0.0,
+        "gate_rows_gained": 0,
+        "matched_pct_gained": 0.0,
+        "matched_rows_gained": 0
+      }
+    },
+    "frozen": {
+      "counts": {
+        "dark": 9286,
+        "gate": 4616,
+        "unmatched": 5955
+      },
+      "matched_pct": 70.01,
+      "options": "frozen matcher",
+      "pct": {
+        "dark": 46.76,
+        "gate": 23.25,
+        "unmatched": 29.99
+      }
+    },
+    "minpts1": {
+      "counts": {
+        "dark": 10182,
+        "gate": 4619,
+        "unmatched": 5056
+      },
+      "matched_pct": 74.54,
+      "options": {
+        "min_ground_points": 1
+      },
+      "pct": {
+        "dark": 51.28,
+        "gate": 23.26,
+        "unmatched": 25.46
+      },
+      "vs_frozen": {
+        "gate_pct_gained": 0.02,
+        "gate_rows_gained": 3,
+        "matched_pct_gained": 4.53,
+        "matched_rows_gained": 899
+      }
+    },
+    "radius100": {
+      "counts": {
+        "dark": 7873,
+        "gate": 6029,
+        "unmatched": 5955
+      },
+      "matched_pct": 70.01,
+      "options": {
+        "stand_radius_m": 100.0
+      },
+      "pct": {
+        "dark": 39.65,
+        "gate": 30.36,
+        "unmatched": 29.99
+      },
+      "vs_frozen": {
+        "gate_pct_gained": 7.12,
+        "gate_rows_gained": 1413,
+        "matched_pct_gained": 0.0,
+        "matched_rows_gained": 0
+      }
+    },
+    "variant": {
+      "counts": {
+        "dark": 9349,
+        "gate": 4651,
+        "unmatched": 5857
+      },
+      "matched_pct": 70.5,
+      "options": {
+        "callsign_variant": true
+      },
+      "pct": {
+        "dark": 47.08,
+        "gate": 23.42,
+        "unmatched": 29.5
+      },
+      "vs_frozen": {
+        "gate_pct_gained": 0.18,
+        "gate_rows_gained": 35,
+        "matched_pct_gained": 0.49,
+        "matched_rows_gained": 98
+      }
+    }
+  },
+  "created_at_utc": "2026-09-22T16:30:22.066168+00:00",
+  "days": [
+    "05",
+    "12",
+    "19",
+    "26"
+  ],
+  "departures": 19857,
+  "inputs": {
+    "stands": "63502c9465e3742d537fca30bd3c03622623a3be047eb01ba068292a249d995d"
+  },
+  "labels_read": false,
+  "month": "2026-01"
+}
