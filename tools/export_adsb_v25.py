@@ -169,14 +169,14 @@ def main():
                   "training_rows": fitted[members[0]][list(fitted[members[0]])[0]]["training_rows"], "weight": 1.0, "scope": scope, "feature_set": record["feature_set"],
                   "blend_with": config["blend_with"], "extra_blends": config["extra_blends"], "ranking_rows_in_scope": int(inside.sum()), "ranking_matched_rows": int(table["adsb_matched"].eq(1).sum()),
                   "stands": int(len(stands)), "external_data": config["external_data"], "parents": config["parents"], "incumbent": config["incumbent"],
-                  "model_code_sha256": object_hash({p: sha256_file(ROOT / p) for p in MODEL_CODE}), "audit_used": False, "native_fit_count": sum(len(m) for m in fitted.values())}
+                  "model_code_sha256": object_hash({p: sha256_file(ROOT / p) for p in MODEL_CODE}), "audit_used": False, "native_fit_count": sum(len(m) for m in fitted.values()), "threads": threads}
     receipt = export_submission(pd.DataFrame({ID: ids, "prediction": values}), ROOT / "data/raw/submitting.parquet", output, provenance)
     delta = exported.astype(float) - uploaded_v22
     airports = table["airport"].to_numpy()
     report = {"created_at_utc": utc_now(), "output": output.relative_to(ROOT).as_posix(), "receipt": receipt, "ranking_rows": int(len(ids)), "ranking_ids_sha256": identity_hash(pd.Series(ids)), "selected_candidate": name,
               "twelve_month_v7": v7_report, "v9_equal_to_v22": True, "rows_in_scope": int(inside.sum()), "matched_rows": int(table["adsb_matched"].eq(1).sum()), "rows_outside_scope_equal_v22": True,
               "population_rows_unchanged": True, "lirf_missing_clock_rows_unchanged": True,
-              "residual": {m: {t: {k: f[k] for k in ["kind", "rounds", "inner_best_iterations", "training_rows", "weight_sum", "weight_by_distance_rows", "seconds"]} for t, f in fitted[m].items()} for m in members},
+              "threads": threads, "residual": {m: {t: {k: f[k] for k in ["kind", "rounds", "inner_best_iterations", "training_rows", "weight_sum", "weight_by_distance_rows", "seconds"]} for t, f in fitted[m].items()} for m in members},
               "versus_v22": {"changed_rows": int((delta != 0).sum()), "rmse_of_change_seconds": float(np.sqrt(np.mean(delta ** 2))), "mean_change_seconds": float(delta.mean()),
                              "absolute_change_quantiles_seconds": {str(q): float(np.quantile(np.abs(delta), q)) for q in [0.5, 0.9, 0.99, 0.999]}, "max_absolute_change_seconds": float(np.abs(delta).max()),
                              "rms_change_by_airport": {a: float(np.sqrt(np.mean(delta[airports == a] ** 2))) for a in sorted(set(airports))},
