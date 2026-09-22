@@ -91,3 +91,25 @@ gain is a 0.06–0.11% recipe gain. Expected official transfer: of the order of 
   it did for v22. The tool was therefore split into a fit stage (models saved with a hash-bound fit record) and an assemble stage that
   reloads exactly those models; the assemble stage, the verifier and the audit run on the workstation. `export_failed_v9_check.log`
   on arcw0 preserves the first attempt.
+- Fit stage on arcw0 (16 threads, 07:40–09:23 UTC): `adj2` January target 3,074 rounds (inner 3,330 / 3,074 / 2,849 / 3,989 / 2,892;
+  weight sum 1,397,680.5), `adj2` July target 2,630 rounds (weight sum 1,369,633.0), `cat` 8,000 rounds (every inner fold at the cap;
+  5,566 s); 1,113,566 in-scope training rows each (the count v22's residual recorded). Models and `fit_record.json` mirrored to
+  `runs/adsb_v25/export_v23/`; arcw0 deallocated at 09:24 UTC — every VM is deallocated.
+- Assemble stage on the workstation (`--stage assemble`, 335 s; one runtime key added for `export_adsb_v11.ranking_table`'s
+  neighbour-feature switch, which the declared `nb` feature set already lists): **`runs/submissions/vigorous-whistle_v23.parquet`,
+  SHA-256 `f960b72e0b729d47729eed2272634ba8525e57cff9bad243291d96c8fd14fac7`**, 344,841 rows, minimum −12, maximum 120,549. Versus
+  the uploaded v22: 194,207 rows change (all inside the residual scope), RMS 6.56 s, median 1 s, 99.9% within 63 s, largest 205 s
+  (EHAM disruption-week rows); LIRF and LTFM untouched. `export.json`.
+- **Verification** (`tools/verify_adsb_v25.py --version 23`, `verification.json`): declaration parents and receipt provenance; the
+  selection belongs to the declaration and selected the exported candidate; v9 from scratch equal to the uploaded v9 after rounding and
+  the export's v9 equal to v22's recorded ranking v9; the mirrored twelve-month v7 nodes re-predict 3,000 sampled clock-present rows
+  with **difference 0.0**; the three saved models reloaded (tree counts equal the recorded rounds) and the residual recomputed on an
+  independently rebuilt ranking table with each row taking its calendar month's `adj2` model, **difference 0.0**; the blend recomputed
+  with plain arithmetic **equal to the export on every row**; every row outside the residual scope equal to the uploaded v22; the
+  LIRF fill population equal to the uploaded v9 and missing-clock LIRF rows equal to v22; 1,113,566 training rows and both weight sums
+  recounted from the scratch tables, match tables and the declared distance scheme.
+- **Audit** (`tools/audit_export.py --version 23 --compare 22 21 9`, `export_audit_v23.json`): IDs exact, no NaN, 17 negative
+  predictions (none below −12, as v22); extremes 944 / 37 / 12 / 2 rows above 1 h / 4 h / 12 h / 24 h (v22: 941 / 37 / 12 / 2); the
+  same five January airport-months above the 2025 development means; the EHAM 2–7 January and LFPG 7 January disruption days as in
+  v22; the LIRF fill population (383 rows) unchanged; negative-proxy rows p50 1,088 s; no row moved by more than 600 s.
+- Upload only with the user's approval; the official score against v22 (239.1335) is the final test.

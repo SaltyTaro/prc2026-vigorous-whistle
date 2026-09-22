@@ -82,6 +82,7 @@ def main():
     scope = config["residual_scope"]
     matches_root = ROOT / config["matches_dirs"]["v11"]
     config["matches_dir"] = config["matches_dirs"]["v11"]  # export_adsb_v11.ranking_table reads the residual's match directory from here
+    config["residual_model"]["neighbour_features"] = True  # runtime switch of export_adsb_v11.ranking_table; the declared `nb` feature set lists the nb_* columns (both keys are added after the declaration's hash is taken)
     stands = pd.read_parquet(matches_root / "stands.parquet")
     mixture_config = read_json(ROOT / config["parents"]["lirf_mixture_config"]["path"])
     if object_hash(mixture_config) != read_json(ROOT / config["parents"]["lirf_mixture_selection"]["path"])["config_sha256"]:

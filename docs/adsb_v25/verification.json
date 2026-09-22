@@ -1,0 +1,76 @@
+{
+  "config_sha256": "3ddd1b3bd68d024d9a4382957891d163b2599b001f769eeea205aa8c9a73e6d1",
+  "file": "runs/submissions/vigorous-whistle_v23.parquet",
+  "fixed_rows_equal_uploaded": true,
+  "floor_seconds": -12.0,
+  "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+  "independent_recomputation_matches": true,
+  "match_tables": {
+    "2026-01": "6bf7cfa259bc26e048d1ba60a60fd9520aade34b72d64824ff8306d25c6ff2cb",
+    "2026-07": "1947f2002dcaa765ed5f2b82f73cfe0f248e18e8f4b45098fe7a060dc56c026d"
+  },
+  "matched_rows": 225278,
+  "members": [
+    "adj2",
+    "cat"
+  ],
+  "models": {
+    "adj2/2026-01": {
+      "kind": "lightgbm",
+      "rounds": 3074,
+      "rows_predicted": 96075
+    },
+    "adj2/2026-07": {
+      "kind": "lightgbm",
+      "rounds": 2630,
+      "rows_predicted": 120360
+    },
+    "cat/all": {
+      "kind": "catboost",
+      "rounds": 8000,
+      "rows_predicted": 216435
+    }
+  },
+  "residual_max_abs_difference": 0.0,
+  "residual_training_rows_recounted": 1113566,
+  "rows": 344841,
+  "rows_changed_vs_v22": 194207,
+  "rows_in_scope": 216435,
+  "rows_outside_scope_equal_v22": true,
+  "rows_touched": 344441,
+  "selected_candidate": "mean_adj2_cat",
+  "sha256": "f960b72e0b729d47729eed2272634ba8525e57cff9bad243291d96c8fd14fac7",
+  "stands_sha256": "63502c9465e3742d537fca30bd3c03622623a3be047eb01ba068292a249d995d",
+  "training_rows_by_month": {
+    "2025-01": 76213,
+    "2025-02": 75113,
+    "2025-03": 96231,
+    "2025-04": 98611,
+    "2025-05": 91413,
+    "2025-06": 61384,
+    "2025-07": 87440,
+    "2025-08": 96649,
+    "2025-09": 104655,
+    "2025-10": 111240,
+    "2025-11": 107462,
+    "2025-12": 107155
+  },
+  "twelve_month_v7": {
+    "max_abs_difference": 0.0,
+    "run_sha256": "a322a4d4b61cc6f8ac669e251786afa5c30c386f38e5e41e0d4e7e3d001dc7e2",
+    "sampled_rows": 3000
+  },
+  "v9_equal_to_v22": true,
+  "v9_reproduced_from_scratch": true,
+  "verified_at_utc": "2026-09-22T09:37:09.484050+00:00",
+  "weight_sums": {
+    "adj2/2026-01": {
+      "rows": 1113566,
+      "weight_sum": 1397680.5
+    },
+    "adj2/2026-07": {
+      "rows": 1113566,
+      "weight_sum": 1369633.0
+    }
+  }
+}
