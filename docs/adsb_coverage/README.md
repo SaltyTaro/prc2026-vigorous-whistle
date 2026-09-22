@@ -96,3 +96,36 @@ thinner than current ones, so they will not earn the full −27%/−49%; the con
 measured, not assumed.
 
 Not recoverable: LTFM entirely, LFPG's 37–40% never-on-the-ground rows, and LIRF in July 2026.
+
+## The matcher fixes were tested and all three fail (22 September)
+
+`src/prc2026_adsb_v12/matching.py` re-implements the matcher with each census failure point as an option
+(the frozen module is untouched); `tools/probe_adsb_v12.py` measures the class shift and
+`tools/validate_adsb_v12.py` tests whether the extra matches carry signal. The base configuration
+reproduces the frozen matcher row for row, so the deltas below are real.
+
+**Coverage gained** (four January 2026 days, 19,857 departures):
+
+| fix | extra matched rows | dark to gate |
+|---|---|---|
+| accept one or two ground points | +4.53% | +3 |
+| known-stand radius 40 m to 100 m | 0 | +1,413 (gate share 23.3% to 30.4%) |
+| callsign variants (unambiguous, type must agree) | +0.49% | +35 |
+| all three | +5.06% | +1,469 |
+
+**Signal test** (four December 2025 days, 20,923 departures, against the actual taxi-out label). For a gate
+row the matcher's own estimate of the pushback, takeoff minus motion start, should approximate the label:
+the frozen matcher's gate rows sit at a median 63 s from it, its dark rows at 401 s.
+
+- **One or two ground points: garbage.** The 878 newly matched rows have a median of **one** ground point
+  and a median estimate error of **3,233 s**. A single stray ground ping is not a departure trail.
+- **The 100 m radius is actively wrong.** Its 1,622 conversions have a median first point 64 m from the
+  stand — already rolling. Their estimate error goes **84 s to 163 s** and only **1%** of them improve.
+  The frozen matcher was right to leave them dark; at 84 s they were among its *best* dark rows.
+- **Callsign variants add ~55 rows** over the point threshold, 3% of them gate. Too few to matter.
+
+The census's "recoverable" buckets are therefore not recoverable: they are rows where the archive holds no
+usable surface trail, not rows our code mishandles. The matcher lever is closed on evidence, with no refit,
+no export and no worker time spent. What is left in this direction is the 14 archive days never downloaded
+(training rows only) and better modelling of the rows that have no trail at all — for which the committee
+already carries the neighbour features, and for which no specialist has ever been fitted.
