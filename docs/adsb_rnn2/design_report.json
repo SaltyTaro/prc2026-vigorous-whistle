@@ -1,0 +1,42 @@
+{
+  "audit_used": false,
+  "created_at_utc": "2026-09-24T11:42:07.981432+00:00",
+  "day_interval_w100_vs_v26_analogue_seconds": [
+    -0.021637619462027403,
+    0.001212845935492613
+  ],
+  "doubling": {
+    "8_to_16_recipe_pct": -0.009108231611920647,
+    "expected_16_to_32_recipe_pct": -0.004554115805960324
+  },
+  "inputs": {
+    "committee_october": "2862aabb3aa8fff43613397ebc32305c86ed74219c624c47860fa74e1110902e",
+    "residual_columns": "25a9ab6b9a6384244f82ced7664edcf91c044387f44ada59e1ac62472f682eca"
+  },
+  "note": "October only; no recipe or ranking month read.",
+  "recipe_ratio_to_v26_analogue": {
+    "v26_analogue_net8": 1.0000910906128633,
+    "w100_net16": 0.9999446361537045,
+    "w80_net16": 1.000070931668161
+  },
+  "recipe_v26_analogue_rmse": 179.10278414408387,
+  "rows": 183761,
+  "rows_in_scope": 111240,
+  "scope_rmse": {
+    "net16_alone": 112.76201910752532,
+    "net_first1": 115.87553415896024,
+    "net_first16": 112.76201910752532,
+    "net_first2": 114.47519018618235,
+    "net_first4": 113.6238253795094,
+    "net_first8": 113.02105614563088,
+    "trees": 114.289656245809,
+    "v26_residual": 112.54973246512186,
+    "v9": 172.65027638023602
+  },
+  "seed_fit": {
+    "B": 12694.466166708431,
+    "V": 752.9205319214338,
+    "extrapolated_net32_scope_rmse": 112.77408804034275,
+    "extrapolated_net_infinite_scope_rmse": 112.66972160571105
+  }
+}
