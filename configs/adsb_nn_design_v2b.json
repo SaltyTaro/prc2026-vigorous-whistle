@@ -1,0 +1,80 @@
+{
+  "experiment_id": "prc2026-adsb-nn-design-v2b",
+  "created_at_utc": "2026-09-23T00:00:00+00:00",
+  "audit_used": false,
+  "purpose": "Design round 2, second half (protocol of configs/adsb_nn_design_v1.json unchanged: October-only readings). Written after round 1's base/clip21600/clip5400/ema/rank/slow readings (recipe-level October proxy: single seeds at a=0.3 give -0.36/-0.37%; clip5400 and lr 5e-4 worse; rank much worse). Tests embedding capacity: richer numeric embeddings and larger categorical embeddings.",
+  "defaults": {
+    "features": {
+      "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+      "extra_features": [
+        "adsb_appear_s",
+        "adsb_last_stand_s",
+        "adsb_pre_motion_gap_s",
+        "adsb_first_motion_s",
+        "adsb_first_dist_stand_imp_m",
+        "adsb_stand_imputed",
+        "sfc_ground_10m",
+        "sfc_moving_10m",
+        "sfc_moving_20m",
+        "sfc_rwy_queue_5m",
+        "sfc_rwy_queue_10m"
+      ]
+    },
+    "rows": {
+      "exclude_airports": [
+        "LIRF"
+      ],
+      "exclude_population": false,
+      "max_label": null
+    },
+    "preprocess": {
+      "bins": 32,
+      "min_count": 10,
+      "target_clip": null
+    },
+    "architecture": {
+      "numeric_mode": "ple",
+      "d_num": 8,
+      "cat_cap": 16,
+      "width": 512,
+      "depth": 3,
+      "dropout": 0.1,
+      "k": 1
+    },
+    "training": {
+      "epochs": 16,
+      "batch_size": 2048,
+      "lr": 0.001,
+      "weight_decay": 0.0001,
+      "warmup_epochs": 1.0,
+      "min_lr_fraction": 0.02,
+      "grad_clip": 5.0,
+      "ema_decay": 0.0
+    }
+  },
+  "variants": {
+    "emb16": {
+      "preprocess": {
+        "bins": 48
+      },
+      "architecture": {
+        "d_num": 16
+      }
+    },
+    "cat32": {
+      "architecture": {
+        "cat_cap": 32
+      }
+    }
+  },
+  "runs": {
+    "emb16": {
+      "seed": 1,
+      "host": "arcw3"
+    },
+    "cat32": {
+      "seed": 1,
+      "host": "arcw7"
+    }
+  }
+}

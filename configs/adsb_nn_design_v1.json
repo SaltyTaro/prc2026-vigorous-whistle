@@ -1,0 +1,34 @@
+{
+  "experiment_id": "prc2026-adsb-nn-design-v1",
+  "created_at_utc": "2026-09-23T00:00:00+00:00",
+  "audit_used": false,
+  "purpose": "Design phase of the neural committee member. Choose the network's preprocessing, architecture and training budget BEFORE any declaration or development score.",
+  "protocol": {
+    "data": "tools/run_adsb_nn.py --fold design: fit on the seasonal fold's fit partition (2025-02..06, 08, 09; LIRF excluded, as the committee), monitor on its early-stop partition (2025-10, LIRF excluded). October is the partition every committee learner already used for early stopping.",
+    "never_read": "No design run predicts, scores or reads a label of 2025-01, 2025-07, 2025-11 or 2025-12 (the four recipe months) or the ranking months. The seasonal/forward score partitions and December are first used by the declared development round.",
+    "readings": "Per variant: October RMSE of the network on the monitored rows (non-LIRF), its per-epoch curve, and the RMSE of (1 - a) * committee + a * network for a in 0.1..0.6, where committee is the incumbent ens_v20_bag_q_all rebuilt from its members' seasonal-fold models on October (tools/nn_committee_october.py). Those committee models used October for early stopping, so the blend reading is conservative for the network.",
+    "decision": "The declaration fixes the variant with the best October blend reading at its best weight, after at most two design rounds; it may also fix a second variant only if the two are both within 0.02% of the best blend reading and their October predictions correlate below 0.99."
+  },
+  "defaults": {
+    "features": {
+      "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+      "extra_features": ["adsb_appear_s", "adsb_last_stand_s", "adsb_pre_motion_gap_s", "adsb_first_motion_s", "adsb_first_dist_stand_imp_m", "adsb_stand_imputed", "sfc_ground_10m", "sfc_moving_10m", "sfc_moving_20m", "sfc_rwy_queue_5m", "sfc_rwy_queue_10m"]
+    },
+    "rows": {"exclude_airports": ["LIRF"], "exclude_population": false, "max_label": null},
+    "preprocess": {"bins": 32, "min_count": 10, "target_clip": null},
+    "architecture": {"numeric_mode": "ple", "d_num": 8, "cat_cap": 16, "width": 512, "depth": 3, "dropout": 0.1, "k": 1},
+    "training": {"epochs": 16, "batch_size": 2048, "lr": 0.001, "weight_decay": 0.0001, "warmup_epochs": 1.0, "min_lr_fraction": 0.02, "grad_clip": 5.0, "ema_decay": 0.0}
+  },
+  "variants": {
+    "base": {},
+    "rank": {"architecture": {"numeric_mode": "rank"}},
+    "clip21600": {"preprocess": {"target_clip": 21600}},
+    "clip5400": {"preprocess": {"target_clip": 5400}},
+    "ema": {"training": {"ema_decay": 0.999}},
+    "big": {"architecture": {"width": 1024, "depth": 4, "dropout": 0.2}},
+    "tabm4": {"architecture": {"k": 4}},
+    "slow": {"training": {"lr": 0.0005, "epochs": 24}}
+  },
+  "round_1_hosts": {"base": "arcw0", "rank": "arcw1", "clip21600": "arcw2", "clip5400": "arcw3", "ema": "arcw4", "big": "arcw5", "tabm4": "arcw6", "slow": "arcw7"},
+  "seed": 1
+}

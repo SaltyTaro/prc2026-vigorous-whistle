@@ -1,0 +1,23 @@
+{
+  "experiment_id": "prc2026-adsb-nn-design-v2a",
+  "created_at_utc": "2026-09-23T00:00:00+00:00",
+  "audit_used": false,
+  "purpose": "Design round 2, first half (the protocol of configs/adsb_nn_design_v1.json, unchanged: October-only readings; no recipe or ranking month read). Written after round 1's base, clip21600, ema and rank readings: rank is clearly worse (piecewise-linear embeddings kept); base/clip21600/ema blend at -0.82..-0.86% with the October curve flat from epoch ~8 and rising slightly over the last three epochs. This half measures seed noise, stronger regularisation, a shorter budget and the clip + EMA combination.",
+  "defaults": {
+    "features": {
+      "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+      "extra_features": ["adsb_appear_s", "adsb_last_stand_s", "adsb_pre_motion_gap_s", "adsb_first_motion_s", "adsb_first_dist_stand_imp_m", "adsb_stand_imputed", "sfc_ground_10m", "sfc_moving_10m", "sfc_moving_20m", "sfc_rwy_queue_5m", "sfc_rwy_queue_10m"]
+    },
+    "rows": {"exclude_airports": ["LIRF"], "exclude_population": false, "max_label": null},
+    "preprocess": {"bins": 32, "min_count": 10, "target_clip": null},
+    "architecture": {"numeric_mode": "ple", "d_num": 8, "cat_cap": 16, "width": 512, "depth": 3, "dropout": 0.1, "k": 1},
+    "training": {"epochs": 16, "batch_size": 2048, "lr": 0.001, "weight_decay": 0.0001, "warmup_epochs": 1.0, "min_lr_fraction": 0.02, "grad_clip": 5.0, "ema_decay": 0.0}
+  },
+  "variants": {
+    "base": {},
+    "reg": {"architecture": {"dropout": 0.2}, "training": {"weight_decay": 0.001}},
+    "e10": {"training": {"epochs": 10}},
+    "clipema": {"preprocess": {"target_clip": 21600}, "training": {"ema_decay": 0.999}}
+  },
+  "runs": {"base": {"seed": 2, "host": "arcw0"}, "reg": {"seed": 1, "host": "arcw1"}, "e10": {"seed": 1, "host": "arcw2"}, "clipema": {"seed": 1, "host": "arcw4"}}
+}
