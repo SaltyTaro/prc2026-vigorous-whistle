@@ -1,0 +1,116 @@
+{
+  "audit_used": false,
+  "defaults": {
+    "architecture": {
+      "cat_cap": 16,
+      "d_num": 8,
+      "depth": 3,
+      "dropout": 0.1,
+      "k": 1,
+      "numeric_mode": "ple",
+      "width": 512
+    },
+    "features": {
+      "set": "nb"
+    },
+    "preprocess": {
+      "bins": 32,
+      "min_count": 10,
+      "target_clip": null
+    },
+    "training": {
+      "batch_size": 2048,
+      "ema_decay": 0.0,
+      "epochs": 16,
+      "grad_clip": 5.0,
+      "lr": 0.001,
+      "min_lr_fraction": 0.02,
+      "warmup_epochs": 1.0,
+      "weight_decay": 0.0001
+    }
+  },
+  "experiment_id": "prc2026-adsb-rnn-network-v1",
+  "purpose": "Network variants for the residual stage (adsb_rnn): src/prc2026_nn's network, unchanged, on the residual stage's target (label - cross-fit v9), rows (matched_no_lirf) and twelve-month leave-one-month-out, fitted by tools/run_adsb_rnn.py. Architecture, preprocessing and training settings are the committee networks' (configs/adsb_nn3_network_v1.json defaults), unchanged.",
+  "residual_stage": {
+    "categorical": [
+      "airport",
+      "stand",
+      "runway"
+    ],
+    "cross_fit": {
+      "scratch": "scratch/v24"
+    },
+    "declaration": {
+      "path": "configs/adsb_v25_v1.json",
+      "sha256": "9934496163c5429816c0cad2f98fab87a83259b8e561956356d6fdef53100279"
+    },
+    "matches_dirs": {
+      "v11": "data/external/adsblol/matches_v11"
+    },
+    "nb_features": [
+      "airport",
+      "v9",
+      "proxy_s",
+      "schedule_interval_s",
+      "hour",
+      "stand",
+      "runway",
+      "adsb_gate",
+      "adsb_first_point_s",
+      "adsb_motion_s",
+      "adsb_first_gs_kt",
+      "adsb_first_dist_stand_m",
+      "adsb_stop_seconds",
+      "adsb_taxi_path_m",
+      "adsb_taxi_stops",
+      "adsb_taxi_stopped_s",
+      "adsb_slow_start_s",
+      "adsb_gap_before_s",
+      "adsb_turnaround_s",
+      "adsb_anchor_dist_stand_m",
+      "adsb_last_ground_s",
+      "adsb_points",
+      "nb_runway_10m_count",
+      "nb_runway_10m_median_taxi_s",
+      "nb_runway_10m_max_taxi_s",
+      "nb_runway_10m_median_stopped_s",
+      "nb_airport_10m_count",
+      "nb_airport_10m_median_taxi_s",
+      "nb_runway_30m_count",
+      "nb_runway_30m_median_taxi_s",
+      "nb_runway_30m_median_first_point_s",
+      "nb_runway_prev_taxi_s",
+      "nb_runway_next_taxi_s"
+    ],
+    "scope": "matched_no_lirf"
+  },
+  "variants": {
+    "rnb": {
+      "note": "the residual trees' 33 columns (feature set nb)"
+    },
+    "rwide": {
+      "features": {
+        "set": "wide"
+      },
+      "note": "nb + the timeline bundle's 276 model features (airport/stand/runway once) + the 11 v19 features"
+    }
+  },
+  "wide": {
+    "december_build": "data/december/d198dea10625b0a75977",
+    "timeline_bundle": "data/timeline/latest.json",
+    "v19_dir": "data/external/adsblol/features_v19",
+    "v19_features": [
+      "adsb_appear_s",
+      "adsb_last_stand_s",
+      "adsb_pre_motion_gap_s",
+      "adsb_first_motion_s",
+      "adsb_first_dist_stand_imp_m",
+      "adsb_stand_imputed",
+      "sfc_ground_10m",
+      "sfc_moving_10m",
+      "sfc_moving_20m",
+      "sfc_rwy_queue_5m",
+      "sfc_rwy_queue_10m"
+    ]
+  }
+}

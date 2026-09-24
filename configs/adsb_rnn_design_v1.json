@@ -1,0 +1,56 @@
+{
+  "audit_used": false,
+  "code": {
+    "files": {
+      "src/prc2026_adsb/features.py": "cff4c56ae3a70fa8dee35453c42d26dd07f1bb6783ff0c18023aa4d3e46469b5",
+      "src/prc2026_nn/__init__.py": "2ed73c909d64e0802dc5ccca428957a05349efcef6331f7144fe76e55ae40aa7",
+      "src/prc2026_nn/model.py": "cb168202827b27468a1c043e7727859d775f2122c8736d51224bacf5878236a8",
+      "src/prc2026_nn/preprocess.py": "ff4b26e99eef144018facf9eb2cf689091893b8613292af8014f329802b5a667",
+      "src/prc2026_nn/train.py": "1597b4978291fb469a461a9552a0df91945dcb652c4e0bd5144376268b39470b",
+      "tools/run_adsb_rnn.py": "76c4f14d057f0b8912333eef672cb6b8206c1185988dc0bfdb9ac878d26c8847",
+      "tools/run_adsb_v11.py": "da79c6fdee46f2ab30619b706fbdf3879b5fbae748805ba444e75786415865d2",
+      "tools/run_adsb_v24.py": "25714160fee45ae51e7bf5cfaacbf20f68d8fa71ebaec52e7f474cef83130795"
+    },
+    "sha256": "71a826a8c637197d42d513b342487198d8813a417cfa03ec2a2f87e07d36adfa"
+  },
+  "declared_at_utc": "2026-09-24T09:09:59.472019+00:00",
+  "experiment_id": "prc2026-adsb-rnn-design-v1",
+  "hosts": {
+    "rnb seeds 1-4": "arcw0-arcw3",
+    "rwide seeds 1-4": "arcw4-arcw7",
+    "threads": 8
+  },
+  "inputs": {
+    "committee_october": "runs/adsb_nn/design/committee_october.parquet",
+    "pool": "runs/adsb_nn/nnb_s101 .. nnb_s132/seasonal/stop_predictions.parquet (32 seeds = ens_nn + ens_new, equal weights)",
+    "residual_columns": "runs/adsb_v25/dev/predictions_2025-10.parquet"
+  },
+  "network_config": {
+    "path": "configs/adsb_rnn_network_v1.json",
+    "sha256": "35670a9cd3730ca6385bae513604c9d5a5dd5fb27fbd656a8a583f7c25e90f30"
+  },
+  "protocol": {
+    "data": "tools/run_adsb_rnn.py --held-out 2025-10 --design: fit on the in-scope rows of the eleven other 2025 months (the residual stage's leave-one-month-out fold for October, the fold adsb_v25's October columns come from), monitor October every epoch (record only; fixed 16 epochs, final-epoch weights); write October's predictions only.",
+    "decision": "The adsb_rnn twelve-month leave-one-month-out goes ahead only if, for at least one variant, the 4-seed mean's recipe reading (all October rows) at its best w in 0.1..0.9 is at least 0.02% below the control (the selection bar of every round since adsb_v25). The declaration then fixes the variant(s), seeds and the candidate weights from these October readings alone. Otherwise the round stops with a recorded null.",
+    "go_threshold_fraction": 0.0002,
+    "never_read": "No design run predicts or scores a recipe month (2025-01/07/11/12) or a ranking month; those months enter only as fitting rows, as in every leave-one-month-out fold.",
+    "readings": "tools/rnn_design_report.py on October 2025: scope RMSE of v9 + r for the network, the equal thirds mean(adj2, cat, net) and (1 - w) x mean(adj2, cat) + w x net, w = 0.1..0.9; v25's non-LIRF recipe rebuilt on October (0.3 x (v9 + r) + 0.7 x (0.5 committee + 0.5 32-seed pool), floored; committee and pool from their October-out-of-sample seasonal-fold models; LIRF rows at v9 for every candidate), ratio to the control on all rows (primary) and non-LIRF rows; seed means of the first k seeds per variant; the equal-compute mix rnb 1-2 + rwide 1-2."
+  },
+  "purpose": "Design reading for a neural-network member of the residual stage (label - cross-fit v9 on matched rows outside LIRF), the one component of the v25 recipe that has never had a network. v25's residual is the mean of a month-weighted LightGBM (adj2) and a CatBoost (cat); residual-model tuning is exhausted (adsb_v26/v27), so a new model family is the remaining lever there. Two input sets: nb (the residual trees' 33 columns: family diversity at equal information) and wide (nb + the committee learners' timeline and v19 features: more information, but closer to the committee networks already in the recipe). Caution recorded before any fit: residual-scope gains reach the recipe damped about 20:1 (adsb_v25 -1.96% scope -> -0.057% recipe; adsb_v27 -0.218% -> -0.0135%).",
+  "report_tool": "tools/rnn_design_report.py",
+  "seeds": {
+    "rnb": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "rwide": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "tool": "tools/run_adsb_rnn.py"
+}
