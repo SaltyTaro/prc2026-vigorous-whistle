@@ -1,8 +1,8 @@
 # adsb_nn2 — more network seeds and a LIRF-inclusive network (from 24 September 2026, 01:15 UTC)
 
-**Status: SELECTED `k32_m30_u25` (mean −0.152% over the four recipe months, every month better, every paired-day interval below
-zero). Exported as `vigorous-whistle_v25.parquet` (SHA-256 `68dd8f78…2aeb`), independently verified and audited. NOT uploaded:
-awaiting the user's approval. v24 (235.3074) is the incumbent until then.**
+**Status: SHIPPED. `vigorous-whistle_v25` (candidate `k32_m30_u25`) was uploaded with the user's approval ("upload it") and
+officially scores 234.8575 on all 344,841 rows — 0.4499 s (0.191%) better than v24 (235.3074). v25 is the incumbent. Never
+re-upload v1–v25.**
 
 ## Why
 
@@ -120,3 +120,15 @@ all unmatched like January 2025.
   v24; the LIRF fill population (383 rows) unchanged; no row moves by more than 1,800 s.
 - Expected transfer (not a prediction of the official score): December −0.235% is the closest regime to January 2026 (matched LIRF);
   January 2025 −0.053% is the closest to July 2026 (LIRF without ADS-B).
+
+## Official result — `official_result.json`, `leaderboard_after_v25.txt`
+
+Uploaded with the user's "upload it" (`tools/prc_submit.py upload --calendar-day`, first upload of 24 September UTC; the uploader
+re-checked the live ranking/template inputs); processed 06:17:59 UTC 24 September 2026: **234.8575 on all 344,841 rows, −0.4499 s
+(−0.191%) versus v24's 235.3074.** The development reading was −0.235% on December (the January 2026 regime) and −0.053% on
+January 2025 (the July 2026 regime); the official change lands between them, nearer December. Standings snapshot for the record:
+`leaderboard_after_v25.txt` (2nd of 185 scored teams).
+
+What this suggests next (not declared): the matched-LIRF network weight 0.30 was the top of the declared grid and carried most of
+the gain; the LIRF-inclusive network is now the LIRF model family with the most room (more weight on matched rows, its own seeds'
+design on LIRF-only October readings). Seed averaging of the non-LIRF network is spent.
