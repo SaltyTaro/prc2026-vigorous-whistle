@@ -1,8 +1,8 @@
 # adsb_nn2 — more network seeds and a LIRF-inclusive network (from 24 September 2026, 01:15 UTC)
 
 **Status: SELECTED `k32_m30_u25` (mean −0.152% over the four recipe months, every month better, every paired-day interval below
-zero). Twelve-month refits running; export, verification and audit follow; upload only with the user's approval. v24 (235.3074) is
-the incumbent until then.**
+zero). Exported as `vigorous-whistle_v25.parquet` (SHA-256 `68dd8f78…2aeb`), independently verified and audited. NOT uploaded:
+awaiting the user's approval. v24 (235.3074) is the incumbent until then.**
 
 ## Why
 
@@ -94,3 +94,29 @@ so it blends: the matched weight 0.30 (the grid's top) carries most of the gain;
 −0.07%; 0.50 there has a lower mean but fails two intervals. January 2025 (LIRF without ADS-B, the July 2026 regime) gains only from
 the unmatched weight and the pool. For the ranking: January 2026 has 8,747 matched LIRF rows like December; July 2026's LIRF rows are
 all unmatched like January 2025.
+
+## Ship: twelve-month refits, export v25, verification, audit (24 September 2026, UTC)
+
+- **Twelve-month refits:** all 32 new seeds refit on January–December 2025 at the declared 16-epoch budget, queued behind their
+  development folds (04:10–05:15 UTC); mirrored with the 16 v24 seeds' refits already local (48 networks). All eight workers
+  deallocated at 05:20 UTC.
+- **Export** (`tools/export_adsb_nn2.py --version 25`, `export.json`): `runs/submissions/vigorous-whistle_v25.parquet`, SHA-256
+  `68dd8f785fc4eb75281a54f36718a9bf7ad731d97cad5dbbdd18c9f657c12aeb`. The control rebuilt from v24's recorded components equals the
+  recorded v24 values (≤ 1e-6 s) and the uploaded v24 integers exactly, and the v24 network mean equals the recorded one; then the
+  32-seed pool and the LIRF weights are applied with the development tool's own functions. 271,610 rows change against v24 (median
+  1 s, p99 35 s, max 1,303 s, RMS 11.0 s, mean +0.25 s): non-LIRF RMS 3–6 s per scope, LIRF matched 31.0 s, LIRF unmatched 39.9 s.
+  The 400 LIRF rows outside the two scopes (fill population, extreme clocks) equal v24. The largest moves are LIRF rows already
+  predicted at two hours or more, where the LIRF network disagrees with v9 and the tree table; two rows move by more than 600 s.
+- **Verification** (`tools/verify_adsb_nn2.py --version 25`, `verification.json`): passed. All 48 networks (v24's 16, the 16 new
+  seeds, the 16 nnl seeds) reload on Windows and re-predict 3,000 sampled ranking rows from the exact cached ADS-B table within
+  1.65e-3 s of their Linux-saved predictions (float32 noise, as in adsb_nn; tolerance 0.01 s); each ensemble column is the plain mean
+  of its saved seeds; committee and LIRF tree columns equal the v23 twelve-month tables; the LIRF scope labels equal masks recomputed
+  from literal copies of the scope definitions; plain arithmetic (non-LIRF 0.3 × (v9 + residual) + 0.7 × (0.5 × committee + 0.5 ×
+  pool); LIRF scopes v9 / tree / net at their declared weights; floor) rounds to the exported integers on all 344,441 derived rows;
+  file IDs, order, types and SHA-256 match the template and receipt.
+- **Audit** (`tools/audit_export.py --version 25 --compare 24 23 9`, `export_audit_v25.json`): IDs exact, no NaN, 9 negative
+  predictions (none below −12; v24 10); extremes 884 / 37 / 12 / 2 rows above 1 h / 4 h / 12 h / 24 h (v24 883 / 37 / 12 / 2); the
+  same five January airport-months above the development means and the same EHAM 2–7 January / LFPG 7 January disruption days as
+  v24; the LIRF fill population (383 rows) unchanged; no row moves by more than 1,800 s.
+- Expected transfer (not a prediction of the official score): December −0.235% is the closest regime to January 2026 (matched LIRF);
+  January 2025 −0.053% is the closest to July 2026 (LIRF without ADS-B).
