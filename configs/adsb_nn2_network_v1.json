@@ -1,0 +1,67 @@
+{
+  "experiment_id": "prc2026-adsb-nn2-network-v1",
+  "audit_used": false,
+  "purpose": "Network variants of adsb_nn2's declared development and refit fits with tools/run_adsb_nn2.py; settings copied unchanged from the October design configuration (configs/adsb_nn2_design_v1.json), so every variant hash equals its design runs'. nnl: the v24 network (nnb) with LIRF's ordinary rows in fitting, the LIRF fill population still excluded. nmres: nnb trained on label minus the NM clock proxy where the clock is present. Further nnb seeds use the unchanged configs/adsb_nn_network_v1.json and tools/run_adsb_nn.py, so they are the same recipe as v24's sixteen.",
+  "defaults": {
+    "features": {
+      "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+      "extra_features": [
+        "adsb_appear_s",
+        "adsb_last_stand_s",
+        "adsb_pre_motion_gap_s",
+        "adsb_first_motion_s",
+        "adsb_first_dist_stand_imp_m",
+        "adsb_stand_imputed",
+        "sfc_ground_10m",
+        "sfc_moving_10m",
+        "sfc_moving_20m",
+        "sfc_rwy_queue_5m",
+        "sfc_rwy_queue_10m"
+      ]
+    },
+    "rows": {
+      "exclude_airports": [
+        "LIRF"
+      ],
+      "exclude_population": false,
+      "max_label": null
+    },
+    "preprocess": {
+      "bins": 32,
+      "min_count": 10,
+      "target_clip": null
+    },
+    "architecture": {
+      "numeric_mode": "ple",
+      "d_num": 8,
+      "cat_cap": 16,
+      "width": 512,
+      "depth": 3,
+      "dropout": 0.1,
+      "k": 1
+    },
+    "training": {
+      "epochs": 16,
+      "batch_size": 2048,
+      "lr": 0.001,
+      "weight_decay": 0.0001,
+      "warmup_epochs": 1.0,
+      "min_lr_fraction": 0.02,
+      "grad_clip": 5.0,
+      "ema_decay": 0.0
+    },
+    "target_offset": "none"
+  },
+  "variants": {
+    "nmres": {
+      "target_offset": "nm_clock"
+    },
+    "nnl": {
+      "rows": {
+        "exclude_airports": [],
+        "exclude_population": true,
+        "max_label": null
+      }
+    }
+  }
+}

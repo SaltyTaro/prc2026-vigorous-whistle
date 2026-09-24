@@ -1,0 +1,93 @@
+{
+  "experiment_id": "prc2026-adsb-nn2-design-v1",
+  "audit_used": false,
+  "purpose": "Design readings for two new network variants before the adsb_nn2 declaration, under the adsb_nn design protocol (configs/adsb_nn_design_v1.json): October only. (1) nmres: the v24 network (variant nnb, unchanged settings) trained on label minus the NM off-block clock proxy where the clock is present (tools/run_adsb_nn2.py target_offset nm_clock). Question: is it a better or more diverse committee member than further seeds of nnb? (2) nnl: nnb with LIRF's ordinary rows in fitting (the LIRF fill population still excluded, as the v22 LIRF CatBoosts). Question: does fitting LIRF change its non-LIRF October reading (can its seeds share the committee pool), and what does it give on October LIRF rows?",
+  "protocol": {
+    "data": "tools/run_adsb_nn2.py --fold design: fit on the seasonal fold's fit partition (2025-02..06, 08, 09), monitor on its early-stop partition (2025-10); write the October predictions only.",
+    "never_read": "No design run predicts, scores or reads a label of 2025-01, 2025-07, 2025-11, 2025-12 or the ranking months.",
+    "readings": "tools/nn_design_report.py on the monitored non-LIRF October rows against the committee October reference (runs/adsb_nn/design/committee_october.parquet), and paired against the recorded nnb design seeds 1-8 (runs/adsb_nn/design/base_s1..s8): nmres seed n is compared with base seed n, and the mean of base 1..k plus nmres 1..k with the mean of base 1..2k (same compute). For nnl, additionally a descriptive October reading on LIRF non-population rows against the cross-fitted v9 (scratch/v24/2025-10.parquet).",
+    "decision": "nmres enters the adsb_nn2 declaration only if the equal-compute mixed seed mean (base 1..k + nmres 1..k) beats the base mean of 2k seeds on the October committee-blend reading at its best weight; otherwise the declaration uses further nnb seeds. nnl seeds may share the committee pool only if nnl's single-seed non-LIRF blend readings lie inside the range of the eight base seeds; otherwise nnl serves only the LIRF tables."
+  },
+  "defaults": {
+    "features": {
+      "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+      "extra_features": [
+        "adsb_appear_s",
+        "adsb_last_stand_s",
+        "adsb_pre_motion_gap_s",
+        "adsb_first_motion_s",
+        "adsb_first_dist_stand_imp_m",
+        "adsb_stand_imputed",
+        "sfc_ground_10m",
+        "sfc_moving_10m",
+        "sfc_moving_20m",
+        "sfc_rwy_queue_5m",
+        "sfc_rwy_queue_10m"
+      ]
+    },
+    "rows": {
+      "exclude_airports": [
+        "LIRF"
+      ],
+      "exclude_population": false,
+      "max_label": null
+    },
+    "preprocess": {
+      "bins": 32,
+      "min_count": 10,
+      "target_clip": null
+    },
+    "architecture": {
+      "numeric_mode": "ple",
+      "d_num": 8,
+      "cat_cap": 16,
+      "width": 512,
+      "depth": 3,
+      "dropout": 0.1,
+      "k": 1
+    },
+    "training": {
+      "epochs": 16,
+      "batch_size": 2048,
+      "lr": 0.001,
+      "weight_decay": 0.0001,
+      "warmup_epochs": 1.0,
+      "min_lr_fraction": 0.02,
+      "grad_clip": 5.0,
+      "ema_decay": 0.0
+    },
+    "target_offset": "none"
+  },
+  "variants": {
+    "nmres": {
+      "target_offset": "nm_clock"
+    },
+    "nnl": {
+      "rows": {
+        "exclude_airports": [],
+        "exclude_population": true,
+        "max_label": null
+      }
+    }
+  },
+  "hosts": {
+    "nmres seeds 1-6": "arcw0-arcw5",
+    "nnl seeds 1-2": "arcw6-arcw7"
+  },
+  "seeds": {
+    "nmres": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "nnl": [
+      1,
+      2
+    ]
+  },
+  "tool": "tools/run_adsb_nn2.py",
+  "declared_at_utc": "2026-09-24T01:18:12.817088+00:00"
+}
