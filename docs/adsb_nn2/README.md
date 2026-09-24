@@ -1,6 +1,8 @@
 # adsb_nn2 — more network seeds and a LIRF-inclusive network (from 24 September 2026, 01:15 UTC)
 
-**Status: development fits running on arcw0–arcw7 (launched 01:45 UTC). Nothing scored yet. v24 (235.3074) is the incumbent.**
+**Status: SELECTED `k32_m30_u25` (mean −0.152% over the four recipe months, every month better, every paired-day interval below
+zero). Twelve-month refits running; export, verification and audit follow; upload only with the user's approval. v24 (235.3074) is
+the incumbent until then.**
 
 ## Why
 
@@ -63,3 +65,32 @@ rows, the declaration gives the LIRF network explicit per-scope weights.
 - Ship tooling prepared while the fits run: `tools/export_adsb_nn2.py` (dry-tested: its v24 rebuild equals the recorded v24
   values with difference 0.0 and the uploaded integers exactly) and `tools/verify_adsb_nn2.py` (scope recomputation dry-tested:
   8,781 / 17,718 rows, identical to the export's).
+- 04:12 UTC all 32 seeds' development folds complete (no failure; a first progress waiter stopped on a stray ssh line, not a
+  failure, and was re-armed). Mirrored (`tools/nn_mirror.sh`, `tools/nn2_mirror.sh`), seed means built
+  (`tools/ensemble_adsb_full.py` → `runs/adsb_nn2/ens_new`, `ens_nnl`; mean pairwise seed correlation 0.97).
+
+## Development results — `development_results.json`, `runs/adsb_nn2/dev/selection.json`
+
+Whole-month RMSE change against the control (v24's development predictions), all rows; eligible = the declared rule:
+
+| candidate (pool, LIRF net matched / unmatched) | 2025-01 | 2025-07 | 2025-11 | 2025-12 | mean | intervals < 0 | eligible |
+|---|---|---|---|---|---|---|---|
+| k32_m0_u0 (32 seeds only) | −0.019% | −0.004% | −0.034% | +0.002% | −0.014% | 2/4 | no |
+| k16_m30_u0 (LIRF matched only) | 0.000% | −0.159% | −0.057% | −0.166% | −0.095% | 3/3 | yes |
+| k16_m0_u25 (LIRF unmatched only) | −0.034% | −0.044% | −0.023% | −0.071% | −0.043% | 1/4 | no |
+| k32_m15_u25 | −0.053% | −0.182% | −0.094% | −0.169% | −0.125% | 4/4 | yes |
+| k32_m30_u0 | −0.019% | −0.163% | −0.090% | −0.164% | −0.109% | 4/4 | yes |
+| **k32_m30_u25 — selected** | **−0.053%** | **−0.207%** | **−0.113%** | **−0.235%** | **−0.152%** | **4/4** | **yes** |
+| k32_m30_u50 | −0.042% | −0.229% | −0.100% | −0.263% | −0.158% | 2/4 | no |
+
+k32_m30_u25 in detail (RMSE, s): January 327.972 → 327.798 (interval −0.38 … −0.04, 22/31 days better); July 266.810 → 266.258
+(−0.97 … −0.18, 18/31); November 188.327 → 188.114 (−0.35 … −0.08, 25/30); December 173.772 → 173.363 (−0.64 … −0.20, 25/31).
+LIRF RMSE 404.07 → 402.83 / 635.04 → 632.19 / 445.52 → 444.61 / 347.93 → 345.10; non-LIRF within ±0.09 s.
+
+Reading: **the gain is the LIRF-inclusive network.** Doubling the committee pool to 32 seeds is worth only −0.014% (seed
+averaging has saturated at 16). On non-population LIRF rows the 16-seed nnl mean alone equals the LIRF tree table (January 282.9 vs
+281.1 s, November 287.5 vs 287.6, December 282.5 vs 283.1; July 824 vs 553, where one-day rows dominate) and is a different model,
+so it blends: the matched weight 0.30 (the grid's top) carries most of the gain; 0.25 on unmatched rows adds a consistent −0.03 …
+−0.07%; 0.50 there has a lower mean but fails two intervals. January 2025 (LIRF without ADS-B, the July 2026 regime) gains only from
+the unmatched weight and the pool. For the ranking: January 2026 has 8,747 matched LIRF rows like December; July 2026's LIRF rows are
+all unmatched like January 2025.
