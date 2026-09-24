@@ -1,0 +1,40 @@
+{
+  "candidate": "rnet_w90",
+  "caveats": "A post-hoc override; the pre-registered rule selected nothing. The January read (-0.026%) is the weakest; past exports scored between their December and January reads officially. Not a precedent for relaxing the rule in later rounds.",
+  "config_sha256": "00049b0c376f71409ea4af93117c750aca1d3c3b3c0cea4cefdbc93b8302aa34",
+  "created_at_utc": "2026-09-24T11:08:36.885160+00:00",
+  "decision": "user override of the declared selection rule",
+  "declaration": "configs/adsb_rnn_v1.json",
+  "failing_conditions": [
+    "every_touched_month_interval_below_zero"
+  ],
+  "failing_detail": {
+    "month": "2025-01",
+    "paired_day_interval_seconds": [
+      -0.34076568008539854,
+      0.1139698586450029
+    ],
+    "ratio_to_control": 0.9997442743988761
+  },
+  "readings": {
+    "mean_ratio": 0.9987125850915787,
+    "months": {
+      "2025-01": 0.9997442743988761,
+      "2025-07": 0.9991380402776773,
+      "2025-11": 0.99878305215328,
+      "2025-12": 0.9971849735364814
+    },
+    "pooled_scope_ratio_to_control": 0.9785080933230611
+  },
+  "rule_conditions": {
+    "every_touched_month_interval_below_zero": false,
+    "mean_at_least_0.02pct_below": true,
+    "no_recipe_month_worse": true,
+    "pooled_scope_below_control": true
+  },
+  "selected_candidate_under_rule": null,
+  "selection": "runs/adsb_rnn/dev/selection.json",
+  "selection_sha256": "cc96ae80dd6cab23baa45c6b3700f4f20945541930e963a88c9f72cd4d9c9e6a",
+  "user_choice": "Override: upload w90 (answered in the session on 24 Sep 2026 after the null selection was reported)",
+  "why_w90": "the candidate the rule's own tie-breaker (lowest mean ratio) picks among the three once the January interval condition is set aside"
+}

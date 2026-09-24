@@ -36,15 +36,23 @@ def main():
     parser.add_argument("--version", type=int, required=True)
     parser.add_argument("--tolerance", type=float, default=0.01)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--override", type=Path, default=None, help="the recorded user override the export used (the rule selected nothing)")
     args = parser.parse_args()
     import torch
     torch.set_num_threads(8)
     from prc2026_nn.train import load, predict
     config = read_json(ROOT / args.config)
     selection = read_json(ROOT / args.selection)
-    if selection["config_sha256"] != object_hash(config) or not selection["selected_candidate"]:
-        raise ValueError("The selection does not belong to this declaration or selected nothing.")
-    name = selection["selected_candidate"]
+    if args.override:
+        override = read_json(ROOT / args.override)
+        if (selection["config_sha256"] != object_hash(config) or selection["selected_candidate"] is not None or override["config_sha256"] != object_hash(config)
+                or override["selection_sha256"] != sha256_file(ROOT / args.selection)):
+            raise ValueError("The override does not belong to this declaration and its empty selection.")
+        name = override["candidate"]
+    else:
+        if selection["config_sha256"] != object_hash(config) or not selection["selected_candidate"]:
+            raise ValueError("The selection does not belong to this declaration or selected nothing.")
+        name = selection["selected_candidate"]
     candidate = config["candidates"][name]
     export = read_json(ROOT / args.export)
     if export["selected_candidate"] != name:
@@ -53,7 +61,8 @@ def main():
     if sha256_file(ROOT / export["ranking_values"]) != export["ranking_values_sha256"]:
         raise ValueError("The export detail changed.")
     ids = detail[ID].to_numpy()
-    report = {"created_at_utc": utc_now(), "selected_candidate": name, "candidate": candidate, "export_sha256": sha256_file(ROOT / args.export)}
+    report = {"created_at_utc": utc_now(), "selected_candidate": name, "selected_by": "user override" if args.override else "declared rule",
+              "candidate": candidate, "export_sha256": sha256_file(ROOT / args.export)}
     # 1. networks
     network = [m for m in candidate["residual"] if m in config["residual_networks"]][0]
     w = float(candidate["residual"][network])

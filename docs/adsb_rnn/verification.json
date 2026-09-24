@@ -1,0 +1,76 @@
+{
+  "candidate": {
+    "residual": {
+      "adj2": 0.05,
+      "cat": 0.05,
+      "rnet": 0.9
+    }
+  },
+  "created_at_utc": "2026-09-24T11:09:16.916833+00:00",
+  "environment": {
+    "disk_available_bytes": 22768148480,
+    "logical_cpus": 32,
+    "memory_total_bytes": 16858472448,
+    "packages": {
+      "numpy": "2.4.2",
+      "pandas": "3.0.0",
+      "psutil": "7.2.2",
+      "pyarrow": "23.0.1",
+      "tzdata": "2025.3"
+    },
+    "physical_cpus_reported": 24,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.2"
+  },
+  "export_sha256": "e179c88e350e8bd80ce623ea3af1caffc0c0250eac3696ef292c9bd705912069",
+  "file": {
+    "ids_equal_template_order": true,
+    "receipt_sha256": "7357eb742f89d79f3756ae8f01e24fe1c68e7a03ca2062badfb0e0f4c9d2b00f",
+    "rows": 344841,
+    "sha256": "7357eb742f89d79f3756ae8f01e24fe1c68e7a03ca2062badfb0e0f4c9d2b00f",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    }
+  },
+  "network_column_max_abs_difference": 0.0,
+  "other_rows_equal_uploaded_v25": true,
+  "passed": true,
+  "reload_by_learner": {
+    "runs/adsb_rnn/rnb_s501": 0.0015706647720890032,
+    "runs/adsb_rnn/rnb_s502": 0.001322665071256779,
+    "runs/adsb_rnn/rnb_s503": 0.0021493307406217355,
+    "runs/adsb_rnn/rnb_s504": 0.0013949983172523162,
+    "runs/adsb_rnn/rnb_s505": 0.0011573319372928381,
+    "runs/adsb_rnn/rnb_s506": 0.001487998204993346,
+    "runs/adsb_rnn/rnb_s507": 0.0009919988033288973,
+    "runs/adsb_rnn/rnb_s508": 0.0019013310397895111,
+    "runs/adsb_rnn/rnb_s509": 0.0019839976066577947,
+    "runs/adsb_rnn/rnb_s510": 0.0010746653704245546,
+    "runs/adsb_rnn/rnb_s511": 0.001322665071143092,
+    "runs/adsb_rnn/rnb_s512": 0.0012399985041611217,
+    "runs/adsb_rnn/rnb_s513": 0.0010746653704245546,
+    "runs/adsb_rnn/rnb_s514": 0.001322665071143092,
+    "runs/adsb_rnn/rnb_s515": 0.0019426643233373397,
+    "runs/adsb_rnn/rnb_s516": 0.0011573319372928381
+  },
+  "reload_max_abs_difference_seconds": 0.0021493307406217355,
+  "rows": {
+    "changed_vs_v25": 197069,
+    "in_scope": 216435,
+    "other": 128406
+  },
+  "scope_max_abs_difference_to_detail": 9.094947017729282e-13,
+  "scope_rows_equal_after_rounding": true,
+  "selected_by": "user override",
+  "selected_candidate": "rnet_w90",
+  "v25_components_equal": {
+    "committee_mix": true,
+    "residual_v25": true,
+    "residual_v25_is_mean_adj2_cat": true,
+    "scope": true,
+    "scope_equals_saved_table": true,
+    "v25": true,
+    "v9": true
+  }
+}

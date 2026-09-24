@@ -11,6 +11,9 @@ Steps (declared in configs/adsb_rnn_v1.json, "ship"):
 3. The selected candidate's residual -- (1 - w) x mean(adj2, cat) + w x network -- replaces v25's on the residual scope with the same
    arithmetic; every other row keeps the recorded v25 value. Nearest-integer export through the frozen submission contract; rows outside
    the residual scope must equal the uploaded v25.
+With --override docs/adsb_rnn/override.json the export takes the candidate a recorded user override names instead of the rule's selection
+(which then must be empty): the record must belong to this declaration and selection and list the failed rule conditions; the export
+record and the submission provenance carry it.
 Nothing is uploaded here.
 """
 from __future__ import annotations
@@ -62,6 +65,7 @@ def main():
     parser.add_argument("--selection", type=Path, default=Path("runs/adsb_rnn/dev/selection.json"))
     parser.add_argument("--version", type=int, required=True)
     parser.add_argument("--report", type=Path, default=Path("docs/adsb_rnn/export.json"))
+    parser.add_argument("--override", type=Path, default=None, help="a recorded user override naming a candidate the rule did not select")
     args = parser.parse_args()
     started = time.time()
     config = read_json(ROOT / args.config)
@@ -70,11 +74,19 @@ def main():
     check_parents(config)
     config_sha256 = object_hash(config)
     selection = read_json(ROOT / args.selection)
-    if selection["config_sha256"] != config_sha256 or not selection["selected_candidate"]:
-        raise ValueError("The selection does not belong to this declaration or selected nothing.")
-    name = selection["selected_candidate"]
-    if not selection["candidates"][name]["eligible"] or name == config["control_candidate"]:
-        raise ValueError("The selected candidate is not eligible.")
+    override = read_json(ROOT / args.override) if args.override else None
+    if override:
+        if (selection["config_sha256"] != config_sha256 or selection["selected_candidate"] is not None or override["config_sha256"] != config_sha256
+                or override["selection_sha256"] != sha256_file(ROOT / args.selection) or override["candidate"] not in config["candidates"]
+                or override["candidate"] == config["control_candidate"] or not override["failing_conditions"]):
+            raise ValueError("The override does not belong to this declaration and its empty selection.")
+        name = override["candidate"]
+    else:
+        if selection["config_sha256"] != config_sha256 or not selection["selected_candidate"]:
+            raise ValueError("The selection does not belong to this declaration or selected nothing.")
+        name = selection["selected_candidate"]
+        if not selection["candidates"][name]["eligible"] or name == config["control_candidate"]:
+            raise ValueError("The selected candidate is not eligible.")
     candidate = config["candidates"][name]
     weights = candidate["residual"]
     networks = [m for m in weights if m in config["residual_networks"]]
@@ -117,14 +129,18 @@ def main():
     detail.to_parquet(run_dir / "ranking_values.parquet", index=False, compression="zstd")
     output = ROOT / "runs/submissions" / f"vigorous-whistle_v{args.version}.parquet"
     provenance = {"policy": config["prediction_postprocess"], "experiment_id": config["experiment_id"], "config_sha256": config_sha256, "selection_sha256": sha256_file(ROOT / args.selection),
-                  "selected_candidate": name, "candidate": candidate, "network": {k: config["residual_networks"][network][k] for k in ["variant", "variant_sha256", "code_sha256", "config_sha256", "seeds"]},
+                  "selected_candidate": name, "selected_by": "user override (rule selected nothing)" if override else "declared rule",
+                  "override": {"record": args.override.as_posix(), "sha256": sha256_file(ROOT / args.override), "failing_conditions": override["failing_conditions"]} if override else None,
+                  "candidate": candidate, "network": {k: config["residual_networks"][network][k] for k in ["variant", "variant_sha256", "code_sha256", "config_sha256", "seeds"]},
                   "learners": learners, "ranking_table_sha256": table_receipt["table_sha256"], "recipe": "v25 with the residual stage's network member",
                   "incumbent": config["incumbent"], "external_data": config["external_data"], "parents": config["parents"], "audit_used": False, "floor_seconds": floor}
     receipt = export_submission(pd.DataFrame({ID: ids, "prediction": values}), ROOT / "data/raw/submitting.parquet", output, provenance)
     delta = exported.astype(float) - uploaded
     airports = recorded["airport"].to_numpy()
     report = {"created_at_utc": utc_now(), "output": output.relative_to(ROOT).as_posix(), "receipt": receipt, "ranking_rows": int(len(ids)), "ranking_ids_sha256": identity_hash(pd.Series(ids)),
-              "selected_candidate": name, "candidate": candidate, "network_weight": w, "learners": learners, "control_reproduces_v25": True, "rows_outside_scope_unchanged": True,
+              "selected_candidate": name, "selected_by": "user override (rule selected nothing)" if override else "declared rule",
+              "override": {"record": args.override.as_posix(), "sha256": sha256_file(ROOT / args.override), "failing_conditions": override["failing_conditions"]} if override else None,
+              "candidate": candidate, "network_weight": w, "learners": learners, "control_reproduces_v25": True, "rows_outside_scope_unchanged": True,
               "rows_in_scope": int(inside.sum()), "ranking_values": (run_dir / "ranking_values.parquet").relative_to(ROOT).as_posix(),
               "ranking_values_sha256": sha256_file(run_dir / "ranking_values.parquet"),
               "network_vs_v25_residual": {"correlation": float(np.corrcoef(net[inside], residual_v25[inside])[0, 1]),
