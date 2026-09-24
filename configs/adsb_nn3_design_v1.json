@@ -1,0 +1,98 @@
+{
+  "experiment_id": "prc2026-adsb-nn3-design-v1",
+  "audit_used": false,
+  "purpose": "Design reading for a LIRF-inclusive network on the NM-clock residual target (nnlr = adsb_nn2's nnl + target_offset nm_clock) before the adsb_nn3 declaration. adsb_v30 showed that v25's LIRF network (nnl) cannot take more weight because on July's long-clock LIRF rows (labels 6,800-9,200 s) it predicts 900-2,800 s where the tree table and v9 predict 5,300-7,700 s; ten such rows carry 86% of its July matched-scope deficit. The residual target passes the NM clock through. nmres was dropped in adsb_nn2 on non-LIRF October readings only, where long clocks are rare; it was never read on LIRF.",
+  "protocol": {
+    "data": "tools/run_adsb_nn2.py --fold design: fit on the seasonal fold's fit partition (2025-02..06, 08, 09), LIRF ordinary rows included, fill population excluded; monitor on October; write the October predictions only.",
+    "never_read": "No design run predicts, scores or reads a label of 2025-01, 2025-07, 2025-11, 2025-12 or the ranking months.",
+    "readings": "tools/nn3_design_report.py on October 2025 rows of the two declared LIRF blend scopes (lirf_nonpop_matched, lirf_nonpop_unmatched; tools/run_adsb_v24 definitions) against the cross-fitted v9 (scratch/v24/2025-10): the RMSE of (1 - b) x v9 + b x network at the best b in 0.1..0.9 on the union of the two scopes (primary), per scope, and on long rows (v9 >= 7,200 s); for seed means of nnl (seeds 1-2 from adsb_nn2's design, 3-4 here) and nnlr (seeds 1-6), and the equal-compute mix nnl 1-2 + nnlr 1-2. The non-LIRF committee reading is descriptive.",
+    "decision": "The adsb_nn3 development fits (16 nnlr seeds) go ahead only if the primary reading of the nnlr mean of 4 is below the nnl mean of 4's, or the mix nnl 1-2 + nnlr 1-2 is below the nnl mean of 4's. Otherwise the round stops with a recorded null."
+  },
+  "defaults": {
+    "features": {
+      "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+      "extra_features": [
+        "adsb_appear_s",
+        "adsb_last_stand_s",
+        "adsb_pre_motion_gap_s",
+        "adsb_first_motion_s",
+        "adsb_first_dist_stand_imp_m",
+        "adsb_stand_imputed",
+        "sfc_ground_10m",
+        "sfc_moving_10m",
+        "sfc_moving_20m",
+        "sfc_rwy_queue_5m",
+        "sfc_rwy_queue_10m"
+      ]
+    },
+    "rows": {
+      "exclude_airports": [
+        "LIRF"
+      ],
+      "exclude_population": false,
+      "max_label": null
+    },
+    "preprocess": {
+      "bins": 32,
+      "min_count": 10,
+      "target_clip": null
+    },
+    "architecture": {
+      "numeric_mode": "ple",
+      "d_num": 8,
+      "cat_cap": 16,
+      "width": 512,
+      "depth": 3,
+      "dropout": 0.1,
+      "k": 1
+    },
+    "training": {
+      "epochs": 16,
+      "batch_size": 2048,
+      "lr": 0.001,
+      "weight_decay": 0.0001,
+      "warmup_epochs": 1.0,
+      "min_lr_fraction": 0.02,
+      "grad_clip": 5.0,
+      "ema_decay": 0.0
+    },
+    "target_offset": "none"
+  },
+  "variants": {
+    "nnl": {
+      "rows": {
+        "exclude_airports": [],
+        "exclude_population": true,
+        "max_label": null
+      }
+    },
+    "nnlr": {
+      "rows": {
+        "exclude_airports": [],
+        "exclude_population": true,
+        "max_label": null
+      },
+      "target_offset": "nm_clock"
+    }
+  },
+  "hosts": {
+    "nnlr seeds 1-6": "arcw0-arcw5",
+    "nnl seeds 3-4": "arcw6-arcw7"
+  },
+  "seeds": {
+    "nnlr": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "nnl": [
+      3,
+      4
+    ]
+  },
+  "tool": "tools/run_adsb_nn2.py",
+  "declared_at_utc": "2026-09-24T06:43:43.418579+00:00"
+}

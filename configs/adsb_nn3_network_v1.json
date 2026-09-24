@@ -1,0 +1,65 @@
+{
+  "experiment_id": "prc2026-adsb-nn3-network-v1",
+  "audit_used": false,
+  "purpose": "The network variant of adsb_nn3's declared development and refit fits with tools/run_adsb_nn2.py: nnlr (adsb_nn2's LIRF-inclusive nnl with the NM-clock residual target), settings copied unchanged from configs/adsb_nn3_design_v1.json so the variant hash equals its design runs'.",
+  "defaults": {
+    "features": {
+      "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+      "extra_features": [
+        "adsb_appear_s",
+        "adsb_last_stand_s",
+        "adsb_pre_motion_gap_s",
+        "adsb_first_motion_s",
+        "adsb_first_dist_stand_imp_m",
+        "adsb_stand_imputed",
+        "sfc_ground_10m",
+        "sfc_moving_10m",
+        "sfc_moving_20m",
+        "sfc_rwy_queue_5m",
+        "sfc_rwy_queue_10m"
+      ]
+    },
+    "rows": {
+      "exclude_airports": [
+        "LIRF"
+      ],
+      "exclude_population": false,
+      "max_label": null
+    },
+    "preprocess": {
+      "bins": 32,
+      "min_count": 10,
+      "target_clip": null
+    },
+    "architecture": {
+      "numeric_mode": "ple",
+      "d_num": 8,
+      "cat_cap": 16,
+      "width": 512,
+      "depth": 3,
+      "dropout": 0.1,
+      "k": 1
+    },
+    "training": {
+      "epochs": 16,
+      "batch_size": 2048,
+      "lr": 0.001,
+      "weight_decay": 0.0001,
+      "warmup_epochs": 1.0,
+      "min_lr_fraction": 0.02,
+      "grad_clip": 5.0,
+      "ema_decay": 0.0
+    },
+    "target_offset": "none"
+  },
+  "variants": {
+    "nnlr": {
+      "rows": {
+        "exclude_airports": [],
+        "exclude_population": true,
+        "max_label": null
+      },
+      "target_offset": "nm_clock"
+    }
+  }
+}
