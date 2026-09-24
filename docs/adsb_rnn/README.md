@@ -1,8 +1,26 @@
 # adsb_rnn: a neural-network member of the residual stage (24 September 2026)
 
-**Result: nothing selected under the declared rule; v25 (234.8575 official) remains the incumbent.** Every candidate improves all
-four recipe months and the pooled twelve-month residual scope, but January 2025's paired-day interval includes zero for every
-candidate, which the rule does not allow.
+**Result: nothing selected under the declared rule** -- every candidate improves all four recipe months and the pooled twelve-month
+residual scope, but January 2025's paired-day interval includes zero for every candidate, which the rule does not allow. **The user
+then chose a recorded override** (`override.json`): `rnet_w90` was exported as **vigorous-whistle_v26**, verified, audited and
+uploaded, and **officially scored 234.1438** (-0.7137 s / -0.304% vs v25's 234.8575), **1st of 186** at 11:20 UTC on 24 September
+(`leaderboard_after_v26.txt`). v26 is the incumbent; never re-upload v1-v26.
+
+## Override, export and official result
+
+- `override.json`: the user's answer after the null selection was reported ("Override: upload w90"); the only failed condition is
+  January's interval ([-0.341, +0.114] s); w90 is the rule's own tie-break (lowest mean ratio) among the three. Not a precedent for
+  relaxing the rule in later rounds.
+- Export (`tools/export_adsb_rnn.py --version 26 --override docs/adsb_rnn/override.json`, `export.json`):
+  `runs/submissions/vigorous-whistle_v26.parquet`, SHA-256 `7357eb742f89d79f3756ae8f01e24fe1c68e7a03ca2062badfb0e0f4c9d2b00f`; the rebuilt
+  control equals the uploaded v25; 197,069 rows change (RMS 12.19 s, mean -0.42 s, none above 600 s; LIRF untouched).
+- Verification (`tools/verify_adsb_rnn.py`, `verification.json`): all 16 refit networks reload and re-predict every in-scope ranking
+  row within 2.1e-3 s; plain arithmetic reproduces every exported integer; rows outside the scope equal the uploaded v25.
+- Audit (`tools/audit_export.py --version 26 --compare 25 24 9`, `export_audit_v26.json`): v25's shape (same January airport-month
+  flags, negative-proxy and LIRF-population rows; 851 predictions above one hour against v25's 884).
+- Uploaded with the user's approval (`tools/prc_submit.py upload --calendar-day`, second upload of 24 September UTC); processed
+  11:19:41 UTC: **234.1438 on all 344,841 rows** (`official_result.json`). The official gain (-0.304%) is at the December read
+  (-0.28%) and above the recipe-month mean (-0.129%), as in the earlier network rounds.
 
 ## What was tested
 
