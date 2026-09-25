@@ -1,0 +1,41 @@
+{
+  "experiment_id": "prc2026-adsb-ctx-design-v1",
+  "declared_at_utc": "2026-09-25T03:20:17Z",
+  "audit_used": false,
+  "purpose": "Design phase of the context network (src/prc2026_ctx): the committee network (adsb_nn nnb settings, unchanged tabular branch and 314-column contract) plus attention over the individual movements around each departure. Decide whether the context branch earns a declared development round, BEFORE any development score.",
+  "motivation": "docs/xplane_stands/ and the 25 Sep diagnostics: unmatched LTFM/LFPG/LIRF rows carry 45-60% of ordinary SSE; at LTFM/LFPG/EGLL 2% of unmatched rows with |error| > 600 s carry 39-44% of it, and in those rows the NM clock is also far from the label (7-11% within 5 min): unobserved holds after pushback. Existing context enters only as hand-made aggregates (timeline surface counts, nb_* medians). The context network reads each neighbour movement (its takeoff/landing, NM clocks, schedule, arrival in-block and taxi-in, ADS-B motion, same runway/stand/stand group) relative to the focal departure.",
+  "tokens": {
+    "build": "tools/build_ctx_tokens.py -> data/ctx/tokens_v1 (manifest.json); K = 128 neighbours at the same airport with movement time in [t0 - 60 min, t0 + 30 min], a contiguous time run centred on t0 - 15 min, the focal row excluded",
+    "label_contract": "departure tokens never carry BLOCK_TIME_UTC_mvt or TAXITIME_SEC_mvt (dropped in every file, tested in tests/test_ctx.py); arrival tokens carry in-block time and taxi-in, which the supplied ranking file retains for every arrival (ranking DEP rows have neither: checked 25 Sep); ADS-B segments from data/external/adsblol/matches (the committee's pass-2 tables)",
+    "availability": "later movements (up to 30 min after the focal takeoff) are used, as the timeline campaign's reviewed retrospective contract (docs/next_lever/timeline_availability.json) already allows later peer events"
+  },
+  "protocol": {
+    "data": "tools/run_adsb_ctx.py --fold design: fit on the seasonal fold's fit partition (2025-02..06, 08, 09; LIRF excluded, as the committee), monitor on its early-stop partition (2025-10, LIRF excluded), write the October predictions only. Identical data path to tools/run_adsb_nn.py --fold design.",
+    "never_read": "No design run predicts, scores or reads a label of 2025-01, 2025-07, 2025-11, 2025-12 or the ranking months.",
+    "references": "plain network: runs/adsb_nn/design/base_s1..s8 (same fold, same nnb settings); incumbent network pool: the 32 nnb seeds' seasonal-fold October predictions (runs/adsb_nn/nnb_s101..s132/seasonal/stop_predictions.parquet, same fit partition); committee: runs/adsb_nn/design/committee_october.parquet; recipe proxy: tools/nn_design_report.py RecipeProxy (v23-era residual path, LIRF at v9).",
+    "readings": {
+      "R1": "October RMSE (non-LIRF monitored rows) per run and of seed means; ctx mean of n seeds against base mean of n seeds, n = 1..6",
+      "R2": "incremental over the incumbent network pool: table(b) = 0.5 x committee + 0.5 x [(1 - b) x nnb32 + b x ctx_mean], b in {0.25, 0.5, 0.75, 1.0}; recipe-proxy RMSE ratio against b = 0 (all October rows), non-LIRF ratio, matched/unmatched and per-airport change, paired-day 95% interval at the best b",
+      "R3": "ablations at one seed against ctx seed 1: ctx_noadsb (ADS-B token features masked), ctx_dep (departure tokens only)"
+    },
+    "decision": "GO for a declared development round (seasonal, forward and December folds, adsb_nn rules) if R2's best b reaches a recipe-proxy ratio <= 0.9990 (-0.10%) on October with the paired-day interval below zero. Otherwise record the context network as null. At most one further design round (architecture only, declared before its runs) if R1 shows ctx losing to base standalone, which would indicate an optimisation problem rather than absent signal."
+  },
+  "defaults": {
+    "features": {
+      "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+      "extra_features": ["adsb_appear_s", "adsb_last_stand_s", "adsb_pre_motion_gap_s", "adsb_first_motion_s", "adsb_first_dist_stand_imp_m", "adsb_stand_imputed", "sfc_ground_10m", "sfc_moving_10m", "sfc_moving_20m", "sfc_rwy_queue_5m", "sfc_rwy_queue_10m"]
+    },
+    "rows": {"exclude_airports": ["LIRF"], "exclude_population": false, "max_label": null},
+    "preprocess": {"bins": 32, "min_count": 10, "target_clip": null},
+    "architecture": {"d_num": 8, "cat_cap": 16, "width": 512, "depth": 3, "dropout": 0.1, "tok_dim": 96, "heads": 4, "max_tokens": 128},
+    "context": {"use_adsb": true, "departures_only": false},
+    "training": {"epochs": 16, "batch_size": 2048, "lr": 0.001, "weight_decay": 0.0001, "warmup_epochs": 1.0, "min_lr_fraction": 0.02, "grad_clip": 5.0}
+  },
+  "variants": {
+    "ctx": {},
+    "ctx_noadsb": {"context": {"use_adsb": false}},
+    "ctx_dep": {"context": {"departures_only": true}}
+  },
+  "round_1_hosts": {"ctx_s1": "arcw0", "ctx_s2": "arcw1", "ctx_s3": "arcw2", "ctx_s4": "arcw3", "ctx_s5": "arcw4", "ctx_s6": "arcw5", "ctx_noadsb_s1": "arcw6", "ctx_dep_s1": "arcw7"},
+  "smoke": "a local code-path smoke (--limit-rows 20000, one epoch, variant ctx_smoke not declared here) precedes the launch; its October numbers are not a reading and are not recorded"
+}
