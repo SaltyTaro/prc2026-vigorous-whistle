@@ -1,0 +1,295 @@
+{
+  "audit_used": false,
+  "candidate_semantics": "Every candidate keeps v27's committee mix (ens_ctx, share 0.65), residual stage, outer weight 0.7 and floor; it changes only the two LIRF non-population blends: lirf_network (a weighted mean of LIRF network ensembles) and the per-scope (v9, tree, net) weights. Only LIRF non-population rows can change. Round A (configs/adsb_ctx_v2.json) changes only non-LIRF rows, so the two rounds touch disjoint rows.",
+  "candidates": {
+    "control": {
+      "lirf": {
+        "lirf_nonpop_matched": {
+          "net": 0.3,
+          "tree": 0.55,
+          "v9": 0.15000000000000002
+        },
+        "lirf_nonpop_unmatched": {
+          "net": 0.25,
+          "tree": 0.25,
+          "v9": 0.5
+        }
+      },
+      "lirf_network": {
+        "ens_nnl": 1.0
+      }
+    },
+    "lctx_b100": {
+      "lirf": {
+        "lirf_nonpop_matched": {
+          "net": 0.3,
+          "tree": 0.55,
+          "v9": 0.15000000000000002
+        },
+        "lirf_nonpop_unmatched": {
+          "net": 0.25,
+          "tree": 0.25,
+          "v9": 0.5
+        }
+      },
+      "lirf_network": {
+        "ens_ctx_lirf": 1.0
+      }
+    },
+    "lctx_b100_up": {
+      "lirf": {
+        "lirf_nonpop_matched": {
+          "net": 0.4,
+          "tree": 0.45,
+          "v9": 0.15
+        },
+        "lirf_nonpop_unmatched": {
+          "net": 0.35,
+          "tree": 0.25,
+          "v9": 0.4
+        }
+      },
+      "lirf_network": {
+        "ens_ctx_lirf": 1.0
+      }
+    },
+    "lctx_b50": {
+      "lirf": {
+        "lirf_nonpop_matched": {
+          "net": 0.3,
+          "tree": 0.55,
+          "v9": 0.15000000000000002
+        },
+        "lirf_nonpop_unmatched": {
+          "net": 0.25,
+          "tree": 0.25,
+          "v9": 0.5
+        }
+      },
+      "lirf_network": {
+        "ens_ctx_lirf": 0.5,
+        "ens_nnl": 0.5
+      }
+    }
+  },
+  "control": {
+    "committee_network": {
+      "ens_ctx": 1.0
+    },
+    "committee_share": 0.65,
+    "lirf": {
+      "lirf_nonpop_matched": {
+        "net": 0.3,
+        "tree": 0.55,
+        "v9": 0.15000000000000002
+      },
+      "lirf_nonpop_unmatched": {
+        "net": 0.25,
+        "tree": 0.25,
+        "v9": 0.5
+      }
+    },
+    "lirf_network": {
+      "ens_nnl": 1.0
+    },
+    "official": {
+      "official_rmse_seconds": 230.8057,
+      "submission": "vigorous-whistle_v27.parquet"
+    },
+    "recipe": "v27 = configs/adsb_ctx_v1.json ctx_b100_s65 (committee mix ens_ctx at share 0.65; LIRF blends v25's: matched 0.15 v9 + 0.55 tree + 0.30 ens_nnl, unmatched 0.50 / 0.25 / 0.25)",
+    "recorded_development_rmse": {
+      "2025-01": 326.381330381816,
+      "2025-07": 263.104031235157,
+      "2025-11": 186.27030010404886,
+      "2025-12": 169.88384736012654
+    },
+    "reproduction": "the control must reproduce these to 1e-9 s on every recipe month before any candidate is read"
+  },
+  "declared_at_utc": "2026-09-25T16:51:29.740462+00:00",
+  "execution": {
+    "automatic_submission": false,
+    "compute_budget": "CPU only",
+    "development_scoring_host": "the workstation",
+    "network_hosts": "Azure arcw0-arcw7, two lanes per worker once its round-A lanes finish (worker arcwN: seeds 301+N lane A, 309+N lane B), 8 threads, tools/ctx_chain.sh configs/adsb_ctx_network_lirf_v1.json ctx_lirf <seed> runs/adsb_ctx seasonal forward refit refit12 (launcher tools/ctx_launch_lirf_dev.sh)",
+    "scorer": "tools/run_adsb_ctx_lirf_dev.py; its --smoke (ens_ctx_lirf replaced by ens_nnl) must reproduce the control on all four months before --score"
+  },
+  "experiment_id": "prc2026-adsb-ctx-lirf-v1",
+  "external_data": [
+    "adsb.lol globe_history (ODbL) via the committee's ADS-B tables and match tables",
+    "IEM weather and OurAirports runways via the timeline bundle"
+  ],
+  "minimum_mean_improvement_fraction": 0.0002,
+  "networks": {
+    "ens_ctx": {
+      "code": {
+        "files": {
+          "src/prc2026_adsb/features.py": "cff4c56ae3a70fa8dee35453c42d26dd07f1bb6783ff0c18023aa4d3e46469b5",
+          "src/prc2026_ctx/__init__.py": "c8a853d8dfa60c7644660b48e29009e9c972d81402952ce013f953753392c4d1",
+          "src/prc2026_ctx/model.py": "f56e185ffbe1dae97eed562a537d16d04e4fdfa0523929dcb39166eb7f2a5f18",
+          "src/prc2026_ctx/tokens.py": "0ec2f7448834752346a1761ed3133046a2a33ac97d70764a516022117210f06c",
+          "src/prc2026_ctx/train.py": "68c64ecb97506fa8f027bccda3d521bc58004744f2b11e08f49ae31c674511ee",
+          "src/prc2026_nn/model.py": "cb168202827b27468a1c043e7727859d775f2122c8736d51224bacf5878236a8",
+          "src/prc2026_nn/preprocess.py": "ff4b26e99eef144018facf9eb2cf689091893b8613292af8014f329802b5a667",
+          "src/prc2026_nn/train.py": "1597b4978291fb469a461a9552a0df91945dcb652c4e0bd5144376268b39470b",
+          "tools/build_ctx_tokens.py": "a4cd5daafeeded96a3f4bb5f294bec840fd93c27bd8e050308d6467bbc959ed6",
+          "tools/run_adsb_ctx.py": "625b0d48bd339ba91b9844181949cd2868da72246e2b55baaca13abda483cc61",
+          "tools/run_adsb_learner.py": "171ace87e364098259ef5b0e8977914878f8d14ece9e35f3e1709b3b910889c1",
+          "tools/run_adsb_nn.py": "b9b52a34d85f43292e5fa8b72927f2350f9ff30b2519671d92eb5f18496ea4bb"
+        },
+        "sha256": "23386783b7436e6735cfbc965a8c8c139b48f027de53f52528f80917af34fdec"
+      },
+      "config": "configs/adsb_ctx_network_v1.json",
+      "config_sha256": "8db2996014da108ef96dd70d98bd20a3ab1640d48d826072280ea22876aecdd8",
+      "ensemble": "ens_ctx = per-fold seed mean over the 16 learners (tools/ensemble_adsb_full.py convention), every leaf checked against the declared variant, code, configuration and seed",
+      "folds": "seasonal (predicts 2025-01/07), forward (2025-11), refit (Jan-Nov; December leaf cache runs/december/learners/runs__adsb_ctx__ctx_s<seed>.parquet, ranking), refit12 (Jan-Dec; ranking), run in that order per seed by tools/ctx_chain.sh",
+      "learners": [
+        "runs/adsb_ctx/ctx_s101",
+        "runs/adsb_ctx/ctx_s102",
+        "runs/adsb_ctx/ctx_s103",
+        "runs/adsb_ctx/ctx_s104",
+        "runs/adsb_ctx/ctx_s105",
+        "runs/adsb_ctx/ctx_s106",
+        "runs/adsb_ctx/ctx_s107",
+        "runs/adsb_ctx/ctx_s108",
+        "runs/adsb_ctx/ctx_s109",
+        "runs/adsb_ctx/ctx_s110",
+        "runs/adsb_ctx/ctx_s111",
+        "runs/adsb_ctx/ctx_s112",
+        "runs/adsb_ctx/ctx_s113",
+        "runs/adsb_ctx/ctx_s114",
+        "runs/adsb_ctx/ctx_s115",
+        "runs/adsb_ctx/ctx_s116"
+      ],
+      "run_dir": "runs/adsb_ctx/ens_ctx",
+      "seeds": [
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116
+      ],
+      "status": "v27's committee network, fitted under adsb_ctx_v1, unchanged",
+      "tokens_manifest_content": {
+        "2025-01": "39438487fff3aff6d95942ba8a4508b22ba94a33606bca28915ce5a174b760ef",
+        "2025-02": "a3f169c52550f43daadf77169e36b697898059bafd8f1cdd64e906a9ea66213e",
+        "2025-03": "3c1e2c324878738f7b65709ae40513d876ea954a77be5522f5d3a72371c2b6cd",
+        "2025-04": "aab97950f11df050202cb96c62c4777ed130c5251936c37703471477d67c0058",
+        "2025-05": "a083f3c9fa7dc5741c1ae2a338ee6f7a38e4365d8d0c0e1d16e966df3b0da495",
+        "2025-06": "b83ee993efd11182855cc42435b2370370db8e8132122ad2a9ca958ab6a9266f",
+        "2025-07": "83b6490c3f8e7ad609671705825d6261609f49ff7406a0dcffbd8d46e5da998c",
+        "2025-08": "5b01263817a5722b9f65bdc0f100b6bcc75a88f74f7f53921de2446e91c95771",
+        "2025-09": "7bf9c21608866bce81c4c499273681384a468f3dd08f08dd8604b2a01a64b686",
+        "2025-10": "bd3026fb8894295e5013c23e5fc6afbc26bc098825373bf6ee49f1d2526e9330",
+        "2025-11": "1fa9cb8f85bef02a5a7774551e7e774865dfe364d20822d33b71ae0a31683a5e",
+        "2025-12": "3dc3d9950e39cb32d30212847cdf62dc2299061540e1b5a58342ee2d7c4215fc",
+        "ranking": "70ac0cc12a37e42bc9f5b4fe6a188d73d08156b72fbfd435efab8c666f3dcb4a"
+      },
+      "variant": "ctx",
+      "variant_sha256": "c0bbd4fce5e7b1f59f5a952692e83075ae889e20ea9e15ccf923bb46e593d709"
+    },
+    "ens_ctx_lirf": {
+      "code": {
+        "files": {
+          "src/prc2026_adsb/features.py": "cff4c56ae3a70fa8dee35453c42d26dd07f1bb6783ff0c18023aa4d3e46469b5",
+          "src/prc2026_ctx/__init__.py": "c8a853d8dfa60c7644660b48e29009e9c972d81402952ce013f953753392c4d1",
+          "src/prc2026_ctx/model.py": "f56e185ffbe1dae97eed562a537d16d04e4fdfa0523929dcb39166eb7f2a5f18",
+          "src/prc2026_ctx/tokens.py": "0ec2f7448834752346a1761ed3133046a2a33ac97d70764a516022117210f06c",
+          "src/prc2026_ctx/train.py": "68c64ecb97506fa8f027bccda3d521bc58004744f2b11e08f49ae31c674511ee",
+          "src/prc2026_nn/model.py": "cb168202827b27468a1c043e7727859d775f2122c8736d51224bacf5878236a8",
+          "src/prc2026_nn/preprocess.py": "ff4b26e99eef144018facf9eb2cf689091893b8613292af8014f329802b5a667",
+          "src/prc2026_nn/train.py": "1597b4978291fb469a461a9552a0df91945dcb652c4e0bd5144376268b39470b",
+          "tools/build_ctx_tokens.py": "a4cd5daafeeded96a3f4bb5f294bec840fd93c27bd8e050308d6467bbc959ed6",
+          "tools/run_adsb_ctx.py": "625b0d48bd339ba91b9844181949cd2868da72246e2b55baaca13abda483cc61",
+          "tools/run_adsb_learner.py": "171ace87e364098259ef5b0e8977914878f8d14ece9e35f3e1709b3b910889c1",
+          "tools/run_adsb_nn.py": "b9b52a34d85f43292e5fa8b72927f2350f9ff30b2519671d92eb5f18496ea4bb"
+        },
+        "sha256": "23386783b7436e6735cfbc965a8c8c139b48f027de53f52528f80917af34fdec"
+      },
+      "config": "configs/adsb_ctx_network_lirf_v1.json",
+      "config_sha256": "10129b491f127d929df25291951c61b77d72589e9a09dfd712c2293c8fe7c8d9",
+      "ensemble": "ens_ctx_lirf = per-fold seed mean over its 16 learners (tools/ensemble_adsb_full.py); December from the learners' January-November refit leaves",
+      "folds": "seasonal (predicts 2025-01/07), forward (2025-11), refit (Jan-Nov; December leaf cache runs/december/learners/runs__adsb_ctx__ctx_s<seed>.parquet, ranking), refit12 (Jan-Dec; ranking), run in that order per seed by tools/ctx_chain.sh",
+      "learners": [
+        "runs/adsb_ctx/ctx_lirf_s301",
+        "runs/adsb_ctx/ctx_lirf_s302",
+        "runs/adsb_ctx/ctx_lirf_s303",
+        "runs/adsb_ctx/ctx_lirf_s304",
+        "runs/adsb_ctx/ctx_lirf_s305",
+        "runs/adsb_ctx/ctx_lirf_s306",
+        "runs/adsb_ctx/ctx_lirf_s307",
+        "runs/adsb_ctx/ctx_lirf_s308",
+        "runs/adsb_ctx/ctx_lirf_s309",
+        "runs/adsb_ctx/ctx_lirf_s310",
+        "runs/adsb_ctx/ctx_lirf_s311",
+        "runs/adsb_ctx/ctx_lirf_s312",
+        "runs/adsb_ctx/ctx_lirf_s313",
+        "runs/adsb_ctx/ctx_lirf_s314",
+        "runs/adsb_ctx/ctx_lirf_s315",
+        "runs/adsb_ctx/ctx_lirf_s316"
+      ],
+      "run_dir": "runs/adsb_ctx/ens_ctx_lirf",
+      "seeds": [
+        301,
+        302,
+        303,
+        304,
+        305,
+        306,
+        307,
+        308,
+        309,
+        310,
+        311,
+        312,
+        313,
+        314,
+        315,
+        316
+      ],
+      "tokens_manifest_content": {
+        "2025-01": "39438487fff3aff6d95942ba8a4508b22ba94a33606bca28915ce5a174b760ef",
+        "2025-02": "a3f169c52550f43daadf77169e36b697898059bafd8f1cdd64e906a9ea66213e",
+        "2025-03": "3c1e2c324878738f7b65709ae40513d876ea954a77be5522f5d3a72371c2b6cd",
+        "2025-04": "aab97950f11df050202cb96c62c4777ed130c5251936c37703471477d67c0058",
+        "2025-05": "a083f3c9fa7dc5741c1ae2a338ee6f7a38e4365d8d0c0e1d16e966df3b0da495",
+        "2025-06": "b83ee993efd11182855cc42435b2370370db8e8132122ad2a9ca958ab6a9266f",
+        "2025-07": "83b6490c3f8e7ad609671705825d6261609f49ff7406a0dcffbd8d46e5da998c",
+        "2025-08": "5b01263817a5722b9f65bdc0f100b6bcc75a88f74f7f53921de2446e91c95771",
+        "2025-09": "7bf9c21608866bce81c4c499273681384a468f3dd08f08dd8604b2a01a64b686",
+        "2025-10": "bd3026fb8894295e5013c23e5fc6afbc26bc098825373bf6ee49f1d2526e9330",
+        "2025-11": "1fa9cb8f85bef02a5a7774551e7e774865dfe364d20822d33b71ae0a31683a5e",
+        "2025-12": "3dc3d9950e39cb32d30212847cdf62dc2299061540e1b5a58342ee2d7c4215fc",
+        "ranking": "70ac0cc12a37e42bc9f5b4fe6a188d73d08156b72fbfd435efab8c666f3dcb4a"
+      },
+      "variant": "ctx_lirf",
+      "variant_sha256": "b6290f80f18713ff7565d78465c7accb651848c6983bc7633ef0209308e6ad18"
+    }
+  },
+  "new_networks": [
+    "ens_ctx_lirf"
+  ],
+  "override": {
+    "path": "docs/adsb_ctx_lirf/override_design_gate.json",
+    "sha256": "10fe7ab7472d606a7258639c6e434d57a1d61188bde2eb7bc71de3eb53f5f128"
+  },
+  "purpose": "Round B development: the LIRF-inclusive context network (ens_ctx_lirf, 16 seeds) in v27's LIRF blends in place of, or beside, ens_nnl. Run under the user's override of the round-B design gate (docs/adsb_ctx_lirf/override_design_gate.json). Declared before any development fit of ctx_lirf.",
+  "recipe_months": [
+    "2025-01",
+    "2025-07",
+    "2025-11",
+    "2025-12"
+  ],
+  "selection": "A candidate is eligible when: no recipe month is worse on ALL rows (ratio to the control <= 1.0); the mean ratio over the four recipe months is at least 0.02% below 1; and on every month where it changes a row the paired-day bootstrap 95% interval of the RMSE difference against the control lies below zero. Among eligible candidates choose the lowest mean ratio (ties by name); otherwise select nothing and keep v27. The rule of adsb_nn/nn2, unchanged.",
+  "ship": "If a candidate is selected: the coverage-regime ship check (the gate of configs/adsb_ctx_regime_check_v1.json, both thinned months; July thins LIRF to its dark 2026 regime) is re-run for the selected candidate before any export; ranking tables from the refit12 seed means; the shipped incumbent's ranking values are rebuilt from their recorded components and must reproduce the uploaded file exactly; then the selected LIRF network and weights are applied, exported, verified independently (every saved context network reloaded and re-predicted), audited (tools/audit_export.py), and uploaded only with the user's approval. If round A also selects, the combined export applies both selections (disjoint rows), each exactly as selected."
+}

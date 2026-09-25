@@ -1,0 +1,17 @@
+{
+  "created_at_utc": "2026-09-25T16:51:29.740462+00:00",
+  "design_declaration": {
+    "path": "configs/adsb_ctx_lirf_design_v1.json",
+    "sha256": "990b5974e05657fca2c5cc3a5d3c278a0279941a3adeb4a79e8041ee9d67908c"
+  },
+  "design_report": {
+    "path": "docs/adsb_ctx_lirf/design_report_1.json",
+    "sha256": "d552dd7c07a4312b8b487466ba6342719e194539c80b3fbc81cec61b9c214adc"
+  },
+  "failing_condition": "4-seed ctx_lirf blend change at b = 0.3 = -0.9456% against the declared -1.00% bar (paired-day interval [-4.456232260282863, -2.184690166362662], below zero)",
+  "kind": "user override of a design gate (not of a selection rule)",
+  "question_answered": "Do you want me to run the Rome (Round B) full test? (override the round-B design NO-GO and run the 16-seed development round on CPU; the development round keeps its own declared selection rule)",
+  "reason": "LIRF carries about half of v27's development SSE (docs/adsb_ctx/error_budget_v27.json); the design effect is consistent across seeds; CPU is free to the user; the development round's own rule (no month worse, mean >= 0.02%, touched-month intervals below zero) is unchanged and decides what ships",
+  "user_words": "yes",
+  "variant": "ctx_lirf (the declared variant choice: the no-ADS-B variant is worse on unmatched LIRF rows)"
+}
