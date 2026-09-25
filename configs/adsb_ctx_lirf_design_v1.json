@@ -1,0 +1,125 @@
+{
+  "audit_used": false,
+  "declared_at_utc": "2026-09-25T12:15:40.562131+00:00",
+  "defaults": {
+    "architecture": {
+      "cat_cap": 16,
+      "d_num": 8,
+      "depth": 3,
+      "dropout": 0.1,
+      "heads": 4,
+      "max_tokens": 128,
+      "tok_dim": 96,
+      "width": 512
+    },
+    "context": {
+      "departures_only": false,
+      "use_adsb": true
+    },
+    "features": {
+      "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+      "extra_features": [
+        "adsb_appear_s",
+        "adsb_last_stand_s",
+        "adsb_pre_motion_gap_s",
+        "adsb_first_motion_s",
+        "adsb_first_dist_stand_imp_m",
+        "adsb_stand_imputed",
+        "sfc_ground_10m",
+        "sfc_moving_10m",
+        "sfc_moving_20m",
+        "sfc_rwy_queue_5m",
+        "sfc_rwy_queue_10m"
+      ]
+    },
+    "preprocess": {
+      "bins": 32,
+      "min_count": 10,
+      "target_clip": null
+    },
+    "rows": {
+      "exclude_airports": [
+        "LIRF"
+      ],
+      "exclude_population": false,
+      "max_label": null
+    },
+    "training": {
+      "batch_size": 2048,
+      "epochs": 16,
+      "grad_clip": 5.0,
+      "lr": 0.001,
+      "min_lr_fraction": 0.02,
+      "warmup_epochs": 1.0,
+      "weight_decay": 0.0001
+    }
+  },
+  "execution": {
+    "hosts": "a third lane with 4 threads on six Azure workers beside round A's two lanes (CPU only); tools/ctx_launch_lirf_design.sh",
+    "outputs": "runs/adsb_ctx/lirf_design/<variant>_s<seed>/design/",
+    "report": "tools/ctx_lirf_design_report.py -> docs/adsb_ctx_lirf/design_report_1.json"
+  },
+  "experiment_id": "prc2026-adsb-ctx-lirf-design-v1",
+  "motivation": "LIRF blends today: matched non-population 0.15 v9 + 0.55 LIRF tree + 0.30 ens_nnl; unmatched 0.50 / 0.25 / 0.25 (configs/adsb_rnn_v1.json v25_recipe). The strongest label-free LIRF signal found so far (v9/v10 campaigns) is the schedule relative to the previous arrival's in-block at the same stand, which is neighbour information the context tokens carry (same stand, arrival in-block). July 2026 has no LIRF ADS-B ground coverage, hence the no-ADS-B token ablation.",
+  "protocol": {
+    "data": "tools/run_adsb_ctx.py --fold design: fit on the seasonal fold's fit partition (2025-02..06, 08, 09) with LIRF non-population rows included, monitor on 2025-10 (same rows rule), write October predictions only. Same fit partition as the nnl development seeds' seasonal fold.",
+    "decision": "GO for a declared development round (a LIRF context ensemble in v27's LIRF blends) if at 4 seeds the ctx_lirf mean's L2 blend at b = 0.3 is at least 1% below the nnl 4-seed blend on LIRF non-population rows with the paired-day interval below zero. The development round's variant is ctx_lirf_noadsb instead if, at 2 seeds each, it is no more than 0.5% worse than ctx_lirf on all LIRF non-population rows and better on the unmatched ones (July 2026's regime). Otherwise NO-GO.",
+    "never_read": "No design run predicts, scores or reads a label of 2025-01, 2025-07, 2025-11, 2025-12 or the ranking months.",
+    "readings": {
+      "L1": "October LIRF non-population RMSE (all / matched / unmatched) of every run and of variant seed means, against the nnl mean of the same seed count",
+      "L2": "v9 blend on the same rows: (1 - b) x v9 + b x network for b in {0.25, 0.3, 0.5}, network = variant mean of n seeds or nnl mean of n seeds; paired-day 95% interval of (variant blend - nnl blend) at b = 0.3 (the v27 matched LIRF net weight)",
+      "L3": "descriptive: non-LIRF October RMSE of ctx_lirf against round-1 ctx at equal seeds (does fitting LIRF cost the other airports?)"
+    },
+    "references": "nnl: the 16 development seeds' seasonal-fold October predictions (runs/adsb_nn2/nnl_s201..s216/seasonal/stop_predictions.parquet), taken in seed order for equal-count comparisons; v9: cross-fitted October (scratch/v24/2025-10.parquet, with the population flag); non-LIRF: the round-1 ctx design seeds (runs/adsb_ctx/design/ctx_s1..s6)."
+  },
+  "purpose": "Round B design: a LIRF-inclusive context network. LIRF carries 11-45% of development SSE per recipe month (January 11%, July 45%, November 39%, December 29% of v26's development SSE; v27 leaves every LIRF row unchanged, so about one point more of v27's) and neither v27 nor round A touches it. The context network is fitted with LIRF's ordinary rows (fill population excluded, as nnl in configs/adsb_nn2_network_v1.json), to replace or join ens_nnl in v27's LIRF blends. October only, before any development fit or score of a LIRF context network.",
+  "runs": {
+    "ctx_lirf": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "ctx_lirf_noadsb": [
+      1,
+      2
+    ]
+  },
+  "tokens": {
+    "content": {
+      "2025-01": "39438487fff3aff6d95942ba8a4508b22ba94a33606bca28915ce5a174b760ef",
+      "2025-02": "a3f169c52550f43daadf77169e36b697898059bafd8f1cdd64e906a9ea66213e",
+      "2025-03": "3c1e2c324878738f7b65709ae40513d876ea954a77be5522f5d3a72371c2b6cd",
+      "2025-04": "aab97950f11df050202cb96c62c4777ed130c5251936c37703471477d67c0058",
+      "2025-05": "a083f3c9fa7dc5741c1ae2a338ee6f7a38e4365d8d0c0e1d16e966df3b0da495",
+      "2025-06": "b83ee993efd11182855cc42435b2370370db8e8132122ad2a9ca958ab6a9266f",
+      "2025-07": "83b6490c3f8e7ad609671705825d6261609f49ff7406a0dcffbd8d46e5da998c",
+      "2025-08": "5b01263817a5722b9f65bdc0f100b6bcc75a88f74f7f53921de2446e91c95771",
+      "2025-09": "7bf9c21608866bce81c4c499273681384a468f3dd08f08dd8604b2a01a64b686",
+      "2025-10": "bd3026fb8894295e5013c23e5fc6afbc26bc098825373bf6ee49f1d2526e9330",
+      "2025-11": "1fa9cb8f85bef02a5a7774551e7e774865dfe364d20822d33b71ae0a31683a5e",
+      "2025-12": "3dc3d9950e39cb32d30212847cdf62dc2299061540e1b5a58342ee2d7c4215fc",
+      "ranking": "70ac0cc12a37e42bc9f5b4fe6a188d73d08156b72fbfd435efab8c666f3dcb4a"
+    },
+    "directory": "data/ctx/tokens_v1"
+  },
+  "variants": {
+    "ctx_lirf": {
+      "rows": {
+        "exclude_airports": [],
+        "exclude_population": true,
+        "max_label": null
+      }
+    },
+    "ctx_lirf_noadsb": {
+      "context": {
+        "use_adsb": false
+      },
+      "rows": {
+        "exclude_airports": [],
+        "exclude_population": true,
+        "max_label": null
+      }
+    }
+  }
+}
