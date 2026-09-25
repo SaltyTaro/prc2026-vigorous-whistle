@@ -1,0 +1,38 @@
+{
+  "experiment_id": "xplane_stands_probe_v1",
+  "declared_at_utc": "2026-09-25T01:47:00Z",
+  "declared_before": "any stand-distance control, coverage count or label read on the X-Plane catalogue. Seen before declaring (label-free): the Gateway's scenery version lists, the stand-name formats of apt.dat and STAND_mvt per airport, 513 LFPG startup locations in version 111022.",
+  "question": "Does an external stand catalogue (X-Plane Scenery Gateway apt.dat, GPL-2.0-or-later) give LFPG -- 3 learned stands, so adsb_first_dist_stand_m is empty on almost every LFPG match -- valid stand positions, and does the resulting first-point distance carry signal the residual stage has not already used?",
+  "sources": {"manifest": "docs/xplane_stands/sources.json", "manifest_sha256": "e5e0820a5d4b1399345b59e496d77fcfc97f17aa1ff398838cb4f20db58bace1",
+              "primary_catalogue": "pre_data (latest version approved before 2025-01-01, older than every supplied movement)",
+              "sensitivity_catalogue": "recommended (at fetch time); reported, never used for the decision",
+              "learned_stands": "data/external/adsblol/matches_v11/stands.parquet", "learned_stands_sha256": "63502c9465e3742d537fca30bd3c03622623a3be047eb01ba068292a249d995d",
+              "match_tables": "data/external/adsblol/matches_v11/matches2_<month>.parquet (2025-01..2025-12, 2026-01, 2026-07)"},
+  "catalogue": {
+    "rows": "apt.dat row code 1300 (startup location: lat, lon, heading, type, aircraft classes, name) of the airport's own ICAO.dat inside the scenery zip",
+    "normalisation": "upper-case and trim; drop one leading word from {STAND, GATE, RAMP, PARKING, POSITION, POS, APRON}; drop a trailing '-(X)' size code and any trailing parenthetical; delete spaces and hyphens; if the result is letters+digits+letters, remove leading zeros of the digit run (S06 -> S6, 012 -> 12). STAND_mvt gets the same normalisation. Exact key equality only; no fuzzy aliases.",
+    "duplicates": "apt.dat entries sharing a key: mean position if every entry is within 25 m of that mean, otherwise the key is ambiguous and unresolved"
+  },
+  "part_a_controls": {
+    "control_airports": ["EDDF", "EDDM", "EGLL", "EHAM", "LEBL", "LEMD", "LIRF", "LSZH"],
+    "measure": "great-circle distance between each learned stand (n >= 3 gate anchors) and the primary-catalogue position of the same key",
+    "airport_passes": "at least 30 resolved learned stands, median distance <= 25 m and at least 80% within 40 m (the matcher's at_known_stand radius)",
+    "catalogue_accepted": "at least 5 of the 8 control airports pass",
+    "lfpg_direct": "every LFPG gate-class match (2025-01..2026-07): anchor distance to the primary position of its STAND_mvt; LFPG accepted only if the catalogue is accepted and, when at least 30 such anchors resolve, their median is <= 25 m; also the 3 learned LFPG stands and the pre_data -> recommended position shift of every LFPG key (share moved > 10 m)"
+  },
+  "part_b_coverage": "label-free, per month: LFPG departures whose STAND_mvt resolves; LFPG matches by class (gate / dark) with a resolved stand; dark matches whose first point is within 40 m of the resolved stand (candidates for the matcher's gate rescue, not re-matched here); for 2026-01 and 2026-07 as well as 2025",
+  "part_c_signal": {
+    "rows": "2025 LFPG dark-class matches (gate == False) with a resolved stand; every such row, including unusual labels",
+    "target": "r = label - (v9 + 0.5 x residual:adj2 + 0.5 x residual:cat): the residual stage's own twelve-month leave-one-month-out prediction (runs/adsb_v25/dev/predictions_<month>.parquet with cross-fitted v9 from configs/adsb_v25_v1.json)",
+    "feature": "d = great-circle distance from the match's first point to the resolved stand (m)",
+    "fit": "leave-one-month-out over the 2025 months; fitting rows = the other months' rows with label <= 7200 s. f0 = the fitting rows' mean of r. f1 = mean of r in each decile of d (edges from the fitting rows), each shrunk to f0 with a pseudo-count of 100 rows",
+    "score": "RMSE of r - f1 against r - f0 on all held-out rows, pooled over months and per month; the difference isolates the distance information from any intercept shift",
+    "recipe_months_bound": "for 2025-01/07/11/12: the whole-month recipe RMSE (mean_adj2_cat) if the residual path's SSE reduction on these rows carried over in full -- an optimistic bound, reported as a percentage change"
+  },
+  "decision": {
+    "go_for_screen": "LFPG accepted in part A AND pooled RMSE(r - f1) <= 0.97 x RMSE(r - f0) AND f1 better in at least 75% of months with >= 50 rows AND the mean optimistic recipe-month bound <= -0.05%",
+    "go_means": "a separately declared twelve-month refit of the residual trees (adj2, cat) with apt.dat LFPG stand distances, scored like adsb_v25; nothing is refitted, exported or uploaded by this probe",
+    "otherwise": "record null; the apt.dat lever is closed on evidence"
+  },
+  "no_go_actions": ["no model fit", "no Azure worker", "no export", "no upload", "no leaderboard read"]
+}
