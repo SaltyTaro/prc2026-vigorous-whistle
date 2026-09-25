@@ -1,0 +1,69 @@
+{
+  "audit_used": false,
+  "defaults": {
+    "architecture": {
+      "cat_cap": 16,
+      "d_num": 8,
+      "depth": 3,
+      "dropout": 0.1,
+      "heads": 4,
+      "max_tokens": 128,
+      "tok_dim": 96,
+      "width": 512
+    },
+    "context": {
+      "departures_only": false,
+      "use_adsb": true
+    },
+    "features": {
+      "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+      "extra_features": [
+        "adsb_appear_s",
+        "adsb_last_stand_s",
+        "adsb_pre_motion_gap_s",
+        "adsb_first_motion_s",
+        "adsb_first_dist_stand_imp_m",
+        "adsb_stand_imputed",
+        "sfc_ground_10m",
+        "sfc_moving_10m",
+        "sfc_moving_20m",
+        "sfc_rwy_queue_5m",
+        "sfc_rwy_queue_10m"
+      ]
+    },
+    "preprocess": {
+      "bins": 32,
+      "min_count": 10,
+      "target_clip": null
+    },
+    "rows": {
+      "exclude_airports": [
+        "LIRF"
+      ],
+      "exclude_population": false,
+      "max_label": null
+    },
+    "training": {
+      "batch_size": 2048,
+      "epochs": 16,
+      "grad_clip": 5.0,
+      "lr": 0.001,
+      "min_lr_fraction": 0.02,
+      "warmup_epochs": 1.0,
+      "weight_decay": 0.0001
+    }
+  },
+  "experiment_id": "prc2026-adsb-ctx-network-v2",
+  "parent": {
+    "path": "configs/adsb_ctx_network_v1.json",
+    "sha256": "8db2996014da108ef96dd70d98bd20a3ab1640d48d826072280ea22876aecdd8"
+  },
+  "purpose": "Round-A follow-up of adsb_ctx (configs/adsb_ctx_v2.json): the round-1 'ctx' settings of configs/adsb_ctx_network_v1.json (defaults copied unchanged) with the training budget of the round-2 GPU design's chosen variant g_e24 (docs/adsb_ctx2/README.md): 24 epochs instead of 16, as variant 'ctx_e24'. Every declared fit of adsb_ctx_v2 uses this file.",
+  "variants": {
+    "ctx_e24": {
+      "training": {
+        "epochs": 24
+      }
+    }
+  }
+}
