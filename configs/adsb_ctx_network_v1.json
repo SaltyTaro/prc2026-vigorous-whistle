@@ -1,0 +1,61 @@
+{
+  "experiment_id": "prc2026-adsb-ctx-network-v1",
+  "audit_used": false,
+  "purpose": "The context-network recipe fixed by the design phase (docs/adsb_ctx/README.md, configs/adsb_ctx_design_v1.json): the design 'ctx' settings, unchanged, as variant 'ctx'. Every declared development and refit fit of adsb_ctx_v1 uses this file.",
+  "defaults": {
+    "features": {
+      "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+      "extra_features": [
+        "adsb_appear_s",
+        "adsb_last_stand_s",
+        "adsb_pre_motion_gap_s",
+        "adsb_first_motion_s",
+        "adsb_first_dist_stand_imp_m",
+        "adsb_stand_imputed",
+        "sfc_ground_10m",
+        "sfc_moving_10m",
+        "sfc_moving_20m",
+        "sfc_rwy_queue_5m",
+        "sfc_rwy_queue_10m"
+      ]
+    },
+    "rows": {
+      "exclude_airports": [
+        "LIRF"
+      ],
+      "exclude_population": false,
+      "max_label": null
+    },
+    "preprocess": {
+      "bins": 32,
+      "min_count": 10,
+      "target_clip": null
+    },
+    "architecture": {
+      "d_num": 8,
+      "cat_cap": 16,
+      "width": 512,
+      "depth": 3,
+      "dropout": 0.1,
+      "tok_dim": 96,
+      "heads": 4,
+      "max_tokens": 128
+    },
+    "context": {
+      "use_adsb": true,
+      "departures_only": false
+    },
+    "training": {
+      "epochs": 16,
+      "batch_size": 2048,
+      "lr": 0.001,
+      "weight_decay": 0.0001,
+      "warmup_epochs": 1.0,
+      "min_lr_fraction": 0.02,
+      "grad_clip": 5.0
+    }
+  },
+  "variants": {
+    "ctx": {}
+  }
+}
