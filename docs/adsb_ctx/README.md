@@ -116,3 +116,39 @@ whether the gain survives the ranking months' adsb.lol coverage, using the thinn
 The gain survives in full: 100% in December and 99.9% in July. Where coverage thins (EDDF), the context network helps
 *more*; LSZH July moves from −1.21% to −1.05%. Reports: [`regime_check_2025-12.json`](regime_check_2025-12.json),
 [`regime_check_2025-07.json`](regime_check_2025-07.json).
+
+## Export v27 (25 September, 13:45 UTC) — not uploaded
+
+[`tools/export_adsb_ctx.py`](../../tools/export_adsb_ctx.py) → `runs/submissions/vigorous-whistle_v27.parquet`
+(SHA-256 `5a877924b0637f4cb257870410b178901403502131c635984526d23a5a35cd1d`, 1,343,768 bytes). Record:
+[`export.json`](export.json).
+
+- **Inputs:** ens_ctx is the mean of the 16 context seeds' twelve-month refits, each a January–December fit on 1,924,343
+  rows.
+  - Every record carries the declared variant, code, configuration, seed and model hash, the declared token content and one
+    ADS-B ranking table (`1dcf5c7f…`).
+  - The inherited ens_nn / ens_new / ens_nnl tables equal v25's recorded columns.
+- **Control rebuild:** v26 is rebuilt from its recorded components with the development scorer's code path. Committee mix
+  and values differ from the recorded v26 by 0.0 s, and the integers equal the uploaded v26.
+- **Candidate:** ens_ctx replaces the committee mix's network table at share 0.65.
+- **Change against v26:** 298,457 rows change, RMS 22.0 s, mean −0.95 s, median 4 s, p99 86 s, max 779 s.
+  - By airport (RMS): LTFM 38.6 s, EHAM 29.4 s, LFPG 26.3 s, EDDF 17.2 s. LIRF is unchanged.
+  - By month (RMS): January 26.8 s, July 17.1 s.
+  - ens_ctx correlates 0.993 with v26's network table on non-LIRF rows.
+- **Independent verification** ([`verification_v27.json`](verification_v27.json), `tools/verify_adsb_ctx.py`):
+  - All 16 context networks reload on Windows. From the exact cached ADS-B table and the declared ranking token file, they
+    re-predict 5,000 sampled ranking rows within 0.0012 s.
+  - Every ensemble column equals the plain mean of its saved seeds.
+  - v9, residual and committee equal v26's components and the twelve-month committee table.
+  - All 317,942 non-LIRF rows re-derived by plain arithmetic, max(0.3 (v9 + residual) + 0.7 (0.35 committee + 0.65 ens_ctx),
+    −12), round to the exported integers. All 26,899 LIRF rows equal the uploaded v26. The file contract holds.
+- **Audit** ([`export_audit_v27.json`](export_audit_v27.json), `tools/audit_export.py --version 27 --compare 26 25 9`):
+  - v26's shape: the same five January airport-months above their development means (within 0.4 points of v26's ratios),
+    the same flagged days, 37 predictions above 4 h (all LIRF, unchanged), and 7 negative predictions (v26: 9), none below
+    −12.
+  - The EHAM disruption days of early January 2026 rise slightly (4 January mean 2,396 s against 2,346 s).
+  - No row moves more than 1,800 s.
+- **Expected transfer (not a prediction of the official score):**
+  - Development −1.02% (December −1.73%, the closest regime to January 2026; July −1.10%).
+  - Under the ranking months' ADS-B coverage the gain was kept in full on both thinned months.
+- Upload only with the user's approval. Never re-upload v1–v26.
