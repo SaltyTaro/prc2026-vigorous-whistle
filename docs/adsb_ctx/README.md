@@ -73,3 +73,46 @@ Candidates change the committee mix's network table against the v26 control:
 
 The selection rule is the adsb_nn/nn2 rule, unchanged. The control must reproduce v26's recorded development RMSE on all four
 recipe months.
+
+**Result (25 September, 10:47 UTC, [`development_results.json`](development_results.json)): `ctx_b100_s65` is selected.**
+All four candidates are eligible; the declared rule picks the lowest mean ratio. The control reproduces v26 to 1e-9 s on
+every month.
+
+| candidate | 2025-01 | 2025-07 | 2025-11 | 2025-12 | mean |
+|---|---:|---:|---:|---:|---:|
+| ctx_b50 | −0.201% | −0.514% | −0.423% | −0.701% | −0.460% |
+| ctx_b75 | −0.285% | −0.738% | −0.600% | −1.004% | −0.657% |
+| ctx_b100 | −0.356% | −0.940% | −0.753% | −1.274% | −0.831% |
+| **ctx_b100_s65** | **−0.407%** | **−1.099%** | **−0.859%** | **−1.730%** | **−1.024%** |
+
+For `ctx_b100_s65`:
+- **Whole-month RMSE:** 327.71 → 326.38 s (January), 266.03 → 263.10 s (July), 187.88 → 186.27 s (November),
+  172.88 → 169.88 s (December).
+- **Paired-day 95% intervals:** [−2.55, −0.75], [−3.68, −2.32], [−1.88, −1.37] and [−4.27, −2.06] s. Days better: 27/31,
+  31/31, 30/30, 31/31.
+- **Every non-LIRF airport improves in every month.** LIRF is untouched by construction. LTFM improves most: −3.6 / −5.1 /
+  −3.4 / −5.0%. EGLL and EDDM gain about 1–2% in three of four months; LEMD and LFPG range from −0.1% to −1.8%.
+- **Unmatched non-LIRF rows gain most**, e.g. December 215.2 → 208.0 s and July 245.3 → 238.9 s. Matched rows also improve.
+- The mean gain rises monotonically with the network's weight. The grid's largest weight was chosen; no weight outside the
+  declared grid was scored.
+
+## Coverage-regime ship check — [`configs/adsb_ctx_regime_check_v1.json`](../../configs/adsb_ctx_regime_check_v1.json)
+
+Declared after the selection and before any thinned score (commit `a01a8a8`). The check can only block an export. It asks
+whether the gain survives the ranking months' adsb.lol coverage, using the thinned December and July sets of
+[`docs/coverage_regime/`](../coverage_regime/README.md).
+
+- **Tokens:** rebuilt from the thinned match tables. The natural rebuild reproduces the stored token file.
+- **Networks:** all 16 re-predicted with models that never saw the month.
+- **Recipe:** assembled from the coverage campaign's saved tables and residual members.
+- **Reproduction of the natural rebuilds:** the recorded v26 and candidate RMSE reproduce within 0.0006 s (December) and
+  0.00005 s (July). That campaign's local ADS-B feature rebuild is not bit-identical on a few rows, as documented there.
+
+| month (regime) | natural | thinned | EDDF natural → thinned | paired-day interval (thinned) | gate |
+|---|---:|---:|---|---|---|
+| 2025-12 (January-2026 coverage) | −1.730% | −1.737% | −1.02% → −1.49% | [−4.31, −2.11] s | pass |
+| 2025-07 (July-2026 coverage) | −1.099% | −1.098% | −0.86% → −1.55% | [−3.72, −2.35] s | pass |
+
+The gain survives in full: 100% in December and 99.9% in July. Where coverage thins (EDDF), the context network helps
+*more*; LSZH July moves from −1.21% to −1.05%. Reports: [`regime_check_2025-12.json`](regime_check_2025-12.json),
+[`regime_check_2025-07.json`](regime_check_2025-07.json).
