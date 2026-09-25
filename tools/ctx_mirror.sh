@@ -7,6 +7,6 @@ root="$1"; shift
 hosts=${*:-"arcw0 arcw1 arcw2 arcw3 arcw4 arcw5 arcw6 arcw7"}
 mkdir -p "$root" runs/adsb_ctx/logs
 for host in $hosts; do
-  timeout 600 ssh -o BatchMode=yes "$host" "cd /home/azureuser/prc-flight-2026 && tar cf - $root runs/adsb_ctx/logs $(ls runs/december/learners/runs__adsb_ctx__* 2>/dev/null) 2>/dev/null" | tar xf - || echo "$host: mirror returned $?"
+  timeout 600 ssh -o BatchMode=yes "$host" "cd /home/azureuser/prc-flight-2026 && tar cf - $root runs/adsb_ctx/logs \$(ls runs/december/learners/runs__adsb_ctx__* 2>/dev/null) 2>/dev/null" | tar xf - || echo "$host: mirror returned $?"
 done
 find "$root" -name run.json -o -name '*predictions.parquet' | sort | xargs sha256sum
