@@ -1,0 +1,60 @@
+{
+  "avoidable_pure_adj2_recipe_pct": {
+    "2025-07": -0.02186114049104182,
+    "2025-12": -0.010014587223916571
+  },
+  "avoidable_residual_same_row_recovery_share": {
+    "2025-07": 0.205,
+    "2025-12": 0.168
+  },
+  "decision": {
+    "coverage_augmented_round_recommended": false,
+    "extrapolated_committee_network_gain_pct_of_month_rmse": [
+      0.06,
+      0.13
+    ],
+    "penalty_above_0.3pct": true,
+    "recovery_at_least_a_quarter": false
+  },
+  "declaration": "configs/coverage_regime_v1.json",
+  "declaration_sha256": "73e75ff3dd4d7dc23e74930a8e68cfc378b40b18e615a008356295b4a4eb15d5",
+  "experiment_id": "coverage_regime_v1",
+  "files": {
+    "docs/coverage_regime/avoidability_2025-07.json": "8f0e9a7bfd8e5f841f744ae32313c61113fe6539cb02522f5370e3b300ac06f0",
+    "docs/coverage_regime/avoidability_2025-12.json": "e38a55724fbcd79ee7cea04df7b1d14f6712569bf6e953f0f9ef35c0f2ab4f84",
+    "docs/coverage_regime/penalty_2025-07.json": "6e5af1b9fb8b7ca74ba37722129a4bcd21b09fb714f068a837c96221be420728",
+    "docs/coverage_regime/penalty_2025-12.json": "8059a4d966af3046704b09cc3bd4fcb7a4c79934127761704b540a9722428aa6",
+    "src/prc2026_regime/thinning.py": "7ffa0ce4cfcfc32cace3eefbc865cc68304c3b8a7c9649e1d01a7b45cd78b96f",
+    "tools/regime_avoid.py": "54464bbcf5dd0b6bf01c4520fc9218b94fe19380d5a58f328dd101f891f3774a",
+    "tools/regime_features.py": "754d0c783064998c7b33c6872b7fd75f439ffc30d8f41221ca259599b48c9a4a",
+    "tools/regime_measure.py": "5ac5cd6b6aa5a3abbf601df0606b7d1b6d3d598d064d9d8cdd5b2e363426d7ea",
+    "tools/regime_summary.py": "f3bfa3f725b49f0984372bdf0911196ea215c85dfe9447a4aa0a45d37ff18e89",
+    "tools/regime_thin_match.py": "f8483d3bc2ec12f43a12442813c9f1009459e5945ea265c72f10e7d8a6e2001b"
+  },
+  "penalty_airports_pct": {
+    "2025-07": {
+      "EDDF": 26.30204350164691,
+      "LIRF": 2.1391017946528867,
+      "LSZH": 1.6867126889365203
+    },
+    "2025-12": {
+      "EDDF": 39.529792911162744
+    }
+  },
+  "penalty_whole_month_pct": {
+    "2025-07": 1.7163456951959866,
+    "2025-12": 1.240551741006679
+  },
+  "reproduction": {
+    "2025-07": {
+      "per_airport_max_abs_diff_s": 0.0012389127118552778,
+      "rebuilt_rmse": 266.02841668362066,
+      "recorded_rmse": 266.0283685986908
+    },
+    "2025-12": {
+      "per_airport_max_abs_diff_s": 0.0031753405568792914,
+      "rebuilt_rmse": 172.87463274247875,
+      "recorded_rmse": 172.87524988473587
+    }
+  }
+}

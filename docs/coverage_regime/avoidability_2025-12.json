@@ -1,0 +1,265 @@
+{
+  "airports_thinned_in_training": [
+    "EDDF"
+  ],
+  "avoidable": {
+    "mix": {
+      "natural_month_scope_rmse_change_pct": 0.3750876103638445,
+      "pure_adj2_recipe_change_pct": -0.010014587223916571,
+      "scope_rmse_change_pct": -0.1587813268053906,
+      "shifted_scope_rmse_change_pct": -4.275183114523418
+    },
+    "thinned": {
+      "natural_month_scope_rmse_change_pct": 1.1593812865148712,
+      "pure_adj2_recipe_change_pct": -0.023340386735692942,
+      "scope_rmse_change_pct": -0.1309448642385802,
+      "shifted_scope_rmse_change_pct": -4.26501174652304
+    }
+  },
+  "code_sha256": {
+    "src/prc2026_regime/thinning.py": "7ffa0ce4cfcfc32cace3eefbc865cc68304c3b8a7c9649e1d01a7b45cd78b96f",
+    "tools/regime_avoid.py": "54464bbcf5dd0b6bf01c4520fc9218b94fe19380d5a58f328dd101f891f3774a",
+    "tools/regime_thin_match.py": "f8483d3bc2ec12f43a12442813c9f1009459e5945ea265c72f10e7d8a6e2001b"
+  },
+  "created_at_utc": "2026-09-25T04:46:15.250656+00:00",
+  "declaration_sha256": "73e75ff3dd4d7dc23e74930a8e68cfc378b40b18e615a008356295b4a4eb15d5",
+  "fits": {
+    "mix": {
+      "inner_best_iterations": [
+        3995,
+        3978,
+        3993,
+        3116,
+        3366
+      ],
+      "rounds": 3978,
+      "rows": 1166300,
+      "seconds": 433.7
+    },
+    "thinned": {
+      "inner_best_iterations": [
+        3997,
+        2941,
+        2006,
+        3994,
+        3634
+      ],
+      "rounds": 3634,
+      "rows": 975655,
+      "seconds": 351.8
+    }
+  },
+  "month": "2025-12",
+  "residual_penalty_on_shifted_scope": {
+    "natural_month": 86.2186808327739,
+    "note": "natural-trained adj2: thinned-month shifted-scope RMSE vs natural-month shifted-scope RMSE; the rows differ (thinning removes matches), so this is descriptive",
+    "thinned_month": 113.53415738459036
+  },
+  "scores": {
+    "natural:mix_trained": {
+      "pure_adj2_recipe_rmse": 173.55526606255972,
+      "pure_adj2_recipe_shifted_airports_rmse": 87.83139131137835,
+      "scope_rmse": 121.16280966615159,
+      "scope_rows": 107155,
+      "shifted_scope_rmse": 86.93824016686558,
+      "shifted_scope_rows": 16417
+    },
+    "natural:natural_trained": {
+      "pure_adj2_recipe_rmse": 173.49034283463106,
+      "pure_adj2_recipe_shifted_airports_rmse": 87.7377877899511,
+      "scope_rmse": 120.71004125693176,
+      "scope_rows": 107155,
+      "shifted_scope_rmse": 86.2186808327739,
+      "shifted_scope_rows": 16417
+    },
+    "natural:thinned_trained": {
+      "pure_adj2_recipe_rmse": 173.62518547762102,
+      "pure_adj2_recipe_shifted_airports_rmse": 89.4136500329975,
+      "scope_rmse": 122.109530886209,
+      "scope_rows": 107155,
+      "shifted_scope_rmse": 94.9118032964498,
+      "shifted_scope_rows": 16417
+    },
+    "thinned:mix_trained": {
+      "pure_adj2_recipe_rmse": 175.63036768706777,
+      "pure_adj2_recipe_shifted_airports_rmse": 121.01870532290886,
+      "scope_rmse": 124.18355872908535,
+      "scope_rows": 104492,
+      "shifted_scope_rmse": 108.68036425886791,
+      "shifted_scope_rows": 13754
+    },
+    "thinned:natural_trained": {
+      "pure_adj2_recipe_rmse": 175.64795810503924,
+      "pure_adj2_recipe_shifted_airports_rmse": 122.0816761377876,
+      "scope_rmse": 124.38105261472151,
+      "scope_rows": 104492,
+      "shifted_scope_rmse": 113.53415738459036,
+      "shifted_scope_rows": 13754
+    },
+    "thinned:thinned_trained": {
+      "pure_adj2_recipe_rmse": 175.60696119232418,
+      "pure_adj2_recipe_shifted_airports_rmse": 120.89422750531075,
+      "scope_rmse": 124.21818201423665,
+      "scope_rows": 104492,
+      "shifted_scope_rmse": 108.69191223582162,
+      "shifted_scope_rows": 13754
+    }
+  },
+  "target_regime": "2026-01",
+  "training_thinning": {
+    "2025-01": {
+      "EDDF": {
+        "natural_source": {
+          "gate_pct": 12.33,
+          "match_pct": 89.76,
+          "points_median": 25.0
+        },
+        "thinned_source": {
+          "gate_pct": 5.93,
+          "match_pct": 77.13,
+          "points_median": 11.0
+        }
+      }
+    },
+    "2025-02": {
+      "EDDF": {
+        "natural_source": {
+          "gate_pct": 17.77,
+          "match_pct": 96.35,
+          "points_median": 35.0
+        },
+        "thinned_source": {
+          "gate_pct": 6.47,
+          "match_pct": 79.63,
+          "points_median": 11.0
+        }
+      }
+    },
+    "2025-03": {
+      "EDDF": {
+        "natural_source": {
+          "gate_pct": 19.1,
+          "match_pct": 97.03,
+          "points_median": 36.0
+        },
+        "thinned_source": {
+          "gate_pct": 7.04,
+          "match_pct": 79.44,
+          "points_median": 11.0
+        }
+      }
+    },
+    "2025-04": {
+      "EDDF": {
+        "natural_source": {
+          "gate_pct": 17.25,
+          "match_pct": 96.89,
+          "points_median": 35.0
+        },
+        "thinned_source": {
+          "gate_pct": 6.38,
+          "match_pct": 79.09,
+          "points_median": 11.0
+        }
+      }
+    },
+    "2025-05": {
+      "EDDF": {
+        "natural_source": {
+          "gate_pct": 14.44,
+          "match_pct": 84.17,
+          "points_median": 32.0
+        },
+        "thinned_source": {
+          "gate_pct": 6.08,
+          "match_pct": 70.68,
+          "points_median": 12.0
+        }
+      }
+    },
+    "2025-06": {
+      "EDDF": {
+        "natural_source": {
+          "gate_pct": 10.65,
+          "match_pct": 60.25,
+          "points_median": 32.0
+        },
+        "thinned_source": {
+          "gate_pct": 6.46,
+          "match_pct": 53.46,
+          "points_median": 17.0
+        }
+      }
+    },
+    "2025-07": {
+      "EDDF": {
+        "natural_source": {
+          "gate_pct": 16.68,
+          "match_pct": 91.73,
+          "points_median": 32.0
+        },
+        "thinned_source": {
+          "gate_pct": 6.81,
+          "match_pct": 76.91,
+          "points_median": 12.0
+        }
+      }
+    },
+    "2025-08": {
+      "EDDF": {
+        "natural_source": {
+          "gate_pct": 16.69,
+          "match_pct": 91.97,
+          "points_median": 28.0
+        },
+        "thinned_source": {
+          "gate_pct": 7.69,
+          "match_pct": 77.18,
+          "points_median": 13.0
+        }
+      }
+    },
+    "2025-09": {
+      "EDDF": {
+        "natural_source": {
+          "gate_pct": 33.32,
+          "match_pct": 94.19,
+          "points_median": 46.0
+        },
+        "thinned_source": {
+          "gate_pct": 7.62,
+          "match_pct": 78.29,
+          "points_median": 13.0
+        }
+      }
+    },
+    "2025-10": {
+      "EDDF": {
+        "natural_source": {
+          "gate_pct": 22.48,
+          "match_pct": 91.7,
+          "points_median": 33.0
+        },
+        "thinned_source": {
+          "gate_pct": 7.55,
+          "match_pct": 78.91,
+          "points_median": 14.0
+        }
+      }
+    },
+    "2025-11": {
+      "EDDF": {
+        "natural_source": {
+          "gate_pct": 40.28,
+          "match_pct": 95.52,
+          "points_median": 51.0
+        },
+        "thinned_source": {
+          "gate_pct": 7.42,
+          "match_pct": 78.72,
+          "points_median": 13.0
+        }
+      }
+    }
+  }
+}

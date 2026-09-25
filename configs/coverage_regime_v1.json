@@ -1,0 +1,42 @@
+{
+  "experiment_id": "coverage_regime_v1",
+  "declared_at_utc": "2026-09-25T03:43:30Z",
+  "purpose": "Measure what the shipped v26 recipe loses when its ADS-B inputs come from the ranking months' coverage regime instead of the 2025 regime it was developed on (step 2), and whether training the residual stage on thinned coverage recovers part of it (step 3). No model is selected, exported or uploaded; the result is a recommendation.",
+  "declared_before": "any development label read by this campaign. Seen before declaring, all label-free: the natural regime statistics of 2025-07, 2025-12, 2026-01, 2026-07 per airport (match / gate share, points per segment, segment timing) and the census tables of docs/adsb_coverage/; thinning attempts a1-a13 on 2025-12 (target 2026-01) and 2025-07 (target 2026-07), their regime statistics (runs/coverage_regime/<attempt>/attempt_<month>.json), a per-day loss diagnostic on three July days, and the natural matcher reproduction checks (identical rows on 2025-12-03 and 2025-07-10 under both stand tables).",
+  "regimes": {
+    "2025-12 -> 2026-01": {
+      "attempt": "a13_dec",
+      "attempt_record_sha256": "89210f061e865a2d6976851308f71e7581974b34bc76d236c8f026b29a205773",
+      "airports_thinned": ["EDDF"],
+      "left_natural": "every other airport: their 2026-01 class shares are within 4 points of 2025-12's (EGLL, EDDM higher in 2026)",
+      "transform": "decomposed thinning (src/prc2026_regime/thinning.py): per 100 m cell keep = c x ratio of 2026-01 to 2025-12 ground points per departure inside matched departure segments (shrunk to 400 m and airport ratios, prior 50), split into a 400 m run (visit) keep and a point keep; c calibrated so the expected kept total equals the target total; plus whole aircraft-day ground removal with probability 0.08; seed 20260925",
+      "match": "EDDF thinned / target: matched 79.4 / 79.5%, gate 7.2 / 7.8%, points per segment 13 / 15, dark first-point 445 / 452 s, segment 321 / 298 s"
+    },
+    "2025-07 -> 2026-07": {
+      "attempt": "a13_jul",
+      "attempt_record_sha256": "fa55e0a7704587328a4c80ed750753ee4329082ad5c3254028f201299329bd76",
+      "airports_thinned": ["EDDF", "LSZH", "LIRF"],
+      "left_natural": "EGLL, EDDM, LEMD, LFPG, EHAM, LEBL, LTFM: July 2025 coverage is already equal to or below July 2026 there (EDDM 37.5 vs 96.8% matched, EGLL 23.2 vs 97.4%, LEMD 36.9 vs 74.2%), so thinning cannot move them toward July 2026",
+      "transform": "the same decomposed thinning, calibrated, with multipliers EDDF 3, LSZH 1.6 (LIRF: the ratio is ~0.001, the airport goes dark); no aircraft-day removal",
+      "match": "EDDF thinned / target: matched 64.9 / 76.1%, gate 4.3 / 3.8%, points 7 / 10; LSZH matched 90.3 / 93.9%, gate 19.1 / 18.2%, points 34 / 45; LIRF matched 0.6 / 0.2%",
+      "known_limit": "July 2026 covers parts of EDDF (runway areas) better than July 2025 did (54.7% of its departure-route points sit in cells whose ratio exceeds 1); removal cannot recreate them, so EDDF July is harsher than July 2026: about 11 points of departures that July 2026 sees as dark are unmatched here. EDDF July penalties are an upper bound in that component."
+    }
+  },
+  "step_2_penalty": {
+    "recipe": "v26 = adsb_rnn candidate rnet_w90 (configs/adsb_rnn_v1.json, recorded user override): residual 0.05 adj2 + 0.05 cat + 0.9 rnet on matched_no_lirf, committee mix = 0.5 ens_v20_bag_q_all + 0.5 x (0.5 ens_nn + 0.5 ens_new) at weight 0.7 on all_no_lirf, LIRF blends (0.30 net / 0.55 tree matched, 0.25 / 0.25 unmatched), floor -12, built with tools/run_adsb_rnn_dev.py's own functions",
+    "months": {"2025-12": "committee / networks / LIRF learners: their January-November refit models (the December leaves); residual networks: their leave-one-month-out models for December", "2025-07": "committee / networks / LIRF learners: their seasonal-fold models; residual networks: leave-one-month-out models for July"},
+    "residual_trees": "adj2 refitted locally on the other eleven months (natural features, v25 settings, 12 threads) and applied to natural and thinned December / July; the CatBoost member cat is NOT refitted (5,014 s per fit on a VM): on rows in scope in both versions its thinned value is its stored natural value plus adj2's thinned-minus-natural change; weight 0.05 of the residual",
+    "natural_reproduction": "the natural rebuild must reproduce every re-predicted member's stored development predictions (max abs difference reported) and the recorded rnet_w90 RMSE per airport of runs/adsb_rnn/dev/month_<M>.json (tolerance 1e-6 s, or the adj2 thread-count difference reported if it is the only source)",
+    "features": "thinned committee / residual / v19 feature tables by tools/regime_features.py from the attempt's thinned match tables and thinned surface; the natural tables are rebuilt by the same code and checked against the cached ones",
+    "report": "RMSE natural vs thinned on every row of the month, non-LIRF rows, each airport, and each natural-class x thinned-class cell (gate / dark / unmatched) of the thinned airports; SSE change by component (committee mix, residual, LIRF blend)"
+  },
+  "step_3_avoidability": {
+    "question": "Does the residual stage recover part of its thinned-regime penalty when it is trained on the same regime?",
+    "fits": "adj2 (v25 settings) per evaluated month on the other eleven months with: natural (= step 2's control), mix (natural rows plus a thinned copy of every row of the thinned airports, both weighted as in v25), thinned (the thinned airports' rows replaced by their thinned version). Training months are thinned toward the evaluated month's target regime with the same transform settings as its declared attempt (the multipliers and aircraft-day drop of that regime), each with its own keep table",
+    "evaluation": "on the thinned evaluated month: scope RMSE of v9 + adj2 (matched_no_lirf, thinned scope) and the recipe with a pure-adj2 residual (0.3 x (v9 + adj2) + 0.7 x committee mix on non-LIRF), whole month and thinned airports; the natural month is also scored so that any loss there is visible",
+    "avoidable_part": "thinned-evaluation RMSE of the natural-trained adj2 minus that of the mix- (or thinned-) trained adj2"
+  },
+  "recommendation_rule": "A coverage-augmented training round for the committee and networks is recommended if (a) the step-2 recipe penalty exceeds 0.3% of the whole-month RMSE in either regime and (b) step 3 recovers at least a quarter of the residual stage's thinned-regime penalty on the thinned airports' scope rows. Otherwise the ranking regime's cost is recorded as unavoidable with the current data.",
+  "resources": "local only (no Azure, no AWS), at most 12 threads per process and 6 matching workers (the workstation has 15.7 GB), one heavy job at a time",
+  "not_done": ["no upload", "no export", "no leaderboard read", "no change to any frozen package, tool or configuration"]
+}
