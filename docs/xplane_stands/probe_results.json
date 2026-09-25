@@ -1,0 +1,711 @@
+{
+  "code_sha256": "7217fa736c1779124d6d205950195d1cd1eabdcaf0ba83a4d21eb5c85efce58a",
+  "config_sha256": "e5e8ed0cfcd7e40c4cabb2beeef0dfd770324d1d5dfc31eac2244ad4a5d52d6e",
+  "decision": {
+    "go_for_screen": false,
+    "lfpg_accepted": false,
+    "mean_recipe_month_bound_pct": -0.013980725535089888,
+    "months_rule_met": false,
+    "pooled_ratio": 0.9967815264261293
+  },
+  "experiment_id": "xplane_stands_probe_v1",
+  "finished_utc": "2026-09-25T01:49:20.954209+00:00",
+  "part_a": {
+    "airports": {
+      "EDDF": {
+        "ambiguous_keys": 2,
+        "date_approved": "2024-08-16T21:32:31.000Z",
+        "distance": {
+          "median_m": 11.37039879204686,
+          "n": 158,
+          "p90_m": 120.66576900981293,
+          "within_100m": 0.8354430379746836,
+          "within_25m": 0.7151898734177216,
+          "within_40m": 0.7215189873417721
+        },
+        "learned_stands": 184,
+        "named_keys": 225,
+        "passes": false,
+        "resolved_keys": 223,
+        "resolved_learned_stands": 158,
+        "scenery_id": 103368,
+        "startup_locations": 227
+      },
+      "EDDM": {
+        "ambiguous_keys": 0,
+        "date_approved": "2024-08-15T18:29:50.000Z",
+        "distance": {
+          "median_m": 19.996282482993077,
+          "n": 123,
+          "p90_m": 53.93275723749775,
+          "within_100m": 0.9512195121951219,
+          "within_25m": 0.5691056910569106,
+          "within_40m": 0.8048780487804879
+        },
+        "learned_stands": 153,
+        "named_keys": 283,
+        "passes": true,
+        "resolved_keys": 283,
+        "resolved_learned_stands": 123,
+        "scenery_id": 103350,
+        "startup_locations": 284
+      },
+      "EGLL": {
+        "ambiguous_keys": 1,
+        "date_approved": "2024-08-24T02:38:16.000Z",
+        "distance": {
+          "median_m": 67.10000980039743,
+          "n": 149,
+          "p90_m": 397.9246515297605,
+          "within_100m": 0.5973154362416108,
+          "within_25m": 0.40939597315436244,
+          "within_40m": 0.4228187919463087
+        },
+        "learned_stands": 153,
+        "named_keys": 265,
+        "passes": false,
+        "resolved_keys": 264,
+        "resolved_learned_stands": 149,
+        "scenery_id": 103457,
+        "startup_locations": 282
+      },
+      "EHAM": {
+        "ambiguous_keys": 2,
+        "date_approved": "2024-02-26T20:34:11.000Z",
+        "distance": {
+          "median_m": 12.313021909268633,
+          "n": 162,
+          "p90_m": 68.99093834150783,
+          "within_100m": 0.9320987654320988,
+          "within_25m": 0.6666666666666666,
+          "within_40m": 0.6975308641975309
+        },
+        "learned_stands": 187,
+        "named_keys": 190,
+        "passes": false,
+        "resolved_keys": 188,
+        "resolved_learned_stands": 162,
+        "scenery_id": 101003,
+        "startup_locations": 196
+      },
+      "LEBL": {
+        "ambiguous_keys": 2,
+        "date_approved": "2024-05-13T18:38:55.000Z",
+        "distance": {
+          "median_m": 9.290649239454197,
+          "n": 128,
+          "p90_m": 228.84714036469882,
+          "within_100m": 0.7734375,
+          "within_25m": 0.6875,
+          "within_40m": 0.703125
+        },
+        "learned_stands": 131,
+        "named_keys": 231,
+        "passes": false,
+        "resolved_keys": 229,
+        "resolved_learned_stands": 128,
+        "scenery_id": 102255,
+        "startup_locations": 234
+      },
+      "LEMD": {
+        "ambiguous_keys": 2,
+        "date_approved": "2023-12-26T19:07:11.000Z",
+        "distance": {
+          "median_m": 12.821406166946185,
+          "n": 160,
+          "p90_m": 111.14045848551812,
+          "within_100m": 0.85,
+          "within_25m": 0.65625,
+          "within_40m": 0.69375
+        },
+        "learned_stands": 183,
+        "named_keys": 374,
+        "passes": false,
+        "resolved_keys": 372,
+        "resolved_learned_stands": 160,
+        "scenery_id": 99851,
+        "startup_locations": 380
+      },
+      "LIRF": {
+        "ambiguous_keys": 0,
+        "date_approved": "2024-03-20T21:56:39.000Z",
+        "distance": {
+          "median_m": 66.31494197695234,
+          "n": 41,
+          "p90_m": 878.2341818175775,
+          "within_100m": 0.7560975609756098,
+          "within_25m": 0.43902439024390244,
+          "within_40m": 0.4634146341463415
+        },
+        "learned_stands": 43,
+        "named_keys": 140,
+        "passes": false,
+        "resolved_keys": 140,
+        "resolved_learned_stands": 41,
+        "scenery_id": 101391,
+        "startup_locations": 140
+      },
+      "LSZH": {
+        "ambiguous_keys": 0,
+        "date_approved": "2023-08-01T20:42:13.000Z",
+        "distance": {
+          "median_m": 13.716712646450615,
+          "n": 40,
+          "p90_m": 113.52131651928707,
+          "within_100m": 0.575,
+          "within_25m": 0.55,
+          "within_40m": 0.575
+        },
+        "learned_stands": 74,
+        "named_keys": 152,
+        "passes": false,
+        "resolved_keys": 152,
+        "resolved_learned_stands": 40,
+        "scenery_id": 97397,
+        "startup_locations": 152
+      }
+    },
+    "airports_passing": 1,
+    "catalogue_accepted": false,
+    "lfpg": {
+      "accepted": false,
+      "gate_anchor_distance": {
+        "median_m": 2079.8711747391108,
+        "n": 350,
+        "p90_m": 2914.8273908279116,
+        "within_100m": 0.08285714285714285,
+        "within_25m": 0.05142857142857143,
+        "within_40m": 0.05142857142857143
+      },
+      "gate_matches": 367,
+      "learned_stands": {
+        "J30": 2869.7643114429507,
+        "M17": 234.55501324025602,
+        "X01": 1866.6245966939932
+      },
+      "pre_data": {
+        "ambiguous_keys": 0,
+        "date_approved": "2024-06-03T15:04:03.000Z",
+        "named_keys": 513,
+        "resolved_keys": 513,
+        "scenery_id": 102452,
+        "startup_locations": 513
+      },
+      "recommended": {
+        "ambiguous_keys": 0,
+        "date_approved": "2026-05-26T18:51:18.000Z",
+        "named_keys": 513,
+        "resolved_keys": 513,
+        "scenery_id": 111022,
+        "startup_locations": 513
+      },
+      "version_shift": {
+        "keys_in_both": 513,
+        "max_m": 0.0,
+        "moved_over_10m": 0,
+        "only_pre_data": 0,
+        "only_recommended": 0
+      }
+    },
+    "sensitivity_recommended": {
+      "EDDF": {
+        "ambiguous_keys": 2,
+        "date_approved": "2024-08-16T21:32:31.000Z",
+        "distance": {
+          "median_m": 11.37039879204686,
+          "n": 158,
+          "p90_m": 120.66576900981293,
+          "within_100m": 0.8354430379746836,
+          "within_25m": 0.7151898734177216,
+          "within_40m": 0.7215189873417721
+        },
+        "learned_stands": 184,
+        "named_keys": 225,
+        "resolved_keys": 223,
+        "resolved_learned_stands": 158,
+        "scenery_id": 103368,
+        "startup_locations": 227
+      },
+      "EDDM": {
+        "ambiguous_keys": 0,
+        "date_approved": "2026-06-10T15:28:55.000Z",
+        "distance": {
+          "median_m": 19.996282482993077,
+          "n": 123,
+          "p90_m": 53.93275723749775,
+          "within_100m": 0.9512195121951219,
+          "within_25m": 0.5691056910569106,
+          "within_40m": 0.8048780487804879
+        },
+        "learned_stands": 153,
+        "named_keys": 283,
+        "resolved_keys": 283,
+        "resolved_learned_stands": 123,
+        "scenery_id": 111124,
+        "startup_locations": 285
+      },
+      "EGLL": {
+        "ambiguous_keys": 2,
+        "date_approved": "2026-07-01T13:26:41.000Z",
+        "distance": {
+          "median_m": 67.9240097534312,
+          "n": 149,
+          "p90_m": 395.69138945600815,
+          "within_100m": 0.6040268456375839,
+          "within_25m": 0.4161073825503356,
+          "within_40m": 0.42953020134228187
+        },
+        "learned_stands": 153,
+        "named_keys": 266,
+        "resolved_keys": 264,
+        "resolved_learned_stands": 149,
+        "scenery_id": 111341,
+        "startup_locations": 284
+      },
+      "EHAM": {
+        "ambiguous_keys": 1,
+        "date_approved": "2026-09-09T04:26:11.000Z",
+        "distance": {
+          "median_m": 13.731058517819783,
+          "n": 181,
+          "p90_m": 77.44452506234627,
+          "within_100m": 0.9171270718232044,
+          "within_25m": 0.6408839779005525,
+          "within_40m": 0.6795580110497238
+        },
+        "learned_stands": 187,
+        "named_keys": 219,
+        "resolved_keys": 218,
+        "resolved_learned_stands": 181,
+        "scenery_id": 111943,
+        "startup_locations": 224
+      },
+      "LEBL": {
+        "ambiguous_keys": 2,
+        "date_approved": "2024-05-13T18:38:55.000Z",
+        "distance": {
+          "median_m": 9.290649239454197,
+          "n": 128,
+          "p90_m": 228.84714036469882,
+          "within_100m": 0.7734375,
+          "within_25m": 0.6875,
+          "within_40m": 0.703125
+        },
+        "learned_stands": 131,
+        "named_keys": 231,
+        "resolved_keys": 229,
+        "resolved_learned_stands": 128,
+        "scenery_id": 102255,
+        "startup_locations": 234
+      },
+      "LEMD": {
+        "ambiguous_keys": 2,
+        "date_approved": "2023-12-26T19:07:11.000Z",
+        "distance": {
+          "median_m": 12.821406166946185,
+          "n": 160,
+          "p90_m": 111.14045848551812,
+          "within_100m": 0.85,
+          "within_25m": 0.65625,
+          "within_40m": 0.69375
+        },
+        "learned_stands": 183,
+        "named_keys": 374,
+        "resolved_keys": 372,
+        "resolved_learned_stands": 160,
+        "scenery_id": 99851,
+        "startup_locations": 380
+      },
+      "LIRF": {
+        "ambiguous_keys": 1,
+        "date_approved": "2026-04-17T02:48:27.000Z",
+        "distance": {
+          "median_m": 62.59353346195201,
+          "n": 42,
+          "p90_m": 875.7761204257313,
+          "within_100m": 0.7619047619047619,
+          "within_25m": 0.4523809523809524,
+          "within_40m": 0.47619047619047616
+        },
+        "learned_stands": 43,
+        "named_keys": 149,
+        "resolved_keys": 148,
+        "resolved_learned_stands": 42,
+        "scenery_id": 110482,
+        "startup_locations": 151
+      },
+      "LSZH": {
+        "ambiguous_keys": 0,
+        "date_approved": "2025-03-29T04:11:42.000Z",
+        "distance": {
+          "median_m": 99.19702825457749,
+          "n": 49,
+          "p90_m": 406.743621078003,
+          "within_100m": 0.5102040816326531,
+          "within_25m": 0.42857142857142855,
+          "within_40m": 0.46938775510204084
+        },
+        "learned_stands": 74,
+        "named_keys": 189,
+        "resolved_keys": 189,
+        "resolved_learned_stands": 49,
+        "scenery_id": 106102,
+        "startup_locations": 189
+      }
+    }
+  },
+  "part_b": {
+    "2025-01": {
+      "dark": 0,
+      "dark_first_point": {
+        "n": 0
+      },
+      "dark_resolved": 0,
+      "dark_within_40m": 0,
+      "departures": 17900,
+      "gate": 0,
+      "matches": 0,
+      "stand_resolved": 16693
+    },
+    "2025-02": {
+      "dark": 0,
+      "dark_first_point": {
+        "n": 0
+      },
+      "dark_resolved": 0,
+      "dark_within_40m": 0,
+      "departures": 16806,
+      "gate": 0,
+      "matches": 0,
+      "stand_resolved": 15706
+    },
+    "2025-03": {
+      "dark": 0,
+      "dark_first_point": {
+        "n": 0
+      },
+      "dark_resolved": 0,
+      "dark_within_40m": 0,
+      "departures": 19341,
+      "gate": 0,
+      "matches": 0,
+      "stand_resolved": 18079
+    },
+    "2025-04": {
+      "dark": 0,
+      "dark_first_point": {
+        "n": 0
+      },
+      "dark_resolved": 0,
+      "dark_within_40m": 0,
+      "departures": 20002,
+      "gate": 0,
+      "matches": 0,
+      "stand_resolved": 18676
+    },
+    "2025-05": {
+      "dark": 1,
+      "dark_first_point": {
+        "median_m": 5191.764379874016,
+        "n": 1,
+        "p90_m": 5191.764379874016,
+        "within_100m": 0.0,
+        "within_25m": 0.0,
+        "within_40m": 0.0
+      },
+      "dark_resolved": 1,
+      "dark_within_40m": 0,
+      "departures": 20908,
+      "gate": 0,
+      "matches": 1,
+      "stand_resolved": 19515
+    },
+    "2025-06": {
+      "dark": 511,
+      "dark_first_point": {
+        "median_m": 1760.5929809487336,
+        "n": 489,
+        "p90_m": 3949.751425314973,
+        "within_100m": 0.002044989775051125,
+        "within_25m": 0.0,
+        "within_40m": 0.0
+      },
+      "dark_resolved": 489,
+      "dark_within_40m": 0,
+      "departures": 20887,
+      "gate": 11,
+      "matches": 522,
+      "stand_resolved": 19580
+    },
+    "2025-07": {
+      "dark": 1528,
+      "dark_first_point": {
+        "median_m": 1984.3960209413829,
+        "n": 1419,
+        "p90_m": 4289.020950381623,
+        "within_100m": 0.010570824524312896,
+        "within_25m": 0.004228329809725159,
+        "within_40m": 0.006342494714587738
+      },
+      "dark_resolved": 1419,
+      "dark_within_40m": 9,
+      "departures": 21712,
+      "gate": 41,
+      "matches": 1569,
+      "stand_resolved": 20049
+    },
+    "2025-08": {
+      "dark": 1798,
+      "dark_first_point": {
+        "median_m": 1942.4068045247936,
+        "n": 1644,
+        "p90_m": 3916.674246207576,
+        "within_100m": 0.009124087591240875,
+        "within_25m": 0.0030413625304136255,
+        "within_40m": 0.004866180048661801
+      },
+      "dark_resolved": 1644,
+      "dark_within_40m": 8,
+      "departures": 22081,
+      "gate": 36,
+      "matches": 1834,
+      "stand_resolved": 20224
+    },
+    "2025-09": {
+      "dark": 2153,
+      "dark_first_point": {
+        "median_m": 1873.098417560423,
+        "n": 1969,
+        "p90_m": 3972.143241114768,
+        "within_100m": 0.009141696292534281,
+        "within_25m": 0.0035551041137633316,
+        "within_40m": 0.006094464195022855
+      },
+      "dark_resolved": 1969,
+      "dark_within_40m": 12,
+      "departures": 20682,
+      "gate": 48,
+      "matches": 2201,
+      "stand_resolved": 19141
+    },
+    "2025-10": {
+      "dark": 4010,
+      "dark_first_point": {
+        "median_m": 1902.244724699609,
+        "n": 3647,
+        "p90_m": 3602.7708212567213,
+        "within_100m": 0.005209761447765287,
+        "within_25m": 0.0010967918837400603,
+        "within_40m": 0.0019193857965451055
+      },
+      "dark_resolved": 3647,
+      "dark_within_40m": 7,
+      "departures": 20809,
+      "gate": 48,
+      "matches": 4058,
+      "stand_resolved": 19260
+    },
+    "2025-11": {
+      "dark": 6738,
+      "dark_first_point": {
+        "median_m": 1901.3389300464141,
+        "n": 6084,
+        "p90_m": 3674.7282235213047,
+        "within_100m": 0.005259697567389875,
+        "within_25m": 0.0013149243918474688,
+        "within_40m": 0.002794214332675871
+      },
+      "dark_resolved": 6084,
+      "dark_within_40m": 17,
+      "departures": 18646,
+      "gate": 59,
+      "matches": 6797,
+      "stand_resolved": 17200
+    },
+    "2025-12": {
+      "dark": 4734,
+      "dark_first_point": {
+        "median_m": 1851.7938251942096,
+        "n": 4278,
+        "p90_m": 3438.530582405411,
+        "within_100m": 0.007713884992987377,
+        "within_25m": 0.0011687704534829358,
+        "within_40m": 0.002571294997662459
+      },
+      "dark_resolved": 4278,
+      "dark_within_40m": 11,
+      "departures": 19778,
+      "gate": 39,
+      "matches": 4773,
+      "stand_resolved": 18263
+    },
+    "2026-01": {
+      "dark": 3692,
+      "dark_first_point": {
+        "median_m": 1661.135469887196,
+        "n": 3369,
+        "p90_m": 3110.3431664009913,
+        "within_100m": 0.005342831700801425,
+        "within_25m": 0.0011872959335114278,
+        "within_40m": 0.0020777678836449986
+      },
+      "dark_resolved": 3369,
+      "dark_within_40m": 7,
+      "departures": 18129,
+      "gate": 34,
+      "matches": 3726,
+      "stand_resolved": 16653
+    },
+    "2026-07": {
+      "dark": 4538,
+      "dark_first_point": {
+        "median_m": 1698.718296930396,
+        "n": 4157,
+        "p90_m": 3490.1449098238986,
+        "within_100m": 0.006495068559057012,
+        "within_25m": 0.0028866971373586723,
+        "within_40m": 0.004330045706038008
+      },
+      "dark_resolved": 4157,
+      "dark_within_40m": 18,
+      "departures": 21743,
+      "gate": 51,
+      "matches": 4589,
+      "stand_resolved": 19974
+    }
+  },
+  "part_c": {
+    "d": {
+      "median_m": 1890.5248297212365,
+      "n": 19375,
+      "p90_m": 3720.220439839494,
+      "within_100m": 0.006761290322580645,
+      "within_25m": 0.0017548387096774194,
+      "within_40m": 0.0032516129032258063
+    },
+    "excluded_not_in_residual_table": {
+      "2025-01": 0,
+      "2025-02": 0,
+      "2025-03": 0,
+      "2025-04": 0,
+      "2025-05": 0,
+      "2025-06": 30,
+      "2025-07": 0,
+      "2025-08": 35,
+      "2025-09": 36,
+      "2025-10": 55,
+      "2025-11": 0,
+      "2025-12": 0
+    },
+    "mean_recipe_month_bound_pct": -0.013980725535089888,
+    "months_eligible": [
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12"
+    ],
+    "months_f1_better": [
+      "2025-07",
+      "2025-08",
+      "2025-10",
+      "2025-11",
+      "2025-12"
+    ],
+    "per_month": {
+      "2025-05": {
+        "corr_d_r": null,
+        "residual_path_rmse": 110.59473198314822,
+        "rmse_f0": 112.68815272382277,
+        "rmse_f1": 133.36503198867206,
+        "rows": 1
+      },
+      "2025-06": {
+        "corr_d_r": -0.02036895515967199,
+        "residual_path_rmse": 302.2763318109306,
+        "rmse_f0": 302.3682063058211,
+        "rmse_f1": 303.10970251745636,
+        "rows": 459
+      },
+      "2025-07": {
+        "corr_d_r": 0.17600849519974585,
+        "recipe_month_bound_pct": -0.003709047287858702,
+        "recipe_rmse_on_rows": 240.78595619830304,
+        "residual_path_rmse": 216.76652890560763,
+        "rmse_f0": 216.80010239667524,
+        "rmse_f1": 215.1480935331002,
+        "rows": 1419
+      },
+      "2025-08": {
+        "corr_d_r": 0.07472970437432554,
+        "residual_path_rmse": 229.26352463672598,
+        "rmse_f0": 229.2156267610558,
+        "rmse_f1": 228.70633666094207,
+        "rows": 1609
+      },
+      "2025-09": {
+        "corr_d_r": 0.028008463661857497,
+        "residual_path_rmse": 218.09199467418762,
+        "rmse_f0": 218.0453969059219,
+        "rmse_f1": 218.3562506830226,
+        "rows": 1933
+      },
+      "2025-10": {
+        "corr_d_r": 0.10284752431673536,
+        "residual_path_rmse": 190.88118136755884,
+        "rmse_f0": 190.896310645772,
+        "rmse_f1": 190.22272409624424,
+        "rows": 3592
+      },
+      "2025-11": {
+        "corr_d_r": 0.11617197308926636,
+        "recipe_month_bound_pct": -0.03040063777647317,
+        "recipe_rmse_on_rows": 233.23120227598176,
+        "residual_path_rmse": 236.67978077182,
+        "rmse_f0": 236.85363218431826,
+        "rmse_f1": 235.62272812245286,
+        "rows": 6084
+      },
+      "2025-12": {
+        "corr_d_r": 0.03867563275977047,
+        "recipe_month_bound_pct": -0.007832491540937792,
+        "recipe_rmse_on_rows": 208.61541689123422,
+        "residual_path_rmse": 218.22905297722903,
+        "rmse_f0": 218.69822259281625,
+        "rmse_f1": 218.26646749128767,
+        "rows": 4278
+      }
+    },
+    "pooled": {
+      "ordinary_ratio": 0.9968174214157529,
+      "ordinary_rows": 19371,
+      "ratio": 0.9967815264261293,
+      "rmse_f0": 222.81857207134118,
+      "rmse_f1": 222.10143638536195
+    },
+    "rows": 19375,
+    "whole_recipe_months": {
+      "2025-01": {
+        "rows": 153706,
+        "sse": 16612260754.19411
+      },
+      "2025-07": {
+        "rows": 190713,
+        "sse": 13650297643.624506
+      },
+      "2025-11": {
+        "rows": 162332,
+        "sse": 5820319467.345649
+      },
+      "2025-12": {
+        "rows": 165677,
+        "sse": 5152425019.894609
+      }
+    }
+  },
+  "sources_sha256": "e5e0820a5d4b1399345b59e496d77fcfc97f17aa1ff398838cb4f20db58bace1",
+  "stands_sha256": "63502c9465e3742d537fca30bd3c03622623a3be047eb01ba068292a249d995d",
+  "started_utc": "2026-09-25T01:49:11.124698+00:00"
+}
