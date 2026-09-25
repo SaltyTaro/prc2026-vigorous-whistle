@@ -1,0 +1,39 @@
+{'tables': 12, 'tokens': 4857331, 'device': 'cuda', 'seconds': 10.2}
+{'fitted_rows': 1130307, 'numeric': 299, 'categorical': 15, 'monitor_rows': 171532, 'target_mean': 965.9260722971724, 'target_scale': 401.6543570060753, 'seconds': 36.0}
+[W925 07:12:35.128439753 CUDACachingAllocator.cpp:3933] memory allocation failed with OOM on device 0 while trying to allocate 8589934592 bytes (free: 2290155520, total: 47665709056).
+[W925 07:12:35.420461834 CUDACachingAllocator.cpp:3933] memory allocation failed with OOM on device 0 while trying to allocate 8589934592 bytes (free: 3240165376, total: 47665709056).
+[W925 07:12:35.664581503 CUDACachingAllocator.cpp:3933] memory allocation failed with OOM on device 0 while trying to allocate 8589934592 bytes (free: 4045471744, total: 47665709056).
+Traceback (most recent call last):
+  File "/home/ubuntu/prc/tools/run_adsb_ctx2.py", line 247, in <module>
+    main()
+  File "/home/ubuntu/prc/tools/run_adsb_ctx2.py", line 179, in main
+    history = train(model, pre, x_num, x_cat, context, torch.from_numpy(pre.scale_target(target)).to(device), variant["training"], args.seed, monitor=monitor,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prc/src/prc2026_ctx2/train.py", line 116, in train
+    values = predict(model, pre, monitor[0], monitor[1], monitor[2])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prc/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prc/src/prc2026_ctx2/train.py", line 75, in predict
+    z = model(x_num[start:stop], x_cat[start:stop], tok, tok_nan, wake, valid)[:, 0]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prc/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prc/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prc/src/prc2026_ctx2/model.py", line 62, in forward
+    e = layer(e, src_key_padding_mask=pad)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prc/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prc/.venv/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ubuntu/prc/.venv/lib/python3.12/site-packages/torch/nn/modules/transformer.py", line 917, in forward
+    return torch._transformer_encoder_layer_fwd(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 8.00 GiB. GPU 0 has a total capacity of 44.39 GiB of which 3.77 GiB is free. Process 10864 has 16.71 GiB memory in use. Including non-PyTorch memory, this process has 23.90 GiB memory in use. Of the allocated memory 15.69 GiB is allocated by PyTorch, and 7.72 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
