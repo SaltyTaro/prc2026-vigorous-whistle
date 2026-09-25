@@ -1,0 +1,36 @@
+{
+  "audit_used": false,
+  "candidate": {
+    "name": "ctx_b100_s65",
+    "network": {
+      "ens_ctx": 1.0
+    },
+    "network_share": 0.65
+  },
+  "caveats": [
+    "The CatBoost residual on thinned inputs is the coverage campaign's declared approximation; the residual is identical for control and candidate.",
+    "July EDDF is harsher than July 2026 (64.9% vs 76.1% matched)."
+  ],
+  "control": "v26 (configs/adsb_rnn_v1.json rnet_w90: network {ens_nn 0.5, ens_new 0.5}, share 0.5)",
+  "declared_at_utc": "2026-09-25T10:50:15.981553+00:00",
+  "descriptive": [
+    "gain retained = thinned change / natural change (whole month and non-LIRF)",
+    "per-airport change on the thinned regime, especially the thinned airports",
+    "matched / unmatched non-LIRF on the thinned regime"
+  ],
+  "experiment_id": "prc2026-adsb-ctx-regime-check-v1",
+  "gate": "The selection proceeds to export if, on BOTH thinned months, the candidate's whole-month RMSE is below the thinned control's AND the paired-day 95% interval (run_adsb_v11.paired_days, seed of configs/adsb_rnn_v1.json) of the RMSE difference lies below zero. Otherwise no export without the user's decision. This check can only block; it never changes the selected candidate or its weights.",
+  "method": [
+    "Context tokens of the month rebuilt from the raw file and the natural and the thinned match tables (prc2026_ctx.tokens, k = 128, the round-1 window); the natural rebuild must reproduce the stored token file's content hash.",
+    "The 16 context networks re-predicted on natural and thinned inputs (tabular frame = tools/regime_measure.py features(), tokens as above) with models that never saw the month: December -> the January-November refit models, July 2025 -> the seasonal-fold models; ens_ctx = their mean. Natural re-predictions are compared with the stored predictions (max abs difference recorded).",
+    "The recipe is assembled as tools/regime_measure.py recipe_values(), from the committee/LIRF tables and residual members it saved (runs/coverage_regime/measure/<month>/predictions.parquet), with the committee-mix network table and share as a parameter: control (v26) and candidate, natural and thinned. The natural control must reproduce the recorded v26 RMSE, the natural candidate the development result of ctx_b100_s65 for the month (both within 1e-6 s when the natural re-predictions reproduce the stored ones)."
+  ],
+  "purpose": "Ship check for the candidate selected by configs/adsb_ctx_v1.json (ctx_b100_s65, docs/adsb_ctx/development_results.json): does its development gain survive the ranking months' adsb.lol coverage? Declared after that selection and before any thinned score of the context network.",
+  "regimes": {
+    "2025-07": "a13_jul (EDDF, LSZH, LIRF thinned to July 2026 coverage; EDDF harsher than July 2026, an upper bound)",
+    "2025-12": "a13_dec (EDDF thinned to January 2026 coverage)",
+    "source": "configs/coverage_regime_v1.json",
+    "source_sha256": "73e75ff3dd4d7dc23e74930a8e68cfc378b40b18e615a008356295b4a4eb15d5"
+  },
+  "selection_sha256": "eb2fb2d89b799676d5abcfd76b1b0bec2e075332479bf30e9802de28bbc04a8f"
+}
