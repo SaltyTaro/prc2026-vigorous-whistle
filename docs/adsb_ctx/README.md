@@ -117,7 +117,7 @@ The gain survives in full: 100% in December and 99.9% in July. Where coverage th
 *more*; LSZH July moves from −1.21% to −1.05%. Reports: [`regime_check_2025-12.json`](regime_check_2025-12.json),
 [`regime_check_2025-07.json`](regime_check_2025-07.json).
 
-## Export v27 (25 September, 13:45 UTC) — not uploaded
+## Export v27 (25 September, 13:40 UTC) — uploaded, official 230.8057
 
 [`tools/export_adsb_ctx.py`](../../tools/export_adsb_ctx.py) → `runs/submissions/vigorous-whistle_v27.parquet`
 (SHA-256 `5a877924b0637f4cb257870410b178901403502131c635984526d23a5a35cd1d`, 1,343,768 bytes). Record:
@@ -151,4 +151,4 @@ The gain survives in full: 100% in December and 99.9% in July. Where coverage th
 - **Expected transfer (not a prediction of the official score):**
   - Development −1.02% (December −1.73%, the closest regime to January 2026; July −1.10%).
   - Under the ranking months' ADS-B coverage the gain was kept in full on both thinned months.
-- Upload only with the user's approval. Never re-upload v1–v26.
+- **Uploaded with the user's "upload it"** (`tools/prc_submit.py upload --calendar-day`; read-back SHA-256 matches) and **officially scored 230.8057 on all 344,841 rows** (processed 13:41:03 UTC, [`official_result_v27.json`](official_result_v27.json)): **−3.3381 s (−1.426%) against v26 (234.1438)**, larger than the development gain (−1.02%). v27 is the incumbent; never re-upload v1–v27.
