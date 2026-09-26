@@ -1,0 +1,1641 @@
+{
+  "audit_used": false,
+  "bar_points": 0.05,
+  "control_proxy_rmse": 176.26167383161464,
+  "created_at_utc": "2026-09-26T18:37:59.943152+00:00",
+  "decision": "An item is GO when (a) its R2 at b = 0.5 is at least 0.05 points below ref's R2 at b = 0.5, (b) its 4-seed standalone October non-LIRF RMSE is below ref's, and (c) the paired-day bootstrap 95% interval (tools/nn_design_report.day_interval, October days) of the proxy RMSE difference between the item's and ref's tables at b = 0.5 lies below zero. Otherwise NO-GO. GO items go to a development round declared separately (hardware named) against the incumbent with the unchanged development rule; if two or more items are GO, a separately declared GPU combination batch on this fold precedes it.",
+  "declaration_sha256": "e7d40b7185e29c1045671e1d09683d1ca3e6934db2af0ac7ad9ae4ce619098a9",
+  "go": [
+    "e32"
+  ],
+  "hardware_check_vs_round2_g_e24": {
+    "1": {
+      "round2_g_e24": 162.9540755952039,
+      "sprint_ref": 164.02414130686577
+    },
+    "2": {
+      "round2_g_e24": 162.8099203136726,
+      "sprint_ref": 163.43632734924174
+    }
+  },
+  "items": {
+    "aux25": {
+      "decision_item": true,
+      "gain_points_vs_ref_b0.5": -0.039062517734156366,
+      "go": false,
+      "interval_vs_ref_b0.5_s": [
+        -0.040481074484370085,
+        0.17065212380718364
+      ],
+      "matched_change_vs_ref_pct": 0.12961869200158738,
+      "per_seed_rmse_non_lirf": {
+        "1": 162.2582930259176,
+        "2": 162.67765984486772,
+        "3": 163.44455845185766,
+        "4": 161.8725987754743
+      },
+      "r2_pct": {
+        "0.25": -0.01789689568724162,
+        "0.5": 0.019461275994148153,
+        "1.0": 0.2596043995243713
+      },
+      "rmse_matched": 117.87209422023706,
+      "rmse_non_lirf": 155.9717235344935,
+      "rmse_unmatched": 210.1633316384389,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 126.98907460385253,
+        "EDDM": 132.5453431706806,
+        "EGLL": 203.95444147029363,
+        "LEMD": 199.44651744865408,
+        "LFPG": 225.83958057404217,
+        "LTFM": 211.57964541047514
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": 0.016092482332719094
+    },
+    "aux25_ema": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": -0.05680397267520121,
+      "interval_vs_ref_b0.5_s": [
+        -0.0005062022559329189,
+        0.19569804769668972
+      ],
+      "matched_change_vs_ref_pct": 0.15478733097398223,
+      "per_seed_rmse_non_lirf": {
+        "1": 162.11009265056882,
+        "2": 162.5056393240231,
+        "3": 163.1293945688313,
+        "4": 161.53298015333954
+      },
+      "r2_pct": {
+        "0.25": -0.008151282498847223,
+        "0.5": 0.037202730935192996,
+        "1.0": 0.28805064329580077
+      },
+      "rmse_matched": 117.9441049640122,
+      "rmse_non_lirf": 156.00622302761607,
+      "rmse_unmatched": 210.16080426943287,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 127.10237108158601,
+        "EDDM": 132.50929399935856,
+        "EGLL": 203.89143068840747,
+        "LEMD": 199.15249172363215,
+        "LFPG": 225.85936635809531,
+        "LTFM": 211.6344704142207
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": 0.04265116046364703
+    },
+    "aux25_tail": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": -0.05189561318392766,
+      "interval_vs_ref_b0.5_s": [
+        -0.013905078981092344,
+        0.19212110081501724
+      ],
+      "matched_change_vs_ref_pct": 0.15513292920841248,
+      "per_seed_rmse_non_lirf": {
+        "1": 162.14071293305773,
+        "2": 162.59455535251442,
+        "3": 163.10022095253936,
+        "4": 161.62162606716723
+      },
+      "r2_pct": {
+        "0.25": -0.010829977953319414,
+        "0.5": 0.032294371443919445,
+        "1.0": 0.28004053503967175
+      },
+      "rmse_matched": 117.96467253633138,
+      "rmse_non_lirf": 155.9803335808948,
+      "rmse_unmatched": 210.08307533340005,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 127.04114259461925,
+        "EDDM": 132.51079963751707,
+        "EGLL": 203.7889171521813,
+        "LEMD": 199.1926274634682,
+        "LFPG": 225.75271637481643,
+        "LTFM": 211.56948350259626
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": 0.03112545283368018
+    },
+    "aux50": {
+      "decision_item": true,
+      "gain_points_vs_ref_b0.5": -0.08846751771327543,
+      "go": false,
+      "interval_vs_ref_b0.5_s": [
+        0.0069836519714378655,
+        0.30978216295306843
+      ],
+      "matched_change_vs_ref_pct": 0.3665215101451569,
+      "per_seed_rmse_non_lirf": {
+        "1": 163.78893535506327,
+        "2": 163.28147003055471,
+        "3": 163.33025526320958,
+        "4": 162.5821883265127
+      },
+      "r2_pct": {
+        "0.25": 0.002115675911240622,
+        "0.5": 0.06886627597326722,
+        "1.0": 0.39563172411980485
+      },
+      "rmse_matched": 119.22852200074888,
+      "rmse_non_lirf": 156.54620256431056,
+      "rmse_unmatched": 209.94754683845989,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 126.62521958042336,
+        "EDDM": 131.193786586206,
+        "EGLL": 204.41608938300794,
+        "LEMD": 199.07112512336877,
+        "LFPG": 224.9072088922663,
+        "LTFM": 211.90317454517427
+      },
+      "standalone_below_ref": false,
+      "unmatched_change_vs_ref_pct": -0.005439872099055609
+    },
+    "aux50_ema": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": -0.09693034441968784,
+      "interval_vs_ref_b0.5_s": [
+        0.011022424520908914,
+        0.3290617589271164
+      ],
+      "matched_change_vs_ref_pct": 0.3844255548981934,
+      "per_seed_rmse_non_lirf": {
+        "1": 163.49316900532918,
+        "2": 163.0817057164975,
+        "3": 162.86344482198575,
+        "4": 162.14867917250461
+      },
+      "r2_pct": {
+        "0.25": 0.007211665718376281,
+        "0.5": 0.07732910267967963,
+        "1.0": 0.40563590128781524
+      },
+      "rmse_matched": 119.27098043366922,
+      "rmse_non_lirf": 156.5015034248619,
+      "rmse_unmatched": 209.8049356445781,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 126.58200394188995,
+        "EDDM": 131.2616261281958,
+        "EGLL": 204.4093546208746,
+        "LEMD": 198.7438325220938,
+        "LFPG": 224.54606545687068,
+        "LTFM": 211.8509526246959
+      },
+      "standalone_below_ref": false,
+      "unmatched_change_vs_ref_pct": 0.0038447096103011447
+    },
+    "aux50_tail": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": -0.09824064486023687,
+      "interval_vs_ref_b0.5_s": [
+        0.016188841691078436,
+        0.33120412330230237
+      ],
+      "matched_change_vs_ref_pct": 0.38016514156107295,
+      "per_seed_rmse_non_lirf": {
+        "1": 163.52450641619788,
+        "2": 163.16128489081368,
+        "3": 162.85292093279853,
+        "4": 162.3127690121788
+      },
+      "r2_pct": {
+        "0.25": 0.007698958972435221,
+        "0.5": 0.07863940312022866,
+        "1.0": 0.4095890845636996
+      },
+      "rmse_matched": 119.25568907921209,
+      "rmse_non_lirf": 156.5273059226699,
+      "rmse_unmatched": 209.87730815923814,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 126.60567476840006,
+        "EDDM": 131.2443422748351,
+        "EGLL": 204.49513140411685,
+        "LEMD": 198.7744929807941,
+        "LFPG": 224.70925070762866,
+        "LTFM": 211.8746637523487
+      },
+      "standalone_below_ref": false,
+      "unmatched_change_vs_ref_pct": 0.009312888860968371
+    },
+    "deep": {
+      "decision_item": true,
+      "gain_points_vs_ref_b0.5": -0.01830173205256136,
+      "go": false,
+      "interval_vs_ref_b0.5_s": [
+        -0.06963954685566165,
+        0.13253316621413372
+      ],
+      "matched_change_vs_ref_pct": 0.08666941994437405,
+      "per_seed_rmse_non_lirf": {
+        "1": 164.210863503022,
+        "2": 163.86867467493602,
+        "3": 162.70309350870784,
+        "4": 163.58005543062876
+      },
+      "r2_pct": {
+        "0.25": -0.024658046700043457,
+        "0.5": -0.0012995096874468537,
+        "1.0": 0.1892639411696706
+      },
+      "rmse_matched": 117.76693426636768,
+      "rmse_non_lirf": 156.24637891895284,
+      "rmse_unmatched": 210.86626350488322,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 131.28356820476077,
+        "EDDM": 134.2063110195657,
+        "EGLL": 204.41324133804352,
+        "LEMD": 203.42716343096643,
+        "LFPG": 225.04361983063234,
+        "LTFM": 212.6571624036623
+      },
+      "standalone_below_ref": false,
+      "unmatched_change_vs_ref_pct": -0.007275257800876123
+    },
+    "deep_ema": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": -0.045594781423208275,
+      "interval_vs_ref_b0.5_s": [
+        -0.014797196501598364,
+        0.17645869099487752
+      ],
+      "matched_change_vs_ref_pct": 0.1352016021383795,
+      "per_seed_rmse_non_lirf": {
+        "1": 163.99973945659386,
+        "2": 163.63282694633727,
+        "3": 162.30406054416378,
+        "4": 163.1313933760736
+      },
+      "r2_pct": {
+        "0.25": -0.009962389407780492,
+        "0.5": 0.025993539683200062,
+        "1.0": 0.23539958848526332
+      },
+      "rmse_matched": 117.98261466719703,
+      "rmse_non_lirf": 156.37205044992933,
+      "rmse_unmatched": 210.90729141931055,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 131.33494586614572,
+        "EDDM": 134.37927778763094,
+        "EGLL": 204.6382168785447,
+        "LEMD": 203.0685551873324,
+        "LFPG": 225.29685672172124,
+        "LTFM": 212.49454835940128
+      },
+      "standalone_below_ref": false,
+      "unmatched_change_vs_ref_pct": 0.02797748125791255
+    },
+    "deep_tail": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": -0.022918515000802664,
+      "interval_vs_ref_b0.5_s": [
+        -0.06345325565014051,
+        0.14131742795961194
+      ],
+      "matched_change_vs_ref_pct": 0.11131624180265032,
+      "per_seed_rmse_non_lirf": {
+        "1": 163.98185279122612,
+        "2": 163.52274968567983,
+        "3": 162.17111343812564,
+        "4": 163.1024451512324
+      },
+      "r2_pct": {
+        "0.25": -0.02134774314738186,
+        "0.5": 0.003317273260794451,
+        "1.0": 0.19048626074977815
+      },
+      "rmse_matched": 117.82229665469978,
+      "rmse_non_lirf": 156.1787667358427,
+      "rmse_unmatched": 210.66200821664742,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 131.13888900726852,
+        "EDDM": 134.34265692762224,
+        "EGLL": 204.45074621439417,
+        "LEMD": 203.3147035603128,
+        "LFPG": 225.0029297662819,
+        "LTFM": 212.19379116023737
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": -0.010707544352073217
+    },
+    "dnum16": {
+      "decision_item": true,
+      "gain_points_vs_ref_b0.5": 0.03263753363228483,
+      "go": false,
+      "interval_vs_ref_b0.5_s": [
+        -0.24607420401921729,
+        0.11285315677344832
+      ],
+      "matched_change_vs_ref_pct": -0.010311756328817978,
+      "per_seed_rmse_non_lirf": {
+        "1": 163.38042542782847,
+        "2": 165.35431458308815,
+        "3": 163.52601788979456,
+        "4": 163.44223562780257
+      },
+      "r2_pct": {
+        "0.25": -0.05369606327103593,
+        "0.5": -0.052238775372293045,
+        "1.0": 0.11603506924922069
+      },
+      "rmse_matched": 117.52684184736333,
+      "rmse_non_lirf": 156.15303174998067,
+      "rmse_unmatched": 210.92035250163082,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 132.19654540398795,
+        "EDDM": 136.69704255591517,
+        "EGLL": 206.8764857971378,
+        "LEMD": 199.12711462494934,
+        "LFPG": 223.04221238643913,
+        "LTFM": 212.86561288137952
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": -0.06943588987595728
+    },
+    "dnum16_ema": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": 0.012793318107096052,
+      "interval_vs_ref_b0.5_s": [
+        -0.20019241739431806,
+        0.13806692441916862
+      ],
+      "matched_change_vs_ref_pct": 0.012696742413731421,
+      "per_seed_rmse_non_lirf": {
+        "1": 163.0239927547917,
+        "2": 164.98643595046076,
+        "3": 162.92005674231598,
+        "4": 162.9696955291304
+      },
+      "r2_pct": {
+        "0.25": -0.04209027117209052,
+        "0.5": -0.032394559847104265,
+        "1.0": 0.1422143043404933
+      },
+      "rmse_matched": 117.55016312708526,
+      "rmse_non_lirf": 156.14135010570118,
+      "rmse_unmatched": 210.87053702160006,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 132.1229644350502,
+        "EDDM": 136.70791348223335,
+        "EGLL": 206.8328764465476,
+        "LEMD": 199.0558919284842,
+        "LFPG": 223.15005569051394,
+        "LTFM": 212.7315850393689
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": -0.036776185837672504
+    },
+    "dnum16_tail": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": 0.022229196364009773,
+      "interval_vs_ref_b0.5_s": [
+        -0.2186646415611179,
+        0.12457147900691364
+      ],
+      "matched_change_vs_ref_pct": 0.00023273200546736206,
+      "per_seed_rmse_non_lirf": {
+        "1": 163.11326507738914,
+        "2": 165.0250361267237,
+        "3": 163.04431128700912,
+        "4": 162.8894144009625
+      },
+      "r2_pct": {
+        "0.25": -0.04705109843555766,
+        "0.5": -0.041830438104017986,
+        "1.0": 0.1253115852254627
+      },
+      "rmse_matched": 117.4834253586115,
+      "rmse_non_lirf": 156.08840987546657,
+      "rmse_unmatched": 210.82753377814112,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 132.12184664350713,
+        "EDDM": 136.66946483204708,
+        "EGLL": 206.82690187357449,
+        "LEMD": 199.21619072876055,
+        "LFPG": 223.16105992764992,
+        "LTFM": 212.60518846290702
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": -0.05143481827285523
+    },
+    "e32": {
+      "decision_item": true,
+      "gain_points_vs_ref_b0.5": 0.05645596212983106,
+      "go": true,
+      "interval_vs_ref_b0.5_s": [
+        -0.193238300865211,
+        -0.010092017850865234
+      ],
+      "matched_change_vs_ref_pct": -0.07171847056576253,
+      "per_seed_rmse_non_lirf": {
+        "1": 165.13700526166483,
+        "2": 163.55562459488831,
+        "3": 164.61654498306194,
+        "4": 165.50890421208308
+      },
+      "r2_pct": {
+        "0.25": -0.06795990595298562,
+        "0.5": -0.07605720386983927,
+        "1.0": 0.08728672853521857
+      },
+      "rmse_matched": 117.18927064394654,
+      "rmse_non_lirf": 156.0715016084125,
+      "rmse_unmatched": 211.10236906419206,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 133.45137998133802,
+        "EDDM": 136.2802210219194,
+        "EGLL": 205.84827979954582,
+        "LEMD": 205.39744700037582,
+        "LFPG": 226.21309547125804,
+        "LTFM": 211.56989981423447
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": -0.08933933448838083
+    },
+    "e32_ema": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": 0.03544652370128798,
+      "interval_vs_ref_b0.5_s": [
+        -0.1452735840617244,
+        0.018562055643907564
+      ],
+      "matched_change_vs_ref_pct": -0.044451538749656905,
+      "per_seed_rmse_non_lirf": {
+        "1": 164.95164009040693,
+        "2": 163.2063829835203,
+        "3": 164.21362558367395,
+        "4": 165.05494137056027
+      },
+      "r2_pct": {
+        "0.25": -0.05623235782153957,
+        "0.5": -0.05504776544129619,
+        "1.0": 0.11946533466529186
+      },
+      "rmse_matched": 117.28214628276484,
+      "rmse_non_lirf": 156.1115275384605,
+      "rmse_unmatched": 211.09015880657972,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 133.69590595187125,
+        "EDDM": 136.30914639999332,
+        "EGLL": 205.79995879271658,
+        "LEMD": 205.08109201042666,
+        "LFPG": 226.18727012939638,
+        "LTFM": 211.59739276238457
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": -0.05641848756878787
+    },
+    "e32_tail": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": 0.05477303776626474,
+      "interval_vs_ref_b0.5_s": [
+        -0.18674124274401863,
+        -0.007589247002442951
+      ],
+      "matched_change_vs_ref_pct": -0.0726847574208378,
+      "per_seed_rmse_non_lirf": {
+        "1": 165.16329126654983,
+        "2": 163.30397432564996,
+        "3": 164.36489775136795,
+        "4": 165.2298536556816
+      },
+      "r2_pct": {
+        "0.25": -0.06661131492540218,
+        "0.5": -0.07437427950627296,
+        "1.0": 0.08659581150529672
+      },
+      "rmse_matched": 117.15725152005248,
+      "rmse_non_lirf": 156.0128267431701,
+      "rmse_unmatched": 211.0102957329803,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 133.52841003526655,
+        "EDDM": 136.23970019515625,
+        "EGLL": 205.6937739027648,
+        "LEMD": 205.1997327124319,
+        "LFPG": 226.01452578427072,
+        "LTFM": 211.5871603603001
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": -0.08490288050481132
+    },
+    "lr2": {
+      "decision_item": true,
+      "gain_points_vs_ref_b0.5": 0.02717772839359034,
+      "go": false,
+      "interval_vs_ref_b0.5_s": [
+        -0.17213527801343814,
+        0.06193227558797979
+      ],
+      "matched_change_vs_ref_pct": -0.0039633227070901,
+      "per_seed_rmse_non_lirf": {
+        "1": 163.85487837026844,
+        "2": 162.72506699873318,
+        "3": 162.85374635170464,
+        "4": 163.78953848570305
+      },
+      "r2_pct": {
+        "0.25": -0.05137959440767448,
+        "0.5": -0.04677897013359855,
+        "1.0": 0.13023817819706185
+      },
+      "rmse_matched": 117.31951887675484,
+      "rmse_non_lirf": 155.6664088757569,
+      "rmse_unmatched": 210.09446465289835,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 134.69108631040072,
+        "EDDM": 136.1533560570286,
+        "EGLL": 206.48180000359548,
+        "LEMD": 203.89136411764403,
+        "LFPG": 224.67972413133998,
+        "LTFM": 210.08544798315788
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": -0.060459957776437534
+    },
+    "lr2_ema": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": -0.016189248018239066,
+      "interval_vs_ref_b0.5_s": [
+        -0.08785518897588887,
+        0.1343135694083095
+      ],
+      "matched_change_vs_ref_pct": 0.053542204913581415,
+      "per_seed_rmse_non_lirf": {
+        "1": 163.58992569329905,
+        "2": 162.5776404555102,
+        "3": 162.3830427883819,
+        "4": 163.3999812957606
+      },
+      "r2_pct": {
+        "0.25": -0.02855752288241087,
+        "0.5": -0.0034119937217691465,
+        "1.0": 0.20774016880664714
+      },
+      "rmse_matched": 117.57748456440939,
+      "rmse_non_lirf": 155.8701908959374,
+      "rmse_unmatched": 210.25856940406743,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 134.69274551628257,
+        "EDDM": 136.20405275891562,
+        "EGLL": 206.5574081155185,
+        "LEMD": 203.53469374409522,
+        "LFPG": 224.807508357198,
+        "LTFM": 210.35043590920233
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": 0.006778557436692978
+    },
+    "lr2_tail": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": -0.00674261865130088,
+      "interval_vs_ref_b0.5_s": [
+        -0.10466206931726915,
+        0.11558904627543845
+      ],
+      "matched_change_vs_ref_pct": 0.041428270387688926,
+      "per_seed_rmse_non_lirf": {
+        "1": 163.64801723245998,
+        "2": 162.662879089735,
+        "3": 162.42607049958377,
+        "4": 163.47560918056755
+      },
+      "r2_pct": {
+        "0.25": -0.03329826396091251,
+        "0.5": -0.012858623088707333,
+        "1.0": 0.18901634660890565
+      },
+      "rmse_matched": 117.47861893889778,
+      "rmse_non_lirf": 155.79529328950096,
+      "rmse_unmatched": 210.2025812676861,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 134.46834016779997,
+        "EDDM": 135.966655953823,
+        "EGLL": 206.41867487761135,
+        "LEMD": 203.51962010936015,
+        "LFPG": 224.81720326030018,
+        "LTFM": 210.27561599763752
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": -0.008101902323764953
+    },
+    "mask25": {
+      "decision_item": true,
+      "gain_points_vs_ref_b0.5": 0.025419571147800024,
+      "go": false,
+      "interval_vs_ref_b0.5_s": [
+        -0.16615382402756254,
+        0.07786871982589928
+      ],
+      "matched_change_vs_ref_pct": 0.2458700197513819,
+      "per_seed_rmse_non_lirf": {
+        "1": 162.49100931095614,
+        "2": 163.1637139003028,
+        "3": 161.39579127492968,
+        "4": 162.44638666870208
+      },
+      "r2_pct": {
+        "0.25": -0.04710820855592379,
+        "0.5": -0.04502081288780824,
+        "1.0": 0.10665595253458449
+      },
+      "rmse_matched": 118.23846751250178,
+      "rmse_non_lirf": 155.70899987474579,
+      "rmse_unmatched": 209.20446027824184,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 126.29844918649474,
+        "EDDM": 131.20846463838785,
+        "EGLL": 203.11459576094384,
+        "LEMD": 196.83953193233577,
+        "LFPG": 223.91312172597463,
+        "LTFM": 211.2962651432108
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": -0.19941444545769071
+    },
+    "mask25_ema": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": -0.00014051809935633486,
+      "interval_vs_ref_b0.5_s": [
+        -0.10866393969355811,
+        0.1125345272679453
+      ],
+      "matched_change_vs_ref_pct": 0.27789536469025045,
+      "per_seed_rmse_non_lirf": {
+        "1": 162.27890058966148,
+        "2": 162.92429069047108,
+        "3": 161.0083536642854,
+        "4": 162.11660362346672
+      },
+      "r2_pct": {
+        "0.25": -0.033296927828863065,
+        "0.5": -0.019460723640651878,
+        "1.0": 0.1494663939491936
+      },
+      "rmse_matched": 118.36101396242871,
+      "rmse_non_lirf": 155.7793560583544,
+      "rmse_unmatched": 209.2246601158588,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 126.35131153314276,
+        "EDDM": 131.21963925621847,
+        "EGLL": 203.13020532175307,
+        "LEMD": 196.74979315646777,
+        "LFPG": 223.82731627402916,
+        "LTFM": 211.41583692950346
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": -0.15870316794427408
+    },
+    "mask25_tail": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": 0.018958598179596997,
+      "interval_vs_ref_b0.5_s": [
+        -0.14808718234096788,
+        0.08155312175750136
+      ],
+      "matched_change_vs_ref_pct": 0.258443074364334,
+      "per_seed_rmse_non_lirf": {
+        "1": 162.27337104343368,
+        "2": 162.97507325360863,
+        "3": 160.91337578158763,
+        "4": 162.19680357758696
+      },
+      "r2_pct": {
+        "0.25": -0.043127329163061834,
+        "0.5": -0.03855983991960521,
+        "1.0": 0.11356531555914984
+      },
+      "rmse_matched": 118.27490874047571,
+      "rmse_non_lirf": 155.659641361993,
+      "rmse_unmatched": 209.05865113856493,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 126.22558311709919,
+        "EDDM": 131.13203674208808,
+        "EGLL": 202.99405263529678,
+        "LEMD": 196.88548280977102,
+        "LFPG": 223.4796031924939,
+        "LTFM": 211.3474512474062
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": -0.1916912438162499
+    },
+    "mask50": {
+      "decision_item": true,
+      "gain_points_vs_ref_b0.5": -0.025740702422338835,
+      "go": false,
+      "interval_vs_ref_b0.5_s": [
+        -0.067653717042095,
+        0.15864665008970813
+      ],
+      "matched_change_vs_ref_pct": 0.4454078960380192,
+      "per_seed_rmse_non_lirf": {
+        "1": 163.31323454971624,
+        "2": 162.564036627707,
+        "3": 163.03051469710687,
+        "4": 163.25030556972314
+      },
+      "r2_pct": {
+        "0.25": -0.026772490168114338,
+        "0.5": 0.006139460682330622,
+        "1.0": 0.2506749559116006
+      },
+      "rmse_matched": 119.47513370674919,
+      "rmse_non_lirf": 156.4052031349217,
+      "rmse_unmatched": 209.37521594484767,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 124.58561947837624,
+        "EDDM": 129.71460077383966,
+        "EGLL": 202.9118030805303,
+        "LEMD": 195.49485432681942,
+        "LFPG": 224.4538153058972,
+        "LTFM": 211.5487276792098
+      },
+      "standalone_below_ref": false,
+      "unmatched_change_vs_ref_pct": -0.1956852522999819
+    },
+    "mask50_ema": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": -0.051479499818962715,
+      "interval_vs_ref_b0.5_s": [
+        -0.017549898217655624,
+        0.20036878880210188
+      ],
+      "matched_change_vs_ref_pct": 0.48535852622673126,
+      "per_seed_rmse_non_lirf": {
+        "1": 163.1522154829197,
+        "2": 162.34520214311038,
+        "3": 162.5343724172917,
+        "4": 162.86209335241153
+      },
+      "r2_pct": {
+        "0.25": -0.012796101352663403,
+        "0.5": 0.0318782580789545,
+        "1.0": 0.29323237027187865
+      },
+      "rmse_matched": 119.60699740973861,
+      "rmse_non_lirf": 156.46944289124048,
+      "rmse_unmatched": 209.37131711835522,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 124.46766609314133,
+        "EDDM": 129.84501257181242,
+        "EGLL": 202.9749565102221,
+        "LEMD": 195.41179784290165,
+        "LFPG": 224.42444733067106,
+        "LTFM": 211.56221437947113
+      },
+      "standalone_below_ref": false,
+      "unmatched_change_vs_ref_pct": -0.15912293352943196
+    },
+    "mask50_tail": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": -0.03715646117206095,
+      "interval_vs_ref_b0.5_s": [
+        -0.04671095208037954,
+        0.17356279613959483
+      ],
+      "matched_change_vs_ref_pct": 0.46056791870192626,
+      "per_seed_rmse_non_lirf": {
+        "1": 163.1045324980267,
+        "2": 162.38801291817137,
+        "3": 162.4826133894119,
+        "4": 162.85660831840954
+      },
+      "r2_pct": {
+        "0.25": -0.020163244312121353,
+        "0.5": 0.017555219432052738,
+        "1.0": 0.26627574055417824
+      },
+      "rmse_matched": 119.48393024973105,
+      "rmse_non_lirf": 156.36644981937908,
+      "rmse_unmatched": 209.28165674156955,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 124.3742607995787,
+        "EDDM": 129.81350272153944,
+        "EGLL": 202.82490186788354,
+        "LEMD": 195.49111550747412,
+        "LFPG": 224.29141285141318,
+        "LTFM": 211.52753301744784
+      },
+      "standalone_below_ref": false,
+      "unmatched_change_vs_ref_pct": -0.17799751882733306
+    },
+    "ref": {
+      "decision_item": false,
+      "per_seed_rmse_non_lirf": {
+        "1": 164.02414130686577,
+        "2": 163.43632734924174,
+        "3": 162.89874064121403,
+        "4": 164.17891206279913
+      },
+      "r2_pct": {
+        "0.25": -0.03391527196819899,
+        "0.5": -0.019601241740008213,
+        "1.0": 0.15356233478562853
+      },
+      "rmse_matched": 117.27975165655413,
+      "rmse_non_lirf": 156.1992899234199,
+      "rmse_unmatched": 211.28099146021563,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 135.50646401008086,
+        "EDDM": 135.8432557375845,
+        "EGLL": 204.65823615276992,
+        "LEMD": 205.56535557385675,
+        "LFPG": 225.75195523406245,
+        "LTFM": 212.7317137647262
+      }
+    },
+    "ref_ema": {
+      "decision_item": true,
+      "gain_points_vs_ref_b0.5": -0.029278796321619005,
+      "go": false,
+      "interval_vs_ref_b0.5_s": [
+        0.03160781616387922,
+        0.07589711763490213
+      ],
+      "matched_change_vs_ref_pct": 0.0378274072043272,
+      "per_seed_rmse_non_lirf": {
+        "1": 163.6387324704024,
+        "2": 162.96505181339268,
+        "3": 162.6393211332893,
+        "4": 163.63471510757208
+      },
+      "r2_pct": {
+        "0.25": -0.017699655550074134,
+        "0.5": 0.009677554581610792,
+        "1.0": 0.19945394105684855
+      },
+      "rmse_matched": 117.33792166856303,
+      "rmse_non_lirf": 156.238924637833,
+      "rmse_unmatched": 211.30460563964317,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 135.32994079792263,
+        "EDDM": 135.76590389935296,
+        "EGLL": 204.62270329587847,
+        "LEMD": 205.0836691794906,
+        "LFPG": 225.96689752610268,
+        "LTFM": 212.71013505112717
+      },
+      "standalone_below_ref": false,
+      "unmatched_change_vs_ref_pct": 0.04595694395290728
+    },
+    "ref_tail": {
+      "decision_item": true,
+      "gain_points_vs_ref_b0.5": -0.018393819115791743,
+      "go": false,
+      "interval_vs_ref_b0.5_s": [
+        0.018782473701550374,
+        0.046467341656427394
+      ],
+      "matched_change_vs_ref_pct": 0.032246148690662224,
+      "per_seed_rmse_non_lirf": {
+        "1": 163.687048864719,
+        "2": 163.11798527577923,
+        "3": 162.48707021351382,
+        "4": 163.72195497469707
+      },
+      "r2_pct": {
+        "0.25": -0.02337415952615718,
+        "0.5": -0.0012074226242164698,
+        "1.0": 0.1795657109239901
+      },
+      "rmse_matched": 117.32218235886647,
+      "rmse_non_lirf": 156.1986255639993,
+      "rmse_unmatched": 211.2347619131087,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 135.33115409781695,
+        "EDDM": 135.77699608214027,
+        "EGLL": 204.64631840731903,
+        "LEMD": 205.17573256018576,
+        "LFPG": 225.88693979303488,
+        "LTFM": 212.5797521967596
+      },
+      "standalone_below_ref": true,
+      "unmatched_change_vs_ref_pct": 0.02402935493184266
+    },
+    "wide": {
+      "decision_item": true,
+      "gain_points_vs_ref_b0.5": -0.08850760650158662,
+      "go": false,
+      "interval_vs_ref_b0.5_s": [
+        0.04538326690908079,
+        0.27029075444259604
+      ],
+      "matched_change_vs_ref_pct": -0.03370220447835859,
+      "per_seed_rmse_non_lirf": {
+        "1": 166.40267524696569,
+        "2": 165.80685669551863,
+        "3": 165.30145107772674,
+        "4": 166.83564392435073
+      },
+      "r2_pct": {
+        "0.25": 0.0030272019439836484,
+        "0.5": 0.06890636476157841,
+        "1.0": 0.3886075698559699
+      },
+      "rmse_matched": 117.5133208613265,
+      "rmse_non_lirf": 157.19963454193632,
+      "rmse_unmatched": 213.17851445250432,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 134.10281509681823,
+        "EDDM": 137.36731034908195,
+        "EGLL": 207.8377243271867,
+        "LEMD": 205.82587730221252,
+        "LFPG": 227.35561620610366,
+        "LTFM": 214.5671562367958
+      },
+      "standalone_below_ref": false,
+      "unmatched_change_vs_ref_pct": 0.22331551019141305
+    },
+    "wide_ema": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": -0.1026067366363348,
+      "interval_vs_ref_b0.5_s": [
+        0.0686528769443285,
+        0.298833457523105
+      ],
+      "matched_change_vs_ref_pct": -0.013064815583518907,
+      "per_seed_rmse_non_lirf": {
+        "1": 165.6682843714485,
+        "2": 165.30600220438166,
+        "3": 164.61738127346075,
+        "4": 166.04832082227693
+      },
+      "r2_pct": {
+        "0.25": 0.012075331674998857,
+        "0.5": 0.08300549489632658,
+        "1.0": 0.4008278659076714
+      },
+      "rmse_matched": 117.51381275100347,
+      "rmse_non_lirf": 157.12592285033867,
+      "rmse_unmatched": 213.020251493491,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 133.91833433770458,
+        "EDDM": 137.25672007705762,
+        "EGLL": 207.85097862108668,
+        "LEMD": 205.73442023728447,
+        "LFPG": 227.3127280572401,
+        "LTFM": 214.24994187497495
+      },
+      "standalone_below_ref": false,
+      "unmatched_change_vs_ref_pct": 0.24405083131049388
+    },
+    "wide_tail": {
+      "decision_item": false,
+      "gain_points_vs_ref_b0.5": -0.09831933366106771,
+      "interval_vs_ref_b0.5_s": [
+        0.06527991709985201,
+        0.2878572689392001
+      ],
+      "matched_change_vs_ref_pct": -0.013533625517903047,
+      "per_seed_rmse_non_lirf": {
+        "1": 165.8662350711088,
+        "2": 165.36804570527053,
+        "3": 164.7145289715357,
+        "4": 166.3791501139846
+      },
+      "r2_pct": {
+        "0.25": 0.00955875615391566,
+        "0.5": 0.0787180919210595,
+        "1.0": 0.39523967165189244
+      },
+      "rmse_matched": 117.53788665311511,
+      "rmse_non_lirf": 157.15867137834684,
+      "rmse_unmatched": 213.06508877496114,
+      "rmse_unmatched_by_airport": {
+        "EDDF": 134.06515981172402,
+        "EDDM": 137.2765429988308,
+        "EGLL": 208.01881250885342,
+        "LEMD": 205.7234341675292,
+        "LFPG": 227.4212131172289,
+        "LTFM": 214.16369472466818
+      },
+      "standalone_below_ref": false,
+      "unmatched_change_vs_ref_pct": 0.234438262766834
+    }
+  },
+  "note": "October only; no scoring month read.",
+  "pool_rmse_non_lirf": 154.01647144993638,
+  "runs": {
+    "aux25": {
+      "1": {
+        "curve_last": [
+          166.188,
+          166.085,
+          165.996
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 505.1,
+        "parameters": 2554430,
+        "predictions_sha256": {
+          "_ema": "3a2483f82935c6ed155caed0ce3232cdacb33c347a394a129f52d026738a5ace",
+          "_tail": "f207e735bd6b58d26ffb39c32962ce4edecb0d36192ff8169e78489232be7bc1",
+          "final": "3c7fbada0d279350f2731b36796804c0e59126e8fbbcc9cbd17dbdc3ad3c2f2e"
+        }
+      },
+      "2": {
+        "curve_last": [
+          166.731,
+          166.878,
+          166.516
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 506.2,
+        "parameters": 2554430,
+        "predictions_sha256": {
+          "_ema": "606b628d60ad4921ddfbe757ef5a338a450e9af7ae1f0087ef78855beb94f947",
+          "_tail": "7d56f4cf14aa8503e18910082dd241bd408dbdb2ec91e30597c21b99f501b540",
+          "final": "44fc85758d899e2defd550310dc875145884616f49d42fc4aded0fe93349a66f"
+        }
+      },
+      "3": {
+        "curve_last": [
+          167.293,
+          167.153,
+          167.257
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 502.0,
+        "parameters": 2554430,
+        "predictions_sha256": {
+          "_ema": "b31c93bf6b63909e62bce25cf497f0e555df188ca6c3b9806ba4599b74276398",
+          "_tail": "15f9fec669a1914259f9c795a90ce7b51e9ce97f4322d0b636b8d1c6a6b3f974",
+          "final": "3aca87d8beb97e52f2e603cfbaeef4cdccc83e025ac69673d397ce6d48d3ea72"
+        }
+      },
+      "4": {
+        "curve_last": [
+          165.402,
+          165.487,
+          165.566
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 502.4,
+        "parameters": 2554430,
+        "predictions_sha256": {
+          "_ema": "cc361a4f75522fadac614b2f33217d09c93cf0574bd7f2325f82d30ef1a5cf72",
+          "_tail": "cd34ffa8f5928a531d791a8edc0c32722e83131fd6de6779513145811fa473c8",
+          "final": "71b114fa96ff616b331318e0bba84a3fee75aaeeac0f5d544021fc7e66e3218b"
+        }
+      }
+    },
+    "aux50": {
+      "1": {
+        "curve_last": [
+          167.441,
+          167.533,
+          167.578
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 505.3,
+        "parameters": 2554430,
+        "predictions_sha256": {
+          "_ema": "5a08ac1db64992f85321844bd17b9996e0dbac552406ddf76fce9f1e55b4dcce",
+          "_tail": "b7f1c20d623b4591bacdae82e6ead759b841879a6b3fc688313af9decee2cb23",
+          "final": "3946f0c097da3477c61da7545554a89d859c3437e56f8ee1eaf20b5dee0bf075"
+        }
+      },
+      "2": {
+        "curve_last": [
+          167.224,
+          167.126,
+          166.986
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 506.1,
+        "parameters": 2554430,
+        "predictions_sha256": {
+          "_ema": "2024a7ccabefe23f4f0f28a5d535e60734c90e70040b9e63646f2da76d8f1177",
+          "_tail": "ca337a05bb9ef44911e88d98d39090d8cefc24c9bbcb1b20ed2e3bde2972ac3d",
+          "final": "4e2785b95be7e389c8264afa6d5076dd70437e0e49171acc60ed691c50a72b93"
+        }
+      },
+      "3": {
+        "curve_last": [
+          166.969,
+          166.826,
+          167.16
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 502.0,
+        "parameters": 2554430,
+        "predictions_sha256": {
+          "_ema": "7b2db2aaef1f1c31fab5ebcb0e61fb1980c1c668871dbe6d3dad3680c5d736a1",
+          "_tail": "bcb8da6c6e49e6e3f4e76cb582238e873b47aaa9663ab02981c3134cdf755455",
+          "final": "74e3d4d13a60770205396bacacdd305a77451223932de462edcbba64579692ce"
+        }
+      },
+      "4": {
+        "curve_last": [
+          166.182,
+          166.266,
+          166.439
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 502.3,
+        "parameters": 2554430,
+        "predictions_sha256": {
+          "_ema": "b475694ff0b80074be9057291936ec2ebe3ac1c8d9d58b0d9e04e60aaac7efdd",
+          "_tail": "bb479c8b80338bb52722e66f0c765af6ec8a03e8128c93233061d075da8e879f",
+          "final": "0da02f52117456864f48a7920524b95cc1879b39c8f105fa178373fff1970c5a"
+        }
+      }
+    },
+    "deep": {
+      "1": {
+        "curve_last": [
+          168.173,
+          168.485,
+          168.17
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 497.2,
+        "parameters": 2815034,
+        "predictions_sha256": {
+          "_ema": "b8d8485b53554be7627162625ec0db8ba55951e615a112d75c94d6daf30e1d13",
+          "_tail": "356a849b50fcf6b81133658acf5f47dd58f9567f99a7e98f22f7cd40437c3692",
+          "final": "6a1838319f59a3c218e03c258caef135f5c24066a2a270632324bc962954c2fe"
+        }
+      },
+      "2": {
+        "curve_last": [
+          167.725,
+          167.842,
+          167.702
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 499.0,
+        "parameters": 2815034,
+        "predictions_sha256": {
+          "_ema": "ebb5c649f9512e1ab2ce4f09d80a25e8dfe21063ce3c25aeafb0961e2941ddeb",
+          "_tail": "dd4bb4c16f578099ebb6f9fa70abc2c94505cb066dfd600f2da8382b4e261b00",
+          "final": "431c1ff6a5e8aad9b3f5ff033936db1458898602628375292d565ae0960f358f"
+        }
+      },
+      "3": {
+        "curve_last": [
+          166.38,
+          166.42,
+          166.751
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 488.2,
+        "parameters": 2815034,
+        "predictions_sha256": {
+          "_ema": "410d6460bf6bfb04662b914e55e3aa97e77de1b01bc94f19ef710edda2e9a894",
+          "_tail": "6ecd32b90cf244f7daee0cae1b587a9c2ec0f70617d94a82834c686b57f5acbc",
+          "final": "346df4459c726cfa7e75442de4318d050d45b2387e52ec5c63ca90f07bd93584"
+        }
+      },
+      "4": {
+        "curve_last": [
+          167.18,
+          167.127,
+          167.443
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 488.5,
+        "parameters": 2815034,
+        "predictions_sha256": {
+          "_ema": "72cd2421b70af3d62d41d4d444369800c56d1f302b34b43b950d7693ad978506",
+          "_tail": "fb726d38c14621e13aa35cf77a43a814c51799f2278e55e3ca0d1373aa71a4d0",
+          "final": "4f64083c36ae585636df71bc9883266f94d0a5196b51f5fb13669d65c36afae0"
+        }
+      }
+    },
+    "dnum16": {
+      "1": {
+        "curve_last": [
+          167.539,
+          167.333,
+          167.394
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 509.6,
+        "parameters": 4085650,
+        "predictions_sha256": {
+          "_ema": "f9afed5b9602af76cef6487962128d16de3598f1b51d2f9d1379c0e9a593ec5a",
+          "_tail": "73eb4904c2c253e0c6632d8c297dfeeae426c2be82eab5c8c95940b259a20ead",
+          "final": "77109169135485cd14b8ba456a3942a32c47abf214626be18b042c55e594e2b9"
+        }
+      },
+      "2": {
+        "curve_last": [
+          169.67,
+          169.11,
+          169.323
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 510.7,
+        "parameters": 4085650,
+        "predictions_sha256": {
+          "_ema": "739afa91edfd8625a782ec641c585867e253959e8561bbaf209df6bfba57cc9f",
+          "_tail": "6ec30859a372884de276ae5a6977739bd04e7a793eaa55840a980c9b23683574",
+          "final": "d2d26d4dff3d214ee3bcfe3b83c5b9ae518ab88ab565c375879310bd706b4c34"
+        }
+      },
+      "3": {
+        "curve_last": [
+          167.327,
+          167.35,
+          167.636
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 501.2,
+        "parameters": 4085650,
+        "predictions_sha256": {
+          "_ema": "75a7c7fcdcde081df019930f307fcac96382b33d0b186cd58ab89caaa0679a1c",
+          "_tail": "0b426eb19ccfea00b167e469f4c07a957482448503967b5a0c6ea0c5ab171868",
+          "final": "59b592748fa0cff23a4c3310036be17e76da3ed5dde83c0d6ca78ced614b9671"
+        }
+      },
+      "4": {
+        "curve_last": [
+          167.105,
+          167.542,
+          167.452
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 501.5,
+        "parameters": 4085650,
+        "predictions_sha256": {
+          "_ema": "e88c0034ccc44aa1a1980cb18d4af809439c5bbce14d292f6b1fc8f12b81c0e3",
+          "_tail": "3a1464425fbfa7b1dcf4c0ece22d3151aa72837800b1f1e9beef55fca9d7e24f",
+          "final": "11e7e914d16b08eb4fb3ef8773a4d4fa0dc487bb5a39980e250018c3213f6ffe"
+        }
+      }
+    },
+    "e32": {
+      "1": {
+        "curve_last": [
+          169.349,
+          169.482,
+          169.084
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 584.8,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "a8d3fb5b13ae99cfe9f4c69a2bb10dabb33cb19486155abf1a3652f01fd337b6",
+          "_tail": "a569ffd41d60c6fc229d7b92e319c81d4243b7bf9afde7b875bec3ac04ceb714",
+          "final": "04998c63eec35b9f793232ee9d7ec3931591a06b09d5515f27d435cb21410f76"
+        }
+      },
+      "2": {
+        "curve_last": [
+          167.351,
+          167.443,
+          167.411
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 585.8,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "1919999d6384182d3b71708e33f381c401f80c42ed6c3623e036b772bd5bdb62",
+          "_tail": "658ca4eca177c12e485ff2ae7fc89ec0f1e6e87ed1f629827740c8e442238c5a",
+          "final": "8478dd9c7d380ae50911523e638b4b9ef87eb2ae69cf6ecd65dec79748697f6b"
+        }
+      },
+      "3": {
+        "curve_last": [
+          168.5,
+          168.401,
+          168.609
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 576.2,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "77a5b5905405089f4f1a393f1306e51080dfed7526b6ef05f252030b56c69127",
+          "_tail": "a5ad23715ca988c184e4c98ccd1c773a981e48461c7e1c0f43cb1028673669c2",
+          "final": "5581a23fd1011bbfb85dfcbc805433ccaa98e3b59a07a4dcaaf91b6589976f5f"
+        }
+      },
+      "4": {
+        "curve_last": [
+          168.904,
+          169.032,
+          169.153
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 574.9,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "a7129b249e4447200c2ab83ad9e2674da3824fd90e54e1c387dcafa4b88d2163",
+          "_tail": "1be3d2807afc958c232df4740bee2cdbb4c4f7f7d6834da3c35b7a5301c7dae4",
+          "final": "b20207650413a73896d7d9efcbcafe9af6b6e3c2804ea05fb1991ee38bc776b3"
+        }
+      }
+    },
+    "lr2": {
+      "1": {
+        "curve_last": [
+          167.71,
+          167.743,
+          167.684
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 494.1,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "415628d2dd14526debbf5066217b289804c9e0ea58db388975dd6c592bcd71c0",
+          "_tail": "c0107ddc80d3b8ab56fad34411b3c38db1dba76c52f6f6e7878f05883b3f632f",
+          "final": "432989bf9329739211d93b5a51345aa5a38f40fb9316d885043c7bc804c0478a"
+        }
+      },
+      "2": {
+        "curve_last": [
+          166.566,
+          166.605,
+          166.54
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 493.8,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "7a616d2f9e4bd20b8e5a133593596472b3122c41438743666dbfd420f406f769",
+          "_tail": "347ee859c79d1341f9ed66660f6fc09430465689e1d608ded4068e4130dcf125",
+          "final": "e62454f7a81dcb90e007ad395c465a3bb97b341dffb2bcddcd8d4b0983da56da"
+        }
+      },
+      "3": {
+        "curve_last": [
+          166.487,
+          166.5,
+          166.791
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 484.1,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "ac9c9c60e5bc39e6ea39ddaac41f891053f0d7fdb76c8554bbb063d6f3ba306d",
+          "_tail": "eb94fb2374ababfa5e289e2174a2347c24bf09efa57800601430399c1a6e94d5",
+          "final": "98ecac634a74fe758bcc7dbf83e672e6cf64e02830075b451af0458f1a820e79"
+        }
+      },
+      "4": {
+        "curve_last": [
+          167.636,
+          167.418,
+          167.658
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 484.3,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "dcf46c15e14640be6779624aeec9b0c4c8c9fbd414824ab48aa53439a9bb3483",
+          "_tail": "195880ae5b0ee4d9afea0934986d69538c3014ae382fe549a9cd822c0b5f90d1",
+          "final": "373b22d31a7f8ff1f0727ec71f40ed0e5f1508c8d119b6d1b4583a9ad7cbab88"
+        }
+      }
+    },
+    "mask25": {
+      "1": {
+        "curve_last": [
+          166.598,
+          166.664,
+          166.498
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 454.5,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "d0f9a4770e967399af56d4735f0a9658ee373afa5021001eb52d898be4f1ff17",
+          "_tail": "79d90674b3a382e42979dd6189e4d021bb23a08cd08e91e98c2ccc129fca37e3",
+          "final": "7baf0a2f66443c0280825bc07db9fa103c125e056be3ba283967bc21bb02474b"
+        }
+      },
+      "2": {
+        "curve_last": [
+          167.44,
+          167.216,
+          167.126
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 455.6,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "d0534afbe8cd176661812537f8079d3ebfd26a4bccfeda5d86bcadc7bc9315b6",
+          "_tail": "814fcd9323dd7154936bc934066344583ccd37af8947b4b5890f6c80c5a7112b",
+          "final": "d9558936efc2ddbe0dfb9a7e3df3e6b436d70de61db1f948b8060f3d447d4451"
+        }
+      },
+      "3": {
+        "curve_last": [
+          165.199,
+          165.262,
+          165.458
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 451.3,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "e08196c54b57ea2a325c19dd802ebf2559b822aff0341aa987163c817f0cca1e",
+          "_tail": "dfaa89865bcf72b44f1e93c532ae893d7eea25c48403dc48865b19c5b72be356",
+          "final": "837386bac4a79a806b4eb28df1afd676325ef01d3de909737f14b9342206f996"
+        }
+      },
+      "4": {
+        "curve_last": [
+          166.134,
+          166.145,
+          166.318
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 450.1,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "b07a3ea2ee7f83dd98fbcf7feb779de2ed3e779f58615e968a73399f081e48fd",
+          "_tail": "21ac6bbfb20fe023d8f6f2bffc66dd32c8c6662980b9a2529bba814cd2ad6b78",
+          "final": "8a20e54d888d623b9b8462fad7ee131d14c27bcb49728a538ee1757cbe1dbab7"
+        }
+      }
+    },
+    "mask50": {
+      "1": {
+        "curve_last": [
+          167.084,
+          167.29,
+          167.177
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 455.1,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "0367de853a0b7bacc67eb2dd27e2f2c2bc13c680df84aa32773a0c339fb3d2e9",
+          "_tail": "ffd1abecb0c40ad3d60dd441b2ecb67e0aaa1a19f5d1d122bb40525d7b5385f2",
+          "final": "e3fffc7c60db24861071b133058cb7aea5e7a4037e665e90d19dbac7acde9f69"
+        }
+      },
+      "2": {
+        "curve_last": [
+          166.662,
+          166.423,
+          166.349
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 454.5,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "9bd9c628fb9fad0774d3c544e81358a12d60c9b8deb7ef99a6647608fcc3e035",
+          "_tail": "1791b95f7e936f7adf0e36f00e3221e36cba74b4d6c1d1c16cfa6c6a5655e4f4",
+          "final": "af73d99770d23da4b7c736ee4154613daadff599e68a970fcb33b02195f46750"
+        }
+      },
+      "3": {
+        "curve_last": [
+          166.787,
+          166.816,
+          167.053
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 452.5,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "0eaa5e5983e405d53994f4b540388a6659a2bd549044452179f8f226eb4fac4a",
+          "_tail": "fbbd67e9c3ddb61a7ef347d1db4eba29e175a0579d7e42df28a6e6b9da356c82",
+          "final": "99d6a576ffa672803d4fb45b93f2565947871e8c084f867f351d7c83892d674c"
+        }
+      },
+      "4": {
+        "curve_last": [
+          166.97,
+          166.92,
+          166.953
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 451.7,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "606cf0a80fdb0b8f23e54ddb044ca6162351986c211337e910a5703b24edee76",
+          "_tail": "fa96f6147f6a6aea5c3004fa34d83cc89f3f7718229c553fa0465b6af94c4577",
+          "final": "0c6928c168aa5221eb66fda7cf0041910b716ca9e695e692cdf0e60fa319ff29"
+        }
+      }
+    },
+    "ref": {
+      "1": {
+        "curve_last": [
+          167.921,
+          167.899,
+          167.963
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 432.5,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "29611d8212b4db78af7be1c9040d6f50ed5da4d75c01fd6efbaa003a046710d3",
+          "_tail": "414313754844afedac56777a1b0bc09b2281ed9af8dc873e4b7ffb597cae62e4",
+          "final": "51a85cfef60f3dc0cbc293364e033f07b85078a7692628efdd42c11109d159f2"
+        }
+      },
+      "2": {
+        "curve_last": [
+          167.389,
+          167.217,
+          167.338
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 432.1,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "b2490e6c85cc0eaf7e77484997d19afa8c4bbabd90230b285705a44446899e7e",
+          "_tail": "877369df1787654b91226e6b588b34f9c65d977118f822906ce04ce549332ad7",
+          "final": "bce26881a377b47b5d14356243aa992e55a39879e97b4efe80695bb577a81f25"
+        }
+      },
+      "3": {
+        "curve_last": [
+          166.708,
+          166.875,
+          166.936
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 425.8,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "c181b6cdcd251ab14b7d8c6c6fdb6df923ae328d2e713518eae5d5d4a7bbfdda",
+          "_tail": "a8651b07ad5cbd3215323310770600e4d9addf293c03ee258d5532297670e1d2",
+          "final": "9b15a728250ca5d728c7b012b6e7270d533139c6ebbe9d3045ebb3ff63037281"
+        }
+      },
+      "4": {
+        "curve_last": [
+          167.625,
+          167.879,
+          168.013
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 425.7,
+        "parameters": 2552378,
+        "predictions_sha256": {
+          "_ema": "aab5a08b7c155c61ad2704404c8afe911fbff4aa3bc5ad8f2639819df2bd469f",
+          "_tail": "6a64ec870a44cc0cfeafb6d114cdf34086e34e0b2f42c1591f33f90394defff0",
+          "final": "e8c23d21d94c67bdce88dfa36bab73ea71c69e09d945891e7ad5b44112dae26d"
+        }
+      }
+    },
+    "wide": {
+      "1": {
+        "curve_last": [
+          170.192,
+          170.445,
+          170.425
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 424.0,
+        "parameters": 5690426,
+        "predictions_sha256": {
+          "_ema": "fb93fa0bef872dbe1cb7aeb4338707be1c40f32e0b71e594c4c42dd2e6f11972",
+          "_tail": "b058a151a9ce1188f010d18a0cc393bfe887498066f7d34fcd9818245d8b45bf",
+          "final": "0034f2c10c931e886834daf36f02ce646764021cea31a6aa04ce08a5b5f89632"
+        }
+      },
+      "2": {
+        "curve_last": [
+          169.65,
+          169.45,
+          169.584
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 424.4,
+        "parameters": 5690426,
+        "predictions_sha256": {
+          "_ema": "5b22473cac2bc2e23ac14927f988ec13df2239380dfd70d2aa2aca0ccea238b6",
+          "_tail": "68aeda8c7db32cf11abac4b1dc4b3495461f488bc5651384e35377def5852df9",
+          "final": "55642cd64c5b0b9bd964700151965b50b4891c054cf782b33696e276f88b7878"
+        }
+      },
+      "3": {
+        "curve_last": [
+          169.178,
+          169.187,
+          169.324
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 416.1,
+        "parameters": 5690426,
+        "predictions_sha256": {
+          "_ema": "14030a2fdf6c0cd08a37600f9da0fc3cd59f83f30389ea16f86acd5c7d42b102",
+          "_tail": "dc0ad94b769fa7d644991184ccfcaa4e843190112b5fea62290dc98816595877",
+          "final": "1f9ad47a48f584ccee83a7bf2cfd6c5089e78aa498603d926a947a56dcd7a722"
+        }
+      },
+      "4": {
+        "curve_last": [
+          170.657,
+          170.795,
+          170.781
+        ],
+        "device": "NVIDIA L40S",
+        "fit_seconds": 416.4,
+        "parameters": 5690426,
+        "predictions_sha256": {
+          "_ema": "52e762ca5fed6d6a4ed6ae5fef49beb7e5335af473a4240ff281f49b6433e935",
+          "_tail": "3c70b9c9a65dbd70b11fc19a8ca15fdcc74a03934c500e1fdbd1e40415b2f66a",
+          "final": "79219cfa3f86a44cdb6d33cb3ebbfbd1d18a3133e7fe819a9e15e3164de16e59"
+        }
+      }
+    }
+  },
+  "share": 0.75
+}
