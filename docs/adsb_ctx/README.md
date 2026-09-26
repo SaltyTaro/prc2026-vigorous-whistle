@@ -211,3 +211,6 @@ The gain survives in full: 100% in December and 99.9% in July. Where coverage th
   moves more than 600 s.
 - **Expected transfer (not a prediction of the official score):** development −0.188% (December −0.364%, July −0.140%);
   the thinned months keep 102% / 97% of the gain.
+- **Uploaded with the user's "Upload it"** (`tools/prc_submit.py upload --calendar-day`) and **officially scored 230.0668 on
+  all 344,841 rows** (processed 03:50:02 UTC, [`official_result_v28.json`](official_result_v28.json)): **−0.7389 s (−0.320%)
+  against v27 (230.8057)**, larger than the development gain (−0.188%). v28 is the incumbent; never re-upload v1–v28.
