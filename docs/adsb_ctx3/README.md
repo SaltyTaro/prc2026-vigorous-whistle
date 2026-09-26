@@ -58,3 +58,22 @@ points of R2 at b = 0.5 against `ref` (4 seeds each, seeds 1–4); positive = be
   162.81 — the same settings on a different GPU session; single-seed differences of this size are within the seed spread.
 
 Per the declaration, e32 goes to a separately declared development round (hardware named) against the incumbent.
+
+## 32-epoch development round (26 September evening) — [`configs/adsb_ctx_v4.json`](../../configs/adsb_ctx_v4.json), selected `g_thirds`
+
+16 GPU seeds (401–416) of `ctx_e32` ([`configs/adsb_ctx_network_v3.json`](../../configs/adsb_ctx_network_v3.json)) on the four L40S nodes,
+launched 18:50 UTC; all 48 scoring folds finished without a failure (seasonal / forward / refit). `ens_ctx_e32` = their seed mean
+(pairwise correlation 0.960 / 0.971 / 0.964). Scorer `tools/run_adsb_ctx_dev2.py --declaration configs/adsb_ctx_v4.json`; the control
+(pool_s75) reproduced its recorded development RMSE on every month. Report: [`development_results_v4.json`](../adsb_ctx/development_results_v4.json).
+
+| Candidate (network table at share 0.75) | Jan | Jul | Nov | Dec | Mean | Intervals < 0 | Eligible |
+|---|---|---|---|---|---|---|---|
+| g_e32_half (ctx + e32) | −0.016 | −0.054 | −0.078 | −0.042 | −0.048 | 2/4 | no |
+| **g_thirds (ctx + e24 + e32)** | −0.037 | −0.061 | −0.102 | −0.073 | **−0.068** | 4/4 | **selected** |
+| g_e32_only | −0.062 | −0.102 | −0.199 | −0.092 | −0.114 | 3/4 | no |
+| g_e32_e24 (e24 + e32) | −0.071 | −0.092 | −0.180 | −0.122 | −0.116 | 3/4 | no (Dec [−0.38, +0.01]) |
+
+`g_thirds` intervals: January [−0.21, −0.05], July [−0.22, −0.10], November [−0.26, −0.13], December [−0.21, −0.02] s; matched and
+unmatched non-LIRF rows improve in every month. Round D (CPU e24 seeds 133–148) is still running against the same control; per the
+declaration, if it also selects, a combined candidate is declared and scored before anything ships. Next: the coverage-regime ship check,
+the 16 refit12 folds (running), then an export against v29.
