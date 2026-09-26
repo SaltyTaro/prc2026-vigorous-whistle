@@ -152,3 +152,62 @@ The gain survives in full: 100% in December and 99.9% in July. Where coverage th
   - Development −1.02% (December −1.73%, the closest regime to January 2026; July −1.10%).
   - Under the ranking months' ADS-B coverage the gain was kept in full on both thinned months.
 - **Uploaded with the user's "upload it"** (`tools/prc_submit.py upload --calendar-day`: Content-MD5 checked by S3 on write, then a post-upload check of the stored object's size and SHA-256 metadata) and **officially scored 230.8057 on all 344,841 rows** (processed 13:41:03 UTC, [`official_result_v27.json`](official_result_v27.json)): **−3.3381 s (−1.426%) against v26 (234.1438)**, larger than the development gain (−1.02%). v27 is the incumbent; never re-upload v1–v27.
+
+## Round A (26 September) — [`configs/adsb_ctx_v2.json`](../../configs/adsb_ctx_v2.json), selected `pool_s75`
+
+- **Setup:** 16 seeds (117–132) of `ctx_e24` (the round-1 network trained for 24 epochs instead of 16,
+  [`configs/adsb_ctx_network_v2.json`](../../configs/adsb_ctx_network_v2.json), the GPU round's `g_e24`), two lanes per
+  Azure worker, CPU only. Candidates against v27: share-only (`ctx_s75/s85`), `e24_s65` (ens_ctx_e24 replaces ens_ctx),
+  `pool_s65/75/85` (half ens_ctx, half ens_ctx_e24). Development rule unchanged.
+- **Result** ([`development_results_v2.json`](development_results_v2.json), commit `3588318`):
+
+  | Candidate | Jan | Jul | Nov | Dec | Mean | Intervals < 0 | Eligible |
+  |---|---|---|---|---|---|---|---|
+  | ctx_s75 | −0.001 | −0.055 | +0.001 | −0.217 | −0.068 | 2/4 | no |
+  | ctx_s85 | +0.024 | −0.068 | +0.059 | −0.360 | −0.086 | 1/4 | no |
+  | e24_s65 | −0.114 | −0.100 | −0.219 | −0.174 | −0.152 | 4/4 | yes |
+  | pool_s65 | −0.072 | −0.074 | −0.143 | −0.123 | −0.103 | 4/4 | yes |
+  | **pool_s75** | −0.084 | −0.140 | −0.164 | −0.364 | **−0.188** | 4/4 | **selected** |
+  | pool_s85 | −0.071 | −0.163 | −0.127 | −0.533 | −0.223 | 2/4 | no |
+
+  Percent RMSE change against v27 per recipe month. `pool_s75`'s paired-day intervals: January [−0.48, −0.14],
+  July [−0.55, −0.20], November [−0.50, −0.04], December [−0.77, −0.48] s.
+- **Coverage-regime ship check** ([`configs/adsb_ctx_regime_check_v2.json`](../../configs/adsb_ctx_regime_check_v2.json),
+  declared before any thinned score of ens_ctx_e24; `tools/ctx_regime_check2.py`; commit `4cf2d47`): **passes on both
+  months.**
+  - December (EDDF thinned to January 2026): natural −0.364%, thinned −0.370%, interval [−0.78, −0.50]; EDDF −0.19% →
+    −0.39%.
+  - July (EDDF, LSZH, LIRF thinned): natural −0.140%, thinned −0.135%, interval [−0.54, −0.19]; EDDF +0.07% → −0.09%.
+  - The natural rebuilds reproduce v27 and pool_s75 within 0.0006 s ([`regime_check2_2025-12.json`](regime_check2_2025-12.json),
+    [`regime_check2_2025-07.json`](regime_check2_2025-07.json)).
+
+## Export v28 (26 September, ~03:35 UTC)
+
+[`tools/export_adsb_ctx2.py`](../../tools/export_adsb_ctx2.py) → `runs/submissions/vigorous-whistle_v28.parquet`
+(SHA-256 `782c061745eaf85bdf55026b181a6d6d3fd16a29ea39d4766394c53503513d22`, 1,342,820 bytes). Record:
+[`export_v2.json`](export_v2.json).
+
+- **Inputs:** ens_ctx_e24 is the mean of the 16 round-A seeds' twelve-month refits (January–December, 1,924,343 rows,
+  24 epochs each); ens_ctx and the inherited ens_nn / ens_new / ens_nnl equal v27's recorded columns. Every record carries
+  the declared variant, code, configuration, seed, model hash and token content, and one ADS-B ranking table (`1dcf5c7f…`,
+  v27's).
+- **Control rebuild:** v27 rebuilt from its export detail with the development scorer's code path: committee mix and
+  values differ from the recorded v27 by 0.0 s; the integers equal the uploaded v27.
+- **Candidate:** committee-mix network 0.5 ens_ctx + 0.5 ens_ctx_e24 at share 0.75.
+- **Change against v27:** 283,851 rows change, RMS 8.4 s, mean −0.26 s, median 2 s, p99 33 s, max 283 s.
+  - By airport (RMS): EHAM and LTFM 11.3 s, LFPG 10.7 s, LSZH 7.8 s, EGLL 7.7 s, EDDF 7.6 s. LIRF is unchanged.
+  - By month (RMS): January 10.4 s, July 6.4 s. The new network table correlates 0.9995 with v27's on non-LIRF rows.
+- **Independent verification** ([`verification_v28.json`](verification_v28.json), `tools/verify_adsb_ctx2.py`):
+  - All 32 context networks (ens_ctx and ens_ctx_e24) reload on Windows and re-predict 5,000 sampled ranking rows within
+    0.0020 s of their saved predictions (exact cached ADS-B table, declared ranking token file).
+  - Every ensemble column equals the plain mean of its saved seeds (0.0 s).
+  - v9, residual and committee equal v27's components; the rebuilt v27 equals the recorded one (0.0 s).
+  - All 317,942 non-LIRF rows re-derived by plain arithmetic, max(0.3 (v9 + residual) + 0.7 (0.25 committee +
+    0.75 (0.5 ens_ctx + 0.5 ens_ctx_e24)), −12), round to the exported integers (detail within 2e-12 s). All 26,899 LIRF
+    rows equal the uploaded v27. The file contract holds.
+- **Audit** ([`export_audit_v28.json`](export_audit_v28.json), `tools/audit_export.py --version 28 --compare 27 26 9`):
+  v27's shape — the same five January airport-months above their development means (ratios within 0.002 of v27's), the
+  same flagged days, 37 predictions above 4 h (all LIRF, unchanged), 5 negative predictions (v27: 7), none below −12; no row
+  moves more than 600 s.
+- **Expected transfer (not a prediction of the official score):** development −0.188% (December −0.364%, July −0.140%);
+  the thinned months keep 102% / 97% of the gain.
