@@ -1,0 +1,174 @@
+{
+  "audit_used": false,
+  "declared_at_utc": "2026-09-26T18:43:10.024401+00:00",
+  "defaults": {
+    "architecture": {
+      "cat_cap": 16,
+      "d_num": 8,
+      "depth": 3,
+      "dropout": 0.1,
+      "heads": 4,
+      "max_tokens": 128,
+      "n_aux": 0,
+      "sa_dropout": 0.0,
+      "sa_ff": 2,
+      "sa_heads": 4,
+      "sa_layers": 0,
+      "tok_dim": 96,
+      "width": 512
+    },
+    "aux": {
+      "targets": [],
+      "weight": 0.0
+    },
+    "context": {
+      "departures_only": false,
+      "use_adsb": true
+    },
+    "features": {
+      "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+      "extra_features": [
+        "adsb_appear_s",
+        "adsb_last_stand_s",
+        "adsb_pre_motion_gap_s",
+        "adsb_first_motion_s",
+        "adsb_first_dist_stand_imp_m",
+        "adsb_stand_imputed",
+        "sfc_ground_10m",
+        "sfc_moving_10m",
+        "sfc_moving_20m",
+        "sfc_rwy_queue_5m",
+        "sfc_rwy_queue_10m"
+      ]
+    },
+    "masking": {
+      "columns": [
+        "adsb_gate",
+        "adsb_first_point_s",
+        "adsb_motion_s",
+        "adsb_first_gs_kt",
+        "adsb_first_dist_stand_m",
+        "adsb_stop_seconds",
+        "adsb_taxi_path_m",
+        "adsb_taxi_stops",
+        "adsb_taxi_stopped_s",
+        "adsb_slow_start_s",
+        "adsb_gap_before_s",
+        "adsb_turnaround_s",
+        "adsb_anchor_dist_stand_m",
+        "adsb_last_ground_s",
+        "adsb_points",
+        "adsb_appear_s",
+        "adsb_last_stand_s",
+        "adsb_pre_motion_gap_s",
+        "adsb_first_motion_s",
+        "adsb_first_dist_stand_imp_m",
+        "adsb_stand_imputed"
+      ],
+      "matched": "adsb_matched",
+      "p": 0.0
+    },
+    "preprocess": {
+      "bins": 32,
+      "min_count": 10,
+      "target_clip": null
+    },
+    "rows": {
+      "exclude_airports": [
+        "LIRF"
+      ],
+      "exclude_population": false,
+      "max_label": null
+    },
+    "tokens_dir": "data/ctx/tokens_v1",
+    "training": {
+      "batch_size": 2048,
+      "epochs": 32,
+      "grad_clip": 5.0,
+      "lr": 0.001,
+      "min_lr_fraction": 0.02,
+      "warmup_epochs": 1.0,
+      "weight_decay": 0.0001
+    }
+  },
+  "experiment_id": "prc2026-adsb-ctx3-design-v2",
+  "hardware": "four AWS g6e.2xlarge (one L40S each) in us-east-2 via SkyPilot (infra/aws/sky_ctx3_head.yaml, sky_ctx3_worker.yaml; clusters prc-ctx3a-d); tools/run_adsb_ctx3.py --device cuda, float32 with TF32 matrix products; two lanes per GPU; every run of this declaration on that hardware",
+  "protocol": {
+    "data": "tools/run_adsb_ctx3.py --fold design: the round-1/2 design fold exactly (seasonal fit partition 2025-02..06, 08, 09 without LIRF; October monitored; October predictions only)",
+    "decision": "An item is GO when (a) its R2 at b = 0.5 is at least 0.05 points below ref32's R2 at b = 0.5, (b) its 4-seed standalone October non-LIRF RMSE is below ref32's, and (c) the paired-day bootstrap 95% interval of the proxy RMSE difference between the item's and ref32's tables at b = 0.5 lies below zero. GO items go to a separately declared development round; the routed item with the lowest R2 is the only routed one carried forward.",
+    "masking": "training only: each fitted row with adsb_matched = 1 is drawn with probability p at every step (a generator of its own) and shown as an unmatched row: the 21 declared focal-flight ADS-B columns NaN (what every unmatched row carries) and adsb_matched 0; its label is unchanged. Neighbour (nb_*, sfc_*) columns and context tokens are unchanged. Prediction never masks. p = 1.0 masks every matched row at every step.",
+    "never_read": "No run of this declaration predicts, scores or reads a label of 2025-01, 2025-07, 2025-11, 2025-12 or the ranking months.",
+    "readings": {
+      "R1": "October non-LIRF RMSE of each item's 4-seed mean; matched / unmatched; unmatched by airport",
+      "R2": "recipe proxy (tools/nn_design_report.RecipeProxy, all 183,761 October rows; LIRF rows at v9) of table = 0.25 committee + 0.75 net with net = (1 - b) P + b X, b in {0.25, 0.5, 1.0}, as % RMSE against net = P. X = an item's 4-seed mean.",
+      "descriptive": "the unrouted masked variants",
+      "items": {
+        "e40": "X = e40 mean on every row",
+        "route_mask100": "X = ref32 mean on matched rows, mask100_32 mean on the others",
+        "route_mask25": "X = ref32 mean on rows with adsb_matched = 1, mask25_32 mean on the other rows",
+        "route_mask50": "X = ref32 mean on matched rows, mask50_32 mean on the others"
+      },
+      "pool": "P = 0.5 x mean(ctx seeds 101-116) + 0.5 x mean(ctx_e24 seeds 117-132): their seasonal-fold October stop predictions (runs/adsb_ctx/ctx_s1xx/seasonal/stop_predictions.parquet; the same fit partition as the design fold), i.e. v28/v29's network table on October.",
+      "reference": "ref32's 4-seed mean (seeds 5-8), unrouted"
+    }
+  },
+  "purpose": "GPU sprint, second design batch (user: 'go ahead use the gpu'), declared after batch 1's result (docs/adsb_ctx3/README.md) and before any fit of these seeds. Batch 1 showed focal-ADS-B masking improving unmatched rows ~0.2% while costing matched rows 0.25-0.45%, and 32 epochs as the only GO. Questions: (1) does a masked network used ONLY on unmatched rows (matched rows keep the unmasked network) help, at p = 0.25, 0.5 or 1.0 (1.0 = a network that never sees any focal ADS-B input)? (2) do 40 epochs beat 32? All on the 32-epoch base, fresh seeds 5-8.",
+  "runs": {
+    "e40": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "mask100_32": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "mask25_32": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "mask50_32": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "ref32": [
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "tokens": {
+    "data/ctx/tokens_v1": "round-1 build (K 128, [-60, +30] min, centre -15 min), rebuilt on the head node by tools/build_ctx_tokens.py and copied to the workers; content hashes must equal the local manifest on every node"
+  },
+  "variants": {
+    "e40": {
+      "training": {
+        "epochs": 40
+      }
+    },
+    "mask100_32": {
+      "masking": {
+        "p": 1.0
+      }
+    },
+    "mask25_32": {
+      "masking": {
+        "p": 0.25
+      }
+    },
+    "mask50_32": {
+      "masking": {
+        "p": 0.5
+      }
+    },
+    "ref32": {}
+  }
+}

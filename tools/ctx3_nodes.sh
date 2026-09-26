@@ -47,5 +47,27 @@ case "${1:-}" in
       rsync -a -e ssh "$n":prc/runs/adsb_ctx3/ runs/adsb_ctx3/ --exclude 'logs/jobs.txt' --exclude 'logs/chain.log' --exclude 'logs/nohup_chain.log' && \
         mkdir -p runs/adsb_ctx3/node_logs/$n && rsync -a -e ssh "$n":prc/runs/adsb_ctx3/logs/ runs/adsb_ctx3/node_logs/$n/ && echo "$n mirrored"
     done ;;
-  *) echo "usage: $0 fanout|sync|launch|mirror"; exit 2 ;;
+  launch2)
+    # the evening work (tools/ctx3_jobs.py): 32-epoch development seeds and the second design batch, via tools/ctx3_queue.sh as sky jobs
+    source ~/.venv-sky/bin/activate
+    for i in "${!nodes[@]}"; do
+      n=${nodes[$i]}
+      if ssh "$n" "pgrep -f '[c]tx3_queue.sh' > /dev/null"; then echo "$n: queue already running"; continue; fi
+      sky exec "$n" --gpus L40S:1 -d --name "ctx3-queue-$i" "cd ~/prc && .venv/bin/python tools/ctx3_jobs.py && bash tools/ctx3_queue.sh $i 2" 2>&1 \
+        | sed 's/\x1b\[[0-9;]*m//g' | grep -E 'Job (ID|submitted)|Error' | sed "s/^/$n: /"
+    done ;;
+  mirror2)
+    # development learners and batch-2 design runs to the real E: drive (mounted in WSL at /mnt/edrive; WSL's /mnt/e is NOT E:),
+    # December leaves (small) into the local runs/december/learners, node logs to E:
+    e=/mnt/edrive/prc/runs
+    mountpoint -q /mnt/edrive || { echo "mount E: first: wsl -u root mount -t drvfs E: /mnt/edrive -o metadata,uid=1000,gid=1000"; exit 1; }
+    mkdir -p "$e/adsb_ctx_gpu" "$e/adsb_ctx3/design2" "$e/adsb_ctx3/node_logs2" runs/december/learners
+    for n in "${nodes[@]}"; do
+      rsync -a -e ssh "$n":prc/runs/adsb_ctx_gpu/ "$e/adsb_ctx_gpu/" 2>/dev/null; a=$?
+      rsync -a -e ssh "$n":prc/runs/adsb_ctx3/design2/ "$e/adsb_ctx3/design2/" 2>/dev/null; b=$?
+      rsync -a -e ssh --include 'runs__adsb_ctx_gpu__*' --exclude '*' "$n":prc/runs/december/learners/ runs/december/learners/ 2>/dev/null; c=$?
+      mkdir -p "$e/adsb_ctx3/node_logs2/$n" && rsync -a -e ssh "$n":prc/runs/adsb_ctx3/logs2/ "$e/adsb_ctx3/node_logs2/$n/" 2>/dev/null; d=$?
+      echo "$n mirrored (rsync codes $a $b $c $d)"
+    done ;;
+  *) echo "usage: $0 fanout|sync|launch|mirror|launch2|mirror2"; exit 2 ;;
 esac
