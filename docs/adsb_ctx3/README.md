@@ -77,3 +77,14 @@ launched 18:50 UTC; all 48 scoring folds finished without a failure (seasonal / 
 unmatched non-LIRF rows improve in every month. Round D (CPU e24 seeds 133–148) is still running against the same control; per the
 declaration, if it also selects, a combined candidate is declared and scored before anything ships. Next: the coverage-regime ship check,
 the 16 refit12 folds (running), then an export against v29.
+
+### Coverage-regime ship check of `g_thirds` — [`configs/adsb_ctx_regime_check_v4.json`](../../configs/adsb_ctx_regime_check_v4.json): passes both months
+
+`tools/ctx_regime_check3.py` (ens_ctx and ens_ctx_e24 from the earlier checks' hash-bound re-predictions; ens_ctx_e32 re-predicted on the
+workstation CPU from the GPU-trained learners — per network 0.09–0.31 s RMS from the TF32 GPU predictions, ensemble 0.03 / 0.11 s). The
+natural rebuilds reproduce the development control and candidate within 0.0001 s (July) and 0.0006 s (December). A first attempt was
+stopped by the workstation's memory guard during July; rerun on the user's "Run it here".
+- **July 2025** (EDDF, LSZH, LIRF thinned): natural −0.061%, **thinned −0.058%** (95% retained), interval [−0.21, −0.10] s
+  ([`regime_check3_2025-07.json`](../adsb_ctx/regime_check3_2025-07.json)).
+- **December 2025** (EDDF thinned): natural −0.073%, **thinned −0.078%** (107% retained; EDDF −0.20% → −0.24%), interval [−0.22, −0.03] s
+  ([`regime_check3_2025-12.json`](../adsb_ctx/regime_check3_2025-12.json)).
