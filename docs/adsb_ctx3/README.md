@@ -88,3 +88,20 @@ stopped by the workstation's memory guard during July; rerun on the user's "Run 
   ([`regime_check3_2025-07.json`](../adsb_ctx/regime_check3_2025-07.json)).
 - **December 2025** (EDDF thinned): natural −0.073%, **thinned −0.078%** (107% retained; EDDF −0.20% → −0.24%), interval [−0.22, −0.03] s
   ([`regime_check3_2025-12.json`](../adsb_ctx/regime_check3_2025-12.json)).
+
+## Second design batch — [`configs/adsb_ctx3_design_v2.json`](../../configs/adsb_ctx3_design_v2.json), [`design_report_2.json`](design_report_2.json): no GO
+
+Reference ref32 (4-seed
+R1 155.664, R2 at b = 0.5 −0.124%).
+
+| item | R1 (s) | gain vs ref32 (pts) | interval (s) | unmatched / matched | decision |
+|---|---:|---:|---|---|---|
+| route_mask25 (masked p 0.25 on unmatched rows only) | 155.103 | +0.054 | [−0.19, +0.01] | −0.125% / 0.000% | no (interval) |
+| route_mask50 | 155.149 | +0.047 | [−0.17, +0.01] | −0.109% / 0.000% | no |
+| route_mask100 (never sees focal ADS-B) | 155.676 | −0.016 | [−0.08, +0.14] | +0.036% / 0.000% | no |
+| e40 (40 epochs) | 156.429 | −0.027 | [−0.07, +0.17] | +0.028% / +0.062% | no |
+
+- Routing a lightly masked network to unmatched rows keeps its unmatched gain without the matched cost, but the gain (+0.05 pts) is at
+  the bar and its interval touches zero on October. A network that never sees focal ADS-B is worse even on unmatched rows: training on
+  unmasked matched rows helps the unmatched ones.
+- 40 epochs do not improve on 32. The GPU sprint's lasting result is the 32-epoch network (development round above).
