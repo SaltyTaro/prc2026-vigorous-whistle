@@ -63,10 +63,11 @@ case "${1:-}" in
     mountpoint -q /mnt/edrive || { echo "mount E: first: wsl -u root mount -t drvfs E: /mnt/edrive -o metadata,uid=1000,gid=1000"; exit 1; }
     mkdir -p "$e/adsb_ctx_gpu" "$e/adsb_ctx3/design2" "$e/adsb_ctx3/node_logs2" runs/december/learners
     for n in "${nodes[@]}"; do
-      rsync -a -e ssh "$n":prc/runs/adsb_ctx_gpu/ "$e/adsb_ctx_gpu/" 2>/dev/null; a=$?
-      rsync -a -e ssh "$n":prc/runs/adsb_ctx3/design2/ "$e/adsb_ctx3/design2/" 2>/dev/null; b=$?
-      rsync -a -e ssh --include 'runs__adsb_ctx_gpu__*' --exclude '*' "$n":prc/runs/december/learners/ runs/december/learners/ 2>/dev/null; c=$?
-      mkdir -p "$e/adsb_ctx3/node_logs2/$n" && rsync -a -e ssh "$n":prc/runs/adsb_ctx3/logs2/ "$e/adsb_ctx3/node_logs2/$n/" 2>/dev/null; d=$?
+      # each copy may find its source absent (e.g. batch 2 not started yet): record the code, never abort the loop (set -e)
+      a=0; rsync -a -e ssh "$n":prc/runs/adsb_ctx_gpu/ "$e/adsb_ctx_gpu/" 2>/dev/null || a=$?
+      b=0; rsync -a -e ssh "$n":prc/runs/adsb_ctx3/design2/ "$e/adsb_ctx3/design2/" 2>/dev/null || b=$?
+      c=0; rsync -a -e ssh --include 'runs__adsb_ctx_gpu__*' --exclude '*' "$n":prc/runs/december/learners/ runs/december/learners/ 2>/dev/null || c=$?
+      d=0; mkdir -p "$e/adsb_ctx3/node_logs2/$n" && { rsync -a -e ssh "$n":prc/runs/adsb_ctx3/logs2/ "$e/adsb_ctx3/node_logs2/$n/" 2>/dev/null || d=$?; }
       echo "$n mirrored (rsync codes $a $b $c $d)"
     done ;;
   *) echo "usage: $0 fanout|sync|launch|mirror|launch2|mirror2"; exit 2 ;;
