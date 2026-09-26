@@ -1,0 +1,44 @@
+{
+  "audit_used": false,
+  "candidate": {
+    "name": "pool_s75",
+    "network": {
+      "ens_ctx": 0.5,
+      "ens_ctx_e24": 0.5
+    },
+    "network_share": 0.75
+  },
+  "caveats": [
+    "The CatBoost residual on thinned inputs is the coverage campaign's declared approximation; the residual is identical for control and candidate.",
+    "July EDDF is harsher than July 2026 (64.9% vs 76.1% matched).",
+    "The control is now v27; the round-1 check measured v27 against v26 on the same thinned sets (passed on both months)."
+  ],
+  "control": "v27 (configs/adsb_ctx_v2.json control: committee mix network {ens_ctx: 1.0}, share 0.65)",
+  "declared_at_utc": "2026-09-26T01:14:52.590938+00:00",
+  "descriptive": [
+    "gain retained = thinned change / natural change (whole month and non-LIRF)",
+    "per-airport change on the thinned regime, especially the thinned airports",
+    "matched / unmatched non-LIRF on the thinned regime"
+  ],
+  "experiment_id": "prc2026-adsb-ctx-regime-check-v2",
+  "gate": "The selection proceeds to export if, on BOTH thinned months, the candidate's whole-month RMSE is below the thinned control's AND the paired-day 95% interval (run_adsb_v11.paired_days, seed of configs/adsb_rnn_v1.json) of the RMSE difference lies below zero. Otherwise no export without the user's decision. This check can only block; it never changes the selected candidate or its weights.",
+  "method": [
+    "As configs/adsb_ctx_regime_check_v1.json (tools/ctx_regime_check.py): same thinned months and attempts, token rebuild (k = 128) that must reproduce the stored token file, member folds (December: January-November refit models; July 2025: seasonal models), recipe assembly from the coverage campaign's saved tables and residual members.",
+    "ens_ctx natural and thinned are the round-1 check's re-predictions (runs/adsb_ctx/regime_check/<month>.parquet, hash-bound to docs/adsb_ctx/regime_check_<month>.json); ens_ctx_e24 is re-predicted here from its 16 learners (tools/ctx_regime_check2.py).",
+    "The natural control must reproduce v27's recorded development RMSE and the natural candidate its round-A development RMSE, within 0.01 s (the round-1 check's documented tolerance: local network re-predictions differ from the Azure-stored ones on a few rows)."
+  ],
+  "purpose": "Ship check for the candidate selected by configs/adsb_ctx_v2.json (round A; docs/adsb_ctx/development_results_v2.json): does its development gain over v27 survive the ranking months' adsb.lol coverage? Declared after that selection and before any thinned score of ens_ctx_e24 or of the candidate.",
+  "regimes": {
+    "2025-07": "a13_jul (EDDF, LSZH, LIRF thinned to July 2026 coverage; EDDF harsher than July 2026, an upper bound)",
+    "2025-12": "a13_dec (EDDF thinned to January 2026 coverage)",
+    "source": "configs/coverage_regime_v1.json",
+    "source_sha256": "73e75ff3dd4d7dc23e74930a8e68cfc378b40b18e615a008356295b4a4eb15d5"
+  },
+  "round_a": {
+    "declaration": "configs/adsb_ctx_v2.json",
+    "development_dir": "runs/adsb_ctx/dev2",
+    "selection": "runs/adsb_ctx/dev2/selection.json",
+    "selection_sha256": "3fbd5614411734656f00c421fcdb21301a8119aea14d164b52eb6927c2baf097",
+    "sha256": "b3ab91b1732d8f75125a3e6be0b76cfe2eda343bd558f2797ea65f6bc671e6eb"
+  }
+}
