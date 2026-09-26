@@ -97,3 +97,6 @@ months.**
   the same flags, one row moves more than 600 s and none more than 1,800 s.
 - **Expected transfer (not a prediction of the official score):** development −0.103% (December −0.137%, July −0.115%); the July
   check with LIRF dark reads −0.390%, the closest regime to July 2026.
+- **Uploaded with the user's "uplod it"** (`tools/prc_submit.py upload --calendar-day`) and **officially scored 229.6196 on all
+  344,841 rows** (processed 12:46:30 UTC, [`official_result_v29.json`](official_result_v29.json)): **−0.4472 s (−0.194%) against v28
+  (230.0668)**, about twice the development gain (−0.103%) and between it and the July-dark check (−0.390%). v29 is the incumbent; never re-upload v1–v29.
