@@ -1,4 +1,5 @@
-"""Export the 32-epoch round's selected candidate (configs/adsb_ctx_v4.json, g_thirds) on top of the incumbent v29.
+"""Export a selected committee-mix candidate of the 32-epoch round (configs/adsb_ctx_v4.json) or of the combined round
+(configs/adsb_ctx_v5.json: round D + 32-epoch) on top of the incumbent v29 (--declaration, --selection, --check, --check-reports).
 
 v29 = v28's committee mix (round A pool_s75: 0.5 ens_ctx + 0.5 ens_ctx_e24 at share 0.75) with round B's LIRF non-population blends
 (configs/adsb_ctx_lirf_v1.json lctx_b100_up). The 32-epoch round changes only the committee mix's network table (non-LIRF rows); round B's
@@ -6,14 +7,15 @@ LIRF blends are kept exactly. Steps:
 1. Every ensemble's ranking column is the mean of its declared seeds' twelve-month refits (tools/export_adsb_nn2.ensemble_table): the
    inherited ensembles must equal v29's recorded columns to 1e-9 s; ens_ctx_e32 is the sixteen GPU seeds 401-416. Each refit record carries
    the declared variant, code, configuration and seed, and its saved model the recorded hash; all seeds one ADS-B ranking table (v29's);
+   new tables: ens_ctx_e32 (GPU seeds 401-416) and, for the combined round, ens_ctx_e24b (round D's CPU seeds 133-148);
    every context seed's token files the declared content.
 2. v29 is rebuilt from its recorded components (runs/adsb_ctx/export_v29/ranking_values.parquet, hash-checked against
    docs/adsb_ctx_lirf/export.json) on the development scorer's code path: the committee mix must equal v29's recorded one to 1e-9 s, the
    values the recorded v29 to 1e-6 s and the uploaded v29 integers exactly.
 3. The selected committee mix replaces pool_s75 on the same code path (round B's LIRF blends unchanged); floor; nearest-integer export
    through the frozen submission contract. Every LIRF row must equal the uploaded v29.
-The coverage-regime ship check (configs/adsb_ctx_regime_check_v4.json) must have passed on both thinned months, and round D
-(configs/adsb_ctx_v3.json) must not have selected a candidate that has not been combined with this one. Nothing is uploaded here.
+The declared coverage-regime ship check (--check; reports docs/adsb_ctx/<--check-reports>_<month>.json) must have passed on both thinned months;
+for the v4 declaration alone, round D must not have selected a candidate (the combined round supersedes it). Nothing is uploaded here.
 """
 from __future__ import annotations
 
@@ -57,7 +59,9 @@ def main():
     parser.add_argument("--incumbent", type=Path, default=Path("docs/adsb_ctx_lirf/export.json"), help="v29's export record")
     parser.add_argument("--version", type=int, required=True)
     parser.add_argument("--report", type=Path, default=Path("docs/adsb_ctx3/export.json"))
-    parser.add_argument("--control-only", action="store_true", help="stop after the v29 control reproduction (no ens_ctx_e32, no export)")
+    parser.add_argument("--check", default=CHECK, help="the coverage-regime ship check declaration")
+    parser.add_argument("--check-reports", default="regime_check3", help="its per-month reports docs/adsb_ctx/<name>_<month>.json")
+    parser.add_argument("--control-only", action="store_true", help="stop after the v29 control reproduction (no new tables, no export)")
     args = parser.parse_args()
     started = time.time()
     decl, decl_b = read_json(ROOT / args.declaration), read_json(ROOT / ROUND_B)
@@ -77,11 +81,11 @@ def main():
         if not selection["candidates"][name]["eligible"] or name == "control":
             raise ValueError("The selected candidate is not eligible.")
         candidate = decl["candidates"][name]
-        check = read_json(ROOT / CHECK)
-        regime = {m: read_json(ROOT / f"docs/adsb_ctx/regime_check3_{m}.json") for m in REGIME_MONTHS}
-        if check["candidate"]["name"] != name or any(r["declaration_sha256"] != sha256_file(ROOT / CHECK) or not r["gate_month"]["passes"] for r in regime.values()):
+        check = read_json(ROOT / args.check)
+        regime = {m: read_json(ROOT / f"docs/adsb_ctx/{args.check_reports}_{m}.json") for m in REGIME_MONTHS}
+        if check["candidate"]["name"] != name or any(r["declaration_sha256"] != sha256_file(ROOT / args.check) or not r["gate_month"]["passes"] for r in regime.values()):
             raise ValueError("The coverage-regime ship check has not passed on both thinned months for this candidate.")
-        if (ROOT / ROUND_D_SELECTION).exists() and read_json(ROOT / ROUND_D_SELECTION).get("selected_candidate"):
+        if args.declaration.as_posix() == "configs/adsb_ctx_v4.json" and (ROOT / ROUND_D_SELECTION).exists() and read_json(ROOT / ROUND_D_SELECTION).get("selected_candidate"):
             raise ValueError("Round D selected a candidate: a combined candidate must be declared and checked before either ships.")
     config = merged_config(decl)
     config_b = merged_config(decl_b)
@@ -170,11 +174,11 @@ def main():
     provenance = {"policy": config["prediction_postprocess"], "experiment_id": decl["experiment_id"], "declaration_sha256": object_hash(decl),
                   "selection_sha256": sha256_file(ROOT / args.selection), "selected_candidate": name, "selected_by": "declared rule", "candidate": candidate,
                   "round_b": {"declaration_sha256": object_hash(decl_b), "selection_sha256": sha256_file(ROOT / ROUND_B_SELECTION), "selected_candidate": "lctx_b100_up"},
-                  "ship_check": {"declaration": CHECK, "months": {m: {"thinned_change_pct": r["regimes"]["thinned"]["change_pct"], "passes": r["gate_month"]["passes"]}
+                  "ship_check": {"declaration": args.check, "months": {m: {"thinned_change_pct": r["regimes"]["thinned"]["change_pct"], "passes": r["gate_month"]["passes"]}
                                                                   for m, r in regime.items()}},
                   "hardware": {"ens_ctx_e32": networks["ens_ctx_e32"]["hardware"]},
                   "ensembles": {e: {k: config["ensembles"][e][k] for k in ["variant_sha256", "code_sha256", "config_sha256", "seeds"]} for e in used},
-                  "learners": learners, "recipe": "v29 with the 32-epoch round's committee mix (g_thirds)",
+                  "learners": learners, "recipe": f"v29 with the committee mix {name} of {args.declaration.as_posix()}",
                   "incumbent": {"submission": "vigorous-whistle_v29.parquet", "official_rmse_seconds": 229.6196},
                   "external_data": decl["external_data"], "audit_used": False, "floor_seconds": floor}
     receipt = export_submission(pd.DataFrame({ID: ids, "prediction": values}), ROOT / "data/raw/submitting.parquet", output, provenance)

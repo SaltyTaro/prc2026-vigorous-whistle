@@ -1,12 +1,13 @@
 """Independent verification of the 32-epoch round's export (configs/adsb_ctx_v4.json on top of v29) against its declaration, selection and
 saved networks. Checks, without the export tool's blend code path:
-1. every seed of ens_ctx_e32: its refit12 record carries the declared variant, code, configuration and seed, the saved model hash, the
+1. every seed of each table new to v29 (ens_ctx_e32; for the combined round also ens_ctx_e24b): its refit12 record carries the declared variant, code, configuration and seed, the saved model hash, the
    declared token content and v29's ADS-B ranking table; the saved model reloads on this CPU and re-predicts a random sample of ranking rows
    (tabular inputs from the exact cached ADS-B table through tools/verify_adsb_nn.ranking_sample, context from the declared ranking token
-   file). These networks were trained and predicted on an L40S with TF32 matrix products, so a float32 CPU reload cannot match bit for bit:
+   file). CPU-trained networks must reproduce within --cpu-tolerance seconds (max abs). GPU-trained ones were trained and predicted on an
+   L40S with TF32 matrix products, so a float32 CPU reload cannot match bit for bit:
    each must be within --rms-tolerance seconds RMS and --p99-tolerance seconds at the 99th percentile of its saved ranking predictions (the
    coverage check measured 0.09-0.31 s RMS per network; a wrong or damaged model differs by tens of seconds);
-2. every ensemble column of the export detail is the plain mean of its saved seeds (ens_ctx_e32 and the six inherited ensembles);
+2. every ensemble column of the export detail is the plain mean of its saved seeds (the new tables and the inherited ensembles);
 3. the detail's v9, residual, committee, scope, v29 committee mix and round-B LIRF blend columns equal v29's recorded components, and its
    v29 column the recorded v29 (1e-6 s);
 4. plain arithmetic on non-LIRF rows, value = max(0.3 x (v9 + residual) + 0.7 x ((1 - s) x committee + s x sum_e w_e x ens_e), -12): with
@@ -44,6 +45,7 @@ def main():
     parser.add_argument("--sample", type=int, default=5000)
     parser.add_argument("--rms-tolerance", type=float, default=0.5)
     parser.add_argument("--p99-tolerance", type=float, default=2.0)
+    parser.add_argument("--cpu-tolerance", type=float, default=0.01, help="seconds, max abs, CPU-trained networks")
     parser.add_argument("--adsb-cache", type=Path, default=Path("runs/adsb_ctx2/inputs/adsb_features_arcw0"), help="a byte copy of arcw0's runs/adsb_nn/features")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
@@ -51,6 +53,7 @@ def main():
     torch.set_num_threads(8)
     from prc2026_ctx.tokens import TokenStore
     from prc2026_ctx3.train import Context, Store, load, predict
+    from prc2026_ctx.train import Context as Context1, load as load1, predict as predict1
     decl = read_json(ROOT / args.declaration)
     selection = read_json(ROOT / args.selection)
     if selection["declaration_sha256"] != object_hash(decl) or not selection["selected_candidate"]:
@@ -67,53 +70,71 @@ def main():
         raise ValueError("The recorded v29 components or the uploaded v29 file changed.")
     report = {"created_at_utc": utc_now(), "version": args.version, "selected_candidate": name, "candidate": candidate, "learners": {}, "ensembles": {}}
 
-    # 1. the new GPU-trained context networks
-    net = decl["networks"]["ens_ctx_e32"]
-    records = {leaf: read_json(ROOT / leaf / "refit12" / "run.json") for leaf in net["learners"]}
-    for leaf, record in records.items():
-        run = ROOT / leaf / "refit12"
-        if (record["fold"] != "refit12" or record["variant_sha256"] != net["variant_sha256"] or record["inputs"]["code"]["sha256"] != net["code"]["sha256"]
-                or record["config_sha256"] != net["config_sha256"] or record["seed"] not in net["seeds"] or record["model_sha256"] != sha256_file(run / "model.pt")
-                or record.get("audit_used") or record["inputs"]["tokens"]["files"] != net["tokens_manifest_content"] or record["inputs"]["device"] != "cuda"):
-            raise ValueError(f"{leaf}: refit12 record does not match the declaration.")
-    if sorted(r["seed"] for r in records.values()) != sorted(net["seeds"]):
-        raise ValueError("The ens_ctx_e32 refits do not cover the declared seeds exactly once.")
-    caches = {r["inputs"]["adsb_cache_sha256"]["ranking.parquet"] for r in records.values()}
-    extras = {tuple(r["inputs"]["extra_features"]) for r in records.values()}
+    # 1. the new context networks (tables absent from v29): GPU-trained (record device cuda) or CPU-trained
+    v29_tables = {"ens_ctx", "ens_ctx_e24"}
+    new_tables = [e for e in decl["networks"] if e not in v29_tables]
+    records = {e: {leaf: read_json(ROOT / leaf / "refit12" / "run.json") for leaf in decl["networks"][e]["learners"]} for e in new_tables}
+    for ensemble, recs in records.items():
+        net = decl["networks"][ensemble]
+        for leaf, record in recs.items():
+            run = ROOT / leaf / "refit12"
+            if (record["fold"] != "refit12" or record["variant_sha256"] != net["variant_sha256"] or record["inputs"]["code"]["sha256"] != net["code"]["sha256"]
+                    or record["config_sha256"] != net["config_sha256"] or record["seed"] not in net["seeds"] or record["model_sha256"] != sha256_file(run / "model.pt")
+                    or record.get("audit_used") or record["inputs"]["tokens"]["files"] != net["tokens_manifest_content"]):
+                raise ValueError(f"{leaf}: refit12 record does not match the declaration.")
+        if sorted(r["seed"] for r in recs.values()) != sorted(net["seeds"]):
+            raise ValueError(f"The {ensemble} refits do not cover the declared seeds exactly once.")
+    every = [r for recs in records.values() for r in recs.values()]
+    caches = {r["inputs"]["adsb_cache_sha256"]["ranking.parquet"] for r in every}
+    extras = {tuple(r["inputs"]["extra_features"]) for r in every}
     if len(caches) != 1 or len(extras) != 1 or caches != {incumbent["adsb_ranking_table_sha256"]}:
         raise ValueError("The new context seeds used different ADS-B ranking tables (or not v29's) or extra features.")
     report["adsb_ranking_table_sha256"] = caches.pop()
     report["ranking_tokens_content_sha256"] = content_hash(ROOT / "data/ctx/tokens_v1" / "ranking.npz")
-    if report["ranking_tokens_content_sha256"] != net["tokens_manifest_content"]["ranking"]:
+    if any(report["ranking_tokens_content_sha256"] != decl["networks"][e]["tokens_manifest_content"]["ranking"] for e in new_tables):
         raise ValueError("The ranking token file is not the one the declaration records.")
     frame = ranking_sample(ids, args.sample, 20260927, list(extras.pop()), ROOT / args.adsb_cache, report["adsb_ranking_table_sha256"])
     host = TokenStore(ROOT / "data/ctx/tokens_v1", ["ranking"])
     device = torch.device("cpu")
     store = Store.build(host, device)
-    seeds_by = {"ens_ctx_e32": []}
-    for leaf, record in records.items():
-        run = ROOT / leaf / "refit12"
-        saved = pd.read_parquet(run / "ranking_predictions.parquet").set_index(ID)["adsb_full"]
-        seeds_by["ens_ctx_e32"].append(saved.reindex(ids).to_numpy(dtype=float))
-        model, pre, settings = load(run, device)
-        x_num, x_cat = pre.transform(frame)
-        values = predict(model, pre, torch.from_numpy(x_num), torch.from_numpy(x_cat), Context.build(store, *host.lookup(frame[ID].to_numpy()), settings))
-        delta = np.abs(values - saved.reindex(frame[ID]).to_numpy(dtype=float))
-        report["learners"][leaf] = {"seed": record["seed"], "sample_rows": int(len(frame)), "rms_difference_seconds": float(np.sqrt(np.mean(delta ** 2))),
-                                    "p99_abs_difference_seconds": float(np.quantile(delta, 0.99)), "max_abs_difference_seconds": float(delta.max()),
-                                    "correlation": float(np.corrcoef(values, saved.reindex(frame[ID]).to_numpy(dtype=float))[0, 1])}
-        print(leaf, report["learners"][leaf], flush=True)
-    worst_rms = max(r["rms_difference_seconds"] for r in report["learners"].values())
-    worst_p99 = max(r["p99_abs_difference_seconds"] for r in report["learners"].values())
-    report["reload"] = {"rms_tolerance_seconds": args.rms_tolerance, "p99_tolerance_seconds": args.p99_tolerance, "worst_rms_seconds": worst_rms, "worst_p99_seconds": worst_p99,
-                        "note": "GPU (TF32) training and prediction, CPU float32 reload"}
-    if worst_rms > args.rms_tolerance or worst_p99 > args.p99_tolerance:
-        raise ValueError(f"A reloaded network differs from its saved predictions beyond tolerance: {report['reload']}")
+    seeds_by = {}
+    for ensemble, recs in records.items():
+        seeds_by[ensemble] = []
+        for leaf, record in recs.items():
+            run = ROOT / leaf / "refit12"
+            saved = pd.read_parquet(run / "ranking_predictions.parquet").set_index(ID)["adsb_full"]
+            seeds_by[ensemble].append(saved.reindex(ids).to_numpy(dtype=float))
+            gpu = record["inputs"].get("device") == "cuda"
+            if gpu:
+                model, pre, settings = load(run, device)
+                x_num, x_cat = pre.transform(frame)
+                values = predict(model, pre, torch.from_numpy(x_num), torch.from_numpy(x_cat), Context.build(store, *host.lookup(frame[ID].to_numpy()), settings))
+            else:
+                model, pre, settings = load1(run)
+                x_num, x_cat = pre.transform(frame)
+                values = predict1(model, pre, x_num, x_cat, Context1.build(host, *host.lookup(frame[ID].to_numpy()), settings))
+            delta = np.abs(values - saved.reindex(frame[ID]).to_numpy(dtype=float))
+            report["learners"][leaf] = {"ensemble": ensemble, "seed": record["seed"], "trained_on": "gpu" if gpu else "cpu", "sample_rows": int(len(frame)),
+                                        "rms_difference_seconds": float(np.sqrt(np.mean(delta ** 2))), "p99_abs_difference_seconds": float(np.quantile(delta, 0.99)),
+                                        "max_abs_difference_seconds": float(delta.max())}
+            print(leaf, report["learners"][leaf], flush=True)
+    gpu_runs = [r for r in report["learners"].values() if r["trained_on"] == "gpu"]
+    cpu_runs = [r for r in report["learners"].values() if r["trained_on"] == "cpu"]
+    report["reload"] = {"gpu": {"rms_tolerance_seconds": args.rms_tolerance, "p99_tolerance_seconds": args.p99_tolerance,
+                                "worst_rms_seconds": max((r["rms_difference_seconds"] for r in gpu_runs), default=None),
+                                "worst_p99_seconds": max((r["p99_abs_difference_seconds"] for r in gpu_runs), default=None),
+                                "note": "GPU (TF32) training and prediction, CPU float32 reload"},
+                        "cpu": {"max_abs_tolerance_seconds": args.cpu_tolerance, "worst_max_abs_seconds": max((r["max_abs_difference_seconds"] for r in cpu_runs), default=None),
+                                "note": "Linux-saved float32 networks reloaded on Windows differ by up to ~2e-3 s (docs/adsb_nn)"}}
+    if gpu_runs and (report["reload"]["gpu"]["worst_rms_seconds"] > args.rms_tolerance or report["reload"]["gpu"]["worst_p99_seconds"] > args.p99_tolerance):
+        raise ValueError(f"A reloaded GPU network differs from its saved predictions beyond tolerance: {report['reload']}")
+    if cpu_runs and report["reload"]["cpu"]["worst_max_abs_seconds"] > args.cpu_tolerance:
+        raise ValueError(f"A reloaded CPU network differs from its saved predictions beyond tolerance: {report['reload']}")
 
     # 2. every ensemble column is the plain mean of its saved seeds
     rnn = read_json(ROOT / "configs/adsb_rnn_v1.json")
     round_b = read_json(ROOT / "configs/adsb_ctx_lirf_v1.json")
-    learner_lists = {**{e: s["learners"] for e, s in rnn["ensembles"].items()}, **{e: n["learners"] for e, n in decl["networks"].items() if e != "ens_ctx_e32"},
+    learner_lists = {**{e: s["learners"] for e, s in rnn["ensembles"].items()}, **{e: n["learners"] for e, n in decl["networks"].items() if e not in new_tables},
                      "ens_ctx_lirf": round_b["networks"]["ens_ctx_lirf"]["learners"]}
     for ensemble, leaves in learner_lists.items():
         seeds_by[ensemble] = [pd.read_parquet(ROOT / leaf / "refit12" / "ranking_predictions.parquet").set_index(ID)["adsb_full"].reindex(ids).to_numpy(dtype=float)
