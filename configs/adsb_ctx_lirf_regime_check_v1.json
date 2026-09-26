@@ -1,0 +1,52 @@
+{
+  "audit_used": false,
+  "candidate": {
+    "lirf": {
+      "lirf_nonpop_matched": {
+        "net": 0.4,
+        "tree": 0.45,
+        "v9": 0.15
+      },
+      "lirf_nonpop_unmatched": {
+        "net": 0.35,
+        "tree": 0.25,
+        "v9": 0.4
+      }
+    },
+    "lirf_network": {
+      "ens_ctx_lirf": 1.0
+    },
+    "name": "lctx_b100_up"
+  },
+  "caveats": [
+    "The CatBoost residual on thinned inputs is the coverage campaign's declared approximation; the residual is identical for control and candidate.",
+    "July EDDF is harsher than July 2026 (64.9% vs 76.1% matched).",
+    "December's thinning (a13_dec) touches EDDF only, so LIRF inputs are natural there; July is the informative month for round B."
+  ],
+  "control": "v27's LIRF blends (v25's weights, ens_nnl) with v27's committee mix (ens_ctx, share 0.65) -- round B's declared control; LIRF rows equal v28's",
+  "declared_at_utc": "2026-09-26T10:01:34.318028+00:00",
+  "descriptive": [
+    "gain retained (thinned / natural change) on all rows and on LIRF",
+    "LIRF matched / unmatched readings on each regime"
+  ],
+  "experiment_id": "prc2026-adsb-ctx-lirf-regime-check-v1",
+  "gate": "The selection proceeds to export if, on BOTH thinned months, the candidate's whole-month RMSE is below the thinned control's AND the paired-day 95% interval (run_adsb_v11.paired_days, seed of configs/adsb_rnn_v1.json) of the RMSE difference lies below zero. Otherwise no export without the user's decision. This check can only block; it never changes the selected candidate or its weights.",
+  "method": [
+    "As configs/adsb_ctx_regime_check_v2.json (tools/ctx_lirf_regime_check.py): same thinned months and attempts (July 2025 thins LIRF to its July 2026 coverage), token rebuild that must reproduce the stored token file, member folds (December: January-November refit models; July: seasonal models); ens_ctx from the round-1 check's saved re-predictions, ens_nnl natural/thinned from the coverage campaign's saved tables, ens_ctx_lirf re-predicted from its 16 learners. Only LIRF rows may differ between control and candidate.",
+    "The natural control must reproduce v27's recorded development RMSE and the natural candidate its round-B development RMSE within 0.01 s."
+  ],
+  "purpose": "Ship check for round B's selected candidate (configs/adsb_ctx_lirf_v1.json, docs/adsb_ctx_lirf/development_results.json): does its LIRF gain survive the ranking months' adsb.lol coverage, in particular July 2026's dark LIRF? Declared after that selection and before any thinned score of ens_ctx_lirf or of the candidate.",
+  "regimes": {
+    "2025-07": "a13_jul (EDDF, LSZH, LIRF thinned to July 2026 coverage; EDDF harsher than July 2026, an upper bound)",
+    "2025-12": "a13_dec (EDDF thinned to January 2026 coverage)",
+    "source": "configs/coverage_regime_v1.json",
+    "source_sha256": "73e75ff3dd4d7dc23e74930a8e68cfc378b40b18e615a008356295b4a4eb15d5"
+  },
+  "round_b": {
+    "declaration": "configs/adsb_ctx_lirf_v1.json",
+    "development_dir": "runs/adsb_ctx/dev_lirf",
+    "selection": "runs/adsb_ctx/dev_lirf/selection.json",
+    "selection_sha256": "e677f7595c7cf3ad6ad17b4975d2e87ce8fa8b3948a3dc46cd8ea4616001944a",
+    "sha256": "f8c10be16cff0ec047ca8a6e7830d6f4357a1d6296319cebf37931c222e717cc"
+  }
+}
