@@ -1,5 +1,5 @@
 """LOMO development rows (configs/lomo_dev_v1.json + configs/lomo_dev_networks_v1.json): January and July 2025 with every component on
-eleven-month leave-one-month-out footing, in the layout of runs/fair_dev/rows.parquet so that tools/run_fair_weights.build and the rounds'
+eleven-month leave-one-month-out footing, in the layout of runs/fair_dev/rows.parquet plus committee and nets (the network table at v34's family weights) so that tools/run_fair_weights.build and the rounds'
 runners work unchanged.
 
 Per held month (2025-01, 2025-07), starting from the fair rows (labels, flags, the LIRF fill population's values):
@@ -62,7 +62,8 @@ def assemble(f: pd.DataFrame, v9, residual, tables: dict, config, net, lirf_net,
     g["v9"], g["residual"] = v9, np.where(matched_non_lirf, residual, 0.0)
     g["base"] = g["v9"] + g["residual"]
     t = pd.DataFrame(tables)
-    g["mix"] = mixed(t[config["committee_table"]].to_numpy(dtype=float), weighted(t, net["network"]), float(net["network_share"]))
+    g["committee"], g["nets"] = t[config["committee_table"]].to_numpy(dtype=float), weighted(t, net["network"])
+    g["mix"] = mixed(g["committee"].to_numpy(), g["nets"].to_numpy(), float(net["network_share"]))
     g["lirf_tree"], g["lirf_net"] = t[config["lirf_table"]].to_numpy(dtype=float), weighted(t, lirf_net)
     g["v30"] = build(g, *V30)
     g["v33"] = build(g, v33["outer"], v33["lirf"])
@@ -71,7 +72,7 @@ def assemble(f: pd.DataFrame, v9, residual, tables: dict, config, net, lirf_net,
 
 def check_fold(fair: pd.DataFrame, config, net, lirf_net, v33) -> dict:
     out = {}
-    for month in HELD:
+    for month in sorted(set(fair["month"])):
         f = fair[fair["month"] == month].reset_index(drop=True)
         ids = f[ID].to_numpy()
         tables = extra_columns(config, month, ids)
@@ -130,7 +131,16 @@ def main() -> None:
                                     "matched_scope_mix_fair": rmse(y[inside], f["mix"].to_numpy()[inside]), "matched_scope_mix_lomo": rmse(y[inside], g["mix"].to_numpy()[inside])}
         frames.append(g.assign(provenance="lomo"))
         print(month, {k: round(v, 3) for k, v in summary["months"][month].items()}, flush=True)
-    rest = fair[~fair["month"].isin(HELD)].assign(provenance="fair")
+    rest = []
+    for month in sorted(set(fair["month"]) - set(HELD)):  # fair November / December with their committee and network columns
+        f = fair[fair["month"] == month].reset_index(drop=True)
+        g = assemble(f, f["v9"].to_numpy(), f["residual"].to_numpy(), extra_columns(config, month, f[ID].to_numpy()), config, net, lirf_net, v33)
+        check = {c: float(np.nanmax(np.abs(g[c].to_numpy(dtype=float) - f[c].to_numpy(dtype=float)))) for c in ["base", "mix", "lirf_tree", "lirf_net", "v30", "v33"]}
+        if not all(v <= 1e-9 for v in check.values()):
+            raise ValueError(f"The fold assembly does not reproduce the fair rows on {month}: {check}")
+        summary["fold_reproduction_max_abs"][month] = check
+        rest.append(g.assign(provenance="fair"))
+    rest = pd.concat(rest, ignore_index=True)
     rows = pd.concat([*frames, rest], ignore_index=True)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     rows.to_parquet(OUT, index=False)

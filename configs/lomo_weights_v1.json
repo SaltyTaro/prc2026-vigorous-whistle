@@ -1,0 +1,35 @@
+{
+ "experiment_id": "lomo_weights_v1",
+ "declared_at_utc": "2026-09-27T14:43:28Z",
+ "audit_used": false,
+ "purpose": "Weight round on the leave-one-month-out development rows (tools/run_lomo_rows.py -> runs/lomo_dev/rows.parquet): January and July 2025 with every component on eleven-month footing (like the ranking's twelve-month refits), plus December from the fair set (January-November refits on both sides). The three months are the equal-footing months; November (forward fold side on nine months against an eleven-month v9 side) is reported, not used. No model is fitted.",
+ "prior_context": {
+  "note": "Declared BEFORE any LOMO component, row or score exists (LOMO v9, residual refits, tree leaves and GPU networks are still running). The fair-set readings are known: December favoured unmatched weight 0.8 (fair_weights_v1), LIRF v9 shares toward 0 (fair_lirf_v1, v34), u300 and cs50 (disagreement_gate_v1, callsign_fix_v1).",
+  "hypothesis": "whether the fair set's January/July preference for the v9 side on unmatched rows was the fold side's seven-month training (data quantity) or season"
+ },
+ "rows": "runs/lomo_dev/rows.parquet (SHA-256 in docs/lomo_dev/rows_summary.json); months 2025-01 and 2025-07 with provenance 'lomo', 2025-12 'fair'",
+ "recipe_months": ["2025-01", "2025-07", "2025-12"],
+ "reported_months": ["2025-11"],
+ "control": {"name": "v34", "outer": {"ltfm": 1.0, "matched_other": 0.6, "unmatched_other": 0.7},
+             "lirf": {"lirf_nonpop_matched": {"v9": 0.15, "net": 0.40, "tree": 0.45}, "lirf_nonpop_unmatched": {"v9": 0.0, "net": 0.5833333333333334, "tree": 0.4166666666666667}},
+             "network_share": 0.75,
+             "reproduction": "on the fair months, build() at the control must equal the v34 rebuild of tools/run_disagreement_gate.py; on every month the mix column must equal mixed(committee, nets, 0.75) to 1e-9"},
+ "candidates": {
+  "o_u80":  {"outer": {"unmatched_other": 0.8}},
+  "o_u90":  {"outer": {"unmatched_other": 0.9}},
+  "o_m50":  {"outer": {"matched_other": 0.5}},
+  "o_m70":  {"outer": {"matched_other": 0.7}},
+  "l_m05":  {"lirf_v9": {"lirf_nonpop_matched": 0.05}},
+  "l_m00":  {"lirf_v9": {"lirf_nonpop_matched": 0.0}},
+  "n65":    {"network_share": 0.65},
+  "n85":    {"network_share": 0.85},
+  "n100":   {"network_share": 1.0},
+  "g_u300": {"gate": "u300"},
+  "cs50":   {"callsign": 0.5},
+  "g_u300_cs50": {"gate": "u300", "callsign": 0.5}
+ },
+ "candidate_semantics": "outer / lirf_v9 as configs/fair_weights_v1.json (LIRF net:tree proportions kept); network_share a: mix = (1 - a) committee + a nets where both are finite, else the committee (tools/run_adsb_nn_dev.mixed); gate u300 as configs/disagreement_gate_v1.json on the candidate's own base / mix; callsign w as configs/callsign_fix_v1.json (offsets from the non-recipe months, applied last); floor per row",
+ "minimum_mean_improvement_fraction": 0.0002,
+ "selection": "Unchanged rule over the three recipe months: eligible when no recipe month is worse on ALL rows, the mean ratio is at least 0.02% below 1, and every touched month's paired-day 95% interval lies below zero; lowest mean ratio among eligible; otherwise keep the control. Combinations of eligible single changes need their own declaration.",
+ "ship": "delta from the dry-run detail (candidate minus v34's recipe) added to the incumbent's floats; independent rebuild; audit; upload only on the user's decision."
+}
