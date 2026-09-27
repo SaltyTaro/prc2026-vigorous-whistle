@@ -1,0 +1,46 @@
+{
+  "experiment_id": "adsb_ctx_ft_design_v1",
+  "declared_at_utc": "2026-09-27T06:26:23+00:00",
+  "audit_used": false,
+  "purpose": "Per-airport fine-tuning of the 32-epoch context network (27 Sep 2026 lever search). The four GPU-sprint design networks e32_s1..4 (fit on the seasonal fold's fit partition, October monitored) are each fine-tuned on one airport's fitting rows and re-predict that airport's October rows; compared with the same networks' own October predictions. Motivation: unmatched LTFM/LFPG/EGLL rows carry ~35% of the projected ranking error (docs/error_map/), and airport-specific trees helped the earlier stacks (phase-4 airport_blend).",
+  "base": {
+    "runs": "runs/adsb_ctx3_base/e32_s<seed>/design",
+    "seeds": [
+      1,
+      2,
+      3,
+      4
+    ]
+  },
+  "airports": [
+    "LTFM",
+    "LFPG",
+    "EGLL",
+    "LEMD",
+    "LEBL",
+    "EHAM",
+    "EDDF",
+    "EDDM",
+    "LSZH"
+  ],
+  "settings": {
+    "lo": {
+      "epochs": 6,
+      "lr": 0.0001,
+      "warmup_epochs": 0.5
+    },
+    "hi": {
+      "epochs": 6,
+      "lr": 0.0003,
+      "warmup_epochs": 0.5
+    }
+  },
+  "readings": {
+    "per_airport": "4-seed mean fine-tuned vs 4-seed mean base on the airport's October rows: RMSE change %, matched/unmatched, paired-day bootstrap interval",
+    "go": "an airport GOes when a setting improves its October RMSE by at least 1.0% with the day interval below zero; the setting is then fixed per the rule 'best mean over all airports' (one setting for all airports, no per-airport choice) before any development round. A GO needs its own declared development round (seasonal/forward/December folds) and the unchanged recipe rule before anything ships."
+  },
+  "execution": {
+    "runner": "tools/run_adsb_ctx_ft.py --seed S",
+    "hardware": "AWS L40S via SkyPilot (infra/aws/gpu_authorization_20260927.json), queued on each node after the time-gap test"
+  }
+}
