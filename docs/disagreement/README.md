@@ -65,3 +65,36 @@ change, independent rebuild within 1 s on 199 rows (float noise). Not uploaded; 
 
 Scored at 14:00 UTC after all 16 lanes' scoring folds: nothing selected (e_e32only mean -0.015%, July +0.051%, December -0.058%).
 docs/adsb_ctx/development_results_v6.json.
+
+## Direct ADS-B check of u300 and the callsign fix (27 September, 14:00-15:30 UTC)
+
+The 397 EHAM no-clock unmatched rows of 3-7 January 2026 have **no NM flight record at all**; the matcher keys them on `FLIGHT_mvt`, which
+carries the IATA designator (`KL1787`) while ADS-B callsigns use the ICAO one, so they never match. Rematching them against the
+raw adsb.lol surface files (label-free):
+
+| subset | rows | observed ADS-B taxi | v9 | fold side | v34 | implied beta |
+|---|---|---|---|---|---|---|
+| IATA->ICAO mapped callsign, gate segment | 64 | 2,456 | 1,586 | 2,473 | 2,206 | 0.94 |
+| takeoff-time match, unique candidate, gate | 205 | 2,852 | 1,598 | 2,595 | 2,296 | 1.16 |
+
+(beta from observed taxi + 50 s; the takeoff-time method picks the callsign-matched aircraft only 76% of the time on a validation set,
+so the mapped-callsign row is the precise one.) Both clear u300's break-even beta 0.85.
+
+**Callsign fix round** (configs/callsign_fix_v1.json, 14:32:25Z; tools/adsb_rematch_nonm.py on arcw5 / arcw2 / arcw1;
+tools/run_callsign_fix.py -> callsign_fix_v1_results.json). Scope: no-NM EDDF/EHAM departures whose existing key finds nothing but whose
+mapped callsign yields a gate segment (development 38 / 87 / 35 / 38 rows per recipe month; ranking 115 January + 48 July). Observed taxi
+offset from non-recipe months: EDDF +73.7 s, EHAM +6.5 s. Control v34 (fair). **Nothing selected.**
+
+| candidate | Jan | Jul | Nov | Dec | mean | intervals < 0 |
+|---|---|---|---|---|---|---|
+| cs50 | -0.004% | -0.012% | -0.016% | -0.011% | -0.011% | 4/4 (mean below the 0.02% bar) |
+| cs75 | -0.004% | -0.006% | -0.019% | -0.013% | -0.010% | 3/4 |
+| u300_cs50 | -0.014% | -0.067% | -0.136% | -0.057% | -0.068% | 2/4 |
+| u300_cs75 | -0.015% | -0.060% | -0.139% | -0.058% | -0.068% | 3/4 (January fails) |
+
+On the scope rows themselves v34's RMSE is 227 / 227 / 296 / 203 s by month; the 50% blend 143 / 127 / 191 / 118 s. The largest ranking
+changes are EHAM disruption flights with 6-10 ADS-B stops and 1-1.4 h stationary (de-icing queues; observed taxi 3,500-7,400 s against v34
+1,100-3,000 s); one July 2025 row shows the risk (ADS-B 4,778 s, v34 1,234 s, label 2,683 s), so the 50% weight is the robust choice.
+
+Scratch exports (tools/export_callsign_fix.py --dry-run): u300_cs50 SHA f47a5c75..., u300_cs75 SHA 522f1653...; 861 rows change against
+v34 (758 gate + 163 callsign, 60 overlap), v31/v33/v34 floats round exactly, independent rebuild within 1 s on 199 rows. Not uploaded.

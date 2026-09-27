@@ -79,10 +79,20 @@ def main() -> None:
         output, report_path = out_dir / f"vigorous-whistle_v{args.version}.parquet", out_dir / f"export_v{args.version}.json"
     if output.exists():
         raise ValueError(f"{output} exists; never overwrite.")
+    rec, ids, dry, lfpg, uploaded, v34, at34 = rebuild_v34()
+
+    delta, masks = gate_delta(dry, spec, at34)
+    touched = masks["unm_up"] | masks["mat_down"] | masks["lirf_up"]
+    if np.any(delta[~touched] != 0) or not np.isfinite(delta).all():
+        raise ValueError("The gate delta touches rows outside its masks.")
+    finish(args, decl, spec, rec, ids, dry, lfpg, uploaded, v34, delta, touched, masks, output, report_path)
+
+
+def rebuild_v34():
+    """v31 / v33 / v34 floats rebuilt from the recorded detail and the dry run; each must round to its uploaded file."""
     for path, sha in [(export_v33.V31_FILE, export_v33.V31_SHA), (V33_FILE, V33_SHA), (V34_FILE, V34_SHA)]:
         if sha256_file(ROOT / path) != sha:
             raise ValueError(f"The uploaded {path} changed.")
-
     rec = pd.read_parquet(ROOT / export_v33.V30_DETAIL)
     ids = rec[ID].to_numpy()
     dry = pd.read_parquet(ROOT / export_v33.DRY).set_index(ID).reindex(ids).reset_index()
@@ -100,11 +110,11 @@ def main() -> None:
     for v, floats in [(31, v31), (33, v33), (34, v34)]:
         if not np.array_equal(np.rint(floats).astype(np.int64), uploaded[v]):
             raise ValueError(f"Rebuilt v{v} floats do not round to the uploaded v{v}.")
+    return rec, ids, dry, lfpg, uploaded, v34, at34
 
-    delta, masks = gate_delta(dry, spec, at34)
-    touched = masks["unm_up"] | masks["mat_down"] | masks["lirf_up"]
-    if np.any(delta[~touched] != 0) or not np.isfinite(delta).all():
-        raise ValueError("The gate delta touches rows outside its masks.")
+
+def finish(args, decl, spec, rec, ids, dry, lfpg, uploaded, v34, delta, touched, masks, output, report_path, extra=None):
+    """Export v34 floats + delta, rebuild independently from the recorded detail, report."""
     values = np.maximum(v34 + delta, FLOOR)
     provenance = {"experiment_id": decl["experiment_id"], "candidate": args.candidate, "dry_run": args.dry_run is not None,
                   "selected_candidate": f"{args.candidate} (user override)" if args.user_override else args.candidate,
