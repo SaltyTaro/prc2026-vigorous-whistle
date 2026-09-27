@@ -1,0 +1,98 @@
+# Input-shift audit, 2025 → 2026 (27 September 2026). Label-free for the ranking; nothing fitted or selected
+
+`tools/input_shift_audit.py` → [`input_shift.json`](input_shift.json), plus [`tables/`](tables/): clocks and arrivals per airport and
+month, and the shift of every numeric feature.
+
+The audit compares the ranking months (January and July 2026) with 2025 per airport. It never reads a ranking label; the ranking
+file has 0 departure labels and 0 departure block times. The weights are feature importance: the mean normalized gain over the
+twelve-month v7 nodes (globals and airports) and two committee LightGBMs.
+
+The top gains are:
+
+| feature | gain share |
+|---|---:|
+| `nmclock_aobt_movement_minus_s` | 17.1% |
+| `nmclock_aobt_minus_eobt1_s` | 13.3% |
+| `stand` | 8.5% |
+| `nmclock_aobt_minus_iobt_s` | 6.0% |
+| `surface_anchor_lookback_s` | 4.6% |
+| `movement_minus_eobt1_s` | 3.4% |
+
+Follow-up probes were run as scratch code. Their numbers are quoted below.
+
+## Findings, ranked by likely impact
+
+**1. LFPG, July 2026: EOBT_1 changed meaning. This looks like a format or process break.**
+
+- The share of departures with EOBT_1 later than IOBT is 6–7% in every 2025 month and in January 2026. In July 2026 it is 35%.
+- The change is uniform across all 31 days (48–57% of EOBT_1 still equal IOBT each day, against 71–81% before). It holds for every
+  large carrier: AFR 4% → 33%, EZY 11% → 38%, EJU 8% → 24%.
+- The new values sit at exactly +300 s (5.8%) and +600 s (13.2%) after IOBT. This looks as if EOBT_1 now holds an updated EOBT,
+  where it used to hold the first-filed one.
+- LOBT still equals IOBT in 99.9% of rows. AOBT_3 − MVT is stable (median 898 s → 959 s).
+- Feature effect on all 21,743 LFPG July rows:
+  - `nmclock_aobt_minus_eobt1_s` mean 752 s → 206 s (−0.62 SD); this is the largest importance-weighted shift in the whole bundle;
+  - `movement_minus_eobt1_s` −0.55 SD;
+  - `eobt_*` / `gd_*_eobt_*` also move.
+  - Features built on EOBT_1 carry about 19% of gain.
+- 2025 evidence: rows with EOBT_1 later than IOBT had labels +75 s above the rest (1,102 s vs 1,027 s), and v30 already under-predicts
+  them by 34 s in development. In July 2026 the models see five times as many such rows.
+
+**2. LTFM, July 2026: Turkish Airlines' 10-minute early IOBT disappeared. A format or practice break.**
+
+- In every 2025 month and in January 2026, 14–21% of LTFM departures (24% of THY) have IOBT exactly 600 s before schedule. In July
+  2026 it is 0.6% (THY 0.3%), uniform by day. IOBT equal to schedule rises from 56–66% to 82%.
+- It is IOBT that changed, not the schedule: MVT − SCHED p25 is 905 s → 898 s, while MVT − IOBT p25 is 957 s → 840 s.
+- At LTFM, EOBT_1 = LOBT = IOBT (97–100%) and AOBT_3 is an estimate. So `nmclock_aobt_minus_iobt_s` and `nmclock_aobt_minus_eobt1_s`
+  move by about −600 s for roughly 4,500 July rows. The feature means drop by 0.22 SD over all 25,185 rows.
+- 2025: those rows had shorter labels (1,047 s vs 1,083 s) and a development residual of +15 s, against +28 s on the rest.
+
+**3. New stands: real infrastructure change, and unknown to the stand category and the frozen ADS-B stands table.**
+
+- **EDDF:** Pier J opens (Terminal 3). J5, J10 and V333/V335/V337 carry about 590 movements, roughly 300 of them departures, in July
+  2026. A26, A28, F225, V171A/B and V173A/B vanish.
+- **EDDM:** stands 103–108 are new, with 2,354 movements (1,180 departures, 7.9% of EDDM July). Stands 110, 111, 183, 232 and
+  254–256 vanish; 120/121 have been gone since August 2025.
+- Stand carries 8.5% of gain. The novelty baseline, a stand unseen in the other 2025 months, is at most 0.01%.
+
+**4. EHAM, January 2026: the NM record is missing for 5.0% of departures (1.6% in January 2025).**
+
+- About 550 extra rows go to the no-clock route. This coincides with the disruption days, so it is a real-world change. The error map
+  already shows v30 tracking those days.
+
+**5. New operators and flight prefixes (real).**
+
+- EDDF July: VL, i.e. Lufthansa City Airlines, 443 departures; 2.6% of rows have a new prefix and 2.5% a new operator.
+- Elsewhere at most 0.9% of rows: AIC at LIRF, ITY at EGLL, WUK at LEBL, among others. The 2025 leave-one-month-out baseline is
+  0.1–0.3%.
+
+**6. Minor.**
+
+- AOBT_3 carries non-zero seconds at LEBL (3.6%) and LFPG (2.8%) in January 2026. In 2025 the most was 1.5% at LEBL and 0.5% at
+  LFPG. `nmclock_aobt_second_of_minute`
+  is a feature.
+- Arrival taxi-in medians move outside their 2025 range: LIRF January −52 s, EGLL January +47 s.
+- LFPG uses the long runway more in July 2026 (`wx_runway_length_m` +0.44 SD).
+- Winter-delay shifts in January 2026 (`dep_schedule_delay_mean_30m` +0.5 SD at five airports; AOBT → MVT p90 higher at EDDF, EDDM,
+  EHAM and LSZH) look like real weather.
+
+**Stable:**
+
+- missingness of the NM fields, which move together as a unit;
+- SCHED on a whole-minute grid (100%, and a 5-minute grid at LTFM);
+- MVT and EOBT rounding;
+- AOBT_3 − MVT at the airports with a real AOBT clock;
+- arrival in-block and taxi-in presence (100%).
+
+## Suggested levers (none started)
+
+- **LTFM, a cheap and exact test:**
+  1. On the development months, rewrite the 2025 rows with IOBT = SCHED − 600 into the 2026 convention: IOBT, EOBT_1 and LOBT set to
+     SCHED where they equal IOBT.
+  2. Rebuild the NM-clock and schedule features, re-predict with the saved fold models, and score. This measures what the shift costs.
+  3. If it costs something, refit with 2025 converted. The inputs then match 2026 by construction.
+- **LFPG:** the 2026 EOBT_1 cannot be reconstructed for 2025. Two options:
+  - measure the sensitivity: re-predict July 2026 LFPG with EOBT_1 := IOBT on the changed rows, and see how far v30 moves;
+  - run a development ablation that drops EOBT_1 features at LFPG. If it costs little, route LFPG July through that variant.
+- **New stands:** learn positions for J5/J10/V33x and EDDM 103–108 from the 2026 adsb.lol traces. This is label-free, like the frozen
+  1,332-stand table. It would improve ADS-B matching and stand imputation for about 1,500 departures.
