@@ -1,0 +1,52 @@
+{
+  "created_at_utc": "2026-09-27T08:42:48.261370+00:00",
+  "max_abs_change_s": 724.0,
+  "output": "runs/submissions/vigorous-whistle_v32.parquet",
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v32.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 120549,
+    "maximum_rounding_change_seconds": 0.499995176542825,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 3,
+    "provenance": {
+      "audit_used": false,
+      "declaration": "configs/lirf_unmatched_blend_v1.json",
+      "declaration_sha256": "d5fd3797e3aed629c9993d359beddcbe0ddc1c1be7a6b55df93c1ea0849ecf75",
+      "development_results": "docs/lirf_blend/development_results.json",
+      "floor_seconds": -12.0,
+      "incumbent": {
+        "official_rmse_seconds": 229.5832,
+        "sha256": "ea1c17568e49b83cb1c8667212c2097ab8a8dec774b4db57e01b9b79bb531be2",
+        "submission": "vigorous-whistle_v31.parquet"
+      },
+      "recipe": "v31 with the LIRF non-population unmatched blend u50_00_50 (0.50 v9 + 0.50 ens_ctx_lirf) instead of lctx_b100_up",
+      "selected_by": "user override of the unchanged rule ('ship it', 27 Sep 2026): every month better, day intervals below zero on 3/4"
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "979f418c0e6b8afba51d0393b0e4a655766533ed375c7e05c69759428a1e7ec5",
+    "size_bytes": 1343569,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-27T08:42:48.243202+00:00",
+    "version": 32
+  },
+  "rows_changed_outside_scope": 0,
+  "rows_changed_vs_v31": 17188,
+  "scope_mean_change_s": -3.147872220340896,
+  "scope_rms_change_s": 29.548729939211114,
+  "scope_rows": 17718,
+  "scope_rows_by_month": {
+    "2026-01": 2203,
+    "2026-07": 15515
+  }
+}
