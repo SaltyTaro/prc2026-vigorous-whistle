@@ -1,0 +1,84 @@
+{
+ "experiment_id": "lomo_dev_v1",
+ "declared_at_utc": "2026-09-27T13:40:03Z",
+ "audit_used": false,
+ "approval": "the user's 'go' for making January and July 2025 ranking-like (relayed by the parallel session, 27 September 2026, after v34 = 228.5933)",
+ "purpose": "Make the development months January and July 2025 ranking-like for the fold side: every fold-side component refitted on the eleven other 2025 months (leave-one-month-out, LOMO), as December's January-November refit already is and as the ranking's twelve-month refits are. This declaration covers the tree side (the two tree tables' leaves) and the v9 side; the 64 context networks are the parallel session's (AWS GPUs). No weight is chosen here; rounds that use the LOMO tables are declared separately.",
+ "months": [
+  "2025-01",
+  "2025-07"
+ ],
+ "tree_side": {
+  "tables": {
+   "ens_v20_bag_q_all": {
+    "run_dir": "runs/adsb_v20/ens_v20_bag_q_all",
+    "leaf_multiplicities": {
+     "runs/adsb_full_nolirf": 13,
+     "runs/adsb_v15/lgb_s16": 13,
+     "runs/adsb_v15/lgb_s17": 13,
+     "runs/adsb_v15/lgb_s18": 13,
+     "runs/adsb_v15/lgb_deep": 13,
+     "runs/adsb_v15/lgb_clean": 13,
+     "runs/adsb_v20/lgb_x19_s24": 13,
+     "runs/adsb_v20/lgb_x19_s25": 13,
+     "runs/adsb_v20/lgb_x19_s26": 13,
+     "runs/adsb_v16/cat_ctr2": 27,
+     "runs/adsb_v17/cat_ctr2_s17": 27,
+     "runs/adsb_v17/cat_ctr3": 27,
+     "runs/adsb_v17/cat_ctr2_d10": 27,
+     "runs/adsb_v17/cat_ctr2_oh2": 27,
+     "runs/adsb_v18/cat_ctr2_s20": 27,
+     "runs/adsb_v18/cat_ctr2_s21": 27,
+     "runs/adsb_v18/cat_ctr3_s22": 27,
+     "runs/adsb_v18/cat_ctr3_s23": 27,
+     "runs/adsb_v20/cat_ctr2_x19_s27": 27,
+     "runs/adsb_v20/cat_ctr2_x19_s28": 27,
+     "runs/adsb_v20/cat_ctr3_x19_s29": 27,
+     "runs/adsb_v20/cat_ctr2_x19_s30": 27
+    }
+   },
+   "ens_v22_lirf_q": {
+    "run_dir": "runs/adsb_v22/ens_v22_lirf_q",
+    "leaf_multiplicities": {
+     "runs/adsb_v21/lgb_lirf_s31": 4,
+     "runs/adsb_v21/lgb_lirf_cap_s32": 4,
+     "runs/adsb_v21/lgb_lirf_nm_s33": 4,
+     "runs/adsb_v22/cat_lirf_ctr2_s34": 9,
+     "runs/adsb_v22/cat_lirf_ctr3_s35": 9,
+     "runs/adsb_v22/cat_lirf_ctr2_nm_s36": 9,
+     "runs/adsb_v22/cat_lirf_ctr3_nm_s37": 9
+    }
+   }
+  },
+  "leaves": 29,
+  "tool": "tools/run_adsb_learner_lomo.py --source-run LEAF --hold-out 2025-01|2025-07 --output runs/lomo_dev/learners/<leaf name> --cache runs/adsb_v23/_features --threads 16",
+  "recipe_and_rounds": "exactly the leaf's twelve-month refit (tools/run_adsb_learner_dec.py, runs/adsb_v23/<leaf name>/refit): kind, seed, parameters, exclusions, target, extra features from the source learner's seasonal/forward fold records; rounds = median best iteration of the two folds; no early stopping",
+  "population": "the twelve-month refit population (frozen January-November refit rows 1,919,370 + December build 165,677) minus every row whose movement month (MVT time, the validation protocol's assignment clock) is the held month; the tool refuses if a held-month row is in the fit",
+  "predicted_rows": "every departure of the held month; must equal the held month's rows of the leaf's seasonal predictions (344,419 rows over January + July); NaN where the recipe predicts none (NM-residual learners on missing-clock rows), as in the seasonal predictions",
+  "ensemble_rule": "prc2026_december.scoring.leaf_members (flattened leaves with multiplicities) + ensemble_prediction (nanmean), the rule December's values use; rebuilt from the leaves' seasonal predictions it reproduces the stored seasonal tables (max |diff| 2.4e-11 s for ens_v20_bag_q_all, 0.0 for ens_v22_lirf_q)",
+  "outputs": "runs/lomo_dev/learners/<leaf name>/lomo_<month>/{model, predictions.parquet, run.json}; tables runs/lomo_dev/ens/<table>/lomo/predictions.parquet (MVT_ID_mvt, adsb_full) in the seasonal predictions' row order",
+  "reproduction_check": "first: runs/adsb_v15/lgb_clean with --hold-out 2025-12, whose fit is then exactly the January-November refit population; its model and December predictions are compared with runs/adsb_v15/lgb_clean/refit/model.txt and runs/december/learners/runs__adsb_v15__lgb_clean.parquet (identity expected; any difference is reported before the LOMO tables are used)"
+ },
+ "v9_side": {
+  "tool": "tools/run_v7_lomo.py --fold L01|L07 --output runs/lomo_dev/v7: tools/run_v7_dec.py's frozen twelve-component v7 fit (specs, settings, seed, October-selected counts) with one held month; run_v7_dec.py is not edited (the wrapper adds single-month folds to its FOLDS table and calls its main)",
+  "v9": "for the held month's rows of the seasonal fold frame (scratch/seasonal.parquet): v9 = max(LOMO v7, floor -12) on clock-present rows; missing-clock rows (v6 fallback) and the LIRF fill population keep the seasonal fold v9, exactly as the v24 cross-fit frames do (tools/build_v24_scratch.py) -> runs/lomo_dev/v9/<month>.parquet in the scratch layout",
+  "caveat": "the missing-clock fallback (about 1.5% of rows) and the LIRF fill-population mixture stay seasonal-fold (7 fitting months)",
+  "residual_stage": "not refitted here: the shipped residual stage is already a twelve-month leave-one-month-out (eleven fitting months) trained on cross-fit v9 rows; applying it to the LOMO v9 is the ranking's construction (trained on cross-fit, applied to refit v9)"
+ },
+ "execution": {
+  "workers": "Azure arcw0, arcw1, arcw3, arcw4, arcw5, arcw6, arcw7 (arcw2 runs option A and is not touched); one job at a time per worker (never two CatBoosts), 16 threads; v7 on arcw0 (the only worker with run_v7_dec.py and its runs)",
+  "round_e": "per the parallel session: round E's refit12 processes are stopped before the first job on each worker (their chains record FAILED refit12); on arcw4 the chain first waits until both round-E chains have finished their refit step",
+  "launcher": "tools/launch_lomo_dev.py plan|launch|status|mirror; plan runs/lomo_dev/plan.json (longest-first assignment, about 10.5 h per worker)",
+  "plan_sha256": "ea34b8c8839bce0e3e4a6a3db9d3a275be828564fa3cf2ca4664426df5e215d1",
+  "smoke": "local code-path tests before this declaration (tools/run_adsb_learner_lomo.py --smoke 3000, 20 rounds, outside runs/): lgb_clean (2025-01), adsb_full_nolirf (2025-07), cat_ctr2_x19_s27 (2025-07), cat_lirf_ctr2_nm_s36 (2025-01); no smoke prediction was scored. The v7 wrapper was checked for its fold registration only (a v7 fit needs about 15 GB)"
+ },
+ "code": {
+  "tools/run_adsb_learner_lomo.py": "a000ed00a97f392f4f0c641fc8cc1c29dccb7bc049d5eacd7acc24f1d11efe59",
+  "tools/run_v7_lomo.py": "d039678ca77a7547ad92b31b4e6bac633fc7d0ecef0e68eb11b4e62cbc44c69f",
+  "tools/launch_lomo_dev.py": "6cfcb7a4f586435acace80a5b79d2070b8c92301c0253872fc5de1232b141c43",
+  "tools/run_adsb_learner.py": "171ace87e364098259ef5b0e8977914878f8d14ece9e35f3e1709b3b910889c1",
+  "src/prc2026_adsb/features.py": "cff4c56ae3a70fa8dee35453c42d26dd07f1bb6783ff0c18023aa4d3e46469b5",
+  "tools/run_v7_dec.py": "bb32ad72ee904b89a144bf277f16f73c5535a1bdba62040a3086faf67cf6ac3b"
+ },
+ "not_in_scope": "no score, weight, selection, export or upload"
+}
