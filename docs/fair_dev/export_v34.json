@@ -1,0 +1,197 @@
+{
+  "by_airport": {
+    "EDDF": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 36317
+    },
+    "EDDM": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 25966
+    },
+    "EGLL": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 39840
+    },
+    "EHAM": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 38182
+    },
+    "LEBL": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 30080
+    },
+    "LEMD": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 36954
+    },
+    "LFPG": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 39872
+    },
+    "LIRF": {
+      "changed": 17397,
+      "max_abs_change_s": 550.0,
+      "mean_change_s": 0.6282389679913751,
+      "rms_change_s": 35.49079916204743,
+      "rows": 26899
+    },
+    "LSZH": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 23150
+    },
+    "LTFM": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 47581
+    }
+  },
+  "by_scope": {
+    "lirf_fixed": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 400
+    },
+    "lirf_nonpop_matched": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 8781
+    },
+    "lirf_nonpop_unmatched": {
+      "changed": 17397,
+      "max_abs_change_s": 550.0,
+      "mean_change_s": 0.9537758211987809,
+      "rms_change_s": 43.72969994907697,
+      "rows": 17718
+    },
+    "ltfm": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 47581
+    },
+    "matched_other": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 216433
+    },
+    "unmatched_other": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 53928
+    }
+  },
+  "candidate": "lu00",
+  "checks": {
+    "control_lirf_vs_dry_v30_max_abs": 9.094947017729282e-13,
+    "control_non_lirf_equals_export_v33": true,
+    "delta_outside_scopes": 0,
+    "recorded_detail_v30_rebuild_max_abs": 4.547473508864641e-13,
+    "v30_rebuild_on_dry_max_abs": 9.094947017729282e-13,
+    "v31_floats_round_to_uploaded": true,
+    "v33_floats_round_to_uploaded": true
+  },
+  "created_at_utc": "2026-09-27T12:26:22.894448+00:00",
+  "delta_float": {
+    "lirf_fixed": {
+      "mean_s": 0.0,
+      "rms_s": 0.0,
+      "rows": 400
+    },
+    "lirf_nonpop_matched": {
+      "mean_s": 0.0,
+      "rms_s": 0.0,
+      "rows": 8781
+    },
+    "lirf_nonpop_unmatched": {
+      "mean_s": 0.9540852181398819,
+      "rms_s": 43.73122437884166,
+      "rows": 17718
+    },
+    "ltfm": {
+      "mean_s": 0.0,
+      "rms_s": 0.0,
+      "rows": 47581
+    },
+    "matched_other": {
+      "mean_s": 0.0,
+      "rms_s": 0.0,
+      "rows": 216433
+    },
+    "unmatched_other": {
+      "mean_s": 0.0,
+      "rms_s": 0.0,
+      "rows": 53928
+    }
+  },
+  "dry_run": false,
+  "independent_rebuild": {
+    "max_abs_integer_difference": 1,
+    "note": "rows outside the scopes differ only through v33's own construction (dry-run float noise; export_v33's check found 193 rows at 1 s)",
+    "rows_differing": 193,
+    "rows_differing_outside_scopes": 193,
+    "source": "runs/adsb_ctx/export_v30/ranking_values.parquet"
+  },
+  "max_abs_change_s": 550.0,
+  "receipt_sha256": "62b9f2a50cb9ac24600eebbfd6125af46473485c282e2211b7d7dc15fb6dcbff",
+  "rms_change_all_rows_s": 9.912299099205164,
+  "rows_changed_outside_scopes": 0,
+  "rows_changed_vs_v33": 17397,
+  "touched_scopes": [
+    "lirf_nonpop_unmatched"
+  ],
+  "version": 34,
+  "weights": {
+    "lirf": {
+      "lirf_nonpop_matched": {
+        "net": 0.4,
+        "tree": 0.45,
+        "v9": 0.15
+      },
+      "lirf_nonpop_unmatched": {
+        "net": 0.5833333333333334,
+        "tree": 0.4166666666666667,
+        "v9": 0.0
+      }
+    },
+    "outer": {
+      "ltfm": 1.0,
+      "matched_other": 0.6,
+      "unmatched_other": 0.7
+    }
+  }
+}

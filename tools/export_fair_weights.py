@@ -109,14 +109,23 @@ def main() -> None:
     parser.add_argument("--candidate", required=True)
     parser.add_argument("--version", type=int, default=34)
     parser.add_argument("--dry-run", type=Path, help="scratch directory: skip the selection check and write only there")
+    parser.add_argument("--declaration", default=DECLARATION, help="a follow-up declaration on the same rows (control resolved from fair_weights_v1 when given as text)")
+    parser.add_argument("--user-override", help="the user's recorded decision to ship a candidate the unchanged rule did not select (quoted)")
     args = parser.parse_args()
-    decl = read_json(ROOT / DECLARATION)
+    decl = read_json(ROOT / args.declaration)
+    if isinstance(decl.get("control"), str):
+        decl = {**decl, "control": read_json(ROOT / DECLARATION)["control"]}
     if args.candidate not in decl["candidates"]:
         raise ValueError(f"{args.candidate} is not a declared candidate.")
     control = decl["control"]
     if control["outer"] != V33_OUTER or control["lirf"] != V33_LIRF:
         raise ValueError("The declaration's control is not v33's weights.")
-    if args.dry_run is None:
+    results = ROOT / "docs/fair_dev" / f"{Path(args.declaration).stem}_results.json"
+    if args.dry_run is None and args.user_override:
+        if not results.exists() or read_json(results).get("declaration_sha256") != object_hash(decl):
+            raise ValueError(f"No scored results for {args.declaration}; an override needs the round's recorded scores.")
+        output, report_path = ROOT / f"runs/submissions/vigorous-whistle_v{args.version}.parquet", ROOT / f"docs/fair_dev/export_v{args.version}.json"
+    elif args.dry_run is None:
         if not (ROOT / SELECTION).exists():
             raise ValueError(f"{SELECTION} does not exist; the round has not selected yet (use --dry-run for a test).")
         selection = read_json(ROOT / SELECTION)
@@ -180,11 +189,14 @@ def main() -> None:
     values = np.maximum(v33 + delta, FLOOR)
 
     provenance = {"experiment_id": decl["experiment_id"], "candidate": args.candidate, "dry_run": args.dry_run is not None,
+                  "selected_candidate": f"{args.candidate} (user override)" if args.user_override else args.candidate,
+                  "selected_by": f"user override of the unchanged rule: {args.user_override}" if args.user_override else "the unchanged rule",
+                  "development_results": results.relative_to(ROOT).as_posix(),
                   "weights": {"outer": outer, "lirf": lirf}, "touched_scopes": touched,
                   "recipe": "v33 with the fair-set round's weights; delta from the dry-run detail (candidate minus the v33 control) added to v33's floats, floor -12",
                   "incumbent": {"submission": "vigorous-whistle_v33.parquet", "official_rmse_seconds": 228.7246, "sha256": V33_SHA},
-                  "declaration": DECLARATION, "declaration_sha256": sha256_file(ROOT / DECLARATION), "declaration_object_hash": object_hash(decl),
-                  "selection": None if args.dry_run is not None else {"path": SELECTION, "sha256": sha256_file(ROOT / SELECTION)},
+                  "declaration": args.declaration, "declaration_sha256": sha256_file(ROOT / args.declaration), "declaration_object_hash": object_hash(decl),
+                  "selection": None if (args.dry_run is not None or args.user_override) else {"path": SELECTION, "sha256": sha256_file(ROOT / SELECTION)},
                   "inputs": {DRY: sha256_file(ROOT / DRY), REPAIRED: sha256_file(ROOT / REPAIRED), V30_DETAIL: sha256_file(ROOT / V30_DETAIL)},
                   "audit_used": False, "floor_seconds": FLOOR}
     receipt = export_submission(pd.DataFrame({ID: ids, "prediction": values}), ROOT / "data/raw/submitting.parquet", output, provenance)
