@@ -106,6 +106,23 @@ def test_network_kind_routes_by_record():
     assert kind_of({"variant": "nnb", "inputs": {}}) == "nn"
 
 
+def test_vocabulary_cache_is_seeded_once_and_never_overwrites(tmp_path):
+    import json
+    from prc2026_final.leaves import seed_vocabularies
+    source = tmp_path / "old" / "vocabularies.json"
+    source.parent.mkdir()
+    source.write_text(json.dumps({"k": {"airport": ["EDDF"]}}), encoding="utf-8")
+    target = tmp_path / "new" / "leaves" / "vocabularies.json"
+    first = seed_vocabularies(target, source)
+    assert first["seeded"] and first["keys"] == 1 and json.loads(target.read_text(encoding="utf-8")) == {"k": {"airport": ["EDDF"]}}
+    target.write_text(json.dumps({"own": {}}), encoding="utf-8")
+    second = seed_vocabularies(target, source)
+    assert not second["seeded"] and json.loads(target.read_text(encoding="utf-8")) == {"own": {}}
+    source.write_text("[1, 2]", encoding="utf-8")
+    with pytest.raises(ValueError, match="not a vocabulary cache"):
+        seed_vocabularies(tmp_path / "third.json", source)
+
+
 def test_adj2_needs_an_explicit_refit_for_other_months(tmp_path):
     from prc2026_final.residual import adj2_model
     with pytest.raises(ValueError, match="refit-adj2"):

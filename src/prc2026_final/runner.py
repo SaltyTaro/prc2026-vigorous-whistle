@@ -95,10 +95,12 @@ def learner_frame(ctx: Context) -> pd.DataFrame:
     return frame
 
 
-def stage_leaves(ctx: Context, threads: int) -> dict:
+def stage_leaves(ctx: Context, threads: int, vocab_cache: Path | None = None) -> dict:
     started = time.time()
     specs = leaves.leaf_specs()
-    vocab = leaves.vocabularies(ctx.run.path("leaves", "vocabularies.json"), specs)
+    cache_path = ctx.run.path("leaves", "vocabularies.json")
+    seeded = leaves.seed_vocabularies(cache_path, vocab_cache) if vocab_cache else None
+    vocab = leaves.vocabularies(cache_path, specs)
     frame = learner_frame(ctx)
     predictions, info = {}, {}
     for leaf, spec in specs.items():
@@ -118,7 +120,8 @@ def stage_leaves(ctx: Context, threads: int) -> dict:
     for name, member_list in members.items():
         tables[name] = leaves.table_mean(member_list, predictions)
     out = save_frame(tables, ctx.run.path("leaves", "tables.parquet"))
-    record = {"leaves": info, "tables": {n: {"members": len(m), "distinct": len(set(m)), "all_nan_rows": int(tables[n].isna().sum())} for n, m in members.items()}}
+    record = {"leaves": info, "tables": {n: {"members": len(m), "distinct": len(set(m)), "all_nan_rows": int(tables[n].isna().sum())} for n, m in members.items()},
+              "vocabulary_cache": {"seed": seeded, "sha256": sha256_file(cache_path)}}
     return ctx.run.finish("leaves", record, [out], started)
 
 

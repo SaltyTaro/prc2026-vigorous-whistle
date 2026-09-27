@@ -56,6 +56,20 @@ def vocabularies(cache_path: Path, leaves: dict[str, dict]) -> dict[str, dict]:
     return cached
 
 
+def seed_vocabularies(cache_path: Path, source: Path) -> dict:
+    """Copy an earlier run root's vocabularies.json into this root when it has none (the vocabularies depend only on the frozen
+    twelve-month training data, so any run's cache is valid; keys a leaf needs but the copy lacks are still computed)."""
+    source = Path(source)
+    content = json.loads(source.read_text(encoding="utf-8"))
+    if not isinstance(content, dict):
+        raise ValueError(f"{source} is not a vocabulary cache.")
+    if cache_path.exists():
+        return {"source": source.as_posix(), "seeded": False, "reason": "this root already has a cache", "sha256": sha256_file(cache_path)}
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    cache_path.write_bytes(source.read_bytes())
+    return {"source": source.as_posix(), "seeded": True, "keys": len(content), "sha256": sha256_file(cache_path)}
+
+
 def leaf_specs() -> dict[str, dict]:
     config = read_json(ROOT / LEAF_CONFIG)
     out = {}

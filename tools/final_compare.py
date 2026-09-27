@@ -170,7 +170,8 @@ def main() -> None:
         same_order = bool(np.array_equal(ours[ID].to_numpy(), uploaded[ID].to_numpy()))
         same_order = same_order or args.allow_subset
         delta = ours[TARGET].to_numpy().astype(float) - uploaded.set_index(ID).reindex(ours[ID])[TARGET].to_numpy().astype(float)
-        res["export_vs_uploaded_v30"] = {"same_template_order": same_order, "rows_differing": int((delta != 0).sum()), "max_abs_delta_seconds": float(np.abs(delta).max()),
+        res["export_vs_uploaded_v30"] = {"same_template_order": same_order, "rows_differing": int((delta != 0).sum()),
+                                         "max_abs_delta_seconds": float(np.abs(delta).max()) if len(delta) else 0.0,
                                          "uploaded_sha256": sha256_file(ROOT / V30_FILE), "ours_sha256": sha256_file(root / "export" / f"vigorous-whistle_v{args.version}.parquet")}
     out = args.output if args.output.is_absolute() else ROOT / args.output
     write_json(out, report)

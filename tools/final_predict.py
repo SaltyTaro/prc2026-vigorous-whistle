@@ -40,6 +40,9 @@ def main() -> None:
     parser.add_argument("--allow-missing-weather", action="store_true")
     parser.add_argument("--version", type=int, default=None, help="export file name vigorous-whistle_v<N>.parquet inside the root (export stage)")
     parser.add_argument("--detail-ensembles", action="store_true", help="also predict ens_ctx/ens_new/ens_nn/ens_nnl (v30-detail columns the recipe does not use)")
+    parser.add_argument("--vocab-cache", type=Path, default=None,
+                        help="an earlier root's leaves/vocabularies.json (e.g. runs/final_dryrun/run/leaves/vocabularies.json), copied into this root "
+                             "before the leaves stage when it has none; skips the twelve-month vocabulary rebuild (the cache depends only on frozen training data)")
     parser.add_argument("--month", default=None)
     parser.add_argument("--execute", action="store_true")
     args = parser.parse_args()
@@ -83,7 +86,7 @@ def main() -> None:
         elif stage == "v9":
             record = runner.stage_v9(ctx, args.threads)
         elif stage == "leaves":
-            record = runner.stage_leaves(ctx, args.threads)
+            record = runner.stage_leaves(ctx, args.threads, args.vocab_cache.resolve() if args.vocab_cache else None)
         elif stage == "networks":
             from prc2026_final.networks import DETAIL_ONLY, RECIPE_ENSEMBLES
             record = runner.stage_networks(ctx, args.threads, RECIPE_ENSEMBLES + (DETAIL_ONLY if args.detail_ensembles else []))

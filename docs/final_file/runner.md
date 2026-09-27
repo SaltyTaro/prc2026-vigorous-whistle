@@ -20,11 +20,21 @@ python tools/final_predict.py pull-weather --root R [--execute]                 
 python tools/final_predict.py refit-adj2   --root R --month YYYY-MM [--threads 16]    # declared adj2 refit for a month without a booster
 python tools/final_predict.py run          --root R [--stages ...] [--threads 12] [--workers 8]
                                            [--weather-inventory data/external/iem_final/<R>/inventory.json] [--version N] [--detail-ensembles]
+                                           [--vocab-cache runs/final_dryrun/run/leaves/vocabularies.json]
 python tools/final_compare.py --root R --output OUT.json [--version N] [--allow-subset]
 ```
 
 External data and model inference are separate commands: `external` / `extract-adsb` / `pull-weather` touch the network (only with
 `--execute`), `refit-adj2` is the only fit, and `run` is pure local inference on files already on disk.
+
+- **`extract-adsb --execute` downloads on the machine it runs on.** Each day is a 2–4 GB download from `adsblol/globe_history_<year>`,
+  with `--workers` processes. The commands it prints use the Azure form (`.venv/bin/python`), but `--execute` runs them locally with
+  the current interpreter. For more than a few days, run the printed commands on an Azure worker and copy
+  `data/external/adsblol/surface/surface_<day>.parquet` back.
+- **`--vocab-cache`** copies an earlier root's `leaves/vocabularies.json` into a new root before the leaves stage, if the new root
+  has no cache yet. This skips the twelve-month vocabulary rebuild, which reads the December build and the 2025 labels. The cache
+  depends only on frozen training data, so any completed run's copy is valid. Keys that a leaf needs but the copy lacks are still
+  computed. The leaves receipt records the seed and the cache's SHA-256.
 
 ## Stages (`run`)
 
@@ -57,7 +67,7 @@ Months that overlap the frozen Jan–Nov 2025 context are refused (a re-cut of f
 Tested without downloads on a copy of 15 January 2026 shifted to 22 October 2026: `inspect`, `external`, `extract-adsb` and
 `pull-weather` report the missing surface day and all ten station-months; the adj2 new-month wiring is unit-tested.
 
-## Stage 3 — the dry run (not run yet)
+## Stage 3 — the dry run (done 27 September: v30 to 0.031 s RMS, [`dryrun.md`](dryrun.md); the plan as written before it ran)
 
 ```
 mkdir runs/final_dryrun/input && copy data/raw/ranking.parquet runs/final_dryrun/input/final.parquet
