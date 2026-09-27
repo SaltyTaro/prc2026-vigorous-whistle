@@ -61,3 +61,16 @@ Control = v33, and its rebuild equals the fair v33 exactly.
 - **LIRF:** less v9 now helps in every month (`lu20`, `lu30`, `lu20_lm05`), which reverses the shipped set's mixed picture. The effect
   is small (0.01–0.03%, about 0.02–0.07 s) and its intervals touch zero in one or two months.
 - **Remaining gain:** the fold asymmetry's large payoff was v33 itself. What remains of it on these weights is at most about 0.05%.
+
+## LIRF follow-up — [`configs/fair_lirf_v1.json`](../../configs/fair_lirf_v1.json): nothing selected
+
+Declared after the round above; the prior readings are disclosed in it. [`fair_lirf_v1_results.json`](fair_lirf_v1_results.json).
+
+| candidate (LIRF unmatched v9 share) | Jan | Jul | Nov | Dec | mean | intervals < 0 |
+|---|---:|---:|---:|---:|---:|---:|
+| lu10 (0.10) | −0.025% | −0.023% | −0.045% | −0.035% | −0.032% | 2/4 |
+| lu00 (0.00) | −0.025% | −0.026% | −0.054% | −0.040% | −0.036% | 1/4 |
+
+Less v9 on unmatched LIRF rows is better in every month on equal footing, but the gain (about 0.08 s) is within day-to-day noise on
+three of four months. v32, which moved the other way (v9 0.40 → 0.50), officially lost 0.019 s, which is consistent with the direction
+seen here. Under the unchanged rule v33 stays. The finding is kept as the direction for any later LIRF change.

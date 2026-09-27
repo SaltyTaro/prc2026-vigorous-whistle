@@ -54,7 +54,15 @@ def main() -> None:
     global ROWS, OUT, REPORT
     if "--test-shipped" in sys.argv:  # code-path test on the shipped-provenance rows; never a result
         ROWS, OUT, REPORT = "runs/fair_dev/rows_shipped.parquet", ROOT / "runs/fair_dev/test_shipped", ROOT / "runs/fair_dev/test_shipped/report.json"
-    decl = read_json(ROOT / DECLARATION)
+    if "--declaration" in sys.argv:  # a follow-up declaration on the same rows (e.g. configs/fair_lirf_v1.json)
+        name = sys.argv[sys.argv.index("--declaration") + 1]
+        stem = Path(name).stem
+        OUT, REPORT = ROOT / "runs" / stem, ROOT / "docs/fair_dev" / f"{stem}_results.json"
+    else:
+        name = DECLARATION
+    decl = read_json(ROOT / name)
+    if isinstance(decl.get("control"), str):  # "v33 exactly as in configs/fair_weights_v1.json"
+        decl = {**decl, "control": read_json(ROOT / DECLARATION)["control"]}
     if (OUT / "selection.json").exists():
         raise ValueError("Preserve the original selection.")
     rows = pd.read_parquet(ROOT / ROWS)

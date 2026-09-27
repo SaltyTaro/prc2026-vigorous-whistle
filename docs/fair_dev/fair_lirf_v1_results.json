@@ -1,0 +1,272 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "lu00": {
+      "eligible": false,
+      "lirf_v9": {
+        "lirf_nonpop_unmatched": 0.0
+      },
+      "mean_ratio": 0.9996370040869695,
+      "months": {
+        "2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 20,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.22275622490320046,
+              0.014586735356677103
+            ]
+          },
+          "ratio_to_control": 0.9997462762588178,
+          "rmse": 326.3634466296071,
+          "rows_differing_from_control": 11254
+        },
+        "2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 22,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.15903132244294227,
+              0.026174818942244073
+            ]
+          },
+          "ratio_to_control": 0.9997376390894336,
+          "rmse": 261.9819982422026,
+          "rows_differing_from_control": 864
+        },
+        "2025-11": {
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 20,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.17062783640217205,
+              -0.04021353239867697
+            ]
+          },
+          "ratio_to_control": 0.9994593707140705,
+          "rmse": 185.87981134430817,
+          "rows_differing_from_control": 3871
+        },
+        "2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 21,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.1787176456075997,
+              0.05004098957615495
+            ]
+          },
+          "ratio_to_control": 0.9996047302855563,
+          "rmse": 168.10100603742077,
+          "rows_differing_from_control": 2474
+        }
+      },
+      "months_touched": [
+        "2025-01",
+        "2025-07",
+        "2025-11",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [
+        "2025-11"
+      ]
+    },
+    "lu10": {
+      "eligible": false,
+      "lirf_v9": {
+        "lirf_nonpop_unmatched": 0.1
+      },
+      "mean_ratio": 0.9996815578234243,
+      "months": {
+        "2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 20,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.19653237341856808,
+              -0.007306875767595551
+            ]
+          },
+          "ratio_to_control": 0.9997554814283034,
+          "rmse": 326.36645162288534,
+          "rows_differing_from_control": 11254
+        },
+        "2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 22,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.12686492680798125,
+              0.010887895706254319
+            ]
+          },
+          "ratio_to_control": 0.9997751775852209,
+          "rmse": 261.9918352331819,
+          "rows_differing_from_control": 864
+        },
+        "2025-11": {
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 23,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.13820818459929854,
+              -0.037909546097149166
+            ]
+          },
+          "ratio_to_control": 0.9995482277968181,
+          "rmse": 185.89633701634816,
+          "rows_differing_from_control": 3871
+        },
+        "2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 21,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.14386981179742833,
+              0.02814676043163397
+            ]
+          },
+          "ratio_to_control": 0.9996473444833547,
+          "rmse": 168.10817235957228,
+          "rows_differing_from_control": 2474
+        }
+      },
+      "months_touched": [
+        "2025-01",
+        "2025-07",
+        "2025-11",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [
+        "2025-01",
+        "2025-11"
+      ]
+    }
+  },
+  "created_at_utc": "2026-09-27T12:15:38.831227+00:00",
+  "declaration": {
+    "audit_used": false,
+    "candidate_semantics": "as configs/fair_weights_v1.json: value = max(s * v9 + (1 - s) * (0.35 * lirf_net + 0.25 * lirf_tree) / 0.60, floor) on lirf_nonpop_unmatched rows; every other row keeps v33",
+    "candidates": {
+      "lu00": {
+        "lirf_v9": {
+          "lirf_nonpop_unmatched": 0.0
+        }
+      },
+      "lu10": {
+        "lirf_v9": {
+          "lirf_nonpop_unmatched": 0.1
+        }
+      }
+    },
+    "control": {
+      "lirf": {
+        "lirf_nonpop_matched": {
+          "net": 0.4,
+          "tree": 0.45,
+          "v9": 0.15
+        },
+        "lirf_nonpop_unmatched": {
+          "net": 0.35,
+          "tree": 0.25,
+          "v9": 0.4
+        }
+      },
+      "name": "v33",
+      "outer": {
+        "ltfm": 1.0,
+        "matched_other": 0.6,
+        "unmatched_other": 0.7
+      },
+      "reproduction": "the round's rebuild of the control must equal the fair v33 column of rows.parquet to 1e-9 s per row"
+    },
+    "declared_at_utc": "2026-09-27T12:15:28Z",
+    "experiment_id": "fair_lirf_v1",
+    "minimum_mean_improvement_fraction": 0.0002,
+    "prior_context": {
+      "fair_weights_v1": "lu30 / lu20 improved every month (mean -0.014% / -0.024%), intervals below zero on 3/4 and 2/4 months",
+      "note": "Declared AFTER the fair_weights_v1 results and after reading per-component scope RMSEs on the fair rows; disclosed in full. Candidate scores below were NOT computed before this declaration.",
+      "scope_rmse_fair_rows": "lirf_nonpop_unmatched, v33 blend vs net+tree at the control proportions (v9 share 0): Jan 276.4 vs 275.0, Jul 417.6 vs 407.9, Nov 284.3 vs 281.6, Dec 330.1 vs 327.8 s"
+    },
+    "purpose": "Follow-up of the fair-set weight round (configs/fair_weights_v1.json, nothing selected): the v9 share on LIRF non-population UNMATCHED rows below the declared 0.20. July 2026 LIRF is ADS-B-dark, so about 17.7k ranking rows sit in this scope (the largest projected error block). Fair development rows only; no model is fitted.",
+    "recipe_months": [
+      "2025-01",
+      "2025-07",
+      "2025-11",
+      "2025-12"
+    ],
+    "rows": "runs/fair_dev/rows.parquet (the fair_weights_v1 rows, SHA-256 in docs/fair_dev/fair_weights_results.json)",
+    "selection": "Unchanged rule: eligible when no recipe month is worse on ALL rows, the mean ratio is at least 0.02% below 1, and every touched month's paired-day 95% interval lies below zero; lowest mean ratio among eligible; otherwise keep v33.",
+    "ship": "tools/export_fair_weights.py construction (delta from the dry-run detail with the selected LIRF share added to v33's floats), independent rebuild, audit; upload only on the user's decision."
+  },
+  "declaration_sha256": "25bc99773720acd2e53cad55e115e6d5a34045a0c215d56c9296ebe1f64892ba",
+  "eligible": [],
+  "environment": {
+    "disk_available_bytes": 87206498304,
+    "logical_cpus": 32,
+    "memory_total_bytes": 16858472448,
+    "packages": {
+      "numpy": "2.4.2",
+      "pandas": "3.0.0",
+      "psutil": "7.2.2",
+      "pyarrow": "23.0.1",
+      "tzdata": "2025.3"
+    },
+    "physical_cpus_reported": 24,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.2"
+  },
+  "model_code": {
+    "tools/run_fair_dev.py": "820f5b537051e2aa9338c212e58bac3629221f5072beb0cae328e035dad4be30",
+    "tools/run_fair_weights.py": "47eaafd1ddde46dfdf5da81f33bdccfe3aea9fb24e56badf98765a74fab4f5f9",
+    "tools/run_fold_residual.py": "1b1c628037df5195012b51ef6c3f6bc5a5315aa2f9273fcec03cb67e91682d42"
+  },
+  "months": {
+    "2025-01": {
+      "control_rebuild_max_abs": 0.0,
+      "control_rmse": 326.4462737994905,
+      "rows": 153706,
+      "v30_fair_rmse": 326.7250699582161,
+      "v33_vs_v30_fair_pct": -0.08533050701046152
+    },
+    "2025-07": {
+      "control_rebuild_max_abs": 9.094947017729282e-13,
+      "control_rmse": 262.0507501156176,
+      "rows": 190713,
+      "v30_fair_rmse": 262.70906336468505,
+      "v33_vs_v30_fair_pct": -0.25058642463112735
+    },
+    "2025-11": {
+      "control_rebuild_max_abs": 4.547473508864641e-13,
+      "control_rmse": 185.98035777232752,
+      "rows": 162332,
+      "v30_fair_rmse": 186.5620326246662,
+      "v33_vs_v30_fair_pct": -0.3117862965766993
+    },
+    "2025-12": {
+      "control_rebuild_max_abs": 9.094947017729282e-13,
+      "control_rmse": 168.16747754825,
+      "rows": 165677,
+      "v30_fair_rmse": 168.79692193277322,
+      "v33_vs_v30_fair_pct": -0.37290039256397955
+    }
+  },
+  "rows_sha256": "ee2f9fd6fc42017c229b740729e3e12d1605c0e1e8207430daf23fbf6a314f30",
+  "selected_candidate": null
+}
