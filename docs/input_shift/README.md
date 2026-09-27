@@ -96,3 +96,30 @@ Follow-up probes were run as scratch code. Their numbers are quoted below.
   - run a development ablation that drops EOBT_1 features at LFPG. If it costs little, route LFPG July through that variant.
 - **New stands:** learn positions for J5/J10/V33x and EDDM 103–108 from the 2026 adsb.lol traces. This is label-free, like the frozen
   1,332-stand table. It would improve ADS-B matching and stand imputation for about 1,500 departures.
+
+## v31: LFPG EOBT_1 50% blend (27 September 2026). Official 229.5832, a new best
+
+Built from the sensitivity study ([`lfpg_eobt_sensitivity.md`](lfpg_eobt_sensitivity.md)):
+
+- **Recipe:** the recorded float v30 (`runs/adsb_ctx/export_v30/ranking_values.parquet`, which rounds exactly to the uploaded v30),
+  plus 0.5 × (v30 with LFPG July-2026 EOBT_1 := IOBT − v30 unchanged). The unchanged v30 comes from the final-file runner's
+  `final_lfpg_eobt` and `final_dryrun` runs. The effect is exactly zero outside LFPG July 2026. The floor is −12 s, then nearest
+  integer.
+- **Tool and record:** `tools/export_lfpg_eobt_blend.py --version 31` → [`export_v31.json`](export_v31.json).
+- **What changed:** 19,661 of the 21,743 LFPG July rows change against v30 (mean +18.5 s, RMS 33.6 s, range −121 to +912 s); 0 rows
+  outside that scope. Only 7 rows move by more than 300 s, all with announced delays of 1–2.7 h.
+- **Cross-check:** the independent build is byte-identical,
+  SHA-256 `ea1c17568e49b83cb1c8667212c2097ab8a8dec774b4db57e01b9b79bb531be2`.
+- **Audit:** [`../export_audit/v31_audit.json`](../export_audit/v31_audit.json) is clean. Only LFPG differs from v30.
+- **Upload:** approved by the user ("yeah upload it"). Uploaded at 08:29:23 UTC as the second upload of the UTC day and processed at
+  08:30:00 UTC. The official score is **229.5832 on all 344,841 rows**, −0.0177 s (−0.0077%) against v30. The record is
+  [`official_result_v31.json`](official_result_v31.json). Never re-upload v1–v31.
+
+**What the score says.** The squared-error change is −2.80e6, which is −0.015% of the ranking SSE.
+
+- The pre-upload bounds for the 50% blend were −0.71%, −0.23% and +0.20 to +0.28%. The result falls between the second and third
+  readings, close to neutral.
+- In aggregate it corresponds to about 28% of the reset effect being real bias (ΔSSE = D·(w² − 2wf), with D = 9.79e7 and w = 0.5).
+  The best weight would then have been about 0.28, which is only about 0.03 s better than 0.5.
+- This comes from one aggregate score, not a row-level signal. Tuning the LFPG weight on further uploads would be leaderboard
+  fitting, so the lever is closed at v31.

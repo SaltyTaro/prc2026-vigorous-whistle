@@ -83,3 +83,8 @@ The unedited rows add between −0.07% and +0.18% of SSE, depending on the table
   judgement call about uploading, and it belongs to the user.
 - The rebuild's export (`runs/final_lfpg_eobt/run/export/vigorous-whistle_v901.parquet`) is a sensitivity artifact only. It is not a
   submission candidate as it stands: it is not audited and it carries the dry-run float noise.
+
+## Outcome
+
+The 50% blend was uploaded as **v31** and officially scored **229.5832** (v30: 229.6009), a change of −0.015% of SSE. That is close to
+neutral, between the "announced, same total delay" and "announced remainder" readings. See [`README.md`](README.md#v31-lfpg-eobt_1-50-blend-27-september-2026-official-2295832-a-new-best).

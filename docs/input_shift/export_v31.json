@@ -1,0 +1,65 @@
+{
+  "created_at_utc": "2026-09-27T08:28:38.366613+00:00",
+  "delta_vs_v30_in_scope": {
+    "max": 912,
+    "mean": 18.45380122338224,
+    "min": -121,
+    "rms": 33.55374619932395
+  },
+  "file": "runs/submissions/vigorous-whistle_v31.parquet",
+  "minimum_prediction": -12,
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v31.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 120549,
+    "maximum_rounding_change_seconds": 0.499995176542825,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 3,
+    "provenance": {
+      "approval": "user, 27 Sep 2026: 'yeah upload it' (50% blend)",
+      "audit_used": false,
+      "base": {
+        "file": "runs/submissions/vigorous-whistle_v30.parquet",
+        "float_detail": "runs/adsb_ctx/export_v30/ranking_values.parquet",
+        "float_detail_sha256": "b91c57bc18bf65fabd5d4424cda802d28febd3dba0ed1cb303e702e389e9ae4d",
+        "sha256": "3a19fa27f5f1d4a5bed4dfa8e128bdbd58054687bb4a43ee2281f61f6b7765dc"
+      },
+      "effect_runs": {
+        "edited_rows": 7510,
+        "original": "runs/final_dryrun/run",
+        "original_recipe_receipt_sha256": "44d456f8fdc1ba08afcffe7df33837a8f4ac400371a43042e398a15c3c096cd5",
+        "reset": "runs/final_lfpg_eobt/run",
+        "reset_input_sha256": "cc474432b2f165ff00a0c98ece177a88b2b15f60eeb962533dad59920e595079",
+        "reset_recipe_receipt_sha256": "5fb3a50003776c61b019fda5a2a5f6ca24f0b22702c51f2b8aeafe5d8489650f"
+      },
+      "evidence": "docs/input_shift/lfpg_eobt_sensitivity.md",
+      "experiment_id": "lfpg_eobt_blend_v1",
+      "floor_seconds": -12.0,
+      "scope": "LFPG departures in 2026-07 (effect exactly zero elsewhere)",
+      "selected_candidate": "lfpg_eobt_reset_w050",
+      "weight": 0.5
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "ea1c17568e49b83cb1c8667212c2097ab8a8dec774b4db57e01b9b79bb531be2",
+    "size_bytes": 1343564,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-27T08:28:38.346318+00:00",
+    "version": 31
+  },
+  "rows": 344841,
+  "rows_changed_outside_scope": 0,
+  "rows_changed_vs_v30": 19661,
+  "rows_in_scope": 21743,
+  "same_order_as_v30": true,
+  "sha256": "ea1c17568e49b83cb1c8667212c2097ab8a8dec774b4db57e01b9b79bb531be2"
+}
