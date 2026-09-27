@@ -1,0 +1,134 @@
+{
+  "experiment_id": "adsb_ctx_gap_v1",
+  "declared_at_utc": "2026-09-27T06:23:38+00:00",
+  "audit_used": false,
+  "purpose": "Time-gap test (27 Sep 2026): the GPU context network at 16, 24 and 32 epochs (otherwise the ctx_e32 settings of configs/adsb_ctx_network_v3.json) fitted on January-June 2025 ('gap') and on May-October 2025 ('near', same six-month size), both scoring November and December 2025. Question: does the longer-trained network's advantage shrink as the scored months move further from the fitted ones? v30 (more 32-epoch weight) transferred only ~6% of its development gain, against >100% for earlier network rounds; the ranking months lie 1-18 months after the twelve-month refit while every development fold has a 0-1 month gap. Descriptive test; any recipe change it motivates needs its own declared round.",
+  "defaults": {
+    "architecture": {
+      "cat_cap": 16,
+      "d_num": 8,
+      "depth": 3,
+      "dropout": 0.1,
+      "heads": 4,
+      "max_tokens": 128,
+      "n_aux": 0,
+      "sa_dropout": 0.0,
+      "sa_ff": 2,
+      "sa_heads": 4,
+      "sa_layers": 0,
+      "tok_dim": 96,
+      "width": 512
+    },
+    "aux": {
+      "targets": [],
+      "weight": 0.0
+    },
+    "context": {
+      "departures_only": false,
+      "use_adsb": true
+    },
+    "features": {
+      "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+      "extra_features": [
+        "adsb_appear_s",
+        "adsb_last_stand_s",
+        "adsb_pre_motion_gap_s",
+        "adsb_first_motion_s",
+        "adsb_first_dist_stand_imp_m",
+        "adsb_stand_imputed",
+        "sfc_ground_10m",
+        "sfc_moving_10m",
+        "sfc_moving_20m",
+        "sfc_rwy_queue_5m",
+        "sfc_rwy_queue_10m"
+      ]
+    },
+    "masking": {
+      "columns": [
+        "adsb_gate",
+        "adsb_first_point_s",
+        "adsb_motion_s",
+        "adsb_first_gs_kt",
+        "adsb_first_dist_stand_m",
+        "adsb_stop_seconds",
+        "adsb_taxi_path_m",
+        "adsb_taxi_stops",
+        "adsb_taxi_stopped_s",
+        "adsb_slow_start_s",
+        "adsb_gap_before_s",
+        "adsb_turnaround_s",
+        "adsb_anchor_dist_stand_m",
+        "adsb_last_ground_s",
+        "adsb_points",
+        "adsb_appear_s",
+        "adsb_last_stand_s",
+        "adsb_pre_motion_gap_s",
+        "adsb_first_motion_s",
+        "adsb_first_dist_stand_imp_m",
+        "adsb_stand_imputed"
+      ],
+      "matched": "adsb_matched",
+      "p": 0.0
+    },
+    "preprocess": {
+      "bins": 32,
+      "min_count": 10,
+      "target_clip": null
+    },
+    "rows": {
+      "exclude_airports": [
+        "LIRF"
+      ],
+      "exclude_population": false,
+      "max_label": null
+    },
+    "tokens_dir": "data/ctx/tokens_v1",
+    "training": {
+      "batch_size": 2048,
+      "epochs": 32,
+      "grad_clip": 5.0,
+      "lr": 0.001,
+      "min_lr_fraction": 0.02,
+      "warmup_epochs": 1.0,
+      "weight_decay": 0.0001
+    }
+  },
+  "variants": {
+    "g16": {
+      "training": {
+        "epochs": 16
+      }
+    },
+    "g24": {
+      "training": {
+        "epochs": 24
+      }
+    },
+    "g32": {},
+    "smoke1": {
+      "training": {
+        "epochs": 1
+      }
+    }
+  },
+  "seeds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "folds": [
+    "gap",
+    "near"
+  ],
+  "readings": {
+    "per_fold": "4-seed mean prediction per variant; RMSE on non-LIRF November+December rows (all, matched, unmatched) and by month",
+    "interaction": "(g32 - g16) and (g24 - g16) RMSE differences in 'gap' vs 'near', with a paired-day bootstrap interval of the difference-in-differences",
+    "note": "g32/g24 in 'near' should reproduce the development ordering (32 > 24 > 16 epochs); a smaller or reversed advantage in 'gap' supports down-weighting long training for the ranking months"
+  },
+  "execution": {
+    "runner": "tools/run_adsb_ctx_gap.py",
+    "hardware": "AWS L40S (g6e.2xlarge) via SkyPilot, infra/aws/gpu_authorization_20260926.json; user re-authorised GPU use for lever searches on 27 Sep 2026",
+    "smoke": "variant smoke1 with --limit-rows only; never a result"
+  }
+}
