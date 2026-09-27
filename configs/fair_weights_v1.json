@@ -1,0 +1,31 @@
+{
+ "experiment_id": "fair_weights_v1",
+ "declared_at_utc": "2026-09-27T09:28:48Z",
+ "audit_used": false,
+ "purpose": "Re-weight the v9 side against the fold side of v33's recipe on the fair development set (configs/fair_dev_v1.json), where every recipe month compares both sides on equal footing. Declared before any fair-set row or score exists (runs/fair_dev/rows.parquet absent at declaration).",
+ "prior_context": {
+  "shipped_set_readings": "on the shipped (v9-favouring) development set: unmatched non-LTFM outer weight 0.8 gave Dec -0.10% but Jan/Jul worse; LIRF v9 shares lower gave Dec -0.03..-0.07% (intervals across zero), Nov worse; these motivated the candidates and are disclosed",
+  "v33": "outer weight LTFM 1.0 / other matched non-LIRF 0.6 / other unmatched 0.7 officially 228.7246 (-0.374% vs v31), matching the equal-footing December reading"
+ },
+ "rows": "runs/fair_dev/rows.parquet from tools/run_fair_dev.py (fair provenance columns: v9, base, mix, lirf_tree, lirf_net, v30, v33, floor, scope flags)",
+ "recipe_months": ["2025-01", "2025-07", "2025-11", "2025-12"],
+ "control": {"name": "v33", "outer": {"ltfm": 1.0, "matched_other": 0.6, "unmatched_other": 0.7},
+             "lirf": {"lirf_nonpop_matched": {"v9": 0.15, "net": 0.40, "tree": 0.45}, "lirf_nonpop_unmatched": {"v9": 0.40, "net": 0.35, "tree": 0.25}},
+             "reproduction": "the round's rebuild of the control must equal the fair v33 column of rows.parquet to 1e-9 s per row"},
+ "candidates": {
+  "u80": {"outer": {"unmatched_other": 0.8}},
+  "u90": {"outer": {"unmatched_other": 0.9}},
+  "u100": {"outer": {"unmatched_other": 1.0}},
+  "m50": {"outer": {"matched_other": 0.5}},
+  "m70": {"outer": {"matched_other": 0.7}},
+  "lu30": {"lirf_v9": {"lirf_nonpop_unmatched": 0.30}},
+  "lu20": {"lirf_v9": {"lirf_nonpop_unmatched": 0.20}},
+  "lm05": {"lirf_v9": {"lirf_nonpop_matched": 0.05}},
+  "lu20_lm05": {"lirf_v9": {"lirf_nonpop_unmatched": 0.20, "lirf_nonpop_matched": 0.05}},
+  "u80_lu20_lm05": {"outer": {"unmatched_other": 0.8}, "lirf_v9": {"lirf_nonpop_unmatched": 0.20, "lirf_nonpop_matched": 0.05}}
+ },
+ "candidate_semantics": "Each candidate overrides only the named control weights. Outer: value = max((1 - w) * base + w * mix, floor) on non-LIRF rows, w by scope (LTFM rows; other ADS-B-matched non-LIRF rows; other unmatched non-LIRF rows). LIRF: on lirf_nonpop_matched / lirf_nonpop_unmatched rows value = max(s * v9 + (1 - s) * (net_w * lirf_net + tree_w * lirf_tree) / (net_w + tree_w), floor) with the control's net/tree proportions and the candidate's v9 share s; every other LIRF row (fill population, fixed rows) keeps the control.",
+ "minimum_mean_improvement_fraction": 0.0002,
+ "selection": "Unchanged rule: eligible when no recipe month is worse on ALL rows (ratio to the control <= 1.0), the mean ratio over the four months is at least 0.02% below 1, and on every month where it changes a row the paired-day bootstrap 95% interval of the RMSE difference lies below zero. Choose the lowest mean ratio among eligible candidates (ties by name); otherwise keep v33. If two or more candidates touching disjoint scopes are eligible, a combination is declared and scored before any export.",
+ "ship": "If selected: rebuild on the final-file runner's dry-run detail with the selected weights, delta against the v33 weights added to v33's floats (tools/export_v33.py construction), floor -12, export as the next version, independent rebuild, audit. Upload only on the user's decision."
+}
