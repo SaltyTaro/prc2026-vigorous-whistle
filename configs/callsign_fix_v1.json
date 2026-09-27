@@ -1,0 +1,51 @@
+{
+ "experiment_id": "callsign_fix_v1",
+ "declared_at_utc": "2026-09-27T14:32:25Z",
+ "audit_used": false,
+ "purpose": "ADS-B linking fix for departures WITHOUT an NM flight record at EDDF / EHAM. The matcher (src/prc2026_adsb/features.match_departures) keys such rows on FLIGHT_mvt, which carries the IATA airline designator ('KL1787'), while ADS-B callsigns use the ICAO designator, so they never match. tools/adsb_rematch_nonm.py maps the IATA prefix to ICAO (fixed table) and runs the unchanged segment code with the learned stands. Rows whose existing key finds nothing but whose mapped callsign yields a gate-covered segment get the observed ADS-B taxi time blended into the prediction. Fair development rows; no model is fitted.",
+ "prior_context": {
+  "note": "Declared AFTER an exploratory look at the development rows (disclosed): on the 198 newly gate-matched no-NM rows of the four recipe months, v34's RMSE is 236 s, the raw ADS-B taxi (with an offset from those same months' regular gate rows) 216 s, the 50/50 blend 142 s (every month better), 75/25 160 s. The candidate scores below were NOT computed under this declaration's offsets before it was written.",
+  "exploration_offsets_not_used": "median label - (takeoff - motion_start) on regular gate rows of the recipe months: EDDF 60.5 s, EHAM 6.9 s",
+  "ranking_exposure_label_free": "163 newly gate-matched ranking rows (January 115: EHAM 110; July 48); EHAM 3-7 January 2026 precise subset: observed taxi 2,456 s against v34 2,206 s and fold side 2,473 s"
+ },
+ "rematch": {
+  "tool": "tools/adsb_rematch_nonm.py",
+  "tool_sha256": "ecb0b38c678fe8013ffa85e6fe0790072a180056ee0776aa0ba18672fbdbd853",
+  "outputs": {
+   "runs/adsb_rematch/out_arcw5.parquet": "6f04fed8ef07588ed715cad503f3f34317fbda04fbfd80eb8088e2df4292db68",
+   "runs/adsb_rematch/out_arcw2.parquet": "59feb4ddde1f6603b94c73dd4a056675f4924b05fbb7c6a19f84acbdc46abe13",
+   "runs/adsb_rematch/out_arcw1.parquet": "64b5c29e944a16c00a9f61b0603dfb133d8c9262568e66b8495b16442ed620d4"
+  },
+  "inputs": "departures with FLIGHT_ID_mvt missing at EDDF / EHAM: 2025-01 + 2025-12 (arcw5), 2025-07 + 2025-11 (arcw2), ranking (arcw1); adsb.lol surface files (ODbL) on those workers",
+  "scope": "rows with no key_icao and an iata_mapped segment whose gate flag is true"
+ },
+ "offset": "per airport, the median of label - (takeoff - motion_start) over the regular gate-matched departures (data/external/adsblol/matches_v11/matches2_<month>.parquet, gate true) of the NON-recipe 2025 months 02, 03, 04, 05, 06, 08, 09, 10 (labels from data/raw/training_*.parquet); the same constant serves every recipe month and the ranking",
+ "rows": "runs/fair_dev/rows.parquet (SHA-256 in docs/fair_dev/fair_weights_results.json)",
+ "recipe_months": [
+  "2025-01",
+  "2025-07",
+  "2025-11",
+  "2025-12"
+ ],
+ "control": "v34 (fair), as in configs/disagreement_gate_v1.json",
+ "candidates": {
+  "cs50": {
+   "weight": 0.5
+  },
+  "cs75": {
+   "weight": 0.75
+  },
+  "u300_cs50": {
+   "gate": "u300",
+   "weight": 0.5
+  },
+  "u300_cs75": {
+   "gate": "u300",
+   "weight": 0.75
+  }
+ },
+ "candidate_semantics": "value = max(w * (takeoff - motion_start + offset[airport]) + (1 - w) * base_value, floor) on the scope's rows, base_value = the control (cs*) or the control with configs/disagreement_gate_v1.json's u300 gate applied (u300_cs*); every other row keeps base_value",
+ "minimum_mean_improvement_fraction": 0.0002,
+ "selection": "Unchanged rule: eligible when no recipe month is worse on ALL rows, the mean ratio is at least 0.02% below 1, and every touched month's paired-day 95% interval lies below zero; lowest mean ratio among eligible; otherwise keep v34. December reported separately. u300's own result stays as recorded in docs/disagreement/gate_v1_results.json (not selected).",
+ "ship": "delta on the ranking rows in scope = candidate value - v34's value (from v34's rebuilt floats and, for u300_cs*, the u300 gate delta), added to v34's floats, floor -12 s; independent check; audit; upload only on the user's decision."
+}
