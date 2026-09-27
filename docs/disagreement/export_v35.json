@@ -1,0 +1,103 @@
+{
+  "by_airport": {
+    "EDDF": {
+      "changed": 109,
+      "max_abs_change_s": 843.0,
+      "mean_change_s": 0.36379656909987057,
+      "rms_change_s": 9.943331462368722,
+      "rows": 36317
+    },
+    "EDDM": {
+      "changed": 12,
+      "max_abs_change_s": 1736.0,
+      "mean_change_s": 0.13232688900870368,
+      "rms_change_s": 11.518023677899711,
+      "rows": 25966
+    },
+    "EGLL": {
+      "changed": 10,
+      "max_abs_change_s": 710.0,
+      "mean_change_s": 0.04410140562248996,
+      "rms_change_s": 3.9986161009643784,
+      "rows": 39840
+    },
+    "EHAM": {
+      "changed": 668,
+      "max_abs_change_s": 2496.0,
+      "mean_change_s": 3.82737939343146,
+      "rms_change_s": 56.66978736652907,
+      "rows": 38182
+    },
+    "LEBL": {
+      "changed": 14,
+      "max_abs_change_s": 315.0,
+      "mean_change_s": 0.06409574468085107,
+      "rms_change_s": 3.39070420414403,
+      "rows": 30080
+    },
+    "LEMD": {
+      "changed": 10,
+      "max_abs_change_s": 120.0,
+      "mean_change_s": 0.024300481679926395,
+      "rms_change_s": 1.5708795304935013,
+      "rows": 36954
+    },
+    "LFPG": {
+      "changed": 152,
+      "max_abs_change_s": 567.0,
+      "mean_change_s": 0.7031751605136437,
+      "rms_change_s": 13.150355772457834,
+      "rows": 39872
+    },
+    "LIRF": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 26899
+    },
+    "LSZH": {
+      "changed": 47,
+      "max_abs_change_s": 395.0,
+      "mean_change_s": 0.3055291576673866,
+      "rms_change_s": 7.335840595011669,
+      "rows": 23150
+    },
+    "LTFM": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 47581
+    }
+  },
+  "created_at_utc": "2026-09-27T15:07:01.720425+00:00",
+  "dry_run": false,
+  "independent_rebuild": {
+    "max_abs_integer_difference": 1,
+    "rows_differing": 198,
+    "rows_differing_in_layers": 6,
+    "source": "runs/adsb_ctx/export_v30/ranking_values.parquet"
+  },
+  "layer_rows": {
+    "callsign": 163,
+    "mix_gate": 0,
+    "queue": 161,
+    "u300": 758
+  },
+  "max_abs_change_s": 2496.0,
+  "mean_change_by_layer_s": {
+    "callsign": 148.69938650306747,
+    "mix_gate": 0.0,
+    "queue": 71.46583850931677,
+    "u300": 240.70712401055408
+  },
+  "mix_up": null,
+  "queue": 0.75,
+  "queue_source": "regular",
+  "receipt_sha256": "75f4a4f4678921d957909ef364c2cae66a81e5b74bbb680ded50d329ce6ee4f5",
+  "rms_change_all_rows_s": 20.06760838823451,
+  "rows_changed_outside_layers": 0,
+  "rows_changed_vs_v34": 1022,
+  "version": 35
+}
