@@ -1,0 +1,142 @@
+{
+  "experiment_id": "adsb_ctx_season_v1",
+  "declared_at_utc": "2026-09-27T07:07:51+00:00",
+  "audit_used": false,
+  "purpose": "Season-weighted 32-epoch context network (27 Sep 2026 lever search). The time-gap test (docs/adsb_ctx_gap/) found fitting on Jan-Jun scores Nov-Dec 1.3% better than fitting on May-Oct: season matters more than recency. Here the unchanged ctx_e32 network (configs/adsb_ctx_network_v3.json) is fitted with the fitting rows of the scored month's +-1-month window repeated 3 times, seed-matched to the existing GPU development seeds 401-404 (the controls): seasonal fold with target January (window Feb) read on January, target July (window Jun, Aug) read on July; refit fold (Jan-Nov) with target December (window Nov, Jan) read on December.",
+  "defaults": {
+    "architecture": {
+      "cat_cap": 16,
+      "d_num": 8,
+      "depth": 3,
+      "dropout": 0.1,
+      "heads": 4,
+      "max_tokens": 128,
+      "n_aux": 0,
+      "sa_dropout": 0.0,
+      "sa_ff": 2,
+      "sa_heads": 4,
+      "sa_layers": 0,
+      "tok_dim": 96,
+      "width": 512
+    },
+    "aux": {
+      "targets": [],
+      "weight": 0.0
+    },
+    "context": {
+      "departures_only": false,
+      "use_adsb": true
+    },
+    "features": {
+      "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+      "extra_features": [
+        "adsb_appear_s",
+        "adsb_last_stand_s",
+        "adsb_pre_motion_gap_s",
+        "adsb_first_motion_s",
+        "adsb_first_dist_stand_imp_m",
+        "adsb_stand_imputed",
+        "sfc_ground_10m",
+        "sfc_moving_10m",
+        "sfc_moving_20m",
+        "sfc_rwy_queue_5m",
+        "sfc_rwy_queue_10m"
+      ]
+    },
+    "masking": {
+      "columns": [
+        "adsb_gate",
+        "adsb_first_point_s",
+        "adsb_motion_s",
+        "adsb_first_gs_kt",
+        "adsb_first_dist_stand_m",
+        "adsb_stop_seconds",
+        "adsb_taxi_path_m",
+        "adsb_taxi_stops",
+        "adsb_taxi_stopped_s",
+        "adsb_slow_start_s",
+        "adsb_gap_before_s",
+        "adsb_turnaround_s",
+        "adsb_anchor_dist_stand_m",
+        "adsb_last_ground_s",
+        "adsb_points",
+        "adsb_appear_s",
+        "adsb_last_stand_s",
+        "adsb_pre_motion_gap_s",
+        "adsb_first_motion_s",
+        "adsb_first_dist_stand_imp_m",
+        "adsb_stand_imputed"
+      ],
+      "matched": "adsb_matched",
+      "p": 0.0
+    },
+    "preprocess": {
+      "bins": 32,
+      "min_count": 10,
+      "target_clip": null
+    },
+    "rows": {
+      "exclude_airports": [
+        "LIRF"
+      ],
+      "exclude_population": false,
+      "max_label": null
+    },
+    "tokens_dir": "data/ctx/tokens_v1",
+    "training": {
+      "batch_size": 2048,
+      "epochs": 32,
+      "grad_clip": 5.0,
+      "lr": 0.001,
+      "min_lr_fraction": 0.02,
+      "warmup_epochs": 1.0,
+      "weight_decay": 0.0001
+    }
+  },
+  "variants": {
+    "ctx_e32": {}
+  },
+  "runs": {
+    "sw1": {
+      "fold": "seasonal",
+      "season_target": 1,
+      "factor": 3,
+      "read_month": "2025-01"
+    },
+    "sw7": {
+      "fold": "seasonal",
+      "season_target": 7,
+      "factor": 3,
+      "read_month": "2025-07"
+    },
+    "sw12": {
+      "fold": "refit",
+      "season_target": 12,
+      "factor": 3,
+      "read_month": "2025-12"
+    },
+    "sw0": {
+      "fold": "seasonal",
+      "season_target": null,
+      "factor": 1,
+      "read_month": "both",
+      "note": "unweighted reproduction of control seed 401 through the new runner (sanity)"
+    }
+  },
+  "seeds": [
+    401,
+    402,
+    403,
+    404
+  ],
+  "controls": {
+    "seasonal": "runs/adsb_ctx_gpu/ctx_e32_s<seed>/seasonal/predictions.parquet",
+    "december": "runs/december/learners/runs__adsb_ctx_gpu__ctx_e32_s<seed>.parquet"
+  },
+  "go": "4-seed mean weighted vs 4-seed mean control (same seeds) on the read month's non-LIRF rows: at least 0.30% lower RMSE with the paired-day interval below zero in EACH of January, July and December; a GO then needs a recipe-level (committee-mix) check and its own declared development round before anything ships",
+  "execution": {
+    "runner": "tools/run_adsb_ctx_season.py --season-target M --season-factor 3",
+    "chain": "tools/ctx_season_chain.sh SEED",
+    "hardware": "AWS L40S via SkyPilot (infra/aws/gpu_authorization_20260927.json)"
+  }
+}
