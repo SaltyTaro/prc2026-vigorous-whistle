@@ -127,3 +127,22 @@ right, -0.28 s (regular) and -0.17 s (callsign) at full weight.
 post-hoc restriction after the July row). Dry runs: without the queue layer the file equals the u300_cs50 dry export (SHA f47a5c75...);
 with queue trust 0.75 on regular matches SHA 75f4a4f4..., 1,022 rows change (u300 758, callsign 163, queue 161), independent rebuild
 within 1 s. Not uploaded.
+
+## Mix gate (27 September, 15:00-15:45 UTC)
+
+Inside the committee mix, the same "higher side" screen: networks far above the committee -> LS weight on the networks about 1.0-1.2;
+far below -> 0.06-0.64 in January / July but 0.8-0.95 in November / December at LTFM, EHAM and the other airports (the seven-month fold
+networks are weaker than the trees; December's January-November networks are not). **Declared round** configs/mix_gate_v1.json
+(15:00:52Z; tools/run_mix_gate.py -> mix_gate_v1_results.json), control = the current stack. **Nothing selected.**
+
+| candidate | Jan | Jul | Nov | Dec | mean | intervals < 0 |
+|---|---|---|---|---|---|---|
+| mu300 | +0.015% | -0.127% | -0.045% | -0.049% | -0.052% | 1/4 |
+| mu600 | -0.004% | -0.037% | -0.004% | -0.040% | -0.022% | 0/4 |
+| md300 | -0.113% | -0.312% | -0.116% | **+0.403%** | -0.035% | 1/4 |
+| mud300 | -0.099% | -0.440% | -0.161% | **+0.354%** | -0.086% | 1/4 |
+
+The lean-down half is the data-quantity artefact (December rejects it by +0.4%). mu600 is better in every month but weak; on the ranking it
+moves 439 rows by about +200 s (sum of squared moves 2.0e7, at most +-0.13 s). Held out of the stack; to be re-read on the LOMO January / July
+rows (eleven-month networks and committee). The stack itself (v34 + u300 + callsign 50% + queue trust 0.75 on regular matches) against v34 on
+the fair rows: -0.021% / -0.067% / -0.141% / -0.069%. tools/export_stack.py gains --mix-up (dry run with 600: SHA 61e98464..., 1,268 rows).

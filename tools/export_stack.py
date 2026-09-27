@@ -30,14 +30,31 @@ from export_fair_weights import FLOOR, V33_OUTER, recipe, stats  # noqa: E402
 from run_callsign_fix import offsets, scope_table  # noqa: E402
 from run_queue_trust import offsets_all, segments  # noqa: E402
 
-DECLS = ["configs/disagreement_gate_v1.json", "configs/callsign_fix_v1.json", "configs/queue_trust_v1.json"]
-RESULTS = ["docs/disagreement/gate_v1_results.json", "docs/disagreement/callsign_fix_v1_results.json", "docs/disagreement/queue_trust_v1_results.json"]
+DECLS = ["configs/disagreement_gate_v1.json", "configs/callsign_fix_v1.json", "configs/queue_trust_v1.json", "configs/mix_gate_v1.json"]
+RESULTS = ["docs/disagreement/gate_v1_results.json", "docs/disagreement/callsign_fix_v1_results.json", "docs/disagreement/queue_trust_v1_results.json",
+           "docs/disagreement/mix_gate_v1_results.json"]
 
 
-def layers(v34_start: np.ndarray, detail: pd.DataFrame, at34: np.ndarray, ids: np.ndarray, qw: float | None, qsource: str):
-    """(values, masks): v34 floats -> u300 -> callsign 50% -> queue trust."""
-    gdelta, _ = gate_delta(detail, read_json(ROOT / DECLS[0])["candidates"]["u300"], at34)
-    values = np.maximum(v34_start + gdelta, FLOOR)
+def gated_detail(detail: pd.DataFrame, up: float | None) -> pd.DataFrame:
+    """The detail with its committee mix replaced by configs/mix_gate_v1.json's mix' (network share 1.0 where nets - committee > up)."""
+    if up is None:
+        return detail
+    c = detail["committee"].to_numpy(dtype=float)
+    n = (0.25 * detail["ens_ctx_e24"] + 0.25 * detail["ens_ctx_e24b"] + 0.5 * detail["ens_ctx_e32"]).to_numpy(dtype=float)
+    finite = np.isfinite(c) & np.isfinite(n)
+    if not float(np.nanmax(np.abs(np.where(finite, 0.25 * c + 0.75 * n, c) - detail["committee_mix"].to_numpy(dtype=float)))) <= 1e-9:
+        raise ValueError("The detail's committee_mix is not mixed(committee, nets, 0.75).")
+    share = np.where(finite & (n - c > up), 1.0, 0.75)
+    return detail.assign(committee_mix=np.where(finite, (1 - share) * c + share * n, c))
+
+
+def layers(v34_start: np.ndarray, detail: pd.DataFrame, at34: np.ndarray, ids: np.ndarray, qw: float | None, qsource: str, mix_up: float | None = None):
+    """(values, masks): v34 floats -> [mix gate] -> u300 -> callsign 50% -> queue trust."""
+    gd = gated_detail(detail, mix_up)
+    at_g = recipe(gd, V33_OUTER, V34_LIRF) if mix_up is not None else at34
+    mix_delta = at_g - at34
+    gdelta, _ = gate_delta(gd, read_json(ROOT / DECLS[0])["candidates"]["u300"], at_g)
+    values = np.maximum(v34_start + mix_delta + gdelta, FLOOR)
     cs = scope_table(read_json(ROOT / DECLS[1])).set_index(ID).reindex(ids)
     off_cs = offsets()
     cs_in = cs["motion_start"].notna().to_numpy()
@@ -53,13 +70,14 @@ def layers(v34_start: np.ndarray, detail: pd.DataFrame, at34: np.ndarray, ids: n
             q_in &= seg["source"].eq("regular").to_numpy()
         q_taxi = seg["taxi"].to_numpy() + np.array([off.get(a, np.nan) for a in seg["airport"].fillna("")])
         values[q_in] = np.maximum(qw * q_taxi[q_in] + (1 - qw) * values[q_in], FLOOR)
-    return values, {"u300": gdelta != 0, "callsign": cs_in, "queue": q_in}
+    return values, {"mix_gate": mix_delta != 0, "u300": gdelta != 0, "callsign": cs_in, "queue": q_in}
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--queue", type=float)
     parser.add_argument("--queue-source", choices=["regular", "all"], default="regular")
+    parser.add_argument("--mix-up", type=float, help="configs/mix_gate_v1.json: network share 1.0 where nets - committee exceeds this")
     parser.add_argument("--version", type=int, default=35)
     parser.add_argument("--dry-run", type=Path)
     parser.add_argument("--user-override")
@@ -80,13 +98,13 @@ def main() -> None:
         raise ValueError(f"{output} exists; never overwrite.")
 
     rec, ids, dry, lfpg, uploaded, v34, at34 = rebuild_v34()
-    values, m = layers(v34, dry, at34, ids, args.queue, args.queue_source)
-    touched = m["u300"] | m["callsign"] | m["queue"]
+    values, m = layers(v34, dry, at34, ids, args.queue, args.queue_source, args.mix_up)
+    touched = m["mix_gate"] | m["u300"] | m["callsign"] | m["queue"]
     if not np.isfinite(values).all():
         raise ValueError("Non-finite export values.")
-    provenance = {"experiment_id": "stack_u300_cs50" + (f"_qt{int(round(100 * args.queue))}_{args.queue_source}" if args.queue is not None else ""),
+    provenance = {"experiment_id": "stack_u300_cs50" + (f"_qt{int(round(100 * args.queue))}_{args.queue_source}" if args.queue is not None else "") + (f"_mu{int(args.mix_up)}" if args.mix_up is not None else ""),
                   "dry_run": args.dry_run is not None, "selected_by": f"user override of the unchanged rule: {args.user_override}" if args.user_override else "dry run",
-                  "recipe": "v34 + u300 disagreement gate + callsign fix 50%" + (f" + queue trust {args.queue} ({args.queue_source} matches)" if args.queue is not None else ""),
+                  "recipe": "v34" + (f" + mix gate (network share 1.0 where nets - committee > {args.mix_up} s)" if args.mix_up is not None else "") + " + u300 disagreement gate + callsign fix 50%" + (f" + queue trust {args.queue} ({args.queue_source} matches)" if args.queue is not None else ""),
                   "incumbent": {"submission": "vigorous-whistle_v34.parquet", "official_rmse_seconds": 228.5933, "sha256": V34_SHA},
                   "declarations": {d: sha256_file(ROOT / d) for d in DECLS}, "development_results": {r: sha256_file(ROOT / r) for r in RESULTS},
                   "external_data": "adsb.lol globe_history (ODbL) surface positions",
@@ -97,11 +115,11 @@ def main() -> None:
     change = exported.astype(float) - uploaded[34].astype(float)
 
     rec34 = recipe(rec, V33_OUTER, V34_LIRF)
-    independent, _ = layers(np.maximum(rec34 + lfpg, FLOOR), rec, rec34, ids, args.queue, args.queue_source)
+    independent, _ = layers(np.maximum(rec34 + lfpg, FLOOR), rec, rec34, ids, args.queue, args.queue_source, args.mix_up)
     differing = np.rint(independent).astype(np.int64) != exported
     airport = rec["airport"].to_numpy()
     report = {"created_at_utc": utc_now(), "version": args.version, "dry_run": args.dry_run is not None, "output": output.as_posix(), "receipt_sha256": receipt.get("sha256"),
-              "queue": args.queue, "queue_source": args.queue_source, "layer_rows": {k: int(v.sum()) for k, v in m.items()},
+              "queue": args.queue, "queue_source": args.queue_source, "mix_up": args.mix_up, "layer_rows": {k: int(v.sum()) for k, v in m.items()},
               "rows_changed_vs_v34": int((change != 0).sum()), "rows_changed_outside_layers": int(((change != 0) & ~touched).sum()),
               "max_abs_change_s": float(np.abs(change).max()), "rms_change_all_rows_s": float(np.sqrt(np.mean(change ** 2))),
               "mean_change_by_layer_s": {k: float(change[v].mean()) if v.any() else 0.0 for k, v in m.items()},
