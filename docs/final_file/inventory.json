@@ -1,0 +1,78 @@
+{
+  "created_at_utc": "2026-09-27",
+  "purpose": "Stage-1 inventory for rebuilding v30's predictions on a new movement file (insurance against a separate final test file). Read-only; companion of inventory.md.",
+  "target": {
+    "detail": "runs/adsb_ctx/export_v30/ranking_values.parquet",
+    "submission": "runs/submissions/vigorous-whistle_v30.parquet",
+    "submission_sha256": "3a19fa27f5f1d4a5bed4dfa8e128bdbd58054687bb4a43ee2281f61f6b7765dc",
+    "recipe": "non-LIRF: max(0.3*(v9+residual) + 0.7*((1-0.75)*committee + 0.75*(0.25 ens_ctx_e24 + 0.25 ens_ctx_e24b + 0.5 ens_ctx_e32)), -12); LIRF non-population: round-B blends of v9, ens_v22_lirf_q, ens_ctx_lirf (lctx_b100_up); LIRF fill population: v9",
+    "arithmetic_code": ["tools/run_adsb_v11.py::candidate_values", "tools/run_adsb_nn2_dev.py::lirf_blends,spec_for,weighted", "tools/run_adsb_nn_dev.py::mixed", "tools/run_adsb_rnn_dev.py::combine", "tools/export_adsb_ctx4.py"]
+  },
+  "columns": {
+    "v9": {"first_producer": "tools/export_adsb_v25.py (v23 export; carried unchanged into v24-v30 details)", "saved_models": ["runs/azure_arcw0_surface_refit/20260914T185207842456Z_refit_full_timeline_v6_100/pipeline.json", "runs/adsb_v24/v7/refit/"], "refit_needed": "LIRF mixture classifier refit from Jan-Nov 2025 labels (seconds, byte-identical)"},
+    "residual": {"first_producer": "tools/export_adsb_v25.py (adj2, cat) + tools/refit_adsb_rnn.py (rnet) combined by tools/export_adsb_rnn.py", "weights": {"adj2": 0.05, "cat": 0.05, "rnet": 0.9}, "scope": "matched_no_lirf", "saved_models": ["runs/adsb_v25/export_v23/residual_adj2_2026-01.txt", "runs/adsb_v25/export_v23/residual_adj2_2026-07.txt", "runs/adsb_v25/export_v23/residual_cat_all.cbm", "runs/adsb_rnn/rnb_s501..s516/refit12/model.pt"], "refit_needed": "adj2 for any target month other than 2026-01/2026-07 (321.8 s on 16 threads)"},
+    "committee": {"table": "ens_v20_bag_q_all", "first_producer": "tools/run_adsb_learner_dec.py per leaf (Azure arcw0-7, 19 Sep) -> tools/export_december_refit.py means", "saved_models": "29 leaves runs/adsb_v23/<dir>__<name>/refit/{model.cbm|model.txt,run.json}"},
+    "ens_v22_lirf_q": {"first_producer": "same as committee", "saved_models": "same leaves"},
+    "ens_nn": {"seeds": "nnb s101-s116", "producer": "tools/run_adsb_nn.py --fold refit12 (Azure)", "saved_models": "runs/adsb_nn/nnb_s1??/refit12/model.pt"},
+    "ens_new": {"seeds": "nnb s117-s132", "producer": "tools/run_adsb_nn.py (Azure)", "saved_models": "runs/adsb_nn/nnb_s1??/refit12/model.pt"},
+    "ens_nnl": {"seeds": "nnl s201-s216", "producer": "tools/run_adsb_nn2.py (Azure)", "saved_models": "runs/adsb_nn2/nnl_s2??/refit12/model.pt"},
+    "ens_ctx": {"seeds": "ctx s101-s116", "producer": "tools/run_adsb_ctx.py --fold refit12 (Azure CPU)", "saved_models": "runs/adsb_ctx/ctx_s1??/refit12/model.pt"},
+    "ens_ctx_e24": {"seeds": "ctx_e24 s117-s132", "producer": "tools/run_adsb_ctx.py (Azure CPU)"},
+    "ens_ctx_e24b": {"seeds": "ctx_e24 s133-s148", "producer": "tools/run_adsb_ctx.py (Azure CPU)"},
+    "ens_ctx_e32": {"seeds": "ctx_e32 s401-s416", "producer": "tools/run_adsb_ctx3.py on AWS L40S (TF32)", "saved_models": "runs/adsb_ctx_gpu/ctx_e32_s4??/refit12/ (E: junction)", "cpu_reload": "within 0.087 s RMS / 0.34 s p99 per seed (verification_v30)"},
+    "ens_ctx_lirf": {"seeds": "ctx_lirf s301-s316", "producer": "tools/run_adsb_ctx.py (Azure CPU)"},
+    "committee_mix, lirf_mix:*, v29, v30": {"producer": "tools/export_adsb_ctx4.py (arithmetic)"},
+    "scope": {"producer": "tools/export_adsb_v11.py::ranking_table + run_adsb_v11.SCOPES (+ lirf_nonpop_unmatched registered in run_adsb_v24)"}
+  },
+  "stages": [
+    {"id": "S0", "name": "input contract", "inputs": ["data/raw/ranking.parquet (DEP+ARR rows)", "data/raw/submitting.parquet (template)"], "hardcoded": true, "needs_arrivals": true, "labels": "none"},
+    {"id": "S1", "name": "Phase-1 row features + movement context", "first_tool": "src/prc2026/phase1.py prepare", "guards": ["validate_inputs: raw file hashes vs download receipts"], "new_file": "call prc2026.features.movement_context/ranking_view and prc2026_phase3.row_features directly", "ran_on": "local", "labels": "none"},
+    {"id": "S2", "name": "phase3/phase4/phase5R/weather/nmclock/timeline layers (335 columns, 276 predictors)", "first_tool": "each frozen bundle.py prepare (timeline 108.66 s, 6.87 GiB, arcw0)", "guards": ["bundle validate_config: ranking_months == [2026-01, 2026-07]", "ranking ids hash", "one reserved-period raise in each of five features.py"], "template": ["src/prc2026_december/patched.py", "src/prc2026_december/features.py::build", "tools/build_december_features.py --month M [--verify]"], "context": "frozen ranking rows used Jan-Nov 2025 + ranking 2026-01/07 movements; headway features need full history", "ran_on": "local", "labels": "read only to save them (make optional)"},
+    {"id": "S3", "name": "weather + runways", "tools": ["tools/pull_prc_weather.py", "tools/pull_december_weather.py (pattern: separate directory + inventory)"], "external_download": "IEM ASOS for 10 stations over the new period, one request at a time", "static": "OurAirports runways (docs/competition/weather_20260914/)"},
+    {"id": "S4a", "name": "adsb.lol surface extraction", "tool": "tools/adsb_extract_day.py --day YYYY.MM.DD --output data/external/adsblol/surface", "ran_on": "Azure workers (~33 s/day, 14 processes; streams 2-4 GB/day of GitHub release tar parts, globe_history_2026 for 2026)", "held_locally": "413 days: 351 of 2025 + 62 of Jan/Jul 2026", "external_download": "new dates only"},
+    {"id": "S4b", "name": "matching with frozen stands", "tools": ["tools/build_adsb_features.py (raw_path maps 2026 -> ranking.parquet; refuses December)", "tools/build_december_matches.py --matches-dir DIR (frozen-stands copy to generalise)"], "tables": {"learners_nets_tokens": "data/external/adsblol/matches (1,332 stands)", "residual_stage": "data/external/adsblol/matches_v11"}, "ran_on": "local"},
+    {"id": "S4c", "name": "v19 extra features", "tool": "tools/build_adsb_v19_features.py --months ...", "output": "data/external/adsblol/features_v19/"},
+    {"id": "S4d", "name": "learner/net ADS-B caches (27 columns)", "tool": "build_tables in tools/run_adsb_nn.py / run_adsb_learner.py / run_adsb_ctx.py", "hardcoded": ["jobs key 'ranking.parquet' with RANKING_MONTHS"], "recorded_hash": "adsb_cache ranking.parquet 1dcf5c7f01d2bb94a2e967998739c4bd918181e2f013a0c8c8692ba9e7f5be11"},
+    {"id": "S5", "name": "context tokens", "tool": "tools/build_ctx_tokens.py [--only NAME]", "hardcoded": ["SOURCES split ('ranking', RANKING_MONTHS, 'ranking.parquet')"], "output": "data/ctx/tokens_v1 (1.7 GB, ~25 s per VM)", "recorded_hash": "ranking tokens content 70ac0cc12a37e42bc9f5b4fe6a188d73d08156b72fbfd435efab8c666f3dcb4a", "needs_full_movements": true},
+    {"id": "S6", "name": "v7 frozen, v9_frozen, v7 twelve-month, v9", "tools": ["prc2026_surface_refit.inference.pipeline_prediction (as prc2026_december.scoring.build_scratch)", "tools/run_lirf_mixture.py::fit_population_model/score_population", "prc2026_lirf_mixture.model.apply_candidate (w 0.75, threshold 43200 s, floor -12)", "tools/run_v7_dec.py --fold refit --resume (prediction from saved nodes)"], "v7_twelve_month_fit": {"seconds": 1968, "peak_rss_gb": 17.8, "host": "16-core Azure VM"}, "guards": ["export_adsb_v25: predicted_ids_sha256, uploaded-v9 reproduction, v22 recorded v9"], "labels": "Jan-Nov 2025 fitting labels only (mixture classifier)"},
+    {"id": "S7", "name": "committee + LIRF tree tables (29 leaves)", "tools": ["prc2026_december.scoring.learner_prediction(fold='refit')", "tools/verify_december_refit.py (twelve-month vocabularies; 3,000-row re-prediction, max difference 0.0)", "prc2026_december.scoring.leaf_members/ensemble_prediction"], "frame": "timeline features + learner ADS-B table + v19 extras", "estimate": "30-60 min CPU for 344k rows"},
+    {"id": "S8", "name": "networks (144 seeds)", "tools": ["prc2026_nn load/predict (nnb, nnl)", "prc2026_ctx.train load/predict + Context.build over TokenStore", "prc2026_ctx3.train load/predict (e32 on CPU)", "tools/verify_adsb_nn.py::ranking_sample (frame logic)"], "gpu_required": false, "estimate": "~1-1.5 h CPU"},
+    {"id": "S9", "name": "residual stage", "tools": ["tools/export_adsb_v11.py::ranking_table with neighbour features", "tools/rnn_ranking_table.py", "tools/export_adsb_v25.py (adj2 per target month, cat)", "tools/run_adsb_rnn.py::predict_rows (rnet)"], "caveat": "neighbour columns not bit-reproducible across rebuilds (unstable sort moves a few dozen nb_runway_prev/next values)", "refit_needed": "adj2 for months other than 2026-01/2026-07", "guards": ["rnn_ranking_table: scope equals v25's recorded scope"]},
+    {"id": "S10", "name": "recipe, export, verify, audit", "tools": ["tools/export_adsb_ctx4.py (rebuilds v29 from recorded detail; refuses unless integers equal uploaded v29)", "prc2026_submission.contract.export_submission(values, template, output, provenance)", "tools/verify_adsb_ctx4.py", "tools/audit_export.py"], "floor": "-12 from scratch/v24/2025-12.parquet", "new_file": "compute every component; skip reproduction guards; template path as argument"}
+  ],
+  "blockers": [
+    "B1 new file format unknown (arrivals and in-block times are required by v9 turnarounds, arrival tokens, timeline surface context)",
+    "B2 new dates need adsb.lol extraction, IEM pull, v19 features and a token split",
+    "B3 adj2 boosters exist only for target months 2026-01 and 2026-07",
+    "B4 hard-coded ranking plumbing: RANKING_MONTHS in ~20 tools, 'ranking.parquet' keys, build_ctx_tokens.SOURCES, build_adsb_features.raw_path, bundle validate_config, Phase-1 raw-hash validation, uploaded-vN reproduction guards",
+    "B5 neighbour features not bit-reproducible -> tolerance in the dry run",
+    "B6 declared context set for timeline/traffic features",
+    "B7 workstation memory 15.7 GB (v7 twelve-month prediction, full token build) -> Azure VM may be needed"
+  ],
+  "code_changes": [
+    "src/prc2026_final/features.py: generalised December builder (raw path, months, context sources; labels optional; --verify against frozen features/ranking.parquet)",
+    "src/prc2026_final/adsb.py: frozen-stands matching for any days/raw file (both match dirs), v19 features, learner ADS-B table, residual nb table",
+    "token split for a named source (build_ctx_tokens imported, not edited)",
+    "tools/final_predict.py --raw F --template T --root OUT: v7, v9, 29 leaves, 144 nets, residual, recipe arithmetic imported from frozen modules, export_submission with the given template",
+    "tools/final_compare.py for the dry run"
+  ],
+  "runbook_hours": {"inspect_file": 0.2, "adsb_extraction_per_new_month": 1.0, "iem_pull": 0.5, "feature_layers": 0.2, "matches_v19_caches_tokens": 0.5, "v7_v9": 0.5, "leaves": 1.0, "nets": 1.5, "residual": 0.4, "export_verify_audit": 0.5, "total_estimate": "5-7 h after the file appears (about 2 h less if the months are Jan/Jul 2026)"},
+  "dry_run": {
+    "input": "copy of data/raw/ranking.parquet as runs/final_dryrun/input/final.parquet, template data/raw/submitting.parquet, fresh output root",
+    "acceptance": {
+      "features": "equal to frozen timeline features/ranking.parquet (4 cyclic NM-clock columns <= 2e-16)",
+      "matches_caches_tokens": "recorded content hashes or row-level equality",
+      "v7_v9_committee_lirf_tree": "max |d| <= 1e-9 vs v30 detail",
+      "cpu_nets": "<= 0.01 s max abs per seed",
+      "e32_nets": "<= 0.5 s RMS and 2 s p99 per seed",
+      "residual": "declared tolerance (e.g. 99.9% of rows within 1e-6 s) because of nb instability",
+      "final": "report differing integer rows and max |d| vs uploaded v30; never overwrite or re-upload v30"
+    },
+    "effort": {"stage2_coding_days": "1.5-2.5", "stage3_compute_hours": "4-6 plus review"}
+  },
+  "open_questions": [
+    "which Azure workers still hold raw per-day tar parts or extraction scratch (not checked: round E occupies arcw0-7)",
+    "whether a final file would be new months or a re-cut of Jan/Jul 2026",
+    "whether pipeline_prediction's v6/v5 fallback models are fully mirrored locally (December scoring suggests yes)"
+  ]
+}
