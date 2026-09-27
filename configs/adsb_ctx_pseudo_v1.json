@@ -1,0 +1,121 @@
+{
+  "experiment_id": "adsb_ctx_pseudo_v1",
+  "declared_at_utc": "2026-09-27T08:00:02+00:00",
+  "audit_used": false,
+  "purpose": "Pseudo-label adaptation test (27 Sep 2026, the user's 'swing big'). The 2026 ranking months differ from 2025 (docs/input_shift/: LFPG EOBT_1 semantics, LTFM IOBT convention, new stands) and no 2025 development fold can see that. If the scored period's own ADS-B-seen departures, pseudo-labelled from their surface traces with fitting-row statistics only, are added to the fit, do the scored period's OTHER rows (dark, unmatched) improve? Simulated on December 2025 (its true labels only score): ctx_e32 refit fold (Jan-Nov) + December gate rows (pg) or gate+dark rows (pgd), seed-matched to GPU development seeds 401/402/404 (seed 403's node failed); controls = those seeds' December leaf predictions.",
+  "defaults": {
+    "architecture": {
+      "cat_cap": 16,
+      "d_num": 8,
+      "depth": 3,
+      "dropout": 0.1,
+      "heads": 4,
+      "max_tokens": 128,
+      "n_aux": 0,
+      "sa_dropout": 0.0,
+      "sa_ff": 2,
+      "sa_heads": 4,
+      "sa_layers": 0,
+      "tok_dim": 96,
+      "width": 512
+    },
+    "aux": {
+      "targets": [],
+      "weight": 0.0
+    },
+    "context": {
+      "departures_only": false,
+      "use_adsb": true
+    },
+    "features": {
+      "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+      "extra_features": [
+        "adsb_appear_s",
+        "adsb_last_stand_s",
+        "adsb_pre_motion_gap_s",
+        "adsb_first_motion_s",
+        "adsb_first_dist_stand_imp_m",
+        "adsb_stand_imputed",
+        "sfc_ground_10m",
+        "sfc_moving_10m",
+        "sfc_moving_20m",
+        "sfc_rwy_queue_5m",
+        "sfc_rwy_queue_10m"
+      ]
+    },
+    "masking": {
+      "columns": [
+        "adsb_gate",
+        "adsb_first_point_s",
+        "adsb_motion_s",
+        "adsb_first_gs_kt",
+        "adsb_first_dist_stand_m",
+        "adsb_stop_seconds",
+        "adsb_taxi_path_m",
+        "adsb_taxi_stops",
+        "adsb_taxi_stopped_s",
+        "adsb_slow_start_s",
+        "adsb_gap_before_s",
+        "adsb_turnaround_s",
+        "adsb_anchor_dist_stand_m",
+        "adsb_last_ground_s",
+        "adsb_points",
+        "adsb_appear_s",
+        "adsb_last_stand_s",
+        "adsb_pre_motion_gap_s",
+        "adsb_first_motion_s",
+        "adsb_first_dist_stand_imp_m",
+        "adsb_stand_imputed"
+      ],
+      "matched": "adsb_matched",
+      "p": 0.0
+    },
+    "preprocess": {
+      "bins": 32,
+      "min_count": 10,
+      "target_clip": null
+    },
+    "rows": {
+      "exclude_airports": [
+        "LIRF"
+      ],
+      "exclude_population": false,
+      "max_label": null
+    },
+    "tokens_dir": "data/ctx/tokens_v1",
+    "training": {
+      "batch_size": 2048,
+      "epochs": 32,
+      "grad_clip": 5.0,
+      "lr": 0.001,
+      "min_lr_fraction": 0.02,
+      "warmup_epochs": 1.0,
+      "weight_decay": 0.0001
+    }
+  },
+  "variants": {
+    "ctx_e32": {}
+  },
+  "runs": {
+    "pg": {
+      "fold": "refit",
+      "pseudo": "gate"
+    },
+    "pgd": {
+      "fold": "refit",
+      "pseudo": "gate_dark"
+    }
+  },
+  "seeds": [
+    401,
+    402,
+    404
+  ],
+  "readings": "3-seed means vs control means on December non-LIRF rows: all, gate, dark, unmatched (the target is dark + unmatched, which pseudo-labels do not cover for pg), by airport; paired-day interval",
+  "go": "December non-LIRF dark+unmatched rows at least 0.5% lower RMSE with the paired-day interval below zero -> then a declared 2026 version (January/July 2026 traces) with its own checks; shipping it needs the user's decision (it uses flights' own post-pushback ADS-B as training targets)",
+  "execution": {
+    "runner": "tools/run_adsb_ctx_pseudo.py --fold refit --pseudo gate|gate_dark",
+    "chain": "tools/ctx_pseudo_chain.sh SEED",
+    "hardware": "AWS L40S via SkyPilot (infra/aws/gpu_authorization_20260927.json)"
+  }
+}
