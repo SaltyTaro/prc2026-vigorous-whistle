@@ -1,0 +1,81 @@
+{
+  "by_airport_mean_change_s": {
+    "EDDF": 0.02629622490844508,
+    "EDDM": -0.9928752984672263,
+    "EGLL": -0.5706827309236948,
+    "EHAM": -0.5013618982766749,
+    "LEBL": -0.7071476063829787,
+    "LEMD": -0.06294311847161335,
+    "LFPG": 0.2636185794542536,
+    "LIRF": 0.0,
+    "LSZH": -1.083758099352052,
+    "LTFM": -0.9517664614026607
+  },
+  "control_rebuild_max_abs": 0.0,
+  "created_at_utc": "2026-09-27T09:07:53.697105+00:00",
+  "groups": {
+    "LTFM": {
+      "changed": 46358,
+      "mean_change_s": -0.9517664614026607,
+      "rms_change_s": 29.22433125271128,
+      "rows": 47581
+    },
+    "matched_non_lirf_other": {
+      "changed": 184052,
+      "mean_change_s": -0.4845841438227997,
+      "rms_change_s": 6.265558273555272,
+      "rows": 216433
+    }
+  },
+  "max_abs_change_s": 638.0,
+  "output": "runs/submissions/vigorous-whistle_v33.parquet",
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v33.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 120549,
+    "maximum_rounding_change_seconds": 0.49999867658812036,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 3,
+    "provenance": {
+      "audit_used": false,
+      "declaration": "configs/outer_weight_scope_v1.json",
+      "declaration_sha256": "04dbb21313266dc9b69fe728c07745e43c234a06c0ae1a25c64c5c40eae36c23",
+      "development_results": "docs/outer_weight/development_results.json",
+      "experiment_id": "outer_weight_scope_v1",
+      "floor_seconds": -12.0,
+      "incumbent": {
+        "official_rmse_seconds": 229.5832,
+        "sha256": "ea1c17568e49b83cb1c8667212c2097ab8a8dec774b4db57e01b9b79bb531be2",
+        "submission": "vigorous-whistle_v31.parquet"
+      },
+      "inputs": {
+        "runs/adsb_ctx/export_v30/ranking_values.parquet": "b91c57bc18bf65fabd5d4424cda802d28febd3dba0ed1cb303e702e389e9ae4d",
+        "runs/final_dryrun/run/recipe/detail.parquet": "2e79c78b25a4abd1032c211ec61968dc90942e58c2ccff8fceeccc4e3fdcaf5b",
+        "runs/final_lfpg_eobt/run/recipe/detail.parquet": "a73455834db2342f6407a438e631deda3a04879fe5a01fa2f15b90111363bdfd"
+      },
+      "recipe": "v31 with the outer weight of the committee mix set to 1.0 on LTFM rows and 0.6 on other ADS-B-matched non-LIRF rows (0.7 elsewhere); delta from the dry-run detail added to v31's floats",
+      "selected_by": "the unchanged rule: every recipe month better, mean -0.264%, paired-day intervals below zero on 4/4 months",
+      "selected_candidate": "ltfm100_m60",
+      "selection": "runs/outer_weight/selection.json",
+      "selection_sha256": "5a604b629de35bc3f591421bdbe37d8ef003b94a39b685e2984a7a80311a3e52"
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "ceb055981846cdb025f0f0efed45df588bca2f21b56a0a024aec77ce426bed48",
+    "size_bytes": 1343249,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-27T09:07:53.668954+00:00",
+    "version": 33
+  },
+  "rows_changed_outside_scope": 0,
+  "rows_changed_vs_v31": 230410
+}
