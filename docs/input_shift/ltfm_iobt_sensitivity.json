@@ -1,11 +1,11 @@
 {
   "base": "runs/final_dryrun/run",
-  "created_at_utc": "2026-09-27T10:38:03.383682+00:00",
+  "created_at_utc": "2026-09-27T10:48:13.388492+00:00",
   "declaration": "configs/ltfm_iobt_sensitivity_v1.json",
   "declaration_sha256": "0b7f551e8ac84ff3f1b16824e881799d232d9e02c32e348e4e9e3e26b9487970",
   "delta_table": {
     "path": "runs/final_ltfm_iobt/delta.parquet",
-    "sha256": "4b633e6b5da5116df1764114e63d9ba15da104951541d345d75996e3900dea1c"
+    "sha256": "c1de172b0a4bcd567b750c3740edc12d263fba5042d527ec90af7d3c9fb81043"
   },
   "export_integers": {
     "edited_iobt_eobt1_lobt": {
@@ -388,6 +388,38 @@
       "p99": 34.948222507413014,
       "rms": 13.751541213528398,
       "share_nonzero": 1.0
+    },
+    "v33_ltfm_mix_only": {
+      "delta_edited": {
+        "max_abs": 328.4537596074697,
+        "mean": 44.855964343724,
+        "n": 16618,
+        "p1": -8.54559695824962,
+        "p99": 145.754714312894,
+        "rms": 55.149042219008486,
+        "share_nonzero": 1.0
+      },
+      "delta_unedited_ltfm_july": {
+        "max_abs": 320.6001494153529,
+        "mean": 30.474860076071565,
+        "n": 8567,
+        "p1": -1.6750125913611147,
+        "p99": 133.55278390730427,
+        "rms": 42.900235654958074,
+        "share_nonzero": 0.9988327302439594
+      },
+      "note": "v33 sets the outer weight to 1.0 on LTFM, so its LTFM value is max(committee mix, -12); delta_v33 is that value's change",
+      "q_delta_edited": {
+        "max_abs": 122.08080809269902,
+        "mean": 13.21757814636323,
+        "n": 16618,
+        "p1": -2.439622213525337,
+        "p99": 48.33906286074519,
+        "rms": 16.794347336357166,
+        "share_nonzero": 1.0
+      },
+      "sum_sq_delta": 50542265.34082621,
+      "sum_sq_q_delta": 4687108.602584014
     }
   },
   "stages": {

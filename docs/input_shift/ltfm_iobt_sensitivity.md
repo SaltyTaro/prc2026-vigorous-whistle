@@ -134,6 +134,26 @@ against shipped, as a share of ranking SSE; 0.01% ≈ 0.0115 s RMSE, and negativ
     across months.
   - The IOBT field itself changed while MVT − SCHED did not ([`README.md`](README.md), finding 2), which favours "mixture".
 
+## Under v33 (added after v33 became the incumbent)
+
+v33 sets the outer weight to 1.0 on LTFM rows, so its LTFM value is max(committee mix, −12). v9 and the residual stage drop out there, and
+the hedge becomes v33 + w · q · Δ_mix. Both tools now record this as well (`delta_v33` and `q_delta_v33` in the per-row table;
+`v33_ltfm_mix_only` and `readings_v33_mix_only` in the two JSON files).
+
+- **Δ_mix:** +44.9 s on the restored rows (RMS 55, max 328) and +30.5 s (RMS 43) on the unedited LTFM July rows.
+- **q·Δ_mix:** mean **+13.2 s**, RMS 16.8 s, p99 +48 s, max 122 s. Σ = 4.69e6 = 0.026% of v33's ranking SSE.
+- **Relative-anchor bounds**, as a share of v33's ranking SSE:
+
+| reading (table) | soft w = 0.5 | soft 0.75 | soft 1.0 |
+|---|---:|---:|---:|
+| sched (any table) | +0.006% | +0.015% | +0.026% |
+| mixture, recipe months | −0.014% | −0.016% | −0.015% |
+| mixture, July 2025 | −0.008% | −0.007% | −0.003% |
+| mixture, all 2025 | −0.020% | −0.025% | −0.027% |
+| early (bound only) | −0.059% | −0.084% | −0.105% |
+
+The reading is unchanged: a small, roughly symmetric bet. It is parked (worth about 0.01–0.02 s, not an upload slot on its own).
+
 ## Reading
 
 - **Size.**

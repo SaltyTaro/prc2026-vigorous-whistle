@@ -114,6 +114,20 @@ def main() -> None:
                      for k, v in out.items() if isinstance(v, dict)})
         print("  gap on edited", round(out["mean_type_gap_at_same_timing_on_edited_rows"], 2), "q*gap", round(out["mean_q_gap"], 2),
               "corr(delta, gap)", out["corr_delta_gap"], "abs sched - shipped on edited", round(out["absolute_anchor_mean_expected_sched_minus_shipped_on_edited"], 2))
+    # v33 (27 September, after the declaration): outer weight 1.0 on LTFM, so the LTFM value is max(committee mix, -12) and the hedge is
+    # v33 + w * q * delta_v33. Relative anchor only (the absolute one is secondary above); reference SSE = v33's official RMSE.
+    v33_sse = 344841 * 228.7246 ** 2
+    report["readings_v33_mix_only"] = {"ranking_sse_reference": v33_sse, "tables": {}}
+    for name, rows in sources.items():
+        t = tables(rows)
+        gap = edited["bin"].map(t["gap"]).astype(float).fillna(0.0).to_numpy()
+        delta, q = edited["delta_v33"].to_numpy(), edited["q"].to_numpy()
+        out = {"corr_delta_gap": float(np.corrcoef(delta, gap)[0, 1])}
+        for reading, add in {"sched": np.zeros(len(edited)), "mixture": q * gap, "early": gap}.items():
+            out[reading] = {kind: {f"w{w}": (float(((add - w * step) ** 2).sum()) - float((add ** 2).sum())) / v33_sse * 100 for w in WEIGHTS}
+                            for kind, step in [("soft_q", q * delta), ("full", delta)]}
+        report["readings_v33_mix_only"]["tables"][name] = out
+        print("v33", name, {r: {w: round(x, 3) for w, x in out[r]["soft_q"].items()} for r in ["sched", "mixture", "early"]}, "corr", round(out["corr_delta_gap"], 3))
     # context variant (not in the declaration): the context networks also move the unedited LTFM July rows through neighbour inputs.
     # The full restoration makes ~66% of LTFM neighbours early (2025: ~17-20%); scaling by the mean q returns it to the 2025 level.
     # No 2025 label anchors this; under the 'sched' reading it is a pure cost, under 'mixture' the model's own view says it is right.

@@ -31,6 +31,7 @@ BASE = Path("runs/final_dryrun/run")
 MOD = Path("runs/final_ltfm_iobt/run")
 INPUT = ROOT / "runs/final_ltfm_iobt/input/final.parquet"
 DELTA = ROOT / "runs/final_ltfm_iobt/delta.parquet"
+FLOOR = -12.0
 BUCKETS = ["edited_iobt_eobt1_lobt", "edited_iobt_only", "ltfm_jul_unedited", "other_rows"]
 
 
@@ -94,7 +95,7 @@ def main() -> None:
               "modification": json.loads((ROOT / "runs/final_ltfm_iobt/input/modification.json").read_text(encoding="utf-8")),
               "rows": {k: int(v.sum()) for k, v in masks.items()}, "stages": {}}
     outside_max = 0.0
-    v30 = None
+    v30 = mix = None
     for path, columns in STAGES.items():
         a = pd.read_parquet(ROOT / BASE / path).set_index(ID).reindex(ids)
         b = pd.read_parquet(ROOT / MOD / path).set_index(ID).reindex(ids)
@@ -109,6 +110,8 @@ def main() -> None:
             report["stages"][f"{path}:{c}"] = {"by_bucket": {k: stats(delta[m]) for k, m in masks.items()}, "ltfm_jul_all": stats(delta[g["ltfm_jul"].to_numpy()])}
             if path == "recipe/detail.parquet" and c == "v30":
                 v30 = (a[c].to_numpy(dtype=float), delta)
+            if path == "recipe/detail.parquet" and c == "committee_mix":  # v33 on LTFM rows = max(committee mix, floor) (outer weight 1.0)
+                mix = (a[c].to_numpy(dtype=float), b[c].to_numpy(dtype=float))
         del a, b
     report["max_abs_delta_outside_ltfm_july_all_stages"] = outside_max
     if outside_max != 0.0:
@@ -116,9 +119,16 @@ def main() -> None:
     orig, delta = v30
     g["v30_orig"], g["delta_v30"] = orig, delta
     g["q_delta"] = g["q"] * g["delta_v30"]
+    g["v33_orig"] = np.maximum(mix[0], FLOOR)
+    g["delta_v33"] = np.maximum(mix[1], FLOOR) - g["v33_orig"]
+    g["q_delta_v33"] = g["q"] * g["delta_v33"]
     e = g["edited"].to_numpy()
     report["soft_restoration_q_delta"] = {
         "edited_rows": stats(g.loc[e, "q_delta"].to_numpy()), "q": stats(g.loc[e, "q"].to_numpy()),
+        "v33_ltfm_mix_only": {"note": "v33 sets the outer weight to 1.0 on LTFM, so its LTFM value is max(committee mix, -12); delta_v33 is that value's change",
+                              "delta_edited": stats(g.loc[e, "delta_v33"].to_numpy()), "q_delta_edited": stats(g.loc[e, "q_delta_v33"].to_numpy()),
+                              "delta_unedited_ltfm_july": stats(g.loc[g["bucket"].eq("ltfm_jul_unedited").to_numpy(), "delta_v33"].to_numpy()),
+                              "sum_sq_q_delta": float((g.loc[e, "q_delta_v33"] ** 2).sum()), "sum_sq_delta": float((g.loc[e, "delta_v33"] ** 2).sum())},
         "seen_number_rows": stats(g.loc[e & g["q_seen_number"].to_numpy(), "q_delta"].to_numpy()),
         "unseen_number_rows_q_p0": stats(g.loc[e & ~g["q_seen_number"].to_numpy(), "q_delta"].to_numpy()),
         "sum_sq_q_delta": float((g.loc[e, "q_delta"] ** 2).sum()), "sum_sq_delta": float((g.loc[e, "delta_v30"] ** 2).sum()),
@@ -131,8 +141,8 @@ def main() -> None:
     report["export_integers"] = {k: stats(di[m]) for k, m in masks.items()}
     report["feature_columns_changed"] = feature_changes(ids, g["ltfm_jul"].to_numpy())
     report["inputs"] = {"base_recipe_receipt": sha256_file(ROOT / BASE / "stages/recipe.json"), "modified_recipe_receipt": sha256_file(ROOT / MOD / "stages/recipe.json")}
-    g.loc[g["ltfm_jul"], [ID, "bucket", "flight", "q", "q_seen_number", "v30_orig", "delta_v30", "q_delta", "eobt1_minus_sched_s", "aobt3_minus_iobt_s",
-                          "mvt_minus_sched_s"]].to_parquet(DELTA, index=False)
+    g.loc[g["ltfm_jul"], [ID, "bucket", "flight", "q", "q_seen_number", "v30_orig", "delta_v30", "q_delta", "v33_orig", "delta_v33", "q_delta_v33",
+                          "eobt1_minus_sched_s", "aobt3_minus_iobt_s", "mvt_minus_sched_s"]].to_parquet(DELTA, index=False)
     report["delta_table"] = {"path": DELTA.relative_to(ROOT).as_posix(), "sha256": sha256_file(DELTA)}
     out = args.output if args.output.is_absolute() else ROOT / args.output
     write_json(out, json.loads(json.dumps(report, default=float).replace("NaN", "null")))
