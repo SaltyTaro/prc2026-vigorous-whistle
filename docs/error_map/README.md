@@ -32,3 +32,22 @@ non-fills in the same bands). Operator separates them strongly (fill share 1.5%�
 is already a model feature, and the v10 prototype of a clock-present fill mixture (intervals > 1 h only) gave −0.10% / −0.02%.
 EOBT_1 = schedule in 68% of fills against 35% of non-fills. A perfect separator is a ceiling of −5% SSE; an imperfect one is worth a
 fraction of it.
+
+## Follow-up checks (27 September): no LIRF fill lever left, the January disruption is tracked
+
+Scratch scripts, label-free inputs except where fitting labels are named; nothing selected or exported.
+
+- **EHAM 2–7 January and LFPG 7 January 2026** (daily ranking means, no labels): v30 follows the disruption. EHAM gate-matched rows'
+  ADS-B motion-to-takeoff mean rises to 1,832–2,839 s on 3–5 January and v30's mean on the same rows to 1,941–2,466 s; only 5 January
+  (208 departures) looks under-predicted, by roughly 450 s (≈4e7 SSE, ~6% of the gap to first). EHAM stays 58–97% ADS-B-matched through
+  the disruption. Not a lever.
+- **The aircraft's own ADS-B arrival for the LIRF fill population** (1,487 population rows, 12 months, leave-one-month-out with v9's
+  classifier settings): on its own it separates fills (fill share 55–68% when the aircraft landed after the schedule, 12–19% when it
+  landed 0–2 h before; AUC 0.74), but it adds nothing to v9's same-stand turnaround features (AUC 0.928 → 0.920 and mixture RMSE
+  2,933 → 2,982 s on the 466 rows that have it). Ceilings on the same out-of-fold predictions: a perfect normal component −10.7% of
+  the population's SSE, a perfect classifier −47.7%; one one-day row is 37.6% of the population's twelve-month SSE.
+- **An explicit fill mixture for LIRF clock-present rows** (fill classifier over 159,216 rows with operator, stand, EOBT/AOBT/LOBT/IOBT
+  minus schedule and v9's turnaround features; leave-one-month-out AUC 0.860, 0.877 in the 30 min–2 h schedule band where fills cost
+  most): blended into v30 on that band it *raises* every recipe month's SSE (w = 0.25: January +0.06%, July +1.18%, November +0.31%,
+  December +0.66%). v30's implicit hedge is already better than an explicit one at this separability — the v10 finding, now on twelve
+  months.
