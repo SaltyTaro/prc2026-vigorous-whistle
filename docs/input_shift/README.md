@@ -123,3 +123,17 @@ Built from the sensitivity study ([`lfpg_eobt_sensitivity.md`](lfpg_eobt_sensiti
   The best weight would then have been about 0.28, which is only about 0.03 s better than 0.5.
 - This comes from one aggregate score, not a row-level signal. Tuning the LFPG weight on further uploads would be leaderboard
   fitting, so the lever is closed at v31.
+
+## LTFM IOBT-convention sensitivity (27 September 2026). Descriptive; nothing selected or exported
+
+[`ltfm_iobt_sensitivity.md`](ltfm_iobt_sensitivity.md) is the analogue of the LFPG work for finding 2.
+
+- **The convention.** Only THY used the early IOBT, on about 29% of eligible rows. It is not a per-flight-number property, and 55% of
+  the July-2026 THY callsigns are new. So the declared restoration covers all 16,618 July THY rows with IOBT = SCHED, each weighted by
+  its label-free probability q (mean 0.296).
+- **The runner.** The effect is exactly zero outside LTFM July. v30 moves +41 s on the restored rows and +21 s on the other LTFM July
+  rows (context networks).
+- **The 2025 anchor.** Early-type rows taxi 27–65 s longer at the same MVT − SCHED, and v30 learned that.
+- **The bounds.** The soft hedge v31 + w·q·Δ gains 0.008–0.019% of SSE at w = 0.5 under a format change, or costs 0.005% if the 2026
+  rows are genuinely IOBT = SCHED rows. Full unweighted restoration is wrong under any plausible reading.
+- **Decision.** Whether to build a w-blend is the user's call.

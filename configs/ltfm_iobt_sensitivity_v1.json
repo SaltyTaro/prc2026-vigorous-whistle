@@ -1,0 +1,19 @@
+{
+  "experiment_id": "ltfm_iobt_sensitivity_v1",
+  "declared_at_utc": "2026-09-27T08:58:02Z",
+  "audit_used": false,
+  "purpose": "Sensitivity of v30's chain to LTFM's July-2026 IOBT convention break (docs/input_shift/README.md finding 2): in 2025 and January 2026 about 29% of THY LTFM departures with IOBT in {SCHED-600, SCHED} carry IOBT = SCHED - 600 s; in July 2026 it is 0.1%. Descriptive; no export, no upload.",
+  "known_before_declaration": "only the label-free convention table docs/input_shift/ltfm_iobt_convention.json (tools/ltfm_iobt_convention.py); no prediction effect of any restoration was computed",
+  "why_not_a_flight_number_rule": "the convention is not a property of the flight number: of 2,787 LTFM flight numbers with >= 5 earlier departures only 48 carry it on >= 50% of occurrences and 1 on >= 80%; July 2026 has 283 departures (17 numbers) at >= 50% / n >= 5 and 21 (1 number) at >= 80%, against about 4,700 expected at the 2025 rate. Per-number shares are stable (H1 vs H2 2025 correlation 0.80) but sit between 0 and 0.5, so the row cannot be named; it can only be weighted.",
+  "restoration_rule": {
+    "rows": "July 2026 LTFM departures (PHASE_mvt DEP, ADEP_mvt LTFM, MVT month 2026-07) whose FLIGHT_mvt carrier prefix is THY and whose IOBT_flt equals SCHED_TIME_UTC_mvt (16,618 rows). Other carriers' early share was 0.2% in the history and stays unchanged.",
+    "edit": "IOBT_flt := SCHED_TIME_UTC_mvt - 600 s; EOBT_1_flt := SCHED - 600 s where EOBT_1_flt equals the original IOBT_flt; LOBT_flt := SCHED - 600 s where LOBT_flt equals the original IOBT_flt. Departure rows only (as final_lfpg_eobt); every other value byte-identical.",
+    "run": "tools/final_predict.py run on the edited copy, same flags as runs/final_lfpg_eobt, compared with runs/final_dryrun/run; the effect must be exactly zero outside LTFM July 2026"
+  },
+  "row_weight": {
+    "name": "q",
+    "definition": "probability that a July-2026 restored row would have carried the early IOBT under the 2025 convention: per FLIGHT_mvt over THY LTFM departures 2025-01..2026-01 with IOBT in {SCHED-600, SCHED}, q = (e + m * p0) / (e + s + m) with e = early rows, s = IOBT == SCHED rows, m = 20, p0 = the pooled THY share (0.2847); flight numbers not seen before get p0",
+    "use": "hedged value = v31 + w * q * delta, delta = restored - original recipe v30 per row (the full-restoration effect scaled by each row's chance of belonging to the old convention); w in [0, 1] is judged from the 2025 bounds in step 3, as for v31"
+  },
+  "no_selection": "nothing is selected or exported by this declaration; any candidate built from it is the user's decision"
+}

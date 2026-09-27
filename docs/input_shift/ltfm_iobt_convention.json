@@ -1,0 +1,455 @@
+{
+  "by_month": {
+    "2025-01": {
+      "early": 0.17540247098464995,
+      "eobt1_eq_iobt": 0.9848839385997754,
+      "iobt_eq_sched": 0.6087607637588918,
+      "lobt_eq_iobt": 0.9848839385997754,
+      "rows": 21368
+    },
+    "2025-02": {
+      "early": 0.16526625927542557,
+      "eobt1_eq_iobt": 0.9746835443037974,
+      "iobt_eq_sched": 0.5734941073766914,
+      "lobt_eq_iobt": 0.9746835443037974,
+      "rows": 18328
+    },
+    "2025-03": {
+      "early": 0.20458697951726126,
+      "eobt1_eq_iobt": 0.9828348879699971,
+      "iobt_eq_sched": 0.6435714972593518,
+      "lobt_eq_iobt": 0.9828348879699971,
+      "rows": 20798
+    },
+    "2025-04": {
+      "early": 0.12743823146944083,
+      "eobt1_eq_iobt": 0.9768620241244788,
+      "iobt_eq_sched": 0.6624815030716111,
+      "lobt_eq_iobt": 0.9768620241244788,
+      "rows": 22301
+    },
+    "2025-05": {
+      "early": 0.16754560387308723,
+      "eobt1_eq_iobt": 0.9693092418085935,
+      "iobt_eq_sched": 0.6394916573009424,
+      "lobt_eq_iobt": 0.9693092418085935,
+      "rows": 23134
+    },
+    "2025-06": {
+      "early": 0.19414870964994463,
+      "eobt1_eq_iobt": 0.9672089259858615,
+      "iobt_eq_sched": 0.5946682565369219,
+      "lobt_eq_iobt": 0.9672089259858615,
+      "rows": 23482
+    },
+    "2025-07": {
+      "early": 0.17250009932064678,
+      "eobt1_eq_iobt": 0.955901632831433,
+      "iobt_eq_sched": 0.5621945890111636,
+      "lobt_eq_iobt": 0.955901632831433,
+      "rows": 25171
+    },
+    "2025-08": {
+      "early": 0.1487814465408805,
+      "eobt1_eq_iobt": 0.9468553459119496,
+      "iobt_eq_sched": 0.5767295597484277,
+      "lobt_eq_iobt": 0.9468553459119496,
+      "rows": 25440
+    },
+    "2025-09": {
+      "early": 0.14615192819148937,
+      "eobt1_eq_iobt": 0.9436918218085106,
+      "iobt_eq_sched": 0.5898853058510638,
+      "lobt_eq_iobt": 0.9436918218085106,
+      "rows": 24064
+    },
+    "2025-10": {
+      "early": 0.17495847176079735,
+      "eobt1_eq_iobt": 0.9531146179401994,
+      "iobt_eq_sched": 0.5710963455149501,
+      "lobt_eq_iobt": 0.9531146179401994,
+      "rows": 24080
+    },
+    "2025-11": {
+      "early": 0.20198287516899505,
+      "eobt1_eq_iobt": 0.973591707976566,
+      "iobt_eq_sched": 0.5827850383055431,
+      "lobt_eq_iobt": 0.973591707976566,
+      "rows": 22190
+    },
+    "2025-12": {
+      "early": 0.1691361847052059,
+      "eobt1_eq_iobt": 0.9735061258790747,
+      "iobt_eq_sched": 0.572736520854527,
+      "lobt_eq_iobt": 0.9735061258790747,
+      "rows": 22609
+    },
+    "2026-01": {
+      "early": 0.15154491873548848,
+      "eobt1_eq_iobt": 0.9785229505268798,
+      "iobt_eq_sched": 0.5054920521521701,
+      "lobt_eq_iobt": 0.9785229505268798,
+      "rows": 22396
+    },
+    "2026-07": {
+      "early": 0.001270597577923367,
+      "eobt1_eq_iobt": 0.9454834226722255,
+      "iobt_eq_sched": 0.8197339686321223,
+      "lobt_eq_iobt": 0.9454834226722255,
+      "rows": 25185
+    }
+  },
+  "callsign_consistency_min_n5": {
+    "early_rows_by_key_share_bin": {
+      "(0,0.2]": 12988,
+      "(0.2,0.5]": 33562,
+      "(0.5,0.8]": 2762,
+      "(0.8,1)": 296,
+      "0": 0,
+      "1": 0
+    },
+    "keys": 2755,
+    "keys_by_share_bin": {
+      "(0,0.2]": 950,
+      "(0.2,0.5]": 956,
+      "(0.5,0.8]": 46,
+      "(0.8,1)": 1,
+      "0": 802,
+      "1": 0
+    },
+    "purity_early_rows_in_keys_ge_0.8": 0.821917808219178,
+    "rows": 286817,
+    "rows_by_key_share_bin": {
+      "(0,0.2]": 105041,
+      "(0.2,0.5]": 117487,
+      "(0.5,0.8]": 4352,
+      "(0.8,1)": 360,
+      "0": 59577,
+      "1": 0
+    }
+  },
+  "columns_read": [
+    "MVT_ID_mvt",
+    "PHASE_mvt",
+    "ADEP_mvt",
+    "MVT_TIME_UTC_mvt",
+    "SCHED_TIME_UTC_mvt",
+    "FLIGHT_mvt",
+    "CALLSIGN_flt",
+    "AIRCRAFT_OPERATOR_flt",
+    "IOBT_flt",
+    "EOBT_1_flt",
+    "LOBT_flt"
+  ],
+  "created_at_utc": "2026-09-27T09:00:29.079324+00:00",
+  "declared_weight_q_check_on_january_2026": {
+    "brier_p0": 0.20880323620884242,
+    "brier_q": 0.19457014180348778,
+    "calibration": {
+      "(0.0, 0.1]": {
+        "early_share": 0.042328042328042326,
+        "mean_q": 0.08870738170973026,
+        "rows": 189
+      },
+      "(0.1, 0.2]": {
+        "early_share": 0.1334688346883469,
+        "mean_q": 0.1601809269055219,
+        "rows": 1476
+      },
+      "(0.2, 0.3]": {
+        "early_share": 0.23792182568584608,
+        "mean_q": 0.25771074503159425,
+        "rows": 4119
+      },
+      "(0.3, 0.4]": {
+        "early_share": 0.33881578947368424,
+        "mean_q": 0.3427152325232224,
+        "rows": 3952
+      },
+      "(0.4, 0.5]": {
+        "early_share": 0.4982758620689655,
+        "mean_q": 0.4383842373372168,
+        "rows": 1160
+      },
+      "(0.5, 1.0]": {
+        "early_share": 0.5557768924302788,
+        "mean_q": 0.6096166694647887,
+        "rows": 502
+      }
+    },
+    "p0_2025": 0.28389555329551164,
+    "rows": 11398
+  },
+  "declared_weight_q_on_july_2026": {
+    "expected_old_convention_rows": 4918.842608235791,
+    "mean_q": 0.2959948614896974,
+    "p0": 0.2847268354140419,
+    "quantiles": {
+      "0.1": 0.2231512236093613,
+      "0.25": 0.2847268354140419,
+      "0.5": 0.2847268354140419,
+      "0.75": 0.29015800769870476,
+      "0.9": 0.37286679647234
+    },
+    "rows": 16618,
+    "unseen_numbers_rows": 9183
+  },
+  "flight_number_consistency_min_n5": {
+    "early_rows_by_key_share_bin": {
+      "(0,0.2]": 13045,
+      "(0.2,0.5]": 33437,
+      "(0.5,0.8]": 2841,
+      "(0.8,1)": 296,
+      "0": 0,
+      "1": 0
+    },
+    "keys": 2787,
+    "keys_by_share_bin": {
+      "(0,0.2]": 957,
+      "(0.2,0.5]": 954,
+      "(0.5,0.8]": 47,
+      "(0.8,1)": 1,
+      "0": 828,
+      "1": 0
+    },
+    "purity_early_rows_in_keys_ge_0.8": 0.8176795580110497,
+    "rows": 290693,
+    "rows_by_key_share_bin": {
+      "(0,0.2]": 106089,
+      "(0.2,0.5]": 117381,
+      "(0.5,0.8]": 4526,
+      "(0.8,1)": 362,
+      "0": 62335,
+      "1": 0
+    }
+  },
+  "history": "2025-01..2026-01 LTFM departures",
+  "history_carriers_top12": {
+    "AEE": {
+      "early_share": 0.0,
+      "jul26_early_share": 0.0,
+      "jul26_rows": 168,
+      "rows": 1669
+    },
+    "AFL": {
+      "early_share": 0.0007168458781362007,
+      "jul26_early_share": 0.0,
+      "jul26_rows": 307,
+      "rows": 2790
+    },
+    "AZO": {
+      "early_share": 0.0,
+      "jul26_early_share": 0.0,
+      "jul26_rows": 128,
+      "rows": 1581
+    },
+    "DAH": {
+      "early_share": 0.00631246712256707,
+      "jul26_early_share": 0.007407407407407408,
+      "jul26_rows": 135,
+      "rows": 1901
+    },
+    "LOT": {
+      "early_share": 0.0,
+      "jul26_early_share": 0.0,
+      "jul26_rows": 133,
+      "rows": 1443
+    },
+    "MNB": {
+      "early_share": 0.0011424219345011425,
+      "jul26_early_share": 0.010526315789473684,
+      "jul26_rows": 190,
+      "rows": 2626
+    },
+    "MSR": {
+      "early_share": 0.001606425702811245,
+      "jul26_early_share": 0.0,
+      "jul26_rows": 98,
+      "rows": 1245
+    },
+    "PBD": {
+      "early_share": 0.0,
+      "jul26_early_share": 0.0,
+      "jul26_rows": 132,
+      "rows": 1396
+    },
+    "SVA": {
+      "early_share": 0.0,
+      "jul26_early_share": 0.0,
+      "jul26_rows": 183,
+      "rows": 2535
+    },
+    "THY": {
+      "early_share": 0.2189001061061678,
+      "jul26_early_share": 0.0010902294673450317,
+      "jul26_rows": 19262,
+      "rows": 227131
+    },
+    "TVF": {
+      "early_share": 0.0007320644216691069,
+      "jul26_early_share": 0.0,
+      "jul26_rows": 124,
+      "rows": 1366
+    },
+    "UZB": {
+      "early_share": 0.0,
+      "jul26_early_share": 0.0,
+      "jul26_rows": 116,
+      "rows": 1542
+    }
+  },
+  "history_operators_top12": {
+    "0399c3ac67adce677a3983dbfb9c12584b5d00a953ff7e40e882f96484242f60": {
+      "early_share": 0.0,
+      "rows": 2532
+    },
+    "1e218b1a730a8fe295a6547b48d215268be4ae3030d57178a75324bb662288b2": {
+      "early_share": 0.0,
+      "rows": 1439
+    },
+    "46ab1de82c0aaae87139115abe2bf593c5fbd02e08a8985f62e5d5f5af61d6f2": {
+      "early_share": 0.0011507479861910242,
+      "rows": 2607
+    },
+    "6af09c9ae9bf66782e3e288e8f0a2324ff7e9c8efe79fbfd05c2199f8fd43d2a": {
+      "early_share": 0.006352567496029645,
+      "rows": 1889
+    },
+    "6ded0c55d5376f731a3e24e5cb2d773d60ca223a25440fd4f34f4709bd450597": {
+      "early_share": 0.0007199424046076314,
+      "rows": 2778
+    },
+    "77f779142aaef6a0fbf1db1d7e11e546458e34e2cdcb0d67fa9540789166c534": {
+      "early_share": 0.0,
+      "rows": 1395
+    },
+    "79b7def846d1a8b3ac5e80bc89b0f7c92222fefb8bfb43009f66f26a3393398d": {
+      "early_share": 0.0,
+      "rows": 1665
+    },
+    "95828822709b52d2167a5400012d395c3cf1c2978c05e5cc41dccf6fcf559188": {
+      "early_share": 0.22220285580210497,
+      "rows": 223755
+    },
+    "a0acbaa27f3def4904a71b9de26e803d8fae9737ae1af9d3680951f7e543fd7a": {
+      "early_share": 0.0,
+      "rows": 1542
+    },
+    "d25c8ec0b441388b9919e3d0b609cfb50c16d47d6e258fff72d26879758c0564": {
+      "early_share": 0.0007385524372230429,
+      "rows": 1354
+    },
+    "f3270be89c31fcfa9d66b4bace5a2f9961b82a69918faad16c829c6e07929838": {
+      "early_share": 0.006480698788391096,
+      "rows": 7098
+    },
+    "fb8845b49f4da0e38b6614d396f02576d5cb29f1194d0f5bc2a2e97527370dad": {
+      "early_share": 0.0,
+      "rows": 1575
+    }
+  },
+  "january_2026_from_2025_shares": {
+    "2025_share<0.2": {
+      "jan26_early_share": 0.05721765145848916,
+      "jan26_rows": 10696
+    },
+    "2025_share>=0.5": {
+      "jan26_early_share": 0.49257425742574257,
+      "jan26_rows": 404
+    },
+    "2025_share>=0.8": {
+      "jan26_early_share": 0.8518518518518519,
+      "jan26_rows": 27
+    }
+  },
+  "july_2026": {
+    "by_threshold": {
+      "share>=0.5,n>=10": {
+        "flight_numbers": 13,
+        "hist_early_share_of_these_numbers": 0.6685684647302904,
+        "hist_rows_of_these_numbers": 1928,
+        "jul_rows": 249,
+        "jul_rows_already_early": 1,
+        "jul_rows_iobt_eq_sched": 226,
+        "jul_rows_iobt_eq_sched_and_eobt1_eq_iobt": 226,
+        "jul_rows_iobt_eq_sched_and_lobt_eq_iobt": 226
+      },
+      "share>=0.5,n>=3": {
+        "flight_numbers": 21,
+        "hist_early_share_of_these_numbers": 0.6661585365853658,
+        "hist_rows_of_these_numbers": 1968,
+        "jul_rows": 287,
+        "jul_rows_already_early": 1,
+        "jul_rows_iobt_eq_sched": 259,
+        "jul_rows_iobt_eq_sched_and_eobt1_eq_iobt": 258,
+        "jul_rows_iobt_eq_sched_and_lobt_eq_iobt": 258
+      },
+      "share>=0.5,n>=5": {
+        "flight_numbers": 17,
+        "hist_early_share_of_these_numbers": 0.667178699436764,
+        "hist_rows_of_these_numbers": 1953,
+        "jul_rows": 283,
+        "jul_rows_already_early": 1,
+        "jul_rows_iobt_eq_sched": 256,
+        "jul_rows_iobt_eq_sched_and_eobt1_eq_iobt": 255,
+        "jul_rows_iobt_eq_sched_and_lobt_eq_iobt": 255
+      },
+      "share>=0.8,n>=10": {
+        "flight_numbers": 1,
+        "hist_early_share_of_these_numbers": 0.8176795580110497,
+        "hist_rows_of_these_numbers": 362,
+        "jul_rows": 21,
+        "jul_rows_already_early": 0,
+        "jul_rows_iobt_eq_sched": 21,
+        "jul_rows_iobt_eq_sched_and_eobt1_eq_iobt": 21,
+        "jul_rows_iobt_eq_sched_and_lobt_eq_iobt": 21
+      },
+      "share>=0.8,n>=3": {
+        "flight_numbers": 1,
+        "hist_early_share_of_these_numbers": 0.8176795580110497,
+        "hist_rows_of_these_numbers": 362,
+        "jul_rows": 21,
+        "jul_rows_already_early": 0,
+        "jul_rows_iobt_eq_sched": 21,
+        "jul_rows_iobt_eq_sched_and_eobt1_eq_iobt": 21,
+        "jul_rows_iobt_eq_sched_and_lobt_eq_iobt": 21
+      },
+      "share>=0.8,n>=5": {
+        "flight_numbers": 1,
+        "hist_early_share_of_these_numbers": 0.8176795580110497,
+        "hist_rows_of_these_numbers": 362,
+        "jul_rows": 21,
+        "jul_rows_already_early": 0,
+        "jul_rows_iobt_eq_sched": 21,
+        "jul_rows_iobt_eq_sched_and_eobt1_eq_iobt": 21,
+        "jul_rows_iobt_eq_sched_and_lobt_eq_iobt": 21
+      }
+    },
+    "early": 32,
+    "eobt1_eq_iobt": 23812,
+    "flight_numbers_seen_before": 13897,
+    "iobt_eq_sched": 20645,
+    "lobt_eq_iobt": 23812,
+    "rows": 25185
+  },
+  "label_free": true,
+  "stability_h1_vs_h2": {
+    "corr_share": 0.795967043073657,
+    "h1_ge_0.8": 1,
+    "numbers": 1298,
+    "of_which_h2_ge_0.8": 0,
+    "of_which_h2_lt_0.2": 0
+  },
+  "strong_numbers_other_rows_sched_minus_iobt": {
+    "-1500.0": 1,
+    "-1800.0": 2,
+    "-2100.0": 1,
+    "-2460.0": 2,
+    "-3480.0": 1,
+    "-3600.0": 2,
+    "-420.0": 1,
+    "-780.0": 2,
+    "0.0": 49,
+    "300.0": 3
+  }
+}
