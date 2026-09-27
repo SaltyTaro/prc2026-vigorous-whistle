@@ -74,3 +74,21 @@ Declared after the round above; the prior readings are disclosed in it. [`fair_l
 Less v9 on unmatched LIRF rows is better in every month on equal footing, but the gain (about 0.08 s) is within day-to-day noise on
 three of four months. v32, which moved the other way (v9 0.40 → 0.50), officially lost 0.019 s, which is consistent with the direction
 seen here. Under the unchanged rule v33 stays. The finding is kept as the direction for any later LIRF change.
+
+## v34: lu00 shipped by user override, officially **228.5933, new best**
+
+- **Why it shipped:** the user said "do v34". The fair-set follow-up had not selected `lu00`: every month was better (mean −0.036%), but
+  the intervals were below zero on only one month. It is recorded as an override of the unchanged rule.
+- **Export:** `tools/export_fair_weights.py --candidate lu00 --declaration configs/fair_lirf_v1.json --user-override …` →
+  `runs/submissions/vigorous-whistle_v34.parquet`, SHA-256 `62b9f2a50cb9ac24600eebbfd6125af46473485c282e2211b7d7dc15fb6dcbff`
+  ([`export_v34.json`](export_v34.json)).
+- **What changed:** v33 with the v9 share on LIRF non-population unmatched rows set to 0, so those rows get
+  (0.35 net + 0.25 tree) / 0.60. 17,397 rows change (mean +0.95 s, RMS 43.7 s, max 550 s), all in that scope. The independent rebuild
+  is exact in scope. Audit: [`../export_audit/v34_audit.json`](../export_audit/v34_audit.json).
+- **Official result:** the fifth upload of the UTC day, processed at 12:27:28 UTC. **228.5933 on all 344,841 rows**, −0.1313 s
+  (−0.057%) against v33, a squared-error change of −2.07e7. Records: [`official_result_v34.json`](official_result_v34.json) and
+  [`leaderboard_after_v34.txt`](leaderboard_after_v34.txt).
+- **Standings at 12:28 UTC:** 3rd of 195, 2.93 s behind 2nd. Never re-upload v1–v34.
+- **Reading:** the fair set's direction (−0.036% on development) transferred, and slightly more strongly. v32, which moved the other way,
+  lost 0.019 s. Together this is a second confirmation that the equal-footing readings predict the ranking for v9-versus-fold-side
+  weights.
