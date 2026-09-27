@@ -1,0 +1,18 @@
+{
+ "experiment_id": "lirf_up_v1",
+ "declared_at_utc": "2026-09-27T15:03:38Z",
+ "audit_used": false,
+ "purpose": "The lean-up gate on LIRF non-population ADS-B-matched rows: where the LIRF blend column (0.40 net + 0.45 tree, normalised) exceeds v9 by more than T, take the column fully (v9 share 0 instead of 0.15). No model is fitted.",
+ "prior_context": {
+  "note": "Declared AFTER configs/disagreement_gate_v1.json, whose u300_m300_l300 minus u300_m300 isolates the LIRF part at T = 300 (disclosed): January 0.000%, July -0.052%, November +0.001%, December -0.022%; at T = 600: July -0.037%, December -0.007%. Not scored on top of the current stack before this declaration.",
+  "ranking_exposure_label_free": "T = 300: 78 LIRF matched rows in January 2026, none in July (LIRF ADS-B-dark); T = 600: 5"
+ },
+ "rows": "runs/fair_dev/rows.parquet",
+ "recipe_months": ["2025-01", "2025-07", "2025-11", "2025-12"],
+ "control": "the current stack as in configs/mix_gate_v1.json (v34 + u300 + callsign 50% + queue trust 0.75 regular; no mix gate)",
+ "candidates": {"l300": {"lirf_up": 300}, "l600": {"lirf_up": 600}},
+ "candidate_semantics": "configs/disagreement_gate_v1.json's lirf_up on lirf_nonpop_matched rows, applied to the stack's LIRF values (the callsign and queue layers do not touch LIRF rows' scope unless a queue row is LIRF; then queue trust is applied after)",
+ "minimum_mean_improvement_fraction": 0.0002,
+ "selection": "Unchanged rule; December reported separately.",
+ "ship": "through tools/export_stack.py; upload only on the user's decision."
+}
