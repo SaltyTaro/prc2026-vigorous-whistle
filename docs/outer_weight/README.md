@@ -58,3 +58,13 @@ seen before the declaration. The unchanged rule decides.
 - **Audit:** [`../export_audit/v33_audit.json`](../export_audit/v33_audit.json) is clean (row set, types, floor) with v31's shape. Against
   v31: RMS 11.9 s, LTFM 29.2 s, other airports 4–7 s, LIRF 0.
 - **Upload:** only on the user's decision.
+
+## v33 official result (27 September 2026): **228.7246, new best**
+
+- **Upload:** approved by the user ("upload it"). The fourth upload of the UTC calendar day. Processed at 09:10:32 UTC on all 344,841
+  rows. Records: [`official_result_v33.json`](official_result_v33.json) and [`leaderboard_after_v33.txt`](leaderboard_after_v33.txt).
+- **Against v31 (229.5832):** −0.8586 s, **−0.374%**. The squared-error change is −1.36e8.
+- **Against development:** the development mean was −0.264%, and December, the equal-footing month, gave −0.381%. The ranking year
+  matches December almost exactly, while recent rounds transferred 6–28% of their development gain. This supports the fold-asymmetry
+  reading: January, July and November understate anything that moves weight from v9 + residual toward the committee mix.
+- Never re-upload v1–v33.
