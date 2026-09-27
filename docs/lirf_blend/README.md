@@ -42,3 +42,16 @@ v30's recipe (committee mix `c_e24x32_e32h` + `lctx_b100_up`) was rebuilt on the
 small against its day-to-day noise, however, and the unchanged rule rejects it. `u50_00_50` misses only on December, where the
 upper bound is +0.030 s. Shipping it would be a post-hoc relaxation of the declared rule, which is the user's call and would have to
 be recorded as such.
+
+## v32: shipped by user override, officially worse (27 September 2026)
+
+- **Export:** `tools/export_v32.py` → `runs/submissions/vigorous-whistle_v32.parquet`, SHA-256 `979f418c0e6b8afba51d0393b0e4a655766533ed375c7e05c69759428a1e7ec5`
+  ([`export_v32.json`](export_v32.json)). It is v31 with `u50_00_50` on the 17,718 `lirf_nonpop_unmatched` ranking rows (2,203 January,
+  15,515 July 2026). 17,188 rows change, scope mean −3.15 s, RMS 29.5 s; no row outside the scope changes.
+- **Why it shipped:** the user's "ship it", a recorded post-hoc relaxation of the rule (December interval upper bound +0.030 s).
+- **Official result:** processed 08:44:28 UTC, **229.6022 s on all 344,841 rows**, against v31's 229.5832 (+0.0190 s, +0.0083%,
+  about +3.0e6 SSE). Evidence: [`official_result_v32.json`](official_result_v32.json),
+  [`leaderboard_after_v32.txt`](leaderboard_after_v32.txt) (08:46 UTC: still 3rd of 195 on v31).
+- **Reading:** the development gain was −0.023% and the ranking year gave +0.008%. Both are inside the day-to-day noise the rule was
+  guarding against, so this is the rule doing its job, not a new fact about unmatched LIRF rows. No row-level attribution is made.
+  **v31 remains the incumbent.** Never re-upload v1–v32.
