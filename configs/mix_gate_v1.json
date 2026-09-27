@@ -1,0 +1,23 @@
+{
+ "experiment_id": "mix_gate_v1",
+ "declared_at_utc": "2026-09-27T15:00:52Z",
+ "audit_used": false,
+ "purpose": "Disagreement gate INSIDE the committee mix: when the context-network table exceeds the tree committee by more than T seconds, the mix takes the network table fully (share 1.0 instead of 0.75); the 'down' variants lean to the committee when the networks are far lower. Non-LIRF rows only (LIRF uses its own blends). No model is fitted.",
+ "prior_context": {
+  "note": "Declared AFTER an exploratory screen on the fair rows (disclosed): LS weight on the network table per sign of D_m = nets - committee, |D_m| > 300: networks higher -> 0.75 / 1.18 / 1.02 / 0.88 (unmatched rows, Jan / Jul / Nov / Dec), networks lower -> 0.15 / 0.06 / 0.39 / 0.64; by airport the 'down' lean helps January / July but hurts November / December at LTFM, EHAM and the other airports (consistent with the seven-month fold networks being weaker than the trees), the 'up' lean improves every airport group in December. Candidate scores were NOT computed before this declaration.",
+  "ranking_exposure_label_free": "|D_m| > 300 on 2.2% of January 2026 non-LIRF rows (development 0.6-1.1%), 0.55% of July; LTFM 1,064 / 430 rows, EHAM 729 / 18, LFPG 537 / 112"
+ },
+ "rows": "runs/fair_dev/rows.parquet (committee and nets from tools/run_adsb_v24.extra_columns, reproduced exactly by tools/run_lomo_rows.assemble)",
+ "recipe_months": ["2025-01", "2025-07", "2025-11", "2025-12"],
+ "control": "the current stack: v34 (fair) + u300 (configs/disagreement_gate_v1.json) + callsign 50% (configs/callsign_fix_v1.json) + queue trust 0.75 on regular matches (configs/queue_trust_v1.json scope, regular source)",
+ "candidates": {
+  "mu300": {"up": 300},
+  "mu600": {"up": 600},
+  "md300": {"down": 300},
+  "mud300": {"up": 300, "down": 300}
+ },
+ "candidate_semantics": "mix' = committee mix with network share 1.0 on rows where nets - committee > up, and 0.25 where nets - committee < -down (both finite); the whole stack is rebuilt on mix' (outer blend, u300 gate on mix' - base, callsign, queue trust)",
+ "minimum_mean_improvement_fraction": 0.0002,
+ "selection": "Unchanged rule; December reported separately; the LOMO round (configs/lomo_weights_v1.json rows) re-reads the selected or best candidate on eleven-month January / July later.",
+ "ship": "delta on the ranking rows from the dry-run detail's committee / network tables, through tools/export_stack.py; upload only on the user's decision."
+}
