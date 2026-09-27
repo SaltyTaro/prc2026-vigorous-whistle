@@ -1,0 +1,22 @@
+{
+ "experiment_id": "fair_lirf_v1",
+ "declared_at_utc": "2026-09-27T12:15:28Z",
+ "audit_used": false,
+ "purpose": "Follow-up of the fair-set weight round (configs/fair_weights_v1.json, nothing selected): the v9 share on LIRF non-population UNMATCHED rows below the declared 0.20. July 2026 LIRF is ADS-B-dark, so about 17.7k ranking rows sit in this scope (the largest projected error block). Fair development rows only; no model is fitted.",
+ "prior_context": {
+  "note": "Declared AFTER the fair_weights_v1 results and after reading per-component scope RMSEs on the fair rows; disclosed in full. Candidate scores below were NOT computed before this declaration.",
+  "fair_weights_v1": "lu30 / lu20 improved every month (mean -0.014% / -0.024%), intervals below zero on 3/4 and 2/4 months",
+  "scope_rmse_fair_rows": "lirf_nonpop_unmatched, v33 blend vs net+tree at the control proportions (v9 share 0): Jan 276.4 vs 275.0, Jul 417.6 vs 407.9, Nov 284.3 vs 281.6, Dec 330.1 vs 327.8 s"
+ },
+ "rows": "runs/fair_dev/rows.parquet (the fair_weights_v1 rows, SHA-256 in docs/fair_dev/fair_weights_results.json)",
+ "recipe_months": ["2025-01", "2025-07", "2025-11", "2025-12"],
+ "control": "v33 exactly as in configs/fair_weights_v1.json",
+ "candidates": {
+  "lu10": {"lirf_v9": {"lirf_nonpop_unmatched": 0.10}},
+  "lu00": {"lirf_v9": {"lirf_nonpop_unmatched": 0.00}}
+ },
+ "candidate_semantics": "as configs/fair_weights_v1.json: value = max(s * v9 + (1 - s) * (0.35 * lirf_net + 0.25 * lirf_tree) / 0.60, floor) on lirf_nonpop_unmatched rows; every other row keeps v33",
+ "minimum_mean_improvement_fraction": 0.0002,
+ "selection": "Unchanged rule: eligible when no recipe month is worse on ALL rows, the mean ratio is at least 0.02% below 1, and every touched month's paired-day 95% interval lies below zero; lowest mean ratio among eligible; otherwise keep v33.",
+ "ship": "tools/export_fair_weights.py construction (delta from the dry-run detail with the selected LIRF share added to v33's floats), independent rebuild, audit; upload only on the user's decision."
+}
