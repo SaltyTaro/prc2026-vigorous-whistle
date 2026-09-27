@@ -1,0 +1,19 @@
+{
+ "experiment_id": "fair_dev_v1",
+ "declared_at_utc": "2026-09-27T09:24:07Z",
+ "audit_used": false,
+ "purpose": "Build an equal-footing development set for every weight between the v9 side (v9 + the residual stage) and the fold side (committee, context networks, LIRF tree/net tables). The shipped development values give the v9 side 9-11 fitting months (4-fold cross-fit v9, 12-month leave-one-month-out residual) against 7 (Jan/Jul, seasonal fold) or 9 (Nov, forward fold) for the fold side; v33's official gain (-0.374%) matched December, the only month where both sides are fitted on January-November (docs/outer_weight/README.md). This declaration fixes the provenance before any fair-set score exists; weight rounds on it are declared separately, under the unchanged rule.",
+ "provenance": {
+  "v9": "tools/run_adsb_v24.load_frame(..., 'fold'): seasonal fold v9 for 2025-01/07, forward fold v9 for 2025-11, the January-November refit v9 for 2025-12 (scratch/seasonal|forward|december.parquet)",
+  "residual_stage": "tools/run_fold_residual.py: adj2 and cat (configs/adsb_v25_v1.json settings) and 16 rnb network seeds 501-516 (configs/adsb_rnn_network_v1.json, the v26 rnet members' seeds) refitted on the fold's fitting months (seasonal: 2025-02..06, 08, 09; forward: 2025-01..09; december: 2025-01..11), training rows with cross-fit v9 as shipped, scored rows with the fold v9; combined with v26's rnet_w90 weights (adj2 0.05, cat 0.05, rnet 0.9)",
+  "fold_side": "unchanged: the committee table, the context-network ensembles and the LIRF tables' existing development values (seasonal / forward / January-November refit)",
+  "known_caveat": "training rows keep the shipped cross-fit v9, whose models saw the scored months' labels for rows of other cross-fit groups (a second-order channel through the base values of training rows only; no scored-month label is used as a target or feature for a scored row)"
+ },
+ "execution": {
+  "trees": {"arcw0": "seasonal", "arcw1": "forward", "arcw2": "december"},
+  "networks": "arcw3-arcw7: rnb seeds 501-516 x folds seasonal / forward / december, sequentially per worker, 8 threads",
+  "concurrent_with": "round E (configs/adsb_ctx_v6.json) lanes on the same workers; no round-E file is touched"
+ },
+ "first_use": "rebuild v30's and v33's recipes on the fair set (control reproduction there = the fair base rebuilt from its parts); report both, then declare the weight rounds (outer weight by scope incl. unmatched non-LTFM rows, LIRF blends) with the unchanged rule",
+ "code": {"tools/run_fold_residual.py": "e69869564cf9be58bf5e9639291eb1e9809be42b73114b511b2973aa960380aa"}
+}
