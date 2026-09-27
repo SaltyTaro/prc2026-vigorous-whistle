@@ -83,7 +83,10 @@ def main() -> None:
             w = np.where(airport == "LTFM", 1.0, np.where(matched & (airport != "LIRF"), 0.6, 0.7))
             v33 = np.where(airport != "LIRF", np.maximum((1 - w) * base + w * mix, floor), v30)
             recon = np.where(airport != "LIRF", np.maximum(0.3 * base + 0.7 * mix, floor), v30)
-            if float(np.max(np.abs(recon - v30))) > 1e-9:
+            for key, arr in {"v9": v9, "residual": residual, "mix": mix, "v30": v30, "v33": v33}.items():
+                if not np.isfinite(arr).all():
+                    raise ValueError(f"{provenance} {month}: {key} has non-finite values.")
+            if not float(np.max(np.abs(recon - v30))) <= 1e-9:  # also catches NaN
                 raise ValueError(f"{provenance} {month}: base/mix reconstruction does not equal the recipe.")
             built[provenance] = dict(table=table, label=label, v9=v9, residual=residual, base=base, mix=mix, v30=v30, v33=v33, floor=floor, ids=ids)
             month_out[provenance] = {"v30": rmse(label, v30), "v33": rmse(label, v33), "v33_vs_v30_pct": 100 * (rmse(label, v33) / rmse(label, v30) - 1),
@@ -92,7 +95,7 @@ def main() -> None:
         ship = built["shipped"]
         ref = dev_rows[dev_rows["month"] == month].set_index(ID).reindex(ship["ids"])["v30"].to_numpy(dtype=float)
         month_out["shipped_reproduction_max_abs"] = float(np.max(np.abs(ship["v30"] - ref)))
-        if np.isnan(ref).any() or month_out["shipped_reproduction_max_abs"] > 1e-9:
+        if np.isnan(ref).any() or not month_out["shipped_reproduction_max_abs"] <= 1e-9:
             raise ValueError(f"The shipped provenance does not reproduce v30's development rows on {month}.")
         if check_only:  # shipped-provenance rows in the same layout (for testing the round tools and for comparison)
             t = ship["table"]

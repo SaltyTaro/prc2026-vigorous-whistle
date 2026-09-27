@@ -67,14 +67,18 @@ def main() -> None:
         f = rows[rows["month"] == month].reset_index(drop=True)
         y, days = f["label"].to_numpy(dtype=float), f["day"].to_numpy()
         base = build(f, control["outer"], control["lirf"])
+        if not np.isfinite(base).all():
+            raise ValueError(f"The control rebuild has non-finite values on {month}.")
         check = float(np.max(np.abs(base - f["v33"].to_numpy())))
-        if check > 1e-9:
+        if not check <= 1e-9:  # also catches NaN
             raise ValueError(f"The control rebuild does not equal the fair v33 on {month} (max {check}).")
         report["months"][month] = {"rows": int(len(f)), "control_rmse": rmse(y, base), "control_rebuild_max_abs": check,
                                    "v30_fair_rmse": rmse(y, f["v30"].to_numpy()), "v33_vs_v30_fair_pct": 100 * (rmse(y, base) / rmse(y, f["v30"].to_numpy()) - 1)}
         per_month[month] = {}
         for name, spec in decl["candidates"].items():
             values = build(f, *candidate_weights(control, spec))
+            if not np.isfinite(values).all():
+                raise ValueError(f"{name} has non-finite values on {month}.")
             changed = np.abs(values - base) > 1e-9
             per_month[month][name] = {"rmse": rmse(y, values), "ratio_to_control": rmse(y, values) / rmse(y, base), "rows_differing_from_control": int(changed.sum()),
                                       "paired_days_vs_control": paired_days(days, y, values, base, SEED)}

@@ -108,6 +108,9 @@ def run_net(fold: str, seed: int, cache: Path, out_root: Path, threads: int, smo
     if extra:
         raise ValueError("rnb must use the nb feature set.")
     spec = FOLDS[fold]
+    for month in spec["score"]:  # preserve check before any fitting (review finding D)
+        if (out_root / f"rnb_s{seed}" / month / "run.json").exists():
+            raise ValueError(f"Preserve the existing run: {out_root / f'rnb_s{seed}' / month}")
     started = time.time()
     fit = tables(stage, spec["fit"], "cross_fit", cache)
     train_rows = pd.concat([t.loc[np.asarray(scope_mask(t, SCOPE), dtype=bool)] for t in fit.values()], ignore_index=True)
