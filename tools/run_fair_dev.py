@@ -94,7 +94,15 @@ def main() -> None:
         month_out["shipped_reproduction_max_abs"] = float(np.max(np.abs(ship["v30"] - ref)))
         if np.isnan(ref).any() or month_out["shipped_reproduction_max_abs"] > 1e-9:
             raise ValueError(f"The shipped provenance does not reproduce v30's development rows on {month}.")
-        if check_only:
+        if check_only:  # shipped-provenance rows in the same layout (for testing the round tools and for comparison)
+            t = ship["table"]
+            frames.append(pd.DataFrame({ID: ship["ids"].to_numpy(), "month": month, "day": t[TIME].dt.strftime("%Y-%m-%d").to_numpy(),
+                                        "airport": t["airport"].to_numpy(), "label": ship["label"], "floor": ship["floor"],
+                                        "matched": t["adsb_matched"].eq(1).to_numpy(),
+                                        "lirf_m": np.asarray(SCOPES["lirf_nonpop_matched"](t), dtype=bool), "lirf_u": np.asarray(SCOPES["lirf_nonpop_unmatched"](t), dtype=bool),
+                                        "v9": ship["v9"], "residual": ship["residual"], "base": ship["base"], "mix": ship["mix"],
+                                        "lirf_tree": t[config["lirf_table"]].to_numpy(dtype=float), "lirf_net": weighted(t, decl_b["candidates"]["lctx_b100_up"]["lirf_network"]),
+                                        "v30": ship["v30"], "v33": ship["v33"]}))
             print(month, month_out, flush=True)
             continue
         fair = built["fair"]
@@ -111,6 +119,10 @@ def main() -> None:
         summary["months"][month] = month_out
         print(month, {p: {k: round(v, 4) for k, v in e.items()} for p, e in month_out.items() if isinstance(e, dict)}, flush=True)
     if check_only:
+        shipped = ROOT / "runs/fair_dev/rows_shipped.parquet"
+        shipped.parent.mkdir(parents=True, exist_ok=True)
+        pd.concat(frames, ignore_index=True).to_parquet(shipped, index=False)
+        print("wrote", shipped.relative_to(ROOT).as_posix(), sha256_file(shipped))
         return
     OUT.parent.mkdir(parents=True, exist_ok=True)
     pd.concat(frames, ignore_index=True).to_parquet(OUT, index=False)
