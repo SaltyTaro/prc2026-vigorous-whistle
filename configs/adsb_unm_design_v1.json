@@ -1,0 +1,411 @@
+{
+  "experiment_id": "adsb_unm_design_v1",
+  "declared_at_utc": null,
+  "status": "DRAFT: set declared_at_utc and commit this file immediately before launch; no design fit exists before that",
+  "audit_used": false,
+  "purpose": "October design gate for a committee specialist on rows WITHOUT an ADS-B match. Non-LIRF unmatched rows (LTFM entirely, most of LFPG, EGLL, LEMD) carry about 35% of v30's projected ranking error (docs/error_map/README.md: LTFM unmatched 15.4-15.7%, LFPG unmatched 10.9-11.1%), while every committee learner is fitted on all rows, where the matched rows dominate the loss. Two ways to spend the committee's capacity on those rows are compared with the committee members' own recipe: fitting only unmatched rows, and fitting every row with unmatched rows up-weighted (weights 2 and 4 bracket the suggested 3).",
+  "prior_evidence": {
+    "gpu_batch_2": "docs/adsb_ctx3/README.md, design_report_2.json: routing a masked context network to unmatched rows only gave +0.054 points (route_mask25) and +0.047 points (route_mask50) on the October proxy with paired-day intervals touching zero ([-0.19, +0.01] and [-0.17, +0.01] s); route_mask100, a network that never sees focal ADS-B, was worse even on unmatched rows (+0.036%): training on matched rows helps unmatched ones",
+    "coverage_census": "docs/adsb_coverage/README.md: unmatched rows get only about -2% from the ADS-B stack and carry 60-71% of ordinary SSE",
+    "error_map": "docs/error_map/README.md (27 September): LIRF about 40% of the projected ranking error; non-LIRF unmatched about 35%",
+    "october_reference": "runs/adsb_nn/design/committee_october.parquet: committee October non-LIRF RMSE 163.413 s, unmatched 222.634 s (34.9% of 171,532 rows); member means on unmatched rows: LightGBM s24-s26 234.676 s, CatBoost s27-s30 222.119 s"
+  },
+  "expectation": "Small. The GPU batch-2 evidence suggests a specialist adds at best about 0.05-0.1% on the recipe proxy, and fitting unmatched rows alone may lose the transfer from matched rows. A null is the likely outcome and is recorded as such.",
+  "parents": {
+    "committee": {
+      "table": "runs/adsb_v20/ens_v20_bag_q_all",
+      "rule": "one quarter of the nine-LightGBM mean plus three quarters of the thirteen-CatBoost mean (checked on October to 3.6e-12 s)"
+    },
+    "october_reference": {
+      "path": "runs/adsb_nn/design/committee_october.parquet",
+      "sha256": "2862aabb3aa8fff43613397ebc32305c86ed74219c624c47860fa74e1110902e",
+      "record": "runs/adsb_nn/design/committee_october.json",
+      "tool": "tools/nn_committee_october.py"
+    },
+    "network_table": {
+      "rule": "v30's network table on October: 0.25 x mean(ctx_e24 seeds 117-132) + 0.25 x mean(ctx_e24 seeds 133-148) + 0.5 x mean(ctx_e32 seeds 401-416), each seed's seasonal-fold stop_predictions.parquet",
+      "paths": {
+        "ens_ctx_e24": "runs/adsb_ctx/ctx_e24_s{117..132}/seasonal/stop_predictions.parquet",
+        "ens_ctx_e24b": "runs/adsb_ctx/ctx_e24_s{133..148}/seasonal/stop_predictions.parquet",
+        "ens_ctx_e32": "runs/adsb_ctx_gpu/ctx_e32_s{401..416}/seasonal/stop_predictions.parquet"
+      },
+      "weights": {
+        "ens_ctx_e24": 0.25,
+        "ens_ctx_e24b": 0.25,
+        "ens_ctx_e32": 0.5
+      },
+      "network_share": 0.75
+    },
+    "recipe_proxy": "tools/nn_design_report.RecipeProxy (the sprint's October proxy; LIRF rows stay at v9)"
+  },
+  "learner_common": {
+    "runner": "tools/run_adsb_unm.py (imports the feature, encoding and fitting code of tools/run_adsb_learner.py unchanged; the unweighted path calls run_adsb_learner.fit itself)",
+    "settings": "configs/timeline_v1.json",
+    "settings_sha256": "0f3ccec8ae1e23d24eb8eef8c536eeeb8b1439b7e7fc248dccde37732ba8ddd3",
+    "features": "the committee members' 314: timeline bundle CORE + FLOWN + SURFACE (276) + 27 ADS-B features from data/external/adsblol/matches (matches2_*, stands.parquet) + the eleven v19 features from data/external/adsblol/features_v19",
+    "matches_dir": "data/external/adsblol/matches",
+    "extra_features": "data/external/adsblol/features_v19",
+    "extra_tag": "v19",
+    "excluded_airports": [
+      "LIRF"
+    ],
+    "target": "label",
+    "patience": 200,
+    "lightgbm_rounds_cap": 3200,
+    "catboost_rounds_cap": 20000,
+    "threads": 16,
+    "fold": "the timeline bundle's seasonal fold only: fit on its fit partition (2025-02..06, 08, 09), early-stop on its early-stop partition (October 2025), predict every October row (stop_predictions.parquet: ID, adsb_full). January, July, November and December are never read.",
+    "unmatched": "adsb_matched != 1 in the runner's own ADS-B table",
+    "seeds": "each run uses the seed and CatBoost ctr setting of one existing committee member (control_member), so every specialist has an exact all-row twin whose October prediction is already in the reference"
+  },
+  "scopes": {
+    "all": "fit and early-stop on every non-LIRF row, unweighted (the members' own recipe; only the reproduction run)",
+    "unmatched": "fit and early-stop only on non-LIRF rows without an ADS-B match; every October row is still predicted",
+    "weighted": "fit and early-stop on every non-LIRF row; rows without an ADS-B match get the run's sample weight in the loss and in the early-stopping metric, matched rows weight 1"
+  },
+  "runs": {
+    "repro_lgb_s24": {
+      "kind": "lightgbm",
+      "seed": 20260924,
+      "scope": "all",
+      "unmatched_weight": 1.0,
+      "parameters": {},
+      "control_member": "runs/adsb_v20/lgb_x19_s24",
+      "note": "the committee member lgb_x19_s24's own recipe through this runner: its October prediction must equal that member's column of the October reference"
+    },
+    "unm_lgb_s24": {
+      "kind": "lightgbm",
+      "seed": 20260924,
+      "scope": "unmatched",
+      "unmatched_weight": 1.0,
+      "parameters": {},
+      "control_member": "runs/adsb_v20/lgb_x19_s24"
+    },
+    "unm_lgb_s25": {
+      "kind": "lightgbm",
+      "seed": 20260925,
+      "scope": "unmatched",
+      "unmatched_weight": 1.0,
+      "parameters": {},
+      "control_member": "runs/adsb_v20/lgb_x19_s25"
+    },
+    "unm_lgb_s26": {
+      "kind": "lightgbm",
+      "seed": 20260926,
+      "scope": "unmatched",
+      "unmatched_weight": 1.0,
+      "parameters": {},
+      "control_member": "runs/adsb_v20/lgb_x19_s26"
+    },
+    "unm_cat_s27": {
+      "kind": "catboost",
+      "seed": 20260927,
+      "scope": "unmatched",
+      "unmatched_weight": 1.0,
+      "parameters": {
+        "max_ctr_complexity": 2
+      },
+      "rounds": 20000,
+      "control_member": "runs/adsb_v20/cat_ctr2_x19_s27"
+    },
+    "unm_cat_s28": {
+      "kind": "catboost",
+      "seed": 20260928,
+      "scope": "unmatched",
+      "unmatched_weight": 1.0,
+      "parameters": {
+        "max_ctr_complexity": 2
+      },
+      "rounds": 20000,
+      "control_member": "runs/adsb_v20/cat_ctr2_x19_s28"
+    },
+    "unm_cat_s29": {
+      "kind": "catboost",
+      "seed": 20260929,
+      "scope": "unmatched",
+      "unmatched_weight": 1.0,
+      "parameters": {
+        "max_ctr_complexity": 3
+      },
+      "rounds": 20000,
+      "control_member": "runs/adsb_v20/cat_ctr3_x19_s29"
+    },
+    "unm_cat_s30": {
+      "kind": "catboost",
+      "seed": 20260930,
+      "scope": "unmatched",
+      "unmatched_weight": 1.0,
+      "parameters": {
+        "max_ctr_complexity": 2
+      },
+      "rounds": 20000,
+      "control_member": "runs/adsb_v20/cat_ctr2_x19_s30"
+    },
+    "w2_lgb_s24": {
+      "kind": "lightgbm",
+      "seed": 20260924,
+      "scope": "weighted",
+      "unmatched_weight": 2.0,
+      "parameters": {},
+      "control_member": "runs/adsb_v20/lgb_x19_s24"
+    },
+    "w2_lgb_s25": {
+      "kind": "lightgbm",
+      "seed": 20260925,
+      "scope": "weighted",
+      "unmatched_weight": 2.0,
+      "parameters": {},
+      "control_member": "runs/adsb_v20/lgb_x19_s25"
+    },
+    "w2_lgb_s26": {
+      "kind": "lightgbm",
+      "seed": 20260926,
+      "scope": "weighted",
+      "unmatched_weight": 2.0,
+      "parameters": {},
+      "control_member": "runs/adsb_v20/lgb_x19_s26"
+    },
+    "w2_cat_s27": {
+      "kind": "catboost",
+      "seed": 20260927,
+      "scope": "weighted",
+      "unmatched_weight": 2.0,
+      "parameters": {
+        "max_ctr_complexity": 2
+      },
+      "rounds": 20000,
+      "control_member": "runs/adsb_v20/cat_ctr2_x19_s27"
+    },
+    "w2_cat_s28": {
+      "kind": "catboost",
+      "seed": 20260928,
+      "scope": "weighted",
+      "unmatched_weight": 2.0,
+      "parameters": {
+        "max_ctr_complexity": 2
+      },
+      "rounds": 20000,
+      "control_member": "runs/adsb_v20/cat_ctr2_x19_s28"
+    },
+    "w2_cat_s29": {
+      "kind": "catboost",
+      "seed": 20260929,
+      "scope": "weighted",
+      "unmatched_weight": 2.0,
+      "parameters": {
+        "max_ctr_complexity": 3
+      },
+      "rounds": 20000,
+      "control_member": "runs/adsb_v20/cat_ctr3_x19_s29"
+    },
+    "w2_cat_s30": {
+      "kind": "catboost",
+      "seed": 20260930,
+      "scope": "weighted",
+      "unmatched_weight": 2.0,
+      "parameters": {
+        "max_ctr_complexity": 2
+      },
+      "rounds": 20000,
+      "control_member": "runs/adsb_v20/cat_ctr2_x19_s30"
+    },
+    "w4_lgb_s24": {
+      "kind": "lightgbm",
+      "seed": 20260924,
+      "scope": "weighted",
+      "unmatched_weight": 4.0,
+      "parameters": {},
+      "control_member": "runs/adsb_v20/lgb_x19_s24"
+    },
+    "w4_lgb_s25": {
+      "kind": "lightgbm",
+      "seed": 20260925,
+      "scope": "weighted",
+      "unmatched_weight": 4.0,
+      "parameters": {},
+      "control_member": "runs/adsb_v20/lgb_x19_s25"
+    },
+    "w4_lgb_s26": {
+      "kind": "lightgbm",
+      "seed": 20260926,
+      "scope": "weighted",
+      "unmatched_weight": 4.0,
+      "parameters": {},
+      "control_member": "runs/adsb_v20/lgb_x19_s26"
+    },
+    "w4_cat_s27": {
+      "kind": "catboost",
+      "seed": 20260927,
+      "scope": "weighted",
+      "unmatched_weight": 4.0,
+      "parameters": {
+        "max_ctr_complexity": 2
+      },
+      "rounds": 20000,
+      "control_member": "runs/adsb_v20/cat_ctr2_x19_s27"
+    },
+    "w4_cat_s28": {
+      "kind": "catboost",
+      "seed": 20260928,
+      "scope": "weighted",
+      "unmatched_weight": 4.0,
+      "parameters": {
+        "max_ctr_complexity": 2
+      },
+      "rounds": 20000,
+      "control_member": "runs/adsb_v20/cat_ctr2_x19_s28"
+    },
+    "w4_cat_s29": {
+      "kind": "catboost",
+      "seed": 20260929,
+      "scope": "weighted",
+      "unmatched_weight": 4.0,
+      "parameters": {
+        "max_ctr_complexity": 3
+      },
+      "rounds": 20000,
+      "control_member": "runs/adsb_v20/cat_ctr3_x19_s29"
+    },
+    "w4_cat_s30": {
+      "kind": "catboost",
+      "seed": 20260930,
+      "scope": "weighted",
+      "unmatched_weight": 4.0,
+      "parameters": {
+        "max_ctr_complexity": 2
+      },
+      "rounds": 20000,
+      "control_member": "runs/adsb_v20/cat_ctr2_x19_s30"
+    }
+  },
+  "items": {
+    "unm_lgb": [
+      "unm_lgb_s24",
+      "unm_lgb_s25",
+      "unm_lgb_s26"
+    ],
+    "unm_cat": [
+      "unm_cat_s27",
+      "unm_cat_s28",
+      "unm_cat_s29",
+      "unm_cat_s30"
+    ],
+    "w2_lgb": [
+      "w2_lgb_s24",
+      "w2_lgb_s25",
+      "w2_lgb_s26"
+    ],
+    "w2_cat": [
+      "w2_cat_s27",
+      "w2_cat_s28",
+      "w2_cat_s29",
+      "w2_cat_s30"
+    ],
+    "w4_lgb": [
+      "w4_lgb_s24",
+      "w4_lgb_s25",
+      "w4_lgb_s26"
+    ],
+    "w4_cat": [
+      "w4_cat_s27",
+      "w4_cat_s28",
+      "w4_cat_s29",
+      "w4_cat_s30"
+    ]
+  },
+  "bags": {
+    "bag_unm": {
+      "lightgbm": "unm_lgb",
+      "catboost": "unm_cat",
+      "weights": {
+        "lightgbm": 0.25,
+        "catboost": 0.75
+      }
+    },
+    "bag_w2": {
+      "lightgbm": "w2_lgb",
+      "catboost": "w2_cat",
+      "weights": {
+        "lightgbm": 0.25,
+        "catboost": 0.75
+      }
+    },
+    "bag_w4": {
+      "lightgbm": "w4_lgb",
+      "catboost": "w4_cat",
+      "weights": {
+        "lightgbm": 0.25,
+        "catboost": 0.75
+      }
+    }
+  },
+  "reproduction_check": {
+    "run": "repro_lgb_s24",
+    "reference_column": "runs/adsb_v20/lgb_x19_s24",
+    "tolerance_seconds": 1e-06,
+    "rule": "the report refuses to read any item unless the reproduction run equals the member's October column within the tolerance on every October row"
+  },
+  "protocol": {
+    "rows": "October 2025, the recipe proxy's rows; standalone readings on non-LIRF rows (unmatched and matched separately)",
+    "R1": "standalone October RMSE of each run, each item's seed mean and each bag (non-LIRF, matched, unmatched, unmatched by airport), next to the same readings of its control: the seed-matched all-row members from the October reference",
+    "R2": "recipe proxy of the table T = 0.25 x C' + 0.75 x P, where P is v30's network table and C' is the committee with, on non-LIRF unmatched rows only, (1 - c) x committee + c x X, c in {0.5, 1.0}; % against the control T = 0.25 x committee + 0.75 x P. The seed-matched member bag M read the same way is reported next to each bag.",
+    "descriptive": "table-level routing T' = (1 - c) x T + c x X on non-LIRF unmatched rows, c in {0.1, 0.25}; per-kind items; per-seed readings",
+    "decision_items": [
+      "bag_unm",
+      "bag_w2",
+      "bag_w4"
+    ],
+    "decision": "GO for a bag if (1) its R2 at c = 0.5 is at least 0.05 points below the control, (2) the paired-day bootstrap 95% interval of the proxy RMSE difference (bag at c = 0.5 minus control) lies below zero, and (3) its standalone October unmatched non-LIRF RMSE is below that of the seed-matched member bag M (the gain comes from specialisation, not from extra seeds). The reproduction check must pass first. Several GO bags: the lowest R2 at c = 0.5. No GO: the specialist is closed and nothing further is declared.",
+    "if_go": "declare a development round separately (seasonal / forward / refit + December leaf + refit12 folds for the GO bag's learners, v30 as control, the unchanged four-month rule) before any development score; this design report cannot ship anything"
+  },
+  "execution": {
+    "hosts": "arcw0-arcw7 after round E has finished (one chain per worker, 16 threads, runs in sequence)",
+    "assignment": {
+      "arcw0": [
+        "w2_cat_s27",
+        "unm_cat_s27"
+      ],
+      "arcw1": [
+        "w2_cat_s28",
+        "unm_cat_s28"
+      ],
+      "arcw2": [
+        "w2_cat_s29",
+        "unm_cat_s29"
+      ],
+      "arcw3": [
+        "w2_cat_s30",
+        "unm_cat_s30"
+      ],
+      "arcw4": [
+        "repro_lgb_s24",
+        "w4_cat_s27",
+        "unm_lgb_s24",
+        "w2_lgb_s24"
+      ],
+      "arcw5": [
+        "w4_cat_s28",
+        "w4_lgb_s24",
+        "unm_lgb_s25"
+      ],
+      "arcw6": [
+        "w4_cat_s29",
+        "w2_lgb_s25",
+        "w4_lgb_s25"
+      ],
+      "arcw7": [
+        "w4_cat_s30",
+        "unm_lgb_s26",
+        "w2_lgb_s26",
+        "w4_lgb_s26"
+      ]
+    },
+    "launcher": "tools/launch_adsb_unm.py launch HOST: refuses while any training process runs on the worker; syncs the runner, run_adsb_learner.py and the declaration; checks the worker's settings, feature code, matches, stands and v19 tables against the local hashes (copying missing tables); each worker builds its own ADS-B table cache under runs/adsb_unm/features",
+    "runtime_estimate": "CatBoost all-row seasonal fits took 4,720-5,160 s at 16 threads (runs/adsb_v20 records); weighted fits about the same, unmatched-only fits on about 45% of the rows roughly half; LightGBM about 4 min. Per worker 1.7-2.3 h, plus about 10-15 min for the first run on each worker to build the ADS-B table cache",
+    "report": "tools/unm_design_report.py --report docs/adsb_unm/design_report_1.json after tools/launch_adsb_unm.py mirror HOST",
+    "automatic_submission": false,
+    "azure_only": true
+  },
+  "external_data": "adsb.lol globe_history (ODbL) through the existing matches and v19 tables; nothing new",
+  "output_root": "runs/adsb_unm/design"
+}
