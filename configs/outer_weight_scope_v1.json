@@ -1,0 +1,36 @@
+{
+ "experiment_id": "outer_weight_scope_v1",
+ "declared_at_utc": "2026-09-27T09:06:30Z",
+ "audit_used": false,
+ "purpose": "Re-weight v30's outer blend (the committee mix c_e24x32_e32h at weight 0.7 against v9 + residual, on every non-LIRF row) by scope: LTFM rows (no ADS-B at all, where the context networks gained most) and ADS-B-matched non-LIRF rows. The outer weight 0.7 dates from the v17 recipe, before the residual network and the context networks existed. No model is fitted; LIRF rows, the committee mix, residual stage, v9, LIRF blends and floor stay v30's.",
+ "prior_context": {
+  "note": "Declared after a scratch screen by this session on the same four recipe months; the candidate scores below were therefore seen before this declaration. Disclosed in full; the unchanged rule still decides.",
+  "screen_tools": "scratchpad outer_weight_screen.py / outer_ltfm.py (rows cached in runs/share_scope/outer_rows.parquet; base = v9 + residual on matched_no_lirf, mix = committee mix at share 0.75; 0.3 base + 0.7 mix reproduces the recorded v30 non-LIRF rows to 9.1e-13 s)",
+  "screen_result": "ltfm100_m60 -0.264% mean (Jan -0.101 / Jul -0.243 / Nov -0.331 / Dec -0.381%), every paired-day interval below zero; ltfm100 alone -0.165% (Jan interval touches zero); ltfm90 -0.131%, ltfm90_m65 -0.186%, ltfm100_m65 -0.219%, all intervals below zero. Lower weights on unmatched non-LTFM rows help December but hurt January and July, so that scope is not a candidate.",
+  "fold_asymmetry": "v9 (cross-fit v7) and the residual stage are 12-month leave-one-month-out (11 fitting months), while the committee and networks score January/July from the seasonal fold (7 fitting months) and November from the forward fold (9). December is the only recipe month where both sides are fitted on the same months (January-November), as in the ranking's 12-month refits. January, July and November therefore favour the base; December is the unbiased reading and is reported separately, descriptively.",
+  "known_scores_before_declaration": "the screen above"
+ },
+ "parents": {
+  "configs/adsb_ctx_v5.json": "3fb073e18b7d8037342412333a35dc4661829f26dd1480d55f519ee172a09705",
+  "configs/adsb_ctx_lirf_v1.json": "29325b1b524b2b617f6c6ed5c719877a7ee98249473af55726ece6c0492d57df"
+ },
+ "recipe_months": ["2025-01", "2025-07", "2025-11", "2025-12"],
+ "control": {
+  "name": "v30",
+  "recipe": "committee mix c_e24x32_e32h (configs/adsb_ctx_v5.json) at outer weight 0.7 on all_no_lirf + round B's LIRF blends lctx_b100_up (configs/adsb_ctx_lirf_v1.json)",
+  "outer_weight": 0.7,
+  "reproduction": "the control must reproduce v30's development rows of runs/error_map/dev_rows.parquet to 1e-9 s per row, after the three recorded reproductions of tools/run_lirf_blend_dev.py (v28, c_e24x32_e32h with v25's LIRF blends, v27 + lctx_b100_up, to 1e-9 s in RMSE); the scope-weight rebuild at 0.7 everywhere must equal the control to 1e-9 s per row"
+ },
+ "candidates": {
+  "ltfm90": {"ltfm": 0.9, "matched_no_lirf_other": 0.7, "unmatched_no_lirf_other": 0.7},
+  "ltfm100": {"ltfm": 1.0, "matched_no_lirf_other": 0.7, "unmatched_no_lirf_other": 0.7},
+  "ltfm90_m65": {"ltfm": 0.9, "matched_no_lirf_other": 0.65, "unmatched_no_lirf_other": 0.7},
+  "ltfm100_m65": {"ltfm": 1.0, "matched_no_lirf_other": 0.65, "unmatched_no_lirf_other": 0.7},
+  "ltfm100_m60": {"ltfm": 1.0, "matched_no_lirf_other": 0.6, "unmatched_no_lirf_other": 0.7}
+ },
+ "candidate_semantics": "value = max((1 - w) * base + w * mix, floor) on non-LIRF rows, with w = ltfm on LTFM rows (whatever their ADS-B status), matched_no_lirf_other on other ADS-B-matched non-LIRF rows and unmatched_no_lirf_other on other unmatched non-LIRF rows; base = v9 + the residual stage on matched_no_lirf rows (v9 elsewhere), mix = the committee mix at share 0.75. LIRF rows equal the control.",
+ "minimum_mean_improvement_fraction": 0.0002,
+ "selection": "A candidate is eligible when: no recipe month is worse on ALL rows (ratio to the control <= 1.0); the mean ratio over the four recipe months is at least 0.02% below 1; and on every month where it changes a row the paired-day bootstrap 95% interval of the RMSE difference against the control lies below zero. Among eligible candidates choose the lowest mean ratio (ties by name); otherwise select nothing and keep v30. The rule of adsb_nn/nn2, round B and the LIRF round, unchanged.",
+ "ship": "If a candidate is selected: rebuild the recipe on the final-file runner's dry-run detail (runs/final_dryrun/run/recipe/detail.parquet: v9, residual, committee_mix, v30) with the selected weights, check the rebuild at 0.7 equals the dry run's v30, take the delta against it, add the delta to v31's floats (recorded v30 detail + 0.5 x the LFPG EOBT_1 effect), floor -12, export as vigorous-whistle_v33 via the standard contract, verify (delta non-zero only on non-LIRF rows of the declared scopes), audit. v32 (the LIRF unmatched override) scored worse and is not the base. Upload only on the user's decision.",
+ "execution": "workstation only; tools/run_outer_weight_dev.py --score --select; no model fitting"
+}
