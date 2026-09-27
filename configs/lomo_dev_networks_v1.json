@@ -1,0 +1,104 @@
+{
+ "experiment_id": "lomo_dev_networks_v1",
+ "declared_at_utc": "2026-09-27T13:31:46Z",
+ "audit_used": false,
+ "purpose": "Network half of the leave-one-month-out development set: v34's fold-side networks refitted on the twelve 2025 months WITHOUT January (resp. July) and scored on the held month, so that January and July compare both sides like December and the ranking's 12-month refits. Declared before any LOMO fit.",
+ "network_config": "configs/lomo_network_v1.json",
+ "runner": "tools/run_adsb_ctx_lomo.py (tools/run_adsb_ctx3.py plus the lomo folds); jobs tools/lomo_jobs.py; queue tools/lomo_queue.sh",
+ "held_months": [
+  "2025-07",
+  "2025-01"
+ ],
+ "families": [
+  {
+   "variant": "ctx_e24",
+   "table": "ens_ctx_e24 (seeds 117-132) and ens_ctx_e24b (seeds 133-148)",
+   "seeds": [
+    117,
+    118,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    131,
+    132,
+    133,
+    134,
+    135,
+    136,
+    137,
+    138,
+    139,
+    140,
+    141,
+    142,
+    143,
+    144,
+    145,
+    146,
+    147,
+    148
+   ]
+  },
+  {
+   "variant": "ctx_e32",
+   "table": "ens_ctx_e32",
+   "seeds": [
+    401,
+    402,
+    403,
+    404,
+    405,
+    406,
+    407,
+    408,
+    409,
+    410,
+    411,
+    412,
+    413,
+    414,
+    415,
+    416
+   ]
+  },
+  {
+   "variant": "ctx_lirf",
+   "table": "ens_ctx_lirf",
+   "seeds": [
+    301,
+    302,
+    303,
+    304,
+    305,
+    306,
+    307,
+    308,
+    309,
+    310,
+    311,
+    312,
+    313,
+    314,
+    315,
+    316
+   ]
+  }
+ ],
+ "tables": "seed means per table exactly as the shipped ensembles (ens_ctx_e24 = mean of 117-132, ens_ctx_e24b = mean of 133-148, ens_ctx_e32 = mean of 401-416, ens_ctx_lirf = mean of 301-316)",
+ "hardware": "four AWS g6e.2xlarge (one L40S each) in us-east-2 via SkyPilot (infra/aws/gpu_authorization_20260927.json), two lanes per GPU; the shipped ctx_e24 and ctx_lirf seeds were CPU-trained, so their LOMO versions differ from a CPU refit by GPU numerics (TF32, 'high' matmul precision), as ctx_e32's did",
+ "caveats": [
+  "same seeds as shipped: the LOMO networks are refits of the shipped learners on eleven months, not new learners",
+  "fixed epoch budgets as shipped (no early stopping)"
+ ],
+ "use": "with the tree half: a development table for January and July on equal 11-month footing; weight rounds on it are declared separately under the unchanged rule",
+ "automatic_submission": false
+}
