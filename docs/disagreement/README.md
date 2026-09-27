@@ -98,3 +98,32 @@ changes are EHAM disruption flights with 6-10 ADS-B stops and 1-1.4 h stationary
 
 Scratch exports (tools/export_callsign_fix.py --dry-run): u300_cs50 SHA f47a5c75..., u300_cs75 SHA 522f1653...; 861 rows change against
 v34 (758 gate + 163 callsign, 60 overlap), v31/v33/v34 floats round exactly, independent rebuild within 1 s on 199 rows. Not uploaded.
+
+## Screens closed and the queue-trust round (27 September, 15:00-15:30 UTC)
+
+- **Callsign-free matching** (takeoff time + departure from the row's learned stand, four ranking days, 21,934 departures): 98.6% precise
+  against callsign matches but only 36 new matches in four days; 5,886 of 6,614 key-unmatched rows have no ADS-B takeoff at all
+  (LTFM, LFPG, LIRF July dark). Closed.
+- **Extreme ADS-B taxi on regular matches**: rows whose ADS-B taxi exceeds v34 by > 1,500 s are artefacts (median 0 stops, 201 m path;
+  the label follows v34 in 98%). Not a lever by itself.
+- **Queue shape** (twelve 2025 months, gate rows with ADS-B taxi > 3,000 s): >= 5 stops over >= 5 km -> label within 120 s of the ADS-B
+  taxi in 84% (non-queue 19%); with <= 75% stationary: 39 rows, ~95% within 120 s, none short by > 1,000 s.
+
+**Queue-trust round** (configs/queue_trust_v1.json, 14:55:55Z; tools/run_queue_trust.py -> queue_trust_v1_results.json). Control: the
+u300_cs50 stack. Scope rows: January 13, July 1, November 14, December 9. **Nothing selected.**
+
+| candidate | Jan | Jul | Nov | Dec | mean | intervals < 0 |
+|---|---|---|---|---|---|---|
+| qt50 | -0.006% | +0.005% | -0.004% | -0.010% | -0.004% | 3/4 |
+| qt75 | -0.007% | +0.010% | -0.005% | -0.012% | -0.004% | 3/4 |
+| qt100 | -0.008% | +0.016% | -0.005% | -0.013% | -0.002% | 3/4 |
+
+On the regular-match scope rows the observed taxi (+ offset) has RMSE 78 / 68 / 19 s against the control's 442 / 219 / 369 s (January /
+November / December). July's single scope row is a callsign-fix match (ADS-B 4,778 s, label 2,683 s): the uncertain part is the
+IATA-mapped identity, not the queue logic. Ranking exposure: 161 regular + 25 callsign rows (EHAM January mostly); if the observed taxi is
+right, -0.28 s (regular) and -0.17 s (callsign) at full weight.
+
+**Stack exporter** (tools/export_stack.py): v34 -> u300 -> callsign 50% -> optional queue trust restricted to regular matches (a disclosed
+post-hoc restriction after the July row). Dry runs: without the queue layer the file equals the u300_cs50 dry export (SHA f47a5c75...);
+with queue trust 0.75 on regular matches SHA 75f4a4f4..., 1,022 rows change (u300 758, callsign 163, queue 161), independent rebuild
+within 1 s. Not uploaded.
