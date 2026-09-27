@@ -132,7 +132,11 @@ def predict(held: str) -> None:
         column[inside] = predict_rows(model, pre, rows_lomo)
         nets.append(column)
     result["residual:rnet"] = np.mean(nets, axis=0)
-    record["checks_passed"] = bool(all(v <= 1e-3 for v in record["checks"].values()))
+    # trees must reproduce exactly; the networks' stored predictions were made on the Azure Linux CPUs, so float32 kernels differ slightly
+    record["tolerances_s"] = {"trees": 1e-9, "networks": 1e-2}
+    record["checks_passed"] = bool(all(v <= (1e-9 if k in ("adj2", "cat") else 1e-2) for k, v in record["checks"].items()))
+    if not record["checks_passed"]:
+        raise ValueError(f"Reproduction checks failed on {held}: {record['checks']}")
     frame = pd.DataFrame(result)
     for c in frame.columns[2:]:
         if not np.isfinite(frame[c]).all():
