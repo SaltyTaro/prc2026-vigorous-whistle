@@ -146,3 +146,8 @@ The lean-down half is the data-quantity artefact (December rejects it by +0.4%).
 moves 439 rows by about +200 s (sum of squared moves 2.0e7, at most +-0.13 s). Held out of the stack; to be re-read on the LOMO January / July
 rows (eleven-month networks and committee). The stack itself (v34 + u300 + callsign 50% + queue trust 0.75 on regular matches) against v34 on
 the fair rows: -0.021% / -0.067% / -0.141% / -0.069%. tools/export_stack.py gains --mix-up (dry run with 600: SHA 61e98464..., 1,268 rows).
+
+## LIRF lean-up on the stack (configs/lirf_up_v1.json, 15:03:38Z; tools/run_lirf_up.py -> lirf_up_v1_results.json)
+
+Nothing selected: l300 January untouched, July -0.052% [-0.323, -0.019], November +0.001%, December -0.022% [-0.068, -0.009], mean -0.018%;
+l600 mean -0.011%. 78 ranking rows at most (January). Not stacked.

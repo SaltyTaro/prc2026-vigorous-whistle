@@ -1,0 +1,227 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "l300": {
+      "eligible": false,
+      "lirf_up": 300,
+      "mean_ratio": 0.9998195281907986,
+      "months": {
+        "2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 0,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              0.0,
+              0.0
+            ]
+          },
+          "ratio_to_control": 1.0,
+          "rmse": 326.29451198773563,
+          "rows_differing_from_control": 0
+        },
+        "2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 21,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.32333988025265514,
+              -0.019207729283800046
+            ]
+          },
+          "ratio_to_control": 0.9994848824855773,
+          "rmse": 261.67275076636616,
+          "rows_differing_from_control": 537
+        },
+        "2025-11": {
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 10,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.013032450340570278,
+              0.015342458248580462
+            ]
+          },
+          "ratio_to_control": 1.000010330236321,
+          "rmse": 185.6201671620718,
+          "rows_differing_from_control": 58
+        },
+        "2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 15,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.06752611074487476,
+              -0.00925560063289837
+            ]
+          },
+          "ratio_to_control": 0.9997829000412958,
+          "rmse": 167.94866869513683,
+          "rows_differing_from_control": 107
+        }
+      },
+      "months_touched": [
+        "2025-07",
+        "2025-11",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [
+        "2025-07",
+        "2025-12"
+      ]
+    },
+    "l600": {
+      "eligible": false,
+      "lirf_up": 600,
+      "mean_ratio": 0.9998875721757541,
+      "months": {
+        "2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 0,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              0.0,
+              0.0
+            ]
+          },
+          "ratio_to_control": 1.0,
+          "rmse": 326.29451198773563,
+          "rows_differing_from_control": 0
+        },
+        "2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 12,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.2469087394035995,
+              -0.010410068686545083
+            ]
+          },
+          "ratio_to_control": 0.9996292728374463,
+          "rmse": 261.7105532596502,
+          "rows_differing_from_control": 117
+        },
+        "2025-11": {
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 2,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.004150635055579244,
+              0.0
+            ]
+          },
+          "ratio_to_control": 0.9999923971462475,
+          "rmse": 185.61683845328096,
+          "rows_differing_from_control": 2
+        },
+        "2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 3,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.041117903440736826,
+              0.01274150564636257
+            ]
+          },
+          "ratio_to_control": 0.9999286187193226,
+          "rmse": 167.9731472674125,
+          "rows_differing_from_control": 8
+        }
+      },
+      "months_touched": [
+        "2025-07",
+        "2025-11",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [
+        "2025-07"
+      ]
+    }
+  },
+  "created_at_utc": "2026-09-27T15:04:09.060559+00:00",
+  "declaration": {
+    "audit_used": false,
+    "candidate_semantics": "configs/disagreement_gate_v1.json's lirf_up on lirf_nonpop_matched rows, applied to the stack's LIRF values (the callsign and queue layers do not touch LIRF rows' scope unless a queue row is LIRF; then queue trust is applied after)",
+    "candidates": {
+      "l300": {
+        "lirf_up": 300
+      },
+      "l600": {
+        "lirf_up": 600
+      }
+    },
+    "control": "the current stack as in configs/mix_gate_v1.json (v34 + u300 + callsign 50% + queue trust 0.75 regular; no mix gate)",
+    "declared_at_utc": "2026-09-27T15:03:38Z",
+    "experiment_id": "lirf_up_v1",
+    "minimum_mean_improvement_fraction": 0.0002,
+    "prior_context": {
+      "note": "Declared AFTER configs/disagreement_gate_v1.json, whose u300_m300_l300 minus u300_m300 isolates the LIRF part at T = 300 (disclosed): January 0.000%, July -0.052%, November +0.001%, December -0.022%; at T = 600: July -0.037%, December -0.007%. Not scored on top of the current stack before this declaration.",
+      "ranking_exposure_label_free": "T = 300: 78 LIRF matched rows in January 2026, none in July (LIRF ADS-B-dark); T = 600: 5"
+    },
+    "purpose": "The lean-up gate on LIRF non-population ADS-B-matched rows: where the LIRF blend column (0.40 net + 0.45 tree, normalised) exceeds v9 by more than T, take the column fully (v9 share 0 instead of 0.15). No model is fitted.",
+    "recipe_months": [
+      "2025-01",
+      "2025-07",
+      "2025-11",
+      "2025-12"
+    ],
+    "rows": "runs/fair_dev/rows.parquet",
+    "selection": "Unchanged rule; December reported separately.",
+    "ship": "through tools/export_stack.py; upload only on the user's decision."
+  },
+  "declaration_sha256": "b9981f5f50875338bb79109da018fb750cbe9a0b81da8ded842e937cbbabb643",
+  "eligible": [],
+  "environment": {
+    "disk_available_bytes": 86622875648,
+    "logical_cpus": 32,
+    "memory_total_bytes": 16858472448,
+    "packages": {
+      "numpy": "2.4.2",
+      "pandas": "3.0.0",
+      "psutil": "7.2.2",
+      "pyarrow": "23.0.1",
+      "tzdata": "2025.3"
+    },
+    "physical_cpus_reported": 24,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.2"
+  },
+  "model_code": {
+    "tools/run_callsign_fix.py": "d24b5961ef80d92e815da4f5006565f7f1f604d38d8b08ac9a29404b7b78ee6b",
+    "tools/run_disagreement_gate.py": "89bcea5410f0a09488eea219a05dec797aa9394b5f868b00deb5e405278db564",
+    "tools/run_lirf_up.py": "33c80edd7c159591011b8def112aa5fe5859a06da2788d35f7cd9daf9b8439a3",
+    "tools/run_lomo_rows.py": "968fd5551523a91205b210c1d9ccb1917940cbea178404fa3314f5f93220c568",
+    "tools/run_queue_trust.py": "2c897a8a325d8ad884ca3383ab8ea2acfb761143b3489ad02230db1f44a317be"
+  },
+  "months": {
+    "2025-01": {
+      "control_rmse": 326.29451198773563
+    },
+    "2025-07": {
+      "control_rmse": 261.80761245294985
+    },
+    "2025-11": {
+      "control_rmse": 185.61824968168708
+    },
+    "2025-12": {
+      "control_rmse": 167.98513826171637
+    }
+  },
+  "rows_sha256": "ee2f9fd6fc42017c229b740729e3e12d1605c0e1e8207430daf23fbf6a314f30",
+  "selected_candidate": null
+}
