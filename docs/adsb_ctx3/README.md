@@ -105,3 +105,56 @@ R1 155.664, R2 at b = 0.5 −0.124%).
   the bar and its interval touches zero on October. A network that never sees focal ADS-B is worse even on unmatched rows: training on
   unmasked matched rows helps the unmatched ones.
 - 40 epochs do not improve on 32. The GPU sprint's lasting result is the 32-epoch network (development round above).
+
+## Round D and the combined round (26 September night): selected `c_e24x32_e32h`, the v30 candidate
+
+- **Round D** ([`configs/adsb_ctx_v3.json`](../../configs/adsb_ctx_v3.json), 16 more CPU e24 seeds 133–148 as `ens_ctx_e24b`;
+  [`development_results_v3.json`](../adsb_ctx/development_results_v3.json)) selected `d_e24x32` (the 32 e24 seeds, ctx16 dropped):
+  mean −0.0875% vs pool_s75, every month better, 4/4 intervals. Because the 32-epoch round had also selected, both declarations required
+  a combined round before anything ships.
+- **Combined round** ([`configs/adsb_ctx_v5.json`](../../configs/adsb_ctx_v5.json);
+  [`development_results_v5.json`](../adsb_ctx/development_results_v5.json)), network table at share 0.75, unchanged rule:
+
+| Candidate | Jan | Jul | Nov | Dec | Mean | Intervals < 0 |
+|---|---|---|---|---|---|---|
+| g_thirds (ctx + e24 + e32) | −0.036 | −0.061 | −0.102 | −0.073 | −0.068 | 4/4 |
+| c_all64 (ctx + e24 + e24b + e32) | −0.052 | −0.088 | −0.101 | −0.092 | −0.083 | 4/4 |
+| d_e24x32 (e24 + e24b) | −0.070 | −0.094 | −0.086 | −0.099 | −0.088 | 4/4 |
+| c_e24x32_e32 (thirds of e24, e24b, e32) | −0.080 | −0.118 | −0.153 | −0.131 | −0.121 | 4/4 |
+| **c_e24x32_e32h (0.25 e24 + 0.25 e24b + 0.5 e32)** | −0.080 | −0.122 | −0.176 | −0.135 | **−0.128** | 4/4 — **selected** |
+
+  `c_e24x32_e32h` intervals: January [−0.46, −0.13], July [−0.44, −0.19], November [−0.47, −0.19], December [−0.40, −0.003] s; better
+  days 27/31, 27/31, 26/30, 28/31.
+- **Coverage-regime ship check** ([`configs/adsb_ctx_regime_check_v5.json`](../../configs/adsb_ctx_regime_check_v5.json),
+  `tools/ctx_regime_check4.py`; e32 from the check3 re-prediction, e24b re-predicted on the workstation CPU) **passes both months**:
+  July thinned −0.117% (natural −0.122%, interval [−0.42, −0.19] s), December thinned −0.145% (natural −0.135%, interval [−0.42, −0.02] s);
+  natural rebuilds reproduce development within 0.0006 s ([`regime_check4_2025-07.json`](../adsb_ctx/regime_check4_2025-07.json),
+  [`regime_check4_2025-12.json`](../adsb_ctx/regime_check4_2025-12.json)).
+
+## Export v30 (27 September, 01:33 UTC) — [`export.json`](export.json): built, verified, audited; NOT uploaded
+
+`tools/export_adsb_ctx4.py --declaration configs/adsb_ctx_v5.json --selection runs/adsb_ctx/dev5/selection.json --check
+configs/adsb_ctx_regime_check_v5.json --check-reports regime_check4 --version 30`. It first rebuilds v29 from its recorded ranking values
+(committee mix and values max abs 0.0, every integer equal to the uploaded v29), then swaps the network table for 0.25 `ens_ctx_e24` +
+0.25 `ens_ctx_e24b` + 0.5 `ens_ctx_e32` (16 refit12 seeds each; the 16 round-D refits were copied from arcw0–7 and hash-checked
+against their records) at share 0.75 inside the unchanged outer blend and floor. LIRF rows stay exactly at the uploaded v29.
+
+- **`runs/submissions/vigorous-whistle_v30.parquet`**, SHA-256 `3a19fa27f5f1d4a5bed4dfa8e128bdbd58054687bb4a43ee2281f61f6b7765dc`,
+  344,841 rows in template order, min −12, max 120,549, 3 negative predictions (v29: 5).
+- **Versus v29:** 281,088 rows change (all non-LIRF), RMS 8.65 s, mean −0.49 s, median |change| 3 s, p99 33 s, max 348 s; no row moves
+  more than 600 s. RMS by airport 4.8 (EDDM) to 13.7 s (EHAM); LIRF 0.
+- **Verification** ([`verification_v30.json`](verification_v30.json), `tools/verify_adsb_ctx4.py`): passes. Every ensemble column equals
+  the plain mean of its saved seeds (max abs 0.0); the 16 GPU-trained e32 seeds reload on the workstation CPU within 0.087 s RMS / 0.34 s
+  p99 (tolerance 0.5 / 2.0; TF32 on the L40S), the 16 CPU-trained e24b seeds within 0.0017 s max abs (tolerance 0.01); plain arithmetic
+  reproduces the control (= uploaded v29 on non-LIRF rows) and the candidate (max abs 1.8e-12 s, equal after rounding); LIRF rows equal
+  v29; file contract holds.
+- **Audit** ([`export_audit_v30.json`](export_audit_v30.json), `tools/audit_export.py --version 30 --compare 29 28 9`): v29's shape —
+  same IDs, no NaN, nothing below −12; the same airport-month mean flags (January 2026, ratios within 0.004 of v29), the same 13 daily
+  outliers, the same negative-proxy rows (169, p50 1,059 s vs 1,062 s), the same LIRF population (383 rows) and above-4-hour counts;
+  above-1-hour rows 836 (v29 857).
+- Expected effect: the development mean is −0.128% against v29's recipe (≈ −0.29 s on 229.62 if it transfers like earlier network
+  rounds). Upload only with the user's approval; never re-upload v1–v29.
+
+Round E ([`configs/adsb_ctx_v6.json`](../../configs/adsb_ctx_v6.json), CPU 32-epoch seeds 501–516 as `ens_ctx_e32c`, control =
+`c_e24x32_e32h`) is running on all eight Azure workers: arcw0/2/6/7 since 23:19 UTC, arcw1/3/4/5 from the round-D hand-over
+(00:12–01:30 UTC).
