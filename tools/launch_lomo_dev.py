@@ -16,6 +16,7 @@ from __future__ import annotations
 import argparse
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -40,6 +41,15 @@ def name_of(leaf: str) -> str:
 def ssh(host: str, command: str, timeout: int = 600) -> str:
     result = subprocess.run(["ssh", "-o", "BatchMode=yes", "-o", "ConnectTimeout=20", host, command], capture_output=True, text=True, timeout=timeout)
     return (result.stdout + result.stderr).strip()
+
+
+def copy(source: str, target: str, timeout: int = 600) -> None:
+    """scp with retries (arcw5 drops connections intermittently)."""
+    for attempt in range(6):
+        if subprocess.run(["scp", "-q", source, target], timeout=timeout).returncode == 0:
+            return
+        time.sleep(15 * (attempt + 1))
+    raise SystemExit(f"scp failed six times: {source} -> {target}")
 
 
 def jobs() -> list[dict]:
@@ -110,14 +120,14 @@ def main() -> None:
             chain = p["chains"][host]
             ssh(host, f"mkdir -p {REMOTE}/runs/lomo_dev/logs {REMOTE}/configs {REMOTE}/tools")
             for path in CODE:
-                subprocess.run(["scp", "-q", str(ROOT / path), f"{host}:{REMOTE}/{path}"], check=True, timeout=300)
+                copy(str(ROOT / path), f"{host}:{REMOTE}/{path}", 300)
             remote = ssh(host, f"cd {REMOTE} && sha256sum {' '.join(CODE + FROZEN)}").split()[0::2]
             if remote != local:
                 raise SystemExit(f"{host}: code differs from the local copy.")
             for job in chain:  # the held-row reference: the leaf's seasonal predictions (and fold records, already there)
                 if job["kind"] == "learner" and job["month"] != "2025-12":
                     ssh(host, f"mkdir -p {REMOTE}/{job['leaf']}/seasonal")
-                    subprocess.run(["scp", "-q", str(ROOT / job["leaf"] / "seasonal/predictions.parquet"), f"{host}:{REMOTE}/{job['leaf']}/seasonal/predictions.parquet"], check=True, timeout=600)
+                    copy(str(ROOT / job["leaf"] / "seasonal/predictions.parquet"), f"{host}:{REMOTE}/{job['leaf']}/seasonal/predictions.parquet")
             missing = ssh(host, f"cd {REMOTE} && for p in {CACHE} data/december/d198dea10625b0a75977/manifest.json "
                                 + " ".join(f"{j['leaf']}/seasonal/run.json {j['leaf']}/forward/run.json" for j in chain if j["kind"] == "learner")
                                 + (" tools/run_v7_dec.py" if any(j["kind"] == "v7" for j in chain) else "") + "; do [ -e $p ] || echo MISSING $p; done")
@@ -125,7 +135,7 @@ def main() -> None:
                 raise SystemExit(f"{host}: {missing}")
             script = ROOT / "runs/lomo_dev" / f"chain_{host}.sh"
             script.write_text(chain_script(host, chain), encoding="utf-8", newline="\n")
-            subprocess.run(["scp", "-q", str(script), f"{host}:{REMOTE}/runs/lomo_dev/chain_{host}.sh"], check=True, timeout=300)
+            copy(str(script), f"{host}:{REMOTE}/runs/lomo_dev/chain_{host}.sh", 300)
             try:
                 print(host, ssh(host, f"cd {REMOTE} && nohup setsid bash runs/lomo_dev/chain_{host}.sh < /dev/null > /dev/null 2>&1 & sleep 3; pgrep -f 'chain_{host}.sh' | wc -l", timeout=40))
             except subprocess.TimeoutExpired:
@@ -150,7 +160,7 @@ def main() -> None:
                     continue
                 (ROOT / src).mkdir(parents=True, exist_ok=True)
                 for f in files[::-1]:  # run.json last, so a local run.json means a complete mirror
-                    subprocess.run(["scp", "-q", f"{host}:{REMOTE}/{src}/{f}", str(ROOT / src / f)], check=True, timeout=3600)
+                    copy(f"{host}:{REMOTE}/{src}/{f}", str(ROOT / src / f), 3600)
                 print("mirrored", job["name"], "from", host)
 
 
