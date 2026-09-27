@@ -151,3 +151,6 @@ the fair rows: -0.021% / -0.067% / -0.141% / -0.069%. tools/export_stack.py gain
 
 Nothing selected: l300 January untouched, July -0.052% [-0.323, -0.019], November +0.001%, December -0.022% [-0.068, -0.009], mean -0.018%;
 l600 mean -0.011%. 78 ranking rows at most (January). Not stacked.
+
+Closed the same hour: an ADS-B "lower bound" (takeoff - segment_start on non-gate segments): 9% of labels (gate: 30%) lie below it, since
+segment starts include earlier ground time; raising predictions to it multiplies SSE (+1e11 per month). The models already use these features.
