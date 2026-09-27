@@ -131,7 +131,7 @@ R1 155.664, R2 at b = 0.5 −0.124%).
   natural rebuilds reproduce development within 0.0006 s ([`regime_check4_2025-07.json`](../adsb_ctx/regime_check4_2025-07.json),
   [`regime_check4_2025-12.json`](../adsb_ctx/regime_check4_2025-12.json)).
 
-## Export v30 (27 September, 01:33 UTC) — [`export.json`](export.json): built, verified, audited; NOT uploaded
+## Export v30 (27 September, 01:33 UTC) — [`export.json`](export.json): uploaded, **official 229.6009** (new best, 2nd of 195)
 
 `tools/export_adsb_ctx4.py --declaration configs/adsb_ctx_v5.json --selection runs/adsb_ctx/dev5/selection.json --check
 configs/adsb_ctx_regime_check_v5.json --check-reports regime_check4 --version 30`. It first rebuilds v29 from its recorded ranking values
@@ -154,6 +154,12 @@ against their records) at share 0.75 inside the unchanged outer blend and floor.
   above-1-hour rows 836 (v29 857).
 - Expected effect: the development mean is −0.128% against v29's recipe (≈ −0.29 s on 229.62 if it transfers like earlier network
   rounds). Upload only with the user's approval; never re-upload v1–v29.
+- **Uploaded with the user's "upload it"** (`tools/prc_submit.py upload --calendar-day`) and **officially scored 229.6009 on all
+  344,841 rows** (processed 01:37:49 UTC, [`official_result_v30.json`](official_result_v30.json)): **−0.0187 s (−0.008%) against v29**
+  (229.6196), the new official best. Never re-upload v1–v30.
+- **Transfer:** about 6% of the development gain (−0.128% predicted, −0.008% official), far below earlier network rounds. More seeds and
+  longer training of the same context network are nearly spent on the ranking months; round E (more 32-epoch seeds) should be expected
+  to add at most a few hundredths of a second.
 
 Round E ([`configs/adsb_ctx_v6.json`](../../configs/adsb_ctx_v6.json), CPU 32-epoch seeds 501–516 as `ens_ctx_e32c`, control =
 `c_e24x32_e32h`) is running on all eight Azure workers: arcw0/2/6/7 since 23:19 UTC, arcw1/3/4/5 from the round-D hand-over
