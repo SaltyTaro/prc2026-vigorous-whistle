@@ -1,0 +1,20 @@
+{
+ "experiment_id": "queue_trust_v1",
+ "declared_at_utc": "2026-09-27T14:55:55Z",
+ "audit_used": false,
+ "purpose": "Trust the observed ADS-B taxi on long, queue-shaped surface segments. Tree models cannot extrapolate into the long tail; when a gate-covered segment shows a genuine queue (many stops over a long path, not mostly stationary) the airport label equals the ADS-B taxi (takeoff - motion_start) almost exactly. No model is fitted.",
+ "prior_context": {
+  "note": "Declared AFTER exploratory screens (disclosed): (1) matched gate rows of the four recipe months whose ADS-B taxi exceeds v34 by > 1,500 s are artefacts (median 0 stops, 201 m path; the label follows v34 in 98%); (2) twelve 2025 months, gate rows with ADS-B taxi > 3,000 s: queue-shaped segments (>= 5 stops, >= 5 km) have |label - taxi| <= 120 s in 84% (non-queue 19%); split by stationary share: <= 0.75 -> 39 rows, about 95% within 120 s, none short by > 1,000 s; > 0.75 -> 6 rows, 4 short by > 1,000 s. The thresholds below come from that screen; the candidate scores were NOT computed before this declaration.",
+  "ranking_exposure_label_free": "185 ranking rows in scope (EHAM January 2026: 150 regular matches, mean taxi - v34 +66 s; 24 callsign-fix rows, mean +2,009 s, max +4,705 s); EHAM regular matches of 3-7 January with > 0.75 stationary are outside the scope"
+ },
+ "scope": "gate-covered ADS-B segments, from the regular matches (data/external/adsblol/matches_v11/matches2_<month>.parquet, gate true) and from the callsign fix's scope rows (configs/callsign_fix_v1.json rematch outputs), with taxi_stops >= 5, taxi_path_m >= 5000, taxi_stopped_s / taxi <= 0.75 and taxi = takeoff - motion_start > 3000 s",
+ "offset": "per airport, the median of label - (takeoff - motion_start) over the regular gate-matched departures of the non-recipe 2025 months 02-06, 08-10 (as configs/callsign_fix_v1.json, extended to every airport)",
+ "rows": "runs/fair_dev/rows.parquet",
+ "recipe_months": ["2025-01", "2025-07", "2025-11", "2025-12"],
+ "control": "the current stack: v34 (fair) + configs/disagreement_gate_v1.json u300 + configs/callsign_fix_v1.json 50% (u300_cs50)",
+ "candidates": {"qt50": {"weight": 0.5}, "qt75": {"weight": 0.75}, "qt100": {"weight": 1.0}},
+ "candidate_semantics": "value = max(w * (taxi + offset[airport]) + (1 - w) * control, floor) on scope rows (after the callsign blend); every other row keeps the control",
+ "minimum_mean_improvement_fraction": 0.0002,
+ "selection": "Unchanged rule: eligible when no recipe month is worse on ALL rows, the mean ratio is at least 0.02% below 1, and every touched month's paired-day 95% interval lies below zero; lowest mean ratio among eligible; otherwise keep the control. Also reported against v34.",
+ "ship": "on top of the u300_cs50 export construction: scope rows of the ranking get the candidate value; independent check; audit; upload only on the user's decision."
+}
