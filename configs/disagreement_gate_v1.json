@@ -1,0 +1,37 @@
+{
+ "experiment_id": "disagreement_gate_v1",
+ "declared_at_utc": "2026-09-27T13:50:53Z",
+ "audit_used": false,
+ "purpose": "Disagreement-gated outer weight. When the v9 side (v9 + residual stage) and the fold side (committee mix at share 0.75) disagree strongly, lean toward the HIGHER side instead of the fixed scope weight: a model that sees a delay signal is usually right, since taxi times run long but rarely much below the unimpeded time. The label-free audit (tools/disagreement_audit.py, docs/disagreement/audit.json) finds January 2026 far outside the development months: |D| > 600 s on 0.55% of rows (0.10-0.26% in 2025), 408 unmatched non-LIRF rows with D > 600 (173 in all four development months together), concentrated at EHAM on 3-7 January 2026 (disruption; 29.9% of EHAM unmatched rows). Fair development rows only; no model is fitted.",
+ "prior_context": {
+  "note": "Declared AFTER an exploratory screen on the fair rows (least-squares weight on the fold side and RMSE of each side per D bin, pooled over the four months and per month for D > 600); disclosed here. The per-month candidate scores below were NOT computed before this declaration. Scopes and signs were chosen from that screen.",
+  "screen_unmatched_non_lirf_non_ltfm": "D 300-600: 550 rows, LS weight 1.07; 600-1200: 159 rows, 1.20; >1200: 14 rows, 0.78; D < -1200: 72 rows, 0.14; -1200..-600: 170 rows, 0.67 (v34 uses 0.7). D > 600 by month: LS weight 0.98 / 1.18 / 1.67 / 1.27.",
+  "screen_matched_non_lirf_non_ltfm": "D < -1200: 44 rows, LS weight 0.03; -1200..-600: 201, 0.15; -600..-300: 740, 0.37 (v34 uses 0.6); D 300-600: 258, 0.98; 600-1200: 33, 0.32.",
+  "screen_lirf_nonpop_matched": "D = LIRF column - v9. D 300-600: 575 rows, LS weight on the column 1.11; 600-1200: 121, 1.33 (v34 uses 0.85).",
+  "dev_analog": "EHAM 5 January 2025 (snow): 44 unmatched rows, mean label 1731 s, fold side 1408, v9 side 1092.",
+  "ranking_eham_crosscheck": "EHAM gate-matched rows on 3-7 January 2026: v9 tracks the ADS-B motion-to-takeoff (docs/error_map); unmatched rows on those days have v9 1438-1783 s against fold side 2004-2718 s."
+ },
+ "rows": "runs/fair_dev/rows.parquet (SHA-256 in docs/fair_dev/fair_weights_results.json)",
+ "recipe_months": ["2025-01", "2025-07", "2025-11", "2025-12"],
+ "control": "v34: v33 exactly as in configs/fair_weights_v1.json with the lirf_nonpop_unmatched v9 share 0 (configs/fair_lirf_v1.json lu00); the v33 rebuild must equal rows.parquet's v33 to 1e-9 s per row first",
+ "definitions": {
+  "D_non_lirf": "mix - base (base = v9 + residual stage on matched_no_lirf rows, mix = committee mix at share 0.75)",
+  "D_lirf_matched": "(0.40 * lirf_net + 0.45 * lirf_tree) / 0.85 - v9 on lirf_nonpop_matched rows",
+  "unm": "non-LIRF, non-LTFM rows without an ADS-B match (control weight 0.7)",
+  "mat": "non-LIRF, non-LTFM ADS-B-matched rows (control weight 0.6)",
+  "lirf_m": "lirf_nonpop_matched rows (control v9 share 0.15)",
+  "LTFM": "unchanged (control weight 1.0)"
+ },
+ "candidates": {
+  "u600":           {"unm_up": 600},
+  "u300":           {"unm_up": 300},
+  "u600_m600":      {"unm_up": 600, "mat_down": 600},
+  "u300_m300":      {"unm_up": 300, "mat_down": 300},
+  "u600_m600_l600": {"unm_up": 600, "mat_down": 600, "lirf_up": 600},
+  "u300_m300_l300": {"unm_up": 300, "mat_down": 300, "lirf_up": 300}
+ },
+ "candidate_semantics": "unm_up T: unm rows with D > T get outer weight 1.0 (value = max(mix, floor)); mat_down T: mat rows with D < -T get outer weight 0.0 (value = max(base, floor)); lirf_up T: lirf_m rows with D_lirf > T get v9 share 0 (value = max(column, floor)); every other row keeps the control",
+ "minimum_mean_improvement_fraction": 0.0002,
+ "selection": "Unchanged rule: eligible when no recipe month is worse on ALL rows, the mean ratio is at least 0.02% below 1, and every touched month's paired-day 95% interval lies below zero; lowest mean ratio among eligible; otherwise keep v34. December (equal footing) is reported separately.",
+ "ship": "delta = gated recipe minus v34's recipe on the final-file dry-run detail (D from the ranking's twelve-month components), added to v34's floats, floored at -12 s; independent rebuild; audit; upload only on the user's decision."
+}
