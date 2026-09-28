@@ -1,4 +1,4 @@
-"""S11-S13: the layers from v30 to the v35 incumbent, each through the frozen code that first built it for the ranking file.
+"""S11-S13: the layers from v30 to v35 / v36 / v37 / v38, each through the frozen code that first built it for the ranking file.
 
 - repair (v31, docs/input_shift/lfpg_eobt_sensitivity.md). A label-free detector flags an airport-month when its share of departures
   with EOBT_1 > IOBT lies more than one 2025 span above the 2025 maximum (reference: the same airport's twelve 2025 months, read from
@@ -11,14 +11,26 @@
 - stack: the recipe deltas on the file's own recipe detail, as the exports took them from the dry-run detail:
   v33 = max(v31 + export_v33.recipe(detail, 1.0, 0.6, 0.7) - export_v33.recipe(detail, 0.7, 0.7, 0.7), -12);
   v34 = max(v33 + export_fair_weights.recipe(detail, V33_OUTER, V34_LIRF) - recipe(detail, V33_OUTER, V33_LIRF), -12);
-  v35 = tools/export_stack.layers(v34, detail, ..., queue 0.75, regular): + export_disagreement_gate.gate_delta (u300), then the callsign
-  rows max(0.5 x observed taxi + 0.5 x value, -12) (run_callsign_fix.scope_table / offsets), then the queue rows
-  max(0.75 x observed taxi + 0.25 x value, -12) on regular gate matches (run_queue_trust's segment rule / offsets_all).
-  export_stack.layers itself reads the frozen ranking tables, so the layers are re-plumbed here onto the run's own tables.
+  then tools/export_stack.layers itself, for each layer set:
+  v35 = layers(v34, ..., queue 0.75, regular): u300 gate (export_disagreement_gate.gate_delta), callsign fix 50%
+        (run_callsign_fix.scope_table / offsets), queue trust 0.75 on regular gate matches (run_queue_trust segments / offsets_all);
+  v36 = layers(v34, ..., queue 0.75, regular, mix_up=600, peer=True): the same after export_stack.gated_detail's mu600 mix gate
+        (network share 1.0 where nets - committee > 600 s; recipe and u300 recomputed on the gated mix), then export_stack.peer_lifts
+        (configs/higher_bundle_v2.json mu_pc_pcc: +100 s no-clock / +50 s untracked non-LIRF rows in airport-hours whose NM proxies
+        run > 600 s above the month's normal, >= 5 peers).
+  v37 = layers(v34, ..., queue 0.75, regular, stretch=1500): v35, then export_stack.tail_stretch after every other layer
+        (configs/tail_stretch_v1.json v35_t1500: value + k x (value - 1500) above 1,500 s on non-LIRF rows outside the callsign and
+        queue layers, k untracked / tracked from docs/disagreement/tail_stretch_v1_results.json's four-month fit; floor -12).
+  v38 = layers(v34, ..., queue 0.75, regular, stretch=1500, stretch_lower=900): v35, then the two-sided stretch on every non-LIRF row
+        outside the callsign and queue layers (configs/tail_stretch_v2.json two_sided_900): u = value + k1 x max(value - 1500, 0),
+        value = max(u + k2 x max(900 - u, 0), -12), k1 / k2 per untracked / tracked from tail_stretch_v2_results.json.
+  export_stack's three ranking-bound readers (scope_table, segments, ranking_peers) answer from the run's own tables during the
+  call (run_tables): the file's rematch, its residual match tables and tools/peer_congestion.peer_table on the file itself.
 """
 from __future__ import annotations
 
 import sys
+from contextlib import contextmanager
 from pathlib import Path
 
 import numpy as np
@@ -31,8 +43,9 @@ from .common import ROOT, save_frame, source_file
 
 sys.path.insert(0, str(ROOT / "tools"))
 import export_v33  # noqa: E402
-from export_disagreement_gate import V34_LIRF, gate_delta  # noqa: E402
+from export_disagreement_gate import V34_LIRF  # noqa: E402
 from export_fair_weights import FLOOR, V30_OUTER, V33_LIRF, V33_OUTER, recipe  # noqa: E402
+from peer_congestion import COLUMNS as PEER_COLUMNS, peer_table  # noqa: E402
 from run_callsign_fix import offsets, scope_table  # noqa: E402
 from run_queue_trust import SEGMENT, offsets_all  # noqa: E402
 
@@ -44,9 +57,21 @@ REMATCH_COLUMNS = ["MVT_ID_mvt", "PHASE_mvt", "MVT_TIME_UTC_mvt", "ADEP_mvt", "F
 REMATCH_OUTPUT_COLUMNS = ["MVT_ID_mvt", "airport", "flight", "mapped", "takeoff"] + [f"{m}_{k}" for m in ["iata_mapped", "key"] for k in
                                                                                    ["icao", "gate", "motion_start", "segment_start", "last_ground",
                                                                                     "taxi_path_m", "taxi_stops", "taxi_stopped_s", "at_known_stand"]]
-DECLARATIONS = {"gate": "configs/disagreement_gate_v1.json", "callsign": "configs/callsign_fix_v1.json", "queue": "configs/queue_trust_v1.json"}
+DECLARATIONS = {"gate": "configs/disagreement_gate_v1.json", "callsign": "configs/callsign_fix_v1.json", "queue": "configs/queue_trust_v1.json",
+                "mix": "configs/mix_gate_v1.json", "peer": "configs/higher_bundle_v2.json", "stretch": "configs/tail_stretch_v1.json",
+                "stretch2": "configs/tail_stretch_v2.json"}
+RESULTS = ["docs/disagreement/tail_stretch_v1_results.json", "docs/disagreement/tail_stretch_v2_results.json"]  # the stretches' k (four-month fits), read by export_stack.tail_stretch
+CODE = ["tools/export_stack.py", "tools/peer_congestion.py", "tools/export_disagreement_gate.py", "tools/export_fair_weights.py", "tools/export_v33.py",
+        "tools/run_callsign_fix.py", "tools/run_queue_trust.py", "tools/adsb_rematch_nonm.py"]
+LAYER_SETS = ["v35", "v36", "v37", "v38"]
 V35 = {"gate": "u300", "callsign": "u300_cs50", "queue": "qt75", "queue_source": "regular",
        "record": "docs/disagreement/export_v35.json (tools/export_stack.py --queue 0.75 --queue-source regular --version 35, user override)"}
+V36 = {**V35, "peer": "mu_pc_pcc",
+       "record": "docs/disagreement/export_v36.json (tools/export_stack.py --queue 0.75 --queue-source regular --mix-up 600 --peer-lift --version 36, user override)"}
+V37 = {**V35, "stretch": "v35_t1500",
+       "record": "docs/disagreement/export_v37.json (tools/export_stack.py --queue 0.75 --queue-source regular --stretch 1500 --version 37, user override)"}
+V38 = {**V35, "stretch": "two_sided_900",
+       "record": "docs/disagreement/export_v38.json (tools/export_stack.py --queue 0.75 --queue-source regular --stretch 1500 --stretch-lower 900 --version 38, user override)"}
 
 
 # ---------------------------------------------------------------- repair (v31)
@@ -118,7 +143,9 @@ def rematch(deps_path: Path, out_path: Path) -> None:
         save_frame(pd.DataFrame({c: pd.Series(dtype=float) for c in REMATCH_OUTPUT_COLUMNS}), out_path)
 
 
-# ---------------------------------------------------------------- stack (v31 -> v35)
+
+
+# ---------------------------------------------------------------- stack (v31 -> v35 / v36)
 
 def queue_segments(regular: pd.DataFrame, rematch_out: pd.DataFrame, callsign_ids: set) -> pd.DataFrame:
     """run_queue_trust.segments on the run's own tables: regular gate matches (the residual match dir, matches_v11's stands) plus the
@@ -134,16 +161,45 @@ def queue_segments(regular: pd.DataFrame, rematch_out: pd.DataFrame, callsign_id
     return seg.set_index(ID)
 
 
-def weights() -> dict:
-    """The shipped layers' parameters, read from their declarations (v35 = the user's override of u300 + cs50 + qt75 on regular matches)."""
-    decls = {k: read_json(ROOT / p) for k, p in DECLARATIONS.items()}
-    return {"gate": decls["gate"]["candidates"][V35["gate"]], "callsign": float(decls["callsign"]["candidates"][V35["callsign"]]["weight"]),
-            "queue": float(decls["queue"]["candidates"][V35["queue"]]["weight"]), "queue_source": V35["queue_source"],
-            "declarations": {p: {"sha256": sha256_file(ROOT / p), "object_hash": object_hash(decls[k])} for k, p in DECLARATIONS.items()}}
+def peers(raw_path: Path) -> pd.DataFrame:
+    """tools/peer_congestion.peer_table on the movement file itself (its departures' own NM clocks; label-free)."""
+    return peer_table(pd.read_parquet(raw_path, columns=PEER_COLUMNS))
 
 
-def compute(detail: pd.DataFrame, repaired_v30: np.ndarray | None, rematch_path: Path, regular: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
-    """`detail`: the recipe stage's detail (v30's columns); `repaired_v30`: v30 on the repaired input in detail order (None: no repair)."""
+def layer_specs() -> dict:
+    """export_stack.layers' arguments per layer set, from the declarations (v35 / v36 / v37 / v38 = the user's overrides recorded in
+    docs/disagreement/export_v35.json .. export_v38.json)."""
+    queue = float(read_json(ROOT / DECLARATIONS["queue"])["candidates"][V35["queue"]]["weight"])
+    bundle = read_json(ROOT / DECLARATIONS["peer"])["candidates"][V36["peer"]]
+    stretch = read_json(ROOT / DECLARATIONS["stretch"])["candidates"][V37["stretch"]]
+    if stretch["control"] != "v35":
+        raise ValueError("v37's stretch is declared on the v35 stack.")
+    two = read_json(ROOT / DECLARATIONS["stretch2"])["candidates"][V38["stretch"]]
+    base = {"queue": queue, "queue_source": V35["queue_source"], "mix_up": None, "peer": False, "stretch": None, "stretch_lower": None}
+    return {"v35": base, "v36": {**base, "mix_up": float(bundle["net_up"]), "peer": True}, "v37": {**base, "stretch": float(stretch["t"])},
+            "v38": {**base, "stretch": float(two["t_upper"]), "stretch_lower": float(two["t_lower"])}}
+
+
+@contextmanager
+def run_tables(callsign: pd.DataFrame, segments: pd.DataFrame, peer: pd.DataFrame):
+    """tools/export_stack with its three ranking-bound readers answering from the run's own tables: scope_table (the declared ranking
+    rematch outputs), segments (matches_v11's 2026 months) and ranking_peers (data/raw/ranking.parquet). Everything else is its own code."""
+    import export_stack
+    patches = {"scope_table": lambda decl: callsign.copy(), "segments": lambda months: segments.copy(), "ranking_peers": lambda: peer.copy()}
+    saved = {name: getattr(export_stack, name) for name in patches}
+    try:
+        for name, function in patches.items():
+            setattr(export_stack, name, function)
+        yield export_stack
+    finally:
+        for name, function in saved.items():
+            setattr(export_stack, name, function)
+
+
+def compute(detail: pd.DataFrame, repaired_v30: np.ndarray | None, rematch_path: Path, regular: pd.DataFrame,
+            peer: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+    """`detail`: the recipe stage's detail (v30's columns); `repaired_v30`: v30 on the repaired input in detail order (None: no repair);
+    `regular`: the run's residual match tables; `peer`: peers() of the file. Returns v30 .. v34 and both layer sets' values and masks."""
     ids = detail[ID].to_numpy()
     v30 = detail["v30"].to_numpy(dtype=float)
     # the detail must be v30's recipe under both frozen rebuilds (export_v33 at 0.7; export_fair_weights at v30's outer and LIRF weights)
@@ -154,46 +210,39 @@ def compute(detail: pd.DataFrame, repaired_v30: np.ndarray | None, rematch_path:
     effect = np.zeros(len(ids)) if repaired_v30 is None else np.asarray(repaired_v30, dtype=float) - v30
     if not np.isfinite(effect).all():
         raise ValueError("The repair effect has non-finite values.")
+    # tools/export_disagreement_gate.rebuild_v34's arithmetic, with the file's own v30 in place of the recorded ranking v30
     v31 = np.maximum(v30 + LFPG_WEIGHT * effect, FLOOR)
     v33 = np.maximum(v31 + export_v33.recipe(detail, 1.0, 0.6, 0.7) - export_v33.recipe(detail, 0.7, 0.7, 0.7), FLOOR)
     at33, at34 = recipe(detail, V33_OUTER, V33_LIRF), recipe(detail, V33_OUTER, V34_LIRF)
     v34 = np.maximum(v33 + at34 - at33, FLOOR)
 
-    w = weights()
-    gdelta, gate_masks = gate_delta(detail, w["gate"], at34)
-    if np.any(gdelta[~(gate_masks["unm_up"] | gate_masks["mat_down"] | gate_masks["lirf_up"])] != 0) or not np.isfinite(gdelta).all():
-        raise ValueError("The gate delta touches rows outside its masks.")
-    values = np.maximum(v34 + gdelta, FLOOR)
-    after_gate = values.copy()
-
     rematch_out = pd.read_parquet(rematch_path)
-    cs = scope_table({"rematch": {"outputs": {rematch_path.as_posix(): sha256_file(rematch_path)}}})
-    off_cs = offsets()
-    s = cs.set_index(ID).reindex(ids)
-    cs_in = s["motion_start"].notna().to_numpy()
-    cs_taxi = s["takeoff"].to_numpy() - s["motion_start"].to_numpy() + np.array([off_cs.get(a, np.nan) for a in s["airport"].fillna("")])
-    values[cs_in] = np.maximum(w["callsign"] * cs_taxi[cs_in] + (1 - w["callsign"]) * values[cs_in], FLOOR)
-    after_callsign = values.copy()
-
-    seg = queue_segments(regular, rematch_out, set(cs[ID])).reindex(ids)
-    off = offsets_all()
-    q_in = seg["in_scope"].fillna(False).to_numpy(dtype=bool)
-    if w["queue_source"] == "regular":
-        q_in &= seg["source"].eq("regular").to_numpy()
-    q_taxi = seg["taxi"].to_numpy() + np.array([off.get(a, np.nan) for a in seg["airport"].fillna("")])
-    values[q_in] = np.maximum(w["queue"] * q_taxi[q_in] + (1 - w["queue"]) * values[q_in], FLOOR)
-    if not np.isfinite(values).all():
-        raise ValueError("Non-finite v35 values.")
-
+    callsign = scope_table({"rematch": {"outputs": {rematch_path.as_posix(): sha256_file(rematch_path)}}})
+    segments = queue_segments(regular, rematch_out, set(callsign[ID]))
+    if not np.array_equal(np.sort(peer[ID].to_numpy()), np.sort(ids)):
+        raise ValueError("The peer table does not cover exactly the file's departures.")
     frame = pd.DataFrame({ID: ids, "airport": detail["airport"].to_numpy(), "month": detail["month"].to_numpy(), "scope": detail["scope"].to_numpy(),
-                          "v30": v30, "repair_effect": effect, "v31": v31, "v33": v33, "v34": v34, "after_gate": after_gate,
-                          "after_callsign": after_callsign, "v35": values, "layer_gate": gdelta != 0, "layer_callsign": cs_in, "layer_queue": q_in,
-                          "callsign_taxi": np.where(cs_in, cs_taxi, np.nan), "queue_taxi": np.where(q_in, q_taxi, np.nan)})
-    record = {"recipe_checks_max_abs": checks, "lfpg_weight": LFPG_WEIGHT, "floor_seconds": FLOOR,
-              "v33_outer": V33_OUTER, "v33_lirf": V33_LIRF, "v34_lirf": V34_LIRF, "layers": {**{k: v for k, v in w.items() if k != "declarations"}, "shipped_as": V35},
-              "declarations": w["declarations"], "offsets_callsign_s": off_cs, "offsets_queue_s": off,
-              "rows": {"repair_effect_nonzero": int((effect != 0).sum()), "gate": int((gdelta != 0).sum()),
-                       **{f"gate_{k}": int(v.sum()) for k, v in gate_masks.items()}, "callsign": int(cs_in.sum()), "queue": int(q_in.sum()),
-                       "queue_scope_any_source": int(seg["in_scope"].fillna(False).to_numpy(dtype=bool).sum())},
-              "rematch_rows": int(len(rematch_out)), "floored_rows_v35": int((values == FLOOR).sum())}
+                          "v30": v30, "repair_effect": effect, "v31": v31, "v33": v33, "v34": v34})
+    specs = layer_specs()
+    rows: dict = {"repair_effect_nonzero": int((effect != 0).sum())}
+    with run_tables(callsign, segments, peer) as export_stack:
+        for name, spec in specs.items():
+            values, masks = export_stack.layers(v34, detail, at34, ids, spec["queue"], spec["queue_source"], spec["mix_up"], spec["peer"], spec["stretch"],
+                                                spec["stretch_lower"])
+            if not np.isfinite(values).all():
+                raise ValueError(f"Non-finite {name} values.")
+            frame[name] = values
+            for layer, mask in masks.items():
+                frame[f"{name}_{layer}"] = np.asarray(mask, dtype=bool)
+            rows[name] = {layer: int(np.sum(mask)) for layer, mask in masks.items()}
+            rows[name]["floored"] = int((values == FLOOR).sum())
+    record = {"recipe_checks_max_abs": checks, "lfpg_weight": LFPG_WEIGHT, "floor_seconds": FLOOR, "v33_outer": V33_OUTER, "v33_lirf": V33_LIRF,
+              "v34_lirf": V34_LIRF, "layer_sets": specs, "shipped_as": {"v35": V35, "v36": V36, "v37": V37, "v38": V38},
+              "declarations": {p: {"sha256": sha256_file(ROOT / p), "object_hash": object_hash(read_json(ROOT / p))} for p in DECLARATIONS.values()},
+              "results": {p: sha256_file(ROOT / p) for p in RESULTS},
+              "stretch_k": {"v37": read_json(ROOT / RESULTS[0])["candidates"][V37["stretch"]]["k_all_months"],
+                            "v38": read_json(ROOT / RESULTS[1])["candidates"][V38["stretch"]]["k_all_months"]},
+              "code": {p: sha256_file(ROOT / p) for p in CODE}, "offsets_callsign_s": offsets(), "offsets_queue_s": offsets_all(),
+              "rows": rows, "rematch_rows": int(len(rematch_out)), "callsign_scope_rows": int(len(callsign)),
+              "peer": {"departures": int(len(peer)), "rows_with_5_peers": int((peer["peer_n"] >= 5).sum()), "no_clock": int(peer["no_clock"].sum())}}
     return frame, record

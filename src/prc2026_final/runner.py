@@ -18,7 +18,7 @@ from . import adsb, features, leaves, networks, recipe, residual, tokens, v9
 from .common import ROOT, Run, departures_of, inspect, load_movements, save_frame
 
 CHAIN = ["features", "adsb", "tokens", "v9", "leaves", "networks", "residual", "recipe"]  # v30 on the file (also run on the repaired input)
-STAGES = CHAIN + ["repair", "rematch", "stack", "final"]  # default order: v30 -> v35 and the v35 file
+STAGES = CHAIN + ["repair", "rematch", "stack", "final"]  # default order: v30 -> v35 / v36 and the chosen layer set's file
 EXTRA_STAGES = ["export"]  # v30's own integer file (component check against the uploaded v30); run only when named
 
 
@@ -32,6 +32,7 @@ class Options:
     detail_ensembles: bool = False
     vocab_cache: Path | None = None
     repair_root: Path | None = None
+    layers: str = "v35"  # the final file's layer set: v35 (the uploaded incumbent; default until another is uploaded), v36, v37 or v38
 
 
 class Context:
@@ -298,25 +299,42 @@ def stage_stack(ctx: Context) -> dict:
             raise ValueError(f"{path} changed after the repair receipt was written.")
         repaired = pd.read_parquet(path, columns=[ID, "v30"]).set_index(ID)["v30"].reindex(ctx.ids).to_numpy(dtype=float)
     regular = pd.concat([pd.read_parquet(ctx.run.root / "adsb" / "residual" / f"matches2_{m}.parquet") for m in ctx.months], ignore_index=True)
-    frame, record = stack.compute(detail, repaired, ctx.run.root / "rematch" / "out.parquet", regular)
+    peer = stack.peers(ctx.raw_path)
+    peer_out = save_frame(peer, ctx.run.path("stack", "peers.parquet"))
+    frame, record = stack.compute(detail, repaired, ctx.run.root / "rematch" / "out.parquet", regular, peer)
     flagged = {(f["airport"], f["month"]) for f in rep["flagged"]}
     in_flagged = np.array([(a, m) in flagged for a, m in zip(frame["airport"], frame["month"])], dtype=bool)
     record["rows"]["repair_effect_nonzero_outside_flagged"] = int(((frame["repair_effect"].to_numpy() != 0) & ~in_flagged).sum())
     out = save_frame(frame, ctx.run.path("stack", "detail.parquet"))
-    return ctx.run.finish("stack", record, [out], started)
+    return ctx.run.finish("stack", record, [out, peer_out], started)
 
 
-def stage_final(ctx: Context, version: int) -> dict:
-    """The v35 integer file in the template's order (export_submission), inside the run root."""
+RECIPES = {"v35": "v35: v30 + EOBT_1 repair 0.5 + v33/v34 weights + u300 + callsign fix 0.5 + queue trust 0.75 (regular matches)",
+           "v36": "v36: v35's layers after the mu600 mix gate, then the peer-congestion lifts (configs/higher_bundle_v2.json mu_pc_pcc)",
+           "v37": "v37: v35, then the tail stretch above 1,500 s (configs/tail_stretch_v1.json v35_t1500, four-month k)",
+           "v38": "v38: v35, then the two-sided stretch (above 1,500 s, below 900 s; configs/tail_stretch_v2.json two_sided_900, four-month k)"}
+
+
+def receipt_key(stage: str, options: Options) -> str:
+    """The final stage keeps one receipt per layer set (stages/final-v35.json, stages/final-v36.json), so both files can live in one root."""
+    return f"final-{options.layers}" if stage == "final" else stage
+
+
+def stage_final(ctx: Context, version: int, layers: str) -> dict:
+    """The chosen layer set's integer file in the template's order (export_submission), inside the run root."""
+    from .stack import LAYER_SETS
+    if layers not in LAYER_SETS:
+        raise ValueError(f"--layers must be one of {LAYER_SETS}")
     started = time.time()
-    frame = pd.read_parquet(ctx.run.root / "stack" / "detail.parquet", columns=[ID, "v35"])
+    ctx.run.verify_outputs("stack")
+    frame = pd.read_parquet(ctx.run.root / "stack" / "detail.parquet", columns=[ID, layers])
     output = ctx.run.path("final", f"vigorous-whistle_v{version}.parquet")
-    provenance = {"runner": "tools/final_predict.py", "recipe": "v35 (v30 + LFPG-type EOBT_1 repair 0.5 + v33/v34 weights + u300 + callsign fix 0.5 + queue trust 0.75 regular)",
+    provenance = {"runner": "tools/final_predict.py", "layers": layers, "recipe": RECIPES[layers],
                   "input": {k: ctx.meta[k] for k in ["raw", "raw_sha256", "template", "template_sha256", "months", "departures"]},
                   "stages": {s: sha256_file(ctx.run.receipt_path(s)) for s in STAGES[:-1]},
                   "note": "written into the run root only; never copied to runs/submissions or uploaded by this tool"}
-    receipt = export_submission(pd.DataFrame({ID: frame[ID].to_numpy(), "prediction": frame["v35"].to_numpy(dtype=float)}), ctx.template, output, provenance)
-    return ctx.run.finish("final", {"receipt": receipt}, [output, output.with_suffix(".receipt.json")], started)
+    receipt = export_submission(pd.DataFrame({ID: frame[ID].to_numpy(), "prediction": frame[layers].to_numpy(dtype=float)}), ctx.template, output, provenance)
+    return ctx.run.finish(f"final-{layers}", {"layers": layers, "version": version, "receipt": receipt}, [output, output.with_suffix(".receipt.json")], started)
 
 
 def run_stage(ctx: Context, stage: str, options: Options) -> dict:
@@ -348,5 +366,5 @@ def run_stage(ctx: Context, stage: str, options: Options) -> dict:
     if stage == "export":
         return stage_export(ctx, options.version)
     if stage == "final":
-        return stage_final(ctx, options.version)
+        return stage_final(ctx, options.version, options.layers)
     raise SystemExit(f"Unknown stage {stage}")

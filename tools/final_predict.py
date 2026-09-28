@@ -1,4 +1,4 @@
-"""The v35 incumbent on any movement file with the ranking file's schema, from the saved models only (docs/final_file/runner.md).
+"""v35 (or v36 / v37 / v38 with --layers) on any movement file with the ranking file's schema, from the saved models only (docs/final_file/runner.md).
 
 Subcommands (all take --root, a fresh directory per input file; every stage is resumable and writes <root>/stages/<stage>.json last):
   inspect      --raw F --template T   schema, months, arrivals, departures vs the template -> <root>/input.json
@@ -13,7 +13,7 @@ Subcommands (all take --root, a fresh directory per input file; every stage is r
   refit-adj2   --month M              the declared residual adj2 refit for a target month without a saved booster (~5 min, 16 threads)
   run          [--stages ...]         features, adsb, tokens, v9, leaves, networks, residual, recipe (v30), repair (v31's EOBT_1 detector;
                                       a flag reruns features..recipe on the edited input in <root>/repair/run, or --repair-root reuses one),
-                                      rematch (the callsign fix's ADS-B rematch), stack (v31 -> v35), final (default: all pending);
+                                      rematch (the callsign fix's ADS-B rematch), stack (v31 -> v35 .. v38), final (--layers v35|v36|v37|v38; default: all pending);
                                       `export` (v30's own file) runs only when named
 Nothing is uploaded and nothing is written to runs/submissions; the final stage writes <root>/final/vigorous-whistle_v<N>.parquet.
 """
@@ -50,6 +50,9 @@ def main() -> None:
                         help="a completed run root (features..recipe) of this file's EOBT_1-repaired input, reused by the repair stage instead of "
                              "running the chain in <root>/repair/run; refused unless its input has exactly the repair's content "
                              "(the ranking file: runs/final_lfpg_eobt/run)")
+    parser.add_argument("--layers", choices=["v35", "v36", "v37", "v38"], default="v35",
+                        help="the final stage's layer set, recorded in its receipt (stages/final-<layers>.json): v35 (default: the uploaded "
+                             "incumbent), v36 (mu600 mix gate + peer-congestion lifts), v37 (tail stretch above 1,500 s) or v38 (two-sided stretch)")
     parser.add_argument("--month", default=None)
     parser.add_argument("--execute", action="store_true")
     args = parser.parse_args()
@@ -77,14 +80,16 @@ def main() -> None:
     ctx = runner.Context(run)
     options = runner.Options(threads=args.threads, workers=args.workers, weather_inventory=args.weather_inventory, allow_missing_weather=args.allow_missing_weather,
                              version=args.version, detail_ensembles=args.detail_ensembles, vocab_cache=args.vocab_cache,
-                             repair_root=(ROOT / args.repair_root if not args.repair_root.is_absolute() else args.repair_root) if args.repair_root else None)
+                             repair_root=(ROOT / args.repair_root if not args.repair_root.is_absolute() else args.repair_root) if args.repair_root else None,
+                             layers=args.layers)
     stages = args.stages or runner.STAGES
     for stage in stages:
         if stage not in runner.STAGES + runner.EXTRA_STAGES:
             raise SystemExit(f"Unknown stage {stage}")
-        if run.done(stage):
-            run.verify_outputs(stage)
-            print(stage, "done (receipt present; outputs verified)", flush=True)
+        key = runner.receipt_key(stage, options)
+        if run.done(key):
+            run.verify_outputs(key)
+            print(key, "done (receipt present; outputs verified)", flush=True)
             continue
         started = time.time()
         runner.run_stage(ctx, stage, options)

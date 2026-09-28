@@ -1,0 +1,204 @@
+{
+  "created_at_utc": "2026-09-28T03:23:36.553144+00:00",
+  "floats": {
+    "export_stack_layers_on_runner_v34_max_abs": 0.0,
+    "noise_identity": {
+      "max_abs": 3.503711210051108e-12,
+      "rows": 344839,
+      "rows_excluded_stretch_boundary": 0,
+      "v30_noise_max_abs": 6.32495893086616,
+      "v30_noise_rms": 0.030752304827054284
+    },
+    "repair_effect_minus_export_lfpg_effect_max_abs": 0.0,
+    "runner_minus_shipped": {
+      "max_abs": 6.861188906496409,
+      "p99_abs": 0.023369151587030415,
+      "rms": 0.03170932451658702
+    },
+    "runner_v34_minus_shipped_v34": {
+      "max_abs": 6.32495893086525,
+      "rms": 0.030752304827053083
+    }
+  },
+  "integers": {
+    "differences_histogram": {
+      "-1": 601,
+      "-2": 3,
+      "-3": 3,
+      "-4": 4,
+      "-5": 1,
+      "-6": 3,
+      "1": 551,
+      "2": 4,
+      "3": 2,
+      "4": 1,
+      "7": 1
+    },
+    "final_file": "final/vigorous-whistle_v937.parquet",
+    "final_sha256": "b7dc3f184efc858a85140ff13cf7db80e03c25b24591938ab9e663ff8631a683",
+    "identical_file": false,
+    "max_abs_difference_s": 7,
+    "rows_differing": 1174,
+    "rows_differing_by_airport": {
+      "EDDF": 136,
+      "EDDM": 68,
+      "EGLL": 212,
+      "EHAM": 134,
+      "LEBL": 85,
+      "LEMD": 117,
+      "LFPG": 137,
+      "LIRF": 5,
+      "LSZH": 63,
+      "LTFM": 217
+    },
+    "rows_differing_in_layers": {
+      "callsign": 0,
+      "mix_gate": 0,
+      "queue": 3,
+      "stretch_tracked": 202,
+      "stretch_untracked": 128,
+      "u300": 19
+    },
+    "rows_differing_lfpg_july": 55,
+    "rows_differing_outside_layers": 840,
+    "rows_differing_that_also_flip_in_the_v30_dry_run": 171,
+    "shipped_sha256": "edb11dce04a61f18fb15da26f2e88c8eaf8c7a83fc0f745fada350d6f18c1d4f",
+    "v30_dryrun_flip_rows": 1141
+  },
+  "layers": {
+    "callsign": {
+      "recorded": 163,
+      "rows": 163,
+      "rows_differing_from_export_stack_masks": 0,
+      "rows_differing_from_the_shipped_masks": 0
+    },
+    "mix_gate": {
+      "recorded": 0,
+      "rows": 0,
+      "rows_differing_from_export_stack_masks": 0,
+      "rows_differing_from_the_shipped_masks": 0
+    },
+    "queue": {
+      "recorded": 161,
+      "rows": 161,
+      "rows_differing_from_export_stack_masks": 0,
+      "rows_differing_from_the_shipped_masks": 0
+    },
+    "stretch_tracked": {
+      "recorded": 21299,
+      "rows": 21299,
+      "rows_differing_from_export_stack_masks": 0,
+      "rows_differing_from_the_shipped_masks": 0
+    },
+    "stretch_untracked": {
+      "recorded": 9982,
+      "rows": 9982,
+      "rows_differing_from_export_stack_masks": 0,
+      "rows_differing_from_the_shipped_masks": 0
+    },
+    "u300": {
+      "recorded": 758,
+      "rows": 758,
+      "rows_differing_from_export_stack_masks": 0,
+      "rows_differing_from_the_shipped_masks": 0
+    }
+  },
+  "layers_pass": true,
+  "peers": {
+    "exact": {
+      "columns_differing": {},
+      "rows": [
+        344841,
+        344841
+      ],
+      "same_columns": true,
+      "same_ids": true
+    },
+    "pass": true
+  },
+  "receipts": {
+    "adsb": "a8a3bf083df6cc09232f1971e0118940779e1d21b6754905e07e682da8e9b6bd",
+    "features": "35d73a438643ed0df792d1f910248358a0665c3e418a98f9de6ec28d941fe002",
+    "final-v37": "181dc18782449d372e7cb618fea0000e1f295419b9312abe603bd33985d4d1c7",
+    "leaves": "dc4964abe81f5f1b61084a5bba82e56eb131f0a7802e22af23b97ee1b5485331",
+    "networks": "c0f7d97de6276ff62c6b1fb28738006da6c3f0c098132f024490ac1845d36272",
+    "recipe": "44d456f8fdc1ba08afcffe7df33837a8f4ac400371a43042e398a15c3c096cd5",
+    "rematch": "ce6fd991e2a98d3fb8c2ea0701e21761af2ed6ece2cd7424831e866617181cfc",
+    "repair": "6912fe841360db4aac17046cbe5d1308242eaff2be555d08da7ba99ef07070d9",
+    "residual": "8e863b2fbee37f2326a81d4a0647e1e7f0f40b935c646ab116f216e43da9608d",
+    "stack": "c9c3cbc695dda58b08a4da93011dedd641ef84a2a8fcb9ce8fe809f4297b7c48",
+    "tokens": "37d4b2e3863a4abf9fa2ba3baac2d2937f11463580fb269f646338f35b65c92d",
+    "v9": "598c81946a3175c8959fec76cc4ba71e289c7155925a0598ab915d12ff669fa7"
+  },
+  "rematch": {
+    "exact": {
+      "columns_differing": {
+        "iata_mapped_taxi_path_m": 5
+      },
+      "rows": [
+        1627,
+        1627
+      ],
+      "same_columns": true,
+      "same_ids": true
+    },
+    "pass": true,
+    "within_1e-6": {
+      "columns_differing": {},
+      "rows": [
+        1627,
+        1627
+      ],
+      "same_columns": true,
+      "same_ids": true
+    }
+  },
+  "repair": {
+    "closest_unflagged": [
+      {
+        "airport": "LEMD",
+        "margin": -0.018206168412946144,
+        "month": "2026-01",
+        "share": 0.2189025116057612,
+        "threshold": 0.23710868001870736
+      },
+      {
+        "airport": "LTFM",
+        "margin": -0.02324362368726258,
+        "month": "2026-07",
+        "share": 0.009608894183045464,
+        "threshold": 0.032852517870308046
+      },
+      {
+        "airport": "LTFM",
+        "margin": -0.029950213887453964,
+        "month": "2026-01",
+        "share": 0.0029023039828540813,
+        "threshold": 0.032852517870308046
+      }
+    ],
+    "edited_rows": 7510,
+    "edited_rows_recorded": 7510,
+    "effect_nonzero_outside_lfpg_july": 0,
+    "effect_nonzero_rows": 21575,
+    "flagged": [
+      {
+        "airport": "LFPG",
+        "month": "2026-07"
+      }
+    ],
+    "pass": true,
+    "recorded_input_sha256": "cc474432b2f165ff00a0c98ece177a88b2b15f60eeb962533dad59920e595079",
+    "repair_input_sha256": "cc474432b2f165ff00a0c98ece177a88b2b15f60eeb962533dad59920e595079"
+  },
+  "root": "runs/final_dryrun/run",
+  "shipped": {
+    "file": "runs/submissions/vigorous-whistle_v37.parquet",
+    "lower": null,
+    "mix_up": null,
+    "peer": false,
+    "record": "docs/disagreement/export_v37.json",
+    "sha256": "edb11dce04a61f18fb15da26f2e88c8eaf8c7a83fc0f745fada350d6f18c1d4f",
+    "stretch": 1500.0
+  }
+}

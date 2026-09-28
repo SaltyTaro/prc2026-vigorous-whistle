@@ -1,4 +1,4 @@
-"""Final-file runner, v31 -> v35 stages (src/prc2026_final/stack.py): EOBT_1 detector, the reset edit and the stack arithmetic."""
+"""Final-file runner, v31 -> v35 .. v38 stages (src/prc2026_final/stack.py): EOBT_1 detector, the reset edit and the stack arithmetic."""
 from __future__ import annotations
 
 import sys
@@ -47,20 +47,26 @@ def test_reset_edits_only_later_eobt1_departures_of_flagged_airport_months():
     assert stack.same_content(frame, frame.copy()) and not stack.same_content(frame, edited)
 
 
-def test_stack_arithmetic_on_the_eight_routes(tmp_path, monkeypatch):
-    """Hand-computed v31 -> v35 on: LTFM, matched EDDF (+ repair effect), unmatched EDDF above the u300 gate, LIRF unmatched / matched /
-    fill population, an EHAM callsign-fix row and an EHAM regular queue-shaped match."""
-    monkeypatch.setattr(stack, "offsets", lambda: {"EDDF": 0.0, "EHAM": 10.0})
-    monkeypatch.setattr(stack, "offsets_all", lambda: {"EHAM": 5.0})
-    ids = np.arange(1.0, 9.0)
-    detail = pd.DataFrame({"MVT_ID_mvt": ids, "airport": ["LTFM", "EDDF", "EDDF", "LIRF", "LIRF", "LIRF", "EHAM", "EHAM"], "month": "2026-01",
-                           "scope": ["all_no_lirf", "matched_no_lirf", "all_no_lirf", "lirf_nonpop_unmatched", "lirf_nonpop_matched", "fixed", "all_no_lirf", "matched_no_lirf"],
-                           "v9": [1000.0, 600.0, 500.0, 1000.0, 900.0, 5000.0, 800.0, 900.0], "residual": [0.0, 20.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-                           "committee_mix": [1100.0, 700.0, 900.0, 1.0, 1.0, 1.0, 820.0, 1000.0],
-                           "ens_ctx_lirf": [0.0, 0.0, 0.0, 1200.0, 980.0, 7.0, 0.0, 0.0], "ens_v22_lirf_q": [0.0, 0.0, 0.0, 1100.0, 950.0, 3.0, 0.0, 0.0]})
+def test_stack_arithmetic_on_the_routes(tmp_path, monkeypatch):
+    """Hand-computed v31 -> v35, v36, v37 and v38 on: LTFM, matched EDDF (+ repair effect), unmatched EDDF above the u300 gate, LIRF unmatched /
+    matched / fill population, an EHAM callsign-fix row, an EHAM regular queue-shaped match, an EGLL row whose nets exceed the committee
+    by 800 s (mu600), an EGLL no-clock row in a congested hour (peer lift) and an untracked / a tracked LSZH row above 1,500 s (stretch)."""
+    import export_stack
+    for module in (stack, export_stack):
+        monkeypatch.setattr(module, "offsets", lambda: {"EDDF": 0.0, "EHAM": 10.0})
+        monkeypatch.setattr(module, "offsets_all", lambda: {"EHAM": 5.0})
+    ids = np.arange(1.0, 13.0)
+    committee = np.array([1100.0, 700.0, 900.0, 1.0, 1.0, 1.0, 820.0, 1000.0, 400.0, 900.0, 2000.0, 3000.0])
+    nets = np.array([1100.0, 700.0, 900.0, 1.0, 1.0, 1.0, 820.0, 1000.0, 1200.0, 900.0, 2000.0, 3000.0])
+    detail = pd.DataFrame({"MVT_ID_mvt": ids, "airport": ["LTFM", "EDDF", "EDDF", "LIRF", "LIRF", "LIRF", "EHAM", "EHAM", "EGLL", "EGLL", "LSZH", "LSZH"], "month": "2026-01",
+                           "scope": ["all_no_lirf", "matched_no_lirf", "all_no_lirf", "lirf_nonpop_unmatched", "lirf_nonpop_matched", "fixed", "all_no_lirf",
+                                     "matched_no_lirf", "all_no_lirf", "all_no_lirf", "all_no_lirf", "matched_no_lirf"],
+                           "v9": [1000.0, 600.0, 500.0, 1000.0, 900.0, 5000.0, 800.0, 900.0, 1000.0, 900.0, 2000.0, 3000.0], "residual": [0.0, 20.0] + [0.0] * 10,
+                           "committee": committee, "ens_ctx_e24": nets, "ens_ctx_e24b": nets, "ens_ctx_e32": nets, "committee_mix": 0.25 * committee + 0.75 * nets,
+                           "ens_ctx_lirf": [0.0, 0.0, 0.0, 1200.0, 980.0, 7.0] + [0.0] * 6, "ens_v22_lirf_q": [0.0, 0.0, 0.0, 1100.0, 950.0, 3.0] + [0.0] * 6})
     detail["v30"] = [0.3 * 1000 + 0.7 * 1100, 0.3 * 620 + 0.7 * 700, 0.3 * 500 + 0.7 * 900, 0.40 * 1000 + 0.35 * 1200 + 0.25 * 1100,
-                     0.15 * 900 + 0.40 * 980 + 0.45 * 950, 5000.0, 0.3 * 800 + 0.7 * 820, 0.3 * 900 + 0.7 * 1000]
-    repaired = detail["v30"].to_numpy() + np.array([0, 100.0, 0, 0, 0, 0, 0, 0])
+                     0.15 * 900 + 0.40 * 980 + 0.45 * 950, 5000.0, 0.3 * 800 + 0.7 * 820, 0.3 * 900 + 0.7 * 1000, 1000.0, 900.0, 2000.0, 3000.0]
+    repaired = detail["v30"].to_numpy() + np.array([0, 100.0] + [0.0] * 10)
     takeoff = 1.8e9
     rematch = pd.DataFrame({"MVT_ID_mvt": [7.0], "airport": ["EHAM"], "flight": ["KL1"], "mapped": ["KLM1"], "takeoff": [takeoff], "key_icao": [None],
                             "iata_mapped_icao": ["abc123"], "iata_mapped_gate": [True], "iata_mapped_motion_start": [takeoff - 2000.0],
@@ -69,26 +75,51 @@ def test_stack_arithmetic_on_the_eight_routes(tmp_path, monkeypatch):
     rematch.to_parquet(path, index=False)
     regular = pd.DataFrame({"MVT_ID_mvt": [8.0, 2.0], "airport": ["EHAM", "EDDF"], "gate": [True, True], "takeoff": [takeoff, takeoff],
                             "motion_start": [takeoff - 4000.0, takeoff - 700.0], "taxi_stops": [6.0, 0.0], "taxi_stopped_s": [1000.0, 0.0], "taxi_path_m": [6000.0, 2000.0]})
-    frame, record = stack.compute(detail, repaired, path, regular)
-    expected = [1100.0,                                   # LTFM: outer weight 1.0
-                0.4 * 620 + 0.6 * 700 + 0.5 * 100,        # matched EDDF: outer 0.6, plus half the repair effect
-                900.0,                                    # unmatched EDDF, mix - base = 400 > 300: the mix
-                (0.35 * 1200 + 0.25 * 1100) / 0.60,       # LIRF unmatched: v9 share 0, net:tree 0.35:0.25
-                0.15 * 900 + 0.40 * 980 + 0.45 * 950,     # LIRF matched: unchanged
-                5000.0,                                   # fill population: v30
-                0.5 * (2000 + 10) + 0.5 * (0.3 * 800 + 0.7 * 820),   # callsign fix 50%
-                0.75 * (4000 + 5) + 0.25 * (0.4 * 900 + 0.6 * 1000)]  # queue trust 0.75 on a regular match
-    assert np.allclose(frame["v35"].to_numpy(), expected, rtol=0, atol=1e-9)
-    assert frame["layer_gate"].tolist() == [False, False, True, False, False, False, False, False]
-    assert frame["layer_callsign"].tolist() == [False] * 6 + [True, False] and frame["layer_queue"].tolist() == [False] * 7 + [True]
-    assert record["rows"]["repair_effect_nonzero"] == 1 and record["layers"]["callsign"] == 0.5 and record["layers"]["queue"] == 0.75
+    # congested hours (peer_c > 600, >= 5 peers) on rows 2 (tracked), 3 (untracked, clock), 4 (LIRF) and 10 (no clock); row 1's hour is below
+    peer = pd.DataFrame({"MVT_ID_mvt": ids, "no_clock": [False, False, False, True, False, False, False, False, False, True, False, False],
+                         "peer_c": [500.0, 900.0, 650.0, 900.0, 0.0, 0.0, 0.0, 0.0, 0.0, 700.0, 0.0, 0.0], "peer_n": [9, 9, 5, 10, 0, 0, 0, 0, 0, 6, 0, 0]})
+    frame, record = stack.compute(detail, repaired, path, regular, peer)
+    v35 = [1100.0,                                   # LTFM: outer weight 1.0
+           0.4 * 620 + 0.6 * 700 + 0.5 * 100,        # matched EDDF: outer 0.6, plus half the repair effect
+           900.0,                                    # unmatched EDDF, mix - base = 400 > 300: the mix
+           (0.35 * 1200 + 0.25 * 1100) / 0.60,       # LIRF unmatched: v9 share 0, net:tree 0.35:0.25
+           0.15 * 900 + 0.40 * 980 + 0.45 * 950,     # LIRF matched: unchanged
+           5000.0,                                   # fill population: v30
+           0.5 * (2000 + 10) + 0.5 * (0.3 * 800 + 0.7 * 820),   # callsign fix 50%
+           0.75 * (4000 + 5) + 0.25 * (0.4 * 900 + 0.6 * 1000),  # queue trust 0.75 on a regular match
+           1000.0, 900.0, 2000.0, 3000.0]
+    v36 = list(v35)
+    v36[2] += 50.0                                   # untracked, own clock, congested hour
+    v36[8] = 0.3 * 1000 + 0.7 * 1200                 # nets - committee = 800 > 600: network share 1.0
+    v36[9] += 100.0                                  # no clock, congested hour
+    from prc2026.artifacts import read_json
+    k = read_json(ROOT / "docs/disagreement/tail_stretch_v1_results.json")["candidates"]["v35_t1500"]["k_all_months"]
+    v37 = list(v35)
+    v37[10] += k["untracked"] * (2000 - 1500)          # untracked above 1,500 s (the queue row, 3,244 s, is anchored; LIRF 5,000 s excluded)
+    v37[11] += k["tracked"] * (3000 - 1500)
+    assert np.allclose(frame["v35"].to_numpy(), v35, rtol=0, atol=1e-9) and np.allclose(frame["v36"].to_numpy(), v36, rtol=0, atol=1e-9)
+    assert np.allclose(frame["v37"].to_numpy(), v37, rtol=0, atol=1e-9)
+    assert frame["v37_stretch_untracked"].tolist() == [False] * 10 + [True, False] and frame["v37_stretch_tracked"].tolist() == [False] * 11 + [True]
+    two = read_json(ROOT / "docs/disagreement/tail_stretch_v2_results.json")["candidates"]["two_sided_900"]["k_all_months"]
+    v38 = list(v37)                                  # the upper k is v37's; the lower stretch acts below 900 s on every unanchored non-LIRF row
+    v38[1] += two["tracked"][1] * (900 - v35[1])     # matched EDDF at 718 s
+    assert two["untracked"][0] == k["untracked"] and np.allclose(frame["v38"].to_numpy(), v38, rtol=0, atol=1e-9)
+    assert frame["v38_stretch_untracked"].tolist() == [True, False, True] + [False] * 5 + [True, True, True, False]
+    assert frame["v38_stretch_tracked"].tolist() == [False, True] + [False] * 9 + [True]  # the tracked queue row is anchored
+    assert frame["v35_u300"].tolist() == [False, False, True] + [False] * 9 and frame["v36_u300"].tolist() == frame["v35_u300"].tolist()
+    assert frame["v35_callsign"].tolist() == [False] * 6 + [True] + [False] * 5 and frame["v35_queue"].tolist() == [False] * 7 + [True] + [False] * 4
+    assert frame["v36_mix_gate"].tolist() == [False] * 8 + [True, False, False, False] and not frame["v35_mix_gate"].any()
+    assert frame["v36_peer_noclock"].tolist() == [False] * 9 + [True, False, False] and frame["v36_peer_clock_untracked"].tolist() == [False, False, True] + [False] * 9
+    assert record["rows"]["repair_effect_nonzero"] == 1 and record["layer_sets"]["v36"]["mix_up"] == 600.0
+    assert "v35_peer_noclock" not in frame.columns and "v36_stretch_tracked" not in frame.columns
+    assert export_stack.scope_table is not None and export_stack.ranking_peers.__module__ == "peer_congestion"  # readers restored
 
 
 def test_stack_refuses_a_detail_that_is_not_v30s_recipe(tmp_path):
     detail = pd.DataFrame({"MVT_ID_mvt": [1.0], "airport": ["EDDF"], "month": "2026-01", "scope": ["all_no_lirf"], "v9": [500.0], "residual": [0.0],
                            "committee_mix": [600.0], "ens_ctx_lirf": [0.0], "ens_v22_lirf_q": [0.0], "v30": [999.0]})
     with pytest.raises(ValueError, match="not v30's recipe"):
-        stack.compute(detail, None, tmp_path / "unused.parquet", pd.DataFrame())
+        stack.compute(detail, None, tmp_path / "unused.parquet", pd.DataFrame(), pd.DataFrame())
 
 
 def test_rematch_scope_is_the_declared_no_nm_eddf_eham_departures():
