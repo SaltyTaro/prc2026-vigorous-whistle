@@ -154,3 +154,21 @@ July 2026 rows are already scored by their own features). No calibration shift i
 summer months that resemble July 2026), but the declared rule was set for month-level consistency and it does not clear it. Shipping
 it is a user decision with the odds above; the stake on the ranking is of the order of ±0.5 s (population SSE ≈ 16–26% of the total,
 times 2.7–4%), on 372 rows.
+
+## Closed after v42 (28 September, 17:55–18:15 UTC; scratch only, nothing declared)
+
+- **UTC-day truncation of ADS-B tracks.** `tools/build_adsb_features.py` matches each departure against its own UTC day's surface
+  file only, so a track that crosses midnight is cut at 00:00 (the rematch tool already loads the previous day). On the ranking this
+  touches **55 matched rows** whose segment starts within 60 s of midnight (takeoffs 51 s to 3.5 h after midnight; the previous
+  day's file holds 24–303 ground points of the same aircraft for the first twelve checked) and a handful of 23:45–24:00 departures
+  whose airborne points fall in the next file. Not a lever at this size (well under 0.02 s); recorded for a future rebuild.
+- **No-NM departures outside EDDF/EHAM.** Of the 5,290 no-NM ranking departures, 383 are the LIRF population and the IATA-format
+  flight keys (1,276 unmatched rows) are all at EDDF/EHAM, which v35's callsign fix already covers. Every other airport's no-NM
+  rows carry ICAO callsigns and match at the airport's normal rate (EDDM 94–97%, EGLL 76–99%, LEBL 98%, LEMD 85–91%, LFPG 19–25%,
+  LSZH 26–28%, LTFM 0%). Nothing to rematch.
+- **ADS-B observation as the population's normal component.** 714 in-scope 2025 population rows have an ADS-B match (May–December;
+  none before May), 56 of the ranking's 107 January 2026 rows and 2 of July's. On normal-mode matched rows the observed taxi
+  (takeoff − motion start) has a tight core (label − observed median 481 s gate / 628 s dark, MAD 187–359 s) but the label's heavy
+  tail is not in the ADS-B: RMSE 2,874 / 3,108 s against the band median's 1,450 / 1,656 s. Replacing the band median by the
+  observed taxi plus a LOMO-fitted offset worsens the `pa` mixture in every month (12-month SSE +13% at full weight, +3.5% at half).
+  The population's "normal" labels are mostly block-time artefacts, not taxi observations. Closed.
