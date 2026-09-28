@@ -1,0 +1,30 @@
+{
+ "experiment_id": "tail_stretch_v1",
+ "declared_at_utc": "2026-09-28T03:16:00Z",
+ "audit_used": false,
+ "purpose": "Tail recalibration of the stacked prediction. On the LOMO / fair months the v35 stack is compressed: it over-predicts rows it puts at 300-600 s (-12 ... -25 s) and under-predicts rows it puts above 1,800 s in every month (2,400-3,600 s: untracked +109 / +257 / +287 / +151 s, tracked +47 / +282 / +141 / +95 s), as expected when calibrated components are averaged. The candidates stretch the upper tail, value + k x max(value - t, 0), with k FITTED by least squares on the other recipe months (never chosen by hand), separately for untracked and tracked non-LIRF rows. No model is fitted beyond that one coefficient per scope.",
+ "prior_context": {
+  "note": "Declared AFTER an exploratory leave-one-month-out read on these same four months with the v35 stack as control (disclosed): t = 1200 / 1500 / 1800 / 2400 gave mean -0.157 / -0.188 / -0.185 / -0.124%, every month better for every t; a linear per-scope recalibration -0.159%. LIRF was left out after its in-sample slopes proved unstable (0.95-1.29). The v36 control variant and the exclusion of observation-anchored rows were not read before this declaration.",
+  "ranking_exposure_label_free": "v35 has 4,067 rows at 2,400-3,600 s and 780 at 3,600-7,200 s (development: about 1,100 and 160 a month)"
+ },
+ "rows": "runs/lomo_dev/rows.parquet (SHA-256 9072bc730f2cac40b8d85633cc19d41967d88b19c6c97bd12cbb22b15d9c5ed5): 2025-01 and 2025-07 'lomo', 2025-11 and 2025-12 'fair'",
+ "recipe_months": ["2025-01", "2025-07", "2025-11", "2025-12"],
+ "controls": {
+  "v35": "tools/run_mix_gate.stack (v34 weights -> u300 -> callsign 50% -> queue trust 0.75 regular); must reproduce docs/disagreement/mix_gate_v1_results.json's control_rmse on November / December to 1e-6 s",
+  "v36": "tools/run_higher_bundle.layered with configs/higher_bundle_v2.json's mu_pc_pcc (v35 stack on the mu600 mix + peer-congestion lifts); must reproduce higher_bundle_v2_results.json's mu_pc_pcc RMSE on every month to 1e-6 s"
+ },
+ "scopes": "untracked = non-LIRF rows with matched false; tracked = non-LIRF rows with matched true; rows moved by the callsign fix or queue trust (observation-anchored) and all LIRF rows keep the control",
+ "fit": "for each held month, k_scope = sum(x * r) / sum(x^2) over the OTHER three recipe months' in-scope rows, x = max(control - t, 0), r = label - control (control = the same variant's values); for the ranking export, k from all four months",
+ "candidates": {
+  "v35_t1200": {"control": "v35", "t": 1200},
+  "v35_t1500": {"control": "v35", "t": 1500},
+  "v35_t1800": {"control": "v35", "t": 1800},
+  "v36_t1200": {"control": "v36", "t": 1200},
+  "v36_t1500": {"control": "v36", "t": 1500},
+  "v36_t1800": {"control": "v36", "t": 1800}
+ },
+ "candidate_semantics": "value = max(control + k_scope x max(control - t, 0), floor) on in-scope rows; every other row keeps its control value; each candidate is compared with ITS OWN control variant",
+ "minimum_mean_improvement_fraction": 0.0002,
+ "selection": "Unchanged rule, per control variant, over the four recipe months: eligible when no recipe month is worse on ALL rows, the mean ratio is at least 0.02% below 1, and every touched month's paired-day 95% interval (seed 20260928) lies below zero; lowest mean ratio among eligible within the variant. The v36 variant is informative only while v36 is unscored; the variant matching the incumbent at ship time is the one that ships.",
+ "ship": "delta on the ranking rows = k_scope (four-month fit) x max(incumbent float - t, 0) on in-scope rows, added to the incumbent's rebuilt floats (tools/export_stack.py), floor -12 s; independent check; audit; upload only on the user's decision."
+}
