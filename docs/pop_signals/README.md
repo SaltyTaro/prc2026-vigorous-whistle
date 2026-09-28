@@ -199,3 +199,35 @@ next-arrival and stand-level capture-state features gave nothing.
 Declared candidates: `pa_stake`, `pa_op`, `pa_op_stake`, `pa_opall`, `pa_opall_stake`; the v1 rule, unchanged; the report adds each
 candidate's January/July readings and a ranking-composition read (January and July 2025 per-row SSE scaled to the ranking's 104 / 268
 in-scope rows) for the user's decision. A selected candidate exports as **v43 = v40 + 0.75 × (mixture − v9 shipped)**, replacing v42.
+
+**Round-3 results (`results_v3.json`, 18:50–19:35 UTC; the first run crashed after the control on a tooling bug in the informational
+ranking-read block, fixed in commit 67a9cfd and rerun from scratch; rows `runs/pop_signals/lomo_rows_v3.parquet`). The rule selects
+`pa_op_stake`.** Against the control (19.054e9, reproduced exactly from rounds 1–2):
+
+| candidate | SSE e9 | change | months | bootstrap 95% | Jan | Jul | ranking read |
+|---|---|---|---|---|---|---|---|
+| `pa_stake` | 18.224 | −4.36% | 9/12 | [−7.6, −2.6] | −21% | −7% | −9.3% |
+| `pa_op` | 17.826 | −6.45% | 8/12 | [−13.1, −2.0] | −32% | −15% | −17.8% |
+| **`pa_op_stake`** | **17.646** | **−7.39%** | **8/12** | **[−16.1, −2.3]** | **−38%** | **−18%** | **−21.1%** |
+| `pa_opall` | 17.958 | −5.76% | 6/12 | [−12.3, +0.0] | −31% | −16% | −18.1% |
+| `pa_opall_stake` | 17.825 | −6.45% | 7/12 | [−14.8, −0.6] | −36% | −19% | −21.5% |
+
+Three candidates are eligible; `pa_op_stake` has the lowest SSE. Its losing months are March (+29%), October (+5%) and December
+(+13%), the large-carrier fills noted above; excluding the June one-day row its twelve-month change is −10.9%. The prefix departure
+descriptors (`pa_opall*`) add nothing over the arrival share and fail the month count.
+
+## v43 built (19:41 UTC; the rule's selection, NOT uploaded)
+
+`runs/submissions/vigorous-whistle_v43.parquet`, SHA-256 `8c4a031b1319a0d5a78613a1ee63851ac0c9461b065abff0f065ce0439a73ff7`
+(byte-identical to the dry run): v40 + 0.75 × (mixture[`pa_op_stake`, twelve months, eight seeds, stake-weighted] − mixture[v9
+shipped]) on the 372 in-scope population rows, floor −12 s; it **replaces v42** (the `pa` candidate) rather than stacking on it.
+Report `export_v43.json`; bag and detail `runs/pop_signals/export_v43/`; audit `docs/export_audit/v43_audit.json` clean (372 rows
+changed, all LIRF population, every other row byte-identical to v40; the flagged airport-months are January 2026's known regimes,
+unchanged from v40). Moves: January 104 rows, mean −129 s; July 268 rows, mean +93 s; mean |Δ| 440 s, largest 8,622 s; sum of
+squared changes 2.6e8 (v42: 0.75e8; the two deltas correlate 0.57). Mean p_fill 0.438 (v9) → 0.445.
+
+Expectation, stated with its assumptions: the twelve-month reading (−7.4% of population SSE, −10.9% without the one-day row) is
+worth **−1.3 to −3.2 s** for a ranking population share of 16–26% of the total squared error; the January/July analog read scaled to
+the ranking's rows says −3.8 s; if the moves do not transfer at all they cost about +1.7 s (v10's precedent: a population change that
+passed its folds lost 0.52 s). The bounds in the report (222.76 / 226.14) are the extremes where every changed label sits at the new
+or the old value. The user decides the upload at the 00:00 UTC reset; v42 stays built but superseded.
