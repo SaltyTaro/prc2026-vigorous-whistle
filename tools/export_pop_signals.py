@@ -41,6 +41,8 @@ def main() -> None:
     parser.add_argument("--dry-run", type=Path)
     parser.add_argument("--user-override")
     parser.add_argument("--models", default="runs/pop_signals", help="directory for the fitted boosters and the detail table")
+    parser.add_argument("--reference", default="shipped", choices=["shipped", "control"],
+                        help="delta against v9's shipped mixture (the whole new classifier replaces v9's) or against the control bag (the feature effect only)")
     args = parser.parse_args()
     config = read_json(ROOT / args.declaration)
     if not config.get("declared_at_utc"):
@@ -84,10 +86,13 @@ def main() -> None:
     component = ps.normal_component(train["label"].to_numpy(dtype=float), train["schedule_interval_s"].to_numpy(dtype=float), train["mode"].to_numpy(),
                                     mixture_config)
     mixture_new, p_fill = ps.mixture_for(bag, component, rank)
+    # the control (v9's features, the same twelve months and seeds): splits the delta into the refit part and the feature part
+    control_bag = ps.fit_bag(train, train["mode"].to_numpy(), train["movement_date_utc"].to_numpy(), ps.candidate_names(config["control"]), classifier, config["seeds"])
+    mixture_control, p_fill_control = ps.mixture_for(control_bag, component, rank)
 
     # the shipped v9 mixture on the same rows, and the v9 identity
     shipped = pd.read_parquet(ROOT / SHIPPED)
-    detail = rank[[ID, "schedule_interval_s"]].assign(mixture_new=mixture_new, p_fill_new=p_fill).merge(
+    detail = rank[[ID, "schedule_interval_s"]].assign(mixture_new=mixture_new, p_fill_new=p_fill, mixture_control=mixture_control, p_fill_control=p_fill_control).merge(
         shipped[[ID, "schedule_interval_s", "p_fill", "mixture", "v7", "v9"]].rename(columns={"schedule_interval_s": "interval_shipped", "p_fill": "p_fill_v9",
                                                                                               "mixture": "mixture_v9"}), on=ID, how="outer", validate="one_to_one", indicator=True)
     if not detail["_merge"].eq("both").all() or len(detail) != len(shipped):
@@ -102,9 +107,16 @@ def main() -> None:
     v40 = pd.read_parquet(ROOT / base_file)
     ids = v40[ID].to_numpy()
     base = v40[TARGET].to_numpy(dtype=float)
-    delta_table = detail.loc[in_scope, [ID, "mixture_new", "mixture_v9"]]
+    reference = "mixture_v9" if args.reference == "shipped" else "mixture_control"
+    delta_table = detail.loc[in_scope, [ID, "mixture_new", "mixture_v9", "mixture_control"]]
     aligned = pd.DataFrame({ID: ids}).merge(delta_table, on=ID, how="left", validate="one_to_one")
-    delta = WEIGHT * (aligned["mixture_new"] - aligned["mixture_v9"]).to_numpy(dtype=float)
+    delta = WEIGHT * (aligned["mixture_new"] - aligned[reference]).to_numpy(dtype=float)
+    scope_detail = detail.loc[in_scope]
+    split = {"reference": args.reference,
+             "sum_sq_refit_part_0.75x(control-shipped)": float(np.sum((WEIGHT * (scope_detail["mixture_control"] - scope_detail["mixture_v9"])) ** 2)),
+             "sum_sq_feature_part_0.75x(new-control)": float(np.sum((WEIGHT * (scope_detail["mixture_new"] - scope_detail["mixture_control"])) ** 2)),
+             "sum_sq_total_0.75x(new-shipped)": float(np.sum((WEIGHT * (scope_detail["mixture_new"] - scope_detail["mixture_v9"])) ** 2)),
+             "mean_p_fill": {"v9_shipped": float(scope_detail["p_fill_v9"].mean()), "control": float(scope_detail["p_fill_control"].mean()), "new": float(scope_detail["p_fill_new"].mean())}}
     changed = np.isfinite(delta)
     if changed.sum() != int(in_scope.sum()):
         raise ValueError("Not every in-scope population row is a departure of the file.")
@@ -116,7 +128,8 @@ def main() -> None:
     detail.drop(columns="_merge").to_parquet(model_dir / "population_detail.parquet", index=False)
     provenance = {"experiment_id": config["experiment_id"], "candidate": candidate, "dry_run": args.dry_run is not None,
                   "selected_by": ("the declared rule (tools/run_pop_signals.py)" if candidate == selected else f"the user's decision: {args.user_override}"),
-                  "recipe": f"v40 (uploaded integers) + {WEIGHT} * (mixture[{candidate}] - mixture[v9 shipped]) on LIRF population rows with interval <= {threshold:.0f} s, floor {FLOOR}",
+                  "recipe": f"v40 (uploaded integers) + {WEIGHT} * (mixture[{candidate}] - mixture[{'v9 shipped' if args.reference == 'shipped' else 'control bag, same months and seeds'}]) "
+                            f"on LIRF population rows with interval <= {threshold:.0f} s, floor {FLOOR}",
                   "incumbent": {"submission": Path(base_file).name, "official_rmse_seconds": base_rmse, "sha256": base_sha},
                   "declaration": {args.declaration: {"sha256": sha256_file(ROOT / args.declaration), "object_hash": object_hash(config)},
                                   config["mixture_declaration"]: {"sha256": sha256_file(ROOT / config["mixture_declaration"])}},
@@ -133,7 +146,8 @@ def main() -> None:
         raise ValueError("Rows outside the population scope changed.")
     meta = ranking_raw.set_index(ID).reindex(ids[changed])
     det = detail.set_index(ID).reindex(ids[changed])
-    rows = [{"MVT_ID_mvt": float(i), "takeoff_utc": str(meta.at[i, TIME]), "flight": meta.at[i, "FLIGHT_mvt"], "stand": meta.at[i, "STAND_mvt"],
+    text = lambda v: None if pd.isna(v) else str(v)  # noqa: E731
+    rows = [{"MVT_ID_mvt": float(i), "takeoff_utc": str(meta.at[i, TIME]), "flight": text(meta.at[i, "FLIGHT_mvt"]), "stand": text(meta.at[i, "STAND_mvt"]),
              "interval_s": float(det.at[i, "schedule_interval_s"]), "p_fill_v9": float(det.at[i, "p_fill_v9"]), "p_fill_new": float(det.at[i, "p_fill_new"]),
              "mixture_v9": float(det.at[i, "mixture_v9"]), "mixture_new": float(det.at[i, "mixture_new"]), "v40": int(base[k]), f"v{args.version}": int(exported[k]),
              "change_s": float(change[k])} for i, k in zip(ids[changed], np.flatnonzero(changed))]
@@ -145,7 +159,7 @@ def main() -> None:
                "rows_up": int((moved > 0).sum()), "rows_down": int((moved < 0).sum()),
                "rmse_if_every_change_is_fully_right": float(np.sqrt(max(sse40 - np.sum(moved ** 2), 0) / n)),
                "rmse_if_every_change_is_fully_wrong": float(np.sqrt((sse40 + np.sum(moved ** 2)) / n)),
-               "lomo_relative_sse_change_of_candidate": report["results"][candidate].get("relative_sse_change")}
+               "lomo_relative_sse_change_of_candidate": report["results"][candidate].get("relative_sse_change"), "delta_split": split}
     write_json(report_path, {"created_at_utc": utc_now(), "version": args.version, "candidate": candidate, "dry_run": args.dry_run is not None,
                              "output": output.as_posix(), "receipt_sha256": receipt.get("sha256"), "models": model_dir.as_posix(), **summary, "rows": rows,
                              "user_override": args.user_override})
