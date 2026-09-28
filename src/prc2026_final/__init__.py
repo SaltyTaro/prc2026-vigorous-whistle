@@ -1,4 +1,6 @@
-"""Final-file runner: v30's recipe on any movement file with the ranking file's schema, from the saved models only.
+"""Final-file runner: the v35 incumbent on any movement file with the ranking file's schema, from the saved models only.
+
+v30's chain (features .. recipe), then v31's EOBT_1 repair, the v33/v34 recipe weights and v35's stack (stack.py).
 
 Insurance against a separate final test file (docs/final_file/inventory.md). Every stage imports the frozen functions that
 first computed its column for the ranking file and writes its outputs under a run root with a JSON receipt, so a run is

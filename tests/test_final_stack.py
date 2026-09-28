@@ -1,0 +1,99 @@
+"""Final-file runner, v31 -> v35 stages (src/prc2026_final/stack.py): EOBT_1 detector, the reset edit and the stack arithmetic."""
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+import pytest
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "tools"))
+
+from prc2026_final import stack  # noqa: E402
+
+
+def departures(airport: str, month: str, n: int, later: int) -> pd.DataFrame:
+    t = pd.Timestamp(f"{month}-10 08:00", tz="UTC")
+    iobt = pd.Series([t] * n)
+    eobt = iobt + pd.to_timedelta([600 if i < later else 0 for i in range(n)], unit="s")
+    return pd.DataFrame({"MVT_ID_mvt": np.arange(n, dtype=float), "PHASE_mvt": "DEP", "ADEP_mvt": airport, "MVT_TIME_UTC_mvt": iobt + pd.Timedelta(minutes=20),
+                         "EOBT_1_flt": eobt, "IOBT_flt": iobt})
+
+
+def test_detector_flags_only_shares_more_than_one_span_above_the_2025_maximum():
+    reference = pd.DataFrame({"airport": ["LFPG", "LEMD"], "reference_min": [0.04, 0.17], "reference_max": [0.07, 0.21], "reference_months": [12, 12]})
+    reference["span"] = reference["reference_max"] - reference["reference_min"]
+    reference["threshold"] = reference["reference_max"] + reference["span"]
+    frame = pd.concat([departures("LFPG", "2026-07", 100, 35), departures("LFPG", "2026-01", 100, 6),
+                       departures("LEMD", "2026-01", 100, 22),  # above the 2025 maximum but within one span: not flagged
+                       departures("LEMD", "2026-07", 100, 1),   # below the range: never flagged
+                       departures("XXXX", "2026-07", 100, 90)], ignore_index=True)  # no 2025 reference: never flagged
+    flagged, table = stack.detect(frame, reference)
+    assert flagged == [("LFPG", "2026-07")]
+    assert table.set_index(["airport", "month"]).loc[("LFPG", "2026-07"), "share"] == pytest.approx(0.35)
+
+
+def test_reset_edits_only_later_eobt1_departures_of_flagged_airport_months():
+    frame = pd.concat([departures("LFPG", "2026-07", 4, 2), departures("LFPG", "2026-01", 4, 2), departures("EDDF", "2026-07", 4, 2)], ignore_index=True)
+    arrival = frame.iloc[[0]].assign(PHASE_mvt="ARR", MVT_ID_mvt=99.0)
+    frame = pd.concat([frame, arrival], ignore_index=True)
+    edited, mask = stack.reset_input(frame, [("LFPG", "2026-07")])
+    assert mask.tolist() == [True, True] + [False] * 11
+    assert (edited.loc[mask, "EOBT_1_flt"] == edited.loc[mask, "IOBT_flt"]).all()
+    assert edited.loc[~mask].equals(frame.loc[~mask]) and edited.dtypes.equals(frame.dtypes)
+    assert stack.same_content(frame, frame.copy()) and not stack.same_content(frame, edited)
+
+
+def test_stack_arithmetic_on_the_eight_routes(tmp_path, monkeypatch):
+    """Hand-computed v31 -> v35 on: LTFM, matched EDDF (+ repair effect), unmatched EDDF above the u300 gate, LIRF unmatched / matched /
+    fill population, an EHAM callsign-fix row and an EHAM regular queue-shaped match."""
+    monkeypatch.setattr(stack, "offsets", lambda: {"EDDF": 0.0, "EHAM": 10.0})
+    monkeypatch.setattr(stack, "offsets_all", lambda: {"EHAM": 5.0})
+    ids = np.arange(1.0, 9.0)
+    detail = pd.DataFrame({"MVT_ID_mvt": ids, "airport": ["LTFM", "EDDF", "EDDF", "LIRF", "LIRF", "LIRF", "EHAM", "EHAM"], "month": "2026-01",
+                           "scope": ["all_no_lirf", "matched_no_lirf", "all_no_lirf", "lirf_nonpop_unmatched", "lirf_nonpop_matched", "fixed", "all_no_lirf", "matched_no_lirf"],
+                           "v9": [1000.0, 600.0, 500.0, 1000.0, 900.0, 5000.0, 800.0, 900.0], "residual": [0.0, 20.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+                           "committee_mix": [1100.0, 700.0, 900.0, 1.0, 1.0, 1.0, 820.0, 1000.0],
+                           "ens_ctx_lirf": [0.0, 0.0, 0.0, 1200.0, 980.0, 7.0, 0.0, 0.0], "ens_v22_lirf_q": [0.0, 0.0, 0.0, 1100.0, 950.0, 3.0, 0.0, 0.0]})
+    detail["v30"] = [0.3 * 1000 + 0.7 * 1100, 0.3 * 620 + 0.7 * 700, 0.3 * 500 + 0.7 * 900, 0.40 * 1000 + 0.35 * 1200 + 0.25 * 1100,
+                     0.15 * 900 + 0.40 * 980 + 0.45 * 950, 5000.0, 0.3 * 800 + 0.7 * 820, 0.3 * 900 + 0.7 * 1000]
+    repaired = detail["v30"].to_numpy() + np.array([0, 100.0, 0, 0, 0, 0, 0, 0])
+    takeoff = 1.8e9
+    rematch = pd.DataFrame({"MVT_ID_mvt": [7.0], "airport": ["EHAM"], "flight": ["KL1"], "mapped": ["KLM1"], "takeoff": [takeoff], "key_icao": [None],
+                            "iata_mapped_icao": ["abc123"], "iata_mapped_gate": [True], "iata_mapped_motion_start": [takeoff - 2000.0],
+                            "iata_mapped_taxi_stops": [1.0], "iata_mapped_taxi_stopped_s": [100.0], "iata_mapped_taxi_path_m": [900.0]})
+    path = tmp_path / "rematch.parquet"
+    rematch.to_parquet(path, index=False)
+    regular = pd.DataFrame({"MVT_ID_mvt": [8.0, 2.0], "airport": ["EHAM", "EDDF"], "gate": [True, True], "takeoff": [takeoff, takeoff],
+                            "motion_start": [takeoff - 4000.0, takeoff - 700.0], "taxi_stops": [6.0, 0.0], "taxi_stopped_s": [1000.0, 0.0], "taxi_path_m": [6000.0, 2000.0]})
+    frame, record = stack.compute(detail, repaired, path, regular)
+    expected = [1100.0,                                   # LTFM: outer weight 1.0
+                0.4 * 620 + 0.6 * 700 + 0.5 * 100,        # matched EDDF: outer 0.6, plus half the repair effect
+                900.0,                                    # unmatched EDDF, mix - base = 400 > 300: the mix
+                (0.35 * 1200 + 0.25 * 1100) / 0.60,       # LIRF unmatched: v9 share 0, net:tree 0.35:0.25
+                0.15 * 900 + 0.40 * 980 + 0.45 * 950,     # LIRF matched: unchanged
+                5000.0,                                   # fill population: v30
+                0.5 * (2000 + 10) + 0.5 * (0.3 * 800 + 0.7 * 820),   # callsign fix 50%
+                0.75 * (4000 + 5) + 0.25 * (0.4 * 900 + 0.6 * 1000)]  # queue trust 0.75 on a regular match
+    assert np.allclose(frame["v35"].to_numpy(), expected, rtol=0, atol=1e-9)
+    assert frame["layer_gate"].tolist() == [False, False, True, False, False, False, False, False]
+    assert frame["layer_callsign"].tolist() == [False] * 6 + [True, False] and frame["layer_queue"].tolist() == [False] * 7 + [True]
+    assert record["rows"]["repair_effect_nonzero"] == 1 and record["layers"]["callsign"] == 0.5 and record["layers"]["queue"] == 0.75
+
+
+def test_stack_refuses_a_detail_that_is_not_v30s_recipe(tmp_path):
+    detail = pd.DataFrame({"MVT_ID_mvt": [1.0], "airport": ["EDDF"], "month": "2026-01", "scope": ["all_no_lirf"], "v9": [500.0], "residual": [0.0],
+                           "committee_mix": [600.0], "ens_ctx_lirf": [0.0], "ens_v22_lirf_q": [0.0], "v30": [999.0]})
+    with pytest.raises(ValueError, match="not v30's recipe"):
+        stack.compute(detail, None, tmp_path / "unused.parquet", pd.DataFrame())
+
+
+def test_rematch_scope_is_the_declared_no_nm_eddf_eham_departures():
+    frame = pd.DataFrame({c: [None] * 4 for c in stack.REMATCH_COLUMNS})
+    frame["ADEP_mvt"] = ["EDDF", "EHAM", "EHAM", "LFPG"]
+    frame["FLIGHT_ID_mvt"] = [np.nan, np.nan, 5.0, np.nan]
+    frame["MVT_ID_mvt"] = [1.0, 2.0, 3.0, 4.0]
+    assert stack.rematch_departures(frame)["MVT_ID_mvt"].tolist() == [1.0, 2.0]

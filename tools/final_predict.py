@@ -1,4 +1,4 @@
-"""v30's recipe on any movement file with the ranking file's schema, from the saved models only (docs/final_file/runner.md).
+"""The v35 incumbent on any movement file with the ranking file's schema, from the saved models only (docs/final_file/runner.md).
 
 Subcommands (all take --root, a fresh directory per input file; every stage is resumable and writes <root>/stages/<stage>.json last):
   inspect      --raw F --template T   schema, months, arrivals, departures vs the template -> <root>/input.json
@@ -11,8 +11,11 @@ Subcommands (all take --root, a fresh directory per input file; every stage is r
                                       time) into data/external/iem_final/<root name>/ plus an inventory JSON for --weather-inventory;
                                       without --execute it only prints the requests
   refit-adj2   --month M              the declared residual adj2 refit for a target month without a saved booster (~5 min, 16 threads)
-  run          [--stages ...]         features, adsb, tokens, v9, leaves, networks, residual, recipe, export (default: all pending)
-Nothing is uploaded and nothing is written to runs/submissions; the export stage writes <root>/export/vigorous-whistle_v<N>.parquet.
+  run          [--stages ...]         features, adsb, tokens, v9, leaves, networks, residual, recipe (v30), repair (v31's EOBT_1 detector;
+                                      a flag reruns features..recipe on the edited input in <root>/repair/run, or --repair-root reuses one),
+                                      rematch (the callsign fix's ADS-B rematch), stack (v31 -> v35), final (default: all pending);
+                                      `export` (v30's own file) runs only when named
+Nothing is uploaded and nothing is written to runs/submissions; the final stage writes <root>/final/vigorous-whistle_v<N>.parquet.
 """
 from __future__ import annotations
 
@@ -43,6 +46,10 @@ def main() -> None:
     parser.add_argument("--vocab-cache", type=Path, default=None,
                         help="an earlier root's leaves/vocabularies.json (e.g. runs/final_dryrun/run/leaves/vocabularies.json), copied into this root "
                              "before the leaves stage when it has none; skips the twelve-month vocabulary rebuild (the cache depends only on frozen training data)")
+    parser.add_argument("--repair-root", type=Path, default=None,
+                        help="a completed run root (features..recipe) of this file's EOBT_1-repaired input, reused by the repair stage instead of "
+                             "running the chain in <root>/repair/run; refused unless its input has exactly the repair's content "
+                             "(the ranking file: runs/final_lfpg_eobt/run)")
     parser.add_argument("--month", default=None)
     parser.add_argument("--execute", action="store_true")
     args = parser.parse_args()
@@ -68,36 +75,19 @@ def main() -> None:
         return
     from prc2026_final import runner
     ctx = runner.Context(run)
+    options = runner.Options(threads=args.threads, workers=args.workers, weather_inventory=args.weather_inventory, allow_missing_weather=args.allow_missing_weather,
+                             version=args.version, detail_ensembles=args.detail_ensembles, vocab_cache=args.vocab_cache,
+                             repair_root=(ROOT / args.repair_root if not args.repair_root.is_absolute() else args.repair_root) if args.repair_root else None)
     stages = args.stages or runner.STAGES
     for stage in stages:
-        if stage not in runner.STAGES:
+        if stage not in runner.STAGES + runner.EXTRA_STAGES:
             raise SystemExit(f"Unknown stage {stage}")
         if run.done(stage):
             run.verify_outputs(stage)
             print(stage, "done (receipt present; outputs verified)", flush=True)
             continue
         started = time.time()
-        if stage == "features":
-            record = runner.stage_features(ctx, [p.resolve() for p in args.weather_inventory], args.allow_missing_weather)
-        elif stage == "adsb":
-            record = runner.stage_adsb(ctx, args.workers)
-        elif stage == "tokens":
-            record = runner.stage_tokens(ctx)
-        elif stage == "v9":
-            record = runner.stage_v9(ctx, args.threads)
-        elif stage == "leaves":
-            record = runner.stage_leaves(ctx, args.threads, args.vocab_cache.resolve() if args.vocab_cache else None)
-        elif stage == "networks":
-            from prc2026_final.networks import DETAIL_ONLY, RECIPE_ENSEMBLES
-            record = runner.stage_networks(ctx, args.threads, RECIPE_ENSEMBLES + (DETAIL_ONLY if args.detail_ensembles else []))
-        elif stage == "residual":
-            record = runner.stage_residual(ctx, args.threads)
-        elif stage == "recipe":
-            record = runner.stage_recipe(ctx)
-        else:
-            if args.version is None:
-                raise SystemExit("the export stage needs --version N (the file is written inside the run root)")
-            record = runner.stage_export(ctx, args.version)
+        runner.run_stage(ctx, stage, options)
         print(stage, "finished in", round(time.time() - started, 1), "s", flush=True)
 
 

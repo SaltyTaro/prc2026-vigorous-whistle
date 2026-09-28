@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import gc
 import time
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 
 import numpy as np
@@ -11,11 +12,26 @@ import pandas as pd
 from prc2026.artifacts import read_json, sha256_file, write_json
 from prc2026.features import ID, TIME
 from prc2026.validation import identity_hash
+from prc2026_submission.contract import export_submission
 
 from . import adsb, features, leaves, networks, recipe, residual, tokens, v9
 from .common import ROOT, Run, departures_of, inspect, load_movements, save_frame
 
-STAGES = ["features", "adsb", "tokens", "v9", "leaves", "networks", "residual", "recipe", "export"]
+CHAIN = ["features", "adsb", "tokens", "v9", "leaves", "networks", "residual", "recipe"]  # v30 on the file (also run on the repaired input)
+STAGES = CHAIN + ["repair", "rematch", "stack", "final"]  # default order: v30 -> v35 and the v35 file
+EXTRA_STAGES = ["export"]  # v30's own integer file (component check against the uploaded v30); run only when named
+
+
+@dataclass
+class Options:
+    threads: int = 12
+    workers: int = 8
+    weather_inventory: list[Path] = field(default_factory=list)
+    allow_missing_weather: bool = False
+    version: int | None = None
+    detail_ensembles: bool = False
+    vocab_cache: Path | None = None
+    repair_root: Path | None = None
 
 
 class Context:
@@ -184,7 +200,153 @@ def stage_export(ctx: Context, version: int) -> dict:
     detail = pd.read_parquet(ctx.run.root / "recipe" / "detail.parquet")
     output = ctx.run.path("export", f"vigorous-whistle_v{version}.parquet")
     provenance = {"runner": "tools/final_predict.py", "input": {k: ctx.meta[k] for k in ["raw", "raw_sha256", "template", "template_sha256", "months", "departures"]},
-                  "stages": {s: sha256_file(ctx.run.receipt_path(s)) for s in STAGES[:-1]}, "recipe": ctx.run.receipt("recipe")["candidate"],
+                  "stages": {s: sha256_file(ctx.run.receipt_path(s)) for s in CHAIN}, "recipe": ctx.run.receipt("recipe")["candidate"],
                   "note": "written into the run root only; never copied to runs/submissions or uploaded by this tool"}
     receipt = recipe.export(detail, ctx.template, output, provenance)
     return ctx.run.finish("export", {"receipt": receipt}, [output, output.with_suffix(".receipt.json")], started)
+
+
+def stage_repair(ctx: Context, options: Options) -> dict:
+    """v31's input: the label-free EOBT_1 detector; for flagged airport-months, the chain on the edited input in a sub-root."""
+    from . import stack
+    started = time.time()
+    raw = pd.read_parquet(ctx.raw_path)
+    flagged, table = stack.detect(raw)
+    shares_out = save_frame(table, ctx.run.path("repair", "shares.parquet"))
+    record = {"rule": "flag an airport-month when its share of departures with EOBT_1 > IOBT exceeds the airport's 2025 maximum by more than "
+                      "the 2025 span (maximum - minimum over the twelve 2025 months); edit EOBT_1 := IOBT where EOBT_1 > IOBT on its departures",
+              "flagged": [{"airport": a, "month": m} for a, m in flagged],
+              "closest_unflagged": table.loc[~table["flagged"]].nlargest(3, "margin")[["airport", "month", "share", "threshold", "margin"]].to_dict(orient="records"),
+              "repair_root": None, "edited_rows": 0}
+    outputs = [shares_out]
+    if flagged:
+        edited, mask = stack.reset_input(raw, flagged)
+        del raw
+        ids_out = save_frame(pd.DataFrame({ID: edited.loc[mask, ID].to_numpy()}), ctx.run.path("repair", "edited_ids.parquet"))
+        outputs.append(ids_out)
+        record["edited_rows"] = int(mask.sum())
+        if options.repair_root is not None:
+            sub = Run(options.repair_root)
+            for stage in CHAIN:
+                if not sub.done(stage):
+                    raise ValueError(f"--repair-root {sub.root} has no {stage} receipt.")
+                sub.verify_outputs(stage)
+            meta = sub.input()
+            if meta["template_sha256"] != ctx.meta["template_sha256"] or not stack.same_content(pd.read_parquet(meta["raw"]), edited):
+                raise ValueError(f"--repair-root {sub.root} was not run on this file's edited input (or on another template).")
+            record["reused"] = True
+        else:
+            path = ctx.run.path("repair", "input", "final.parquet")
+            if path.exists():
+                if not stack.same_content(pd.read_parquet(path), edited):
+                    raise ValueError(f"{path} exists with other content; delete it (and {ctx.run.root / 'repair' / 'run'}) to rebuild.")
+            else:
+                save_frame(edited, path)
+            del edited
+            gc.collect()
+            sub = Run(ctx.run.root / "repair" / "run")
+            stage_inspect(sub, path, ctx.template)
+            sub_ctx = Context(sub)
+            cache = ctx.run.root / "leaves" / "vocabularies.json"
+            sub_options = replace(options, detail_ensembles=False, vocab_cache=cache if cache.exists() else options.vocab_cache, repair_root=None)
+            for stage in CHAIN:
+                if sub.done(stage):
+                    sub.verify_outputs(stage)
+                    continue
+                print("repair:", stage, flush=True)
+                run_stage(sub_ctx, stage, sub_options)
+            del sub_ctx
+            gc.collect()
+            record["reused"] = False
+        record["repair_root"] = sub.root.resolve().as_posix()
+        record["repair_input_sha256"] = sub.input()["raw_sha256"]
+        record["repair_recipe_receipt_sha256"] = sha256_file(sub.receipt_path("recipe"))
+        record["repair_detail_sha256"] = sha256_file(sub.root / "recipe" / "detail.parquet")
+    return ctx.run.finish("repair", record, outputs, started)
+
+
+def stage_rematch(ctx: Context) -> dict:
+    """The callsign fix's input: tools/adsb_rematch_nonm.py on the no-NM EDDF / EHAM departures."""
+    from . import stack
+    started = time.time()
+    deps = stack.rematch_departures(ctx.departures)
+    deps_out = save_frame(deps, ctx.run.path("rematch", "deps.parquet"))
+    out = ctx.run.path("rematch", "out.parquet")
+    stack.rematch(deps_out, out)
+    days = sorted(deps[TIME].dt.strftime("%Y%m%d").unique().tolist())
+    missing = [d for d in days if not (adsb.SURFACE / f"surface_{d}.parquet").exists()]
+    record = {"departures": int(len(deps)), "rows_out": int(len(pd.read_parquet(out))), "surface_days_missing": missing}
+    if missing:
+        record["warning"] = "surface days missing: those departures get no rematch (run `final_predict.py external`)"
+    return ctx.run.finish("rematch", record, [deps_out, out], started)
+
+
+def stage_stack(ctx: Context) -> dict:
+    """v31 -> v33 -> v34 -> v35 on the recipe detail (tools/export_stack.py's construction, the run's own tables)."""
+    from . import stack
+    started = time.time()
+    for stage in ["recipe", "repair", "rematch"]:
+        ctx.run.verify_outputs(stage)
+    detail = pd.read_parquet(ctx.run.root / "recipe" / "detail.parquet")
+    if not np.array_equal(detail[ID].to_numpy(), ctx.ids):
+        raise ValueError("The recipe detail is not in the file's departure order.")
+    rep = ctx.run.receipt("repair")
+    repaired = None
+    if rep["repair_root"] is not None:
+        path = Path(rep["repair_root"]) / "recipe" / "detail.parquet"
+        if sha256_file(path) != rep["repair_detail_sha256"]:
+            raise ValueError(f"{path} changed after the repair receipt was written.")
+        repaired = pd.read_parquet(path, columns=[ID, "v30"]).set_index(ID)["v30"].reindex(ctx.ids).to_numpy(dtype=float)
+    regular = pd.concat([pd.read_parquet(ctx.run.root / "adsb" / "residual" / f"matches2_{m}.parquet") for m in ctx.months], ignore_index=True)
+    frame, record = stack.compute(detail, repaired, ctx.run.root / "rematch" / "out.parquet", regular)
+    flagged = {(f["airport"], f["month"]) for f in rep["flagged"]}
+    in_flagged = np.array([(a, m) in flagged for a, m in zip(frame["airport"], frame["month"])], dtype=bool)
+    record["rows"]["repair_effect_nonzero_outside_flagged"] = int(((frame["repair_effect"].to_numpy() != 0) & ~in_flagged).sum())
+    out = save_frame(frame, ctx.run.path("stack", "detail.parquet"))
+    return ctx.run.finish("stack", record, [out], started)
+
+
+def stage_final(ctx: Context, version: int) -> dict:
+    """The v35 integer file in the template's order (export_submission), inside the run root."""
+    started = time.time()
+    frame = pd.read_parquet(ctx.run.root / "stack" / "detail.parquet", columns=[ID, "v35"])
+    output = ctx.run.path("final", f"vigorous-whistle_v{version}.parquet")
+    provenance = {"runner": "tools/final_predict.py", "recipe": "v35 (v30 + LFPG-type EOBT_1 repair 0.5 + v33/v34 weights + u300 + callsign fix 0.5 + queue trust 0.75 regular)",
+                  "input": {k: ctx.meta[k] for k in ["raw", "raw_sha256", "template", "template_sha256", "months", "departures"]},
+                  "stages": {s: sha256_file(ctx.run.receipt_path(s)) for s in STAGES[:-1]},
+                  "note": "written into the run root only; never copied to runs/submissions or uploaded by this tool"}
+    receipt = export_submission(pd.DataFrame({ID: frame[ID].to_numpy(), "prediction": frame["v35"].to_numpy(dtype=float)}), ctx.template, output, provenance)
+    return ctx.run.finish("final", {"receipt": receipt}, [output, output.with_suffix(".receipt.json")], started)
+
+
+def run_stage(ctx: Context, stage: str, options: Options) -> dict:
+    if stage == "features":
+        return stage_features(ctx, [p.resolve() for p in options.weather_inventory], options.allow_missing_weather)
+    if stage == "adsb":
+        return stage_adsb(ctx, options.workers)
+    if stage == "tokens":
+        return stage_tokens(ctx)
+    if stage == "v9":
+        return stage_v9(ctx, options.threads)
+    if stage == "leaves":
+        return stage_leaves(ctx, options.threads, options.vocab_cache.resolve() if options.vocab_cache else None)
+    if stage == "networks":
+        from .networks import DETAIL_ONLY, RECIPE_ENSEMBLES
+        return stage_networks(ctx, options.threads, RECIPE_ENSEMBLES + (DETAIL_ONLY if options.detail_ensembles else []))
+    if stage == "residual":
+        return stage_residual(ctx, options.threads)
+    if stage == "recipe":
+        return stage_recipe(ctx)
+    if stage == "repair":
+        return stage_repair(ctx, options)
+    if stage == "rematch":
+        return stage_rematch(ctx)
+    if stage == "stack":
+        return stage_stack(ctx)
+    if options.version is None:
+        raise SystemExit(f"the {stage} stage needs --version N (the file is written inside the run root)")
+    if stage == "export":
+        return stage_export(ctx, options.version)
+    if stage == "final":
+        return stage_final(ctx, options.version)
+    raise SystemExit(f"Unknown stage {stage}")

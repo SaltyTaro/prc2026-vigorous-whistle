@@ -1,10 +1,12 @@
 # Final-file runner (stage 2) — `tools/final_predict.py`, `tools/final_compare.py`, `src/prc2026_final/`
 
-v30's recipe on **any movement file with the ranking file's 30-column schema**, from the saved models only. Built from the stage-1
-inventory ([`inventory.md`](inventory.md)). Frozen packages, tools and configurations are untouched: every stage imports the frozen
-function that first computed its column for the ranking file, and re-implements only plumbing that hard-codes `ranking.parquet`,
-`RANKING_MONTHS` or a "must reproduce vN" guard (the December package is the template). No refit happens except the residual
-stage's per-target-month adj2 booster, via an explicit subcommand. Nothing is downloaded, uploaded or written to `runs/submissions`.
+**The v35 incumbent** on **any movement file with the ranking file's 30-column schema**, from the saved models only: v30's chain
+(stages features → recipe), then v31's EOBT_1 repair, the v33/v34 recipe weights and v35's stack (stages repair → final; see
+[v31–v35 layers](#v31v35-layers-28-september) below). Built from the stage-1 inventory ([`inventory.md`](inventory.md)). Frozen
+packages, tools and configurations are untouched: every stage imports the frozen function that first computed its column for the
+ranking file, and re-implements only plumbing that hard-codes `ranking.parquet`, `RANKING_MONTHS`, the ranking's match tables or a
+"must reproduce vN" guard (the December package is the template). No refit happens except the residual stage's per-target-month adj2
+booster, via an explicit subcommand. Nothing is downloaded, uploaded or written to `runs/submissions`.
 
 ## Usage
 
@@ -20,7 +22,7 @@ python tools/final_predict.py pull-weather --root R [--execute]                 
 python tools/final_predict.py refit-adj2   --root R --month YYYY-MM [--threads 16]    # declared adj2 refit for a month without a booster
 python tools/final_predict.py run          --root R [--stages ...] [--threads 12] [--workers 8]
                                            [--weather-inventory data/external/iem_final/<R>/inventory.json] [--version N] [--detail-ensembles]
-                                           [--vocab-cache runs/final_dryrun/run/leaves/vocabularies.json]
+                                           [--vocab-cache runs/final_dryrun/run/leaves/vocabularies.json] [--repair-root DIR]
 python tools/final_compare.py --root R --output OUT.json [--version N] [--allow-subset]
 ```
 
@@ -48,7 +50,74 @@ External data and model inference are separate commands: `external` / `extract-a
 | networks | `ens_ctx_e24`, `ens_ctx_e24b`, `ens_ctx_e32` (GPU-trained, predicted on CPU), `ens_ctx_lirf` (+ `ens_ctx`, `ens_new`, `ens_nn`, `ens_nnl` with `--detail-ensembles`) | `prc2026_ctx`, `prc2026_ctx3`, `prc2026_nn` load/predict | `networks/<ens>/*.parquet`, `networks/ensembles.parquet` |
 | residual | nb table (matches_v11), adj2 per target month, cat, 16 rnet seeds; 0.1 × mean(adj2, cat) + 0.9 × rnet on matched non-LIRF rows | `run_adsb_v25.predict_variant`, `run_adsb_rnn.predict_rows` | `residual/table.parquet`, `residual/residual.parquet` |
 | recipe | v30 arithmetic: mix 0.25 e24 + 0.25 e24b + 0.5 e32 at share 0.75, outer 0.7, round-B LIRF blends, floor −12; scope column | `mixed`, `weighted`, `lirf_blends`, `spec_for`, `candidate_values` | `recipe/detail.parquet` (v30 detail's columns) |
-| export | nearest-integer file in the template's order (`--version N` names it) | `export_submission` | `export/vigorous-whistle_v<N>.parquet` + receipt |
+| repair | v31's input: label-free EOBT_1 detector per airport-month; for a flagged one, EOBT_1 := IOBT where EOBT_1 > IOBT and the chain features → recipe again in `<root>/repair/run` (or `--repair-root`, a completed run of exactly that content) | the chain's own stages | `repair/shares.parquet`, `repair/edited_ids.parquet` |
+| rematch | the callsign fix's ADS-B rematch of the no-NM EDDF / EHAM departures | `tools/adsb_rematch_nonm.py` main, unchanged (its `REPO` pointed at this workspace) | `rematch/{deps,out}.parquet` |
+| stack | v31 → v33 → v34 → v35 on the recipe detail (the exports' construction; deltas from the file's own detail) | `export_v33.recipe`, `export_fair_weights.recipe` + `V33_OUTER`/`V33_LIRF`, `export_disagreement_gate.V34_LIRF`/`gate_delta`, `run_callsign_fix.scope_table`/`offsets`, `run_queue_trust` segment rule/`offsets_all` | `stack/detail.parquet` (v30, repair effect, v31, v33, v34, v35, layer masks) |
+| final | v35 as the nearest-integer file in the template's order (`--version N` names it) | `export_submission` | `final/vigorous-whistle_v<N>.parquet` + receipt |
+| export | only when named (`--stages export`): v30's own file, a component check against the uploaded v30 | `export_submission` | `export/vigorous-whistle_v<N>.parquet` + receipt |
+
+## v31–v35 layers (28 September)
+
+The runner stopped at v30. The four stages after `recipe` bring it to the v35 incumbent (226.8989 official), in shipping order, each
+through the frozen code that built the layer. Module: `src/prc2026_final/stack.py`.
+
+1. **v31, the EOBT_1 repair (stage `repair`).**
+   - **Detector (label-free).** For each departure airport-month of the file: the share of departures with EOBT_1 > IOBT (a missing
+     clock counts as not later). It is flagged when the share exceeds the airport's **2025 maximum by more than the 2025 span**
+     (maximum − minimum over its twelve 2025 months, read from `data/raw/training_2025-*.parquet`). Upward only: a share below the
+     range is never an EOBT_1-announcement break.
+   - **Edit.** In a flagged airport-month, EOBT_1 := IOBT on the departures with EOBT_1 > IOBT (the sensitivity run's edit). The chain
+     features → recipe runs again on the edited file in `<root>/repair/run` (about 1.5 h; `--repair-root` reuses a completed run
+     whose input has exactly that content). v31 = max(v30 + 0.5 × (v30 edited − v30), −12), as `tools/export_lfpg_eobt_blend.py`.
+     No flag: v31 = v30 and nothing reruns.
+   - **On the ranking file it reduces to v31's rows exactly.** Only LFPG 2026-07 is flagged: share 34.5% against the threshold 10.2%
+     (2025: 3.8–7.0%). The closest unflagged airport-month is LEMD 2026-01, 21.9% against 23.7% (margin −1.8 points). A plain
+     "outside the 2025 range" rule would also flag LEMD January (above its 20.6% maximum) and LIRF January (below its minimum), hence
+     the one-span margin and the upward direction. The edit is the same 7,510 rows, with content identical to
+     `runs/final_lfpg_eobt/input/final.parquet` (input SHA-256 `cc474432…`). The effect is non-zero on 21,575 rows, all LFPG July.
+2. **v33 / v34, the recipe weights (stage `stack`).**
+   - v33 = max(v31 + `export_v33.recipe`(detail, 1.0, 0.6, 0.7) − `recipe`(detail, 0.7, 0.7, 0.7), −12).
+   - v34 = max(v33 + `export_fair_weights.recipe`(detail, `V33_OUTER`, `V34_LIRF`) − `recipe`(detail, `V33_OUTER`, `V33_LIRF`), −12).
+   - That gives outer weights LTFM 1.0 / matched 0.6 / unmatched 0.7; LIRF matched v9 .15 / net .40 / tree .45; LIRF unmatched v9 0 /
+     net .35 / tree .25.
+   - Guards: the detail must be v30's recipe under both frozen rebuilds (`export_v33` at 0.7 and `export_fair_weights` at v30's
+     weights, ≤ 1e-9).
+3. **v35, the stack (stages `rematch`, `stack`), following `tools/export_stack.layers`.**
+   - **(a) u300.** `export_disagreement_gate.gate_delta` with `configs/disagreement_gate_v1.json`'s u300: on unmatched non-LIRF
+     non-LTFM rows where the committee mix exceeds v9 + residual by more than 300 s, the value is the mix.
+   - **(b) Callsign fix, 50%.** `tools/adsb_rematch_nonm.py` (unchanged; its `REPO` pointed at this workspace) on the departures
+     without an NM flight record at EDDF / EHAM. `run_callsign_fix.scope_table` then keeps rows where the key found nothing and the
+     IATA → ICAO callsign gives a gate segment. value = max(0.5 × (takeoff − motion_start + offset) + 0.5 × value, −12). The offsets
+     are `run_callsign_fix.offsets()`, constants from 2025 (EDDF 73.72 s, EHAM 6.49 s).
+   - **(c) Queue trust, 0.75, regular matches.** Gate-covered segments from the run's own residual match tables (the `matches_v11`
+     stands) plus the callsign rows. The scope is `run_queue_trust`'s rule: ≥ 5 stops, ≥ 5 km, stationary ≤ 75%, taxi > 3,000 s.
+     Only the regular matches are applied. value = max(0.75 × (taxi + `offsets_all()`[airport]) + 0.25 × value, −12).
+   - `export_stack.layers` reads the frozen ranking tables, so the runner re-plumbs `run_queue_trust.segments` onto the run's
+     tables: same columns, rule and duplicate guard.
+   - Weights are read from the declarations: gate u300, callsign `u300_cs50` 0.5, queue `qt75` 0.75 on regular matches, as
+     `docs/disagreement/export_v35.json` shipped them.
+4. **`final`** writes v35's integer file into the run root. `export` (v30's own file) now runs only when named.
+
+**Dry run (28 September): passes.** The new stages ran on `runs/final_dryrun/run`, reusing its completed chain, with
+`--repair-root runs/final_lfpg_eobt/run --version 935`: repair 11 s, rematch 78 s, stack 2 s, final < 1 s.
+`tools/final_compare_v35.py` → [`dryrun_v35_compare.json`](dryrun_v35_compare.json):
+- **Repair.** It flags exactly LFPG 2026-07 with 7,510 edited rows (input hash equal to the recorded one). The effect equals the
+  export's LFPG effect exactly (max |Δ| 0.0).
+- **Rematch.** 1,627 departures, 0 surface days missing. It equals the Azure ranking rematch (`runs/adsb_rematch/out_arcw1.parquet`)
+  on every row and column within 1e-6. Five `iata_mapped_taxi_path_m` values differ in float rounding.
+- **Layers.** u300 **758**, callsign **163**, queue **161**, equal to `export_v35.json` layer_rows. Every mask equals
+  `export_stack.layers`' mask on the frozen tables, row for row. `export_stack.layers` applied to the runner's own v34 on the frozen
+  tables returns the runner's v35 **exactly** (max |Δ| 0.0).
+- **Floats.** Runner v35 − shipped v35 has RMS 0.031 s and maximum 6.3 s. On all 344,839 rows off the floor this equals the dry run's
+  v30 noise (runner v30 − recorded v30, the e32 GPU → CPU difference) carried through the layer weights (×1, ×0.5 on callsign rows,
+  ×0.25 on queue rows), to 2.7e-12.
+- **Integers.** Against the uploaded v35 (`75f4a4f4…`), **1,140 rows differ, maximum 6 s**: 1,118 by ±1 s and 22 by 2–6 s. This
+  matches the v30 dry run's 1,141 rows / 7 s. The rows differ from the v30 dry run's rows because the rounding boundaries moved; the
+  noise is the same. Within the layers, 14 u300 and 3 queue rows differ, all noise. Output:
+  `runs/final_dryrun/run/final/vigorous-whistle_v935.parquet` (SHA-256 `ee04cbd3…`), never copied or uploaded.
+- **Tests.** `tests/test_final_stack.py` (5 tests) covers the detector (one-span margin, upward only, airports without a 2025
+  reference), the reset edit, the stack arithmetic hand-computed on eight routes, the v30 guard and the rematch scope. With
+  `tests/test_final_runner.py`, 18 pass.
 
 ## A period other than January/July 2026
 
@@ -62,7 +131,10 @@ Nothing in `run` depends on `RANKING_MONTHS` or on ranking-only artifacts. What 
    leaves those departures unmatched (recorded as a warning).
 3. `refit-adj2 --month M` for every month of the file other than 2026-01/07 (the frozen `fit_variant` on the twelve 2025 cross-fit
    months with circular month-distance weights; ~5 min on 16 threads, needs scratch/v24 and runs/adsb_v24/features).
-4. `run --weather-inventory data/external/iem_final/<root>/inventory.json`.
+4. `run --weather-inventory data/external/iem_final/<root>/inventory.json`. If the detector flags an airport-month, `repair` runs
+   the chain a second time on the edited input (about 1.5 h more; the sub-root reuses the main root's vocabulary cache). The rematch
+   reads the same surface days as the ADS-B stage; days missing there leave their no-NM EDDF / EHAM departures without a callsign fix.
+   The detector's 2025 reference and both offset tables are constants from the 2025 files, so they apply to any later period.
 Months that overlap the frozen Jan–Nov 2025 context are refused (a re-cut of fitting months needs its own context declaration).
 Tested without downloads on a copy of 15 January 2026 shifted to 22 October 2026: `inspect`, `external`, `extract-adsb` and
 `pull-weather` report the missing surface day and all ten station-months; the adj2 new-month wiring is unit-tested.
@@ -116,6 +188,9 @@ Additionally needed beyond this runner:
   twelve-month nodes 101 MB, residual trees 221 MB, 16 rnet seeds 44 MB, the 64 recipe networks 644 MB (the 80 detail-only nets are
   not needed): **~5.8 GB**. Plus the twelve-month vocabulary JSON (0.5 MB, replaces the December build and the 2025 labels) and the
   frozen stands tables.
+- **v31–v35 layers** add no models. The detector reads the 2025 movement files, which are already shipped as context. The rematch
+  reads the `matches_v11` stands table and the period's surface files. The callsign / queue offsets come from the 2025 labels and
+  the `matches_v11` tables of eight 2025 months; ship the two small offset dictionaries instead. A repair flag doubles the run time.
 - **Data they must supply or we must ship**: the 2025 movement files as feature context (272 MB raw; the Phase-1 context parquet
   91 MB) and 2025 labels for the mixture classifier unless it is shipped fitted; the frozen IEM objects (18 MB) + OurAirports runways;
   adsb.lol surface files for their period (~12 MB per extracted day; extraction needs internet and 2–4 GB download per day).
