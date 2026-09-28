@@ -32,7 +32,7 @@ class Options:
     detail_ensembles: bool = False
     vocab_cache: Path | None = None
     repair_root: Path | None = None
-    layers: str = "v35"  # the final file's layer set: v35 (the uploaded incumbent; default until another is uploaded), v36, v37 or v38
+    layers: str = "v38"  # the final file's layer set: v38 (the official best, 226.8053; default), v35, v36 or v37
 
 
 class Context:

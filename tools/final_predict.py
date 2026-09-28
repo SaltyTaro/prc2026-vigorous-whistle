@@ -1,4 +1,4 @@
-"""v35 (or v36 / v37 / v38 with --layers) on any movement file with the ranking file's schema, from the saved models only (docs/final_file/runner.md).
+"""v38 (or v35 / v36 / v37 with --layers) on any movement file with the ranking file's schema, from the saved models only (docs/final_file/runner.md).
 
 Subcommands (all take --root, a fresh directory per input file; every stage is resumable and writes <root>/stages/<stage>.json last):
   inspect      --raw F --template T   schema, months, arrivals, departures vs the template -> <root>/input.json
@@ -50,9 +50,9 @@ def main() -> None:
                         help="a completed run root (features..recipe) of this file's EOBT_1-repaired input, reused by the repair stage instead of "
                              "running the chain in <root>/repair/run; refused unless its input has exactly the repair's content "
                              "(the ranking file: runs/final_lfpg_eobt/run)")
-    parser.add_argument("--layers", choices=["v35", "v36", "v37", "v38"], default="v35",
-                        help="the final stage's layer set, recorded in its receipt (stages/final-<layers>.json): v35 (default: the uploaded "
-                             "incumbent), v36 (mu600 mix gate + peer-congestion lifts), v37 (tail stretch above 1,500 s) or v38 (two-sided stretch)")
+    parser.add_argument("--layers", choices=["v35", "v36", "v37", "v38"], default="v38",
+                        help="the final stage's layer set, recorded in its receipt (stages/final-<layers>.json): v38 (default: the official "
+                             "best, two-sided stretch), v35, v36 (mu600 mix gate + peer-congestion lifts) or v37 (tail stretch above 1,500 s)")
     parser.add_argument("--month", default=None)
     parser.add_argument("--execute", action="store_true")
     args = parser.parse_args()

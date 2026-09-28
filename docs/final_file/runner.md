@@ -1,6 +1,6 @@
 # Final-file runner (stage 2) — `tools/final_predict.py`, `tools/final_compare.py`, `src/prc2026_final/`
 
-**The v35 incumbent (or v36 / v37 / v38 with `--layers`)** on **any movement file with the ranking file's 30-column schema**, from
+**The v38 incumbent (or v35 / v36 / v37 with `--layers`)** on **any movement file with the ranking file's 30-column schema**, from
 the saved models only: v30's chain (stages features → recipe), then v31's EOBT_1 repair, the v33/v34 recipe weights and the stack
 (stages repair → final; see [v31–v38 layers](#v31v38-layers-28-september) below). Built from the stage-1 inventory ([`inventory.md`](inventory.md)). Frozen
 packages, tools and configurations are untouched: every stage imports the frozen function that first computed its column for the
@@ -54,7 +54,7 @@ External data and model inference are separate commands: `external` / `extract-a
 | repair | v31's input: label-free EOBT_1 detector per airport-month; for a flagged one, EOBT_1 := IOBT where EOBT_1 > IOBT and the chain features → recipe again in `<root>/repair/run` (or `--repair-root`, a completed run of exactly that content) | the chain's own stages | `repair/shares.parquet`, `repair/edited_ids.parquet` |
 | rematch | the callsign fix's ADS-B rematch of the no-NM EDDF / EHAM departures | `tools/adsb_rematch_nonm.py` main, unchanged (its `REPO` pointed at this workspace) | `rematch/{deps,out}.parquet` |
 | stack | v31 → v33 → v34, then v35 / v36 / v37 / v38 on the recipe detail (the exports' construction; deltas from the file's own detail) | `export_v33.recipe`, `export_fair_weights.recipe` + `V33_OUTER`/`V33_LIRF`, `export_disagreement_gate.V34_LIRF`; `tools/export_stack.layers` itself, its readers answering from the run's tables (`run_callsign_fix.scope_table`, `run_queue_trust` segment rule, `peer_congestion.peer_table`) | `stack/detail.parquet` (v30, repair effect, v31, v33, v34, v35–v38, per-set layer masks), `stack/peers.parquet` |
-| final | the `--layers` set (default v35) as the nearest-integer file in the template's order (`--version N` names it); receipt `stages/final-<layers>.json` | `export_submission` | `final/vigorous-whistle_v<N>.parquet` + receipt |
+| final | the `--layers` set (default v38) as the nearest-integer file in the template's order (`--version N` names it); receipt `stages/final-<layers>.json` | `export_submission` | `final/vigorous-whistle_v<N>.parquet` + receipt |
 | export | only when named (`--stages export`): v30's own file, a component check against the uploaded v30 | `export_submission` | `export/vigorous-whistle_v<N>.parquet` + receipt |
 
 ## v31–v38 layers (28 September)
@@ -63,8 +63,8 @@ The runner stopped at v30. The four stages after `recipe` take it to the v35 inc
 not-uploaded v36, v37 and v38, in shipping order, each through the frozen code that built the layer. Module:
 `src/prc2026_final/stack.py`.
 
-**`--layers v35|v36|v37|v38`** picks the final file's layer set. The default is **v35**, the uploaded incumbent, until the user
-uploads another. The stack stage computes all four columns every time. The final stage exports the chosen one and keeps one receipt
+**`--layers v35|v36|v37|v38`** picks the final file's layer set. The default is **v38**, the official best since its upload (226.8053; v35 226.8989);
+it was v35 until then. The stack stage computes all four columns every time. The final stage exports the chosen one and keeps one receipt
 per layer set (`stages/final-<layers>.json`, which records the layer set and version), so several files can live in one root.
 
 1. **v31, the EOBT_1 repair (stage `repair`).**
