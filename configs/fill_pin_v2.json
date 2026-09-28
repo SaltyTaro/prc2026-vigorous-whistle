@@ -1,0 +1,65 @@
+{
+ "experiment_id": "fill_pin_v2",
+ "declared_at_utc": "2026-09-28T05:05:00Z",
+ "audit_used": false,
+ "status": "DECLARED after v39's official result (disclosed below); no export from this declaration unless the user decides; nothing uploaded",
+ "purpose": "Restrict configs/fill_pin_v1.json's pin to the rows its evidence actually covers. v39 (all twelve rows at the schedule interval) scored 226.8802, +0.0749 s against v38 (+1.17e7 SSE against an all-fill prediction of -4.35e8). The v8 arithmetic that motivated the pin had power only on population rows with intervals of 47-57 ks (v8's hedge moved them 11-14 ks; a one-day label there would have improved v8 by 2.7e8-7.5e8 SSE); v39's result is consistent with one of those three being a one-day error and the other nine being fills.",
+ "prior_context": {
+  "v39": {
+   "official_rmse_seconds": 226.8802,
+   "sha256": "06a9acbcd4ec91d3887070855e2730835a17f2f031c2194602275c15d3fc107b",
+   "record": "docs/fill_pin/official_result_v39.json"
+  },
+  "row_table": "docs/fill_pin/README.md, section 'What the score implies, row by row'",
+  "disclosure": "a candidate chosen after seeing v39's score; the partition (v8-tested rows / untested rows / rows dominant under both mechanisms) was derivable before v39 but was not proposed then"
+ },
+ "rule": "as configs/fill_pin_v1.json (same code, src/prc2026_final/fill_pin.py); candidates restrict the population scope by interval band",
+ "candidates": {
+  "evidenced_nine": {
+   "scopes": [
+    "population"
+   ],
+   "population_interval_bands_s": [
+    [
+     43200,
+     58000
+    ],
+    [
+     79200,
+     1000000000
+    ]
+   ],
+   "rows_on_the_ranking": [
+    "WMTT3508",
+    "TAY9LA",
+    "WMT402",
+    "TARAR753",
+    "ITYTY674"
+   ],
+   "stake": "1.95e8 SSE = 1.10% of v38's; 226.8053 -> about 225.56 (-1.25 s) if the seven small-interval rows are fills; the two large-interval rows gain under either mechanism",
+   "risk": "one one-day row among the seven costs 2.1e8-3.0e8: net about +0.1..+0.7 s; v8 would then have needed its other rules to cost 0.8e9-1.4e9 (the v10 result bounds them near 0.4e9)"
+  },
+  "dominant_three": {
+   "scopes": [
+    "population",
+    "clock_day"
+   ],
+   "population_interval_bands_s": [
+    [
+     79200,
+     1000000000
+    ]
+   ],
+   "clock_day_value": "schedule interval (fill reading)",
+   "note": "as configs/fill_pin_v1.json's dominant_three"
+  }
+ },
+ "selection": "No labelled data can score these rows; the user decides. Default if nothing is chosen: keep v38.",
+ "control": {
+  "submission": "vigorous-whistle_v38.parquet",
+  "official_rmse_seconds": 226.8053,
+  "sha256": "61264cdb7f0a37a8e5cf943f8e950441df38b826132cfc1097f00ca9d0519fe4"
+ },
+ "export": "tools/export_fill_pin.py --declaration configs/fill_pin_v2.json --candidate evidenced_nine --version 40 --user-override '<user words>' (dry run first with --dry-run DIR); then tools/audit_export.py --version 40 --compare 38 39",
+ "never": "no upload without the user's explicit word; never re-upload v1-v39"
+}

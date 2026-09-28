@@ -29,18 +29,27 @@ EXTRA = ["FLIGHT_mvt", "STAND_mvt"]
 
 
 def candidate_pins(pins: pd.DataFrame, candidate: dict) -> pd.DataFrame:
-    keep = pins["scope"].isin(candidate["scopes"]) & ~(pins["scope"].eq("population") & (pins["interval_s"] < float(candidate["population_interval_s_min"])))
+    """The candidate's rows: its scopes, with population rows restricted to `population_interval_bands_s` (or, in the v1 form,
+    to intervals at or above `population_interval_s_min`)."""
+    bands = candidate.get("population_interval_bands_s") or [[float(candidate["population_interval_s_min"]), float("inf")]]
+    interval = pins["interval_s"].to_numpy(dtype=float)
+    in_band = np.zeros(len(pins), dtype=bool)
+    for lo, hi in bands:
+        in_band |= (interval >= float(lo)) & (interval <= float(hi))
+    keep = pins["scope"].isin(candidate["scopes"]).to_numpy() & (~pins["scope"].eq("population").to_numpy() | in_band)
     return pins.loc[keep].reset_index(drop=True)
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--declaration", default=DECL, help="configs/fill_pin_v1.json (default) or a later fill-pin declaration with its own candidates")
     parser.add_argument("--candidate", default="all_twelve")
     parser.add_argument("--version", type=int, default=39)
     parser.add_argument("--dry-run", type=Path)
     parser.add_argument("--user-override")
     args = parser.parse_args()
-    decl = read_json(ROOT / DECL)
+    decl = read_json(ROOT / args.declaration)
+    declaration_path = args.declaration
     if not decl.get("declared_at_utc") or args.candidate not in decl["candidates"]:
         raise ValueError("The declaration is not recorded or the candidate is not declared.")
     if args.dry_run is None:
@@ -63,7 +72,7 @@ def main() -> None:
     raw = pd.read_parquet(ROOT / RAW, columns=COLUMNS + EXTRA)
     pins_all = fill_pins(raw[COLUMNS])
     counts = pins_all["scope"].value_counts().to_dict()
-    expected = {k: v for k, v in decl["expected_ranking_scope"].items() if k != "note"}
+    expected = {k: v for k, v in read_json(ROOT / DECL)["expected_ranking_scope"].items() if k != "note"}
     if counts != expected:
         raise ValueError(f"The ranking's fill-pin scope is {counts}, not the declared {expected}.")
     pins = candidate_pins(pins_all, decl["candidates"][args.candidate])
@@ -73,7 +82,8 @@ def main() -> None:
                   "selected_by": f"the user's decision on the declared candidates: {args.user_override}" if args.user_override else "dry run",
                   "recipe": f"v38 (uploaded integers) + fill pins ({args.candidate}: {decl['candidates'][args.candidate]['scopes']}) at the schedule interval",
                   "incumbent": {"submission": Path(V38_FILE).name, "official_rmse_seconds": V38_RMSE, "sha256": V38_SHA},
-                  "declaration": {DECL: {"sha256": sha256_file(ROOT / DECL), "object_hash": object_hash(decl)}},
+                  "declaration": {declaration_path: {"sha256": sha256_file(ROOT / declaration_path), "object_hash": object_hash(decl)},
+                                  DECL: {"sha256": sha256_file(ROOT / DECL)}},
                   "code": {p: sha256_file(ROOT / p) for p in ["src/prc2026_final/fill_pin.py", "tools/export_fill_pin.py"]},
                   "inputs": {RAW: sha256_file(ROOT / RAW)}, "audit_used": False, "external_data": "none for this layer"}
     receipt = export_submission(pd.DataFrame({ID: ids, "prediction": values}), ROOT / TEMPLATE, output, provenance)
