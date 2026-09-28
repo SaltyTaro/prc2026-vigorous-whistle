@@ -5,6 +5,7 @@ matched lean-up (outer weight 1.0 on matched non-LIRF rows outside the queue sco
 lifts (tools/peer_congestion.py) for rows without an NM clock and for untracked rows with one.
 
   --score --select   -> runs/higher_bundle/selection.json and docs/disagreement/higher_bundle_v1_results.json
+  --declaration configs/higher_bundle_v2.json   a follow-up declaration on the same rows -> runs/<stem>/, docs/disagreement/<stem>_results.json
 """
 from __future__ import annotations
 
@@ -68,6 +69,11 @@ def layered(f: pd.DataFrame, spec: dict, cs, off_cs, seg, off, peers: pd.DataFra
 
 
 def main() -> None:
+    global DECLARATION, OUT, REPORT
+    if "--declaration" in sys.argv:
+        DECLARATION = sys.argv[sys.argv.index("--declaration") + 1]
+        stem = Path(DECLARATION).stem
+        OUT, REPORT = ROOT / "runs" / stem, ROOT / "docs/disagreement" / f"{stem}_results.json"
     decl = read_json(ROOT / DECLARATION)
     if (OUT / "selection.json").exists():
         raise ValueError("Preserve the original selection.")

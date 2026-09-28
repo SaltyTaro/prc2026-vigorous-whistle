@@ -1,0 +1,26 @@
+{
+ "experiment_id": "higher_bundle_v2",
+ "declared_at_utc": "2026-09-28T02:09:00Z",
+ "audit_used": false,
+ "purpose": "Follow-up combination of configs/higher_bundle_v1.json's three single items that were better in every month (mu600, pc, pcc), without the matched lean-up that worsened November. Same rows, control, semantics and rule. No model is fitted.",
+ "prior_context": {
+  "note": "POST-HOC: declared after reading higher_bundle_v1's single-item and bundle results on these same four months (docs/disagreement/higher_bundle_v1_results.json), which themselves followed exploratory reads on the same months. The combination was chosen because each member was better in all four months; this round only measures the joint effect and its paired-day intervals. Any ship is a user decision.",
+  "v1_single_items": "mu600 -0.008 / -0.073 / -0.004 / -0.040% (1/4 intervals); pc -0.001 / -0.009 / -0.042 / -0.016% (0/4); pcc -0.019 / -0.014 / -0.021 / -0.012% (0/4); ml +0.002 / -0.017 / +0.050 / -0.021%"
+ },
+ "rows": "runs/lomo_dev/rows.parquet (SHA-256 9072bc730f2cac40b8d85633cc19d41967d88b19c6c97bd12cbb22b15d9c5ed5): 2025-01 and 2025-07 'lomo', 2025-11 and 2025-12 'fair'",
+ "recipe_months": ["2025-01", "2025-07", "2025-11", "2025-12"],
+ "control": {
+  "name": "v35 stack",
+  "construction": "tools/run_mix_gate.stack, as configs/higher_bundle_v1.json",
+  "reproduction": "on 2025-11 and 2025-12 the control RMSE must equal docs/disagreement/mix_gate_v1_results.json's control_rmse to 1e-6 s"
+ },
+ "peer_congestion": "as configs/higher_bundle_v1.json (tools/peer_congestion.peer_table)",
+ "candidates": {
+  "mu_pc_pcc": {"net_up": 600, "noclock_lift": {"peer_c_above": 600, "seconds": 100}, "clock_untracked_lift": {"peer_c_above": 600, "seconds": 50}},
+  "pc_pcc":    {"noclock_lift": {"peer_c_above": 600, "seconds": 100}, "clock_untracked_lift": {"peer_c_above": 600, "seconds": 50}}
+ },
+ "candidate_semantics": "as configs/higher_bundle_v1.json (tools/run_higher_bundle.layered)",
+ "minimum_mean_improvement_fraction": 0.0002,
+ "selection": "Unchanged rule over the four recipe months: eligible when no recipe month is worse on ALL rows, the mean ratio is at least 0.02% below 1, and every touched month's paired-day 95% interval (seed 20260928) lies below zero; lowest mean ratio among eligible; otherwise keep v35.",
+ "ship": "as configs/higher_bundle_v1.json; upload only on the user's decision."
+}
