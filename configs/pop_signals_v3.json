@@ -1,0 +1,126 @@
+{
+  "experiment_id": "pop_signals_v3",
+  "declared_at_utc": "2026-09-28T18:43:00Z",
+  "audit_used": false,
+  "status": "DECLARED before the governing leave-one-month-out run (tools/run_pop_signals.py --declaration configs/pop_signals_v3.json); the eight-seed scratch reads that motivated the candidates are disclosed below (scratch harness, same months and seeds, a slightly different no-NM definition); three scratch combinations were still running at declaration time and are not read",
+  "purpose": "Two further label-free changes to the v9 LIRF population classifier, on top of configs/pop_signals_v1.json's previous-arrival identity (v42's candidate). (1) Operator descriptors of the row's flight prefix in the row's calendar month, from every LIRF movement of the file: the prefix's arrival fill share (in-block = scheduled arrival within the fill tolerance) smoothed towards the month's arrival fill share, its arrival count, and over the prefix's departures the share without an NM record, the share without an airport aircraft type and the departure count. They describe what kind of operator the row belongs to (an airline whose other movements are NM-filed and typed, or an operator whose movements are mostly unfiled), which the flight-prefix categorical cannot do for rare or unseen prefixes. (2) Stake weighting of the classifier fit: each fitting row weighs |schedule interval - the normal component's band value|, clipped to [600, 20000] s and scaled to mean 1, so the fit spends its capacity where the fill/normal decision moves the squared error, which is what the mixture is scored on.",
+  "mixture_declaration": "configs/lirf_mixture_v1.json",
+  "months": [
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11",
+    "2025-12"
+  ],
+  "seeds": [
+    20260915,
+    20260916,
+    20260917,
+    20260918,
+    20260919,
+    20260920,
+    20260921,
+    20260922
+  ],
+  "threads": 12,
+  "control": {
+    "feature_set": "base",
+    "description": "v9's seventeen classifier features, the same protocol and seed bag, unweighted (identical to the v1 and v2 controls)"
+  },
+  "candidates": {
+    "pa_stake": {
+      "feature_set": "pa",
+      "stake_weight": {
+        "floor_s": 600,
+        "cap_s": 20000
+      },
+      "description": "v1's pa features, the classifier fitted with the stake weights"
+    },
+    "pa_op": {
+      "feature_set": "pa_op",
+      "description": "pa + op_arr_fill_m + op_arr_n_m (the prefix's smoothed arrival fill share and log1p arrival count in the row's month), unweighted"
+    },
+    "pa_op_stake": {
+      "feature_set": "pa_op",
+      "stake_weight": {
+        "floor_s": 600,
+        "cap_s": 20000
+      },
+      "description": "pa_op with the stake weights"
+    },
+    "pa_opall": {
+      "feature_set": "pa_opall",
+      "description": "pa + the two arrival descriptors + prefix_nonm_m, prefix_notype_m, prefix_n_m (the prefix's departures in the month: no-NM share, no-type share, log1p count), unweighted"
+    },
+    "pa_opall_stake": {
+      "feature_set": "pa_opall",
+      "stake_weight": {
+        "floor_s": 600,
+        "cap_s": 20000
+      },
+      "description": "pa_opall with the stake weights"
+    }
+  },
+  "feature_definitions": {
+    "prefix": "the first three characters of FLIGHT_mvt ('?' when missing), for departures and arrivals alike (src/prc2026_final/pop_signals._prefix)",
+    "op_arr_fill_m": "(fills among the prefix's LIRF arrivals in the row's calendar month + 5 x the month's LIRF arrival fill share) / (the prefix's arrivals in the month + 5); a fill = |in-block - scheduled arrival| <= the mixture's fill tolerance (120 s); a prefix with no arrivals in the month gets the month's share (src/prc2026_final/pop_signals.operator_descriptors)",
+    "op_arr_n_m": "log1p(the prefix's LIRF arrivals in the month); 0 when none",
+    "prefix_nonm_m": "share of the prefix's LIRF departures in the month (every departure of the file, not only the population) whose ADEP_flt is missing (no NM flight record)",
+    "prefix_notype_m": "share of the prefix's LIRF departures in the month whose AIRCRAFT_TYPE_mvt is missing",
+    "prefix_n_m": "log1p(the prefix's LIRF departures in the month)",
+    "availability": "every input is a supplied movement column of the same file; in a leave-one-month-out fold the held-out month's own movements give its descriptors, as the ranking file's movements do for January and July 2026; no departure label or departure block time is read",
+    "stake_weight": "for each fitting row |schedule_interval_s - band_values(normal component fitted on the same fitting rows)| clipped to [floor_s, cap_s], divided by the mean over the fitting rows; passed as LightGBM row weights to every inner date-grouped fold (fit and early-stopping metric) and to the final booster (src/prc2026_final/pop_signals.stake_weights, fit_bag); the normal component itself is unchanged (band medians)"
+  },
+  "scope": "population rows with a schedule interval at or below the mixture threshold (43,200 s), as configs/pop_signals_v1.json",
+  "protocol": "as configs/pop_signals_v1.json: leave-one-month-out over the twelve 2025 months, classifier and normal component fitted on the other eleven months, mixture on the held-out rows, squared error against the held-out label",
+  "rule": {
+    "min_relative_sse_gain": 0.03,
+    "min_months_better": 8,
+    "bootstrap_draws": 10000,
+    "bootstrap_seed": 20260928,
+    "selection": "unchanged from configs/pop_signals_v1.json: among candidates at least 3% below the control's twelve-month in-scope SSE, better in at least 8 of 12 months, with the paired-month bootstrap 95% interval below zero, the lowest SSE; otherwise nothing",
+    "note": "the report also states each candidate's January and July readings and a ranking-composition read (below) for the user's decision; they are informational, not selection criteria"
+  },
+  "ranking_composition_read": {
+    "2025-01": 104,
+    "2025-07": 268,
+    "definition": "the January and July 2025 per-row in-scope SSE of the control and the candidate, each scaled to the ranking's in-scope population counts (104 January 2026 rows, 268 July 2026 rows), summed; informational"
+  },
+  "export": "v43 = uploaded v40 + 0.75 x (mixture_selected - mixture_v9_shipped) on the in-scope ranking population rows, floored at -12 s, every other row byte-identical to v40 (tools/export_pop_signals.py --declaration configs/pop_signals_v3.json --version 43); a v43 REPLACES v42's population delta (v42 = the pa candidate, built at the user's word, not uploaded) rather than stacking on it; the selected candidate's bag is fitted on all twelve 2025 months with the declared seeds and, for a stake-weighted candidate, the stake weights of those rows",
+  "incumbent": {
+    "submission": "vigorous-whistle_v40.parquet",
+    "official_rmse_seconds": 224.4588,
+    "sha256": "da5b20c328ab6be5fca4a21c37cb7c80210397fba62d8395557a9b84d77d162a"
+  },
+  "prior_exploration_disclosed": {
+    "when": "28 September 2026, 18:05-18:55 UTC, scratchpad scripts (pop_variants3/4/5/6.py) on the same twelve months, eight seeds, the scratch harness of rounds 1-2 (its control reads 19.007e9 against the declared tool's 19.054e9; its no-NM flag was FLIGHT_ID_mvt missing where the module uses ADEP_flt missing)",
+    "eight_seed_scratch_reads_e9": {
+      "base": 19.007,
+      "pa": 18.21,
+      "pa_stake": 18.142,
+      "pa_iso": 18.155,
+      "pa_stake_iso": 18.171,
+      "pa_na": 18.246,
+      "pa_stand": 18.591,
+      "pa_op_unsmoothed_share_plus_prefix_descriptors": 18.101,
+      "pa_opA_prefix_descriptors_only": 18.172,
+      "pa_opB_unsmoothed_share": 18.103,
+      "pa_opBs_smoothed_share_and_count": 17.753,
+      "pa_opAs_smoothed_share_count_and_prefix_descriptors": 17.9,
+      "pa_nonm": 18.196,
+      "opBs_stake": 17.575,
+      "opAs_stake": 17.704
+    },
+    "scratch_month_pattern": "pa_stake: 9/12 months below the control, bootstrap [-8.0%, -2.8%], January -21%, July -7%; pa_opBs: 8/12, [-13.0%, -2.0%], January -32%, July -15%, March +25%, December +20%; pa_opAs: 8/12, [-12.2%, -0.4%]; opBs_stake: 9/12, January -39%, July -18%, March +19%, October +7%, December +11%; the operator descriptors help small and unfiled operators and normal-mode rows of large carriers, and hurt on some fills of large carriers (RAM, VLG, DLH in March/December); opAs_stake: 7/12, January -37%, July -19%, March +26%, December +11% (read as the declaration was recorded)",
+    "not_declared": "isotonic calibration of p_fill on inner out-of-fold predictions (10/12 months but January +11.5%: the ranking's January rows carry the higher per-row error); next-arrival fill / same-prefix (no gain); stand +/-3-day, apron-day and +/-2-hour arrival fill shares (worse); the operator descriptors' unsmoothed arrival share (noisier than the smoothed one); combinations still running at declaration time (opA_stake, opBs_stake_iso) are not read",
+    "closed_alongside": "UTC-day truncation of ADS-B tracks (55 ranking rows), no-NM rematch outside EDDF/EHAM (nothing to do), the ADS-B observed taxi as the population's normal component (worse in every month)"
+  },
+  "report": "docs/pop_signals/results_v3.json"
+}

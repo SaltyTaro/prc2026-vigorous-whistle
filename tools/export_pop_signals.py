@@ -82,9 +82,10 @@ def main() -> None:
         train["cs_rate"] = ps.callsign_rates(train["flight"], train["lomo_month"], fill, train["flight"], train["lomo_month"], smoothing)
         rank["cs_rate"] = ps.callsign_rates(train["flight"], train["lomo_month"], fill, rank["flight"], None, smoothing)
     classifier = {**mixture_config["classifier"], "params": {**mixture_config["classifier"]["params"], "num_threads": int(config.get("threads", 4))}}
-    bag = ps.fit_bag(train, train["mode"].to_numpy(), train["movement_date_utc"].to_numpy(), names, classifier, config["seeds"])
     component = ps.normal_component(train["label"].to_numpy(dtype=float), train["schedule_interval_s"].to_numpy(dtype=float), train["mode"].to_numpy(),
                                     mixture_config)
+    weight = ps.stake_weights(train, component, spec["stake_weight"]) if spec.get("stake_weight") else None
+    bag = ps.fit_bag(train, train["mode"].to_numpy(), train["movement_date_utc"].to_numpy(), names, classifier, config["seeds"], weight)
     mixture_new, p_fill = ps.mixture_for(bag, component, rank)
     # the control (v9's features, the same twelve months and seeds): splits the delta into the refit part and the feature part
     control_bag = ps.fit_bag(train, train["mode"].to_numpy(), train["movement_date_utc"].to_numpy(), ps.candidate_names(config["control"]), classifier, config["seeds"])

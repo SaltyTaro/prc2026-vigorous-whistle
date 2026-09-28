@@ -47,16 +47,18 @@ def fold(table: pd.DataFrame, held: str, candidate: dict, config: dict, mixture_
         train["cs_rate"] = ps.callsign_rates(train["flight"], train["lomo_month"], fill, train["flight"], train["lomo_month"], smoothing)
         hold["cs_rate"] = ps.callsign_rates(train["flight"], train["lomo_month"], fill, hold["flight"], None, smoothing)
     classifier = {**mixture_config["classifier"], "params": {**mixture_config["classifier"]["params"], "num_threads": int(config.get("threads", 4))}}
-    bag = ps.fit_bag(train, train["mode"].to_numpy(), train["movement_date_utc"].to_numpy(), names, classifier, config["seeds"])
     component = ps.normal_component(train["label"].to_numpy(dtype=float), train["schedule_interval_s"].to_numpy(dtype=float), train["mode"].to_numpy(),
                                     mixture_config)
+    weight = ps.stake_weights(train, component, candidate["stake_weight"]) if candidate.get("stake_weight") else None
+    bag = ps.fit_bag(train, train["mode"].to_numpy(), train["movement_date_utc"].to_numpy(), names, classifier, config["seeds"], weight)
     mixture, p_fill = ps.mixture_for(bag, component, hold)
     return pd.DataFrame({ID: hold[ID].to_numpy(), "month": held, "interval_s": hold["schedule_interval_s"].to_numpy(dtype=float),
                          "label": hold["label"].to_numpy(dtype=float), "mode": hold["mode"].to_numpy(), "p_fill": p_fill, "mixture": mixture,
                          "rounds": float(np.mean([m["rounds"] for m in bag["members"]]))})
 
 
-def summarise(rows: pd.DataFrame, control: pd.DataFrame | None, threshold: float, months: list[str], rng: np.random.Generator, draws: int) -> dict:
+def summarise(rows: pd.DataFrame, control: pd.DataFrame | None, threshold: float, months: list[str], rng: np.random.Generator, draws: int,
+              ranking_rows: dict | None = None) -> dict:
     scope = rows[rows["interval_s"] <= threshold]
     err = (scope["mixture"] - scope["label"]) ** 2
     per_month = err.groupby(scope["month"]).sum().reindex(months).fillna(0.0)
@@ -71,6 +73,11 @@ def summarise(rows: pd.DataFrame, control: pd.DataFrame | None, threshold: float
         out.update({"relative_sse_change": float(rel), "months_better": int((a < b).sum()), "months": len(months),
                     "relative_change_by_month": {m: float((a[k] - b[k]) / b[k]) for k, m in enumerate(months)},
                     "bootstrap_95": [float(np.quantile(draws_rel, 0.025)), float(np.quantile(draws_rel, 0.975))]})
+        if ranking_rows:  # informational: the ranking months' analogs, per-row SSE scaled to the ranking's in-scope population counts
+            counts = {m: int((cscope["month"] == m).sum()) for m in ranking_rows}
+            ctrl = sum(b[months.index(m)] / counts[m] * n for m, n in ranking_rows.items())
+            cand = sum(a[months.index(m)] / counts[m] * n for m, n in ranking_rows.items())
+            out["ranking_composition_read"] = {"relative_sse_change": float((cand - ctrl) / ctrl), "sse_change": float(cand - ctrl), "ranking_rows": ranking_rows}
     return out
 
 
@@ -98,8 +105,9 @@ def main() -> None:
         frames.append(rows)
         if name == "control":
             control_rows = rows
-        results[name] = {"feature_set": candidate["feature_set"], **summarise(rows, None if name == "control" else control_rows, threshold, months, rng,
-                                                                             int(config["rule"]["bootstrap_draws"]))}
+        results[name] = {"feature_set": candidate["feature_set"], "stake_weight": candidate.get("stake_weight"),
+                         **summarise(rows, None if name == "control" else control_rows, threshold, months, rng, int(config["rule"]["bootstrap_draws"]),
+                                     config.get("ranking_composition_read"))}
         print(name, {k: (round(v, 4) if isinstance(v, float) else v) for k, v in results[name].items() if k not in ("sse_by_month", "relative_change_by_month")}, flush=True)
     rule = config["rule"]
     eligible = [n for n in config["candidates"] if results[n]["relative_sse_change"] <= -float(rule["min_relative_sse_gain"])
