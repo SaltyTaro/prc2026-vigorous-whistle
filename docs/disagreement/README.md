@@ -154,3 +154,11 @@ l600 mean -0.011%. 78 ranking rows at most (January). Not stacked.
 
 Closed the same hour: an ADS-B "lower bound" (takeoff - segment_start on non-gate segments): 9% of labels (gate: 30%) lie below it, since
 segment starts include earlier ground time; raising predictions to it multiplies SSE (+1e11 per month). The models already use these features.
+
+## v35 official result (28 September 2026)
+
+Uploaded at the user's "upload v35 now" at 00:57:18 UTC (the first attempt stopped before any write: the uploader required a
+`selected_candidate` provenance field that the stack exporter does not write; tools/prc_submit.py now labels such exports by their
+experiment id). Processed 00:57:59 UTC: **226.8989 on all 344,841 rows, -1.6944 s (-0.741%) against v34's 228.5933**, new official best.
+The fair development months predicted -0.021 / -0.067 / -0.141 / -0.069%; the ranking gain is ten times the development mean, as the
+label-free exposure analysis expected (January 2026 carries several times the development months' disagreement, EHAM 3-7 January). Official record: official_result_v35.json. Never re-upload v1-v35.

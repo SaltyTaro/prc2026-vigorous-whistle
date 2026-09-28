@@ -46,7 +46,8 @@ def upload(path: Path, expected_sha256: str, calendar_day: bool = False):
     log_path = path.with_suffix(".upload.json")
     provenance = receipt["provenance"]
     # Post-processing exports carry no refit of their own; identify them by declaration and candidate.
-    run_id = provenance.get("refit_run_id") or f"{provenance['experiment_id']}:{provenance['selected_candidate']}"
+    # Stacked overrides (tools/export_stack.py) name no single candidate; their experiment id alone identifies them.
+    run_id = provenance.get("refit_run_id") or ":".join(str(x) for x in [provenance["experiment_id"], provenance.get("selected_candidate")] if x)
     log = {"created_at_utc": utc_now(), "status": "upload_started", "endpoint": ENDPOINT,
            "bucket": BUCKET, "filename": path.name, "sha256": expected_sha256,
            "validation": validation, "limits": limits, "refit_run_id": run_id}
