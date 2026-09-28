@@ -103,6 +103,27 @@ accounts for 2.3e7 and the new features for 2.9e7 (cross terms make up the rest)
 changed label equals the new value, 224.94 if it equals the old one; the leave-one-month-out reading implies about −0.5 s if the
 population behaves as in 2025 (−2.7…−4% of a population SSE of roughly 2.9e9). `pa2` is the same picture (SHA-256 2ef11b10…).
 
+## v42 built (11:25 UTC, user: "build v42 and keep searching"; NOT uploaded)
+
+`runs/submissions/vigorous-whistle_v42.parquet`, SHA-256 `a8729c26565eae4ddc62cc8adc3f791f25efcadd8d5f08e29f61081863c55c41`
+(byte-identical to the dry run): v40 + 0.75 × (mixture[`pa`, twelve months, eight seeds] − mixture[v9 shipped]) on the 372 in-scope
+population rows, floor −12 s. Report `export_v42.json`; classifier bag and detail table `runs/pop_signals/export_v42/`; audit
+`docs/export_audit/v42_audit.json` clean (370 rows changed, all LIRF population; every other row byte-identical to v40; the
+airport-month flags are January 2026's known disruption/snow levels, unchanged from v40). Independent check: 370 changed rows, all in
+the v9 scope. The report's `lomo_implied_rmse_change_s` (−1.27 s) uses the control's per-row SSE *including* the June one-day row and
+the −4.04% total; the honest expectation excludes that row: about **−0.5 s** if the 2026 population behaves as 2025's, with a
+comparable loss if the signal does not transfer (v10's precedent). The user uploads at the 00:00 UTC reset if they choose; a v42 runner
+layer set is added only after an upload.
+
+### Normal-component follow-up (scratch, on the declared LOMO rows with `pa`'s p_fill; not declared)
+
+Replacing the band medians: band means −0.7% (7/12 months), a small LightGBM regression on interval/hour/weekday/month + the four
+categoricals −3.4% (11/12), the same plus the turnaround features −4.6% (11/12), a 50/50 blend with the medians −2.3% (11/12); an L1
+regression −1.2%. **Every regression variant loses January** (+3.5% … +14.7%): the "normal" class carries a heavy tail (p95 5,075 s,
+p99 8,967 s) that a mean regression follows, and January's 34 normal-mode rows are short (median 844 s). Weighted by the ranking's
+row mix (January rows carry a higher per-row SSE than July's), a candidate that loses January by 12% and wins July by 1% is a net
+loss, so this is parked: no declaration, no export.
+
 **Reading.** The previous-arrival identity is a real, structural separator (a −2.7% to −4% population-SSE effect, concentrated in the
 summer months that resemble July 2026), but the declared rule was set for month-level consistency and it does not clear it. Shipping
 it is a user decision with the odds above; the stake on the ranking is of the order of ±0.5 s (population SSE ≈ 16–26% of the total,

@@ -1,0 +1,33 @@
+{
+  "candidate": "pa",
+  "created_at_utc": "2026-09-28T14:46:57.995671+00:00",
+  "delta_split": {
+    "mean_p_fill": {
+      "control": 0.4417438910453616,
+      "new": 0.4425553815313462,
+      "v9_shipped": 0.43834202646306597
+    },
+    "reference": "shipped",
+    "sum_sq_feature_part_0.75x(new-control)": 28528811.076764077,
+    "sum_sq_refit_part_0.75x(control-shipped)": 22963748.08700588,
+    "sum_sq_total_0.75x(new-shipped)": 74754709.91573954
+  },
+  "dry_run": false,
+  "lomo_implied_rmse_change_s": -1.2712714503394125,
+  "lomo_relative_sse_change_of_candidate": -0.0403655540823907,
+  "lomo_row_sse_used_for_the_implication": 13068879.646677239,
+  "max_abs_change_s": 4600.0,
+  "mean_abs_change_s": 203.6263440860215,
+  "note_on_scenarios": "the realised change can exceed either bound: a move of d against a residual r changes the SSE by 2*d*r - d^2",
+  "receipt_sha256": "a8729c26565eae4ddc62cc8adc3f791f25efcadd8d5f08e29f61081863c55c41",
+  "rmse_if_every_changed_label_equals_the_new_value": 223.97537500459472,
+  "rmse_if_every_changed_label_equals_the_old_value": 224.94118606078158,
+  "rows": [],
+  "rows_changed": 370,
+  "rows_down": 187,
+  "rows_in_scope": 372,
+  "rows_up": 183,
+  "sum_squared_change": 74756111.0,
+  "user_override": "build v42 and keep searching",
+  "version": 42
+}
