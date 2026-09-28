@@ -314,3 +314,12 @@ bin by bin with the same quantity on the development months (where the proxy its
 +796 s above 1,800 / 2,400 / 3,600 s), differs by +30 ... +90 s above 900 s with all airports, but that is EGLL's July coverage change;
 without EGLL the ranking matches development within +-15 s up to 2,400 s, and January's tail sits higher (+80 s at 2,400-3,600,
 +273 s above), July's lower above 3,600 s (-151 s, few rows). No sign that the dev-fitted stretch overshoots in the ranking.
+
+## v38 official result (28 September 2026)
+
+Uploaded at the user's "upload it" at 03:45:10 UTC (second upload of 28 September UTC). Processed 03:45:53 UTC: **226.8053 on all
+344,841 rows, -0.0936 s (-0.041%) against v35's 226.8989**, new official best. The development months predicted -0.235% (and the
+sum of squared moves, 1.56e8, made a full transfer worth about -1.0 s): the ranking realised about a tenth of it. A plausible reason,
+not tested: the ranking's twelve-month refits are less compressed than the eleven-month LOMO and fold models the stretch was fitted
+on. The shipped stretch coefficients are not to be re-tuned against this score.
+Official record: official_result_v38.json. v36 and v37 were exported but never uploaded. Never re-upload v1-v38.
