@@ -1,0 +1,23 @@
+{
+ "experiment_id": "tail_stretch_v2",
+ "declared_at_utc": "2026-09-28T03:20:00Z",
+ "audit_used": false,
+ "purpose": "Two-sided version of configs/tail_stretch_v1.json's v35_t1500: after the upper stretch (value + k1 x max(value - 1500, 0)), a lower stretch value + k2 x max(t2 - value, 0) with k2 fitted the same way (least squares on the other recipe months, per scope, on the upper-stretched values). The v35 stack over-predicts rows it puts at 300-900 s in every month (-1 ... -25 s). No model is fitted beyond one coefficient per scope and side.",
+ "prior_context": {
+  "note": "POST-HOC for the lower side: declared after an exploratory leave-one-month-out read on these same four months (disclosed): t2 = 600 / 900 / 1200 added -0.021 / -0.046 / -0.041% (mean) on top of the upper stretch, t2 = 900 better in every month (-0.009 / -0.017 / -0.057 / -0.102%), k2 about -0.035 (tracked). A per-airport k was also explored and LOST to the pooled k (-0.120% vs -0.188%), so the pooled form is kept. The upper side is unchanged from tail_stretch_v1."
+ },
+ "rows": "runs/lomo_dev/rows.parquet (SHA-256 9072bc730f2cac40b8d85633cc19d41967d88b19c6c97bd12cbb22b15d9c5ed5): 2025-01 and 2025-07 'lomo', 2025-11 and 2025-12 'fair'",
+ "recipe_months": ["2025-01", "2025-07", "2025-11", "2025-12"],
+ "control": "v35 stack (tools/run_mix_gate.stack), as configs/tail_stretch_v1.json",
+ "scopes": "as configs/tail_stretch_v1.json: untracked / tracked non-LIRF rows outside the callsign / queue layers; LIRF and anchored rows keep the control",
+ "fit": "per held month, from the other three months' in-scope rows: k1 = LS of (label - control) on max(control - 1500, 0); u = control + k1 x max(control - 1500, 0); k2 = LS of (label - u) on max(t2 - u, 0). For the export, both from all four months.",
+ "candidates": {
+  "two_sided_900":  {"t_upper": 1500, "t_lower": 900},
+  "two_sided_1200": {"t_upper": 1500, "t_lower": 1200},
+  "upper_only":     {"t_upper": 1500}
+ },
+ "candidate_semantics": "value = max(u + k2 x max(t_lower - u, 0), floor) on in-scope rows (u = the upper-stretched value); upper_only reproduces tail_stretch_v1's v35_t1500 and is a code-path check (its per-month ratios must equal tail_stretch_v1's to 1e-9)",
+ "minimum_mean_improvement_fraction": 0.0002,
+ "selection": "Unchanged rule over the four recipe months against the v35 stack: eligible when no recipe month is worse on ALL rows, the mean ratio is at least 0.02% below 1, and every touched month's paired-day 95% interval (seed 20260928) lies below zero; lowest mean ratio among eligible.",
+ "ship": "tools/export_stack.py --stretch 1500 with the lower side added, k from all four months; upload only on the user's decision."
+}
