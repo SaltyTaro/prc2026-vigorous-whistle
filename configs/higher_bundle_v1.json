@@ -1,0 +1,33 @@
+{
+ "experiment_id": "higher_bundle_v1",
+ "declared_at_utc": "2026-09-28T02:08:00Z",
+ "audit_used": false,
+ "purpose": "Bundle of the small same-direction ('higher side') items left after the post-v35 searches, on top of the shipped v35 stack: network share 1.0 where the networks lie > 600 s above the committee (mu600); outer weight 1.0 instead of 0.6 on matched rows whose mix lies 150-300 s above the v9 + residual side (ml); and a lift for rows in airport-hours whose NM-clocked departures run far above the month's normal (tools/peer_congestion.py): +100 s for rows without an NM clock (pc), +50 s for untracked rows with one (pcc). No model is fitted.",
+ "prior_context": {
+  "note": "Declared AFTER exploratory reads on the SAME four months this round scores (disclosed; docs/disagreement/README.md 'Deep search' and 'Second disagreement pass'): the thresholds and lift sizes below were chosen from those reads, so a pass here is weaker evidence than a clean holdout. The user asked for this round (28 September 2026, 'yes do both') knowing that shipping may need an override.",
+  "mu600": "configs/mix_gate_v1.json (fair rows) -0.004 / -0.037 / -0.004 / -0.040%, 0/4 intervals; configs/snow_higher_v1.json (LOMO + fair) -0.008 / -0.073 / -0.004 / -0.040%, 1/4",
+  "ml": "fair rows, matched non-LIRF non-LTFM, mix - base in (150, 300]: least-squares weight on the mix 0.93 / 1.01 / 0.52 / 1.02 (Jan / Jul / Nov / Dec) against 0.6 used; 283-607 rows a month",
+  "pc_pcc": "LOMO / fair v35-stack control, non-LIRF, hours with peer_c > 600 s: no-clock untracked +137 s (257 rows), no-clock tracked +286 s (90), clock untracked +67 s (3,118); peer_c > 300 per month, no-clock untracked +61 / +110 / +106 / +8 s",
+  "ranking_exposure_label_free": "mu600 439 rows; peer_c > 600 in January 2026: 4,792 rows, of which 603 without an NM clock (training months at most 200); 462 of the congested no-clock rows were already moved by v35's layers (EHAM 377)"
+ },
+ "rows": "runs/lomo_dev/rows.parquet (SHA-256 9072bc730f2cac40b8d85633cc19d41967d88b19c6c97bd12cbb22b15d9c5ed5): 2025-01 and 2025-07 'lomo', 2025-11 and 2025-12 'fair'",
+ "recipe_months": ["2025-01", "2025-07", "2025-11", "2025-12"],
+ "control": {
+  "name": "v35 stack",
+  "construction": "tools/run_mix_gate.stack (v34 weights -> u300 -> callsign 50% -> queue trust 0.75 on regular matches), as configs/snow_higher_v1.json",
+  "reproduction": "on 2025-11 and 2025-12 the control RMSE must equal docs/disagreement/mix_gate_v1_results.json's control_rmse to 1e-6 s"
+ },
+ "peer_congestion": "tools/peer_congestion.peer_table on the movement file's own departures (training files for the development months, ranking.parquet for the ranking): peer_c = the airport-hour's mean of MVT - AOBT_3 (0-7200 s) minus the airport-month median of those hourly means; rows need peer_n >= 5; no_clock = own AOBT_3 missing",
+ "candidates": {
+  "mu600":   {"net_up": 600},
+  "ml":      {"matched_lean": [150, 300]},
+  "pc":      {"noclock_lift": {"peer_c_above": 600, "seconds": 100}},
+  "pcc":     {"clock_untracked_lift": {"peer_c_above": 600, "seconds": 50}},
+  "bundle3": {"net_up": 600, "matched_lean": [150, 300], "noclock_lift": {"peer_c_above": 600, "seconds": 100}},
+  "bundle":  {"net_up": 600, "matched_lean": [150, 300], "noclock_lift": {"peer_c_above": 600, "seconds": 100}, "clock_untracked_lift": {"peer_c_above": 600, "seconds": 50}}
+ },
+ "candidate_semantics": "net_up u: network share 1.0 where nets - committee > u (0.75 otherwise), the whole v35 stack rebuilt on that mix; matched_lean [a, b]: on matched non-LIRF rows outside the queue-trust scope with a < mix - base <= b (the candidate's mix), value + 0.4 x (mix - base) (outer weight 1.0 instead of 0.6), floor; noclock_lift: non-LIRF rows without an NM clock, peer_n >= 5 and peer_c > threshold, value + seconds (tracked and untracked); clock_untracked_lift: non-LIRF untracked rows with an NM clock under the same peer condition, value + seconds. Applied in the order listed.",
+ "minimum_mean_improvement_fraction": 0.0002,
+ "selection": "Unchanged rule over the four recipe months: eligible when no recipe month is worse on ALL rows, the mean ratio is at least 0.02% below 1, and every touched month's paired-day 95% interval (seed 20260928) lies below zero; lowest mean ratio among eligible; otherwise keep v35.",
+ "ship": "delta on the ranking rows = candidate minus the v35 stack, both from v34's rebuilt floats (tools/export_stack.py style), peer congestion from ranking.parquet; independent check; audit; upload only on the user's decision."
+}
