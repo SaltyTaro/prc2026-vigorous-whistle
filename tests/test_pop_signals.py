@@ -76,8 +76,23 @@ def test_candidate_names_extend_v9s_features():
     assert ps.candidate_names({"feature_set": "base"}) == FEATURE_NAMES
     assert ps.candidate_names({"feature_set": "pa"}) == FEATURE_NAMES + ps.PA_NUMERIC
     assert ps.candidate_names({"feature_set": "cs_pa"}) == FEATURE_NAMES + ps.CS_NUMERIC + ps.PA_NUMERIC
+    assert ps.candidate_names({"feature_set": "pa_arrm", "drop": ["month"]}) == [n for n in FEATURE_NAMES if n != "month"] + ps.PA_NUMERIC + ["arr_fill_m"]
     with pytest.raises(KeyError):
         ps.candidate_names({"feature_set": "nope"})
+    with pytest.raises(KeyError):
+        ps.candidate_names({"feature_set": "base", "drop": ["not_a_feature"]})
+
+
+def test_arrival_fill_shares_by_month_and_day():
+    m = movements()
+    by_month, by_day = ps.arrival_fill_shares(m, 120.0)
+    # arrivals: RYR122 in-block 30 s after schedule (fill), EZY77 one hour late, ITY8 ten minutes late, BAW1 5.5 h late -> 1 of 4
+    assert by_month.to_dict() == {"2025-07": 0.25}
+    assert by_day.to_dict() == {"2025-07-10": 0.25}
+    # a tighter tolerance drops the 30-second one
+    assert ps.arrival_fill_shares(m, 5.0)[0].to_dict() == {"2025-07": 0.0}
+    table = ps.population_table(m, read_json(ROOT / "configs/lirf_mixture_v1.json"))
+    assert table["arr_fill_m"].tolist() == [0.25] * 4 and table["arr_fill_d"].tolist() == [0.25] * 4
 
 
 def test_population_table_and_bag_on_synthetic_rows():

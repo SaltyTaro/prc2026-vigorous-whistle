@@ -28,9 +28,22 @@ from prc2026_lirf_mixture.model import band_values, mixture_values, normal_compo
 
 PA_NUMERIC = ["pa_same_prefix", "pa_sched_gap", "pa_fill", "pa_nonm"]
 CS_NUMERIC = ["cs_rate"]
-ARRIVAL_EXTRA = ["SCHED_TIME_UTC_mvt", "FLIGHT_mvt", "ADEP_flt"]
+ARR_NUMERIC = ["arr_fill_m", "arr_fill_d"]  # the airport's arrival fill share (in-block = scheduled arrival) in the row's month / UTC day
+ARRIVAL_EXTRA = ["SCHED_TIME_UTC_mvt", "FLIGHT_mvt", "ADEP_flt", "MVT_TIME_UTC_mvt"]
 RAW_COLUMNS = sorted(set(DEPARTURE_COLUMNS + ARRIVAL_COLUMNS + ARRIVAL_EXTRA + ["TAXITIME_SEC_mvt"]))
-FEATURE_SETS = {"base": [], "pa": PA_NUMERIC, "pa2": ["pa_same_prefix", "pa_sched_gap"], "cs": CS_NUMERIC, "cs_pa": CS_NUMERIC + PA_NUMERIC}
+FEATURE_SETS = {"base": [], "pa": PA_NUMERIC, "pa2": ["pa_same_prefix", "pa_sched_gap"], "cs": CS_NUMERIC, "cs_pa": CS_NUMERIC + PA_NUMERIC,
+                "pa_arrm": PA_NUMERIC + ["arr_fill_m"], "pa_arrd": PA_NUMERIC + ARR_NUMERIC, "arrm": ["arr_fill_m"]}
+
+
+def arrival_fill_shares(movements: pd.DataFrame, fill_tolerance_seconds: float) -> tuple[pd.Series, pd.Series]:
+    """Share of LIRF arrivals whose in-block equals their scheduled arrival within the tolerance, per month ('YYYY-MM') and per UTC day
+    ('YYYY-MM-DD') of the arrival's movement time. Arrival block times are supplied in every file, including the ranking's."""
+    arrivals = movements.loc[movements[PHASE].eq("ARR") & movements["ADES_mvt"].eq(AIRPORT) & movements["BLOCK_TIME_UTC_mvt"].notna()
+                             & movements["SCHED_TIME_UTC_mvt"].notna()]
+    fill = pd.Series(np.abs(_seconds(arrivals["BLOCK_TIME_UTC_mvt"]) - _seconds(arrivals["SCHED_TIME_UTC_mvt"])) <= fill_tolerance_seconds,
+                     index=arrivals.index, dtype=float)
+    stamps = pd.to_datetime(arrivals[TIME], utc=True)
+    return fill.groupby(stamps.dt.strftime("%Y-%m").to_numpy()).mean(), fill.groupby(stamps.dt.strftime("%Y-%m-%d").to_numpy()).mean()
 EPOCH = pd.Timestamp("1970-01-01", tz="UTC")
 
 
@@ -98,6 +111,9 @@ def population_table(movements: pd.DataFrame, config: dict) -> pd.DataFrame:
     out = base.merge(extra, on=ID, how="left", validate="one_to_one")
     stamps = pd.to_datetime(population[TIME], utc=True)
     out["lomo_month"] = stamps.dt.strftime("%Y-%m").to_numpy()  # v9's numeric "month" feature keeps its column
+    by_month, by_day = arrival_fill_shares(movements, float(config["fill_tolerance_seconds"]))
+    out["arr_fill_m"] = pd.Series(out["lomo_month"]).map(by_month).to_numpy(dtype=float)
+    out["arr_fill_d"] = pd.Series(stamps.dt.strftime("%Y-%m-%d").to_numpy()).map(by_day).to_numpy(dtype=float)
     out["movement_date_utc"] = stamps.dt.strftime("%Y-%m-%d").to_numpy()
     out["flight"] = population["FLIGHT_mvt"].to_numpy()
     out["label"] = population["TAXITIME_SEC_mvt"].to_numpy(dtype=float) if "TAXITIME_SEC_mvt" in population else np.nan
@@ -153,7 +169,11 @@ def predict_bag(bag: dict, features: pd.DataFrame) -> np.ndarray:
 
 
 def candidate_names(candidate: dict) -> list[str]:
-    return FEATURE_NAMES + FEATURE_SETS[candidate["feature_set"]]
+    """v9's classifier features (minus any the candidate declares in `drop`, e.g. the calendar month) plus the candidate's feature set."""
+    drop = set(candidate.get("drop", []))
+    if drop - set(FEATURE_NAMES):
+        raise KeyError(f"drop names not in v9's features: {sorted(drop - set(FEATURE_NAMES))}")
+    return [n for n in FEATURE_NAMES if n not in drop] + FEATURE_SETS[candidate["feature_set"]]
 
 
 def mixture_for(bag: dict, component: dict, features: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:

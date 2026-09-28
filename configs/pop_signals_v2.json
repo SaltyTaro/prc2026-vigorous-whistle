@@ -1,0 +1,36 @@
+{
+  "experiment_id": "pop_signals_v2",
+  "declared_at_utc": "2026-09-28T14:58:00Z",
+  "audit_used": false,
+  "status": "DECLARED before the governing leave-one-month-out run (tools/run_pop_signals.py --declaration configs/pop_signals_v2.json); the month-level diagnostic and a single-seed scratch read that motivated it are disclosed below; an eight-seed scratch read of the same feature sets was running at declaration time and had produced no result yet",
+  "purpose": "The v9 population classifier carries the calendar month as a feature, so on the ranking it applies July 2025's fill propensity (the lowest of 2025: 32% of population rows) to July 2026 and January 2025's (41%) to January 2026. A label-free measure of the airport's record-capture state exists in every file: the share of LIRF arrivals whose in-block equals their scheduled arrival (within v9's 120 s fill tolerance). Across the twelve 2025 months it tracks the population's departure fill share with r = 0.81 (July 2025 the lowest on both: 0.135 / 0.317; February-March and December the highest: 0.17-0.19 / 0.75-0.77). The ranking's arrival shares are 0.146 (January 2026, like January 2025's 0.148) and 0.156 (July 2026, well above July 2025's 0.135 and in the range of August-December 2025, whose population fill shares were 0.43-0.77). This round gives the classifier that share (and, as a variant, drops the calendar month so the propensity is read from the share rather than from the month), on top of the previous-arrival identity features of configs/pop_signals_v1.json.",
+  "mixture_declaration": "configs/lirf_mixture_v1.json",
+  "months": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12"],
+  "seeds": [20260915, 20260916, 20260917, 20260918, 20260919, 20260920, 20260921, 20260922],
+  "threads": 12,
+  "control": {"feature_set": "base", "description": "v9's seventeen classifier features, the same protocol and seed bag (identical to configs/pop_signals_v1.json's control)"},
+  "candidates": {
+    "pa": {"feature_set": "pa", "description": "configs/pop_signals_v1.json's pa, the v42 export's candidate; re-scored here as the reference"},
+    "pa_arrm": {"feature_set": "pa_arrm", "description": "pa + arr_fill_m (the month's LIRF arrival fill share), calendar month kept"},
+    "pa_arrm_nomonth": {"feature_set": "pa_arrm", "drop": ["month"], "description": "pa + arr_fill_m with the calendar month feature removed"},
+    "arrm_nomonth": {"feature_set": "arrm", "drop": ["month"], "description": "v9's features with the calendar month replaced by arr_fill_m (no previous-arrival features)"},
+    "pa_arrd": {"feature_set": "pa_arrd", "description": "pa + arr_fill_m + arr_fill_d (the UTC day's arrival fill share; within-month day variation looked weak: fill 0.44-0.53 across quintiles)"}
+  },
+  "feature_definitions": {"arr_fill_m": "share of the file's LIRF arrivals in the row's calendar month whose in-block is within 120 s of their scheduled arrival (src/prc2026_final/pop_signals.arrival_fill_shares); in a leave-one-month-out fold the held-out month's own arrivals give its share, as the ranking file's arrivals do for 2026",
+                          "arr_fill_d": "the same share over the row's UTC day"},
+  "scope": "population rows with a schedule interval at or below the mixture threshold (43,200 s), as configs/pop_signals_v1.json",
+  "protocol": "as configs/pop_signals_v1.json: leave-one-month-out over the twelve 2025 months, classifier and normal component fitted on the other eleven months, mixture on the held-out rows, squared error against the held-out label",
+  "rule": {"min_relative_sse_gain": 0.03, "min_months_better": 8, "bootstrap_draws": 10000, "bootstrap_seed": 20260928,
+           "selection": "unchanged from configs/pop_signals_v1.json: among candidates at least 3% below the control's twelve-month in-scope SSE, better in at least 8 of 12 months, with the paired-month bootstrap 95% interval below zero, the lowest SSE; otherwise nothing",
+           "note": "the same rule failed pa by one month (7 of 12) in v1; the report also states each candidate's change excluding the one June one-day row and its January / July readings (the ranking months' analogs), for the user's decision"},
+  "export": "as configs/pop_signals_v1.json (v40 + 0.75 x (mixture_selected - mixture_v9_shipped) on the in-scope ranking population rows, floor -12 s); a v43 would replace v42 (the pa export, built at the user's word, not uploaded) rather than stack on it",
+  "incumbent": {"submission": "vigorous-whistle_v40.parquet", "official_rmse_seconds": 224.4588, "sha256": "da5b20c328ab6be5fca4a21c37cb7c80210397fba62d8395557a9b84d77d162a"},
+  "prior_exploration_disclosed": {
+    "when": "28 September 2026, 14:35-14:55 UTC, scratchpad",
+    "month_level": {"arr_fill_m_2025": [0.148, 0.174, 0.189, 0.170, 0.166, 0.160, 0.135, 0.152, 0.151, 0.154, 0.158, 0.162], "pop_fill_2025": [0.414, 0.754, 0.759, 0.662, 0.465, 0.492, 0.317, 0.438, 0.427, 0.487, 0.640, 0.767],
+                    "correlation": 0.814, "linear_fit_implied_pop_fill": {"2026-01": 0.420, "2026-07": 0.519}, "arr_fill_m_ranking": {"2026-01": 0.146, "2026-07": 0.156}},
+    "day_level": "population fill share by quintile of the day's arrival fill share 0.35 -> 0.62, but within a month (share minus the month's) only 0.45 / 0.48 / 0.44 / 0.53 / 0.52: the signal is the month's level",
+    "single_seed_lomo": "base + arr_fill_m + a same-month operator arrival fill rate (10:30 UTC scratch, calendar month kept): 18.591e9 against 18.941e9, unstable by month (January -22%, December +22%)"
+  },
+  "report": "docs/pop_signals/results_v2.json"
+}
