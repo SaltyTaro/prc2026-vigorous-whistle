@@ -211,3 +211,32 @@ round's control exactly on November and December. **Nothing selected.**
 - **Higher-side gates:** the networks-far-below (nd1200) and LIRF-network-far-below (lt600) gates win July (the month with the
   most such rows) but lose December. mu600 is better in every month again (8 of 8 month readings over this round and
   configs/mix_gate_v1.json) but has 1/4 intervals below zero. Ranking stake: 439 rows moved by about +200 s, at most about 0.13 s.
+
+## Deep search for a ranking-only signal (28 September 2026, after the snow round)
+
+Scripts: deep_search_20260928/ (scratch analyses; control_rows.py builds the v35-stack control on the LOMO rows, the others read it).
+Everything below is label-free on the ranking; labels are read only on 2025 months. Nothing was declared or selected.
+
+- **Where the error is.** On the LOMO / fair months the v35 stack's airport-day means carry 0.4-1.2% of SSE (so day-level
+  corrections are nearly spent); 14-94 rows per month with |error| > 1 h carry 13-72% (January 26 rows = 72%). Of the 144 such rows,
+  82 have no NM record, then LIRF one-day rows and schedule fills.
+- **No-NM schedule fills outside LIRF: closed.** Over the twelve months, no-NM departures more than 1 h after schedule have their block
+  within 15 min of schedule in 0-2% of rows (LTFM 11%, LIRF 50%); labels are ordinary (median ~1,000 s).
+- **Arrival block-time source: closed.** The arrival fill rate (block = schedule) is inside its 2025 range at every airport in both
+  ranking months. Runway shares: no ranking-month share leaves its 2025 range by 5 points. Month-level arrival taxi-in does not anchor
+  departures (2025 correlations weak or negative; departures follow the de-icing season).
+- **ADS-B observation trust: closed.** On 148k dev gate rows the least-squares weight on the raw observation beyond the stack is ~0 in
+  every gap bin (also above +600 s). EGLL: dev residual by points per minute +4 ... +14 s; July 2026's density lies in that range, so
+  the -45 ... -52 s against the 2025 label relation is a measurement change, not a model error (< 0.01 s). Stand stops before motion
+  (`stop_seconds`) are in the label for 0-5% of long stops; residual ~0, weight 0 (already a feature).
+- **NM AOBT_3 exactness: closed.** Block equals AOBT_3 within 1 s on 0.5-3% of rows (median |difference| 120-356 s).
+- **Matched lean-up:** when the mix lies 150-300 s above the v9+residual side on matched rows the truth sits at the mix (weights 0.93 /
+  1.01 / 0.52 / 1.02 against 0.6 used; 283-607 rows a month) -> another ~0.1 s higher-side item.
+- **Peer congestion (new signal, mostly already exploited).** Per airport-hour, the mean NM proxy (MVT - AOBT_3, 0-7200 s, >= 5 peers)
+  minus the airport-month median of hourly means. On the LOMO / fair months the stack under-predicts rows in hours > 300 s above
+  normal in every month: no-clock untracked +32 s (300-600) / +137 s (> 600), no-clock tracked +168 / +286 s, clock untracked +13 /
+  +67 s; the peer level itself carries no information beyond the stack (weights ~0). Cross-fit v9 on the other eight months: clock
+  rows +58 s (600-1200) / +380 s (> 1200). January 2026 is outside the training range: 10.5% of rows in hours > 300 s (training 2.6-7.8%),
+  1,052 no-clock rows (training at most 287 a month), 274 of them > 1,200 s (about 10 in the four development months). v35's layers
+  already moved 462 of those rows (EHAM 377, +138 ... +301 s); the rest, 590 rows mostly at 300-600 s, is worth ~0.02 s on the
+  development evidence. The extreme hours (EHAM 3-9 January, LFPG 3-7 January) have no development support.
