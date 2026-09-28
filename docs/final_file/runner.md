@@ -63,11 +63,12 @@ The runner stopped at v30. The four stages after `recipe` take it to the v35 inc
 not-uploaded v36, v37 and v38, in shipping order, each through the frozen code that built the layer. Module:
 `src/prc2026_final/stack.py`.
 
-**`--layers v35|v36|v37|v38|v39`** picks the final file's layer set. The default is **v38**, the official best since its upload (226.8053; v35 226.8989);
-it was v35 until then. **v39** (exported 28 September, `docs/fill_pin/README.md`) is v38 with the fill pins: the file's own LIRF
-departures with a schedule interval above 43,200 s that are the v9 population (no NM record, no aircraft type) or carry a one-day-early
-NM clock take their schedule interval (`stack/fill_pins.parquet` lists them). Flip the default when it is uploaded and scored.
-The stack stage computes all five columns every time. The final stage exports the chosen one and keeps one receipt
+**`--layers v35|v36|v37|v38|v39|v40`** picks the final file's layer set. The default is **v40**, the official best since its upload
+(224.4588 on 28 September; v38 226.8053, v39 226.8802, v35 226.8989). **v39** (`docs/fill_pin/README.md`) is v38 with every fill pin:
+the file's own LIRF departures with a schedule interval above 43,200 s that are the v9 population (no NM record, no aircraft type) or
+carry a one-day-early NM clock take their schedule interval (`stack/fill_pins.parquet` lists them). **v40** is v38 with
+`configs/fill_pin_v2.json`'s `evidenced_nine`: population rows only, with intervals in [43,200, 58,000] or at or above 79,200 s.
+The stack stage computes all six columns every time. The final stage exports the chosen one and keeps one receipt
 per layer set (`stages/final-<layers>.json`, which records the layer set and version), so several files can live in one root.
 
 1. **v31, the EOBT_1 repair (stage `repair`).**
@@ -122,6 +123,9 @@ per layer set (`stages/final-<layers>.json`, which records the layer set and ver
      Dry run (28 September, stack 7 s, final 0.3 s, `--layers v39 --version 939`): [`dryrun_v39_compare.json`](dryrun_v39_compare.json),
      the 12 pinned rows equal the export exactly, v939 − v938 is non-zero on exactly those rows, and the other 1,157 differing rows
      are the same float-noise rows as v938 vs v38 (≤ 7 s).
+   - **v40** = v38, then `fill_pin.candidate_pins(fill_pins, evidenced_nine)` from `configs/fill_pin_v2.json`: population scope only,
+     interval bands [43,200, 58,000] and [79,200, ∞) s. On the ranking file: 9 rows (`docs/fill_pin/export_v40.json`); mask
+     `v40_fill_pin`. Dry run: [`dryrun_v40_compare.json`](dryrun_v40_compare.json).
 4. **`final`** writes the chosen layer set's integer file into the run root. `export` (v30's own file) runs only when named.
 
 **Dry run (28 September): all four pass.** The new stages ran on `runs/final_dryrun/run`, reusing its completed chain, with

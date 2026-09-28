@@ -19,25 +19,13 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from prc2026.artifacts import object_hash, read_json, sha256_file, utc_now, write_json  # noqa: E402
 from prc2026.features import ID, TARGET, TIME  # noqa: E402
-from prc2026_final.fill_pin import COLUMNS, apply_pins, fill_pins  # noqa: E402
+from prc2026_final.fill_pin import COLUMNS, apply_pins, candidate_pins, fill_pins  # noqa: E402
 from prc2026_submission.contract import export_submission  # noqa: E402
 
 DECL = "configs/fill_pin_v1.json"
 V38_FILE, V38_SHA, V38_RMSE = "runs/submissions/vigorous-whistle_v38.parquet", "61264cdb7f0a37a8e5cf943f8e950441df38b826132cfc1097f00ca9d0519fe4", 226.8053
 RAW, TEMPLATE = "data/raw/ranking.parquet", "data/raw/submitting.parquet"
 EXTRA = ["FLIGHT_mvt", "STAND_mvt"]
-
-
-def candidate_pins(pins: pd.DataFrame, candidate: dict) -> pd.DataFrame:
-    """The candidate's rows: its scopes, with population rows restricted to `population_interval_bands_s` (or, in the v1 form,
-    to intervals at or above `population_interval_s_min`)."""
-    bands = candidate.get("population_interval_bands_s") or [[float(candidate["population_interval_s_min"]), float("inf")]]
-    interval = pins["interval_s"].to_numpy(dtype=float)
-    in_band = np.zeros(len(pins), dtype=bool)
-    for lo, hi in bands:
-        in_band |= (interval >= float(lo)) & (interval <= float(hi))
-    keep = pins["scope"].isin(candidate["scopes"]).to_numpy() & (~pins["scope"].eq("population").to_numpy() | in_band)
-    return pins.loc[keep].reset_index(drop=True)
 
 
 def main() -> None:

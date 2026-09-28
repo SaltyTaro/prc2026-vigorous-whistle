@@ -83,3 +83,16 @@ and rests with the user; nothing has been exported for it.
 --version 40`, record `export_v40.json`, audit `docs/export_audit/v40_audit.json`. SHA-256
 `da5b20c328ab6be5fca4a21c37cb7c80210397fba62d8395557a9b84d77d162a`. Expected 225.56 (−1.25 s) if the seven are fills; about
 +0.2 s if one of them is a one-day error (the two dominant rows offset most of it).
+
+## Official result (28 September, 05:19 UTC): **v40 = 224.4588, the new best, −2.3465 s vs v38**
+
+Uploaded at the user's word; `official_result_v40.json`. Uploads on 28 September UTC: v35, v38, v39, v40. The nine rows
+removed 3.65e8 SSE, almost twice the all-fill expectation of 1.95e8. So four or five of the twelve are one-day errors, about the 2025 rate of 38%, and the
+"v8 proves fills" argument was simply wrong: v40 won because the row that is better under either mechanism happened to be the
+one-day kind and paid 5e8, covering the one bad small row.
+
+Both are row-level inferences from official scores; the project's stance is that
+they are the user's call, not a rule, and nothing has been exported for them.
+
+The final-file runner's default layer set is now `v40` (`stack/fill_pins.parquet` + `configs/fill_pin_v2.json`'s bands); dry run:
+`docs/final_file/dryrun_v40_compare.json`.

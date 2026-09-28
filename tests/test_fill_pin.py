@@ -54,6 +54,18 @@ def test_apply_replaces_only_pinned_rows_and_refuses_foreign_or_non_lirf_pins():
         fill_pin.fill_pins(rows().drop(columns=["AOBT_3_flt"]))
 
 
+def test_candidate_bands_restrict_population_rows_only():
+    pins = pd.DataFrame({"MVT_ID_mvt": [1.0, 2.0, 3.0, 4.0], "pin_s": [50000.0, 61000.0, 90000.0, 94000.0], "scope": ["population"] * 3 + ["clock_day"],
+                         "interval_s": [50000.0, 61000.0, 90000.0, 94000.0], "proxy_s": [np.nan, np.nan, np.nan, 86000.0]})
+    nine = {"scopes": ["population"], "population_interval_bands_s": [[43200, 58000], [79200, 1000000000]]}
+    assert fill_pin.candidate_pins(pins, nine)["MVT_ID_mvt"].tolist() == [1.0, 3.0]
+    v1 = {"scopes": ["population", "clock_day"], "population_interval_s_min": 43200}
+    assert fill_pin.candidate_pins(pins, v1)["MVT_ID_mvt"].tolist() == [1.0, 2.0, 3.0, 4.0]
+    dominant = {"scopes": ["population", "clock_day"], "population_interval_s_min": 79200}
+    assert fill_pin.candidate_pins(pins, dominant)["MVT_ID_mvt"].tolist() == [3.0, 4.0]
+    assert len(fill_pin.candidate_pins(pins.iloc[:0], nine)) == 0
+
+
 def test_ranking_scope_is_the_declared_twelve_rows():
     raw = pd.read_parquet(ROOT / "data/raw/ranking.parquet", columns=fill_pin.COLUMNS)
     pins = fill_pin.fill_pins(raw)

@@ -117,6 +117,9 @@ def test_stack_arithmetic_on_the_routes(tmp_path, monkeypatch):
     assert np.allclose(frame["v39"].to_numpy(), v39, rtol=0, atol=1e-9) and frame["v39_fill_pin"].tolist() == [False] * 5 + [True] + [False] * 6
     assert record["rows"]["v39"] == {"fill_pin": 1, "fill_pin_population": 1, "fill_pin_clock_day": 0, "floored": 0}
     assert record["layer_sets"]["v39"]["base"] == "v38" and record["shipped_as"]["v39"]["fill_pin"] == "all_twelve"
+    # v40 (configs/fill_pin_v2.json evidenced_nine): the same pin lies in the [43,200, 58,000] band, so v40 == v39 here
+    assert np.allclose(frame["v40"].to_numpy(), v39, rtol=0, atol=1e-9) and frame["v40_fill_pin"].tolist() == frame["v39_fill_pin"].tolist()
+    assert record["rows"]["v40"] == {"fill_pin": 1, "floored": 0} and record["layer_sets"]["v40"]["candidate"] == "evidenced_nine"
     assert "v35_peer_noclock" not in frame.columns and "v36_stretch_tracked" not in frame.columns
     assert export_stack.scope_table is not None and export_stack.ranking_peers.__module__ == "peer_congestion"  # readers restored
 

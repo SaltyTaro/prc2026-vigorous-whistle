@@ -1,0 +1,14 @@
+{
+ "runner_v940_sha256": "c7f609eeb64e61ca3e908e10678ea373e6dc32db003eb480bb26f5573d2b42b8",
+ "export_v40_sha256": "da5b20c328ab6be5fca4a21c37cb7c80210397fba62d8395557a9b84d77d162a",
+ "runner_v940_vs_export_v40": {
+  "rows_differing": 1157,
+  "max_abs_s": 7,
+  "pinned_rows_differing": 0
+ },
+ "runner_v940_vs_runner_v938": {
+  "rows_differing": 9,
+  "all_differing_rows_are_the_nine": true
+ },
+ "note": "the runner's layer set v40 (configs/fill_pin_v2.json evidenced_nine on the file's own rows) against tools/export_fill_pin.py's v40; the non-pinned differences are the dry run's known float noise (v938 vs v38)"
+}

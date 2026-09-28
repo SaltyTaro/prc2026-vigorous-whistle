@@ -46,6 +46,20 @@ def fill_pins(raw: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def candidate_pins(pins: pd.DataFrame, candidate: dict) -> pd.DataFrame:
+    """A declared candidate's rows: its `scopes`, with population rows restricted to `population_interval_bands_s` (closed intervals in
+    seconds) or, in configs/fill_pin_v1.json's form, to intervals at or above `population_interval_s_min`."""
+    if len(pins) == 0:
+        return pins
+    bands = candidate.get("population_interval_bands_s") or [[float(candidate["population_interval_s_min"]), float("inf")]]
+    interval = pins["interval_s"].to_numpy(dtype=float)
+    in_band = np.zeros(len(pins), dtype=bool)
+    for lo, hi in bands:
+        in_band |= (interval >= float(lo)) & (interval <= float(hi))
+    keep = pins["scope"].isin(candidate["scopes"]).to_numpy() & (~pins["scope"].eq(SCOPES[0]).to_numpy() | in_band)
+    return pins.loc[keep].reset_index(drop=True)
+
+
 def apply_pins(values: np.ndarray, ids: np.ndarray, pins: pd.DataFrame, airports: np.ndarray | None = None) -> tuple[np.ndarray, np.ndarray]:
     """`values` with the pinned rows replaced by their pin; returns (new values, pinned mask in `ids` order). Every pin must be one of `ids`."""
     values = np.asarray(values, dtype=float)
