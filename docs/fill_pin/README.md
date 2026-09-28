@@ -76,3 +76,10 @@ The seven v8-tested population rows plus the two rows that gain under either mec
 hedge; pinning only those nine (candidate `evidenced_nine`, `configs/fill_pin_v2.json`) would score about 225.56 (−1.25 s) if the
 seven are fills, on evidence that predates v39. Choosing that subset after v39's score is the same kind of decision as v39 itself
 and rests with the user; nothing has been exported for it.
+
+## v40 = v38 + `evidenced_nine` (28 September, user: "nine")
+
+`configs/fill_pin_v2.json`, export `tools/export_fill_pin.py --declaration configs/fill_pin_v2.json --candidate evidenced_nine
+--version 40`, record `export_v40.json`, audit `docs/export_audit/v40_audit.json`. SHA-256
+`da5b20c328ab6be5fca4a21c37cb7c80210397fba62d8395557a9b84d77d162a`. Expected 225.56 (−1.25 s) if the seven are fills; about
++0.2 s if one of them is a one-day error (the two dominant rows offset most of it).
