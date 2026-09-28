@@ -57,7 +57,11 @@ def candidate_pins(pins: pd.DataFrame, candidate: dict) -> pd.DataFrame:
     for lo, hi in bands:
         in_band |= (interval >= float(lo)) & (interval <= float(hi))
     keep = pins["scope"].isin(candidate["scopes"]).to_numpy() & (~pins["scope"].eq(SCOPES[0]).to_numpy() | in_band)
-    return pins.loc[keep].reset_index(drop=True)
+    out = pins.loc[keep].reset_index(drop=True)
+    plus = (candidate.get("pinned_value") or {}).get("one_day_plus_s")
+    if plus is not None:  # configs/fill_pin_v3.json: the one-day value (86,400 s + an ordinary taxi) instead of the schedule interval
+        out = out.assign(pin_s=CLOCK_DAY_S + float(plus))
+    return out
 
 
 def apply_pins(values: np.ndarray, ids: np.ndarray, pins: pd.DataFrame, airports: np.ndarray | None = None) -> tuple[np.ndarray, np.ndarray]:

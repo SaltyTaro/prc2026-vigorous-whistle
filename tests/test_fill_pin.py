@@ -64,6 +64,11 @@ def test_candidate_bands_restrict_population_rows_only():
     dominant = {"scopes": ["population", "clock_day"], "population_interval_s_min": 79200}
     assert fill_pin.candidate_pins(pins, dominant)["MVT_ID_mvt"].tolist() == [3.0, 4.0]
     assert len(fill_pin.candidate_pins(pins.iloc[:0], nine)) == 0
+    one_day = {"scopes": ["population"], "population_interval_bands_s": [[100000, 1000000000]], "pinned_value": {"one_day_plus_s": 1135.5}}
+    pins2 = pins.assign(interval_s=[50000.0, 61000.0, 111654.0, 94000.0], pin_s=[50000.0, 61000.0, 111654.0, 94000.0])
+    picked = fill_pin.candidate_pins(pins2, one_day)
+    assert picked["MVT_ID_mvt"].tolist() == [3.0] and picked["pin_s"].tolist() == [86400.0 + 1135.5] and picked["interval_s"].tolist() == [111654.0]
+    assert fill_pin.candidate_pins(pins2, nine)["pin_s"].tolist() == [50000.0, 111654.0]  # no pinned_value: the interval stays the pin
 
 
 def test_ranking_scope_is_the_declared_twelve_rows():

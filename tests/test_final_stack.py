@@ -120,6 +120,9 @@ def test_stack_arithmetic_on_the_routes(tmp_path, monkeypatch):
     # v40 (configs/fill_pin_v2.json evidenced_nine): the same pin lies in the [43,200, 58,000] band, so v40 == v39 here
     assert np.allclose(frame["v40"].to_numpy(), v39, rtol=0, atol=1e-9) and frame["v40_fill_pin"].tolist() == frame["v39_fill_pin"].tolist()
     assert record["rows"]["v40"] == {"fill_pin": 1, "floored": 0} and record["layer_sets"]["v40"]["candidate"] == "evidenced_nine"
+    # v41 (configs/fill_pin_v3.json): the pin's interval (50,000 s) is below the 100,000 s band, so nothing moves to the one-day value
+    assert np.allclose(frame["v41"].to_numpy(), v39, rtol=0, atol=1e-9) and not frame["v41_one_day"].any()
+    assert record["rows"]["v41"] == {"fill_pin": 1, "one_day": 0, "floored": 0} and record["layer_sets"]["v41"]["base"] == "v40"
     assert "v35_peer_noclock" not in frame.columns and "v36_stretch_tracked" not in frame.columns
     assert export_stack.scope_table is not None and export_stack.ranking_peers.__module__ == "peer_congestion"  # readers restored
 

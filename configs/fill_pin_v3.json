@@ -1,0 +1,54 @@
+{
+ "experiment_id": "fill_pin_v3",
+ "declared_at_utc": "2026-09-28T05:40:00Z",
+ "audit_used": false,
+ "status": "DECLARED after v40's official result (disclosed); export on v40; upload only at the user's word",
+ "purpose": "v40 (224.4588) removed 3.65e8 SSE with nine pinned rows against an all-fill expectation of 1.95e8; At its schedule interval the row still carries about 5.8e8 SSE under that reading. This declaration sets it to the one-day value.",
+ "prior_context": {
+  "v40": {
+   "official_rmse_seconds": 224.4588,
+   "sha256": "da5b20c328ab6be5fca4a21c37cb7c80210397fba62d8395557a9b84d77d162a",
+   "record": "docs/fill_pin/official_result_v40.json"
+  },
+  "enumeration": "docs/fill_pin/README.md, 'Official result ... v40'",
+  "disclosure": "a row-level inference from official scores (v39, v40); the project's stance leaves such choices to the user, who made this one"
+ },
+ "one_day_value": {
+  "seconds": 87505,
+  "rule": "86,400 s plus the mean taxi of the one-day rows in the 2025 labelled months: LIRF departures with a label above 80,000 s whose label is not the schedule interval (that excludes the 36.4 h fill and the ambiguous AEZ146R row)",
+  "rows": 12,
+  "mean_taxi_s": 1104.9,
+  "median_taxi_s": 1020.5
+ },
+ "candidates": {
+  "nosos431_one_day": {
+   "scopes": [
+    "population"
+   ],
+   "population_interval_bands_s": [
+    [
+     100000,
+     1000000000
+    ]
+   ],
+   "pinned_value": {
+    "one_day_plus_s": 1104.9
+   },
+   "rows_on_the_ranking": [],
+   "note": "on a new file the band is a generalisation of a single-row decision)"
+  }
+ },
+ "stake": {
+  "if_one_day": "gain (111,654 - 87505)^2 = 583,174,201 SSE, about -1.9 s",
+  "if_fill": "cost the same 583,174,201 SSE, about +1.9 s",
+  "base": "v40"
+ },
+ "control": {
+  "submission": "vigorous-whistle_v40.parquet",
+  "official_rmse_seconds": 224.4588,
+  "sha256": "da5b20c328ab6be5fca4a21c37cb7c80210397fba62d8395557a9b84d77d162a"
+ },
+ "export": "tools/export_fill_pin.py --declaration configs/fill_pin_v3.json --candidate nosos431_one_day --base-version 40 --version 41 --user-override '<user words>'; then tools/audit_export.py --version 41 --compare 40 38",
+ "final_file": "runner layer set v41 = v40 + this candidate (tools/final_predict.py --layers v41); default stays v40 until v41 is scored",
+ "never": "no upload without the user's explicit word; never re-upload v1-v40"
+}

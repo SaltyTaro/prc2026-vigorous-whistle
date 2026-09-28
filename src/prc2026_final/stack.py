@@ -63,11 +63,12 @@ REMATCH_OUTPUT_COLUMNS = ["MVT_ID_mvt", "airport", "flight", "mapped", "takeoff"
                                                                                     "taxi_path_m", "taxi_stops", "taxi_stopped_s", "at_known_stand"]]
 DECLARATIONS = {"gate": "configs/disagreement_gate_v1.json", "callsign": "configs/callsign_fix_v1.json", "queue": "configs/queue_trust_v1.json",
                 "mix": "configs/mix_gate_v1.json", "peer": "configs/higher_bundle_v2.json", "stretch": "configs/tail_stretch_v1.json",
-                "stretch2": "configs/tail_stretch_v2.json", "fill_pin": "configs/fill_pin_v1.json", "fill_pin2": "configs/fill_pin_v2.json"}
+                "stretch2": "configs/tail_stretch_v2.json", "fill_pin": "configs/fill_pin_v1.json", "fill_pin2": "configs/fill_pin_v2.json",
+                "fill_pin3": "configs/fill_pin_v3.json"}
 RESULTS = ["docs/disagreement/tail_stretch_v1_results.json", "docs/disagreement/tail_stretch_v2_results.json"]  # the stretches' k (four-month fits), read by export_stack.tail_stretch
 CODE = ["tools/export_stack.py", "tools/peer_congestion.py", "tools/export_disagreement_gate.py", "tools/export_fair_weights.py", "tools/export_v33.py",
         "tools/run_callsign_fix.py", "tools/run_queue_trust.py", "tools/adsb_rematch_nonm.py"]
-LAYER_SETS = ["v35", "v36", "v37", "v38", "v39", "v40"]
+LAYER_SETS = ["v35", "v36", "v37", "v38", "v39", "v40", "v41"]
 V35 = {"gate": "u300", "callsign": "u300_cs50", "queue": "qt75", "queue_source": "regular",
        "record": "docs/disagreement/export_v35.json (tools/export_stack.py --queue 0.75 --queue-source regular --version 35, user override)"}
 V36 = {**V35, "peer": "mu_pc_pcc",
@@ -80,6 +81,8 @@ V39 = {**V38, "fill_pin": "all_twelve",
        "record": "docs/fill_pin/export_v39.json (tools/export_fill_pin.py --version 39, the user's decision on the declared candidates)"}
 V40 = {**V38, "fill_pin": "evidenced_nine",
        "record": "docs/fill_pin/export_v40.json (tools/export_fill_pin.py --declaration configs/fill_pin_v2.json --candidate evidenced_nine --version 40, the user's decision)"}
+V41 = {**V40, "fill_pin3": "nosos431_one_day",
+       "record": "docs/fill_pin/export_v41.json (tools/export_fill_pin.py --declaration configs/fill_pin_v3.json --candidate nosos431_one_day --base-version 40 --version 41, the user's decision)"}
 
 
 def pins(raw_path: Path) -> pd.DataFrame:
@@ -260,11 +263,18 @@ def compute(detail: pd.DataFrame, repaired_v30: np.ndarray | None, rematch_path:
     v40, pinned40 = apply_pins(frame["v38"].to_numpy(dtype=float), ids, candidate_pins(fill, nine), detail["airport"].to_numpy())
     frame["v40"], frame["v40_fill_pin"] = v40, pinned40
     rows["v40"] = {"fill_pin": int(pinned40.sum()), "floored": int((v40 == FLOOR).sum())}
+    # v41 = v40 with configs/fill_pin_v3.json's nosos431_one_day: population rows in its band at the one-day value (86,400 s + the 2025 one-day taxi mean)
+    one_day = read_json(ROOT / DECLARATIONS["fill_pin3"])["candidates"][V41["fill_pin3"]]
+    v41, pinned41 = apply_pins(v40, ids, candidate_pins(fill, one_day), detail["airport"].to_numpy())
+    frame["v41"], frame["v41_one_day"] = v41, pinned41
+    rows["v41"] = {"fill_pin": int(pinned40.sum()), "one_day": int(pinned41.sum()), "floored": int((v41 == FLOOR).sum())}
     specs = {**specs, "v39": {"base": "v38", "fill_pin": DECLARATIONS["fill_pin"], "pinned_value": "schedule interval (takeoff minus scheduled departure) in seconds"},
              "v40": {"base": "v38", "fill_pin": DECLARATIONS["fill_pin2"], "candidate": V40["fill_pin"], "scopes": nine["scopes"],
-                     "population_interval_bands_s": nine["population_interval_bands_s"], "pinned_value": "schedule interval in seconds"}}
+                     "population_interval_bands_s": nine["population_interval_bands_s"], "pinned_value": "schedule interval in seconds"},
+             "v41": {"base": "v40", "fill_pin": DECLARATIONS["fill_pin3"], "candidate": V41["fill_pin3"], "scopes": one_day["scopes"],
+                     "population_interval_bands_s": one_day["population_interval_bands_s"], "pinned_value": one_day["pinned_value"]}}
     record = {"recipe_checks_max_abs": checks, "lfpg_weight": LFPG_WEIGHT, "floor_seconds": FLOOR, "v33_outer": V33_OUTER, "v33_lirf": V33_LIRF,
-              "v34_lirf": V34_LIRF, "layer_sets": specs, "shipped_as": {"v35": V35, "v36": V36, "v37": V37, "v38": V38, "v39": V39, "v40": V40},
+              "v34_lirf": V34_LIRF, "layer_sets": specs, "shipped_as": {"v35": V35, "v36": V36, "v37": V37, "v38": V38, "v39": V39, "v40": V40, "v41": V41},
               "declarations": {p: {"sha256": sha256_file(ROOT / p), "object_hash": object_hash(read_json(ROOT / p))} for p in DECLARATIONS.values()},
               "results": {p: sha256_file(ROOT / p) for p in RESULTS},
               "stretch_k": {"v37": read_json(ROOT / RESULTS[0])["candidates"][V37["stretch"]]["k_all_months"],

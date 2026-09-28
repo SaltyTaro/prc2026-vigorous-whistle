@@ -96,3 +96,14 @@ they are the user's call, not a rule, and nothing has been exported for them.
 
 The final-file runner's default layer set is now `v40` (`stack/fill_pins.parquet` + `configs/fill_pin_v2.json`'s bands); dry run:
 `docs/final_file/dryrun_v40_compare.json`.
+
+`configs/fill_pin_v3.json` (declared after v40's result, disclosed), candidate `nosos431_one_day`: population rows with a schedule
+interval of 100,000 s or more take 86,400 s + the mean taxi of the twelve 2025 one-day rows (1,104.9 s; the 36.4 h fill and the
+ambiguous AEZ146R row are excluded because their labels equal the interval), i.e. **87,505 s**. Export `tools/export_fill_pin.py --declaration configs/fill_pin_v3.json --candidate
+nosos431_one_day --base-version 40 --version 41`, record `export_v41.json`, audit `docs/export_audit/v41_audit.json`; runner layer
+set `v41` (default stays `v40` until scored).
+
+Stake, corrected from the "about 1.9 s" quoted in conversation: the row carries **5.83e8 SSE = 3.36% of v40's**, so v41 scores about
+**220.66 (−3.80 s) if the one-day reading is right and about 228.19 (+3.74 s) if the label is the interval after all** (no effect on
+the standing, which uses the best score). The reading rests on the enumeration above under the two-mechanism assumption (every
+long-interval population label in 2025 was either the interval or 86,400 s plus a taxi); a third mechanism would void it.
