@@ -124,6 +124,17 @@ p99 8,967 s) that a mean regression follows, and January's 34 normal-mode rows a
 row mix (January rows carry a higher per-row SSE than July's), a candidate that loses January by 12% and wins July by 1% is a net
 loss, so this is parked: no declaration, no export.
 
+## Round 2: the month's arrival fill share (`configs/pop_signals_v2.json`, declared 14:58 UTC)
+
+A label-free measure of the airport's record-capture state exists in every file: the share of LIRF *arrivals* whose in-block equals
+their scheduled arrival (120 s). Across the twelve 2025 months it tracks the population's departure fill share with **r = 0.81**
+(July 2025 is the lowest on both: 0.135 / 0.317; February–March and December the highest: 0.17–0.19 / 0.75–0.77). The ranking's
+shares are 0.146 for January 2026 (January 2025: 0.148) and **0.156 for July 2026**, above July 2025's 0.135 and in the range of
+August–December 2025, whose population fill shares were 0.43–0.77. The v9 classifier reads the *calendar month*, so on the ranking it
+applies July 2025's low propensity to July 2026's 276 rows; a linear read of the arrival share implies about 0.52 instead of 0.32.
+Day-level shares add little within a month (fill 0.44–0.53 across quintiles). Candidates: `pa` + share (month kept / dropped), the
+share alone with the month dropped, and the day share; same rule as round 1. Results: `results_v2.json` (pending at the time of writing).
+
 **Reading.** The previous-arrival identity is a real, structural separator (a −2.7% to −4% population-SSE effect, concentrated in the
 summer months that resemble July 2026), but the declared rule was set for month-level consistency and it does not clear it. Shipping
 it is a user decision with the odds above; the stake on the ranking is of the order of ±0.5 s (population SSE ≈ 16–26% of the total,
