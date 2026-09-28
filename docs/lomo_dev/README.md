@@ -47,6 +47,13 @@ networks, on AWS GPUs.
 - **Round E.** Its refit12 lanes were stopped, as the parallel session allowed. arcw4 waited for its refit step to finish first.
 - **Local smoke tests** ran before the declaration (3,000 rows per month, 20 rounds): `lgb_clean`, `adsb_full_nolirf`,
   `cat_ctr2_x19_s27` and `cat_lirf_ctr2_nm_s36`.
+- **Completion.** All 61 jobs finished with 0 failures: 58 LOMO leaves, v7 L01/L07 and the reproduction check. The last chain ended
+  at 00:39:46 UTC on 28 September.
+- **Mirror.** The first full mirror, models included, was reaped for low local RAM after 19 jobs. The rest was mirrored lean
+  (predictions + run.json only). The CatBoost/LightGBM LOMO models of arcw1 and arcw3–arcw7 stay on those workers' disks.
+- **Close-down.** All seven workers were checked idle, then arcw0, arcw1 and arcw3–arcw7 were deallocated at about 01:20 UTC on the
+  user's instruction ("close down the compute once they finish"). Their disks are kept. All eight VMs (arcw2 by the parallel
+  session) report "VM deallocated" at 01:28 UTC.
 
 ## Tables, rows and the declared weight round (28 September 2026)
 
