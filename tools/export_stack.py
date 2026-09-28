@@ -5,9 +5,13 @@
 Construction: v34 floats rebuilt (tools/export_disagreement_gate.rebuild_v34; v31 / v33 / v34 must round to the uploads) -> + u300 gate delta
 (dry-run detail) -> callsign rows = max(0.5 x observed taxi + 0.5 x start, -12) -> queue rows = max(W x observed taxi + (1 - W) x that, -12).
 Independent rebuild from the recorded v30 detail's components. Nothing is uploaded.
+Optional last layer (configs/higher_bundle_v2.json): --peer-lift adds the peer-congestion lifts (tools/peer_congestion.py on
+ranking.parquet): +100 s on non-LIRF rows without an NM clock and +50 s on untracked non-LIRF rows with one, where the airport-hour's
+NM proxies run more than 600 s above the month's normal (>= 5 peers).
 
   --queue W --queue-source regular|all --dry-run OUT
   --queue W --queue-source regular --version N --user-override TEXT
+  [--mix-up 600] [--peer-lift]
 """
 from __future__ import annotations
 
@@ -29,10 +33,13 @@ from export_disagreement_gate import V34_LIRF, V34_SHA, gate_delta, rebuild_v34 
 from export_fair_weights import FLOOR, V33_OUTER, recipe, stats  # noqa: E402
 from run_callsign_fix import offsets, scope_table  # noqa: E402
 from run_queue_trust import offsets_all, segments  # noqa: E402
+from peer_congestion import ranking_peers  # noqa: E402
 
 DECLS = ["configs/disagreement_gate_v1.json", "configs/callsign_fix_v1.json", "configs/queue_trust_v1.json", "configs/mix_gate_v1.json"]
 RESULTS = ["docs/disagreement/gate_v1_results.json", "docs/disagreement/callsign_fix_v1_results.json", "docs/disagreement/queue_trust_v1_results.json",
            "docs/disagreement/mix_gate_v1_results.json"]
+V35_FILE, V35_SHA = "runs/submissions/vigorous-whistle_v35.parquet", "75f4a4f4678921d957909ef364c2cae66a81e5b74bbb680ded50d329ce6ee4f5"
+PEER_DECL, PEER_RESULTS = "configs/higher_bundle_v2.json", "docs/disagreement/higher_bundle_v2_results.json"
 
 
 def gated_detail(detail: pd.DataFrame, up: float | None) -> pd.DataFrame:
@@ -48,8 +55,27 @@ def gated_detail(detail: pd.DataFrame, up: float | None) -> pd.DataFrame:
     return detail.assign(committee_mix=np.where(finite, (1 - share) * c + share * n, c))
 
 
-def layers(v34_start: np.ndarray, detail: pd.DataFrame, at34: np.ndarray, ids: np.ndarray, qw: float | None, qsource: str, mix_up: float | None = None):
-    """(values, masks): v34 floats -> [mix gate] -> u300 -> callsign 50% -> queue trust."""
+def peer_lifts(values: np.ndarray, detail: pd.DataFrame, ids: np.ndarray) -> tuple[np.ndarray, dict]:
+    """configs/higher_bundle_v2.json's noclock / clock-untracked lifts on the ranking rows."""
+    spec = read_json(ROOT / PEER_DECL)["candidates"]["mu_pc_pcc"]
+    p = ranking_peers().set_index(ID).reindex(ids)
+    if p["peer_n"].isna().any():
+        raise ValueError("Peer congestion does not cover every ranking row.")
+    non_lirf = detail["airport"].to_numpy() != "LIRF"
+    untracked = ~detail["scope"].isin(["matched_no_lirf", "lirf_nonpop_matched"]).to_numpy()
+    ok = (p["peer_n"].to_numpy() >= 5) & non_lirf
+    peer_c, no_clock = p["peer_c"].to_numpy(dtype=float), p["no_clock"].to_numpy(dtype=bool)
+    nc = ok & no_clock & (peer_c > spec["noclock_lift"]["peer_c_above"])
+    cu = ok & ~no_clock & untracked & (peer_c > spec["clock_untracked_lift"]["peer_c_above"])
+    out = values.copy()
+    out[nc] += spec["noclock_lift"]["seconds"]
+    out[cu] += spec["clock_untracked_lift"]["seconds"]
+    return out, {"peer_noclock": nc, "peer_clock_untracked": cu}
+
+
+def layers(v34_start: np.ndarray, detail: pd.DataFrame, at34: np.ndarray, ids: np.ndarray, qw: float | None, qsource: str, mix_up: float | None = None,
+           peer: bool = False):
+    """(values, masks): v34 floats -> [mix gate] -> u300 -> callsign 50% -> queue trust -> [peer lifts]."""
     gd = gated_detail(detail, mix_up)
     at_g = recipe(gd, V33_OUTER, V34_LIRF) if mix_up is not None else at34
     mix_delta = at_g - at34
@@ -70,7 +96,11 @@ def layers(v34_start: np.ndarray, detail: pd.DataFrame, at34: np.ndarray, ids: n
             q_in &= seg["source"].eq("regular").to_numpy()
         q_taxi = seg["taxi"].to_numpy() + np.array([off.get(a, np.nan) for a in seg["airport"].fillna("")])
         values[q_in] = np.maximum(qw * q_taxi[q_in] + (1 - qw) * values[q_in], FLOOR)
-    return values, {"mix_gate": mix_delta != 0, "u300": gdelta != 0, "callsign": cs_in, "queue": q_in}
+    masks = {"mix_gate": mix_delta != 0, "u300": gdelta != 0, "callsign": cs_in, "queue": q_in}
+    if peer:
+        values, extra = peer_lifts(values, detail, ids)
+        masks.update(extra)
+    return values, masks
 
 
 def main() -> None:
@@ -78,11 +108,13 @@ def main() -> None:
     parser.add_argument("--queue", type=float)
     parser.add_argument("--queue-source", choices=["regular", "all"], default="regular")
     parser.add_argument("--mix-up", type=float, help="configs/mix_gate_v1.json: network share 1.0 where nets - committee exceeds this")
+    parser.add_argument("--peer-lift", action="store_true", help="configs/higher_bundle_v2.json's peer-congestion lifts as the last layer")
     parser.add_argument("--version", type=int, default=35)
     parser.add_argument("--dry-run", type=Path)
     parser.add_argument("--user-override")
     args = parser.parse_args()
-    for d, r in zip(DECLS, RESULTS):
+    decls, results = (DECLS + [PEER_DECL], RESULTS + [PEER_RESULTS]) if args.peer_lift else (DECLS, RESULTS)
+    for d, r in zip(decls, results):
         if read_json(ROOT / r).get("declaration_sha256") != object_hash(read_json(ROOT / d)):
             raise ValueError(f"{r} is not the recorded result of {d}.")
     if args.dry_run is None:
@@ -98,24 +130,30 @@ def main() -> None:
         raise ValueError(f"{output} exists; never overwrite.")
 
     rec, ids, dry, lfpg, uploaded, v34, at34 = rebuild_v34()
-    values, m = layers(v34, dry, at34, ids, args.queue, args.queue_source, args.mix_up)
-    touched = m["mix_gate"] | m["u300"] | m["callsign"] | m["queue"]
+    values, m = layers(v34, dry, at34, ids, args.queue, args.queue_source, args.mix_up, args.peer_lift)
+    touched = np.logical_or.reduce(list(m.values()))
     if not np.isfinite(values).all():
         raise ValueError("Non-finite export values.")
-    provenance = {"experiment_id": "stack_u300_cs50" + (f"_qt{int(round(100 * args.queue))}_{args.queue_source}" if args.queue is not None else "") + (f"_mu{int(args.mix_up)}" if args.mix_up is not None else ""),
+    provenance = {"experiment_id": "stack_u300_cs50" + (f"_qt{int(round(100 * args.queue))}_{args.queue_source}" if args.queue is not None else "") + (f"_mu{int(args.mix_up)}" if args.mix_up is not None else "") + ("_pc_pcc" if args.peer_lift else ""),
                   "dry_run": args.dry_run is not None, "selected_by": f"user override of the unchanged rule: {args.user_override}" if args.user_override else "dry run",
-                  "recipe": "v34" + (f" + mix gate (network share 1.0 where nets - committee > {args.mix_up} s)" if args.mix_up is not None else "") + " + u300 disagreement gate + callsign fix 50%" + (f" + queue trust {args.queue} ({args.queue_source} matches)" if args.queue is not None else ""),
-                  "incumbent": {"submission": "vigorous-whistle_v34.parquet", "official_rmse_seconds": 228.5933, "sha256": V34_SHA},
-                  "declarations": {d: sha256_file(ROOT / d) for d in DECLS}, "development_results": {r: sha256_file(ROOT / r) for r in RESULTS},
+                  "recipe": "v34" + (f" + mix gate (network share 1.0 where nets - committee > {args.mix_up} s)" if args.mix_up is not None else "") + " + u300 disagreement gate + callsign fix 50%" + (f" + queue trust {args.queue} ({args.queue_source} matches)" if args.queue is not None else "")
+                            + (" + peer-congestion lifts (configs/higher_bundle_v2.json)" if args.peer_lift else ""),
+                  "incumbent": ({"submission": "vigorous-whistle_v35.parquet", "official_rmse_seconds": 226.8989, "sha256": V35_SHA} if args.version >= 36
+                                else {"submission": "vigorous-whistle_v34.parquet", "official_rmse_seconds": 228.5933, "sha256": V34_SHA}),
+                  "declarations": {d: sha256_file(ROOT / d) for d in decls}, "development_results": {r: sha256_file(ROOT / r) for r in results},
                   "external_data": "adsb.lol globe_history (ODbL) surface positions",
                   "inputs": {p: sha256_file(ROOT / p) for p in [export_v33.DRY, export_v33.REPAIRED, export_v33.V30_DETAIL, *read_json(ROOT / DECLS[1])["rematch"]["outputs"]]},
                   "audit_used": False, "floor_seconds": FLOOR}
     receipt = export_submission(pd.DataFrame({ID: ids, "prediction": values}), ROOT / "data/raw/submitting.parquet", output, provenance)
     exported = pd.read_parquet(output).set_index(ID)[TARGET].reindex(ids).to_numpy().astype(np.int64)
     change = exported.astype(float) - uploaded[34].astype(float)
+    if sha256_file(ROOT / V35_FILE) != V35_SHA:
+        raise ValueError("The uploaded v35 changed.")
+    v35 = pd.read_parquet(ROOT / V35_FILE).set_index(ID)[TARGET].reindex(ids).to_numpy().astype(np.int64)
+    change35 = exported.astype(float) - v35.astype(float)
 
     rec34 = recipe(rec, V33_OUTER, V34_LIRF)
-    independent, _ = layers(np.maximum(rec34 + lfpg, FLOOR), rec, rec34, ids, args.queue, args.queue_source, args.mix_up)
+    independent, _ = layers(np.maximum(rec34 + lfpg, FLOOR), rec, rec34, ids, args.queue, args.queue_source, args.mix_up, args.peer_lift)
     differing = np.rint(independent).astype(np.int64) != exported
     airport = rec["airport"].to_numpy()
     report = {"created_at_utc": utc_now(), "version": args.version, "dry_run": args.dry_run is not None, "output": output.as_posix(), "receipt_sha256": receipt.get("sha256"),
@@ -124,12 +162,16 @@ def main() -> None:
               "max_abs_change_s": float(np.abs(change).max()), "rms_change_all_rows_s": float(np.sqrt(np.mean(change ** 2))),
               "mean_change_by_layer_s": {k: float(change[v].mean()) if v.any() else 0.0 for k, v in m.items()},
               "by_airport": {a: stats(change, airport == a) for a in sorted(set(airport))},
+              "vs_v35": {"rows_changed": int((change35 != 0).sum()), "max_abs_change_s": float(np.abs(change35).max()), "mean_change_s": float(change35[change35 != 0].mean()) if (change35 != 0).any() else 0.0,
+                         "sum_squared_change": float(np.sum(change35 ** 2)), "rows_changed_by_layer": {k: int(((change35 != 0) & v).sum()) for k, v in m.items()},
+                         "by_airport": {a: stats(change35, airport == a) for a in sorted(set(airport))}},
               "independent_rebuild": {"source": export_v33.V30_DETAIL, "rows_differing": int(differing.sum()), "rows_differing_in_layers": int((differing & touched).sum()),
                                       "max_abs_integer_difference": int(np.abs(np.rint(independent).astype(np.int64) - exported).max())}}
     if report["rows_changed_outside_layers"]:
         raise ValueError("Rows outside the layers changed.")
     write_json(report_path, report)
     print({k: report[k] for k in ["layer_rows", "rows_changed_vs_v34", "max_abs_change_s", "mean_change_by_layer_s", "independent_rebuild"]}, receipt.get("sha256"))
+    print("vs v35:", {k: v for k, v in report["vs_v35"].items() if k != "by_airport"})
 
 
 if __name__ == "__main__":

@@ -240,3 +240,29 @@ Everything below is label-free on the ranking; labels are read only on 2025 mont
   1,052 no-clock rows (training at most 287 a month), 274 of them > 1,200 s (about 10 in the four development months). v35's layers
   already moved 462 of those rows (EHAM 377, +138 ... +301 s); the rest, 590 rows mostly at 300-600 s, is worth ~0.02 s on the
   development evidence. The extreme hours (EHAM 3-9 January, LFPG 3-7 January) have no development support.
+
+## Higher-side bundle (configs/higher_bundle_v1.json 02:08Z, follow-up v2 02:09Z post-hoc; tools/run_higher_bundle.py)
+
+Control: the v35 stack on the LOMO rows (reproduces the mix-gate round exactly on November / December). Peer congestion:
+tools/peer_congestion.py. **Nothing selected in either round.**
+
+| candidate | Jan (LOMO) | Jul (LOMO) | Nov | Dec | mean | intervals < 0 |
+|---|---|---|---|---|---|---|
+| mu600 | -0.008% | -0.073% | -0.004% | -0.040% | -0.031% | 1/4 |
+| ml (matched lean-up 150-300 s) | +0.002% | -0.017% | **+0.050%** | -0.021% | +0.004% | 1/4 |
+| pc (no clock, peer_c > 600: +100 s) | -0.001% | -0.009% | -0.042% | -0.016% | -0.017% | 0/4 |
+| pcc (clock, untracked: +50 s) | -0.019% | -0.014% | -0.021% | -0.012% | -0.016% | 0/4 |
+| bundle (all four) | -0.023% | -0.111% | -0.012% | -0.078% | -0.056% | 1/4 |
+| **v2 mu_pc_pcc** | -0.026% | -0.096% | -0.066% | -0.059% | **-0.062%** | 2/4 (Jul, Nov) |
+| v2 pc_pcc | -0.020% | -0.022% | -0.063% | -0.028% | -0.033% | 0/4 |
+
+v2 is post-hoc (the three members were each better in all four months in v1; the parameters themselves came from exploratory
+reads on the same months), so it is weaker evidence than a clean round. mu_pc_pcc is better in every month.
+
+**Dry export** (tools/export_stack.py --queue 0.75 --queue-source regular --mix-up 600 --peer-lift --version 36 --dry-run DIR; the
+patched exporter reproduces v35 byte for byte without the new flags): SHA-256 ed4bcd36..., independent rebuild within 1 s (204 float-noise
+rows). Against v35: 2,388 rows change, all upward, mean +93 s, max +667 s, sum of squared change 3.57e7 (mu600 gate 439, u300 re-gated
+541, no-clock lift 609, clock-untracked lift 1,476; LFPG 1,188, EHAM 510, LTFM 352, EGLL 134, EDDF 110). Ranking effect if the truth sits
+at beta x the move: -(2 beta - 1) x 3.57e7 SSE, i.e. -0.23 s at beta 1, -0.46 s at beta 1.5, +0.23 s at beta 0; break-even beta 0.5.
+Development implies beta ~1.3-1.4 for the lifts (+137 / +67 s residual against +100 / +50 s) and ~1.0 for mu600.
+Report: dry_export_v36_mu600_pc_pcc.json. Not exported to runs/submissions; the user decides.
