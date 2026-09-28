@@ -1,0 +1,464 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "two_sided_1200": {
+      "eligible": false,
+      "k_all_months": {
+        "tracked": [
+          0.08477999327622773,
+          -0.016012644354580698
+        ],
+        "untracked": [
+          0.12580569556630752,
+          -0.01533149872409483
+        ]
+      },
+      "mean_ratio": 0.9977017762720459,
+      "months": {
+        "2025-01": {
+          "k": {
+            "tracked": [
+              0.0916521203461064,
+              -0.017796507395719828
+            ],
+            "untracked": [
+              0.14406590501143407,
+              -0.016466289838578577
+            ]
+          },
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 17,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.8045034567809239,
+              0.12177871998424475
+            ]
+          },
+          "ratio_to_control": 0.999282365865193,
+          "rmse": 323.06962644092863,
+          "rows_differing_from_control": 123223
+        },
+        "2025-07": {
+          "k": {
+            "tracked": [
+              0.07179712910332331,
+              -0.017103965802954705
+            ],
+            "untracked": [
+              0.09903993469000733,
+              -0.021403558607614254
+            ]
+          },
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 27,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.1244980707689791,
+              -0.4586755360811893
+            ]
+          },
+          "ratio_to_control": 0.9970198521368544,
+          "rmse": 258.5201341999837,
+          "rows_differing_from_control": 148801
+        },
+        "2025-11": {
+          "k": {
+            "tracked": [
+              0.08557300281594528,
+              -0.015212289840975682
+            ],
+            "untracked": [
+              0.12065696086197701,
+              -0.014636510420149117
+            ]
+          },
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 26,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.215289123048946,
+              -0.22741733962724048
+            ]
+          },
+          "ratio_to_control": 0.996418478168137,
+          "rmse": 184.9534538680599,
+          "rows_differing_from_control": 127872
+        },
+        "2025-12": {
+          "k": {
+            "tracked": [
+              0.09337142620211444,
+              -0.013824436406359119
+            ],
+            "untracked": [
+              0.13710061820161704,
+              -0.010252762973899038
+            ]
+          },
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 18,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.791376735644274,
+              0.07449716177378167
+            ]
+          },
+          "ratio_to_control": 0.9980864089179994,
+          "rmse": 167.6636833992301,
+          "rows_differing_from_control": 132153
+        }
+      },
+      "months_touched": [
+        "2025-01",
+        "2025-07",
+        "2025-11",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [
+        "2025-07",
+        "2025-11"
+      ],
+      "t_lower": 1200,
+      "t_upper": 1500
+    },
+    "two_sided_900": {
+      "eligible": false,
+      "k_all_months": {
+        "tracked": [
+          0.08477999327622773,
+          -0.036195286491497544
+        ],
+        "untracked": [
+          0.12580569556630752,
+          -0.04355418251929831
+        ]
+      },
+      "mean_ratio": 0.9976539391687829,
+      "months": {
+        "2025-01": {
+          "k": {
+            "tracked": [
+              0.0916521203461064,
+              -0.03941586655810053
+            ],
+            "untracked": [
+              0.14406590501143407,
+              -0.046154490034785674
+            ]
+          },
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 18,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.8218470977960166,
+              0.10234279440227563
+            ]
+          },
+          "ratio_to_control": 0.9992375346273419,
+          "rmse": 323.0551324282649,
+          "rows_differing_from_control": 80649
+        },
+        "2025-07": {
+          "k": {
+            "tracked": [
+              0.07179712910332331,
+              -0.03761869895892736
+            ],
+            "untracked": [
+              0.09903993469000733,
+              -0.05034564687349679
+            ]
+          },
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 27,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.1793604350776135,
+              -0.5039014886333548
+            ]
+          },
+          "ratio_to_control": 0.9968489366551119,
+          "rmse": 258.47581703500225,
+          "rows_differing_from_control": 92688
+        },
+        "2025-11": {
+          "k": {
+            "tracked": [
+              0.08557300281594528,
+              -0.035263564976453644
+            ],
+            "untracked": [
+              0.12065696086197701,
+              -0.04407611751462318
+            ]
+          },
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 25,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.205803264152599,
+              -0.22923449522832753
+            ]
+          },
+          "ratio_to_control": 0.9964427130989638,
+          "rmse": 184.95795231350115,
+          "rows_differing_from_control": 81154
+        },
+        "2025-12": {
+          "k": {
+            "tracked": [
+              0.09337142620211444,
+              -0.032439199529298385
+            ],
+            "untracked": [
+              0.13710061820161704,
+              -0.035620919824224426
+            ]
+          },
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 19,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.7936264324212153,
+              0.07549495705023684
+            ]
+          },
+          "ratio_to_control": 0.9980865722937139,
+          "rmse": 167.6637108439221,
+          "rows_differing_from_control": 84129
+        }
+      },
+      "months_touched": [
+        "2025-01",
+        "2025-07",
+        "2025-11",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [
+        "2025-07",
+        "2025-11"
+      ],
+      "t_lower": 900,
+      "t_upper": 1500
+    },
+    "upper_only": {
+      "eligible": false,
+      "k_all_months": {
+        "tracked": [
+          0.08477999327622773,
+          0.0
+        ],
+        "untracked": [
+          0.12580569556630752,
+          0.0
+        ]
+      },
+      "mean_ratio": 0.9981157137144294,
+      "months": {
+        "2025-01": {
+          "k": {
+            "tracked": [
+              0.0916521203461064,
+              0.0
+            ],
+            "untracked": [
+              0.14406590501143407,
+              0.0
+            ]
+          },
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 17,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.7446292980146332,
+              0.1331735394685492
+            ]
+          },
+          "ratio_to_control": 0.9993253064059139,
+          "rmse": 323.08350918811175,
+          "rows_differing_from_control": 12390
+        },
+        "2025-07": {
+          "k": {
+            "tracked": [
+              0.07179712910332331,
+              0.0
+            ],
+            "untracked": [
+              0.09903993469000733,
+              0.0
+            ]
+          },
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 27,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.1334598467331312,
+              -0.4595202858521625
+            ]
+          },
+          "ratio_to_control": 0.9970218873601242,
+          "rmse": 258.52066191885683,
+          "rows_differing_from_control": 13391
+        },
+        "2025-11": {
+          "k": {
+            "tracked": [
+              0.08557300281594528,
+              0.0
+            ],
+            "untracked": [
+              0.12065696086197701,
+              0.0
+            ]
+          },
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 20,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.1037530651669996,
+              -0.12621140801213618
+            ]
+          },
+          "ratio_to_control": 0.9970070516552857,
+          "rmse": 185.0627038485535,
+          "rows_differing_from_control": 13016
+        },
+        "2025-12": {
+          "k": {
+            "tracked": [
+              0.09337142620211444,
+              0.0
+            ],
+            "untracked": [
+              0.13710061820161704,
+              0.0
+            ]
+          },
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 11,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.623484699717185,
+              0.2462854384721494
+            ]
+          },
+          "ratio_to_control": 0.9991086094363941,
+          "rmse": 167.83539789464385,
+          "rows_differing_from_control": 13004
+        }
+      },
+      "months_touched": [
+        "2025-01",
+        "2025-07",
+        "2025-11",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [
+        "2025-07",
+        "2025-11"
+      ],
+      "reproduces_tail_stretch_v1": 0.0,
+      "t_upper": 1500
+    }
+  },
+  "created_at_utc": "2026-09-28T03:19:49.058013+00:00",
+  "declaration": {
+    "audit_used": false,
+    "candidate_semantics": "value = max(u + k2 x max(t_lower - u, 0), floor) on in-scope rows (u = the upper-stretched value); upper_only reproduces tail_stretch_v1's v35_t1500 and is a code-path check (its per-month ratios must equal tail_stretch_v1's to 1e-9)",
+    "candidates": {
+      "two_sided_1200": {
+        "t_lower": 1200,
+        "t_upper": 1500
+      },
+      "two_sided_900": {
+        "t_lower": 900,
+        "t_upper": 1500
+      },
+      "upper_only": {
+        "t_upper": 1500
+      }
+    },
+    "control": "v35 stack (tools/run_mix_gate.stack), as configs/tail_stretch_v1.json",
+    "declared_at_utc": "2026-09-28T03:20:00Z",
+    "experiment_id": "tail_stretch_v2",
+    "fit": "per held month, from the other three months' in-scope rows: k1 = LS of (label - control) on max(control - 1500, 0); u = control + k1 x max(control - 1500, 0); k2 = LS of (label - u) on max(t2 - u, 0). For the export, both from all four months.",
+    "minimum_mean_improvement_fraction": 0.0002,
+    "prior_context": {
+      "note": "POST-HOC for the lower side: declared after an exploratory leave-one-month-out read on these same four months (disclosed): t2 = 600 / 900 / 1200 added -0.021 / -0.046 / -0.041% (mean) on top of the upper stretch, t2 = 900 better in every month (-0.009 / -0.017 / -0.057 / -0.102%), k2 about -0.035 (tracked). A per-airport k was also explored and LOST to the pooled k (-0.120% vs -0.188%), so the pooled form is kept. The upper side is unchanged from tail_stretch_v1."
+    },
+    "purpose": "Two-sided version of configs/tail_stretch_v1.json's v35_t1500: after the upper stretch (value + k1 x max(value - 1500, 0)), a lower stretch value + k2 x max(t2 - value, 0) with k2 fitted the same way (least squares on the other recipe months, per scope, on the upper-stretched values). The v35 stack over-predicts rows it puts at 300-900 s in every month (-1 ... -25 s). No model is fitted beyond one coefficient per scope and side.",
+    "recipe_months": [
+      "2025-01",
+      "2025-07",
+      "2025-11",
+      "2025-12"
+    ],
+    "rows": "runs/lomo_dev/rows.parquet (SHA-256 9072bc730f2cac40b8d85633cc19d41967d88b19c6c97bd12cbb22b15d9c5ed5): 2025-01 and 2025-07 'lomo', 2025-11 and 2025-12 'fair'",
+    "scopes": "as configs/tail_stretch_v1.json: untracked / tracked non-LIRF rows outside the callsign / queue layers; LIRF and anchored rows keep the control",
+    "selection": "Unchanged rule over the four recipe months against the v35 stack: eligible when no recipe month is worse on ALL rows, the mean ratio is at least 0.02% below 1, and every touched month's paired-day 95% interval (seed 20260928) lies below zero; lowest mean ratio among eligible.",
+    "ship": "tools/export_stack.py --stretch 1500 with the lower side added, k from all four months; upload only on the user's decision."
+  },
+  "declaration_sha256": "d1e956dbb5e51857c09a7070d2f3a19fb2717d41a79d20cded5bf01daa49f13a",
+  "environment": {
+    "disk_available_bytes": 83208101888,
+    "logical_cpus": 32,
+    "memory_total_bytes": 16858472448,
+    "packages": {
+      "numpy": "2.4.2",
+      "pandas": "3.0.0",
+      "psutil": "7.2.2",
+      "pyarrow": "23.0.1",
+      "tzdata": "2025.3"
+    },
+    "physical_cpus_reported": 24,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.2"
+  },
+  "model_code": {
+    "tools/run_callsign_fix.py": "d24b5961ef80d92e815da4f5006565f7f1f604d38d8b08ac9a29404b7b78ee6b",
+    "tools/run_mix_gate.py": "5b524e492cfc13f9b183aef3619e44fa9477c471551f1c94e2f1273438eee592",
+    "tools/run_queue_trust.py": "2c897a8a325d8ad884ca3383ab8ea2acfb761143b3489ad02230db1f44a317be",
+    "tools/run_tail_stretch2.py": "0f04c248053010ad0d4377000cfaaf5c9f7c55d0a69a564d269769c4750208e7"
+  },
+  "months": {
+    "2025-01": {
+      "control_rmse": 323.30163873272227
+    },
+    "2025-07": {
+      "control_rmse": 259.29286527837195
+    },
+    "2025-11": {
+      "control_rmse": 185.61824968168708
+    },
+    "2025-12": {
+      "control_rmse": 167.98513826171637
+    }
+  },
+  "rows_sha256": "9072bc730f2cac40b8d85633cc19d41967d88b19c6c97bd12cbb22b15d9c5ed5",
+  "selected_candidate": null
+}
