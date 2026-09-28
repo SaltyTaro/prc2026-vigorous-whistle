@@ -1,0 +1,40 @@
+{
+ "experiment_id": "snow_higher_v1",
+ "declared_at_utc": "2026-09-28T01:31:00Z",
+ "audit_used": false,
+ "purpose": "Two label-free leads from the post-v35 searches (docs/disagreement/README.md, 'Follow-up searches after v35'), tested on top of the shipped v35 stack. (S) Snow days: January 2026 has 45 METAR snow airport-days (18,931 ranking rows, 6,221 untracked) against 33 in the four development months; untracked rows on snow days are lifted by a fixed fraction of the day's predicted rise. (H) Higher-side gates from the second disagreement pass: network share 1.0 where the networks lie > 600 s above the committee (configs/mix_gate_v1.json's mu600), 0.5 where they lie > 1200 s below it, and the LIRF column on trees only where the LIRF network lies > 600 s below the LIRF tree table. No model is fitted.",
+ "prior_context": {
+  "note": "Declared AFTER exploratory looks on the FAIR rows (disclosed), BEFORE any score on the LOMO January / July rows other than configs/lomo_weights_v1.json's candidates, and before any candidate below is scored on any month.",
+  "snow_exploration": "tools/snow_day_scan.py (docs/disagreement/snow_days.json): full v33 on the fair months, snow days beta 1.087 (label lift on prediction lift), mean residual +11.4 s on snow days (-1.7 s otherwise), +55.8 s on untracked rows, +4.3 s on tracked rows; LFPG +68 s, 17 January 2025 +110 s. Cross-fit v9 on all twelve 2025 months: beta 1.19, LTFM +162 s (its 2025 snow is all in February, which no development month covers).",
+  "higher_side_exploration": "tools/disagreement_audit2.py (docs/disagreement/audit2.json), fair rows: least-squares weight on the networks ~1.0 where they are > 300 s above the committee in every month; 0.04 pooled / 0.53 December where they are > 1200 s below it; LIRF network weight -0.23 ... 0.27 in every month where it is 600-1200 s below the LIRF trees. configs/mix_gate_v1.json on the fair rows: mu600 -0.004 / -0.037 / -0.004 / -0.040% (0/4 intervals), not selected.",
+  "ranking_exposure_label_free": "snow: 6,221 untracked rows on 45 airport-days (LTFM 18-19 January +754 / +1,011 s over its median); mu600 439 rows; networks > 1200 s below the committee ~60 rows; LIRF network > 600 s below the trees ~100 rows"
+ },
+ "rows": "runs/lomo_dev/rows.parquet (SHA-256 9072bc730f2cac40b8d85633cc19d41967d88b19c6c97bd12cbb22b15d9c5ed5): 2025-01 and 2025-07 with provenance 'lomo', 2025-11 and 2025-12 'fair'",
+ "recipe_months": ["2025-01", "2025-07", "2025-11", "2025-12"],
+ "recipe_months_note": "November is a recipe month here (it was reported only in configs/lomo_weights_v1.json): the fold asymmetry concerns v9-side against mix-side weights, while these candidates move the mix internally (both sides fold-side in November) or lift untracked rows on snow days; November carries half of the development snow days.",
+ "control": {
+  "name": "v35 stack",
+  "construction": "v34 weights (outer LTFM 1.0 / matched 0.6 / unmatched 0.7; LIRF matched v9 .15 net .40 tree .45; unmatched v9 0 net .35 tree .25; network share 0.75) -> u300 gate (configs/disagreement_gate_v1.json) -> callsign fix 50% (configs/callsign_fix_v1.json) -> queue trust 0.75 on regular gate matches (configs/queue_trust_v1.json scope, regular source only), exactly tools/run_mix_gate.stack",
+  "reproduction": "on 2025-11 and 2025-12 (fair rows) the control RMSE must equal docs/disagreement/mix_gate_v1_results.json's control_rmse to 1e-6 s"
+ },
+ "snow_rule": {
+  "snow_day": "airport x UTC day with >= 8 METAR reports whose present-weather codes contain SN, or >= 4 containing FZ (tools/snow_day_scan.weather_days, IEM archive already on disk)",
+  "day_lift": "mean of the stack's values over all rows of the airport-day minus the median, over the month's NON-snow days of that airport, of the same day means (label-free; computed from the values the candidate lifts)",
+  "rows_lifted": "untracked (matched false) non-LIRF rows on snow days",
+  "value": "max(value + k * max(day_lift, 0), floor)"
+ },
+ "candidates": {
+  "s10":      {"snow_k": 0.10},
+  "s20":      {"snow_k": 0.20},
+  "mu600":    {"net_up": 600},
+  "nd1200":   {"net_down": 1200},
+  "lt600":    {"lirf_net_down": 600},
+  "h3":       {"net_up": 600, "net_down": 1200, "lirf_net_down": 600},
+  "h3_s10":   {"net_up": 600, "net_down": 1200, "lirf_net_down": 600, "snow_k": 0.10},
+  "h3_s20":   {"net_up": 600, "net_down": 1200, "lirf_net_down": 600, "snow_k": 0.20}
+ },
+ "candidate_semantics": "net_up u: network share 1.0 where nets - committee > u; net_down d: network share 0.5 where nets - committee < -d (both finite; share 0.75 otherwise); lirf_net_down t: on LIRF non-population rows with lirf_net - lirf_tree < -t the LIRF network value is replaced by the tree value (the column becomes the tree table; v9 shares unchanged); the whole stack (u300 gate on the candidate's own base / mix, callsign, queue) is rebuilt on the candidate's inputs; the snow lift is applied last, from the candidate's stack values",
+ "minimum_mean_improvement_fraction": 0.0002,
+ "selection": "Unchanged rule over the four recipe months: eligible when no recipe month is worse on ALL rows, the mean ratio is at least 0.02% below 1, and every touched month's paired-day 95% interval (seed 20260928) lies below zero; lowest mean ratio among eligible; otherwise keep v35.",
+ "ship": "delta on the ranking rows = candidate stack minus the v35 stack, both rebuilt from v34's floats as tools/export_stack.py does (snow lift from the rebuilt stack's ranking values, weather from the IEM ranking files), floor -12 s; independent check; audit; upload only on the user's decision."
+}
