@@ -1,0 +1,35 @@
+{
+  "experiment_id": "pop_signals_v1",
+  "declared_at_utc": "2026-09-28T10:46:00Z",
+  "audit_used": false,
+  "status": "DECLARED before the governing leave-one-month-out run (tools/run_pop_signals.py); exploratory scratch reads on the same months are disclosed below",
+  "purpose": "The v9 LIRF schedule-fill mixture (configs/lirf_mixture_v1.json) sets the value of the LIRF population rows (no NM clock, no airport aircraft type; 383 ranking rows, 372 with a schedule interval at or below 43,200 s). On the four development months those rows carry 6-28% of the stack's squared error and a perfect fill/normal separation would remove about half of it. v9's classifier reads the row's own clocks and the timing of the previous arrival in-block at the stand. This round adds what that arrival is (same operator prefix, planned turnaround, its own block source, its NM record) and a leave-one-month-out callsign fill share, and re-fits the same three-class classifier bagged over eight seeds on twelve months.",
+  "mixture_declaration": "configs/lirf_mixture_v1.json",
+  "months": ["2025-01", "2025-02", "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12"],
+  "seeds": [20260915, 20260916, 20260917, 20260918, 20260919, 20260920, 20260921, 20260922],
+  "threads": 12,
+  "control": {"feature_set": "base", "description": "v9's seventeen classifier features, the same protocol and seed bag; the shipped v9 classifier itself is one seed on January-November and cannot be scored leave-one-month-out"},
+  "candidates": {
+    "pa": {"feature_set": "pa", "description": "control + pa_same_prefix, pa_sched_gap, pa_fill, pa_nonm (src/prc2026_final/pop_signals.py)"},
+    "pa2": {"feature_set": "pa2", "description": "control + pa_same_prefix, pa_sched_gap"},
+    "cs": {"feature_set": "cs", "description": "control + cs_rate (callsign fill share over the other fitting months, smoothed)"},
+    "cs_pa": {"feature_set": "cs_pa", "description": "control + cs_rate + the four previous-arrival features"}
+  },
+  "callsign_rate": {"smoothing": 3.0,
+                    "definition": "(fills of the callsign in the other fitting months + 3 * overall fitting fill share) / (rows of the callsign in the other fitting months + 3); within a fold the training rows exclude their own month and the held-out month, the held-out rows use the eleven training months; the export uses all twelve 2025 months for the ranking rows"},
+  "scope": "population rows with a schedule interval at or below the mixture threshold (43,200 s); rows above it are outside this round (v40's fill pins and the three unpinned rows stay exactly as uploaded)",
+  "protocol": "leave-one-month-out over the twelve 2025 months: classifier (v9's params, inner date-grouped folds for the round count, one booster per seed, mean probability) and normal component (v9's band medians) fitted on the other eleven months' population rows; held-out mixture = p_fill * interval + (1 - p_fill) * normal with p_fill = P(fill) / (P(fill) + P(normal)); squared error against the held-out label",
+  "rule": {"min_relative_sse_gain": 0.03, "min_months_better": 8, "bootstrap_draws": 10000, "bootstrap_seed": 20260928,
+           "selection": "among candidates whose twelve-month in-scope mixture SSE is at least 3% below the control's, that beat the control in at least 8 of 12 months and whose paired-month bootstrap 95% interval of the relative SSE change lies below zero, the lowest SSE; otherwise nothing",
+           "note": "a candidate that passes is still a change concentrated on a few hundred rows whose 2026 behaviour no development month can score (v10's day-density classifier passed the folds and lost 0.52 s); the user decides on any upload"},
+  "export": "v42 = uploaded v40 + 0.75 * (mixture_selected - mixture_v9_shipped) on the in-scope ranking population rows, floored at -12 s; every other row byte-identical to v40. mixture_selected: the selected candidate fitted on all twelve 2025 months with the declared seeds; mixture_v9_shipped: the mixture column of runs/lirf_mixture/export_v9/population_predictions.parquet (v9 = 0.25 * v7 + 0.75 * mixture on those rows, reproduced exactly). The 0.75 weight is v9's selected mixture weight, unchanged.",
+  "incumbent": {"submission": "vigorous-whistle_v40.parquet", "official_rmse_seconds": 224.4588, "sha256": "da5b20c328ab6be5fca4a21c37cb7c80210397fba62d8395557a9b84d77d162a"},
+  "prior_exploration_disclosed": {
+    "when": "28 September 2026, 10:15-10:45 UTC, scratchpad scripts on the same twelve months (no ranking label exists)",
+    "single_seed_lomo_mixture_sse_e9": {"base": 18.941, "cs": 18.598, "pa": 18.200, "arrival_month_rates": 18.591, "cs_pa": 17.793, "all": 17.993, "perfect_classifier": 10.195},
+    "eight_seed_lomo_mixture_sse_e9": {"base": 19.007, "pa": 18.210, "cs_pa": 17.977, "all": 17.832},
+    "caveats": "the scratch cs_rate excluded only the row's own month, so training rows saw the held-out month's fills in their feature (the declared tool excludes both); 279 of the 383 ranking population callsigns never appear in the 2025 population, so cs_rate is mostly the prior there; the previous-arrival prefix share is the same on the ranking (0.875) as in 2025 (0.88); a same-month operator arrival fill rate and the month arrival fill rate were explored and are not declared (unstable by month)",
+    "closed_alongside": "LIRF clock-present fills (new inputs move AUC 0.885 -> 0.894, an explicit mixture still worse than the trees' hedge in every blend), hedge bias by delay band (none), no-NM long-interval rows outside LIRF (labels ordinary), arrival taxi-in context (residual correlation 0.004), LTFM block-clock structure (near its clock floor), block source census (only LIRF has schedule fills of any weight)"
+  },
+  "report": "docs/pop_signals/results_v1.json"
+}
