@@ -187,3 +187,27 @@ but under-reacts at LTFM, whose 2025 snow all fell in February (+162 s mean, up 
 v33 recipe on the fair months (out of sample): beta 1.087, +11 s on snow days (-2 s otherwise), **+56 s on untracked rows**, +4 s on
 tracked rows, LFPG +68 s (17 January 2025 +110 s). LTFM 18-19 January 2026 (showers of snow and blowing snow) is predicted +754 / +1,011 s
 over its median; LTFM's own snow response can only be read from February 2025, which no development month covers.
+
+## Snow-day lift and higher-side gates (configs/snow_higher_v1.json, 01:31Z; tools/run_snow_higher.py -> snow_higher_v1_results.json)
+
+Control: the v35 stack on the LOMO rows (January / July eleven-month footing, November / December fair); it reproduces the mix-gate
+round's control exactly on November and December. **Nothing selected.**
+
+| candidate | Jan (LOMO) | Jul (LOMO) | Nov | Dec | mean | intervals < 0 |
+|---|---|---|---|---|---|---|
+| s10 | -0.011% | - | +0.014% | - | +0.001% | 0/2 |
+| s20 | +0.023% | - | +0.062% | - | +0.021% | 0/2 |
+| mu600 | -0.008% | -0.073% | -0.004% | -0.040% | -0.031% | 1/4 |
+| nd1200 | -0.025% | -0.105% | -0.047% | **+0.020%** | -0.039% | 2/4 |
+| lt600 | -0.003% | -0.085% | -0.012% | **+0.033%** | -0.017% | 0/4 |
+| h3 | -0.036% | -0.264% | -0.063% | **+0.012%** | -0.088% | 1/4 |
+| h3_s10 | -0.046% | -0.264% | -0.044% | +0.012% | -0.085% | 1/4 |
+| h3_s20 | -0.010% | -0.264% | +0.011% | +0.012% | -0.063% | 1/4 |
+
+- **Snow lift closed.** The fair rows' +56 s on untracked snow-day rows does not survive the eleven-month footing: s10 moves 1,555
+  January rows for -0.011% (interval crosses zero) and worsens November; s20 worsens both. The residual was the fold side's shorter
+  training, not a snow blind spot. LTFM's snow response stays untestable (its 2025 snow is February only), so a LTFM-only lift
+  would be an unsupported bet.
+- **Higher-side gates:** the networks-far-below (nd1200) and LIRF-network-far-below (lt600) gates win July (the month with the
+  most such rows) but lose December. mu600 is better in every month again (8 of 8 month readings over this round and
+  configs/mix_gate_v1.json) but has 1/4 intervals below zero. Ranking stake: 439 rows moved by about +200 s, at most about 0.13 s.
