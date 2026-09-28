@@ -162,3 +162,28 @@ Uploaded at the user's "upload v35 now" at 00:57:18 UTC (the first attempt stopp
 experiment id). Processed 00:57:59 UTC: **226.8989 on all 344,841 rows, -1.6944 s (-0.741%) against v34's 228.5933**, new official best.
 The fair development months predicted -0.021 / -0.067 / -0.141 / -0.069%; the ranking gain is ten times the development mean, as the
 label-free exposure analysis expected (January 2026 carries several times the development months' disagreement, EHAM 3-7 January). Official record: official_result_v35.json. Never re-upload v1-v35.
+
+## Follow-up searches after v35 (28 September 2026, label-free on the ranking)
+
+**Day-level ADS-B bias (closed).** Per airport-day, the median of (takeoff - motion start) - v9 on gate-tracked flights against the mean
+residual of v33 on untracked flights of the same day, four fair months: slope -0.05 (per month -0.10 ... +0.36, correlations |r| < 0.15),
+also -0.05 on the 59 most extreme days. It would not have found EHAM 3-7 January 2026 either: the tracked flights there show d9 -124 ... +87 s
+while the untracked rows sit 300-660 s above v9. Binned by the observed taxi, EGLL July 2026 predictions lie 52 s below the 2025 label
+relation on 9,601 gate rows (the helper's ~45 s, docs/adsb_shift), EDDF July +144 s on 784 rows, LSZH July +62 s on 2,393: all coverage
+changes, each at most ~0.16% of SSE. Scratch scripts only (scratchpad daybias.py / egll_curve.py); nothing kept.
+
+**Second disagreement pass** (tools/disagreement_audit2.py -> audit2.json; runs/disagreement2_{rank,dev}.parquet). Pairs: networks vs
+committee (non-LIRF), LIRF network vs LIRF trees, residual stage vs v9 (matched). July 2026 has no excess on any pair. January 2026's
+excess is EHAM (the known disruption: 141 untracked rows with nets > committee + 600) and LTFM 18-19 January (77 rows with nets < committee
+- 600). Development side weights (least-squares weight on the second side, per sign and |D| bin, four months): nets above the committee
+~1.0 in every month (supports mu600, 439 ranking rows); nets below the committee by > 1200 s 0.04 pooled, 0.53 December (vs 0.75 used;
+~60 ranking rows); LIRF network below the LIRF trees by 600-1200 s -0.23 ... 0.27 in every month (vs 0.58 used on unmatched rows;
+~100 ranking rows). The higher side wins again, but each touches <= ~0.1 s of ranking exposure.
+
+**Snow days** (tools/snow_day_scan.py -> snow_days.json; METAR SN >= 8 or FZ >= 4 reports per UTC day). January 2026 is unusually
+snowy: 45 snow airport-days, 18,931 ranking rows (6,221 untracked), against 33 snow days in the four development months. On the 2025
+months the 12-month cross-fit v9 tracks snow where the airport's snow appears in other training months (EDDM +0, EHAM +14, LSZH -12 s)
+but under-reacts at LTFM, whose 2025 snow all fell in February (+162 s mean, up to +485 s on 23 February; beta 1.19 overall). The full
+v33 recipe on the fair months (out of sample): beta 1.087, +11 s on snow days (-2 s otherwise), **+56 s on untracked rows**, +4 s on
+tracked rows, LFPG +68 s (17 January 2025 +110 s). LTFM 18-19 January 2026 (showers of snow and blowing snow) is predicted +754 / +1,011 s
+over its median; LTFM's own snow response can only be read from February 2025, which no development month covers.
