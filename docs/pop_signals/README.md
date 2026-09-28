@@ -231,3 +231,8 @@ worth **−1.3 to −3.2 s** for a ranking population share of 16–26% of the t
 the ranking's rows says −3.8 s; if the moves do not transfer at all they cost about +1.7 s (v10's precedent: a population change that
 passed its folds lost 0.52 s). The bounds in the report (222.76 / 226.14) are the extremes where every changed label sits at the new
 or the old value. The user decides the upload at the 00:00 UTC reset; v42 stays built but superseded.
+
+**CatBoost as the classifier learner (scratch, 4 seeds, twelve-month leave-one-month-out; closed).** Same inputs, depth 4, learning
+rate 0.03, l2 5, early stopping on the same date-grouped inner folds: control 19.018e9 (LightGBM 19.007e9; AUC 0.926 vs 0.915) and
+`pa` 18.106e9 (LightGBM 18.210e9; 8/12 months against its own control, March +11%, December +9%). A higher AUC, a 0.6% lower SSE
+and the same month pattern: not a learner effect worth a round, and well above round 3's selected 17.646e9. Closed.
