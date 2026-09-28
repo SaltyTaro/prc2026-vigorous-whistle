@@ -95,6 +95,14 @@ No candidate reaches 8 of 12 months; `pa`'s interval touches zero (+0.1%). `sele
   `pa`, but it loses January (+17% / +23%) and November (+14–17%), the light months and one of the ranking months; a stake-weighted
   classifier was a scratch bug (AUC 0.5) and is discarded.
 
+**Dry-run export of `pa` on the ranking** (`tools/export_pop_signals.py --candidate pa --dry-run`, scratchpad only; SHA-256 of the
+would-be v42 a8729c26…): 370 of the 372 in-scope rows change, 183 up / 187 down, mean |Δ| 204 s, largest +4,600 s (RYRR388G,
+26 July, p_fill 0.55 → 0.75) and −2,189 s; January rows move −43 s on average, July +1 s; the mean
+p_fill is unchanged (0.438 → 0.443). Sum of squared change 7.5e7, of which the twelve-month eight-seed refit of v9's own features
+accounts for 2.3e7 and the new features for 2.9e7 (cross terms make up the rest). Scenario bounds on the changed rows: 223.98 if every
+changed label equals the new value, 224.94 if it equals the old one; the leave-one-month-out reading implies about −0.5 s if the
+population behaves as in 2025 (−2.7…−4% of a population SSE of roughly 2.9e9). `pa2` is the same picture (SHA-256 2ef11b10…).
+
 **Reading.** The previous-arrival identity is a real, structural separator (a −2.7% to −4% population-SSE effect, concentrated in the
 summer months that resemble July 2026), but the declared rule was set for month-level consistency and it does not clear it. Shipping
 it is a user decision with the odds above; the stake on the ranking is of the order of ±0.5 s (population SSE ≈ 16–26% of the total,

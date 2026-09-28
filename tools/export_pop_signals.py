@@ -154,12 +154,17 @@ def main() -> None:
     n = len(ids)
     sse40 = n * base_rmse ** 2
     moved = change[changed]
+    lomo_row_sse = report["results"]["control"]["sse"] / report["results"]["control"]["rows_in_scope"]  # includes the June one-day row
     summary = {"rows_changed": int((change != 0).sum()), "rows_in_scope": int(changed.sum()), "sum_squared_change": float(np.sum(moved ** 2)),
                "mean_abs_change_s": float(np.mean(np.abs(moved))), "max_abs_change_s": float(np.max(np.abs(moved))),
                "rows_up": int((moved > 0).sum()), "rows_down": int((moved < 0).sum()),
-               "rmse_if_every_change_is_fully_right": float(np.sqrt(max(sse40 - np.sum(moved ** 2), 0) / n)),
-               "rmse_if_every_change_is_fully_wrong": float(np.sqrt((sse40 + np.sum(moved ** 2)) / n)),
-               "lomo_relative_sse_change_of_candidate": report["results"][candidate].get("relative_sse_change"), "delta_split": split}
+               # scenario bounds on the changed rows only: every changed label equals the new value (gain = sum of squared change) or the old one (loss = the same)
+               "rmse_if_every_changed_label_equals_the_new_value": float(np.sqrt(max(sse40 - np.sum(moved ** 2), 0) / n)),
+               "rmse_if_every_changed_label_equals_the_old_value": float(np.sqrt((sse40 + np.sum(moved ** 2)) / n)),
+               "note_on_scenarios": "the realised change can exceed either bound: a move of d against a residual r changes the SSE by 2*d*r - d^2",
+               "lomo_relative_sse_change_of_candidate": report["results"][candidate].get("relative_sse_change"),
+               "lomo_implied_rmse_change_s": float(np.sqrt(max(sse40 + report["results"][candidate]["relative_sse_change"] * lomo_row_sse * changed.sum(), 0) / n) - base_rmse),
+               "lomo_row_sse_used_for_the_implication": float(lomo_row_sse), "delta_split": split}
     write_json(report_path, {"created_at_utc": utc_now(), "version": args.version, "candidate": candidate, "dry_run": args.dry_run is not None,
                              "output": output.as_posix(), "receipt_sha256": receipt.get("sha256"), "models": model_dir.as_posix(), **summary, "rows": rows,
                              "user_override": args.user_override})
