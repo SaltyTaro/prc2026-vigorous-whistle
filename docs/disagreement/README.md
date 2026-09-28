@@ -266,3 +266,27 @@ rows). Against v35: 2,388 rows change, all upward, mean +93 s, max +667 s, sum o
 at beta x the move: -(2 beta - 1) x 3.57e7 SSE, i.e. -0.23 s at beta 1, -0.46 s at beta 1.5, +0.23 s at beta 0; break-even beta 0.5.
 Development implies beta ~1.3-1.4 for the lifts (+137 / +67 s residual against +100 / +50 s) and ~1.0 for mu600.
 Report: dry_export_v36_mu600_pc_pcc.json. Not exported to runs/submissions; the user decides.
+
+## Tail stretch (configs/tail_stretch_v1.json 03:16Z; tools/run_tail_stretch.py) and exports v36 / v37 (28 September 2026)
+
+The v35 stack is compressed on the LOMO / fair months: rows it puts at 300-600 s are over-predicted (-12 ... -25 s), rows it puts
+at 2,400-3,600 s under-predicted in every month (untracked +109 / +257 / +287 / +151 s, tracked +47 / +282 / +141 / +95 s), as
+averaging separately calibrated components implies. Candidate: value + k x max(value - t, 0) on untracked / tracked non-LIRF rows
+outside the callsign / queue layers, k fitted on the other three months. **Nothing selected** (Jan and Dec intervals cross zero):
+
+| candidate | Jan (LOMO) | Jul (LOMO) | Nov | Dec | mean | intervals < 0 | four-month k (untracked / tracked) |
+|---|---|---|---|---|---|---|---|
+| v35_t1200 | -0.050% | -0.280% | -0.222% | -0.075% | -0.157% | 2/4 | 0.082 / 0.052 |
+| **v35_t1500** | -0.068% | -0.298% | -0.299% | -0.089% | **-0.188%** | 2/4 | 0.126 / 0.085 |
+| v35_t1800 | -0.090% | -0.257% | -0.286% | -0.114% | -0.187% | 2/4 | 0.162 / 0.122 |
+| v36_t1500 | -0.024% | -0.230% | -0.243% | +0.015% | -0.121% | 2/4 | 0.099 / 0.083 |
+| v36_t1800 | -0.049% | -0.211% | -0.234% | -0.008% | -0.126% | 2/4 | 0.127 / 0.119 |
+
+- **v36** (exported at the user's "proceed", override of higher_bundle_v2): v35 + mu600 + peer lifts, SHA-256 ed4bcd36...,
+  2,388 rows up vs v35, audit clean (docs/export_audit/v36_audit.json). Not uploaded.
+- **v37** (exported under the user's standing "proceed, don't wait on me look for things to close the gap"; override of
+  tail_stretch_v1): v35 + stretch above 1,500 s with the four-month k, SHA-256 edb11dce04a61f18fb15da26f2e88c8eaf8c7a83fc0f745fada350d6f18c1d4f.
+  30,782 rows up vs v35, mean +43 s, max +870 s, sum of squared change 1.46e8: -0.93 s at beta 1, +0.93 s at beta 0, break-even 0.5.
+  Independent rebuild within 1 s; audit clean (RMS diff vs v35 20.5 s, none > 1,800 s). Not uploaded.
+- The alternative v36 + stretch above 1,800 s (dry run SHA 5dde9af1..., 14,201 rows, sum of squared change 2.07e8) is equal on
+  development (~-0.19% against v35) and was not exported: v37 is one declared mechanism with a fitted coefficient per scope.

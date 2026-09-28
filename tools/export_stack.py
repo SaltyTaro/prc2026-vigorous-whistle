@@ -39,6 +39,7 @@ DECLS = ["configs/disagreement_gate_v1.json", "configs/callsign_fix_v1.json", "c
 RESULTS = ["docs/disagreement/gate_v1_results.json", "docs/disagreement/callsign_fix_v1_results.json", "docs/disagreement/queue_trust_v1_results.json",
            "docs/disagreement/mix_gate_v1_results.json"]
 V35_FILE, V35_SHA = "runs/submissions/vigorous-whistle_v35.parquet", "75f4a4f4678921d957909ef364c2cae66a81e5b74bbb680ded50d329ce6ee4f5"
+STRETCH_DECL, STRETCH_RESULTS = "configs/tail_stretch_v1.json", "docs/disagreement/tail_stretch_v1_results.json"
 PEER_DECL, PEER_RESULTS = "configs/higher_bundle_v2.json", "docs/disagreement/higher_bundle_v2_results.json"
 
 
@@ -73,8 +74,22 @@ def peer_lifts(values: np.ndarray, detail: pd.DataFrame, ids: np.ndarray) -> tup
     return out, {"peer_noclock": nc, "peer_clock_untracked": cu}
 
 
+def tail_stretch(values: np.ndarray, detail: pd.DataFrame, anchored: np.ndarray, t: float, variant: str) -> tuple[np.ndarray, dict]:
+    """configs/tail_stretch_v1.json: value + k x max(value - t, 0) on untracked / tracked non-LIRF rows outside the anchored layers,
+    k = the round's four-month fit for the candidate {variant}_t{t}."""
+    k = read_json(ROOT / STRETCH_RESULTS)["candidates"][f"{variant}_t{int(t)}"]["k_all_months"]
+    non_lirf = detail["airport"].to_numpy() != "LIRF"
+    tracked = detail["scope"].eq("matched_no_lirf").to_numpy()
+    masks = {"stretch_untracked": non_lirf & ~tracked & ~anchored & (values > t), "stretch_tracked": non_lirf & tracked & ~anchored & (values > t)}
+    out = values.copy()
+    for name, scope in [("stretch_untracked", "untracked"), ("stretch_tracked", "tracked")]:
+        m = masks[name]
+        out[m] = np.maximum(out[m] + k[scope] * (out[m] - t), FLOOR)
+    return out, masks
+
+
 def layers(v34_start: np.ndarray, detail: pd.DataFrame, at34: np.ndarray, ids: np.ndarray, qw: float | None, qsource: str, mix_up: float | None = None,
-           peer: bool = False):
+           peer: bool = False, stretch: float | None = None):
     """(values, masks): v34 floats -> [mix gate] -> u300 -> callsign 50% -> queue trust -> [peer lifts]."""
     gd = gated_detail(detail, mix_up)
     at_g = recipe(gd, V33_OUTER, V34_LIRF) if mix_up is not None else at34
@@ -100,6 +115,12 @@ def layers(v34_start: np.ndarray, detail: pd.DataFrame, at34: np.ndarray, ids: n
     if peer:
         values, extra = peer_lifts(values, detail, ids)
         masks.update(extra)
+    if stretch is not None:
+        variant = "v36" if (peer and mix_up == 600) else "v35" if (not peer and mix_up is None) else None
+        if variant is None or qw != 0.75 or qsource != "regular":
+            raise ValueError("The tail stretch is declared only on the v35 or v36 stack.")
+        values, extra = tail_stretch(values, detail, cs_in | q_in, stretch, variant)
+        masks.update(extra)
     return values, masks
 
 
@@ -109,11 +130,14 @@ def main() -> None:
     parser.add_argument("--queue-source", choices=["regular", "all"], default="regular")
     parser.add_argument("--mix-up", type=float, help="configs/mix_gate_v1.json: network share 1.0 where nets - committee exceeds this")
     parser.add_argument("--peer-lift", action="store_true", help="configs/higher_bundle_v2.json's peer-congestion lifts as the last layer")
+    parser.add_argument("--stretch", type=float, help="configs/tail_stretch_v1.json: upper-tail stretch above this threshold (after every other layer)")
     parser.add_argument("--version", type=int, default=35)
     parser.add_argument("--dry-run", type=Path)
     parser.add_argument("--user-override")
     args = parser.parse_args()
     decls, results = (DECLS + [PEER_DECL], RESULTS + [PEER_RESULTS]) if args.peer_lift else (DECLS, RESULTS)
+    if args.stretch is not None:
+        decls, results = decls + [STRETCH_DECL], results + [STRETCH_RESULTS]
     for d, r in zip(decls, results):
         if read_json(ROOT / r).get("declaration_sha256") != object_hash(read_json(ROOT / d)):
             raise ValueError(f"{r} is not the recorded result of {d}.")
@@ -130,14 +154,15 @@ def main() -> None:
         raise ValueError(f"{output} exists; never overwrite.")
 
     rec, ids, dry, lfpg, uploaded, v34, at34 = rebuild_v34()
-    values, m = layers(v34, dry, at34, ids, args.queue, args.queue_source, args.mix_up, args.peer_lift)
+    values, m = layers(v34, dry, at34, ids, args.queue, args.queue_source, args.mix_up, args.peer_lift, args.stretch)
     touched = np.logical_or.reduce(list(m.values()))
     if not np.isfinite(values).all():
         raise ValueError("Non-finite export values.")
-    provenance = {"experiment_id": "stack_u300_cs50" + (f"_qt{int(round(100 * args.queue))}_{args.queue_source}" if args.queue is not None else "") + (f"_mu{int(args.mix_up)}" if args.mix_up is not None else "") + ("_pc_pcc" if args.peer_lift else ""),
+    provenance = {"experiment_id": "stack_u300_cs50" + (f"_qt{int(round(100 * args.queue))}_{args.queue_source}" if args.queue is not None else "") + (f"_mu{int(args.mix_up)}" if args.mix_up is not None else "") + ("_pc_pcc" if args.peer_lift else "") + (f"_t{int(args.stretch)}" if args.stretch is not None else ""),
                   "dry_run": args.dry_run is not None, "selected_by": f"user override of the unchanged rule: {args.user_override}" if args.user_override else "dry run",
                   "recipe": "v34" + (f" + mix gate (network share 1.0 where nets - committee > {args.mix_up} s)" if args.mix_up is not None else "") + " + u300 disagreement gate + callsign fix 50%" + (f" + queue trust {args.queue} ({args.queue_source} matches)" if args.queue is not None else "")
-                            + (" + peer-congestion lifts (configs/higher_bundle_v2.json)" if args.peer_lift else ""),
+                            + (" + peer-congestion lifts (configs/higher_bundle_v2.json)" if args.peer_lift else "")
+                            + (f" + tail stretch above {args.stretch} s (configs/tail_stretch_v1.json, four-month k)" if args.stretch is not None else ""),
                   "incumbent": ({"submission": "vigorous-whistle_v35.parquet", "official_rmse_seconds": 226.8989, "sha256": V35_SHA} if args.version >= 36
                                 else {"submission": "vigorous-whistle_v34.parquet", "official_rmse_seconds": 228.5933, "sha256": V34_SHA}),
                   "declarations": {d: sha256_file(ROOT / d) for d in decls}, "development_results": {r: sha256_file(ROOT / r) for r in results},
@@ -153,7 +178,7 @@ def main() -> None:
     change35 = exported.astype(float) - v35.astype(float)
 
     rec34 = recipe(rec, V33_OUTER, V34_LIRF)
-    independent, _ = layers(np.maximum(rec34 + lfpg, FLOOR), rec, rec34, ids, args.queue, args.queue_source, args.mix_up, args.peer_lift)
+    independent, _ = layers(np.maximum(rec34 + lfpg, FLOOR), rec, rec34, ids, args.queue, args.queue_source, args.mix_up, args.peer_lift, args.stretch)
     differing = np.rint(independent).astype(np.int64) != exported
     airport = rec["airport"].to_numpy()
     report = {"created_at_utc": utc_now(), "version": args.version, "dry_run": args.dry_run is not None, "output": output.as_posix(), "receipt_sha256": receipt.get("sha256"),
