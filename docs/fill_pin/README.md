@@ -107,3 +107,15 @@ Stake, corrected from the "about 1.9 s" quoted in conversation: the row carries 
 **220.66 (−3.80 s) if the one-day reading is right and about 228.19 (+3.74 s) if the label is the interval after all** (no effect on
 the standing, which uses the best score). The reading rests on the enumeration above under the two-mechanism assumption (every
 long-interval population label in 2025 was either the interval or 86,400 s plus a taxi); a third mechanism would void it.
+
+## Official result (28 September, 05:37 UTC): v41 = 228.1934, +3.7346 s vs v40; **v40 (224.4588) stays the official best**
+
+`official_result_v41.json`. The enumeration that called it a one-day row was wrong because it admitted only two label mechanisms
+(fill or 86,400 s plus a taxi). A third, an ordinary taxi recorded correctly against a hugely delayed schedule, was excluded only
+because none of the 29 long-interval population rows of 2025 showed it, which is far too small a sample to rule it out. With
+three mechanisms the nine-row accounting is underdetermined: v40's extra gain over the all-fill expectation is explained equally by
+one small-interval row whose label is an ordinary taxi (lowering its prediction by 3 ks then gains about 3e8, more than a fill
+would) with or without a one-day row elsewhere.
+
+State: v40 is the incumbent and the runner's default layer set; v41 stays selectable but is documented here as failed. Uploads on
+28 September UTC: v35, v38, v39, v40, v41. Never re-upload v1–v41.

@@ -127,7 +127,7 @@ per layer set (`stages/final-<layers>.json`, which records the layer set and ver
      interval bands [43,200, 58,000] and [79,200, ∞) s. On the ranking file: 9 rows (`docs/fill_pin/export_v40.json`); mask
      `v40_fill_pin`. Dry run: [`dryrun_v40_compare.json`](dryrun_v40_compare.json).
    - **v41** = v40, then `configs/fill_pin_v3.json` `nosos431_one_day`: population rows with intervals of 100,000 s or more take
-     86,400 s + the 2025 one-day taxi mean (87,505 s). `--layers v41`; the default stays v40 until v41 is scored.
+     86,400 s + the 2025 one-day taxi mean (87,505 s). `--layers v41`.
 4. **`final`** writes the chosen layer set's integer file into the run root. `export` (v30's own file) runs only when named.
 
 **Dry run (28 September): all four pass.** The new stages ran on `runs/final_dryrun/run`, reusing its completed chain, with
