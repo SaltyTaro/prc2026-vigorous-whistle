@@ -47,3 +47,19 @@ networks, on AWS GPUs.
 - **Round E.** Its refit12 lanes were stopped, as the parallel session allowed. arcw4 waited for its refit step to finish first.
 - **Local smoke tests** ran before the declaration (3,000 rows per month, 20 rounds): `lgb_clean`, `adsb_full_nolirf`,
   `cat_ctr2_x19_s27` and `cat_lirf_ctr2_nm_s36`.
+
+## Tables, rows and the declared weight round (28 September 2026)
+
+- **Tree tables** (parallel session, docs/lomo_dev/tables.json): runs/lomo_dev/ens/ens_v20_bag_q_all/lomo/predictions.parquet
+  (SHA-256 a7f722fe...) and ens_v22_lirf_q/lomo (1d5e80de...), 344,419 rows each, seasonal row order; lean mirror (predictions +
+  run.json of all 58 LOMO jobs, 126 files hash-checked); member rule rebuilds both seasonal tables within 1e-9. LOMO minus seasonal:
+  committee Jan -7.76 / 34.2 s (mean / RMS), Jul -0.78 / 25.8; LIRF table Jan -6.26 / 36.6, Jul -1.21 / 30.9.
+- **Rows** (tools/run_lomo_rows.py -> runs/lomo_dev/rows.parquet, SHA-256 9072bc73..., rows_summary.json): the fold path reproduces
+  the fair rows exactly (<= 9.1e-13). On the equal footing the mix overtakes the v9 side on matched rows: January base 122.06 / mix
+  121.22 (fold 128.03 / 129.59), July 153.84 / 155.29 (fold 155.91 / 157.57). v33 January 323.457, July 259.584.
+- **Round** (configs/lomo_weights_v1.json, tools/run_lomo_round.py --score --select -> lomo_weights_v1_results.json; months LOMO
+  January / July + fair December, November reported): **selected g_u300_cs50** (eligible: g_u300, g_u300_cs50), mean -0.0544%,
+  Jan -0.032 / Jul -0.075 / Dec -0.057% (Nov -0.136%), intervals below zero in 3/3. That is two of v35's three shipped layers, so the
+  equal-footing months confirm v35 under the unchanged rule; no new export. No weight candidate qualifies: network share 0.85 is
+  Dec -0.134% but Jan / Jul intervals cross zero (Nov +0.040%); 1.0 is Dec -0.163% but Nov +0.231%; 0.65 worse everywhere; outer
+  weights and the LIRF matched v9 share fail their intervals (o_m70 worse everywhere).

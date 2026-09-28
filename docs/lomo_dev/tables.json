@@ -1,0 +1,121 @@
+{
+  "created_at_utc": "2026-09-28T01:25:39.286833+00:00",
+  "declaration": "configs/lomo_dev_v1.json",
+  "declaration_sha256": "74105d763ca9aa7f53dd2e6126adfe907d77e30699614a1ffe528e8eeffbb6c8",
+  "tables": {
+    "ens_v20_bag_q_all": {
+      "distinct_leaves": 22,
+      "inputs": {
+        "runs/lomo_dev/learners/adsb_full_nolirf/lomo_2025-01/predictions.parquet": "63d69b7f4972f5745e5cc7943d9a23094b4de7e5826f7c08b37432c163bb51c8",
+        "runs/lomo_dev/learners/adsb_full_nolirf/lomo_2025-07/predictions.parquet": "4778222433b3de0c8ead59309e540653861e491ae8615ed0db16713eab660998",
+        "runs/lomo_dev/learners/adsb_v15__lgb_clean/lomo_2025-01/predictions.parquet": "307c1a3c0c87a333e450ade2a7ff8b83e6931ca8e07c99dcac208d2288a773b2",
+        "runs/lomo_dev/learners/adsb_v15__lgb_clean/lomo_2025-07/predictions.parquet": "cec2211c014366e92f92a7ce949f7d19f14a273937f8694d4f856936b6c94eaa",
+        "runs/lomo_dev/learners/adsb_v15__lgb_deep/lomo_2025-01/predictions.parquet": "80b3b28a67105c1f97725f1364b05fd1f178de084d497a22edfc24df6c38eaa7",
+        "runs/lomo_dev/learners/adsb_v15__lgb_deep/lomo_2025-07/predictions.parquet": "efe81d535ee33265699d2ea48884a70ee48389907836b32fba47c8296b5a17e0",
+        "runs/lomo_dev/learners/adsb_v15__lgb_s16/lomo_2025-01/predictions.parquet": "bff3217a9a010f9f345f639ba653c73e2b1f2cf6cda2020de2ad671f2814bb97",
+        "runs/lomo_dev/learners/adsb_v15__lgb_s16/lomo_2025-07/predictions.parquet": "c42621aa52e1d337f10a9961010d50a3275619e4c2f53265f1c86da1250c100a",
+        "runs/lomo_dev/learners/adsb_v15__lgb_s17/lomo_2025-01/predictions.parquet": "fe273b06e25bf16c4b289875534034860e1f26d576c2e572fd74ef6530c20dcf",
+        "runs/lomo_dev/learners/adsb_v15__lgb_s17/lomo_2025-07/predictions.parquet": "0ab43f93fba3408aa6c12b080abc4e836574f20b493766cfe4f28bd9ea8f5bc0",
+        "runs/lomo_dev/learners/adsb_v15__lgb_s18/lomo_2025-01/predictions.parquet": "2517fff31154285d8035d74a686eed666c42a9fbbdab3bbc647b17e23ecf7bb1",
+        "runs/lomo_dev/learners/adsb_v15__lgb_s18/lomo_2025-07/predictions.parquet": "80189ac01888e094db13c4c9c5b0a96ae7722b7ddf81fefa39955040af0a6553",
+        "runs/lomo_dev/learners/adsb_v16__cat_ctr2/lomo_2025-01/predictions.parquet": "47554b5a612519a33f87732c64a2955c9910305c5ed68b62af607403f9f5e47b",
+        "runs/lomo_dev/learners/adsb_v16__cat_ctr2/lomo_2025-07/predictions.parquet": "cd54f0d5b05959da04b252088de7236dd99b58e7bf3248a969ed52ce5e8c3073",
+        "runs/lomo_dev/learners/adsb_v17__cat_ctr2_d10/lomo_2025-01/predictions.parquet": "892adbb7256031416ea63f1b179f271d2deec07e0229e29ccc47c47d38196d9e",
+        "runs/lomo_dev/learners/adsb_v17__cat_ctr2_d10/lomo_2025-07/predictions.parquet": "f6ddd7270704fca81255d07b9aa35a1ebf9a27ae82a56adaf279cd1fc319bf9c",
+        "runs/lomo_dev/learners/adsb_v17__cat_ctr2_oh2/lomo_2025-01/predictions.parquet": "e34c69df6a9c97d009464bc3ea140331a6a0c607acfcfa947bc1b2b01733cdd8",
+        "runs/lomo_dev/learners/adsb_v17__cat_ctr2_oh2/lomo_2025-07/predictions.parquet": "e119b0795bc6aa3b1100a057fb8bb08a2e9c9bd2c27933c07ede0c49ebbd6583",
+        "runs/lomo_dev/learners/adsb_v17__cat_ctr2_s17/lomo_2025-01/predictions.parquet": "c6a2e70d7a5325b8c7c4f09556d4e38023e7cf9f4b5f23355dd79dc7ee29c9c2",
+        "runs/lomo_dev/learners/adsb_v17__cat_ctr2_s17/lomo_2025-07/predictions.parquet": "1e6fbcae4297aca8dd336de4ea30cafe6f7b8f27799b3ecfabcbd2d30d7a3bfa",
+        "runs/lomo_dev/learners/adsb_v17__cat_ctr3/lomo_2025-01/predictions.parquet": "48f17f06fa210652d5df966ceb3f32fbf9731334dfdda2177a82ebf755b5de55",
+        "runs/lomo_dev/learners/adsb_v17__cat_ctr3/lomo_2025-07/predictions.parquet": "1b6dac65db5845f5a8f6a21278a25f5ccb413e474dfb5894ef6432c06ee99e3f",
+        "runs/lomo_dev/learners/adsb_v18__cat_ctr2_s20/lomo_2025-01/predictions.parquet": "1a70726501ebb1b27dc9ccf7e06786e7d58c328c7f18e70b003d847c413ac2d7",
+        "runs/lomo_dev/learners/adsb_v18__cat_ctr2_s20/lomo_2025-07/predictions.parquet": "e26559721ce83e38e6080a76b325bb4d549b7e34de749c56c400628c319d14c7",
+        "runs/lomo_dev/learners/adsb_v18__cat_ctr2_s21/lomo_2025-01/predictions.parquet": "2017350e46fa7886b9b5a59c1028137d4019e377552ef1da890cf933c7383ef6",
+        "runs/lomo_dev/learners/adsb_v18__cat_ctr2_s21/lomo_2025-07/predictions.parquet": "4227b345943dcb87c3c260203fdb97aaa531c3dbbe14ee7c21b115bca55ef249",
+        "runs/lomo_dev/learners/adsb_v18__cat_ctr3_s22/lomo_2025-01/predictions.parquet": "98842c42d4ec2c554772be69eb1e02d1f2341278caf47cffb84e92a1f065aa0c",
+        "runs/lomo_dev/learners/adsb_v18__cat_ctr3_s22/lomo_2025-07/predictions.parquet": "6b38267078058d6f012130349b71231d24c21e74bb54a40ecbd79913f69f08f7",
+        "runs/lomo_dev/learners/adsb_v18__cat_ctr3_s23/lomo_2025-01/predictions.parquet": "16e49086747160c62a3783d5cf7b9f3b46ac923ae9d74fe05f877814ef286430",
+        "runs/lomo_dev/learners/adsb_v18__cat_ctr3_s23/lomo_2025-07/predictions.parquet": "39778847ac624fb7da4d5dacb838f2b6d25abe67fd8940893d1b169ebb276465",
+        "runs/lomo_dev/learners/adsb_v20__cat_ctr2_x19_s27/lomo_2025-01/predictions.parquet": "0cd97e154b3d5e2e236346950c92d985a940bea2342c78eb805ad83039d47907",
+        "runs/lomo_dev/learners/adsb_v20__cat_ctr2_x19_s27/lomo_2025-07/predictions.parquet": "670296d307786be694c49977cb3c0b51cb37793ee123cf05c1bf9984285e899a",
+        "runs/lomo_dev/learners/adsb_v20__cat_ctr2_x19_s28/lomo_2025-01/predictions.parquet": "674a126137409aff1f1a65d45822505e8d8196b8ff9b900af5a2e1850a7b83da",
+        "runs/lomo_dev/learners/adsb_v20__cat_ctr2_x19_s28/lomo_2025-07/predictions.parquet": "b1e45108562f0f55be21d654c818ee988df613b266f0c78a6ba7fc3e181b949f",
+        "runs/lomo_dev/learners/adsb_v20__cat_ctr2_x19_s30/lomo_2025-01/predictions.parquet": "53144d86921df9ce83c53e513f7b6f791b1074075a2729f27ff4701933f8af0d",
+        "runs/lomo_dev/learners/adsb_v20__cat_ctr2_x19_s30/lomo_2025-07/predictions.parquet": "60ce7bdfc97a58576d9591a8efc8cca26d306d4b7241c5a6ad8f38f6e4e07887",
+        "runs/lomo_dev/learners/adsb_v20__cat_ctr3_x19_s29/lomo_2025-01/predictions.parquet": "ac3a2fd717f9f81ddb0e16ae14f684b91b828eabb7e3632ecadc14b6108166d7",
+        "runs/lomo_dev/learners/adsb_v20__cat_ctr3_x19_s29/lomo_2025-07/predictions.parquet": "56f6d4110bfc7119d826ecd1b1ac96bc75386b9b9c8eaf02bae403e42995fb0b",
+        "runs/lomo_dev/learners/adsb_v20__lgb_x19_s24/lomo_2025-01/predictions.parquet": "4d53c1ebb2bd8564efe78b5e48b5c74922b9ff32c07aa5becfd363a514a4b395",
+        "runs/lomo_dev/learners/adsb_v20__lgb_x19_s24/lomo_2025-07/predictions.parquet": "dce9ee0d3a69104f15775d7eee5c222c68d201e6a72c61d0ad1afc46e7dc1ab6",
+        "runs/lomo_dev/learners/adsb_v20__lgb_x19_s25/lomo_2025-01/predictions.parquet": "3307651771b6a25923fb676d64fccb00573aa874e5b1f04ed28c4d07be71c949",
+        "runs/lomo_dev/learners/adsb_v20__lgb_x19_s25/lomo_2025-07/predictions.parquet": "7d77d6c93799ccb31ea280836e7930ac0d8aa0f55d1571f13a4c4601950f2a00",
+        "runs/lomo_dev/learners/adsb_v20__lgb_x19_s26/lomo_2025-01/predictions.parquet": "ff5b68ce3f75125fde30ce90d184bbc1267cc4745a7e6913546ae841422a1750",
+        "runs/lomo_dev/learners/adsb_v20__lgb_x19_s26/lomo_2025-07/predictions.parquet": "aa73116672e1b6bc0d7dae8d06a8e55d7a252c6e58ac4c14de390c8a7818040a"
+      },
+      "lomo_minus_seasonal": {
+        "2025-01": {
+          "finite": 153706,
+          "mean_s": -7.755723584107622,
+          "p1_s": -104.08222451770249,
+          "p99_s": 82.8131243611994,
+          "rms_s": 34.18207116295415,
+          "rows": 153706
+        },
+        "2025-07": {
+          "finite": 190713,
+          "mean_s": -0.7779212733635051,
+          "p1_s": -62.018055990448,
+          "p99_s": 66.4745118179575,
+          "rms_s": 25.770542123860917,
+          "rows": 190713
+        }
+      },
+      "members": 468,
+      "output": "runs/lomo_dev/ens/ens_v20_bag_q_all/lomo/predictions.parquet",
+      "run_dir": "runs/adsb_v20/ens_v20_bag_q_all",
+      "seasonal_rebuild_max_abs": 2.3646862246096134e-11,
+      "sha256": "a7f722fe7eeff1e1b9a4286e3fd10cc767371cf343245493cde478e95a4ef851"
+    },
+    "ens_v22_lirf_q": {
+      "distinct_leaves": 7,
+      "inputs": {
+        "runs/lomo_dev/learners/adsb_v21__lgb_lirf_cap_s32/lomo_2025-01/predictions.parquet": "c4a9e974fad7c09e100deb6cfffe314e919abbfdc4e714c8d0be4b7ff5327257",
+        "runs/lomo_dev/learners/adsb_v21__lgb_lirf_cap_s32/lomo_2025-07/predictions.parquet": "6d74db8aaaa6a692571516ec80fa56a426a00613670512c5fbaceca586e469db",
+        "runs/lomo_dev/learners/adsb_v21__lgb_lirf_nm_s33/lomo_2025-01/predictions.parquet": "003bd1f736936a70f9fc352bc40b09a5a1b450f7334a8580335a617795c0f284",
+        "runs/lomo_dev/learners/adsb_v21__lgb_lirf_nm_s33/lomo_2025-07/predictions.parquet": "390775720668f5a02d575464534f78c31ed5aca8c6ea391792dd1056d0f25da7",
+        "runs/lomo_dev/learners/adsb_v21__lgb_lirf_s31/lomo_2025-01/predictions.parquet": "f4c628b7ea784cdc01d4acb9189a16ef3de93e8b0de27bee2ba1f453eb999450",
+        "runs/lomo_dev/learners/adsb_v21__lgb_lirf_s31/lomo_2025-07/predictions.parquet": "1dda5881c41fd35652d5db5e75942951cddaab1e511b631eb1e011c7a1f5b6c9",
+        "runs/lomo_dev/learners/adsb_v22__cat_lirf_ctr2_nm_s36/lomo_2025-01/predictions.parquet": "0b245889e9fb28b8905026c009c86cfc48ee7b1e7d2354a3f9f6a477254df854",
+        "runs/lomo_dev/learners/adsb_v22__cat_lirf_ctr2_nm_s36/lomo_2025-07/predictions.parquet": "c3dd178b98ec7a9580726b7ecd9ca4303d37284331370f1e1579b80c4365d4da",
+        "runs/lomo_dev/learners/adsb_v22__cat_lirf_ctr2_s34/lomo_2025-01/predictions.parquet": "38aa4ef094e9f82a35153ebb9066c522a99d19321ac76acccf53976abfcc9c2c",
+        "runs/lomo_dev/learners/adsb_v22__cat_lirf_ctr2_s34/lomo_2025-07/predictions.parquet": "df633c2e666b0a7f50bf29abcda4b26388e6989df997795431c84627badd5947",
+        "runs/lomo_dev/learners/adsb_v22__cat_lirf_ctr3_nm_s37/lomo_2025-01/predictions.parquet": "8aa7c8743a8ac29e0c8341fea5f9df6180e8dd3d261b09c225ca30f4fbd0e1bb",
+        "runs/lomo_dev/learners/adsb_v22__cat_lirf_ctr3_nm_s37/lomo_2025-07/predictions.parquet": "c8ee1e5bd118b47382415e1ab651e0f2087dd2d44309adb2c921da6fadc6e44c",
+        "runs/lomo_dev/learners/adsb_v22__cat_lirf_ctr3_s35/lomo_2025-01/predictions.parquet": "e752385c2557a1a0dd54377105820c6ea54a664ce2ecbb67791e217d8ee165e4",
+        "runs/lomo_dev/learners/adsb_v22__cat_lirf_ctr3_s35/lomo_2025-07/predictions.parquet": "bed5f68862cbd894baf82038a4ed0f4284854a1d25af25ad1e7f9ae10c34c64b"
+      },
+      "lomo_minus_seasonal": {
+        "2025-01": {
+          "finite": 153706,
+          "mean_s": -6.259738550214619,
+          "p1_s": -104.21780587625673,
+          "p99_s": 93.21989469532143,
+          "rms_s": 36.557670355654395,
+          "rows": 153706
+        },
+        "2025-07": {
+          "finite": 190713,
+          "mean_s": -1.2110240006708823,
+          "p1_s": -80.99199291569938,
+          "p99_s": 84.533695062167,
+          "rms_s": 30.92795183609034,
+          "rows": 190713
+        }
+      },
+      "members": 48,
+      "output": "runs/lomo_dev/ens/ens_v22_lirf_q/lomo/predictions.parquet",
+      "run_dir": "runs/adsb_v22/ens_v22_lirf_q",
+      "seasonal_rebuild_max_abs": 0.0,
+      "sha256": "1d5e80de158ba7214a192c0b1e87ca23bb689b18e1ec290d41dd37b3f02daafd"
+    }
+  }
+}

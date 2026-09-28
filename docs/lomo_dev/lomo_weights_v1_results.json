@@ -1,0 +1,1070 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "cs50": {
+      "callsign": 0.5,
+      "eligible": false,
+      "mean_ratio": 0.9999088626279592,
+      "months": {
+        "2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 12,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.02814672379396086,
+              -0.0016404782283125036
+            ]
+          },
+          "ratio_to_control": 0.9999681225305065,
+          "rmse": 323.40258013408595,
+          "rows_differing_from_control": 38
+        },
+        "2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 20,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.07942177180125327,
+              -0.0042595520988797375
+            ]
+          },
+          "ratio_to_control": 0.9998700678341454,
+          "rmse": 259.45238898661825,
+          "rows_differing_from_control": 87
+        },
+        "2025-11": {
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 17,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.05795427824118846,
+              -0.008049864515524521
+            ]
+          },
+          "ratio_to_control": 0.9998421046559218,
+          "rmse": 185.85046178753876,
+          "rows_differing_from_control": 35
+        },
+        "2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 19,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.035869151692984505,
+              -0.006597254256040231
+            ]
+          },
+          "ratio_to_control": 0.9998883975192256,
+          "rmse": 168.08224554812634,
+          "rows_differing_from_control": 38
+        }
+      },
+      "months_touched": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ]
+    },
+    "g_u300": {
+      "eligible": true,
+      "gate": "u300",
+      "mean_ratio": 0.9995480267746238,
+      "months": {
+        "2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 17,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.2380895776639008,
+              -0.0034607923809545594
+            ]
+          },
+          "ratio_to_control": 0.999713812101495,
+          "rmse": 323.32033286335377,
+          "rows_differing_from_control": 218
+        },
+        "2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 24,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.24245131748150897,
+              -0.07944355596928725
+            ]
+          },
+          "ratio_to_control": 0.9993853121017975,
+          "rmse": 259.3266016099593,
+          "rows_differing_from_control": 259
+        },
+        "2025-11": {
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 13,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.7008433841656526,
+              0.03375207839393597
+            ]
+          },
+          "ratio_to_control": 0.998827210853529,
+          "rmse": 185.66181351901548,
+          "rows_differing_from_control": 93
+        },
+        "2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 19,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.16285701410016884,
+              -0.0005799127642519138
+            ]
+          },
+          "ratio_to_control": 0.9995449561205793,
+          "rmse": 168.02451270349897,
+          "rows_differing_from_control": 80
+        }
+      },
+      "months_touched": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ]
+    },
+    "g_u300_cs50": {
+      "callsign": 0.5,
+      "eligible": true,
+      "gate": "u300",
+      "mean_ratio": 0.9994562863854353,
+      "months": {
+        "2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 19,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.25589728120686744,
+              -0.010779467726188601
+            ]
+          },
+          "ratio_to_control": 0.9996802563206267,
+          "rmse": 323.3094804912964,
+          "rows_differing_from_control": 255
+        },
+        "2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 25,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.30721802472292553,
+              -0.09464128185564395
+            ]
+          },
+          "ratio_to_control": 0.9992553000086944,
+          "rmse": 259.29286527837195,
+          "rows_differing_from_control": 346
+        },
+        "2025-11": {
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 18,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.7576541851003654,
+              0.0035785659882755006
+            ]
+          },
+          "ratio_to_control": 0.9986453684282764,
+          "rmse": 185.62801268331515,
+          "rows_differing_from_control": 123
+        },
+        "2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 22,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.18406371326170615,
+              -0.017163158905135156
+            ]
+          },
+          "ratio_to_control": 0.9994333028269847,
+          "rmse": 168.00574367251835,
+          "rows_differing_from_control": 118
+        }
+      },
+      "months_touched": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ]
+    },
+    "l_m00": {
+      "eligible": false,
+      "lirf_v9": {
+        "lirf_nonpop_matched": 0.0
+      },
+      "mean_ratio": 0.999845350641183,
+      "months": {
+        "2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 0,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              0.0,
+              0.0
+            ]
+          },
+          "ratio_to_control": 1.0,
+          "rmse": 323.4128897186118,
+          "rows_differing_from_control": 0
+        },
+        "2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 15,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.1501335840995665,
+              0.1327654426484115
+            ]
+          },
+          "ratio_to_control": 0.9999921502355674,
+          "rmse": 259.4840676734008,
+          "rows_differing_from_control": 13992
+        },
+        "2025-11": {
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 14,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.00511539018974716,
+              0.05705505269020107
+            ]
+          },
+          "ratio_to_control": 1.0001330007223637,
+          "rmse": 185.9045334934898,
+          "rows_differing_from_control": 7401
+        },
+        "2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 23,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.13082663612354892,
+              -0.02216175992742038
+            ]
+          },
+          "ratio_to_control": 0.9995439016879818,
+          "rmse": 168.02433545231855,
+          "rows_differing_from_control": 9506
+        }
+      },
+      "months_touched": [
+        "2025-07",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [
+        "2025-12"
+      ]
+    },
+    "l_m05": {
+      "eligible": false,
+      "lirf_v9": {
+        "lirf_nonpop_matched": 0.05
+      },
+      "mean_ratio": 0.99984989151173,
+      "months": {
+        "2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 0,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              0.0,
+              0.0
+            ]
+          },
+          "ratio_to_control": 1.0,
+          "rmse": 323.4128897186118,
+          "rows_differing_from_control": 0
+        },
+        "2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 15,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.13134130910804842,
+              0.06964389939468062
+            ]
+          },
+          "ratio_to_control": 0.9999060561035612,
+          "rmse": 259.46172744245945,
+          "rows_differing_from_control": 13992
+        },
+        "2025-11": {
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 15,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.00932313509321574,
+              0.032478626254169266
+            ]
+          },
+          "ratio_to_control": 1.00005996797951,
+          "rmse": 185.89095818102615,
+          "rows_differing_from_control": 7401
+        },
+        "2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 23,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.09658031268992673,
+              -0.023208981464504327
+            ]
+          },
+          "ratio_to_control": 0.999643618431629,
+          "rmse": 168.04109793724442,
+          "rows_differing_from_control": 9506
+        }
+      },
+      "months_touched": [
+        "2025-07",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [
+        "2025-12"
+      ]
+    },
+    "n100": {
+      "eligible": false,
+      "mean_ratio": 0.9995066996566956,
+      "months": {
+        "2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 15,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.17079449131310512,
+              0.32874283467508364
+            ]
+          },
+          "ratio_to_control": 1.000220377520044,
+          "rmse": 323.48416264919825,
+          "rows_differing_from_control": 142389
+        },
+        "2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 19,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.3450918595440754,
+              0.28969188237593635
+            ]
+          },
+          "ratio_to_control": 0.9999284291267888,
+          "rmse": 259.4675329311044,
+          "rows_differing_from_control": 175501
+        },
+        "2025-11": {
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 12,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              0.006367776323941143,
+              1.1292804662694789
+            ]
+          },
+          "ratio_to_control": 1.0023106866339526,
+          "rmse": 186.3093213399031,
+          "rows_differing_from_control": 151004
+        },
+        "2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 19,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.488226131737607,
+              -0.06861426447462123
+            ]
+          },
+          "ratio_to_control": 0.9983712923232543,
+          "rmse": 167.82721863841894,
+          "rows_differing_from_control": 153609
+        }
+      },
+      "months_touched": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [
+        "2025-12"
+      ],
+      "network_share": 1.0
+    },
+    "n65": {
+      "eligible": false,
+      "mean_ratio": 1.0012120418182526,
+      "months": {
+        "2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 9,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              0.03462820695441167,
+              0.2878792842944456
+            ]
+          },
+          "ratio_to_control": 1.0003746963576927,
+          "rmse": 323.5340713504202,
+          "rows_differing_from_control": 142387
+        },
+        "2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 6,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              0.1369970063098876,
+              0.39604099238712376
+            ]
+          },
+          "ratio_to_control": 1.0009983343325282,
+          "rmse": 259.74515846520967,
+          "rows_differing_from_control": 175500
+        },
+        "2025-11": {
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 8,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.17199272143174796,
+              0.19021158788560655
+            ]
+          },
+          "ratio_to_control": 1.0002949350982633,
+          "rmse": 185.93463382473217,
+          "rows_differing_from_control": 151004
+        },
+        "2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 2,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              0.25190366543689324,
+              0.5269376054704372
+            ]
+          },
+          "ratio_to_control": 1.002263094764537,
+          "rmse": 168.48143454409745,
+          "rows_differing_from_control": 153608
+        }
+      },
+      "months_touched": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [],
+      "network_share": 0.65
+    },
+    "n85": {
+      "eligible": false,
+      "mean_ratio": 0.9993671205479112,
+      "months": {
+        "2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 22,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.15524735160583206,
+              0.0520195616879021
+            ]
+          },
+          "ratio_to_control": 0.9998897587271761,
+          "rmse": 323.37723627000156,
+          "rows_differing_from_control": 142388
+        },
+        "2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 19,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.2467953926332754,
+              0.0068484343588740525
+            ]
+          },
+          "ratio_to_control": 0.999555472867862,
+          "rmse": 259.3707559642974,
+          "rows_differing_from_control": 175501
+        },
+        "2025-11": {
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 17,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.07837892909122815,
+              0.3320580037889563
+            ]
+          },
+          "ratio_to_control": 1.0004022668417858,
+          "rmse": 185.9545846289694,
+          "rows_differing_from_control": 151004
+        },
+        "2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 26,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.3320260768084765,
+              -0.12861621713745017
+            ]
+          },
+          "ratio_to_control": 0.9986561300486957,
+          "rmse": 167.87510014662305,
+          "rows_differing_from_control": 153608
+        }
+      },
+      "months_touched": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [
+        "2025-12"
+      ],
+      "network_share": 0.85
+    },
+    "o_m50": {
+      "eligible": false,
+      "mean_ratio": 0.9999201042632239,
+      "months": {
+        "2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 14,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.06427869628710496,
+              0.04160181835636719
+            ]
+          },
+          "ratio_to_control": 0.9999765716556969,
+          "rmse": 323.40531269007937,
+          "rows_differing_from_control": 76213
+        },
+        "2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 13,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.14346594507958912,
+              0.007347275947084571
+            ]
+          },
+          "ratio_to_control": 0.9997562350990374,
+          "rmse": 259.42285097361156,
+          "rows_differing_from_control": 87440
+        },
+        "2025-11": {
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 20,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.2508078039720651,
+              -0.014410837881776224
+            ]
+          },
+          "ratio_to_control": 0.9993386639409518,
+          "rmse": 185.7568823224171,
+          "rows_differing_from_control": 107462
+        },
+        "2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 13,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.06086696011987911,
+              0.056329818351148475
+            ]
+          },
+          "ratio_to_control": 1.0000275060349375,
+          "rmse": 168.10562982956586,
+          "rows_differing_from_control": 107155
+        }
+      },
+      "months_touched": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [],
+      "outer": {
+        "matched_other": 0.5
+      }
+    },
+    "o_m70": {
+      "eligible": false,
+      "mean_ratio": 1.0003522714685285,
+      "months": {
+        "2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 10,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              0.009582540512121795,
+              0.13392877471535697
+            ]
+          },
+          "ratio_to_control": 1.0001668111946265,
+          "rmse": 323.4668386091033,
+          "rows_differing_from_control": 76213
+        },
+        "2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 10,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              0.0347692418368716,
+              0.196682633034527
+            ]
+          },
+          "ratio_to_control": 1.000425186665281,
+          "rmse": 259.59643460968755,
+          "rows_differing_from_control": 87440
+        },
+        "2025-11": {
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 6,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              0.10086295902142339,
+              0.38447028652610266
+            ]
+          },
+          "ratio_to_control": 1.0012261809828782,
+          "rmse": 186.10773363407955,
+          "rows_differing_from_control": 107462
+        },
+        "2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 11,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              0.022607583139313193,
+              0.15191361190657554
+            ]
+          },
+          "ratio_to_control": 1.0004648165456778,
+          "rmse": 168.17914216637203,
+          "rows_differing_from_control": 107155
+        }
+      },
+      "months_touched": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [],
+      "outer": {
+        "matched_other": 0.7
+      }
+    },
+    "o_u80": {
+      "eligible": false,
+      "mean_ratio": 0.9998060103784508,
+      "months": {
+        "2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 20,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.17478973178072293,
+              0.07308598317431603
+            ]
+          },
+          "ratio_to_control": 0.9998969416195648,
+          "rmse": 323.3795593099855,
+          "rows_differing_from_control": 44806
+        },
+        "2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 19,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.07552119701091228,
+              0.2080084709684177
+            ]
+          },
+          "ratio_to_control": 1.0001891254288666,
+          "rmse": 259.5351799990085,
+          "rows_differing_from_control": 62889
+        },
+        "2025-11": {
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 20,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.19404756775834286,
+              0.014068179069887648
+            ]
+          },
+          "ratio_to_control": 0.9995965735890915,
+          "rmse": 185.80482251915717,
+          "rows_differing_from_control": 21352
+        },
+        "2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 27,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.2101668640451912,
+              -0.005132251478109951
+            ]
+          },
+          "ratio_to_control": 0.9993319640869214,
+          "rmse": 167.98870852836313,
+          "rows_differing_from_control": 23844
+        }
+      },
+      "months_touched": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [
+        "2025-12"
+      ],
+      "outer": {
+        "unmatched_other": 0.8
+      }
+    },
+    "o_u90": {
+      "eligible": false,
+      "mean_ratio": 0.9999779187572543,
+      "months": {
+        "2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 19,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.2539550004210035,
+              0.22263681653886902
+            ]
+          },
+          "ratio_to_control": 1.0000132567470237,
+          "rmse": 323.417177121475,
+          "rows_differing_from_control": 44806
+        },
+        "2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 18,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.06304195317235184,
+              0.5487163566929831
+            ]
+          },
+          "ratio_to_control": 1.0007840409167128,
+          "rmse": 259.68955230150294,
+          "rows_differing_from_control": 62889
+        },
+        "2025-11": {
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 17,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.2875300374317334,
+              0.08775934703280693
+            ]
+          },
+          "ratio_to_control": 0.9995428502855543,
+          "rmse": 185.7948364416309,
+          "rows_differing_from_control": 21352
+        },
+        "2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 26,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.34462746146945733,
+              0.07027825621578922
+            ]
+          },
+          "ratio_to_control": 0.9991364586080262,
+          "rmse": 167.95584386067503,
+          "rows_differing_from_control": 23844
+        }
+      },
+      "months_touched": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ],
+      "months_with_interval_below_zero": [],
+      "outer": {
+        "unmatched_other": 0.9
+      }
+    }
+  },
+  "created_at_utc": "2026-09-28T01:26:31.103079+00:00",
+  "declaration": {
+    "audit_used": false,
+    "candidate_semantics": "outer / lirf_v9 as configs/fair_weights_v1.json (LIRF net:tree proportions kept); network_share a: mix = (1 - a) committee + a nets where both are finite, else the committee (tools/run_adsb_nn_dev.mixed); gate u300 as configs/disagreement_gate_v1.json on the candidate's own base / mix; callsign w as configs/callsign_fix_v1.json (offsets from the non-recipe months, applied last); floor per row",
+    "candidates": {
+      "cs50": {
+        "callsign": 0.5
+      },
+      "g_u300": {
+        "gate": "u300"
+      },
+      "g_u300_cs50": {
+        "callsign": 0.5,
+        "gate": "u300"
+      },
+      "l_m00": {
+        "lirf_v9": {
+          "lirf_nonpop_matched": 0.0
+        }
+      },
+      "l_m05": {
+        "lirf_v9": {
+          "lirf_nonpop_matched": 0.05
+        }
+      },
+      "n100": {
+        "network_share": 1.0
+      },
+      "n65": {
+        "network_share": 0.65
+      },
+      "n85": {
+        "network_share": 0.85
+      },
+      "o_m50": {
+        "outer": {
+          "matched_other": 0.5
+        }
+      },
+      "o_m70": {
+        "outer": {
+          "matched_other": 0.7
+        }
+      },
+      "o_u80": {
+        "outer": {
+          "unmatched_other": 0.8
+        }
+      },
+      "o_u90": {
+        "outer": {
+          "unmatched_other": 0.9
+        }
+      }
+    },
+    "control": {
+      "lirf": {
+        "lirf_nonpop_matched": {
+          "net": 0.4,
+          "tree": 0.45,
+          "v9": 0.15
+        },
+        "lirf_nonpop_unmatched": {
+          "net": 0.5833333333333334,
+          "tree": 0.4166666666666667,
+          "v9": 0.0
+        }
+      },
+      "name": "v34",
+      "network_share": 0.75,
+      "outer": {
+        "ltfm": 1.0,
+        "matched_other": 0.6,
+        "unmatched_other": 0.7
+      },
+      "reproduction": "on the fair months, build() at the control must equal the v34 rebuild of tools/run_disagreement_gate.py; on every month the mix column must equal mixed(committee, nets, 0.75) to 1e-9"
+    },
+    "declared_at_utc": "2026-09-27T14:43:28Z",
+    "experiment_id": "lomo_weights_v1",
+    "minimum_mean_improvement_fraction": 0.0002,
+    "prior_context": {
+      "hypothesis": "whether the fair set's January/July preference for the v9 side on unmatched rows was the fold side's seven-month training (data quantity) or season",
+      "note": "Declared BEFORE any LOMO component, row or score exists (LOMO v9, residual refits, tree leaves and GPU networks are still running). The fair-set readings are known: December favoured unmatched weight 0.8 (fair_weights_v1), LIRF v9 shares toward 0 (fair_lirf_v1, v34), u300 and cs50 (disagreement_gate_v1, callsign_fix_v1)."
+    },
+    "purpose": "Weight round on the leave-one-month-out development rows (tools/run_lomo_rows.py -> runs/lomo_dev/rows.parquet): January and July 2025 with every component on eleven-month footing (like the ranking's twelve-month refits), plus December from the fair set (January-November refits on both sides). The three months are the equal-footing months; November (forward fold side on nine months against an eleven-month v9 side) is reported, not used. No model is fitted.",
+    "recipe_months": [
+      "2025-01",
+      "2025-07",
+      "2025-12"
+    ],
+    "reported_months": [
+      "2025-11"
+    ],
+    "rows": "runs/lomo_dev/rows.parquet (SHA-256 in docs/lomo_dev/rows_summary.json); months 2025-01 and 2025-07 with provenance 'lomo', 2025-12 'fair'",
+    "selection": "Unchanged rule over the three recipe months: eligible when no recipe month is worse on ALL rows, the mean ratio is at least 0.02% below 1, and every touched month's paired-day 95% interval lies below zero; lowest mean ratio among eligible; otherwise keep the control. Combinations of eligible single changes need their own declaration.",
+    "ship": "delta from the dry-run detail (candidate minus v34's recipe) added to the incumbent's floats; independent rebuild; audit; upload only on the user's decision."
+  },
+  "declaration_sha256": "c42ffbb0e255166c8b9213868d516f528c96369639ba39112699c280d67e4f29",
+  "eligible": [
+    "g_u300",
+    "g_u300_cs50"
+  ],
+  "environment": {
+    "disk_available_bytes": 83257589760,
+    "logical_cpus": 32,
+    "memory_total_bytes": 16858472448,
+    "packages": {
+      "numpy": "2.4.2",
+      "pandas": "3.0.0",
+      "psutil": "7.2.2",
+      "pyarrow": "23.0.1",
+      "tzdata": "2025.3"
+    },
+    "physical_cpus_reported": 24,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.2"
+  },
+  "model_code": {
+    "tools/run_callsign_fix.py": "d24b5961ef80d92e815da4f5006565f7f1f604d38d8b08ac9a29404b7b78ee6b",
+    "tools/run_disagreement_gate.py": "89bcea5410f0a09488eea219a05dec797aa9394b5f868b00deb5e405278db564",
+    "tools/run_fair_weights.py": "47eaafd1ddde46dfdf5da81f33bdccfe3aea9fb24e56badf98765a74fab4f5f9",
+    "tools/run_lomo_round.py": "12d04bb3bbac2005742161223d55ef8a753a31b17d0d90bda8ba8ee8fd62ba90",
+    "tools/run_lomo_rows.py": "968fd5551523a91205b210c1d9ccb1917940cbea178404fa3314f5f93220c568"
+  },
+  "months": {
+    "2025-01": {
+      "control_rmse": 323.4128897186118,
+      "provenance": [
+        "lomo"
+      ],
+      "rows": 153706
+    },
+    "2025-07": {
+      "control_rmse": 259.48610457819524,
+      "provenance": [
+        "lomo"
+      ],
+      "rows": 190713
+    },
+    "2025-11": {
+      "control_rmse": 185.87981134430817,
+      "provenance": [
+        "fair"
+      ],
+      "rows": 162332
+    },
+    "2025-12": {
+      "control_rmse": 168.10100603742077,
+      "provenance": [
+        "fair"
+      ],
+      "rows": 165677
+    }
+  },
+  "rows_sha256": "9072bc730f2cac40b8d85633cc19d41967d88b19c6c97bd12cbb22b15d9c5ed5",
+  "selected_candidate": "g_u300_cs50"
+}
