@@ -172,3 +172,30 @@ times 2.7–4%), on 372 rows.
   tail is not in the ADS-B: RMSE 2,874 / 3,108 s against the band median's 1,450 / 1,656 s. Replacing the band median by the
   observed taxi plus a LOMO-fitted offset worsens the `pa` mixture in every month (12-month SSE +13% at full weight, +3.5% at half).
   The population's "normal" labels are mostly block-time artefacts, not taxi observations. Closed.
+
+## Round 3: operator descriptors and stake-weighted fits (`configs/pop_signals_v3.json`, declared 18:43 UTC)
+
+Scratch reads after v42 (eight seeds, twelve-month leave-one-month-out, the scratch harness of rounds 1–2, control 19.007e9):
+
+| variant (on top of `pa`) | SSE e9 | vs control | months | bootstrap 95% | Jan | Jul |
+|---|---|---|---|---|---|---|
+| `pa` (v42) | 18.210 | −4.19% | 9/12 | [−5.4, −0.6] | +4.4% | −7.0% |
+| stake-weighted fit | 18.142 | −4.55% | 9/12 | [−8.0, −2.8] | −21.4% | −7.4% |
+| isotonic calibration (inner OOF) | 18.155 | −4.48% | 10/12 | [−6.2, −1.1] | +11.5% | −7.9% |
+| next-arrival fill / same prefix | 18.246 | −4.00% | 8/12 | [−5.2, +0.2] | +2.9% | −6.3% |
+| stand / apron / 2-hour arrival shares | 18.591 | −2.19% | 5/12 | [−4.1, +2.2] | +3.6% | −6.6% |
+| operator arrival fill share (smoothed) + count | 17.753 | −6.60% | 8/12 | [−13.0, −2.0] | −31.6% | −15.2% |
+| + prefix no-NM / no-type / count | 17.900 | −5.82% | 8/12 | [−12.2, −0.4] | −30.0% | −16.1% |
+| operator share + count, stake-weighted | 17.575 | −7.53% | 9/12 | — | −38.7% | −18.0% |
+
+The operator descriptors are label-free per (month, prefix) over every LIRF movement of the file: they tell the classifier what kind of
+operator a row belongs to (NM-filed and typed airline, or mostly unfiled operator), which the prefix categorical cannot for rare or
+unseen prefixes. They help small and unfiled operators and the normal-mode rows of large carriers, and hurt on some large-carrier
+fills (RAM, VLG, DLH in March/December: +19…+25% in those months). The stake weights make the fit spend its capacity where the
+fill/normal decision moves the squared error (|interval − band normal| clipped to [600, 20,000] s), which is what the mixture is scored
+on; they lower the AUC and raise the SSE reading. Isotonic calibration is not declared (loses January, the heavier ranking month);
+next-arrival and stand-level capture-state features gave nothing.
+
+Declared candidates: `pa_stake`, `pa_op`, `pa_op_stake`, `pa_opall`, `pa_opall_stake`; the v1 rule, unchanged; the report adds each
+candidate's January/July readings and a ranking-composition read (January and July 2025 per-row SSE scaled to the ranking's 104 / 268
+in-scope rows) for the user's decision. A selected candidate exports as **v43 = v40 + 0.75 × (mixture − v9 shipped)**, replacing v42.
