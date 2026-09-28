@@ -303,3 +303,14 @@ explored on the same months before declaring (disclosed); a per-airport k was al
 SHA-256 61264cdb7f0a37a8e5cf943f8e950441df38b826132cfc1097f00ca9d0519fe4. 163,594 rows change vs v35 (mean +1.9 s, max +870 s; the
 low-end moves are a few seconds down), sum of squared change 1.56e8; independent rebuild within 1 s; audit clean (26 predictions below
 zero, none below -12; RMS diff vs v35 21.3 s, vs v37 5.6 s). Recommended upload: v38 (it contains v37's upper stretch).
+
+**Checks after v38 (exploratory, scripts in deep_search_20260928/):** per-airport k loses to the pooled k (-0.120% vs -0.188%, also
+when shrunk); a free per-scope stacking regression y = a + b1 base + b2 mix gains only -0.069% (coefficient sums 1.06 / 1.03 confirm
+the compression); the stretch on LIRF non-population rows worsens January (+0.023%; LIRF January 2025 is dark like July 2026) -> LIRF
+stays out; after the stretch, clock rows in congested hours are balanced, no-clock rows still +6 / +430 / +355 / +76 s (a pc lift on
+v38 would be worth ~0.04 s on 609 ranking rows; not exported).
+**Ranking-side, label-free:** on the ranking's gate-tracked non-LIRF rows, observed taxi + airport offset minus the prediction, compared
+bin by bin with the same quantity on the development months (where the proxy itself runs low in the tail: label - obs +51 / +241 /
++796 s above 1,800 / 2,400 / 3,600 s), differs by +30 ... +90 s above 900 s with all airports, but that is EGLL's July coverage change;
+without EGLL the ranking matches development within +-15 s up to 2,400 s, and January's tail sits higher (+80 s at 2,400-3,600,
++273 s above), July's lower above 3,600 s (-151 s, few rows). No sign that the dev-fitted stretch overshoots in the ranking.
