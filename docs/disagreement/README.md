@@ -290,3 +290,16 @@ outside the callsign / queue layers, k fitted on the other three months. **Nothi
   Independent rebuild within 1 s; audit clean (RMS diff vs v35 20.5 s, none > 1,800 s). Not uploaded.
 - The alternative v36 + stretch above 1,800 s (dry run SHA 5dde9af1..., 14,201 rows, sum of squared change 2.07e8) is equal on
   development (~-0.19% against v35) and was not exported: v37 is one declared mechanism with a fitted coefficient per scope.
+
+## Two-sided stretch and v38 (configs/tail_stretch_v2.json 03:20Z; tools/run_tail_stretch2.py)
+
+The lower side (value + k2 x max(t_lower - u, 0) on the upper-stretched value u; k2 < 0 pulls the over-predicted low end down) was
+explored on the same months before declaring (disclosed); a per-airport k was also explored and lost to the pooled k (-0.120% vs
+-0.188%). **Nothing selected**: two_sided_900 -0.076 / -0.315 / -0.356 / -0.191% (mean **-0.235%**, 2/4 intervals; December
+[-0.794, +0.075]); two_sided_1200 mean -0.230%; upper_only reproduces tail_stretch_v1's v35_t1500 exactly. Four-month k: untracked
+0.126 / -0.044, tracked 0.085 / -0.036.
+
+**v38** (exported under the user's standing "proceed, don't wait on me"; not uploaded): v35 + two-sided stretch (1500 / 900),
+SHA-256 61264cdb7f0a37a8e5cf943f8e950441df38b826132cfc1097f00ca9d0519fe4. 163,594 rows change vs v35 (mean +1.9 s, max +870 s; the
+low-end moves are a few seconds down), sum of squared change 1.56e8; independent rebuild within 1 s; audit clean (26 predictions below
+zero, none below -12; RMS diff vs v35 21.3 s, vs v37 5.6 s). Recommended upload: v38 (it contains v37's upper stretch).
