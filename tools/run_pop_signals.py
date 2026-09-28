@@ -73,6 +73,7 @@ def summarise(rows: pd.DataFrame, control: pd.DataFrame | None, threshold: float
         out.update({"relative_sse_change": float(rel), "months_better": int((a < b).sum()), "months": len(months),
                     "relative_change_by_month": {m: float((a[k] - b[k]) / b[k]) for k, m in enumerate(months)},
                     "bootstrap_95": [float(np.quantile(draws_rel, 0.025)), float(np.quantile(draws_rel, 0.975))]})
+        ranking_rows = {m: int(n) for m, n in (ranking_rows or {}).items() if m in months}  # month keys only (the declaration also documents itself)
         if ranking_rows:  # informational: the ranking months' analogs, per-row SSE scaled to the ranking's in-scope population counts
             counts = {m: int((cscope["month"] == m).sum()) for m in ranking_rows}
             ctrl = sum(b[months.index(m)] / counts[m] * n for m, n in ranking_rows.items())
