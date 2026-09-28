@@ -133,7 +133,22 @@ shares are 0.146 for January 2026 (January 2025: 0.148) and **0.156 for July 202
 August–December 2025, whose population fill shares were 0.43–0.77. The v9 classifier reads the *calendar month*, so on the ranking it
 applies July 2025's low propensity to July 2026's 276 rows; a linear read of the arrival share implies about 0.52 instead of 0.32.
 Day-level shares add little within a month (fill 0.44–0.53 across quintiles). Candidates: `pa` + share (month kept / dropped), the
-share alone with the month dropped, and the day share; same rule as round 1. Results: `results_v2.json` (pending at the time of writing).
+share alone with the month dropped, and the day share; same rule as round 1.
+
+**Results (`results_v2.json`, 15:00–15:50 UTC): nothing selected.** Against the same control (19.054e9): `pa_arrm` 18.228e9 (−4.34%,
+8/12 months, bootstrap [−6.4%, +0.9%]); `pa_arrm_nomonth` 18.384e9 (−3.52%, 7/12, [−6.0%, +4.1%]); `arrm_nomonth` 19.100e9
+(+0.24%); `pa_arrd` 18.380e9 (−3.54%, 5/12). The scratch month breakdown shows every arrival-share variant losing January by
++90…+180% (a few large-interval rows whose p_fill falls) and November by +10…+30%. Dropping the calendar month without a replacement
+(`pa` minus month, scratch) costs January +57% and November +37%: the month feature carries the winter fill propensity.
+
+**Why the r = 0.81 does not turn into a lever (calibration check on the leave-one-month-out rows).** The classifier's monthly mean
+p_fill already tracks each month's actual population fill share with r = 0.91, through the rows' own features (interval, hour,
+turnaround, operator). The *residual* miscalibration (actual − mean p) still correlates with the arrival share (r = 0.75), but its
+size is small: July 2025 −0.07, January −0.13, March +0.15, December +0.08. On the ranking the v42 classifier's mean p_fill is
+0.659 for January 2026 and 0.359 for July 2026; read through the residual relation, July 2026's arrival share (0.156) implies an
+actual share only about +0.01…+0.03 above the classifier's mean, not the 0.52 of the naive month-level fit (which ignores that the
+July 2026 rows are already scored by their own features). No calibration shift is warranted; `pa_arrm` gets the calibration right
+(miscalibration correlation 0.49, July −0.04) but pays for it on the few January rows that dominate that month's SSE. Closed.
 
 **Reading.** The previous-arrival identity is a real, structural separator (a −2.7% to −4% population-SSE effect, concentrated in the
 summer months that resemble July 2026), but the declared rule was set for month-level consistency and it does not clear it. Shipping
