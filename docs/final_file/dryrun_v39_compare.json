@@ -1,0 +1,24 @@
+{
+ "runner_v939_sha256": "bfc1a99ce4908bb980c957849fd26ebfcc9813c2d41abb1f781d0dccfbba25e3",
+ "export_v39_sha256": "06a9acbcd4ec91d3887070855e2730835a17f2f031c2194602275c15d3fc107b",
+ "fill_pins_rows": 12,
+ "fill_pins_scopes": {
+  "population": 11,
+  "clock_day": 1
+ },
+ "runner_v939_vs_export_v39": {
+  "rows_differing": 1157,
+  "max_abs_s": 7,
+  "pinned_rows_differing": 0
+ },
+ "runner_v938_vs_export_v38": {
+  "rows_differing": 1157,
+  "max_abs_s": 7
+ },
+ "runner_v939_vs_runner_v938": {
+  "rows_differing": 12,
+  "all_differing_rows_are_pins": true,
+  "pinned_equal_interval": true
+ },
+ "note": "the runner's layer set v39 on the ranking file (dry-run root) against the export tools/export_fill_pin.py built on the uploaded v38; the non-pinned differences are the dry run's known float noise (v938 vs v38)"
+}

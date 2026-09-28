@@ -301,15 +301,18 @@ def stage_stack(ctx: Context) -> dict:
     regular = pd.concat([pd.read_parquet(ctx.run.root / "adsb" / "residual" / f"matches2_{m}.parquet") for m in ctx.months], ignore_index=True)
     peer = stack.peers(ctx.raw_path)
     peer_out = save_frame(peer, ctx.run.path("stack", "peers.parquet"))
-    frame, record = stack.compute(detail, repaired, ctx.run.root / "rematch" / "out.parquet", regular, peer)
+    fill = stack.pins(ctx.raw_path)
+    fill_out = save_frame(fill, ctx.run.path("stack", "fill_pins.parquet"))
+    frame, record = stack.compute(detail, repaired, ctx.run.root / "rematch" / "out.parquet", regular, peer, fill)
     flagged = {(f["airport"], f["month"]) for f in rep["flagged"]}
     in_flagged = np.array([(a, m) in flagged for a, m in zip(frame["airport"], frame["month"])], dtype=bool)
     record["rows"]["repair_effect_nonzero_outside_flagged"] = int(((frame["repair_effect"].to_numpy() != 0) & ~in_flagged).sum())
     out = save_frame(frame, ctx.run.path("stack", "detail.parquet"))
-    return ctx.run.finish("stack", record, [out, peer_out], started)
+    return ctx.run.finish("stack", record, [out, peer_out, fill_out], started)
 
 
 RECIPES = {"v35": "v35: v30 + EOBT_1 repair 0.5 + v33/v34 weights + u300 + callsign fix 0.5 + queue trust 0.75 (regular matches)",
+           "v39": "v39: v38, then the fill pins (configs/fill_pin_v1.json: LIRF long-interval population and one-day-clock departures at their schedule interval)",
            "v36": "v36: v35's layers after the mu600 mix gate, then the peer-congestion lifts (configs/higher_bundle_v2.json mu_pc_pcc)",
            "v37": "v37: v35, then the tail stretch above 1,500 s (configs/tail_stretch_v1.json v35_t1500, four-month k)",
            "v38": "v38: v35, then the two-sided stretch (above 1,500 s, below 900 s; configs/tail_stretch_v2.json two_sided_900, four-month k)"}

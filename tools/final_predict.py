@@ -13,7 +13,7 @@ Subcommands (all take --root, a fresh directory per input file; every stage is r
   refit-adj2   --month M              the declared residual adj2 refit for a target month without a saved booster (~5 min, 16 threads)
   run          [--stages ...]         features, adsb, tokens, v9, leaves, networks, residual, recipe (v30), repair (v31's EOBT_1 detector;
                                       a flag reruns features..recipe on the edited input in <root>/repair/run, or --repair-root reuses one),
-                                      rematch (the callsign fix's ADS-B rematch), stack (v31 -> v35 .. v38), final (--layers v35|v36|v37|v38; default: all pending);
+                                      rematch (the callsign fix's ADS-B rematch), stack (v31 -> v35 .. v39), final (--layers v35|v36|v37|v38|v39; default: all pending);
                                       `export` (v30's own file) runs only when named
 Nothing is uploaded and nothing is written to runs/submissions; the final stage writes <root>/final/vigorous-whistle_v<N>.parquet.
 """
@@ -50,9 +50,10 @@ def main() -> None:
                         help="a completed run root (features..recipe) of this file's EOBT_1-repaired input, reused by the repair stage instead of "
                              "running the chain in <root>/repair/run; refused unless its input has exactly the repair's content "
                              "(the ranking file: runs/final_lfpg_eobt/run)")
-    parser.add_argument("--layers", choices=["v35", "v36", "v37", "v38"], default="v38",
+    parser.add_argument("--layers", choices=["v35", "v36", "v37", "v38", "v39"], default="v38",
                         help="the final stage's layer set, recorded in its receipt (stages/final-<layers>.json): v38 (default: the official "
-                             "best, two-sided stretch), v35, v36 (mu600 mix gate + peer-congestion lifts) or v37 (tail stretch above 1,500 s)")
+                             "best, two-sided stretch), v39 (v38 + the fill pins of configs/fill_pin_v1.json), v35, v36 (mu600 mix gate + "
+                             "peer-congestion lifts) or v37 (tail stretch above 1,500 s)")
     parser.add_argument("--month", default=None)
     parser.add_argument("--execute", action="store_true")
     args = parser.parse_args()

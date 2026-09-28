@@ -24,6 +24,9 @@
   v38 = layers(v34, ..., queue 0.75, regular, stretch=1500, stretch_lower=900): v35, then the two-sided stretch on every non-LIRF row
         outside the callsign and queue layers (configs/tail_stretch_v2.json two_sided_900): u = value + k1 x max(value - 1500, 0),
         value = max(u + k2 x max(900 - u, 0), -12), k1 / k2 per untracked / tracked from tail_stretch_v2_results.json.
+  v39 = v38 with the fill pins (configs/fill_pin_v1.json, src/prc2026_final/fill_pin.py): the file's own LIRF departures with a
+        schedule interval above 43,200 s that are either the v9 population (no NM record, no aircraft type) or carry a one-day-early
+        NM off-block clock take their schedule interval; no model, no fitted coefficient (the user's decision of 28 September).
   export_stack's three ranking-bound readers (scope_table, segments, ranking_peers) answer from the run's own tables during the
   call (run_tables): the file's rematch, its residual match tables and tools/peer_congestion.peer_table on the file itself.
 """
@@ -40,6 +43,7 @@ from prc2026.artifacts import object_hash, read_json, sha256_file
 from prc2026.features import ID, PHASE, TIME
 
 from .common import ROOT, save_frame, source_file
+from .fill_pin import COLUMNS as FILL_COLUMNS, SCOPES as FILL_SCOPES, apply_pins, fill_pins
 
 sys.path.insert(0, str(ROOT / "tools"))
 import export_v33  # noqa: E402
@@ -59,11 +63,11 @@ REMATCH_OUTPUT_COLUMNS = ["MVT_ID_mvt", "airport", "flight", "mapped", "takeoff"
                                                                                     "taxi_path_m", "taxi_stops", "taxi_stopped_s", "at_known_stand"]]
 DECLARATIONS = {"gate": "configs/disagreement_gate_v1.json", "callsign": "configs/callsign_fix_v1.json", "queue": "configs/queue_trust_v1.json",
                 "mix": "configs/mix_gate_v1.json", "peer": "configs/higher_bundle_v2.json", "stretch": "configs/tail_stretch_v1.json",
-                "stretch2": "configs/tail_stretch_v2.json"}
+                "stretch2": "configs/tail_stretch_v2.json", "fill_pin": "configs/fill_pin_v1.json"}
 RESULTS = ["docs/disagreement/tail_stretch_v1_results.json", "docs/disagreement/tail_stretch_v2_results.json"]  # the stretches' k (four-month fits), read by export_stack.tail_stretch
 CODE = ["tools/export_stack.py", "tools/peer_congestion.py", "tools/export_disagreement_gate.py", "tools/export_fair_weights.py", "tools/export_v33.py",
         "tools/run_callsign_fix.py", "tools/run_queue_trust.py", "tools/adsb_rematch_nonm.py"]
-LAYER_SETS = ["v35", "v36", "v37", "v38"]
+LAYER_SETS = ["v35", "v36", "v37", "v38", "v39"]
 V35 = {"gate": "u300", "callsign": "u300_cs50", "queue": "qt75", "queue_source": "regular",
        "record": "docs/disagreement/export_v35.json (tools/export_stack.py --queue 0.75 --queue-source regular --version 35, user override)"}
 V36 = {**V35, "peer": "mu_pc_pcc",
@@ -72,6 +76,13 @@ V37 = {**V35, "stretch": "v35_t1500",
        "record": "docs/disagreement/export_v37.json (tools/export_stack.py --queue 0.75 --queue-source regular --stretch 1500 --version 37, user override)"}
 V38 = {**V35, "stretch": "two_sided_900",
        "record": "docs/disagreement/export_v38.json (tools/export_stack.py --queue 0.75 --queue-source regular --stretch 1500 --stretch-lower 900 --version 38, user override)"}
+V39 = {**V38, "fill_pin": "all_twelve",
+       "record": "docs/fill_pin/export_v39.json (tools/export_fill_pin.py --version 39, the user's decision on the declared candidates)"}
+
+
+def pins(raw_path: Path) -> pd.DataFrame:
+    """src/prc2026_final/fill_pin.fill_pins on the movement file itself (label-free: schedule, takeoff and NM clock columns only)."""
+    return fill_pins(pd.read_parquet(raw_path, columns=FILL_COLUMNS))
 
 
 # ---------------------------------------------------------------- repair (v31)
@@ -197,9 +208,10 @@ def run_tables(callsign: pd.DataFrame, segments: pd.DataFrame, peer: pd.DataFram
 
 
 def compute(detail: pd.DataFrame, repaired_v30: np.ndarray | None, rematch_path: Path, regular: pd.DataFrame,
-            peer: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+            peer: pd.DataFrame, fill: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     """`detail`: the recipe stage's detail (v30's columns); `repaired_v30`: v30 on the repaired input in detail order (None: no repair);
-    `regular`: the run's residual match tables; `peer`: peers() of the file. Returns v30 .. v34 and both layer sets' values and masks."""
+    `regular`: the run's residual match tables; `peer`: peers() of the file; `fill`: pins() of the file (v39's fill pins).
+    Returns v30 .. v34 and every layer set's values and masks."""
     ids = detail[ID].to_numpy()
     v30 = detail["v30"].to_numpy(dtype=float)
     # the detail must be v30's recipe under both frozen rebuilds (export_v33 at 0.7; export_fair_weights at v30's outer and LIRF weights)
@@ -236,8 +248,14 @@ def compute(detail: pd.DataFrame, repaired_v30: np.ndarray | None, rematch_path:
                 frame[f"{name}_{layer}"] = np.asarray(mask, dtype=bool)
             rows[name] = {layer: int(np.sum(mask)) for layer, mask in masks.items()}
             rows[name]["floored"] = int((values == FLOOR).sum())
+    # v39 = v38 with the fill pins (configs/fill_pin_v1.json): the file's own in-scope LIRF departures at their schedule interval
+    v39, pinned = apply_pins(frame["v38"].to_numpy(dtype=float), ids, fill, detail["airport"].to_numpy())
+    frame["v39"], frame["v39_fill_pin"] = v39, pinned
+    scope = pd.DataFrame({ID: ids}).merge(fill[[ID, "scope"]], on=ID, how="left", validate="one_to_one")["scope"] if len(fill) else pd.Series([None] * len(ids))
+    rows["v39"] = {"fill_pin": int(pinned.sum()), **{f"fill_pin_{s}": int(scope.eq(s).sum()) for s in FILL_SCOPES}, "floored": int((v39 == FLOOR).sum())}
+    specs = {**specs, "v39": {"base": "v38", "fill_pin": DECLARATIONS["fill_pin"], "pinned_value": "schedule interval (takeoff minus scheduled departure) in seconds"}}
     record = {"recipe_checks_max_abs": checks, "lfpg_weight": LFPG_WEIGHT, "floor_seconds": FLOOR, "v33_outer": V33_OUTER, "v33_lirf": V33_LIRF,
-              "v34_lirf": V34_LIRF, "layer_sets": specs, "shipped_as": {"v35": V35, "v36": V36, "v37": V37, "v38": V38},
+              "v34_lirf": V34_LIRF, "layer_sets": specs, "shipped_as": {"v35": V35, "v36": V36, "v37": V37, "v38": V38, "v39": V39},
               "declarations": {p: {"sha256": sha256_file(ROOT / p), "object_hash": object_hash(read_json(ROOT / p))} for p in DECLARATIONS.values()},
               "results": {p: sha256_file(ROOT / p) for p in RESULTS},
               "stretch_k": {"v37": read_json(ROOT / RESULTS[0])["candidates"][V37["stretch"]]["k_all_months"],

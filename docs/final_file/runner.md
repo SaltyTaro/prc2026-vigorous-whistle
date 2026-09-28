@@ -23,7 +23,7 @@ python tools/final_predict.py refit-adj2   --root R --month YYYY-MM [--threads 1
 python tools/final_predict.py run          --root R [--stages ...] [--threads 12] [--workers 8]
                                            [--weather-inventory data/external/iem_final/<R>/inventory.json] [--version N] [--detail-ensembles]
                                            [--vocab-cache runs/final_dryrun/run/leaves/vocabularies.json] [--repair-root DIR]
-                                           [--layers v35|v36|v37|v38]
+                                           [--layers v35|v36|v37|v38|v39]
 python tools/final_compare.py --root R --output OUT.json [--version N] [--allow-subset]
 ```
 
@@ -53,7 +53,7 @@ External data and model inference are separate commands: `external` / `extract-a
 | recipe | v30 arithmetic: mix 0.25 e24 + 0.25 e24b + 0.5 e32 at share 0.75, outer 0.7, round-B LIRF blends, floor −12; scope column | `mixed`, `weighted`, `lirf_blends`, `spec_for`, `candidate_values` | `recipe/detail.parquet` (v30 detail's columns) |
 | repair | v31's input: label-free EOBT_1 detector per airport-month; for a flagged one, EOBT_1 := IOBT where EOBT_1 > IOBT and the chain features → recipe again in `<root>/repair/run` (or `--repair-root`, a completed run of exactly that content) | the chain's own stages | `repair/shares.parquet`, `repair/edited_ids.parquet` |
 | rematch | the callsign fix's ADS-B rematch of the no-NM EDDF / EHAM departures | `tools/adsb_rematch_nonm.py` main, unchanged (its `REPO` pointed at this workspace) | `rematch/{deps,out}.parquet` |
-| stack | v31 → v33 → v34, then v35 / v36 / v37 / v38 on the recipe detail (the exports' construction; deltas from the file's own detail) | `export_v33.recipe`, `export_fair_weights.recipe` + `V33_OUTER`/`V33_LIRF`, `export_disagreement_gate.V34_LIRF`; `tools/export_stack.layers` itself, its readers answering from the run's tables (`run_callsign_fix.scope_table`, `run_queue_trust` segment rule, `peer_congestion.peer_table`) | `stack/detail.parquet` (v30, repair effect, v31, v33, v34, v35–v38, per-set layer masks), `stack/peers.parquet` |
+| stack | v31 → v33 → v34, then v35 / v36 / v37 / v38 on the recipe detail (the exports' construction; deltas from the file's own detail), then v39 = v38 + the fill pins of the file's own LIRF long-interval departures (`configs/fill_pin_v1.json`, `src/prc2026_final/fill_pin.py`) | `export_v33.recipe`, `export_fair_weights.recipe` + `V33_OUTER`/`V33_LIRF`, `export_disagreement_gate.V34_LIRF`; `tools/export_stack.layers` itself, its readers answering from the run's tables (`run_callsign_fix.scope_table`, `run_queue_trust` segment rule, `peer_congestion.peer_table`) | `stack/detail.parquet` (v30, repair effect, v31, v33, v34, v35–v38, per-set layer masks), `stack/peers.parquet` |
 | final | the `--layers` set (default v38) as the nearest-integer file in the template's order (`--version N` names it); receipt `stages/final-<layers>.json` | `export_submission` | `final/vigorous-whistle_v<N>.parquet` + receipt |
 | export | only when named (`--stages export`): v30's own file, a component check against the uploaded v30 | `export_submission` | `export/vigorous-whistle_v<N>.parquet` + receipt |
 
@@ -63,8 +63,11 @@ The runner stopped at v30. The four stages after `recipe` take it to the v35 inc
 not-uploaded v36, v37 and v38, in shipping order, each through the frozen code that built the layer. Module:
 `src/prc2026_final/stack.py`.
 
-**`--layers v35|v36|v37|v38`** picks the final file's layer set. The default is **v38**, the official best since its upload (226.8053; v35 226.8989);
-it was v35 until then. The stack stage computes all four columns every time. The final stage exports the chosen one and keeps one receipt
+**`--layers v35|v36|v37|v38|v39`** picks the final file's layer set. The default is **v38**, the official best since its upload (226.8053; v35 226.8989);
+it was v35 until then. **v39** (exported 28 September, `docs/fill_pin/README.md`) is v38 with the fill pins: the file's own LIRF
+departures with a schedule interval above 43,200 s that are the v9 population (no NM record, no aircraft type) or carry a one-day-early
+NM clock take their schedule interval (`stack/fill_pins.parquet` lists them). Flip the default when it is uploaded and scored.
+The stack stage computes all five columns every time. The final stage exports the chosen one and keeps one receipt
 per layer set (`stages/final-<layers>.json`, which records the layer set and version), so several files can live in one root.
 
 1. **v31, the EOBT_1 repair (stage `repair`).**
@@ -112,6 +115,13 @@ per layer set (`stages/final-<layers>.json`, which records the layer set and ver
    - **v38** = the same with `stretch=1500, stretch_lower=900`, from `configs/tail_stretch_v2.json` `two_sided_900`. On every
      unanchored non-LIRF row: u = value + k1 × max(value − 1,500, 0), then max(u + k2 × max(900 − u, 0), −12). k1 is v37's;
      k2 is untracked −0.0436 / tracked −0.0362.
+   - **v39** = v38, then `fill_pin.apply_pins` with `fill_pin.fill_pins` of the file's own rows (`configs/fill_pin_v1.json`, 28 September):
+     LIRF departures with a schedule interval above 43,200 s that have no NM record and no aircraft type (the v9 population), or whose
+     NM off-block clock is one day early (takeoff − AOBT_3 within 7,200 s of 86,400 s), take their schedule interval. No coefficient;
+     the ranking file has 12 such rows (`docs/fill_pin/export_v39.json`). Saved as `stack/fill_pins.parquet`, mask `v39_fill_pin`.
+     Dry run (28 September, stack 7 s, final 0.3 s, `--layers v39 --version 939`): [`dryrun_v39_compare.json`](dryrun_v39_compare.json),
+     the 12 pinned rows equal the export exactly, v939 − v938 is non-zero on exactly those rows, and the other 1,157 differing rows
+     are the same float-noise rows as v938 vs v38 (≤ 7 s).
 4. **`final`** writes the chosen layer set's integer file into the run root. `export` (v30's own file) runs only when named.
 
 **Dry run (28 September): all four pass.** The new stages ran on `runs/final_dryrun/run`, reusing its completed chain, with

@@ -78,7 +78,8 @@ def test_stack_arithmetic_on_the_routes(tmp_path, monkeypatch):
     # congested hours (peer_c > 600, >= 5 peers) on rows 2 (tracked), 3 (untracked, clock), 4 (LIRF) and 10 (no clock); row 1's hour is below
     peer = pd.DataFrame({"MVT_ID_mvt": ids, "no_clock": [False, False, False, True, False, False, False, False, False, True, False, False],
                          "peer_c": [500.0, 900.0, 650.0, 900.0, 0.0, 0.0, 0.0, 0.0, 0.0, 700.0, 0.0, 0.0], "peer_n": [9, 9, 5, 10, 0, 0, 0, 0, 0, 6, 0, 0]})
-    frame, record = stack.compute(detail, repaired, path, regular, peer)
+    fill = pd.DataFrame({"MVT_ID_mvt": [6.0], "pin_s": [50000.0], "scope": ["population"], "interval_s": [50000.0], "proxy_s": [np.nan]})
+    frame, record = stack.compute(detail, repaired, path, regular, peer, fill)
     v35 = [1100.0,                                   # LTFM: outer weight 1.0
            0.4 * 620 + 0.6 * 700 + 0.5 * 100,        # matched EDDF: outer 0.6, plus half the repair effect
            900.0,                                    # unmatched EDDF, mix - base = 400 > 300: the mix
@@ -111,6 +112,11 @@ def test_stack_arithmetic_on_the_routes(tmp_path, monkeypatch):
     assert frame["v36_mix_gate"].tolist() == [False] * 8 + [True, False, False, False] and not frame["v35_mix_gate"].any()
     assert frame["v36_peer_noclock"].tolist() == [False] * 9 + [True, False, False] and frame["v36_peer_clock_untracked"].tolist() == [False, False, True] + [False] * 9
     assert record["rows"]["repair_effect_nonzero"] == 1 and record["layer_sets"]["v36"]["mix_up"] == 600.0
+    v39 = list(v38)                                  # the fill pin: the LIRF population row (5,000 s at v30..v38) takes its schedule interval
+    v39[5] = 50000.0
+    assert np.allclose(frame["v39"].to_numpy(), v39, rtol=0, atol=1e-9) and frame["v39_fill_pin"].tolist() == [False] * 5 + [True] + [False] * 6
+    assert record["rows"]["v39"] == {"fill_pin": 1, "fill_pin_population": 1, "fill_pin_clock_day": 0, "floored": 0}
+    assert record["layer_sets"]["v39"]["base"] == "v38" and record["shipped_as"]["v39"]["fill_pin"] == "all_twelve"
     assert "v35_peer_noclock" not in frame.columns and "v36_stretch_tracked" not in frame.columns
     assert export_stack.scope_table is not None and export_stack.ranking_peers.__module__ == "peer_congestion"  # readers restored
 
@@ -119,7 +125,7 @@ def test_stack_refuses_a_detail_that_is_not_v30s_recipe(tmp_path):
     detail = pd.DataFrame({"MVT_ID_mvt": [1.0], "airport": ["EDDF"], "month": "2026-01", "scope": ["all_no_lirf"], "v9": [500.0], "residual": [0.0],
                            "committee_mix": [600.0], "ens_ctx_lirf": [0.0], "ens_v22_lirf_q": [0.0], "v30": [999.0]})
     with pytest.raises(ValueError, match="not v30's recipe"):
-        stack.compute(detail, None, tmp_path / "unused.parquet", pd.DataFrame(), pd.DataFrame())
+        stack.compute(detail, None, tmp_path / "unused.parquet", pd.DataFrame(), pd.DataFrame(), pd.DataFrame())
 
 
 def test_rematch_scope_is_the_declared_no_nm_eddf_eham_departures():

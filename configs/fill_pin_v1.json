@@ -1,0 +1,78 @@
+{
+ "experiment_id": "fill_pin_v1",
+ "declared_at_utc": "2026-09-28T04:40:00Z",
+ "audit_used": false,
+ "status": "DECLARED before any export; no development score exists for these rows (no labelled month holds a comparable set); the choice between the candidates is the user's, recorded below",
+ "purpose": "LIRF departures whose recorded taxi time can only be a schedule fill (label = takeoff - scheduled departure) or a one-day date error (label = 86,400 s + an ordinary taxi). The frozen v7 keeps a learned partial one-day hedge on the long-interval population rows (prediction = interval + 2.8..9.1 ks on the ranking file), and the NM residual models follow a one-day-early NM clock (prediction ~ 86,400 s) below both possible labels. The pin sets the prediction to the schedule interval.",
+ "rule": {
+  "airport": "LIRF",
+  "departures_only": true,
+  "schedule_interval_s_min_exclusive": 43200,
+  "scopes": {
+   "population": "no NM flight record (ADEP_flt missing) and no airport aircraft type (AIRCRAFT_TYPE_mvt missing): the v9 mixture's population (src/prc2026_lirf_mixture/features.population_rows)",
+   "clock_day": "an NM off-block clock one day early: takeoff minus AOBT_3 within 7,200 s of 86,400 s"
+  },
+  "pinned_value": "schedule interval = MVT_TIME_UTC_mvt - SCHED_TIME_UTC_mvt in seconds (rounded by the export contract); every other row keeps its layer-set value",
+  "code": "src/prc2026_final/fill_pin.py (fill_pins, apply_pins); runner layer set v39 in src/prc2026_final/stack.py; ranking export tools/export_fill_pin.py",
+  "label_free": "reads only takeoff, schedule and NM clock columns plus the two missingness flags; no departure label or block time"
+ },
+ "expected_ranking_scope": {
+  "population": 11,
+  "clock_day": 1,
+  "note": "3 population rows in 2026-01, 8 in 2026-07"
+ },
+ "evidence": {
+  "labelled_2025": {
+   "population_long_interval_rows": 29,
+   "fills": 18,
+   "one_day": 11,
+   "no_separating_feature": "docs/audit_20260922/README.md section 4; one-day rows have longer intervals (6 of 9 above 17 h are one-day) but 5 of the 20 below 17 h are one-day too",
+   "non_population_long_interval_rows": "597 across all airports: 596 ordinary taxi times (v38 follows the NM clock there, untouched by this rule), 1 fill = AEZ146R LIRF 2025-07-15 whose NM clock was also one day early (interval 87,001, proxy 87,181, label 87,002): the clock_day scope's only precedent"
+  },
+  "v8_arithmetic": {
+   "v7_official": 275.057,
+   "v8_official": 283.668,
+   "observed_sse_change": 1659092459,
+   "hedge_rows_sse_change_if_all_fills": 1248471374,
+   "one_one_day_row_would_have_changed_sse_by": "-449675300 on average (range -880393752 .. -13653997), i.e. v8 would have scored better than v7",
+   "reading": "consistent only with zero (at most one) one-day rows among the 11 hedged rows; the v10 result (+1.8e8 with the same routing rules) corroborates that the non-hedge rules cost no more than about 0.4e9",
+   "conflict": "docs/postprocess/README.md and docs/audit_20260922/README.md decline to derive a row-level rule from the v8 score; v8 was a genuine candidate, not a probe. The user decides."
+  },
+  "stake_on_v38": {
+   "v38_official": 226.8053,
+   "all_twelve_if_all_fills": "population 3.61e8 SSE (2.03%, -2.32 s) + clock_day 7.4e7 (0.42%, -0.47 s)",
+   "all_twelve_if_exactly_one_population_row_is_one_day": "about -1.09 s net"
+  }
+ },
+ "candidates": {
+  "all_twelve": {
+   "scopes": [
+    "population",
+    "clock_day"
+   ],
+   "population_interval_s_min": 43200
+  },
+  "dominant_three": {
+   "scopes": [
+    "population",
+    "clock_day"
+   ],
+   "population_interval_s_min": 79200,
+   "note": "population rows only where the one-day label (86,400 + taxi) cannot exceed the interval; rule-compliant under either mechanism"
+  }
+ },
+ "selection": "No rule can score these rows on labelled data. The user chose on 28 September 2026: 'all twelve'.",
+ "user_decision": {
+  "candidate": "all_twelve",
+  "words": "all twelve",
+  "recorded_at_utc": "2026-09-28T04:40:00Z"
+ },
+ "control": {
+  "submission": "vigorous-whistle_v38.parquet",
+  "official_rmse_seconds": 226.8053,
+  "sha256": "61264cdb7f0a37a8e5cf943f8e950441df38b826132cfc1097f00ca9d0519fe4"
+ },
+ "export": "tools/export_fill_pin.py --version 39 --user-override 'all twelve' -> runs/submissions/vigorous-whistle_v39.parquet + docs/fill_pin/export_v39.json; then tools/audit_export.py --version 39 --compare 38 35; upload only at the user's word",
+ "final_file": "src/prc2026_final layer set v39 (tools/final_predict.py --layers v39) applies the same rule to any movement file's own rows",
+ "never": "no upload from this declaration without the user's explicit word; never re-upload v1-v38"
+}
