@@ -85,8 +85,8 @@ slice holds 0.9% of the squared error, so the whole effect is at most 0.05% of t
 the ranking file: 3,154 departures (0.91%) have such a category against the twelve 2025 months; January 0.28%, July 1.42%.
 
 **New stands in July 2026 (label-free follow-up).** Counted by airport and stand, 3,271 ranking departures leave from a stand
-with fewer than ten departures in 2025. Two cells hold nearly all of them; neither stand group occurs in 2025 or in January
-2026:
+with fewer than ten departures in 2025. Two cells hold nearly all of them. The EDDM group does not occur in 2025 or in
+January 2026; the EDDF group holds 61 departures in all of 2025 and 26 in January 2026:
 
 | cell | rows | v46 mean, new / other stands | what the inputs say |
 |---|---:|---:|---|
