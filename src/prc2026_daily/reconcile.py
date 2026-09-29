@@ -44,6 +44,7 @@ class Settings:
                                      # their outcomes without a visible delay count as the schedule interval, so that the total
                                      # moves a row between its delay outcomes and its schedule interval and never beyond
     pin_s: float = 0.0               # heavy rows predicted within this of their schedule interval (declared fills) keep their prediction
+    heavy_keep_clock: bool = False   # heavy rows that hold an NM clock keep their prediction (prepare_day's `keep`)
     tilt_sd_s: float = 300.0         # rows whose scenarios spread more than this get prior weights matched to the prediction
     noise_wide_sd_s: tuple = (3600.0, 28800.0)
     score_clip: float = 3.0
@@ -172,12 +173,14 @@ class Prepared:
     var_bulk: float      # prior variance of the sum of e_i over the rows that are not heavy
     component: np.ndarray | None = None   # shift component of each row
     n_eff_k: np.ndarray | None = None     # n_eff by component
-    pinned: np.ndarray | None = None      # rows predicted at their schedule interval (Settings.pin_s)
+    pinned: np.ndarray | None = None      # rows that keep their prediction when heavy: Settings.pin_s, and prepare_day's `keep`
 
 
-def prepare_day(a: np.ndarray, yhat: np.ndarray, groups: list, settings: Settings = Settings(), component: np.ndarray | None = None, components: int = 1) -> Prepared:
+def prepare_day(a: np.ndarray, yhat: np.ndarray, groups: list, settings: Settings = Settings(), component: np.ndarray | None = None, components: int = 1,
+                keep: np.ndarray | None = None) -> Prepared:
     """groups: [(row positions, (sample_a, sample_yhat, sample_y))], a partition of the day's rows by cell.
-    component: the shift component of each row (0 ... components - 1); one component when absent."""
+    component: the shift component of each row (0 ... components - 1); one component when absent.
+    keep: rows that keep their prediction when they are heavy (they still enter the day's arithmetic)."""
     a, yhat = np.asarray(a, dtype=float), np.asarray(yhat, dtype=float)
     n = len(a)
     component = np.zeros(n, dtype=np.int64) if component is None else np.asarray(component, dtype=np.int64)
@@ -218,7 +221,7 @@ def prepare_day(a: np.ndarray, yhat: np.ndarray, groups: list, settings: Setting
     return Prepared(yhat=yhat, reference_total=float(reference.sum()), prior=prior, is_heavy=is_heavy, heavy=heavy, heavy_cf=cf[heavy].copy(), bulk_cf=np.prod(cf[~is_heavy], axis=0),
                     store=store, n_eff=float(late[~is_heavy].sum()), mean_e=float(mean.sum()), var_bulk=float((sd[~is_heavy] ** 2).sum()),
                     component=component, n_eff_k=np.bincount(component[~is_heavy], weights=late[~is_heavy], minlength=components).astype(float),
-                    pinned=(np.abs(yhat - a) <= settings.pin_s) if settings.pin_s > 0 else np.zeros(n, dtype=bool))
+                    pinned=((np.abs(yhat - a) <= settings.pin_s) if settings.pin_s > 0 else np.zeros(n, dtype=bool)) | (np.zeros(n, dtype=bool) if keep is None else np.asarray(keep, dtype=bool)))
 
 
 def shift_estimate(p: Prepared, total_s: float) -> float:

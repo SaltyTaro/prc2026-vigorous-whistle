@@ -36,7 +36,7 @@ from prc2026_daily.reconcile import prepare_day, solve_day  # noqa: E402
 from prc2026_submission.contract import export_submission  # noqa: E402
 import export_v33  # noqa: E402
 from export_share_gate import uploaded  # noqa: E402
-from run_daily_totals import Cells, add_keys, rows_table, scales, settings_from  # noqa: E402
+from run_daily_totals import Cells, add_keys, nm_clock, rows_table, scales, settings_from  # noqa: E402
 from screen_daily_totals import BANDS, published  # noqa: E402
 
 DECLARATION = "configs/daily_totals_v1.json"
@@ -64,6 +64,7 @@ def ranking_table() -> pd.DataFrame:
     t["a"] = (takeoff - schedule).dt.total_seconds().to_numpy()
     t["bday"] = (takeoff - pd.to_timedelta(t["stack"], unit="s")).dt.strftime("%Y-%m-%d").to_numpy()
     t["cls"] = np.where(detail["scope"].eq("fixed").to_numpy(), "LIRF_pop", np.where(t["matched"], t["airport"] + "_m", t["airport"] + "_u"))
+    t["nm_clock"] = nm_clock(ids, [ROOT / RANKING])
     t["band"] = pd.cut(t["a"] / 3600, BANDS).astype(str)
     t = t.join(published(), on=["airport", "bday"])
     t["complete"] = (t["pub"].notna() & (t.groupby(["airport", "bday"])["a"].transform("size") >= 0.9 * t["n_pub"])).to_numpy()
@@ -82,7 +83,8 @@ def reconcile(t: pd.DataFrame, settings, tau_scale: float) -> tuple[np.ndarray, 
     for (airport, bday), day in use.groupby(["airport", "bday"], sort=True):
         positions = day.index.to_numpy()
         day = day.reset_index(drop=True)
-        p = prepare_day(day["a"].to_numpy(dtype=float), day["stack"].to_numpy(dtype=float), cells.resolve(day), settings)
+        p = prepare_day(day["a"].to_numpy(dtype=float), day["stack"].to_numpy(dtype=float), cells.resolve(day), settings,
+                        keep=day["nm_clock"].to_numpy(dtype=bool) if settings.heavy_keep_clock else None)
         values, info = solve_day(p, float(day["pub"].iat[0]), noise[airport], wide[airport], 0.0, tau_scale * tau[airport], settings)
         new[positions] = np.maximum(values, FLOOR)
         heavy[positions] = p.is_heavy

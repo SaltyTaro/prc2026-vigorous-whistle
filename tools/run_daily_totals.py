@@ -112,6 +112,16 @@ def table(rows: str) -> pd.DataFrame:
     return rows12_table() if rows == "twelve" else rows_table()
 
 
+def nm_clock(ids: np.ndarray, files: list) -> np.ndarray:
+    """True where the departure holds an NM off-block clock (AOBT_3_flt or LOBT_flt), from the supplied files."""
+    raw = pd.concat([pd.read_parquet(p, columns=[ID, "PHASE_mvt", "AOBT_3_flt", "LOBT_flt"]) for p in files], ignore_index=True)
+    raw = raw[raw["PHASE_mvt"].eq("DEP")].drop_duplicates(ID).set_index(ID)
+    found = (raw["AOBT_3_flt"].notna() | raw["LOBT_flt"].notna()).reindex(ids)
+    if found.isna().any():
+        raise ValueError("A row is missing from the supplied files.")
+    return found.to_numpy(dtype=bool)
+
+
 def add_keys(t: pd.DataFrame) -> pd.DataFrame:
     t = t.copy()
     t["group"] = np.where(t["cls"].eq("LIRF_pop"), "LIRF_pop", np.where(t["airport"].eq("LIRF"), "LIRF", "other") + np.where(t["matched"], "_m", "_u"))
@@ -232,6 +242,8 @@ def run_month(month: str, tag: str, tau_scale: float, settings: Settings, rows: 
     fit, use = t[t["month"].ne(month) & ~t["extra"]], t[t["month"].eq(month) & t["complete"]]
     if airports:  # the fitting side is unchanged; only these airports' days are read
         use = use[use["airport"].isin(airports)]
+    if settings.heavy_keep_clock:
+        use = use.assign(nm_clock=nm_clock(use[ID].to_numpy(), sorted((ROOT / "data/raw").glob(f"training_{month}-*.parquet"))))
     cells = Cells(fit)
     noise, wide, tau = scales(fit)
     if components not in ("one", "tracked") or (components == "tracked" and prior != "fixed"):
@@ -249,6 +261,8 @@ def run_month(month: str, tag: str, tau_scale: float, settings: Settings, rows: 
         for bday, day in month_rows.groupby("bday", sort=True):
             day = day.reset_index(drop=True)
             split = {"component": (~day["matched"].to_numpy(dtype=bool)).astype(np.int64), "components": 2} if components == "tracked" else {}
+            if settings.heavy_keep_clock:
+                split["keep"] = day["nm_clock"].to_numpy(dtype=bool)
             days.append((bday, day[ID].to_numpy(), float(day["pub"].iat[0]), prepare_day(day["a"].to_numpy(dtype=float), day["stack"].to_numpy(dtype=float), cells.resolve(day), settings, **split)))
         if placebo is not None:  # each day reads another day's discrepancy (total minus the total its predictions imply)
             order = np.random.default_rng(placebo).permutation(len(days))
@@ -293,7 +307,7 @@ def settings_from(declaration: dict, candidate: str | None = None) -> tuple[Sett
         raise ValueError("The declaration's constants differ from the code's.")
     return (Settings(heavy_sd_s=float(spec["heavy_sd_s"]), max_heavy=int(spec["max_heavy"]), heavy_updates=bool(spec["heavy_updates"]), tilt_sd_s=float(spec["tilt_sd_s"]),
                      noise_wide_sd_s=tuple(float(v) for v in spec["noise_wide_sd_s"]), heavy_temper=float(spec.get("heavy_temper", 1.0)), heavy_prior=str(spec.get("heavy_prior", "tilt")),
-                     pin_s=float(spec.get("pin_s", 0.0))), float(spec["tau_scale"]), str(spec["prior"]))
+                     pin_s=float(spec.get("pin_s", 0.0)), heavy_keep_clock=bool(spec.get("heavy_keep_clock", False))), float(spec["tau_scale"]), str(spec["prior"]))
 
 
 def _month(args: tuple) -> None:
@@ -430,6 +444,7 @@ def main() -> None:
     parser.add_argument("--heavy-tilt", action="store_true")
     parser.add_argument("--heavy-prior", choices=["tilt", "groups", "bounded"], default="tilt")
     parser.add_argument("--pin", type=float, default=0.0)
+    parser.add_argument("--keep-clock", action="store_true", help="heavy rows that hold an NM clock keep their prediction")
     parser.add_argument("--placebo", type=int, help="exploration: the airport's published totals permuted over the month's days, this seed")
     parser.add_argument("--score-clip", type=float, default=3.0)
     parser.add_argument("--report", action="store_true")
@@ -448,7 +463,7 @@ def main() -> None:
         report(args.tag, args.rows, args.control)
     else:
         run_month(args.month, args.tag, args.tau_scale, Settings(heavy_sd_s=args.heavy, heavy_updates=not args.no_heavy_updates, heavy_temper=args.heavy_temper, heavy_tilt=args.heavy_tilt,
-                                                                 score_clip=args.score_clip, heavy_prior=args.heavy_prior, pin_s=args.pin), args.rows, args.prior, args.components, args.centres, args.airports, args.placebo)
+                                                                 score_clip=args.score_clip, heavy_prior=args.heavy_prior, pin_s=args.pin, heavy_keep_clock=args.keep_clock), args.rows, args.prior, args.components, args.centres, args.airports, args.placebo)
 
 
 if __name__ == "__main__":

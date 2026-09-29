@@ -160,3 +160,14 @@ def test_tempered_heavy_rows_move_between_their_delay_outcomes_and_the_schedule_
     groups[-1] = (groups[-1][0], (h_a, h_yhat, h_y))
     new, info = reconcile_day(a, above, groups, float(np.maximum(a - y, 0).sum()), 60.0, 0.02, 20.0, bounded)
     assert info["heavy"] == 1 and new[-1] == pytest.approx(above[-1], abs=1e-6)
+
+
+def test_a_heavy_row_with_an_nm_clock_keeps_its_prediction():
+    settings = Settings(heavy_temper=0.25, heavy_prior="bounded", pin_s=120.0, heavy_keep_clock=True)
+    a, yhat, y, groups, total = day(0.0, 32000.0)
+    keep = np.zeros(len(a), dtype=bool)
+    moved, _ = solve_day(prepare_day(a, yhat, groups, settings, keep=keep), total, 60.0, 0.02, 0.0, 20.0, settings)
+    keep[-1] = True
+    kept, info = solve_day(prepare_day(a, yhat, groups, settings, keep=keep), total, 60.0, 0.02, 0.0, 20.0, settings)
+    assert info["heavy"] == 1 and moved[-1] != yhat[-1] and kept[-1] == yhat[-1]
+    assert np.array_equal(kept[:-1], moved[:-1])                                  # the other rows of the day are not affected
