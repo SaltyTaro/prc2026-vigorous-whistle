@@ -47,14 +47,8 @@ def test_reset_edits_only_later_eobt1_departures_of_flagged_airport_months():
     assert stack.same_content(frame, frame.copy()) and not stack.same_content(frame, edited)
 
 
-def test_stack_arithmetic_on_the_routes(tmp_path, monkeypatch):
-    """Hand-computed v31 -> v35, v36, v37 and v38 on: LTFM, matched EDDF (+ repair effect), unmatched EDDF above the u300 gate, LIRF unmatched /
-    matched / fill population, an EHAM callsign-fix row, an EHAM regular queue-shaped match, an EGLL row whose nets exceed the committee
-    by 800 s (mu600), an EGLL no-clock row in a congested hour (peer lift) and an untracked / a tracked LSZH row above 1,500 s (stretch)."""
-    import export_stack
-    for module in (stack, export_stack):
-        monkeypatch.setattr(module, "offsets", lambda: {"EDDF": 0.0, "EHAM": 10.0})
-        monkeypatch.setattr(module, "offsets_all", lambda: {"EHAM": 5.0})
+def stack_inputs(tmp_path, edit=None):
+    """The twelve-route fixture of test_stack_arithmetic_on_the_routes; `edit(detail)` may change rows before v30 is derived by the caller."""
     ids = np.arange(1.0, 13.0)
     committee = np.array([1100.0, 700.0, 900.0, 1.0, 1.0, 1.0, 820.0, 1000.0, 400.0, 900.0, 2000.0, 3000.0])
     nets = np.array([1100.0, 700.0, 900.0, 1.0, 1.0, 1.0, 820.0, 1000.0, 1200.0, 900.0, 2000.0, 3000.0])
@@ -79,6 +73,18 @@ def test_stack_arithmetic_on_the_routes(tmp_path, monkeypatch):
     peer = pd.DataFrame({"MVT_ID_mvt": ids, "no_clock": [False, False, False, True, False, False, False, False, False, True, False, False],
                          "peer_c": [500.0, 900.0, 650.0, 900.0, 0.0, 0.0, 0.0, 0.0, 0.0, 700.0, 0.0, 0.0], "peer_n": [9, 9, 5, 10, 0, 0, 0, 0, 0, 6, 0, 0]})
     fill = pd.DataFrame({"MVT_ID_mvt": [6.0], "pin_s": [50000.0], "scope": ["population"], "interval_s": [50000.0], "proxy_s": [np.nan]})
+    return ids, detail, repaired, path, regular, peer, fill
+
+
+def test_stack_arithmetic_on_the_routes(tmp_path, monkeypatch):
+    """Hand-computed v31 -> v35, v36, v37 and v38 on: LTFM, matched EDDF (+ repair effect), unmatched EDDF above the u300 gate, LIRF unmatched /
+    matched / fill population, an EHAM callsign-fix row, an EHAM regular queue-shaped match, an EGLL row whose nets exceed the committee
+    by 800 s (mu600), an EGLL no-clock row in a congested hour (peer lift) and an untracked / a tracked LSZH row above 1,500 s (stretch)."""
+    import export_stack
+    for module in (stack, export_stack):
+        monkeypatch.setattr(module, "offsets", lambda: {"EDDF": 0.0, "EHAM": 10.0})
+        monkeypatch.setattr(module, "offsets_all", lambda: {"EHAM": 5.0})
+    ids, detail, repaired, path, regular, peer, fill = stack_inputs(tmp_path)
     frame, record = stack.compute(detail, repaired, path, regular, peer, fill)
     v35 = [1100.0,                                   # LTFM: outer weight 1.0
            0.4 * 620 + 0.6 * 700 + 0.5 * 100,        # matched EDDF: outer 0.6, plus half the repair effect
@@ -130,6 +136,14 @@ def test_stack_arithmetic_on_the_routes(tmp_path, monkeypatch):
     assert np.allclose(frame["v45"].to_numpy(), v45, rtol=0, atol=1e-9) and frame["v45_lirf_gate"].tolist() == [False] * 3 + [True] + [False] * 8
     assert record["rows"]["v45"] == {"fill_pin": 1, "lirf_gate": 1, "floored": 0} and record["layer_sets"]["v45"]["base"] == "v40"
     assert record["layer_sets"]["v45"]["spec"]["unmatched"]["T"] == 600 and record["shipped_as"]["v45"]["lirf_gate"] == "u600_m600"
+    # v46 (configs/thinned_regime_round_v1.json n85_nd1200): only the EGLL row whose networks differ from the committee moves with the share
+    # (mix 0.15 x 400 + 0.85 x 1200 = 1,080 against 1,000; outer weight 0.7 on base 1,000); no row has its committee 1,200 s above the networks
+    v46 = list(v45)
+    v46[8] = 0.3 * 1000 + 0.7 * (0.15 * 400 + 0.85 * 1200)
+    assert np.allclose(frame["v46"].to_numpy(), v46, rtol=0, atol=1e-9) and frame["v46_share"].tolist() == [False] * 8 + [True] + [False] * 3
+    assert not frame["v46_share_gate"].any() and record["rows"]["v46"] == {"fill_pin": 1, "lirf_gate": 1, "share": 1, "share_gate": 0, "floored": 0}
+    assert record["layer_sets"]["v46"]["base"] == "v45" and record["layer_sets"]["v46"]["network_share"] == 0.85
+    assert record["layer_sets"]["v46"]["gate"] == {"threshold_s": 1200, "share_inside": 0.5} and record["shipped_as"]["v46"]["share_gate"] == "n85_nd1200"
     assert "v35_peer_noclock" not in frame.columns and "v36_stretch_tracked" not in frame.columns
     assert export_stack.scope_table is not None and export_stack.ranking_peers.__module__ == "peer_congestion"  # readers restored
 
@@ -147,3 +161,28 @@ def test_rematch_scope_is_the_declared_no_nm_eddf_eham_departures():
     frame["FLIGHT_ID_mvt"] = [np.nan, np.nan, 5.0, np.nan]
     frame["MVT_ID_mvt"] = [1.0, 2.0, 3.0, 4.0]
     assert stack.rematch_departures(frame)["MVT_ID_mvt"].tolist() == [1.0, 2.0]
+
+
+def test_v46_gate_row_takes_the_half_share_through_the_whole_stack(tmp_path, monkeypatch):
+    """An unmatched EGLL row whose committee (3,000 s) sits 1,500 s above the networks: the control mix is 1,875 s, the gated mix 2,250 s; both
+    pass the u300 gate (the mix itself) and the upper stretch, so v46 = 2,250 + k x 750 against v45 = 1,875 + k x 375."""
+    import export_stack
+    from prc2026.artifacts import read_json
+    for module in (stack, export_stack):
+        monkeypatch.setattr(module, "offsets", lambda: {"EDDF": 0.0, "EHAM": 10.0})
+        monkeypatch.setattr(module, "offsets_all", lambda: {"EHAM": 5.0})
+    ids, detail, repaired, path, regular, peer, fill = stack_inputs(tmp_path)
+    row = 9
+    effect = repaired - detail["v30"].to_numpy()
+    detail.loc[row, "committee"] = 3000.0
+    detail.loc[row, ["ens_ctx_e24", "ens_ctx_e24b", "ens_ctx_e32"]] = 1500.0
+    detail.loc[row, "committee_mix"] = 0.25 * 3000 + 0.75 * 1500
+    detail.loc[row, "v30"] = 0.3 * 900 + 0.7 * 1875
+    frame, record = stack.compute(detail, detail["v30"].to_numpy() + effect, path, regular, peer, fill)
+    k = read_json(ROOT / "docs/disagreement/tail_stretch_v2_results.json")["candidates"]["two_sided_900"]["k_all_months"]["untracked"][0]
+    assert frame.loc[row, "v38"] == pytest.approx(1875 + k * 375) and frame.loc[row, "v45"] == pytest.approx(1875 + k * 375)
+    assert frame.loc[row, "v46"] == pytest.approx(2250 + k * 750)
+    assert frame["v46_share_gate"].tolist() == [False] * 9 + [True, False, False] and frame["v46_share"].tolist() == [False] * 8 + [True, True, False, False]
+    assert record["rows"]["v46"]["share_gate"] == 1 and record["rows"]["v46"]["share"] == 2
+    lirf = detail["airport"].eq("LIRF").to_numpy()
+    assert np.array_equal(frame.loc[lirf, "v46"].to_numpy(), frame.loc[lirf, "v45"].to_numpy())

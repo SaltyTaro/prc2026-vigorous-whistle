@@ -63,9 +63,11 @@ The runner stopped at v30. The four stages after `recipe` take it to the v35 inc
 not-uploaded v36, v37 and v38, in shipping order, each through the frozen code that built the layer. Module:
 `src/prc2026_final/stack.py`.
 
-**`--layers v35|v36|v37|v38|v39|v40|v41|v45`** picks the final file's layer set. The default is **v45** (29 September: v40 plus the LIRF
-disagreement gate of `configs/lirf_gate_v1.json`, officially 224.2398, the clean model line's best; `docs/lirf_gate/README.md`; mask
-`v45_lirf_gate`). Before that the default was **v40**, the official best from its upload
+**`--layers v35|v36|v37|v38|v39|v40|v41|v45|v46`** picks the final file's layer set. The default is **v46** (29 September: v45 with the
+committee mix of `configs/thinned_regime_round_v1.json` `n85_nd1200`, officially 223.9339, the clean model line's best;
+`docs/thinned_regime/README.md`; masks `v46_share`, `v46_share_gate`). Before that the default was **v45** (v40 plus the LIRF
+disagreement gate of `configs/lirf_gate_v1.json`, officially 224.2398; `docs/lirf_gate/README.md`; mask
+`v45_lirf_gate`), and before that **v40**, the official best from its upload
 (224.4588 on 28 September; v38 226.8053, v39 226.8802, v35 226.8989). **v39** (`docs/fill_pin/README.md`) is v38 with every fill pin:
 the file's own LIRF departures with a schedule interval above 43,200 s that are the v9 population (no NM record, no aircraft type) or
 carry a one-day-early NM clock take their schedule interval (`stack/fill_pins.parquet` lists them). **v40** is v38 with
@@ -253,4 +255,13 @@ Additionally needed beyond this runner:
      (26 January, 74 July; `docs/lirf_gate/export_v45.json`); mask `v45_lirf_gate`. `--layers v45` (the default since 29 September).
      Dry run (29 September, stack 7.7 s, final 0.4 s, `--layers v45 --version 945`): [`dryrun_v45_compare.json`](dryrun_v45_compare.json),
      1,182 integers differ from the uploaded v45 by at most 7 s (the chain's float noise), the 100 gated rows match.
-     **Scored 224.2398 on 29 September (−0.219 s vs v40): the clean model line's best.**
+     **Scored 224.2398 on 29 September (−0.219 s vs v40).**
+   - **v46** = v45 with the committee mix of `configs/thinned_regime_round_v1.json` `n85_nd1200` (`src/prc2026_final/share_gate.py`):
+     network share 0.85 instead of 0.75, and 0.5 on rows whose committee sits more than 1,200 s above the networks. v34's recipe and
+     v38's layers (u300 gate, callsign fix, queue trust, two-sided stretch) are recomputed on that mix through `export_stack.layers`;
+     every row whose value changes takes the recomputed value, LIRF rows keep v45. On the ranking file: 263,907 integers change, 55 gate
+     rows (40 January, 15 July; `docs/thinned_regime/export_v46.json`); masks `v46_share`, `v46_share_gate`. The declared rule selected
+     nothing; the layer is the user's override. `--layers v46` (the default since 29 September).
+     Dry run (29 September, stack 8.9 s, final 0.4 s, `--layers v46 --version 946`): [`dryrun_v46_compare.json`](dryrun_v46_compare.json),
+     1,196 integers differ from the uploaded v46 by at most 7 s (the chain's float noise), the 55 gate rows match.
+     **Scored 223.9339 on 29 September (−0.306 s vs v45): the clean model line's best.**

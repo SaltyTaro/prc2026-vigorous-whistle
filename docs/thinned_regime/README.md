@@ -1,4 +1,4 @@
-# Network share on the ranking-regime sets (`configs/thinned_regime_round_v1.json`, 29 September 2026): nothing selected; v46 built on the user's override
+# Network share on the ranking-regime sets (`configs/thinned_regime_round_v1.json`, 29 September 2026): nothing selected; v46 (the user's override) officially 223.9339
 
 Model work on the clean line (v45 = 224.2398). No official score enters this round.
 
@@ -60,7 +60,7 @@ The share question is closed on four readings. `n85_nd1200` is the only candidat
 override of the declared rule and is the user's decision. At full transfer its development mean is worth about 0.3 s on the ranking;
 the precedents for rule overrides are mixed (v26 gained, v32 lost, v38 gained a tenth of its development reading).
 
-## v46 (built 29 September on the user's override; NOT uploaded)
+## v46 (built 29 September on the user's override)
 
 The user's decision ("ok build it") overrides the declared rule for `n85_nd1200`: network share 0.85, and share 0.5 where the committee
 sits more than 1,200 s above the networks.
@@ -95,3 +95,18 @@ byte-identical to the dry run.
 **Expectation, with its assumptions:** against v45's 224.2398, a move of this size is worth −0.16 s at alignment 1, −0.32 s at 1.5
 (January and July read 1.5–1.9 in development, December 0.9), and costs +0.16 s if it is noise. No official score enters the file. Upload is the user's
 decision; the final-file runner gets a `v46` layer set only if the layer ships and gains.
+
+## v46 official: 223.9339 (06:37 UTC, 29 September) — −0.3059 s against v45; the clean line's best
+
+Uploaded at the user's word ("upload it") at 06:36 UTC, processed 06:37:01 UTC, 344,841 rows
+([`official_result_v46.json`](official_result_v46.json)). Against v45 (224.2398) the squared error falls by 4.73e7 for a sum of squared
+moves of 2.51e7: the move's alignment on the ranking is 1.44, inside the range the development months read for January and July
+(1.5–1.9) and above December's (0.9). This is recorded as an outcome only; no score enters any weight.
+
+- v46 is the best file of the clean model
+  line: v45 224.2398, v40 224.4588, v38 226.8053.
+- Never re-upload v1–v46.
+- The final-file runner has the `v46` layer set and defaults to it (`src/prc2026_final/stack.py`, `share_gate.py`). Rebuilt on the
+  dry-run root it reproduces the uploaded v46 within the chain's float noise: 1,196 integers differ by at most 7 s, the 55 gate rows
+  are the same, and every earlier layer's column is unchanged ([`../final_file/dryrun_v46_compare.json`](../final_file/dryrun_v46_compare.json)).
+- The declared rule selected nothing, and the override gained. One outcome does not change the rule: v32 was an override that lost.

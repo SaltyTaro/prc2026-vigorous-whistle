@@ -1,0 +1,26 @@
+{
+ "created_at_utc": "2026-09-29T06:41:17.725123+00:00",
+ "root": "runs/final_dryrun/run",
+ "command": "tools/final_predict.py run --root runs/final_dryrun/run --stages stack final --layers v46 --version 946 --threads 12 (stack receipt and detail preserved under superseded_b0551d7, receipt removed first; stack 8.9 s, final 0.4 s)",
+ "runner_v946_vs_uploaded_v46": {
+  "rows_differing": 1196,
+  "max_abs_diff_s": 7.0,
+  "rows_abs_diff_over_1s": 23,
+  "reading": "float noise of the rebuilt v30 chain, as every earlier dry run (v45: 1,182 rows, max 7 s)"
+ },
+ "stack_v46_share_rows": {
+  "total": 317931,
+  "2026-01": 141654,
+  "2026-07": 176277
+ },
+ "stack_v46_share_gate_rows": {
+  "total": 55,
+  "2026-01": 40,
+  "2026-07": 15
+ },
+ "uploaded_v46_rows_differing_from_v45": 263907,
+ "uploaded_moved_rows_outside_stack_share_mask": 0,
+ "earlier_layer_columns_unchanged_by_the_rebuild": true,
+ "columns_checked": 42,
+ "tests": "29 passed (tests/test_final_stack.py, tests/test_final_runner.py, tests/test_share_gate.py, tests/test_lirf_gate.py, tests/test_fill_pin.py)"
+}
