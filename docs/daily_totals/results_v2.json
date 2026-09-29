@@ -1,0 +1,1225 @@
+{
+  "accepted": false,
+  "audit_used": false,
+  "candidates": {
+    "temper_10": {
+      "airport_month_cells": {
+        "better": 14,
+        "worse": 7
+      },
+      "airports": {
+        "EDDF": {
+          "2025-01": -0.0015682919380366478,
+          "2025-07": 0.0,
+          "2025-11": 0.0,
+          "2025-12": -0.00023303541957231388
+        },
+        "EDDM": {
+          "2025-01": 0.0,
+          "2025-07": 0.0,
+          "2025-11": 0.0,
+          "2025-12": 0.0
+        },
+        "EGLL": {
+          "2025-01": -0.00020718393980434513,
+          "2025-07": 0.011465896673801268,
+          "2025-11": 0.0,
+          "2025-12": -0.006057881250187691
+        },
+        "EHAM": {
+          "2025-01": -0.020027991306637016,
+          "2025-07": -0.04915628432541341,
+          "2025-11": 0.0,
+          "2025-12": 0.005409888338769875
+        },
+        "LEBL": {
+          "2025-01": 0.0,
+          "2025-07": 0.0,
+          "2025-11": 0.0,
+          "2025-12": 0.0
+        },
+        "LEMD": {
+          "2025-01": 0.0,
+          "2025-07": 0.0,
+          "2025-11": 0.0,
+          "2025-12": 0.0
+        },
+        "LFPG": {
+          "2025-01": -0.0009261541985883248,
+          "2025-07": -0.004754910097171106,
+          "2025-11": 0.01704712028931521,
+          "2025-12": 0.003924127118493104
+        },
+        "LIRF": {
+          "2025-01": -2.831920672345667,
+          "2025-07": -0.545531641016217,
+          "2025-11": -0.9626530137451295,
+          "2025-12": -1.413209169039198
+        },
+        "LSZH": {
+          "2025-01": 0.03082430447238771,
+          "2025-07": 0.0,
+          "2025-11": 0.0,
+          "2025-12": 0.0
+        },
+        "LTFM": {
+          "2025-01": 0.001725385980799743,
+          "2025-07": -0.007059414378973727,
+          "2025-11": -0.001243798494499071,
+          "2025-12": 0.03288368630105509
+        }
+      },
+      "control": "daily_totals_v1",
+      "created_at_utc": "2026-09-29T18:42:56.842313+00:00",
+      "intervals_below_zero": [
+        "2025-01"
+      ],
+      "mean_change_pct_equal_footing": -0.16817108067428052,
+      "months": {
+        "2025-01": {
+          "alignment": 4.145001737552081,
+          "change_pct": -0.16019725059379653,
+          "ordinary_rows_change_pct": -0.2073306741247949,
+          "paired_days": {
+            "days": 32,
+            "days_with_lower_squared_error": 16,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.4790443309331365,
+              -0.07925579045726182
+            ]
+          },
+          "rmse": 322.01130664046457,
+          "rows_changed_over_60s": 23,
+          "rows_over_1800s_error_sse_change_pct": -0.40924445552521505,
+          "stack_rmse": 322.5279876090097
+        },
+        "2025-07": {
+          "alignment": 3.7195781301363224,
+          "change_pct": -0.1293818749936282,
+          "ordinary_rows_change_pct": -0.0669393509451166,
+          "paired_days": {
+            "days": 32,
+            "days_with_lower_squared_error": 24,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.6850333307447002,
+              0.011392312530856366
+            ]
+          },
+          "rmse": 256.5565925664411,
+          "rows_changed_over_60s": 97,
+          "rows_over_1800s_error_sse_change_pct": -0.442359529356795,
+          "stack_rmse": 256.8889603199547
+        },
+        "2025-11": {
+          "alignment": 4.32196327984437,
+          "change_pct": -0.1939498138666118,
+          "ordinary_rows_change_pct": -0.03256907921329599,
+          "paired_days": {
+            "days": 31,
+            "days_with_lower_squared_error": 21,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.8360261008941805,
+              -0.07296593405822878
+            ]
+          },
+          "rmse": 183.9602711828706,
+          "rows_changed_over_60s": 17,
+          "rows_over_1800s_error_sse_change_pct": -1.021206358674176,
+          "stack_rmse": 184.31775512586032
+        },
+        "2025-12": {
+          "alignment": 3.3665035392211857,
+          "change_pct": -0.21493411643541682,
+          "ordinary_rows_change_pct": 0.03624254735918875,
+          "paired_days": {
+            "days": 32,
+            "days_with_lower_squared_error": 23,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.886122435294611,
+              0.04323429005630698
+            ]
+          },
+          "rmse": 166.47954635508523,
+          "rows_changed_over_60s": 23,
+          "rows_over_1800s_error_sse_change_pct": -1.5471096047579236,
+          "stack_rmse": 166.83813843380523
+        }
+      },
+      "passes": false,
+      "settings_per_month": {
+        "2025-01": {
+          "airports": null,
+          "centres": null,
+          "component_scales": {},
+          "components": "one",
+          "created_at_utc": "2026-09-29T18:39:33.385744+00:00",
+          "max_samples": 1500,
+          "min_cell": 150,
+          "month": "2025-01",
+          "noise_sd_s": {
+            "EDDF": 84.35994000003451,
+            "EDDM": 61.527899999999995,
+            "EGLL": 74.13,
+            "EHAM": 2412.6349799999825,
+            "LEBL": 102.29939999999999,
+            "LEMD": 80.0604,
+            "LFPG": 2425.5335999999998,
+            "LIRF": 68.19959999999999,
+            "LSZH": 352.5622799999827,
+            "LTFM": 85.9908
+          },
+          "noise_wide_share": {
+            "EDDF": 0.03260869565217391,
+            "EDDM": 0.021739130434782608,
+            "EGLL": 0.02,
+            "EHAM": 0.8586956521739131,
+            "LEBL": 0.13043478260869565,
+            "LEMD": 0.043478260869565216,
+            "LFPG": 0.6847826086956522,
+            "LIRF": 0.02,
+            "LSZH": 0.391304347826087,
+            "LTFM": 0.03296703296703297
+          },
+          "placebo": null,
+          "prior": "fixed",
+          "seconds": 53.27099061012268,
+          "settings": {
+            "heavy_prior": "bounded",
+            "heavy_sd_s": 900.0,
+            "heavy_temper": 0.1,
+            "heavy_tilt": false,
+            "heavy_updates": true,
+            "max_heavy": 64,
+            "noise_wide_sd_s": [
+              3600.0,
+              28800.0
+            ],
+            "pin_s": 120.0,
+            "score_clip": 3.0,
+            "score_halfwidth_bins": 10,
+            "shift_grid": 81,
+            "tilt_sd_s": 300.0
+          },
+          "shift_priors": {
+            "EDDF": {
+              "mean_s": 0.0,
+              "sd_s": 5.0
+            },
+            "EDDM": {
+              "mean_s": 0.0,
+              "sd_s": 10.303755465149811
+            },
+            "EGLL": {
+              "mean_s": 0.0,
+              "sd_s": 18.102426731334546
+            },
+            "EHAM": {
+              "mean_s": 0.0,
+              "sd_s": 5.0
+            },
+            "LEBL": {
+              "mean_s": 0.0,
+              "sd_s": 11.698514282852067
+            },
+            "LEMD": {
+              "mean_s": 0.0,
+              "sd_s": 8.99149007396373
+            },
+            "LFPG": {
+              "mean_s": 0.0,
+              "sd_s": 18.311358425481274
+            },
+            "LIRF": {
+              "mean_s": 0.0,
+              "sd_s": 20.354015153769538
+            },
+            "LSZH": {
+              "mean_s": 0.0,
+              "sd_s": 7.616641749955893
+            },
+            "LTFM": {
+              "mean_s": 0.0,
+              "sd_s": 22.306715419717037
+            }
+          },
+          "tau_s": {
+            "EDDF": 5.0,
+            "EDDM": 10.303755465149811,
+            "EGLL": 18.102426731334546,
+            "EHAM": 5.0,
+            "LEBL": 11.698514282852067,
+            "LEMD": 8.99149007396373,
+            "LFPG": 18.311358425481274,
+            "LIRF": 20.354015153769538,
+            "LSZH": 7.616641749955893,
+            "LTFM": 22.306715419717037
+          },
+          "tau_scale": 1.0,
+          "tau_within_s": {}
+        },
+        "2025-07": {
+          "airports": null,
+          "centres": null,
+          "component_scales": {},
+          "components": "one",
+          "created_at_utc": "2026-09-29T18:39:48.150934+00:00",
+          "max_samples": 1500,
+          "min_cell": 150,
+          "month": "2025-07",
+          "noise_sd_s": {
+            "EDDF": 75.61260000004314,
+            "EDDM": 54.856199999999994,
+            "EGLL": 71.9061,
+            "EHAM": 2265.2645400000342,
+            "LEBL": 70.42349999999999,
+            "LEMD": 77.8365,
+            "LFPG": 2253.5519999999997,
+            "LIRF": 57.8214,
+            "LSZH": 455.30645999998706,
+            "LTFM": 68.19959999999999
+          },
+          "noise_wide_share": {
+            "EDDF": 0.03260869565217391,
+            "EDDM": 0.02,
+            "EGLL": 0.02,
+            "EHAM": 0.717391304347826,
+            "LEBL": 0.06521739130434782,
+            "LEMD": 0.03260869565217391,
+            "LFPG": 0.6521739130434783,
+            "LIRF": 0.02,
+            "LSZH": 0.41304347826086957,
+            "LTFM": 0.03296703296703297
+          },
+          "placebo": null,
+          "prior": "fixed",
+          "seconds": 68.07582378387451,
+          "settings": {
+            "heavy_prior": "bounded",
+            "heavy_sd_s": 900.0,
+            "heavy_temper": 0.1,
+            "heavy_tilt": false,
+            "heavy_updates": true,
+            "max_heavy": 64,
+            "noise_wide_sd_s": [
+              3600.0,
+              28800.0
+            ],
+            "pin_s": 120.0,
+            "score_clip": 3.0,
+            "score_halfwidth_bins": 10,
+            "shift_grid": 81,
+            "tilt_sd_s": 300.0
+          },
+          "shift_priors": {
+            "EDDF": {
+              "mean_s": 0.0,
+              "sd_s": 6.677150998979051
+            },
+            "EDDM": {
+              "mean_s": 0.0,
+              "sd_s": 5.010315946542178
+            },
+            "EGLL": {
+              "mean_s": 0.0,
+              "sd_s": 19.718425827580806
+            },
+            "EHAM": {
+              "mean_s": 0.0,
+              "sd_s": 5.0
+            },
+            "LEBL": {
+              "mean_s": 0.0,
+              "sd_s": 10.098361554785807
+            },
+            "LEMD": {
+              "mean_s": 0.0,
+              "sd_s": 8.27054197613103
+            },
+            "LFPG": {
+              "mean_s": 0.0,
+              "sd_s": 19.867948324685273
+            },
+            "LIRF": {
+              "mean_s": 0.0,
+              "sd_s": 18.04395002457622
+            },
+            "LSZH": {
+              "mean_s": 0.0,
+              "sd_s": 8.071223914472181
+            },
+            "LTFM": {
+              "mean_s": 0.0,
+              "sd_s": 20.381810576036063
+            }
+          },
+          "tau_s": {
+            "EDDF": 6.677150998979051,
+            "EDDM": 5.010315946542178,
+            "EGLL": 19.718425827580806,
+            "EHAM": 5.0,
+            "LEBL": 10.098361554785807,
+            "LEMD": 8.27054197613103,
+            "LFPG": 19.867948324685273,
+            "LIRF": 18.04395002457622,
+            "LSZH": 8.071223914472181,
+            "LTFM": 20.381810576036063
+          },
+          "tau_scale": 1.0,
+          "tau_within_s": {}
+        },
+        "2025-11": {
+          "airports": null,
+          "centres": null,
+          "component_scales": {},
+          "components": "one",
+          "created_at_utc": "2026-09-29T18:40:34.987255+00:00",
+          "max_samples": 1500,
+          "min_cell": 150,
+          "month": "2025-11",
+          "noise_sd_s": {
+            "EDDF": 78.87431999975836,
+            "EDDM": 56.3388,
+            "EGLL": 78.5778,
+            "EHAM": 2349.0314400000343,
+            "LEBL": 72.64739999999999,
+            "LEMD": 72.64739999999999,
+            "LFPG": 2490.768,
+            "LIRF": 65.2344,
+            "LSZH": 600.7495200001035,
+            "LTFM": 78.5778
+          },
+          "noise_wide_share": {
+            "EDDF": 0.053763440860215055,
+            "EDDM": 0.03225806451612903,
+            "EGLL": 0.02,
+            "EHAM": 0.7419354838709677,
+            "LEBL": 0.12903225806451613,
+            "LEMD": 0.021505376344086023,
+            "LFPG": 0.7204301075268817,
+            "LIRF": 0.02,
+            "LSZH": 0.46236559139784944,
+            "LTFM": 0.02197802197802198
+          },
+          "placebo": null,
+          "prior": "fixed",
+          "seconds": 59.93374752998352,
+          "settings": {
+            "heavy_prior": "bounded",
+            "heavy_sd_s": 900.0,
+            "heavy_temper": 0.1,
+            "heavy_tilt": false,
+            "heavy_updates": true,
+            "max_heavy": 64,
+            "noise_wide_sd_s": [
+              3600.0,
+              28800.0
+            ],
+            "pin_s": 120.0,
+            "score_clip": 3.0,
+            "score_halfwidth_bins": 10,
+            "shift_grid": 81,
+            "tilt_sd_s": 300.0
+          },
+          "shift_priors": {
+            "EDDF": {
+              "mean_s": 0.0,
+              "sd_s": 6.672001270685933
+            },
+            "EDDM": {
+              "mean_s": 0.0,
+              "sd_s": 11.18490895801852
+            },
+            "EGLL": {
+              "mean_s": 0.0,
+              "sd_s": 16.724277148961303
+            },
+            "EHAM": {
+              "mean_s": 0.0,
+              "sd_s": 5.0
+            },
+            "LEBL": {
+              "mean_s": 0.0,
+              "sd_s": 11.979093864622252
+            },
+            "LEMD": {
+              "mean_s": 0.0,
+              "sd_s": 11.169873810650012
+            },
+            "LFPG": {
+              "mean_s": 0.0,
+              "sd_s": 17.588468890159362
+            },
+            "LIRF": {
+              "mean_s": 0.0,
+              "sd_s": 23.21545941606283
+            },
+            "LSZH": {
+              "mean_s": 0.0,
+              "sd_s": 5.287815560132488
+            },
+            "LTFM": {
+              "mean_s": 0.0,
+              "sd_s": 23.877227648774834
+            }
+          },
+          "tau_s": {
+            "EDDF": 6.672001270685933,
+            "EDDM": 11.18490895801852,
+            "EGLL": 16.724277148961303,
+            "EHAM": 5.0,
+            "LEBL": 11.979093864622252,
+            "LEMD": 11.169873810650012,
+            "LFPG": 17.588468890159362,
+            "LIRF": 23.21545941606283,
+            "LSZH": 5.287815560132488,
+            "LTFM": 23.877227648774834
+          },
+          "tau_scale": 1.0,
+          "tau_within_s": {}
+        },
+        "2025-12": {
+          "airports": null,
+          "centres": null,
+          "component_scales": {},
+          "components": "one",
+          "created_at_utc": "2026-09-29T18:40:48.107464+00:00",
+          "max_samples": 1500,
+          "min_cell": 150,
+          "month": "2025-12",
+          "noise_sd_s": {
+            "EDDF": 94.73813999994822,
+            "EDDM": 66.717,
+            "EGLL": 74.87129999999999,
+            "EHAM": 2316.562500000043,
+            "LEBL": 65.08614000000216,
+            "LEMD": 77.09519999999999,
+            "LFPG": 2719.8297,
+            "LIRF": 65.2344,
+            "LSZH": 867.1727400000776,
+            "LTFM": 80.0604
+          },
+          "noise_wide_share": {
+            "EDDF": 0.043478260869565216,
+            "EDDM": 0.03260869565217391,
+            "EGLL": 0.02,
+            "EHAM": 0.7717391304347826,
+            "LEBL": 0.13043478260869565,
+            "LEMD": 0.043478260869565216,
+            "LFPG": 0.7065217391304348,
+            "LIRF": 0.02,
+            "LSZH": 0.4891304347826087,
+            "LTFM": 0.02
+          },
+          "placebo": null,
+          "prior": "fixed",
+          "seconds": 58.281516790390015,
+          "settings": {
+            "heavy_prior": "bounded",
+            "heavy_sd_s": 900.0,
+            "heavy_temper": 0.1,
+            "heavy_tilt": false,
+            "heavy_updates": true,
+            "max_heavy": 64,
+            "noise_wide_sd_s": [
+              3600.0,
+              28800.0
+            ],
+            "pin_s": 120.0,
+            "score_clip": 3.0,
+            "score_halfwidth_bins": 10,
+            "shift_grid": 81,
+            "tilt_sd_s": 300.0
+          },
+          "shift_priors": {
+            "EDDF": {
+              "mean_s": 0.0,
+              "sd_s": 6.022316961381483
+            },
+            "EDDM": {
+              "mean_s": 0.0,
+              "sd_s": 10.789114974365265
+            },
+            "EGLL": {
+              "mean_s": 0.0,
+              "sd_s": 17.628122118782123
+            },
+            "EHAM": {
+              "mean_s": 0.0,
+              "sd_s": 5.0
+            },
+            "LEBL": {
+              "mean_s": 0.0,
+              "sd_s": 12.819736393512457
+            },
+            "LEMD": {
+              "mean_s": 0.0,
+              "sd_s": 10.941552246454245
+            },
+            "LFPG": {
+              "mean_s": 0.0,
+              "sd_s": 20.090601464295606
+            },
+            "LIRF": {
+              "mean_s": 0.0,
+              "sd_s": 23.070629981999126
+            },
+            "LSZH": {
+              "mean_s": 0.0,
+              "sd_s": 7.589616643780589
+            },
+            "LTFM": {
+              "mean_s": 0.0,
+              "sd_s": 20.042755192102355
+            }
+          },
+          "tau_s": {
+            "EDDF": 6.022316961381483,
+            "EDDM": 10.789114974365265,
+            "EGLL": 17.628122118782123,
+            "EHAM": 5.0,
+            "LEBL": 12.819736393512457,
+            "LEMD": 10.941552246454245,
+            "LFPG": 20.090601464295606,
+            "LIRF": 23.070629981999126,
+            "LSZH": 7.589616643780589,
+            "LTFM": 20.042755192102355
+          },
+          "tau_scale": 1.0,
+          "tau_within_s": {}
+        }
+      },
+      "tag": "daily_totals_v2_temper_10"
+    },
+    "temper_25": {
+      "airport_month_cells": {
+        "better": 14,
+        "worse": 7
+      },
+      "airports": {
+        "EDDF": {
+          "2025-01": -0.0011095898605262278,
+          "2025-07": 0.0,
+          "2025-11": 0.0,
+          "2025-12": -0.00025697326909712714
+        },
+        "EDDM": {
+          "2025-01": 0.0,
+          "2025-07": 0.0,
+          "2025-11": 0.0,
+          "2025-12": 0.0
+        },
+        "EGLL": {
+          "2025-01": -0.0004845616564996824,
+          "2025-07": 0.029813914121001872,
+          "2025-11": 0.0,
+          "2025-12": -0.014269314876302897
+        },
+        "EHAM": {
+          "2025-01": -0.04863443125524558,
+          "2025-07": -0.12330897248552519,
+          "2025-11": 0.0,
+          "2025-12": 0.013519460161570684
+        },
+        "LEBL": {
+          "2025-01": 0.0,
+          "2025-07": 0.0,
+          "2025-11": 0.0,
+          "2025-12": 0.0
+        },
+        "LEMD": {
+          "2025-01": 0.0,
+          "2025-07": 0.0,
+          "2025-11": 0.0,
+          "2025-12": 0.0
+        },
+        "LFPG": {
+          "2025-01": -0.002253826351317212,
+          "2025-07": -0.011915630575276559,
+          "2025-11": 0.04295577929218641,
+          "2025-12": 0.010301979585713994
+        },
+        "LIRF": {
+          "2025-01": -5.319179043574607,
+          "2025-07": -1.0971751966539767,
+          "2025-11": -1.740030301617368,
+          "2025-12": -2.498982567205632
+        },
+        "LSZH": {
+          "2025-01": 0.08709139618101602,
+          "2025-07": 0.0,
+          "2025-11": 0.0,
+          "2025-12": 0.0
+        },
+        "LTFM": {
+          "2025-01": 0.004138078238602461,
+          "2025-07": -0.017665779869868725,
+          "2025-11": -0.0034541131530785307,
+          "2025-12": 0.08275359438407737
+        }
+      },
+      "control": "daily_totals_v1",
+      "created_at_utc": "2026-09-29T18:42:57.365684+00:00",
+      "intervals_below_zero": [
+        "2025-01"
+      ],
+      "mean_change_pct_equal_footing": -0.3132587588632256,
+      "months": {
+        "2025-01": {
+          "alignment": 2.424344057773163,
+          "change_pct": -0.3011568487508831,
+          "ordinary_rows_change_pct": -0.49994932776444845,
+          "paired_days": {
+            "days": 32,
+            "days_with_lower_squared_error": 16,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -2.692276331870154,
+              -0.17034022578640853
+            ]
+          },
+          "rmse": 321.55667248518677,
+          "rows_changed_over_60s": 34,
+          "rows_over_1800s_error_sse_change_pct": -0.7771476742408079,
+          "stack_rmse": 322.5279876090097
+        },
+        "2025-07": {
+          "alignment": 1.827098878542547,
+          "change_pct": -0.26056546396910907,
+          "ordinary_rows_change_pct": -0.17031294490296167,
+          "paired_days": {
+            "days": 32,
+            "days_with_lower_squared_error": 23,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.4940213201409094,
+              0.13879842115910998
+            ]
+          },
+          "rmse": 256.2195964086116,
+          "rows_changed_over_60s": 170,
+          "rows_over_1800s_error_sse_change_pct": -1.0173355858778321,
+          "stack_rmse": 256.8889603199547
+        },
+        "2025-11": {
+          "alignment": 2.226716633960062,
+          "change_pct": -0.34977163791609645,
+          "ordinary_rows_change_pct": -0.06910536900609499,
+          "paired_days": {
+            "days": 31,
+            "days_with_lower_squared_error": 21,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.4415587612188012,
+              -0.15494213478924376
+            ]
+          },
+          "rmse": 183.67306389478642,
+          "rows_changed_over_60s": 29,
+          "rows_over_1800s_error_sse_change_pct": -1.83247546350791,
+          "stack_rmse": 184.31775512586032
+        },
+        "2025-12": {
+          "alignment": 1.8722866574027068,
+          "change_pct": -0.3780539638696845,
+          "ordinary_rows_change_pct": 0.08504811890570618,
+          "paired_days": {
+            "days": 32,
+            "days_with_lower_squared_error": 23,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.4821966978251744,
+              0.09708136452937131
+            ]
+          },
+          "rmse": 166.20740023820983,
+          "rows_changed_over_60s": 49,
+          "rows_over_1800s_error_sse_change_pct": -2.724376754411584,
+          "stack_rmse": 166.83813843380523
+        }
+      },
+      "passes": false,
+      "settings_per_month": {
+        "2025-01": {
+          "airports": null,
+          "centres": null,
+          "component_scales": {},
+          "components": "one",
+          "created_at_utc": "2026-09-29T18:41:31.954147+00:00",
+          "max_samples": 1500,
+          "min_cell": 150,
+          "month": "2025-01",
+          "noise_sd_s": {
+            "EDDF": 84.35994000003451,
+            "EDDM": 61.527899999999995,
+            "EGLL": 74.13,
+            "EHAM": 2412.6349799999825,
+            "LEBL": 102.29939999999999,
+            "LEMD": 80.0604,
+            "LFPG": 2425.5335999999998,
+            "LIRF": 68.19959999999999,
+            "LSZH": 352.5622799999827,
+            "LTFM": 85.9908
+          },
+          "noise_wide_share": {
+            "EDDF": 0.03260869565217391,
+            "EDDM": 0.021739130434782608,
+            "EGLL": 0.02,
+            "EHAM": 0.8586956521739131,
+            "LEBL": 0.13043478260869565,
+            "LEMD": 0.043478260869565216,
+            "LFPG": 0.6847826086956522,
+            "LIRF": 0.02,
+            "LSZH": 0.391304347826087,
+            "LTFM": 0.03296703296703297
+          },
+          "placebo": null,
+          "prior": "fixed",
+          "seconds": 55.29772186279297,
+          "settings": {
+            "heavy_prior": "bounded",
+            "heavy_sd_s": 900.0,
+            "heavy_temper": 0.25,
+            "heavy_tilt": false,
+            "heavy_updates": true,
+            "max_heavy": 64,
+            "noise_wide_sd_s": [
+              3600.0,
+              28800.0
+            ],
+            "pin_s": 120.0,
+            "score_clip": 3.0,
+            "score_halfwidth_bins": 10,
+            "shift_grid": 81,
+            "tilt_sd_s": 300.0
+          },
+          "shift_priors": {
+            "EDDF": {
+              "mean_s": 0.0,
+              "sd_s": 5.0
+            },
+            "EDDM": {
+              "mean_s": 0.0,
+              "sd_s": 10.303755465149811
+            },
+            "EGLL": {
+              "mean_s": 0.0,
+              "sd_s": 18.102426731334546
+            },
+            "EHAM": {
+              "mean_s": 0.0,
+              "sd_s": 5.0
+            },
+            "LEBL": {
+              "mean_s": 0.0,
+              "sd_s": 11.698514282852067
+            },
+            "LEMD": {
+              "mean_s": 0.0,
+              "sd_s": 8.99149007396373
+            },
+            "LFPG": {
+              "mean_s": 0.0,
+              "sd_s": 18.311358425481274
+            },
+            "LIRF": {
+              "mean_s": 0.0,
+              "sd_s": 20.354015153769538
+            },
+            "LSZH": {
+              "mean_s": 0.0,
+              "sd_s": 7.616641749955893
+            },
+            "LTFM": {
+              "mean_s": 0.0,
+              "sd_s": 22.306715419717037
+            }
+          },
+          "tau_s": {
+            "EDDF": 5.0,
+            "EDDM": 10.303755465149811,
+            "EGLL": 18.102426731334546,
+            "EHAM": 5.0,
+            "LEBL": 11.698514282852067,
+            "LEMD": 8.99149007396373,
+            "LFPG": 18.311358425481274,
+            "LIRF": 20.354015153769538,
+            "LSZH": 7.616641749955893,
+            "LTFM": 22.306715419717037
+          },
+          "tau_scale": 1.0,
+          "tau_within_s": {}
+        },
+        "2025-07": {
+          "airports": null,
+          "centres": null,
+          "component_scales": {},
+          "components": "one",
+          "created_at_utc": "2026-09-29T18:41:56.752835+00:00",
+          "max_samples": 1500,
+          "min_cell": 150,
+          "month": "2025-07",
+          "noise_sd_s": {
+            "EDDF": 75.61260000004314,
+            "EDDM": 54.856199999999994,
+            "EGLL": 71.9061,
+            "EHAM": 2265.2645400000342,
+            "LEBL": 70.42349999999999,
+            "LEMD": 77.8365,
+            "LFPG": 2253.5519999999997,
+            "LIRF": 57.8214,
+            "LSZH": 455.30645999998706,
+            "LTFM": 68.19959999999999
+          },
+          "noise_wide_share": {
+            "EDDF": 0.03260869565217391,
+            "EDDM": 0.02,
+            "EGLL": 0.02,
+            "EHAM": 0.717391304347826,
+            "LEBL": 0.06521739130434782,
+            "LEMD": 0.03260869565217391,
+            "LFPG": 0.6521739130434783,
+            "LIRF": 0.02,
+            "LSZH": 0.41304347826086957,
+            "LTFM": 0.03296703296703297
+          },
+          "placebo": null,
+          "prior": "fixed",
+          "seconds": 67.00734877586365,
+          "settings": {
+            "heavy_prior": "bounded",
+            "heavy_sd_s": 900.0,
+            "heavy_temper": 0.25,
+            "heavy_tilt": false,
+            "heavy_updates": true,
+            "max_heavy": 64,
+            "noise_wide_sd_s": [
+              3600.0,
+              28800.0
+            ],
+            "pin_s": 120.0,
+            "score_clip": 3.0,
+            "score_halfwidth_bins": 10,
+            "shift_grid": 81,
+            "tilt_sd_s": 300.0
+          },
+          "shift_priors": {
+            "EDDF": {
+              "mean_s": 0.0,
+              "sd_s": 6.677150998979051
+            },
+            "EDDM": {
+              "mean_s": 0.0,
+              "sd_s": 5.010315946542178
+            },
+            "EGLL": {
+              "mean_s": 0.0,
+              "sd_s": 19.718425827580806
+            },
+            "EHAM": {
+              "mean_s": 0.0,
+              "sd_s": 5.0
+            },
+            "LEBL": {
+              "mean_s": 0.0,
+              "sd_s": 10.098361554785807
+            },
+            "LEMD": {
+              "mean_s": 0.0,
+              "sd_s": 8.27054197613103
+            },
+            "LFPG": {
+              "mean_s": 0.0,
+              "sd_s": 19.867948324685273
+            },
+            "LIRF": {
+              "mean_s": 0.0,
+              "sd_s": 18.04395002457622
+            },
+            "LSZH": {
+              "mean_s": 0.0,
+              "sd_s": 8.071223914472181
+            },
+            "LTFM": {
+              "mean_s": 0.0,
+              "sd_s": 20.381810576036063
+            }
+          },
+          "tau_s": {
+            "EDDF": 6.677150998979051,
+            "EDDM": 5.010315946542178,
+            "EGLL": 19.718425827580806,
+            "EHAM": 5.0,
+            "LEBL": 10.098361554785807,
+            "LEMD": 8.27054197613103,
+            "LFPG": 19.867948324685273,
+            "LIRF": 18.04395002457622,
+            "LSZH": 8.071223914472181,
+            "LTFM": 20.381810576036063
+          },
+          "tau_scale": 1.0,
+          "tau_within_s": {}
+        },
+        "2025-11": {
+          "airports": null,
+          "centres": null,
+          "component_scales": {},
+          "components": "one",
+          "created_at_utc": "2026-09-29T18:42:34.871782+00:00",
+          "max_samples": 1500,
+          "min_cell": 150,
+          "month": "2025-11",
+          "noise_sd_s": {
+            "EDDF": 78.87431999975836,
+            "EDDM": 56.3388,
+            "EGLL": 78.5778,
+            "EHAM": 2349.0314400000343,
+            "LEBL": 72.64739999999999,
+            "LEMD": 72.64739999999999,
+            "LFPG": 2490.768,
+            "LIRF": 65.2344,
+            "LSZH": 600.7495200001035,
+            "LTFM": 78.5778
+          },
+          "noise_wide_share": {
+            "EDDF": 0.053763440860215055,
+            "EDDM": 0.03225806451612903,
+            "EGLL": 0.02,
+            "EHAM": 0.7419354838709677,
+            "LEBL": 0.12903225806451613,
+            "LEMD": 0.021505376344086023,
+            "LFPG": 0.7204301075268817,
+            "LIRF": 0.02,
+            "LSZH": 0.46236559139784944,
+            "LTFM": 0.02197802197802198
+          },
+          "placebo": null,
+          "prior": "fixed",
+          "seconds": 61.23660063743591,
+          "settings": {
+            "heavy_prior": "bounded",
+            "heavy_sd_s": 900.0,
+            "heavy_temper": 0.25,
+            "heavy_tilt": false,
+            "heavy_updates": true,
+            "max_heavy": 64,
+            "noise_wide_sd_s": [
+              3600.0,
+              28800.0
+            ],
+            "pin_s": 120.0,
+            "score_clip": 3.0,
+            "score_halfwidth_bins": 10,
+            "shift_grid": 81,
+            "tilt_sd_s": 300.0
+          },
+          "shift_priors": {
+            "EDDF": {
+              "mean_s": 0.0,
+              "sd_s": 6.672001270685933
+            },
+            "EDDM": {
+              "mean_s": 0.0,
+              "sd_s": 11.18490895801852
+            },
+            "EGLL": {
+              "mean_s": 0.0,
+              "sd_s": 16.724277148961303
+            },
+            "EHAM": {
+              "mean_s": 0.0,
+              "sd_s": 5.0
+            },
+            "LEBL": {
+              "mean_s": 0.0,
+              "sd_s": 11.979093864622252
+            },
+            "LEMD": {
+              "mean_s": 0.0,
+              "sd_s": 11.169873810650012
+            },
+            "LFPG": {
+              "mean_s": 0.0,
+              "sd_s": 17.588468890159362
+            },
+            "LIRF": {
+              "mean_s": 0.0,
+              "sd_s": 23.21545941606283
+            },
+            "LSZH": {
+              "mean_s": 0.0,
+              "sd_s": 5.287815560132488
+            },
+            "LTFM": {
+              "mean_s": 0.0,
+              "sd_s": 23.877227648774834
+            }
+          },
+          "tau_s": {
+            "EDDF": 6.672001270685933,
+            "EDDM": 11.18490895801852,
+            "EGLL": 16.724277148961303,
+            "EHAM": 5.0,
+            "LEBL": 11.979093864622252,
+            "LEMD": 11.169873810650012,
+            "LFPG": 17.588468890159362,
+            "LIRF": 23.21545941606283,
+            "LSZH": 5.287815560132488,
+            "LTFM": 23.877227648774834
+          },
+          "tau_scale": 1.0,
+          "tau_within_s": {}
+        },
+        "2025-12": {
+          "airports": null,
+          "centres": null,
+          "component_scales": {},
+          "components": "one",
+          "created_at_utc": "2026-09-29T18:42:56.194736+00:00",
+          "max_samples": 1500,
+          "min_cell": 150,
+          "month": "2025-12",
+          "noise_sd_s": {
+            "EDDF": 94.73813999994822,
+            "EDDM": 66.717,
+            "EGLL": 74.87129999999999,
+            "EHAM": 2316.562500000043,
+            "LEBL": 65.08614000000216,
+            "LEMD": 77.09519999999999,
+            "LFPG": 2719.8297,
+            "LIRF": 65.2344,
+            "LSZH": 867.1727400000776,
+            "LTFM": 80.0604
+          },
+          "noise_wide_share": {
+            "EDDF": 0.043478260869565216,
+            "EDDM": 0.03260869565217391,
+            "EGLL": 0.02,
+            "EHAM": 0.7717391304347826,
+            "LEBL": 0.13043478260869565,
+            "LEMD": 0.043478260869565216,
+            "LFPG": 0.7065217391304348,
+            "LIRF": 0.02,
+            "LSZH": 0.4891304347826087,
+            "LTFM": 0.02
+          },
+          "placebo": null,
+          "prior": "fixed",
+          "seconds": 57.77763485908508,
+          "settings": {
+            "heavy_prior": "bounded",
+            "heavy_sd_s": 900.0,
+            "heavy_temper": 0.25,
+            "heavy_tilt": false,
+            "heavy_updates": true,
+            "max_heavy": 64,
+            "noise_wide_sd_s": [
+              3600.0,
+              28800.0
+            ],
+            "pin_s": 120.0,
+            "score_clip": 3.0,
+            "score_halfwidth_bins": 10,
+            "shift_grid": 81,
+            "tilt_sd_s": 300.0
+          },
+          "shift_priors": {
+            "EDDF": {
+              "mean_s": 0.0,
+              "sd_s": 6.022316961381483
+            },
+            "EDDM": {
+              "mean_s": 0.0,
+              "sd_s": 10.789114974365265
+            },
+            "EGLL": {
+              "mean_s": 0.0,
+              "sd_s": 17.628122118782123
+            },
+            "EHAM": {
+              "mean_s": 0.0,
+              "sd_s": 5.0
+            },
+            "LEBL": {
+              "mean_s": 0.0,
+              "sd_s": 12.819736393512457
+            },
+            "LEMD": {
+              "mean_s": 0.0,
+              "sd_s": 10.941552246454245
+            },
+            "LFPG": {
+              "mean_s": 0.0,
+              "sd_s": 20.090601464295606
+            },
+            "LIRF": {
+              "mean_s": 0.0,
+              "sd_s": 23.070629981999126
+            },
+            "LSZH": {
+              "mean_s": 0.0,
+              "sd_s": 7.589616643780589
+            },
+            "LTFM": {
+              "mean_s": 0.0,
+              "sd_s": 20.042755192102355
+            }
+          },
+          "tau_s": {
+            "EDDF": 6.022316961381483,
+            "EDDM": 10.789114974365265,
+            "EGLL": 17.628122118782123,
+            "EHAM": 5.0,
+            "LEBL": 12.819736393512457,
+            "LEMD": 10.941552246454245,
+            "LFPG": 20.090601464295606,
+            "LIRF": 23.070629981999126,
+            "LSZH": 7.589616643780589,
+            "LTFM": 20.042755192102355
+          },
+          "tau_scale": 1.0,
+          "tau_within_s": {}
+        }
+      },
+      "tag": "daily_totals_v2_temper_25"
+    }
+  },
+  "code": {
+    "src/prc2026_daily/reconcile.py": "ae4295e21d4d75074b185f11caea4d6a95b6dc4e21a586ece1c40f9032af81d5",
+    "tools/run_daily_totals.py": "390fdfa32327b5e582b0415d6f5c322df5a4757822451e5cfd417cf70485b588",
+    "tools/run_share_gate_reread.py": "5cc04bdd9b772f543119a9338116901614b8507b6e7f18b36f981ec0d3ffa286",
+    "tools/screen_daily_totals.py": "7be654b2dae87be5fa4b57a86c5e7220476830a7a7b084d37491b57deda26b4c"
+  },
+  "control_run": {
+    "files": {
+      "2025-01": "5d1d1249eadfdfc2abb8f287f4ef5e8e605979abdce853bc91584c4bc985f0c3",
+      "2025-07": "93c5495179e085a055ba549dcba9f7373a3a28a0dd40329644c34182c42a3eb8",
+      "2025-11": "6cac566b575503a6a3f9b7a278709957f022a8c99f6d6fd4c5e36f363d563b16",
+      "2025-12": "853048d8a306c1357ded6303ac442c715b8f82fe07b82b941336936c5a60a17e"
+    },
+    "tag": "daily_totals_v1"
+  },
+  "created_at_utc": "2026-09-29T18:42:56.409180+00:00",
+  "declaration": "configs/daily_totals_v2.json",
+  "declaration_sha256": "27e634e7d7ba8f4bfaf70b63eb8af99cc49107c379cfb5feab390b3c56e14d91",
+  "equal_footing_months": [
+    "2025-01",
+    "2025-07",
+    "2025-12"
+  ],
+  "official_scores_used": "none",
+  "rows_sha256": "3a807e81989d18332795c905822a2a7d4281e66553a72b301d510a87c03de52f",
+  "selected": null,
+  "workbook_sha256": "9ab45cc5977e154452ea3c0f137737f496003acfcab25d830d3f5211e3a1b218"
+}

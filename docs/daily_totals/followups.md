@@ -82,6 +82,9 @@ months. A regression of each day's discrepancy on the day's population stake rec
 of −0.4 to −0.5. **Closed.** Heavy-row updates outside the LIRF population were also re-read from the exploration before v48: −0.05
 to +0.07% of a month's squared error with no consistent sign.
 
+A row-by-row form with a tempered likelihood and a bounded prior does work in development; it has its own declared round:
+[`heavy_rows.md`](heavy_rows.md).
+
 ## What the scored months show, label-free
 
 At LIRF in July 2026 both published sources say that the predictions are too high in aggregate: the monthly source by 45 s per

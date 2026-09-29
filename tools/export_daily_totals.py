@@ -1,4 +1,6 @@
-"""Export v46 reconciled with the published daily totals of positive off-block delay (configs/daily_totals_v1.json).
+"""Export v46 reconciled with the published daily totals of positive off-block delay (configs/daily_totals_v1.json, the default, or
+the declaration named with --declaration; a declaration with candidates exports the candidate its governing run selected, or the one
+named with --candidate together with --user-override).
 
 Construction, on the ranking rows:
   1. predictions = the uploaded v46 values; a = takeoff - schedule from data/raw/ranking.parquet; class from the final-file dry run's
@@ -8,10 +10,13 @@ Construction, on the ranking rows:
   3. per airport and off-block day read (rows cover at least 90% of the departures behind the published figure):
      src/prc2026_daily/reconcile.prepare_day / solve_day with the declaration's settings; heavy rows keep their prediction.
   4. export = the reconciled value (nearest integer, floor -12 s) where it differs from v46, v46 elsewhere.
+With a declaration that updates heavy rows (configs/daily_totals_v2.json) the heavy rows move as it declares; the export checks that
+no heavy row moved beyond its schedule interval and that no pinned row moved, and reports the change against the uploaded v48.
 Nothing is uploaded.
 
   --dry-run DIR
   --version 48 [--user-override TEXT]
+  --version 49 --declaration configs/daily_totals_v2.json [--candidate NAME --user-override TEXT]
 """
 from __future__ import annotations
 
@@ -36,6 +41,7 @@ from screen_daily_totals import BANDS, published  # noqa: E402
 
 DECLARATION = "configs/daily_totals_v1.json"
 V46 = ("runs/submissions/vigorous-whistle_v46.parquet", "8abdd87ad5098d7753927f407ffd7e8cd342aa84a2864392e1b64c0dde015af9", 223.9339)
+V48 = ("runs/submissions/vigorous-whistle_v48.parquet", "714ce4257b9b224ee7720e7bcae5c9240bc829935a05aa541049314ab8e51e0e", 222.6042)
 WORKBOOK = "data/external/eurocontrol_aiu/All_Pre-Departure_Delay.xlsx"
 RANKING = "data/raw/ranking.parquet"
 CODE = ["tools/export_daily_totals.py", "tools/run_daily_totals.py", "src/prc2026_daily/reconcile.py", "tools/screen_daily_totals.py"]
@@ -70,6 +76,7 @@ def reconcile(t: pd.DataFrame, settings, tau_scale: float) -> tuple[np.ndarray, 
     noise, wide, tau = scales(fit)
     new = t["stack"].to_numpy(dtype=float).copy()
     heavy = np.zeros(len(t), dtype=bool)
+    pinned = np.zeros(len(t), dtype=bool)
     days = []
     use = t[t["complete"]]
     for (airport, bday), day in use.groupby(["airport", "bday"], sort=True):
@@ -79,8 +86,10 @@ def reconcile(t: pd.DataFrame, settings, tau_scale: float) -> tuple[np.ndarray, 
         values, info = solve_day(p, float(day["pub"].iat[0]), noise[airport], wide[airport], 0.0, tau_scale * tau[airport], settings)
         new[positions] = np.maximum(values, FLOOR)
         heavy[positions] = p.is_heavy
+        pinned[positions] = p.is_heavy & p.pinned
         days.append({"airport": airport, "bday": bday, "month": day["month"].iat[0], **info})
-    return new, pd.DataFrame(days), {"noise_sd_s": noise, "noise_wide_share": wide, "tau_s": tau, "heavy_rows": int(heavy.sum()), "fit_rows": int(len(fit))}
+    return new, pd.DataFrame(days), {"noise_sd_s": noise, "noise_wide_share": wide, "tau_s": tau, "heavy_rows": int(heavy.sum()), "fit_rows": int(len(fit)),
+                                     "heavy": heavy, "pinned": pinned}
 
 
 def main() -> None:
@@ -88,12 +97,22 @@ def main() -> None:
     parser.add_argument("--version", type=int, default=48)
     parser.add_argument("--dry-run", type=Path)
     parser.add_argument("--user-override")
+    parser.add_argument("--declaration", default=DECLARATION)
+    parser.add_argument("--candidate")
     args = parser.parse_args()
-    decl = read_json(ROOT / DECLARATION)
+    declaration = args.declaration
+    decl = read_json(ROOT / declaration)
     results = read_json(ROOT / decl["report"])
     if results.get("declaration_sha256") != object_hash(decl):
         raise ValueError("The recorded results are not for this declaration.")
-    if not results.get("accepted") and not args.user_override:
+    candidate = None
+    if decl.get("candidates"):
+        candidate = args.candidate or results.get("selected")
+        if candidate not in decl["candidates"]:
+            raise ValueError("No candidate: the governing run selected none and none was named.")
+        if candidate != results.get("selected") and not args.user_override:
+            raise ValueError("The governing run did not select this candidate; shipping it needs --user-override with the user's words.")
+    elif not results.get("accepted") and not args.user_override:
         raise ValueError("The governing run did not accept the procedure; shipping it needs --user-override with the user's words.")
     if sha256_file(ROOT / WORKBOOK) != decl["external_data"]["sha256"]:
         raise ValueError("The workbook changed.")
@@ -107,27 +126,37 @@ def main() -> None:
         output, report_path, detail_path = out_dir / f"vigorous-whistle_v{args.version}.parquet", out_dir / f"export_v{args.version}.json", out_dir
     if output.exists():
         raise ValueError(f"{output} exists; never overwrite.")
-    settings, tau_scale, prior = settings_from(decl)
-    if prior != "fixed" or settings.heavy_updates:
-        raise ValueError("Only the declared configuration (fixed prior, heavy rows kept) is wired for the ranking rows.")
+    settings, tau_scale, prior = settings_from(decl, candidate)
+    if prior != "fixed":
+        raise ValueError("Only the fixed prior is wired for the ranking rows.")
 
     t = ranking_table()
     ids = t[ID].to_numpy()
     v46 = t["stack"].to_numpy().astype(np.int64)
     new, days, fitted = reconcile(t, settings, tau_scale)
+    heavy, pinned = fitted.pop("heavy"), fitted.pop("pinned")
     if not np.isfinite(new).all():
         raise ValueError("Non-finite values.")
     changed = np.rint(new).astype(np.int64) != v46
     if (changed & ~t["complete"].to_numpy()).any():
         raise ValueError("A row outside a read airport-day changed.")
+    if not settings.heavy_updates and (changed & heavy).any():
+        raise ValueError("A heavy row changed although the declaration keeps heavy rows.")
+    if (changed & pinned).any():
+        raise ValueError("A pinned row changed.")
+    if settings.heavy_prior == "bounded" and (heavy & (new > np.maximum(v46, t["a"].to_numpy(dtype=float)) + 1e-6)).any():
+        raise ValueError("A heavy row moved beyond its schedule interval.")
     values = np.where(changed, new, v46.astype(float))
     provenance = {"experiment_id": decl["experiment_id"], "dry_run": args.dry_run is not None,
                   "selected_by": "dry run" if args.dry_run is not None else (f"the user's override: {args.user_override}" if args.user_override else "the declared development rule (accepted)"),
+                  "candidate": candidate,
                   "recipe": "v46 reconciled with EUROCONTROL's published daily all-cause pre-departure delay per airport: every row of a read airport-day that is not heavy moves by the "
-                            "posterior day shift plus a first-order tilt; heavy rows and rows of airport-days not read keep v46; floor -12 s",
+                            "posterior day shift plus a first-order tilt; " + ("heavy rows move by the tempered posterior of the declaration, between their delay outcomes and their "
+                                                                                "schedule interval; pinned rows and rows of airport-days not read keep v46" if settings.heavy_updates else
+                                                                                "heavy rows and rows of airport-days not read keep v46") + "; floor -12 s",
                   "incumbent": {"submission": Path(V46[0]).name, "official_rmse_seconds": V46[2], "sha256": V46[1],
                                 "note": "the clean model line's best; v47 is a separate file on the same base"},
-                  "declaration": {DECLARATION: {"sha256": sha256_file(ROOT / DECLARATION), "object_hash": object_hash(decl)}},
+                  "declaration": {declaration: {"sha256": sha256_file(ROOT / declaration), "object_hash": object_hash(decl)}},
                   "development_results": {decl["report"]: sha256_file(ROOT / decl["report"])},
                   "code": {p: sha256_file(ROOT / p) for p in CODE},
                   "inputs": {p: sha256_file(ROOT / p) for p in [export_v33.DRY, V46[0], RANKING, "runs/daily_totals/rows.parquet"]},
@@ -155,7 +184,8 @@ def main() -> None:
     counts = t[t["complete"]].groupby(["airport", "bday"]).agg(n=("a", "size"), n_pub=("n_pub", "first"))
     report = {"created_at_utc": utc_now(), "version": args.version, "base": 46, "dry_run": args.dry_run is not None, "output": output.as_posix(), "sha256": sha256_file(output),
               "receipt": receipt, "rows": n, "declaration_object_hash": object_hash(decl), "fitted_from_development_months": fitted,
-              "checks": {"rows_changed_outside_read_days": 0, "exported_equals_reconciled_on_changed_rows": True, "heavy_rows_changed": 0},
+              "checks": {"rows_changed_outside_read_days": 0, "exported_equals_reconciled_on_changed_rows": True, "heavy_rows_changed": int((change != 0)[heavy].sum()),
+                         "pinned_rows": int(pinned.sum()), "pinned_rows_changed": 0, "heavy_rows_beyond_their_schedule_interval": 0 if settings.heavy_prior == "bounded" else None},
               "airport_days": {"read": int(days["used"].sum()), "prepared_without_use": int((~days["used"]).sum()), "rows_outside_read_days": int((~t["complete"]).sum()),
                                "row_count_over_published_count": {"median": float((counts["n"] / counts["n_pub"]).median()), "min": float((counts["n"] / counts["n_pub"]).min()),
                                                                   "max": float((counts["n"] / counts["n_pub"]).max())}},
@@ -164,6 +194,19 @@ def main() -> None:
               "rmse_if_every_changed_label_equals_the_new_value": float(np.sqrt(max(n * V46[2] ** 2 - (change ** 2).sum(), 0.0) / n)),
               "rmse_if_the_changes_are_noise": float(np.sqrt((n * V46[2] ** 2 + (change ** 2).sum()) / n)),
               "rmse_at_the_development_alignment": {f"{b}": float(np.sqrt(max(n * V46[2] ** 2 - (2 * b - 1) * (change ** 2).sum(), 0.0) / n)) for b in (0.78, 0.84, 1.0, 1.17)}}
+    if settings.heavy_updates:   # the file against the uploaded v48: the heavy rows' part, and what it does to the other rows of their days
+        v48 = uploaded(V48[0], V48[1], ids).astype(float)
+        d = exported.astype(float) - v48
+        report["against_v48"] = {"base": {"submission": Path(V48[0]).name, "official_rmse_seconds": V48[2], "sha256": V48[1]}, "rows_that_differ": int((d != 0).sum()),
+                                 "heavy_rows_that_differ": int((d != 0)[heavy].sum()), "sum_squared_change": float((d ** 2).sum()), "sum_squared_change_heavy_rows": float((d[heavy] ** 2).sum()),
+                                 "mean_abs_change_heavy_rows_s": float(np.abs(d[heavy & (d != 0)]).mean()) if (heavy & (d != 0)).any() else 0.0, "max_abs_change_s": float(np.abs(d).max()),
+                                 "heavy_rows_up": int((d[heavy] > 0).sum()), "heavy_rows_down": int((d[heavy] < 0).sum()),
+                                 "by_airport_month": {f"{a}|{m}": {"rows_that_differ": int((g["d"] != 0).sum()), "heavy_rows_that_differ": int(((g["d"] != 0) & g["heavy"]).sum()),
+                                                                   "sum_squared_change": float((g["d"] ** 2).sum())}
+                                                      for (a, m), g in t.assign(d=d, heavy=heavy).groupby(["airport", "month"])},
+                                 "rmse_if_the_difference_is_right_in_full": float(np.sqrt(max(n * V48[2] ** 2 - (d ** 2).sum(), 0.0) / n)),
+                                 "rmse_if_the_difference_is_noise": float(np.sqrt((n * V48[2] ** 2 + (d ** 2).sum()) / n)),
+                                 "note": "arithmetic on v48's published score, for the size of the stake only; no score enters the file"}
     if int((change[np.flatnonzero(t["cls"].eq("LIRF_pop").to_numpy())] != 0).sum()):
         report["checks"]["lirf_population_rows_changed"] = int((change[np.flatnonzero(t["cls"].eq("LIRF_pop").to_numpy())] != 0).sum())
     report_path.parent.mkdir(parents=True, exist_ok=True)
