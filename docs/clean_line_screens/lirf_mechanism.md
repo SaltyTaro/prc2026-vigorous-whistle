@@ -46,3 +46,24 @@ wake category, schedule and clock intervals, the seconds of each clock, and the 
 
 **Closed.** At LIRF the stack already holds what the inputs say about the label mechanism. The remaining error there is the
 class itself, which is decided by something the data does not record.
+
+## Follow-up: arrival-side reporting signals (29 September, after the arrival second task) — closed
+
+Tool: `tools/screen_lirf_arrival_side.py`. Same rows and classes. Added label-free inputs from arrival rows, whose block times
+are supplied in every month: the inbound leg (the last arrival at the same stand before the departure's NM clock, found for
+95% of the rows) with its fill flag, block second, taxi-in and gaps; and the arrival fill share of the same operator that
+day, of the airport in the hour and on the day (24 inputs).
+
+| reading (AUC, month-blocked, stack outputs included) | without | with arrival-side inputs | arrival-side inputs alone |
+|---|---:|---:|---:|
+| early against agree | 0.888 | 0.888 | 0.722 |
+| fill against the rest | 0.865 | 0.869 | 0.750 |
+
+- The inbound leg is a fill for 17% of the fill rows against 7% of the others, and the operator's arrival fill share that day
+  is 16% against 7%. The signal is real and the stack's inputs already carry nearly all of it.
+- A month-blocked correction of label minus v46 on these rows, at half weight: +0.40% without and +0.04% with the
+  arrival-side inputs; by month with them January +0.35%, July +0.54%, November −0.44%, December −1.09%. Two of the three
+  equal-footing months worsen.
+
+**Closed.** Arrival-side reporting behaviour does not separate the label classes of LIRF clock rows beyond what the stack
+holds. The population classifier, closed by the user after v43, is not touched by this screen.
