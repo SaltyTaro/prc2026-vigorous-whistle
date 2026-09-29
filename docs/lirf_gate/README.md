@@ -51,3 +51,9 @@ label-free firing rates 0.5% (July unmatched) against 0.7% in the thinned simula
 **−0.40 s**; if every move were noise, +0.12 s; the u300 precedent (a ranking-regime gate) transferred at ten times its development
 mean, the tail stretch (a dev-fitted recalibration) at half.
 The final-file runner gains a `v45` layer set only if the layer ships.
+
+## v45 official: 224.2398 (01:29 UTC, 29 September) — −0.219 s against v40; the clean line's best
+
+Uploaded at the user's word at 01:29:01 UTC, processed 01:29:47 UTC, 344,841 rows (`official_result_v45.json`). The gate transferred at
+about half of its development expectation (−0.40 s): a model-based, declared, ranking-regime layer that paid on the ranking. Never re-upload v1–v45. No score enters any weight:
+the realised transfer ratio is recorded as an outcome only.
