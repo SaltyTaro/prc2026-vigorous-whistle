@@ -1,0 +1,101 @@
+{
+  "base": 40,
+  "by_month": {
+    "2026-01": {
+      "gated": 26,
+      "max_change_s": 1021.0,
+      "mean_change_s": 240.1153846153846
+    },
+    "2026-07": {
+      "gated": 74,
+      "max_change_s": 1126.0,
+      "mean_change_s": 416.3243243243243
+    }
+  },
+  "candidate": "u600_m600",
+  "checks": {
+    "lirf_nonpop_matched": {
+      "base_minus_v34_blend_max_abs_s": 3.6731871490915182,
+      "base_minus_v34_blend_rows_over_1s": 3,
+      "gated": 21,
+      "gated_rows_base_minus_v34_blend_max_abs_s": 0.4955329028725828,
+      "rows": 8781
+    },
+    "lirf_nonpop_unmatched": {
+      "base_minus_v34_blend_max_abs_s": 0.49995924586892215,
+      "base_minus_v34_blend_rows_over_1s": 0,
+      "gated": 79,
+      "gated_rows_base_minus_v34_blend_max_abs_s": 0.49846903158413625,
+      "rows": 17718
+    }
+  },
+  "created_at_utc": "2026-09-29T01:23:28.652209+00:00",
+  "declaration": "configs/lirf_gate_v1.json",
+  "dry_run": false,
+  "max_abs_change_s": 1126.0,
+  "mean_abs_change_s": 370.51,
+  "mean_change_s": 370.51,
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v45.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 111654,
+    "maximum_rounding_change_seconds": 0.4937294287601617,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 26,
+    "provenance": {
+      "audit_used": false,
+      "candidate": "u600_m600",
+      "code": {
+        "src/prc2026_final/lirf_gate.py": "1720860b7ac801d521a685770e42e3f5d8afa1257b60e5514c46974416d501ef",
+        "tools/export_lirf_gate.py": "16b3ed424592a1a7ac9f80acfd9de7e1aad2746eac2f4067d6114bb66add406b"
+      },
+      "declaration": {
+        "configs/lirf_gate_v1.json": {
+          "object_hash": "596a85f0b2f358b9fa4627577577f6185c035ddb7c183098e3344536351ee23a",
+          "sha256": "fc3b2b7b7ae5157d70d1b20970ca05d23bd198bc8e3b5ff5ceef7c6867249919"
+        }
+      },
+      "dry_run": false,
+      "experiment_id": "lirf_gate_v1",
+      "external_data": "none for this layer",
+      "incumbent": {
+        "official_rmse_seconds": 224.4588,
+        "sha256": "da5b20c328ab6be5fca4a21c37cb7c80210397fba62d8395557a9b84d77d162a",
+        "submission": "vigorous-whistle_v40.parquet"
+      },
+      "inputs": {
+        "runs/final_dryrun/run/recipe/detail.parquet": "2e79c78b25a4abd1032c211ec61968dc90942e58c2ccff8fceeccc4e3fdcaf5b",
+        "runs/submissions/vigorous-whistle_v40.parquet": "da5b20c328ab6be5fca4a21c37cb7c80210397fba62d8395557a9b84d77d162a"
+      },
+      "recipe": "v40 + (gated LIRF blend - v34 LIRF blend) on gated rows (u600_m600: {'unmatched': {'T': 600, 'lean': {'v9': 0.0, 'net': 0.2, 'tree': 0.8}}, 'matched': {'T': 600, 'lean': {'v9': 0.15, 'net': 0.2, 'tree': 0.65}}}), floored at -12 s",
+      "results": {
+        "docs/lirf_gate/results_v1.json": {
+          "sha256": "f2fa60b9fbd40cc4c8f0cfbb3020c84e42d21bf82852f14cc2c9f20729a216b4"
+        }
+      },
+      "selected_by": "the declared rule (docs/lirf_gate/results_v1.json)"
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "72d24155e6b6b8dbb4d6caf7a590679d3b242ad7c83793dcc3d28d5b88fd77fa",
+    "size_bytes": 1356596,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-29T01:23:28.585168+00:00",
+    "version": 45
+  },
+  "rmse_if_every_changed_label_equals_the_new_value": 224.33969146936047,
+  "rmse_if_every_changed_label_equals_the_old_value": 224.57784535949253,
+  "rows": 344841,
+  "rows_changed": 100,
+  "sha256": "72d24155e6b6b8dbb4d6caf7a590679d3b242ad7c83793dcc3d28d5b88fd77fa",
+  "sum_squared_change": 18433727.0
+}

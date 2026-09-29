@@ -1,0 +1,196 @@
+{
+  "experiment_id": "lirf_gate_v1",
+  "declared_at_utc": "2026-09-29T02:05:00Z",
+  "audit_used": false,
+  "status": "DECLARED before the governing run (tools/run_lirf_gate.py); the scratch reads that motivated it (same tables, 01:45-02:00 UTC) are disclosed below; no official score enters this round",
+  "purpose": "The LIRF network (ens_ctx_lirf) compresses long delays far more than the LIRF trees (ens_v22_lirf_q) and v9: on the July 2025 set thinned to July 2026's coverage (LIRF dark: every LIRF row on the unmatched blend, as the ranking's 15,515 July 2026 LIRF rows are), the rows where the tree sits more than 600 s above the network carry a much larger error under the shipped unmatched blend (v9 0, net 0.583, tree 0.417) than under a tree-leaning blend. Natural months rarely put LIRF rows on the unmatched blend, so this exposure is invisible in the four recipe months and specific to the July 2026 regime, like the EHAM/January exposure that v35's u300 gate addressed. A disagreement gate leans to the tree (and, in one variant, to v9) on LIRF non-population rows where tree - net exceeds a threshold; every other row keeps v34's LIRF blend exactly.",
+  "definitions": {
+    "D_lirf": "ens_v22_lirf_q - ens_ctx_lirf (LIRF tree minus LIRF network), per row, from the same out-of-sample components the blend uses",
+    "unmatched_blend_v34": {
+      "v9": 0.0,
+      "net": 0.5833333333333334,
+      "tree": 0.4166666666666667
+    },
+    "matched_blend_v34": {
+      "v9": 0.15,
+      "net": 0.4,
+      "tree": 0.45
+    },
+    "gate": "rows of the scope with D_lirf > T take value max(lean.v9 * v9 + lean.net * net + lean.tree * tree, -12); other rows keep the v34 blend",
+    "population_rows": "excluded everywhere (the fixed scope: on the development rows the rows where |v33 - v9| <= 1 s, on the ranking the recipe's 'fixed' scope)"
+  },
+  "candidates": {
+    "u300": {
+      "unmatched": {
+        "T": 300,
+        "lean": {
+          "v9": 0.0,
+          "net": 0.2,
+          "tree": 0.8
+        }
+      }
+    },
+    "u600": {
+      "unmatched": {
+        "T": 600,
+        "lean": {
+          "v9": 0.0,
+          "net": 0.2,
+          "tree": 0.8
+        }
+      }
+    },
+    "u1200": {
+      "unmatched": {
+        "T": 1200,
+        "lean": {
+          "v9": 0.0,
+          "net": 0.2,
+          "tree": 0.8
+        }
+      }
+    },
+    "u600_v9": {
+      "unmatched": {
+        "T": 600,
+        "lean": {
+          "v9": 0.2,
+          "net": 0.2,
+          "tree": 0.6
+        }
+      }
+    },
+    "m300": {
+      "matched": {
+        "T": 300,
+        "lean": {
+          "v9": 0.15,
+          "net": 0.2,
+          "tree": 0.65
+        }
+      }
+    },
+    "m600": {
+      "matched": {
+        "T": 600,
+        "lean": {
+          "v9": 0.15,
+          "net": 0.2,
+          "tree": 0.65
+        }
+      }
+    },
+    "u600_m600": {
+      "unmatched": {
+        "T": 600,
+        "lean": {
+          "v9": 0.0,
+          "net": 0.2,
+          "tree": 0.8
+        }
+      },
+      "matched": {
+        "T": 600,
+        "lean": {
+          "v9": 0.15,
+          "net": 0.2,
+          "tree": 0.65
+        }
+      }
+    },
+    "u300_m300": {
+      "unmatched": {
+        "T": 300,
+        "lean": {
+          "v9": 0.0,
+          "net": 0.2,
+          "tree": 0.8
+        }
+      },
+      "matched": {
+        "T": 300,
+        "lean": {
+          "v9": 0.15,
+          "net": 0.2,
+          "tree": 0.65
+        }
+      }
+    }
+  },
+  "evaluation_sets": {
+    "thinned_july": {
+      "month": "2025-07",
+      "attempt": "a13_jul",
+      "scope": "unmatched",
+      "components": {
+        "tree": "runs/coverage_regime/measure/2025-07/predictions.parquet: thinned:ens_v22_lirf_q (seasonal-fold LIRF trees on the thinned tables)",
+        "net": "runs/adsb_ctx/regime_check_lirf/2025-07.parquet: ens_ctx_lirf:thinned (seasonal-fold LIRF network on the thinned tokens)",
+        "v9": "runs/lomo_dev/rows.parquet v9 (no ADS-B dependence)",
+        "labels": "the measure table's TAXITIME_SEC_mvt",
+        "scope_rows": "class_thinned == 'unmatched' and not population"
+      },
+      "role": "the July 2026 regime analog (LIRF matched 0.6% against 0.2% in the ranking): the primary read for the unmatched scope"
+    },
+    "natural": {
+      "months": [
+        "2025-01",
+        "2025-07",
+        "2025-11",
+        "2025-12"
+      ],
+      "rows": "runs/lomo_dev/rows.parquet (LOMO January/July, fair November/December): v9, lirf_net, lirf_tree, label, day, matched",
+      "role": "the matched scope's read (July, November, December) and a no-harm check of the unmatched scope on the naturally dark January and the few unmatched rows of the other months"
+    }
+  },
+  "metric": {
+    "primary": "squared error on the scope's rows with labels below 20,000 s (one-day and clock-day labels are outside what the gate is for and dominate any unfiltered sum: one July row with label 87,002 s alone is 60% of the thinned LIRF sum); the unfiltered change is reported alongside",
+    "interval": "paired-day bootstrap of the SSE change, 10,000 draws, seed 20260929, on the scope's days"
+  },
+  "rule": {
+    "unmatched_part": "eligible when the thinned-July primary SSE change is at most -1% with its paired-day 95% interval below zero, and no natural month's unmatched-scope interval lies entirely above zero",
+    "matched_part": "eligible when the natural-July matched-scope primary SSE change is at most -0.5% with its interval below zero, and neither November's nor December's matched-scope interval lies entirely above zero",
+    "combined": "a candidate with both parts needs both; selection = among eligible candidates the lowest sum of the thinned-July unmatched primary relative change and (if present) the natural-July matched primary relative change; otherwise nothing",
+    "note": "the natural months hold few gated rows on the unmatched scope (2-11 per month), so their intervals are wide; they serve as no-harm checks only"
+  },
+  "export": {
+    "version": 45,
+    "construction": "base file + (gated LIRF blend - v34 LIRF blend) on the gated rows of the ranking's LIRF non-population scopes, from the final-file dry run's recipe components (runs/final_dryrun/run/recipe/detail.parquet), floored at -12 s; every other row byte-identical to the base",
+    "base": "vigorous-whistle_v40.parquet"
+  },
+  "incumbent": {
+    "submission": "vigorous-whistle_v40.parquet",
+    "official_rmse_seconds": 224.4588,
+    "sha256": "da5b20c328ab6be5fca4a21c37cb7c80210397fba62d8395557a9b84d77d162a"
+  },
+  "prior_exploration_disclosed": {
+    "when": "29 September 2026, 01:40-02:00 UTC, scratchpad on the same tables",
+    "origin": "a re-read of the LIRF unmatched blend weights on the thinned July set first showed a -60% least-squares gain that was one one-day row (label 87,002 s: v9 86,638, net 4,919, tree 42,425); with labels below 20,000 s the v34 unmatched blend reads 425.5 s against 438.4 s for v9 alone, so the weight change is closed; the same rows showed the network's tail compression (label 8,208: net 1,984, tree 5,972, v9 6,103)",
+    "thinned_july_unmatched_primary": {
+      "u300": "-2.24% [-4.46, -0.13], 17/31 days, 446 gated rows",
+      "u300 lean v9 0.2": "-2.29% [-4.38, -0.23]",
+      "u300 tree 1.0": "-1.78% [-4.72, +1.20]",
+      "u600": "-2.87% [-5.02, -0.84], 19/31, 100 rows (gated rows' RMSE 1,704 -> 1,460)",
+      "u600 lean v9 0.2": "-2.79% [-4.85, -0.80]",
+      "u600 tree 1.0": "-2.97% [-5.79, -0.09]",
+      "u1200": "-2.91% [-5.10, -0.92], 16/31, 43 rows",
+      "u1200 tree 1.0": "-3.20% [-6.08, -0.40]"
+    },
+    "natural_unmatched_u600": {
+      "2025-01": "-0.17% [-0.71, +0.23], 11 rows",
+      "2025-07": "+4.39% [-2.94, +14.60], 6 rows",
+      "2025-11": "-0.24% [-0.85, +0.12], 2 rows",
+      "2025-12": "-0.01% [-2.05, +1.52], 5 rows"
+    },
+    "natural_matched": {
+      "2025-07 m600": "-1.22% [-2.25, -0.22], 16/31, 99 rows",
+      "2025-07 m300": "-1.14% [-2.20, -0.09], 424 rows",
+      "2025-07 m600 tree 0.85": "-1.47% [-3.25, +0.30]",
+      "2025-11 m600": "-0.04% [-0.40, +0.21], 5 rows",
+      "2025-12 m600": "+0.13% [-0.18, +0.43], 12 rows",
+      "2025-12 m300": "+0.28% [-0.06, +0.60], 67 rows"
+    },
+    "ranking_label_free": "July 2026 LIRF unmatched 15,515 rows: D_lirf > 300 on 411 (2.6%, mean lift +198 s), > 600 on 74 (0.5%, +416 s), > 1200 on 21; January 2026 matched 8,747 rows: > 300 on 72, > 600 on 21; January unmatched 2,203 rows: > 600 on 5",
+    "not_a_lever": "the tree-only lean (tree 1.0) has wider intervals; the LIRF unmatched blend weights themselves (v9 share) are unchanged: on ordinary rows the shipped blend is as good as any in the dark regime"
+  },
+  "report": "docs/lirf_gate/results_v1.json"
+}
