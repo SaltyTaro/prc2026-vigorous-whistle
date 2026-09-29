@@ -1,0 +1,173 @@
+{
+ "experiment_id": "prc2026-adsb-ctx3-combo-design-v1",
+ "declared_at_utc": "2026-09-29T12:00:10+00:00",
+ "audit_used": false,
+ "purpose": "Combination batch of the context network's sub-bar items, declared before any fit of these seeds. The GPU sprint (docs/adsb_ctx3/README.md) read three items that leaned positive and failed their bar alone: wider numeric embeddings (dnum16, +0.033 points), a doubled learning rate (lr2, +0.027) and a lightly masked network routed to unmatched rows (route_mask25, +0.054, interval touching zero). Their combination was never fitted. Question: does it clear the bar on the 32-epoch base?",
+ "prior": "Moderate to low: the three single readings sum to about +0.11 points if they add, and each is inside its own noise.",
+ "hardware": "Azure arcw0-arcw7 (Standard_D16ds_v7), CPU, tools/run_adsb_ctx3.py --device cpu --threads 8, two lanes per worker; every run of this declaration, the reference included, on that hardware. CPU because the user's compute rule puts context-network rounds on CPU unless turnaround matters.",
+ "protocol": {
+  "data": "tools/run_adsb_ctx3.py --fold design, unchanged: the seasonal fold's fit partition (2025-02..06, 08, 09, LIRF excluded), October monitored, October predictions only",
+  "never_read": "No run of this declaration predicts, scores or reads a label of 2025-01, 2025-07, 2025-11, 2025-12 or of the ranking months. No official score enters. The published-aggregates sources (docs/published_means, docs/clean_line_screens/daily_totals.json) are not read.",
+  "masking": "as configs/adsb_ctx3_design_v2.json: training only, each matched fitted row drawn with probability p at every step and shown as an unmatched row; prediction never masks",
+  "items": {
+   "combo_dl": "X = the dl32 seed mean on every row",
+   "route_m25": "X = the ref32 seed mean on rows with adsb_matched = 1, the m25_32 seed mean on the other rows (the second batch's best item, measured again on fresh seeds)",
+   "combo_all": "X = the dl32 seed mean on rows with adsb_matched = 1, the m25dl32 seed mean on the other rows"
+  },
+  "readings": {
+   "pool": "P = 0.5 x mean(ctx seeds 101-116) + 0.5 x mean(ctx_e24 seeds 117-132), seasonal-fold October predictions (the design sprint's pool; October non-LIRF 154.016 s, proxy at share 0.75 176.262 s)",
+   "R1": "October non-LIRF RMSE of each item's four-seed mean; matched / unmatched; by airport",
+   "R2": "recipe proxy (tools/nn_design_report.RecipeProxy, all October rows) of table = 0.25 committee + 0.75 [(1 - b) P + b X], b in {0.25, 0.5, 1.0}, as % RMSE against b = 0; share 0.85 reported beside it",
+   "reference": "ref32's four-seed mean (seeds 9-12), unrouted, through the same grid"
+  },
+  "decision": "An item is GO when (a) its R2 at b = 0.5 is at least 0.05 points below ref32's, (b) its four-seed standalone October non-LIRF RMSE is below ref32's, and (c) the paired-day 95% interval of the proxy RMSE difference between the item's and ref32's tables at b = 0.5 lies below zero. If more than one item is GO, the one with the lowest R2 at b = 0.5 is carried forward. A GO goes to a separately declared development round on the clean line's footing (hardware named), control = the v46 stack; every upload is the user's decision. Without a GO the combination is closed."
+ },
+ "defaults": {
+  "architecture": {
+   "cat_cap": 16,
+   "d_num": 8,
+   "depth": 3,
+   "dropout": 0.1,
+   "heads": 4,
+   "max_tokens": 128,
+   "n_aux": 0,
+   "sa_dropout": 0.0,
+   "sa_ff": 2,
+   "sa_heads": 4,
+   "sa_layers": 0,
+   "tok_dim": 96,
+   "width": 512
+  },
+  "aux": {
+   "targets": [],
+   "weight": 0.0
+  },
+  "context": {
+   "departures_only": false,
+   "use_adsb": true
+  },
+  "features": {
+   "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+   "extra_features": [
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed",
+    "sfc_ground_10m",
+    "sfc_moving_10m",
+    "sfc_moving_20m",
+    "sfc_rwy_queue_5m",
+    "sfc_rwy_queue_10m"
+   ]
+  },
+  "masking": {
+   "columns": [
+    "adsb_gate",
+    "adsb_first_point_s",
+    "adsb_motion_s",
+    "adsb_first_gs_kt",
+    "adsb_first_dist_stand_m",
+    "adsb_stop_seconds",
+    "adsb_taxi_path_m",
+    "adsb_taxi_stops",
+    "adsb_taxi_stopped_s",
+    "adsb_slow_start_s",
+    "adsb_gap_before_s",
+    "adsb_turnaround_s",
+    "adsb_anchor_dist_stand_m",
+    "adsb_last_ground_s",
+    "adsb_points",
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed"
+   ],
+   "matched": "adsb_matched",
+   "p": 0.0
+  },
+  "preprocess": {
+   "bins": 32,
+   "min_count": 10,
+   "target_clip": null
+  },
+  "rows": {
+   "exclude_airports": [
+    "LIRF"
+   ],
+   "exclude_population": false,
+   "max_label": null
+  },
+  "tokens_dir": "data/ctx/tokens_v1",
+  "training": {
+   "batch_size": 2048,
+   "epochs": 32,
+   "grad_clip": 5.0,
+   "lr": 0.001,
+   "min_lr_fraction": 0.02,
+   "warmup_epochs": 1.0,
+   "weight_decay": 0.0001
+  }
+ },
+ "variants": {
+  "ref32": {},
+  "dl32": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   }
+  },
+  "m25_32": {
+   "masking": {
+    "p": 0.25
+   }
+  },
+  "m25dl32": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "masking": {
+    "p": 0.25
+   }
+  }
+ },
+ "runs": {
+  "ref32": [
+   9,
+   10,
+   11,
+   12
+  ],
+  "dl32": [
+   9,
+   10,
+   11,
+   12
+  ],
+  "m25_32": [
+   9,
+   10,
+   11,
+   12
+  ],
+  "m25dl32": [
+   9,
+   10,
+   11,
+   12
+  ]
+ },
+ "paths": {
+  "runs": "runs/adsb_ctx3_combo/design/<variant>_s<seed>/design",
+  "report": "docs/adsb_ctx3_combo/design_report.json"
+ },
+ "report": "tools/ctx3_combo_report.py"
+}
