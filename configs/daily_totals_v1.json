@@ -1,0 +1,83 @@
+{
+ "experiment_id": "daily_totals_v1",
+ "declared_at_utc": "2026-09-29T12:40:00Z",
+ "audit_used": false,
+ "status": "DECLARED before the governing run (tools/run_daily_totals.py --score). The configuration was chosen in the exploration disclosed below, on the same four development months; the governing run therefore confirms arithmetic. The evidence that does not come from those months is the twelve-month check: eight other months of 2025 with another predictor, read with this configuration after it had been chosen.",
+ "user_decision": {
+  "words": "go",
+  "date": "2026-09-29",
+  "context": "after being told that EUROCONTROL's daily all-cause pre-departure delay is a daily total of the off-block times the ranking file hides, stronger than the monthly source behind v47, that a reviewer would more readily call it leakage, and that the recommendation was to build the method on 2025 only and decide on shipping once it passes a declared rule. Earlier the same day, on the portal's monthly aggregates: 'yes use it'. Nothing is uploaded without a further word."
+ },
+ "external_data": {
+  "name": "EUROCONTROL Performance Review Unit, All-causes pre-departure delay (airport, day)",
+  "url": "https://www.eurocontrol.int/performance/data/download/xls/All_Pre-Departure_Delay.xlsx",
+  "retrieved_at_utc": "2026-09-29T11:10:00Z",
+  "sha256": "9ab45cc5977e154452ea3c0f137737f496003acfcab25d830d3f5211e3a1b218",
+  "version": "release 2026-09-16 V.1.0, period 2020-01-01 to 2026-07-31",
+  "local_path": "data/external/eurocontrol_aiu/All_Pre-Departure_Delay.xlsx (not in the repository)",
+  "columns_used": "FLT_DATE, APT_ICAO, FLT_DEP_IFR_2 (departures behind the figure), DLY_ALL_PRE_2 (minutes of pre-departure delay, all causes; airport operator data)",
+  "terms": "published by EUROCONTROL for information purposes; may be copied in whole or in part provided EUROCONTROL is mentioned as the source and it is not used for commercial purposes; no modification without prior written permission. Not an open licence.",
+  "organiser_statement": "asked about published aggregates of the ranking period, 'I already answered above: yes'. No ruling names this workbook.",
+  "nature": "per airport and off-block day, the sum over departures of max(off-block - schedule, 0): in 2025 it equals that sum from the supplied clocks within 0.0-0.3 s per flight at seven airports in every month (EHAM -1 to -7 s, LFPG +2 to +5 s, LSZH 0 to -3 s). It is an aggregate of the hidden clock of the ranking rows. No official score and no leaderboard information is used."
+ },
+ "procedure": {
+  "code": "src/prc2026_daily/reconcile.py (row model, day model, posterior), tools/run_daily_totals.py (cells, scales, months)",
+  "summary": "per airport and off-block day (takeoff minus prediction gives the day), the published total against the total the predictions imply; rows are independent given a day shift of the ordinary labels; every row that is not heavy moves by the posterior mean of the day shift plus a first-order tilt; heavy rows (sd of their positive-delay error above 900 s: fill candidates, one-day candidates) enter the day's arithmetic and keep their prediction",
+  "fitting_side": "cells (recorded outcomes of comparable rows), the published figure's accuracy per airport (robust sd, share of days off by more than ten minutes, at least 0.02) and the day-shift scale tau per airport (airport-day means of residuals within 600 s, days of at least 100 rows, sampling variance removed, at least 5 s) come from the months other than the one read",
+  "settings": {
+   "grid_s": 30.0,
+   "heavy_sd_s": 900.0,
+   "max_heavy": 64,
+   "heavy_updates": false,
+   "tilt_sd_s": 300.0,
+   "noise_wide_sd_s": [
+    3600.0,
+    28800.0
+   ],
+   "tau_scale": 1.0,
+   "prior": "fixed",
+   "min_cell": 150,
+   "max_samples": 1500,
+   "seed": 20260929,
+   "complete_share": 0.9
+  },
+  "airport_day_read": "when the rows cover at least 90% of the departures behind the published figure; other rows keep their prediction",
+  "floor": "-12 s",
+  "free_parameters": "none fitted on scores or on the scored months"
+ },
+ "development_read": {
+  "months": [
+   "2025-01",
+   "2025-07",
+   "2025-11",
+   "2025-12"
+  ],
+  "equal_footing": [
+   "2025-01",
+   "2025-07",
+   "2025-12"
+  ],
+  "control": "the v46 development stack on runs/lomo_dev/rows.parquet (tools/run_share_gate_reread.full_stack at network share 0.85 with the nd1200 gate)",
+  "construction": "for each month, the fitting side from the other three months",
+  "minimum_mean_improvement_fraction": 0.0002,
+  "rule": "accepted when no equal-footing month is worse on all rows, the mean change over them is at least 0.02% below zero and every equal-footing month's paired-day 95% interval (by off-block day, seed 20260929) lies below zero. November is reported."
+ },
+ "prior_exploration_disclosed": {
+  "screen": "tools/screen_daily_totals.py (commit 2b4388a): spread by error variance Jan -0.005 / Jul +0.06 / Nov +1.3 / Dec +2.2%; learned residual model -0.53 / -0.32 / -1.67 / +1.14%",
+  "explore1_all_rows_uniform_scenario_weights": "Jan -0.13 / Jul +20.4 / Nov -6.2 / Dec +27.5%: heavy rows moved to their cell's mixture of outcomes",
+  "explore2_scenario_weights_matched_to_the_prediction": "Jan -0.62 / Jul +1.56 / Nov -1.23 / Dec +0.20%: nine airports better in nearly every month, the LIRF fill population unstable (its rows moved by more than 1,800 s: -0.8 / +4.4 / -0.1 / +0.9% of the month's squared error)",
+  "explore3_heavy_rows_keep_their_prediction": "Jan -0.102 / Jul -0.322 / Nov -0.318 / Dec -0.403%, every interval below zero; THIS configuration is declared",
+  "explore4_tau_scale_1.5": "Jan -0.116 / Jul -0.424 / Nov -0.326 / Dec -0.372%",
+  "explore5_month_prior_from_the_months_own_totals": "Jan -0.098 / Jul -0.463 / Nov -0.360 / Dec -0.341% on the four months, but worse on six of the twelve months of the check; rejected",
+  "twelve_month_check": "out-of-sample v9 + residual stage (v23's recipe) on all twelve months of 2025, cells from the other eleven. First run on the cross-fit tables as they are, which leave out 14,092 departures of the eight non-recipe months: seven of eight better (mean -0.16%). With those departures entered at their airport-month's median prediction (never scored): twelve of twelve better, every interval below zero, mean -0.30%; the eight non-recipe months -0.77 / -0.24 / -0.32 / -0.29 / -0.31 / -0.16 / -0.12 / -0.32%; 112 of 120 airport-month cells better",
+  "note": "leaving the LIRF fill population out was decided after seeing its result; two earlier population changes that passed development lost on the leaderboard (v10, v43)"
+ },
+ "export": {
+  "version": 48,
+  "base": "vigorous-whistle_v46.parquet (223.9339, the clean model line's best)",
+  "construction": "the procedure on the ranking rows with the uploaded v46 values as predictions, cells and scales from the four development months; changed rows take the reconciled value, nearest integer; every other row equals v46",
+  "relation_to_v47": "v47 (monthly published means) and this file move the level of the same airport-months from two sources of the same kind; they are alternatives on the same base, never layers of each other",
+  "condition": "only if the governing run accepts, and only on the user's decision"
+ },
+ "report": "docs/daily_totals/results_v1.json"
+}
