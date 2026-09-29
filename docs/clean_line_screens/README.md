@@ -47,3 +47,28 @@ Question: does the raw adsb.lol ground trace hold information beyond the 38 ADS-
   this is a development artefact, not a ranking lever.
 
 A trace encoder would compete for the same 0.02–0.10%. **Closed as a lever of size; not worth a GPU build.**
+
+## 3. Learned gate over the stack's components (`tools/screen_learned_gate.py`, after v46)
+
+Every layer shipped since v35 is a hand-made disagreement gate, and only a linear stacking regression had been tested
+(−0.069%, `docs/disagreement/README.md`). Question: does a learned gate find more? A small LightGBM (15 leaves, 300 rounds) is fitted on
+three months' residuals of the **full v46 stack** and read on the fourth. Rows: non-LIRF, outside the callsign and queue layers.
+`components` = the stack value, v9, base, committee, networks, mix, their three differences, match flag, airport. `context` adds hour,
+weekday, the NM clock interval, schedule and EOBT intervals and the no-NM flag.
+
+Change in month RMSE against the v46 stack, by the weight given to the predicted residual:
+
+| held-out month | components 0.25 | components 0.5 | components 1.0 | context 0.5 |
+|---|---|---|---|---|
+| January (eleven-month footing) | −0.028% | −0.044% | −0.039% | −0.028% |
+| July (eleven-month footing) | −0.006% | +0.007% | +0.093% | +0.014% |
+| November | −0.043% | −0.052% | +0.034% | −0.063% |
+| December (fair) | −0.042% | −0.044% | +0.074% | +0.015% |
+
+- At its best weight the learned gate is worth 0.03–0.04% in three months and nothing in July. The full predicted residual worsens three
+  of four months. The context features add nothing.
+- LTFM worsens in every month under both feature sets (+0.03% to +0.60% of its own RMSE); the small gains sit at the covered airports.
+- The EDDM artefact of section 2 shows again in November and December.
+
+Out of month, the v46 stack's residual is not predictable from its own components or from the clock and schedule intervals.
+**Closed.** ([`learned_gate_screen.json`](learned_gate_screen.json))
