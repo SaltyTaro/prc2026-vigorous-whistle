@@ -47,11 +47,11 @@ def fit_mapping(table: pd.DataFrame, airport: str, exclude: str | None) -> dict:
     return {"function": solve(x, y), "slope": slope, "sd_map": float(np.std(loo)), "u_max": float(x.max()), "months": int(len(g))}
 
 
-def shift_for(level: float, bias: float, sigma: float, u: float, u_max: float) -> tuple[float, dict]:
+def shift_for(level: float, bias: float, sigma: float, u: float, u_max: float, max_sigma: float = MAX_SIGMA) -> tuple[float, dict]:
     """The declared gate and shrinkage for one cell: (shift to subtract from the predictions, record)."""
     effective = level - bias
     inside = bool(u <= u_max + RANGE_MARGIN)
-    eligible = bool(inside and sigma <= MAX_SIGMA and abs(effective) >= GATE * sigma)
+    eligible = bool(inside and sigma <= max_sigma and abs(effective) >= GATE * sigma)
     shift = effective * max(0.0, 1.0 - sigma ** 2 / effective ** 2) if eligible and effective != 0 else 0.0
     return shift, {"level_estimate_s": level, "method_bias_s": bias, "sigma_s": sigma, "effective_level_s": effective, "u": u, "u_inside_range": inside,
                    "eligible": eligible, "shift_s": shift}
@@ -96,6 +96,7 @@ def method(level_by_month: dict, airport: str, exclude: str | None) -> tuple[flo
 
 def score() -> dict:
     decl = read_json(ROOT / DECLARATION)
+    max_sigma = float(decl["procedure"].get("max_sigma_s", MAX_SIGMA))
     if sha256_file(ROOT / WORKBOOK) != decl["external_data"]["sha256"]:
         raise ValueError("The workbook differs from the declared file.")
     pub = published()
@@ -110,7 +111,7 @@ def score() -> dict:
         for a in AIRPORTS:
             e = level_by_month[month][a]
             bias, noise = method(level_by_month, a, month)
-            shift, record = shift_for(e["estimate"], bias, max(e["sd_map"], noise), e["u"], e["u_max"])
+            shift, record = shift_for(e["estimate"], bias, max(e["sd_map"], noise), e["u"], e["u_max"], max_sigma)
             m = (airport == a) & (control > 0) & (control <= CAP)
             values[m] = np.maximum(control[m] - shift, floor[m])
             cells[a] = {**record, "true_level_error_s": e["true"], "rows": e["rows"]}
@@ -133,7 +134,7 @@ def score() -> dict:
         p = g[TARGET].to_numpy(dtype=float)
         p = p[(p > 0) & (p <= CAP)]
         bias, noise = method(level_by_month, a, None)
-        shift, record = shift_for(float(p.mean() - (q["P"] + mp["function"](q["u"]))), bias, max(mp["sd_map"], noise), float(q["u"]), mp["u_max"])
+        shift, record = shift_for(float(p.mean() - (q["P"] + mp["function"](q["u"]))), bias, max(mp["sd_map"], noise), float(q["u"]), mp["u_max"], max_sigma)
         stake += len(p) * (2 * shift * record["effective_level_s"] - shift ** 2) if record["eligible"] else 0.0
         report["scored_months"][f"{a} {month}"] = {**record, "rows": int(len(p)), "published_mean_s": float(q["P"]), "sd_map_s": mp["sd_map"], "method_noise_s": noise}
     n = len(v46)
@@ -192,6 +193,7 @@ def export(version: int, dry_run: Path | None) -> None:
               "rows_changed": int((change != 0).sum()), "mean_change_s": float(change[change != 0].mean()), "max_abs_change_s": float(np.abs(change).max()),
               "sum_squared_change": float((change ** 2).sum()), "rmse_expected_if_estimates_hold": report["scored_months_summary"]["rmse_expected_if_estimates_hold"],
               "rmse_if_every_move_is_noise": float(np.sqrt((n * V46[2] ** 2 + (change ** 2).sum()) / n))}
+    record["declaration"] = DECLARATION
     write_json((ROOT / f"docs/published_means/export_v{version}.json") if dry_run is None else out_dir / f"export_v{version}.json", record)
     print({k: v for k, v in record.items() if k not in ("receipt",)})
 
@@ -202,7 +204,10 @@ if __name__ == "__main__":
     parser.add_argument("--export", action="store_true")
     parser.add_argument("--version", type=int, default=47)
     parser.add_argument("--dry-run", type=Path)
+    parser.add_argument("--declaration", default=DECLARATION)
     args = parser.parse_args()
+    DECLARATION = args.declaration
+    REPORT = read_json(ROOT / DECLARATION)["report"]
     if args.score:
         if (ROOT / REPORT).exists():
             raise ValueError("Preserve the original results.")
