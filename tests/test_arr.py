@@ -134,3 +134,4 @@ def test_no_scoring_month_is_named_by_the_design_fold():
     import run_adsb_arr as runner
     months = [*runner.FIT_MONTHS["design"], *runner.TARGET_MONTHS["design"]]
     assert not set(months) & {"2025-01", "2025-07", "2025-11", "2025-12", "2026-01", "2026-07"}
+

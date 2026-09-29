@@ -1,0 +1,1376 @@
+{
+  "R3_target_against_notarget": {
+    "interval_s": [
+      -0.9918902824870642,
+      0.4928057996667277
+    ],
+    "mean_s": -0.3949245338543079,
+    "paired_differences_s": [
+      -0.3503083560988216,
+      -0.11533945152791603,
+      0.36168189613422896,
+      -1.475732223924723
+    ],
+    "proxy_pct_difference_by_b": {
+      "0.125": -0.01002826464200357,
+      "0.25": -0.020056227323062004,
+      "0.5": -0.04007758568813635
+    },
+    "sd_s": 0.7790500570978114,
+    "seed_mean_target_minus_notarget_pct": -0.14559500410038506,
+    "seeds": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "unseen_category_pct": -6.765323873089124
+  },
+  "audit_used": false,
+  "b_values": [
+    0.125,
+    0.25,
+    0.5
+  ],
+  "bar_pct": -0.1,
+  "committee_rmse_non_lirf": 159.03494928216773,
+  "config_sha256": "936785e186c8c8077bce4dd97a6d6e3ea89af73a9eeb2a5d3d90fdc1fa837f0a",
+  "created_at_utc": "2026-09-29T11:22:23.753480+00:00",
+  "decisions": {
+    "mt_l025@0.125": {
+      "bar": false,
+      "base_pct": 0.16420311915490426,
+      "below_base_member": true,
+      "complete": true,
+      "go": false,
+      "interval_s": [
+        0.16649700891384356,
+        0.40225793136707394
+      ],
+      "pct": 0.153168171176854,
+      "standalone_below_base": true
+    },
+    "mt_l025@0.25": {
+      "bar": false,
+      "base_pct": 0.35433347314155483,
+      "below_base_member": true,
+      "complete": true,
+      "go": false,
+      "interval_s": [
+        0.37186549888167375,
+        0.8626554317857319
+      ],
+      "pct": 0.3339609903171503,
+      "standalone_below_base": true
+    },
+    "mt_l025@0.5": {
+      "bar": false,
+      "base_pct": 0.8117690999838167,
+      "below_base_member": true,
+      "complete": true,
+      "go": false,
+      "interval_s": [
+        0.9056559189412525,
+        1.9545722026786267
+      ],
+      "pct": 0.7778031624355419,
+      "standalone_below_base": true
+    },
+    "mt_l05@0.125": {
+      "bar": false,
+      "base_pct": 0.16420311915490426,
+      "below_base_member": true,
+      "complete": true,
+      "go": false,
+      "interval_s": [
+        0.17811494902789066,
+        0.37723893397355535
+      ],
+      "pct": 0.15318155507362263,
+      "standalone_below_base": false
+    },
+    "mt_l05@0.25": {
+      "bar": false,
+      "base_pct": 0.35433347314155483,
+      "below_base_member": true,
+      "complete": true,
+      "go": false,
+      "interval_s": [
+        0.3986886751436671,
+        0.8106805459470593
+      ],
+      "pct": 0.3347850218271109,
+      "standalone_below_base": false
+    },
+    "mt_l05@0.5": {
+      "bar": false,
+      "base_pct": 0.8117690999838167,
+      "below_base_member": true,
+      "complete": true,
+      "go": false,
+      "interval_s": [
+        0.9688520875775091,
+        1.8552261391650113
+      ],
+      "pct": 0.7826190740708672,
+      "standalone_below_base": false
+    },
+    "mt_l05_notarget@0.125": {
+      "bar": false,
+      "base_pct": 0.16420311915490426,
+      "below_base_member": true,
+      "complete": true,
+      "go": false,
+      "interval_s": [
+        0.194028372825435,
+        0.4120706815548877
+      ],
+      "pct": 0.1632098197156262,
+      "standalone_below_base": false
+    },
+    "mt_l05_notarget@0.25": {
+      "bar": false,
+      "base_pct": 0.35433347314155483,
+      "below_base_member": false,
+      "complete": true,
+      "go": false,
+      "interval_s": [
+        0.4303115225465611,
+        0.8800565486223354
+      ],
+      "pct": 0.3548412491501729,
+      "standalone_below_base": false
+    },
+    "mt_l05_notarget@0.5": {
+      "bar": false,
+      "base_pct": 0.8117690999838167,
+      "below_base_member": false,
+      "complete": true,
+      "go": false,
+      "interval_s": [
+        1.0263609603750772,
+        1.9867648861504776
+      ],
+      "pct": 0.8226966597590035,
+      "standalone_below_base": false
+    },
+    "mt_l1@0.125": {
+      "bar": false,
+      "base_pct": 0.16420311915490426,
+      "below_base_member": true,
+      "complete": true,
+      "go": false,
+      "interval_s": [
+        0.20348301770151736,
+        0.3863932341317706
+      ],
+      "pct": 0.16375853009860109,
+      "standalone_below_base": false
+    },
+    "mt_l1@0.25": {
+      "bar": false,
+      "base_pct": 0.35433347314155483,
+      "below_base_member": false,
+      "complete": true,
+      "go": false,
+      "interval_s": [
+        0.45487811126064626,
+        0.831974744203934
+      ],
+      "pct": 0.3575112677340897,
+      "standalone_below_base": false
+    },
+    "mt_l1@0.5": {
+      "bar": false,
+      "base_pct": 0.8117690999838167,
+      "below_base_member": false,
+      "complete": true,
+      "go": false,
+      "interval_s": [
+        1.0923580703259645,
+        1.9120347240928124
+      ],
+      "pct": 0.8342809966582321,
+      "standalone_below_base": false
+    }
+  },
+  "go": false,
+  "governing_share": 0.75,
+  "inputs": {
+    "committee_sha256": "2862aabb3aa8fff43613397ebc32305c86ed74219c624c47860fa74e1110902e",
+    "predictions_sha256": {
+      "mt_l025_s1": "8fe24272afdafbe22b9a736ce6356f1761548ec871f37dd547abe23dde071b15",
+      "mt_l025_s2": "4ae9737f5ae729c6db123fb37f7a8d25b27509c55ee3dd05d7c3c73d96231126",
+      "mt_l025_s3": "9d914b74b848cb7a2dc0220c3baa00e6cda70b322d870046f6632e914970e2ae",
+      "mt_l025_s4": "aec71e3c1f9be7cca2cbd410abd25587d5835a43edc964277a67a9de1771eaf9",
+      "mt_l05_notarget_s1": "7025b3daf246dcc72bcd039053d4798747130521886d384cb3eb8487d75635dd",
+      "mt_l05_notarget_s2": "bdc822b1c9a128dacaba42ccf94078b3dffc8391ab7cfda1813d77c0e5aa909d",
+      "mt_l05_notarget_s3": "f67aa4cb72d59a9c39ff817538987458b8a4edc155d507ae047525a68f797f21",
+      "mt_l05_notarget_s4": "5dbb5e473fb0fa096cc09c07b4d324a1cbcfc2fbfcdcadda088380d7897f2938",
+      "mt_l05_s1": "3088990fe1034b3c018b7d57d7b1cbfdc83ac05faaaa704dca5b7105d90fad49",
+      "mt_l05_s2": "a21f2569ec66cc05e109b0b86e78e742f09abedd70a60dd46c61294fe791adaf",
+      "mt_l05_s3": "b8bbbf626b85e40937c266a074d4c9c73ca113ab1d8f939adda16f6cb924188f",
+      "mt_l05_s4": "a5e27e6f433f587ce3b31df1e2a1b501b54851bf93264f49aa086d74ea5b79cc",
+      "mt_l1_s1": "27d07986c1b9b5a53be6f5250ec5d81d5946bb0a2577e17139ff4a3c5fae69f6",
+      "mt_l1_s2": "f83c9403cf1fcedfca71f5a5cc9eb56f9af042653a41c7f4fc7340c2953d63fb",
+      "mt_l1_s3": "c9ab55a1b74ec055c99b455cfd63d7348310680f63fa7a15152e931ced47b1b5",
+      "mt_l1_s4": "87760430231ee126b6a2ae1d26c414f8ddcb98ea4098d80ec088b362d5119c41"
+    },
+    "recipe_proxy_inputs": {
+      "residual_columns": "25a9ab6b9a6384244f82ced7664edcf91c044387f44ada59e1ac62472f682eca",
+      "scratch": "00609578dff88396c3b9e78b19be593f88ac0036ce3788c2726d0456c7c7045d"
+    },
+    "tool_sha256": "8fe6cd44be8fd733abca1b6dea2e80444a690e47b82d65f06c41e70bf83c99dd"
+  },
+  "members": {
+    "base": {
+      "airports_rmse": {
+        "EDDF": 97.2750013921239,
+        "EDDM": 70.83921724641914,
+        "EGLL": 209.17004692744,
+        "EHAM": 96.28689764437561,
+        "LEBL": 140.88050677334328,
+        "LEMD": 138.15066800537394,
+        "LFPG": 223.23005092256622,
+        "LSZH": 96.51613111652425,
+        "LTFM": 230.13324816062342
+      },
+      "matched_rmse": 119.53549872175327,
+      "pool_correlation_of_errors": 0.9601544917780724,
+      "proxy": {
+        "0.75": {
+          "by_b": {
+            "0.125": {
+              "interval_s": [
+                0.1828532279498269,
+                0.4170753063762859
+              ],
+              "matched_pct": 0.095884497440335,
+              "pct": 0.16420311915490426,
+              "unmatched_pct": 0.3239076035459254
+            },
+            "0.25": {
+              "interval_s": [
+                0.40424205558623855,
+                0.8869987015787486
+              ],
+              "matched_pct": 0.2136067103830408,
+              "pct": 0.35433347314155483,
+              "unmatched_pct": 0.6945520943559602
+            },
+            "0.5": {
+              "interval_s": [
+                0.9626523552495179,
+                1.9936466176002035
+              ],
+              "matched_pct": 0.51424313409838,
+              "pct": 0.8117690999838167,
+              "unmatched_pct": 1.57394072368775
+            }
+          },
+          "control_rmse": 176.26167383161464
+        },
+        "0.85": {
+          "by_b": {
+            "0.125": {
+              "interval_s": [
+                0.18142800989986796,
+                0.43239812094567515
+              ],
+              "matched_pct": 0.10221048648386688,
+              "pct": 0.1679696052240942,
+              "unmatched_pct": 0.32943530649531816
+            },
+            "0.25": {
+              "interval_s": [
+                0.41243357985935136,
+                0.9318100071862251
+              ],
+              "matched_pct": 0.23246409233868004,
+              "pct": 0.36933655925297515,
+              "unmatched_pct": 0.7193183720829
+            },
+            "0.5": {
+              "interval_s": [
+                1.0260899324795596,
+                2.1502991289403446
+              ],
+              "matched_pct": 0.5766413929656489,
+              "pct": 0.8714293018732056,
+              "unmatched_pct": 1.6775385651135455
+            }
+          },
+          "control_rmse": 176.1699606440017
+        }
+      },
+      "runs_rmse": {
+        "1": 167.74117912205068,
+        "2": 167.4406461452658,
+        "3": 168.3868981031062,
+        "4": 167.46848063740765
+      },
+      "seed_mean_rmse": 161.80944299065257,
+      "seeds": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "unmatched_rmse": 220.90875535883058,
+      "unseen_category_rmse": 169.60541668816626,
+      "unseen_category_rows": 1368
+    },
+    "mt_l025": {
+      "airports_minus_base_pct": {
+        "EDDF": -0.18297696629306914,
+        "EDDM": -1.1156072572945153,
+        "EGLL": -0.8553693914610472,
+        "EHAM": -0.04048860483786276,
+        "LEBL": -0.012121999828618168,
+        "LEMD": 0.4859203307150395,
+        "LFPG": -0.07899897262350075,
+        "LSZH": 0.8143538478959211,
+        "LTFM": 0.41216168467699266
+      },
+      "airports_rmse": {
+        "EDDF": 97.09701054561505,
+        "EDDM": 70.04892979780746,
+        "EGLL": 207.38087036991797,
+        "EHAM": 96.24791242287775,
+        "LEBL": 140.86342923855366,
+        "LEMD": 138.8219701882307,
+        "LFPG": 223.05370147575047,
+        "LSZH": 97.30211394411194,
+        "LTFM": 231.08176923324413
+      },
+      "base_seed_mean_rmse_same_seeds": 161.80944299065257,
+      "matched_minus_base_pct": -0.09424940834540374,
+      "matched_rmse": 119.42283722144529,
+      "paired_mean_s": -0.033384915983504015,
+      "paired_sd_s": 0.5403863072527815,
+      "paired_seed_differences_s": [
+        0.35839756723240157,
+        0.18386010081584914,
+        0.15702856291858325,
+        -0.83282589490085
+      ],
+      "pool_correlation_of_errors": 0.9574892728904641,
+      "proxy": {
+        "0.75": {
+          "by_b": {
+            "0.125": {
+              "interval_s": [
+                0.16649700891384356,
+                0.40225793136707394
+              ],
+              "matched_pct": 0.08438670225232592,
+              "pct": 0.153168171176854,
+              "unmatched_pct": 0.30503954467053784
+            },
+            "0.25": {
+              "interval_s": [
+                0.37186549888167375,
+                0.8626554317857319
+              ],
+              "matched_pct": 0.1920440805627477,
+              "pct": 0.3339609903171503,
+              "unmatched_pct": 0.659961859641256
+            },
+            "0.5": {
+              "interval_s": [
+                0.9056559189412525,
+                1.9545722026786267
+              ],
+              "matched_pct": 0.47685549279843364,
+              "pct": 0.7778031624355419,
+              "unmatched_pct": 1.5172885032061822
+            }
+          },
+          "control_rmse": 176.26167383161464
+        },
+        "0.85": {
+          "by_b": {
+            "0.125": {
+              "interval_s": [
+                0.16276840220606914,
+                0.41531391971396725
+              ],
+              "matched_pct": 0.08828782420899906,
+              "pct": 0.15469792438154162,
+              "unmatched_pct": 0.3067716758143879
+            },
+            "0.25": {
+              "interval_s": [
+                0.3766379834366802,
+                0.9052206309849008
+              ],
+              "matched_pct": 0.20645933260594607,
+              "pct": 0.34497476961496965,
+              "unmatched_pct": 0.678038168523476
+            },
+            "0.5": {
+              "interval_s": [
+                0.9572975974501212,
+                2.1102408511510413
+              ],
+              "matched_pct": 0.532005228233845,
+              "pct": 0.8314218807562224,
+              "unmatched_pct": 1.6111050258993842
+            }
+          },
+          "control_rmse": 176.1699606440017
+        }
+      },
+      "runs_rmse": {
+        "1": 168.09957668928308,
+        "2": 167.62450624608164,
+        "3": 168.5439266660248,
+        "4": 166.6356547425068
+      },
+      "seed_mean_minus_base_pct": -0.04392191188941075,
+      "seed_mean_rmse": 161.73837318967347,
+      "seeds": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "unmatched_minus_base_pct": -0.01590935658434267,
+      "unmatched_rmse": 220.8736101972145,
+      "unseen_category_minus_base_pct": -4.202306076683215,
+      "unseen_category_rmse": 162.47807795629555,
+      "unseen_category_rows": 1368
+    },
+    "mt_l05": {
+      "airports_minus_base_pct": {
+        "EDDF": 0.9507760973701984,
+        "EDDM": 0.05748130028755405,
+        "EGLL": -0.6417680048150798,
+        "EHAM": 0.28894689637930515,
+        "LEBL": 0.6203471147081752,
+        "LEMD": 0.6689689910496011,
+        "LFPG": 0.806096945833823,
+        "LSZH": 1.1216587993094995,
+        "LTFM": -0.6076207447832327
+      },
+      "airports_rmse": {
+        "EDDF": 98.19986885407674,
+        "EDDM": 70.8799365496059,
+        "EGLL": 207.82766049060302,
+        "EHAM": 96.56511564673896,
+        "LEBL": 141.754454932298,
+        "LEMD": 139.07485313525777,
+        "LFPG": 225.02950154523631,
+        "LSZH": 97.59871279394584,
+        "LTFM": 228.734910804156
+      },
+      "base_seed_mean_rmse_same_seeds": 161.80944299065257,
+      "matched_minus_base_pct": 0.12312879683185063,
+      "matched_rmse": 119.68268134311633,
+      "paired_mean_s": 0.11712700802612375,
+      "paired_sd_s": 0.3513539682873717,
+      "paired_seed_differences_s": [
+        -0.08500497920977068,
+        0.6172078377204571,
+        0.10048531185194065,
+        -0.16418013825813205
+      ],
+      "pool_correlation_of_errors": 0.9563042786114865,
+      "proxy": {
+        "0.75": {
+          "by_b": {
+            "0.125": {
+              "interval_s": [
+                0.17811494902789066,
+                0.37723893397355535
+              ],
+              "matched_pct": 0.09356678627947534,
+              "pct": 0.15318155507362263,
+              "unmatched_pct": 0.2998308236644265
+            },
+            "0.25": {
+              "interval_s": [
+                0.3986886751436671,
+                0.8106805459470593
+              ],
+              "matched_pct": 0.2118112476261036,
+              "pct": 0.3347850218271109,
+              "unmatched_pct": 0.6506023900049618
+            },
+            "0.5": {
+              "interval_s": [
+                0.9688520875775091,
+                1.8552261391650113
+              ],
+              "matched_pct": 0.521966679845276,
+              "pct": 0.7826190740708672,
+              "unmatched_pct": 1.5027785963498408
+            }
+          },
+          "control_rmse": 176.26167383161464
+        },
+        "0.85": {
+          "by_b": {
+            "0.125": {
+              "interval_s": [
+                0.17582171123708362,
+                0.38958673799532156
+              ],
+              "matched_pct": 0.09754680505185132,
+              "pct": 0.1546719043534317,
+              "unmatched_pct": 0.3014096113909126
+            },
+            "0.25": {
+              "interval_s": [
+                0.4061610090941471,
+                0.8476981185869639
+              ],
+              "matched_pct": 0.22678696006634969,
+              "pct": 0.34594788482047445,
+              "unmatched_pct": 0.6686687103981903
+            },
+            "0.5": {
+              "interval_s": [
+                1.0301289144198151,
+                1.992078811954226
+              ],
+              "matched_pct": 0.5798286681520048,
+              "pct": 0.8374390158196965,
+              "unmatched_pct": 1.5977509558516623
+            }
+          },
+          "control_rmse": 176.1699606440017
+        }
+      },
+      "runs_rmse": {
+        "1": 167.6561741428409,
+        "2": 168.05785398298625,
+        "3": 168.48738341495815,
+        "4": 167.30430049914952
+      },
+      "seed_mean_minus_base_pct": 0.06977932730143355,
+      "seed_mean_rmse": 161.92235253148164,
+      "seeds": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "unmatched_minus_base_pct": 0.0400607546755305,
+      "unmatched_rmse": 220.99725307337167,
+      "unseen_category_minus_base_pct": -5.626775195827971,
+      "unseen_category_rmse": 160.06210117117584,
+      "unseen_category_rows": 1368
+    },
+    "mt_l05_notarget": {
+      "airports_minus_base_pct": {
+        "EDDF": 0.43384907221610813,
+        "EDDM": 1.3127339036699937,
+        "EGLL": -0.6313765143515226,
+        "EHAM": 0.7027780938158035,
+        "LEBL": 1.1564247828720786,
+        "LEMD": 0.6382349417511479,
+        "LFPG": 0.5370639400536614,
+        "LSZH": 0.7848978205931889,
+        "LTFM": -0.034762457757842036
+      },
+      "airports_rmse": {
+        "EDDF": 97.69702808316183,
+        "EDDM": 71.76914766830733,
+        "EGLL": 207.8493963760821,
+        "EHAM": 96.96358086823513,
+        "LEBL": 142.509683867906,
+        "LEMD": 139.03239384084688,
+        "LFPG": 224.42893902943476,
+        "LSZH": 97.27368412617871,
+        "LTFM": 230.05324818744484
+      },
+      "base_seed_mean_rmse_same_seeds": 161.80944299065257,
+      "matched_minus_base_pct": 0.10582129105536353,
+      "matched_rmse": 119.66199272977009,
+      "paired_mean_s": 0.5120515418804317,
+      "paired_sd_s": 0.6699793070591765,
+      "paired_seed_differences_s": [
+        0.2653033768890509,
+        0.7325472892483731,
+        -0.2611965842822883,
+        1.311552085666591
+      ],
+      "pool_correlation_of_errors": 0.9564666799031284,
+      "proxy": {
+        "0.75": {
+          "by_b": {
+            "0.125": {
+              "interval_s": [
+                0.194028372825435,
+                0.4120706815548877
+              ],
+              "matched_pct": 0.09516812559589027,
+              "pct": 0.1632098197156262,
+              "unmatched_pct": 0.32202746435019414
+            },
+            "0.25": {
+              "interval_s": [
+                0.4303115225465611,
+                0.8800565486223354
+              ],
+              "matched_pct": 0.21592627121869157,
+              "pct": 0.3548412491501729,
+              "unmatched_pct": 0.694399714694538
+            },
+            "0.5": {
+              "interval_s": [
+                1.0263609603750772,
+                1.9867648861504776
+              ],
+              "matched_pct": 0.5338242267724613,
+              "pct": 0.8226966597590035,
+              "unmatched_pct": 1.5878892730495142
+            }
+          },
+          "control_rmse": 176.26167383161464
+        },
+        "0.85": {
+          "by_b": {
+            "0.125": {
+              "interval_s": [
+                0.19152276087347103,
+                0.4239065949353133
+              ],
+              "matched_pct": 0.09736577771985999,
+              "pct": 0.1654854233164027,
+              "unmatched_pct": 0.326475045959862
+            },
+            "0.25": {
+              "interval_s": [
+                0.43888441488086516,
+                0.9225751060511312
+              ],
+              "matched_pct": 0.22760133627997003,
+              "pct": 0.3675801029775716,
+              "unmatched_pct": 0.7180485955071703
+            },
+            "0.5": {
+              "interval_s": [
+                1.0955290924041137,
+                2.1355272008618833
+              ],
+              "matched_pct": 0.5861388693116698,
+              "pct": 0.8806773057004502,
+              "unmatched_pct": 1.6933582695586313
+            }
+          },
+          "control_rmse": 176.1699606440017
+        }
+      },
+      "runs_rmse": {
+        "1": 168.00648249893973,
+        "2": 168.17319343451416,
+        "3": 168.12570151882392,
+        "4": 168.78003272307424
+      },
+      "seed_mean_minus_base_pct": 0.2156883628825934,
+      "seed_mean_rmse": 162.15844712922856,
+      "seeds": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "unmatched_minus_base_pct": 0.2768127613510085,
+      "unmatched_rmse": 221.52025898460548,
+      "unseen_category_minus_base_pct": 1.2211644042302128,
+      "unseen_category_rmse": 171.67657766440846,
+      "unseen_category_rows": 1368
+    },
+    "mt_l1": {
+      "airports_minus_base_pct": {
+        "EDDF": 1.8648170701129008,
+        "EDDM": 1.8369331388224275,
+        "EGLL": -0.3558379575184123,
+        "EHAM": 1.3513110113005267,
+        "LEBL": -0.19086367080155542,
+        "LEMD": 1.4199949636910736,
+        "LFPG": 0.6045275196458366,
+        "LSZH": 2.6839876671851837,
+        "LTFM": -0.2826925748653619
+      },
+      "airports_rmse": {
+        "EDDF": 99.08900222303679,
+        "EDDM": 72.14048630330102,
+        "EGLL": 208.4257405047131,
+        "EHAM": 97.58803309468372,
+        "LEBL": 140.61161706667184,
+        "LEMD": 140.11240053335584,
+        "LFPG": 224.57953801251253,
+        "LSZH": 99.10661217253603,
+        "LTFM": 229.48267855577686
+      },
+      "base_seed_mean_rmse_same_seeds": 161.80944299065257,
+      "matched_minus_base_pct": 0.8918461899352748,
+      "matched_rmse": 120.60157151272337,
+      "paired_mean_s": 0.6445325911837827,
+      "paired_sd_s": 0.5305579344638723,
+      "paired_seed_differences_s": [
+        0.7189501351756746,
+        1.3439448432566223,
+        0.09894598863934334,
+        0.4162893976634905
+      ],
+      "pool_correlation_of_errors": 0.9540312740361194,
+      "proxy": {
+        "0.75": {
+          "by_b": {
+            "0.125": {
+              "interval_s": [
+                0.20348301770151736,
+                0.3863932341317706
+              ],
+              "matched_pct": 0.1283311770552853,
+              "pct": 0.16375853009860109,
+              "unmatched_pct": 0.3043618236519663
+            },
+            "0.25": {
+              "interval_s": [
+                0.45487811126064626,
+                0.831974744203934
+              ],
+              "matched_pct": 0.2857000990068359,
+              "pct": 0.3575112677340897,
+              "unmatched_pct": 0.6608031850650065
+            },
+            "0.5": {
+              "interval_s": [
+                1.0923580703259645,
+                1.9120347240928124
+              ],
+              "matched_pct": 0.6869814408552166,
+              "pct": 0.8342809966582321,
+              "unmatched_pct": 1.527650324301466
+            }
+          },
+          "control_rmse": 176.26167383161464
+        },
+        "0.85": {
+          "by_b": {
+            "0.125": {
+              "interval_s": [
+                0.2018323721570745,
+                0.3965215875972603
+              ],
+              "matched_pct": 0.13447114539655303,
+              "pct": 0.16510216877341222,
+              "unmatched_pct": 0.30434007217554626
+            },
+            "0.25": {
+              "interval_s": [
+                0.4610920704685938,
+                0.8659123551738862
+              ],
+              "matched_pct": 0.3062436794374124,
+              "pct": 0.3688396283145323,
+              "unmatched_pct": 0.6760155745996643
+            },
+            "0.5": {
+              "interval_s": [
+                1.1593429089936378,
+                2.0429987637031024
+              ],
+              "matched_pct": 0.7608884137393357,
+              "pct": 0.8912398088130269,
+              "unmatched_pct": 1.618283656756736
+            }
+          },
+          "control_rmse": 176.1699606440017
+        }
+      },
+      "runs_rmse": {
+        "1": 168.46012925722636,
+        "2": 168.7845909885224,
+        "3": 168.48584409174555,
+        "4": 167.88477003507114
+      },
+      "seed_mean_minus_base_pct": 0.3356621131428428,
+      "seed_mean_rmse": 162.35257598625967,
+      "seeds": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "unmatched_minus_base_pct": 0.024625257876387252,
+      "unmatched_rmse": 220.96315470950918,
+      "unseen_category_minus_base_pct": -4.449352593848999,
+      "unseen_category_rmse": 162.05907368144292,
+      "unseen_category_rows": 1368
+    }
+  },
+  "nesting": {
+    "base_curve": [
+      203.841,
+      187.7831,
+      182.5875,
+      175.8646,
+      176.4527,
+      175.4867,
+      172.0479,
+      170.5647,
+      171.2956,
+      173.0223,
+      171.097,
+      171.0897,
+      172.6335,
+      171.4297,
+      171.6807,
+      171.6583
+    ],
+    "base_rmse": 167.74117912205068,
+    "base_threads": 8,
+    "curve": [
+      203.841,
+      187.7831,
+      182.5875,
+      175.8646,
+      176.4527,
+      175.4867,
+      172.0479,
+      170.5647,
+      171.2956,
+      173.0223,
+      171.097,
+      171.0897,
+      172.6335,
+      171.4297,
+      171.6807,
+      171.6583
+    ],
+    "max_abs_difference_s": 0.0,
+    "rms_difference_s": 0.0,
+    "rmse": 167.74117912205068,
+    "seed": 1,
+    "threads": 8,
+    "vocabulary_equal": true
+  },
+  "note": "October only (the committee's early-stopping month); no scoring month, ranking row or official score read.",
+  "pool_rmse_non_lirf": 154.01647144993638,
+  "rows_non_lirf": 169734,
+  "rows_proxy": 183761,
+  "runs": {
+    "mt_l025_s1": {
+      "added_categories": {
+        "aircraft_type": 16,
+        "airport": 0,
+        "destination": 124,
+        "flight_type": 0,
+        "market_segment": 0,
+        "movement_rule": 0,
+        "nm_aircraft_type": 9,
+        "nm_destination": 114,
+        "nm_origin": 0,
+        "operator": 63,
+        "record_flight_prefix": 185,
+        "record_flight_shape": 9,
+        "runway": 9,
+        "stand": 64,
+        "wake_category": 0
+      },
+      "arrival_loss_last": 0.2984208045932262,
+      "curve_last": [
+        171.75,
+        171.734,
+        171.993
+      ],
+      "fit_month_rows": 1128692,
+      "fit_seconds": 2826.1,
+      "lambda": 0.25,
+      "rows": 1300044,
+      "target_month_rmse": 155.84707207985596,
+      "target_month_rmse_of_fit_mean": 290.6183430180643,
+      "target_month_rows": 171352
+    },
+    "mt_l025_s2": {
+      "added_categories": {
+        "aircraft_type": 16,
+        "airport": 0,
+        "destination": 124,
+        "flight_type": 0,
+        "market_segment": 0,
+        "movement_rule": 0,
+        "nm_aircraft_type": 9,
+        "nm_destination": 114,
+        "nm_origin": 0,
+        "operator": 63,
+        "record_flight_prefix": 185,
+        "record_flight_shape": 9,
+        "runway": 9,
+        "stand": 64,
+        "wake_category": 0
+      },
+      "arrival_loss_last": 0.29647338741283485,
+      "curve_last": [
+        171.219,
+        171.71,
+        171.453
+      ],
+      "fit_month_rows": 1128692,
+      "fit_seconds": 2556.1,
+      "lambda": 0.25,
+      "rows": 1300044,
+      "target_month_rmse": 155.3987487916142,
+      "target_month_rmse_of_fit_mean": 290.6183430180643,
+      "target_month_rows": 171352
+    },
+    "mt_l025_s3": {
+      "added_categories": {
+        "aircraft_type": 16,
+        "airport": 0,
+        "destination": 124,
+        "flight_type": 0,
+        "market_segment": 0,
+        "movement_rule": 0,
+        "nm_aircraft_type": 9,
+        "nm_destination": 114,
+        "nm_origin": 0,
+        "operator": 63,
+        "record_flight_prefix": 185,
+        "record_flight_shape": 9,
+        "runway": 9,
+        "stand": 64,
+        "wake_category": 0
+      },
+      "arrival_loss_last": 0.2991600315477969,
+      "curve_last": [
+        171.983,
+        172.377,
+        172.393
+      ],
+      "fit_month_rows": 1128692,
+      "fit_seconds": 2904.8,
+      "lambda": 0.25,
+      "rows": 1300044,
+      "target_month_rmse": 155.6989270086102,
+      "target_month_rmse_of_fit_mean": 290.6183430180643,
+      "target_month_rows": 171352
+    },
+    "mt_l025_s4": {
+      "added_categories": {
+        "aircraft_type": 16,
+        "airport": 0,
+        "destination": 124,
+        "flight_type": 0,
+        "market_segment": 0,
+        "movement_rule": 0,
+        "nm_aircraft_type": 9,
+        "nm_destination": 114,
+        "nm_origin": 0,
+        "operator": 63,
+        "record_flight_prefix": 185,
+        "record_flight_shape": 9,
+        "runway": 9,
+        "stand": 64,
+        "wake_category": 0
+      },
+      "arrival_loss_last": 0.2959684916380523,
+      "curve_last": [
+        170.633,
+        170.504,
+        170.522
+      ],
+      "fit_month_rows": 1128692,
+      "fit_seconds": 2367.3,
+      "lambda": 0.25,
+      "rows": 1300044,
+      "target_month_rmse": 155.12652845665144,
+      "target_month_rmse_of_fit_mean": 290.6183430180643,
+      "target_month_rows": 171352
+    },
+    "mt_l05_notarget_s1": {
+      "added_categories": {
+        "aircraft_type": 16,
+        "airport": 0,
+        "destination": 109,
+        "flight_type": 0,
+        "market_segment": 0,
+        "movement_rule": 0,
+        "nm_aircraft_type": 9,
+        "nm_destination": 97,
+        "nm_origin": 0,
+        "operator": 53,
+        "record_flight_prefix": 165,
+        "record_flight_shape": 9,
+        "runway": 9,
+        "stand": 57,
+        "wake_category": 0
+      },
+      "arrival_loss_last": 0.27497425559314265,
+      "curve_last": [
+        171.804,
+        171.863,
+        171.986
+      ],
+      "fit_month_rows": 1128692,
+      "fit_seconds": 2560.2,
+      "lambda": 0.5,
+      "rows": 1128692,
+      "target_month_rmse": 164.1149794943091,
+      "target_month_rmse_of_fit_mean": 290.6183430180643,
+      "target_month_rows": 171352
+    },
+    "mt_l05_notarget_s2": {
+      "added_categories": {
+        "aircraft_type": 16,
+        "airport": 0,
+        "destination": 109,
+        "flight_type": 0,
+        "market_segment": 0,
+        "movement_rule": 0,
+        "nm_aircraft_type": 9,
+        "nm_destination": 97,
+        "nm_origin": 0,
+        "operator": 53,
+        "record_flight_prefix": 165,
+        "record_flight_shape": 9,
+        "runway": 9,
+        "stand": 57,
+        "wake_category": 0
+      },
+      "arrival_loss_last": 0.2752060924751171,
+      "curve_last": [
+        171.892,
+        172.449,
+        172.231
+      ],
+      "fit_month_rows": 1128692,
+      "fit_seconds": 2812.3,
+      "lambda": 0.5,
+      "rows": 1128692,
+      "target_month_rmse": 163.25611120606823,
+      "target_month_rmse_of_fit_mean": 290.6183430180643,
+      "target_month_rows": 171352
+    },
+    "mt_l05_notarget_s3": {
+      "added_categories": {
+        "aircraft_type": 16,
+        "airport": 0,
+        "destination": 109,
+        "flight_type": 0,
+        "market_segment": 0,
+        "movement_rule": 0,
+        "nm_aircraft_type": 9,
+        "nm_destination": 97,
+        "nm_origin": 0,
+        "operator": 53,
+        "record_flight_prefix": 165,
+        "record_flight_shape": 9,
+        "runway": 9,
+        "stand": 57,
+        "wake_category": 0
+      },
+      "arrival_loss_last": 0.27692473550205643,
+      "curve_last": [
+        171.271,
+        171.98,
+        172.072
+      ],
+      "fit_month_rows": 1128692,
+      "fit_seconds": 2713.5,
+      "lambda": 0.5,
+      "rows": 1128692,
+      "target_month_rmse": 163.86308134840476,
+      "target_month_rmse_of_fit_mean": 290.6183430180643,
+      "target_month_rows": 171352
+    },
+    "mt_l05_notarget_s4": {
+      "added_categories": {
+        "aircraft_type": 16,
+        "airport": 0,
+        "destination": 109,
+        "flight_type": 0,
+        "market_segment": 0,
+        "movement_rule": 0,
+        "nm_aircraft_type": 9,
+        "nm_destination": 97,
+        "nm_origin": 0,
+        "operator": 53,
+        "record_flight_prefix": 165,
+        "record_flight_shape": 9,
+        "runway": 9,
+        "stand": 57,
+        "wake_category": 0
+      },
+      "arrival_loss_last": 0.2734774317106475,
+      "curve_last": [
+        173.24,
+        172.389,
+        172.632
+      ],
+      "fit_month_rows": 1128692,
+      "fit_seconds": 2795.6,
+      "lambda": 0.5,
+      "rows": 1128692,
+      "target_month_rmse": 163.9851792220789,
+      "target_month_rmse_of_fit_mean": 290.6183430180643,
+      "target_month_rows": 171352
+    },
+    "mt_l05_s1": {
+      "added_categories": {
+        "aircraft_type": 16,
+        "airport": 0,
+        "destination": 124,
+        "flight_type": 0,
+        "market_segment": 0,
+        "movement_rule": 0,
+        "nm_aircraft_type": 9,
+        "nm_destination": 114,
+        "nm_origin": 0,
+        "operator": 63,
+        "record_flight_prefix": 185,
+        "record_flight_shape": 9,
+        "runway": 9,
+        "stand": 64,
+        "wake_category": 0
+      },
+      "arrival_loss_last": 0.2796980713534614,
+      "curve_last": [
+        171.706,
+        171.718,
+        171.654
+      ],
+      "fit_month_rows": 1128692,
+      "fit_seconds": 2592.4,
+      "lambda": 0.5,
+      "rows": 1300044,
+      "target_month_rmse": 150.8603213368652,
+      "target_month_rmse_of_fit_mean": 290.6183430180643,
+      "target_month_rows": 171352
+    },
+    "mt_l05_s2": {
+      "added_categories": {
+        "aircraft_type": 16,
+        "airport": 0,
+        "destination": 124,
+        "flight_type": 0,
+        "market_segment": 0,
+        "movement_rule": 0,
+        "nm_aircraft_type": 9,
+        "nm_destination": 114,
+        "nm_origin": 0,
+        "operator": 63,
+        "record_flight_prefix": 185,
+        "record_flight_shape": 9,
+        "runway": 9,
+        "stand": 64,
+        "wake_category": 0
+      },
+      "arrival_loss_last": 0.27876747083728726,
+      "curve_last": [
+        172.098,
+        172.063,
+        172.079
+      ],
+      "fit_month_rows": 1128692,
+      "fit_seconds": 2868.9,
+      "lambda": 0.5,
+      "rows": 1300044,
+      "target_month_rmse": 150.58730463647538,
+      "target_month_rmse_of_fit_mean": 290.6183430180643,
+      "target_month_rows": 171352
+    },
+    "mt_l05_s3": {
+      "added_categories": {
+        "aircraft_type": 16,
+        "airport": 0,
+        "destination": 124,
+        "flight_type": 0,
+        "market_segment": 0,
+        "movement_rule": 0,
+        "nm_aircraft_type": 9,
+        "nm_destination": 114,
+        "nm_origin": 0,
+        "operator": 63,
+        "record_flight_prefix": 185,
+        "record_flight_shape": 9,
+        "runway": 9,
+        "stand": 64,
+        "wake_category": 0
+      },
+      "arrival_loss_last": 0.27953125436560833,
+      "curve_last": [
+        171.989,
+        172.42,
+        172.299
+      ],
+      "fit_month_rows": 1128692,
+      "fit_seconds": 2766.7,
+      "lambda": 0.5,
+      "rows": 1300044,
+      "target_month_rmse": 150.68071516056142,
+      "target_month_rmse_of_fit_mean": 290.6183430180643,
+      "target_month_rows": 171352
+    },
+    "mt_l05_s4": {
+      "added_categories": {
+        "aircraft_type": 16,
+        "airport": 0,
+        "destination": 124,
+        "flight_type": 0,
+        "market_segment": 0,
+        "movement_rule": 0,
+        "nm_aircraft_type": 9,
+        "nm_destination": 114,
+        "nm_origin": 0,
+        "operator": 63,
+        "record_flight_prefix": 185,
+        "record_flight_shape": 9,
+        "runway": 9,
+        "stand": 64,
+        "wake_category": 0
+      },
+      "arrival_loss_last": 0.27981736432706966,
+      "curve_last": [
+        171.08,
+        170.919,
+        171.077
+      ],
+      "fit_month_rows": 1128692,
+      "fit_seconds": 2747.5,
+      "lambda": 0.5,
+      "rows": 1300044,
+      "target_month_rmse": 150.9018576160549,
+      "target_month_rmse_of_fit_mean": 290.6183430180643,
+      "target_month_rows": 171352
+    },
+    "mt_l1_s1": {
+      "added_categories": {
+        "aircraft_type": 16,
+        "airport": 0,
+        "destination": 124,
+        "flight_type": 0,
+        "market_segment": 0,
+        "movement_rule": 0,
+        "nm_aircraft_type": 9,
+        "nm_destination": 114,
+        "nm_origin": 0,
+        "operator": 63,
+        "record_flight_prefix": 185,
+        "record_flight_shape": 9,
+        "runway": 9,
+        "stand": 64,
+        "wake_category": 0
+      },
+      "arrival_loss_last": 0.26164207386149874,
+      "curve_last": [
+        171.637,
+        172.213,
+        172.268
+      ],
+      "fit_month_rows": 1128692,
+      "fit_seconds": 2842.1,
+      "lambda": 1.0,
+      "rows": 1300044,
+      "target_month_rmse": 145.89258700964012,
+      "target_month_rmse_of_fit_mean": 290.6183430180643,
+      "target_month_rows": 171352
+    },
+    "mt_l1_s2": {
+      "added_categories": {
+        "aircraft_type": 16,
+        "airport": 0,
+        "destination": 124,
+        "flight_type": 0,
+        "market_segment": 0,
+        "movement_rule": 0,
+        "nm_aircraft_type": 9,
+        "nm_destination": 114,
+        "nm_origin": 0,
+        "operator": 63,
+        "record_flight_prefix": 185,
+        "record_flight_shape": 9,
+        "runway": 9,
+        "stand": 64,
+        "wake_category": 0
+      },
+      "arrival_loss_last": 0.26092272872726124,
+      "curve_last": [
+        172.786,
+        172.708,
+        172.681
+      ],
+      "fit_month_rows": 1128692,
+      "fit_seconds": 2620.3,
+      "lambda": 1.0,
+      "rows": 1300044,
+      "target_month_rmse": 145.80755717822075,
+      "target_month_rmse_of_fit_mean": 290.6183430180643,
+      "target_month_rows": 171352
+    },
+    "mt_l1_s3": {
+      "added_categories": {
+        "aircraft_type": 16,
+        "airport": 0,
+        "destination": 124,
+        "flight_type": 0,
+        "market_segment": 0,
+        "movement_rule": 0,
+        "nm_aircraft_type": 9,
+        "nm_destination": 114,
+        "nm_origin": 0,
+        "operator": 63,
+        "record_flight_prefix": 185,
+        "record_flight_shape": 9,
+        "runway": 9,
+        "stand": 64,
+        "wake_category": 0
+      },
+      "arrival_loss_last": 0.26074341079895047,
+      "curve_last": [
+        172.037,
+        172.34,
+        172.432
+      ],
+      "fit_month_rows": 1128692,
+      "fit_seconds": 2861.8,
+      "lambda": 1.0,
+      "rows": 1300044,
+      "target_month_rmse": 146.03820705789323,
+      "target_month_rmse_of_fit_mean": 290.6183430180643,
+      "target_month_rows": 171352
+    },
+    "mt_l1_s4": {
+      "added_categories": {
+        "aircraft_type": 16,
+        "airport": 0,
+        "destination": 124,
+        "flight_type": 0,
+        "market_segment": 0,
+        "movement_rule": 0,
+        "nm_aircraft_type": 9,
+        "nm_destination": 114,
+        "nm_origin": 0,
+        "operator": 63,
+        "record_flight_prefix": 185,
+        "record_flight_shape": 9,
+        "runway": 9,
+        "stand": 64,
+        "wake_category": 0
+      },
+      "arrival_loss_last": 0.2619719505580007,
+      "curve_last": [
+        171.922,
+        171.938,
+        171.845
+      ],
+      "fit_month_rows": 1128692,
+      "fit_seconds": 2743.1,
+      "lambda": 1.0,
+      "rows": 1300044,
+      "target_month_rmse": 146.2826460862732,
+      "target_month_rmse_of_fit_mean": 290.6183430180643,
+      "target_month_rows": 171352
+    }
+  },
+  "shares": [
+    0.75,
+    0.85
+  ]
+}
