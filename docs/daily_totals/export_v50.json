@@ -1,0 +1,579 @@
+{
+  "against_v48": {
+    "base": {
+      "official_rmse_seconds": 222.6042,
+      "sha256": "714ce4257b9b224ee7720e7bcae5c9240bc829935a05aa541049314ab8e51e0e",
+      "submission": "vigorous-whistle_v48.parquet"
+    },
+    "by_airport_month": {
+      "EDDF|2026-01": {
+        "heavy_rows_that_differ": 3,
+        "rows_that_differ": 88,
+        "sum_squared_change": 1384.0
+      },
+      "EDDF|2026-07": {
+        "heavy_rows_that_differ": 0,
+        "rows_that_differ": 0,
+        "sum_squared_change": 0.0
+      },
+      "EDDM|2026-01": {
+        "heavy_rows_that_differ": 1,
+        "rows_that_differ": 7,
+        "sum_squared_change": 2122.0
+      },
+      "EDDM|2026-07": {
+        "heavy_rows_that_differ": 0,
+        "rows_that_differ": 0,
+        "sum_squared_change": 0.0
+      },
+      "EGLL|2026-01": {
+        "heavy_rows_that_differ": 0,
+        "rows_that_differ": 124,
+        "sum_squared_change": 124.0
+      },
+      "EGLL|2026-07": {
+        "heavy_rows_that_differ": 0,
+        "rows_that_differ": 65,
+        "sum_squared_change": 65.0
+      },
+      "EHAM|2026-01": {
+        "heavy_rows_that_differ": 130,
+        "rows_that_differ": 286,
+        "sum_squared_change": 13652.0
+      },
+      "EHAM|2026-07": {
+        "heavy_rows_that_differ": 0,
+        "rows_that_differ": 0,
+        "sum_squared_change": 0.0
+      },
+      "LEBL|2026-01": {
+        "heavy_rows_that_differ": 0,
+        "rows_that_differ": 0,
+        "sum_squared_change": 0.0
+      },
+      "LEBL|2026-07": {
+        "heavy_rows_that_differ": 0,
+        "rows_that_differ": 0,
+        "sum_squared_change": 0.0
+      },
+      "LEMD|2026-01": {
+        "heavy_rows_that_differ": 0,
+        "rows_that_differ": 30,
+        "sum_squared_change": 30.0
+      },
+      "LEMD|2026-07": {
+        "heavy_rows_that_differ": 0,
+        "rows_that_differ": 0,
+        "sum_squared_change": 0.0
+      },
+      "LFPG|2026-01": {
+        "heavy_rows_that_differ": 12,
+        "rows_that_differ": 124,
+        "sum_squared_change": 866.0
+      },
+      "LFPG|2026-07": {
+        "heavy_rows_that_differ": 0,
+        "rows_that_differ": 71,
+        "sum_squared_change": 71.0
+      },
+      "LIRF|2026-01": {
+        "heavy_rows_that_differ": 73,
+        "rows_that_differ": 5294,
+        "sum_squared_change": 1384845.0
+      },
+      "LIRF|2026-07": {
+        "heavy_rows_that_differ": 213,
+        "rows_that_differ": 9563,
+        "sum_squared_change": 8637469.0
+      },
+      "LSZH|2026-01": {
+        "heavy_rows_that_differ": 6,
+        "rows_that_differ": 25,
+        "sum_squared_change": 271.0
+      },
+      "LSZH|2026-07": {
+        "heavy_rows_that_differ": 0,
+        "rows_that_differ": 0,
+        "sum_squared_change": 0.0
+      },
+      "LTFM|2026-01": {
+        "heavy_rows_that_differ": 4,
+        "rows_that_differ": 501,
+        "sum_squared_change": 924.0
+      },
+      "LTFM|2026-07": {
+        "heavy_rows_that_differ": 0,
+        "rows_that_differ": 1,
+        "sum_squared_change": 1.0
+      }
+    },
+    "heavy_rows_down": 219,
+    "heavy_rows_that_differ": 442,
+    "heavy_rows_up": 223,
+    "max_abs_change_s": 1918.0,
+    "mean_abs_change_heavy_rows_s": 55.05203619909502,
+    "note": "arithmetic on v48's published score, for the size of the stake only; no score enters the file",
+    "rmse_if_the_difference_is_noise": 222.66959831657732,
+    "rmse_if_the_difference_is_right_in_full": 222.53878246457197,
+    "rows_that_differ": 16179,
+    "sum_squared_change": 10041824.0,
+    "sum_squared_change_heavy_rows": 9152441.0
+  },
+  "airport_days": {
+    "prepared_without_use": 0,
+    "read": 619,
+    "row_count_over_published_count": {
+      "max": 1.0339943342776203,
+      "median": 1.0,
+      "min": 0.9824561403508771
+    },
+    "rows_outside_read_days": 648
+  },
+  "base": 46,
+  "cells": {
+    "EDDF|2026-01": {
+      "day_shift_max_s": 9.019939920825797,
+      "day_shift_mean_s": 0.16181064443878282,
+      "day_shift_min_s": -9.427870597307903,
+      "day_shift_sd_s": 4.544842336201956,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 397.0,
+      "mean_abs_change_s": 8.569987872598455,
+      "mean_change_s": -0.8387055594561817,
+      "rows": 15667,
+      "rows_changed": 15009,
+      "rows_in_read_days": 15667,
+      "sum_squared_change": 5258740.0
+    },
+    "EDDF|2026-07": {
+      "day_shift_max_s": 10.84954515563991,
+      "day_shift_mean_s": -1.9474327291191385,
+      "day_shift_min_s": -10.803848938054324,
+      "day_shift_sd_s": 5.155186021793221,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 318.0,
+      "mean_abs_change_s": 7.080823244552058,
+      "mean_change_s": -2.925375302663438,
+      "rows": 20650,
+      "rows_changed": 20121,
+      "rows_in_read_days": 20650,
+      "sum_squared_change": 2204245.0
+    },
+    "EDDM|2026-01": {
+      "day_shift_max_s": 6.689095078439879,
+      "day_shift_mean_s": -2.1964807092996264,
+      "day_shift_min_s": -17.560127760999354,
+      "day_shift_sd_s": 6.851948459220446,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 613.0,
+      "mean_abs_change_s": 7.149365470647311,
+      "mean_change_s": -3.712864055509906,
+      "rows": 10953,
+      "rows_changed": 10309,
+      "rows_in_read_days": 10953,
+      "sum_squared_change": 3223481.0
+    },
+    "EDDM|2026-07": {
+      "day_shift_max_s": 8.050663815712664,
+      "day_shift_mean_s": -5.738619249972159,
+      "day_shift_min_s": -16.583736063536715,
+      "day_shift_sd_s": 5.487071291221043,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 124.0,
+      "mean_abs_change_s": 7.662958769066809,
+      "mean_change_s": -6.31212948777726,
+      "rows": 15013,
+      "rows_changed": 14548,
+      "rows_in_read_days": 15013,
+      "sum_squared_change": 1196938.0
+    },
+    "EGLL|2026-01": {
+      "day_shift_max_s": 18.722638321719693,
+      "day_shift_mean_s": -2.8728711564400617,
+      "day_shift_min_s": -36.845234289055924,
+      "day_shift_sd_s": 13.586166555393476,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 189.0,
+      "mean_abs_change_s": 12.62407301768397,
+      "mean_change_s": -4.189700772701343,
+      "rows": 19283,
+      "rows_changed": 19275,
+      "rows_in_read_days": 19283,
+      "sum_squared_change": 6539926.0
+    },
+    "EGLL|2026-07": {
+      "day_shift_max_s": -2.4404042541001107,
+      "day_shift_mean_s": -17.710060732810618,
+      "day_shift_min_s": -36.780663119136975,
+      "day_shift_sd_s": 10.259009039312554,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 218.0,
+      "mean_abs_change_s": 20.7424235053753,
+      "mean_change_s": -20.7424235053753,
+      "rows": 20557,
+      "rows_changed": 20556,
+      "rows_in_read_days": 20557,
+      "sum_squared_change": 12511162.0
+    },
+    "EHAM|2026-01": {
+      "day_shift_max_s": 2.4189523345788024,
+      "day_shift_mean_s": 0.2018585941723692,
+      "day_shift_min_s": -3.389008907178728,
+      "day_shift_sd_s": 1.5505607604955356,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 141.0,
+      "mean_abs_change_s": 3.595983242976836,
+      "mean_change_s": 0.39822572695909314,
+      "rows": 16232,
+      "rows_changed": 14464,
+      "rows_in_read_days": 16232,
+      "sum_squared_change": 1062778.0
+    },
+    "EHAM|2026-07": {
+      "day_shift_max_s": 3.636961533498757,
+      "day_shift_mean_s": 0.8918481225516239,
+      "day_shift_min_s": -2.7574232936223315,
+      "day_shift_sd_s": 1.7396719518944865,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 96.0,
+      "mean_abs_change_s": 2.3655580865603643,
+      "mean_change_s": 1.3358542141230068,
+      "rows": 21950,
+      "rows_changed": 19168,
+      "rows_in_read_days": 21950,
+      "sum_squared_change": 239516.0
+    },
+    "LEBL|2026-01": {
+      "day_shift_max_s": 8.2583213225361,
+      "day_shift_mean_s": -5.471501157660147,
+      "day_shift_min_s": -19.039614257637346,
+      "day_shift_sd_s": 6.70054356626481,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 82.0,
+      "mean_abs_change_s": 10.098680436029834,
+      "mean_change_s": -8.04130808950086,
+      "rows": 12201,
+      "rows_changed": 12201,
+      "rows_in_read_days": 12201,
+      "sum_squared_change": 2217810.0
+    },
+    "LEBL|2026-07": {
+      "day_shift_max_s": 3.475896991412661,
+      "day_shift_mean_s": -14.325434226504463,
+      "day_shift_min_s": -19.95587979783021,
+      "day_shift_sd_s": 6.265352893428796,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 114.0,
+      "mean_abs_change_s": 19.817998769506126,
+      "mean_change_s": -19.47815873370994,
+      "rows": 17879,
+      "rows_changed": 17878,
+      "rows_in_read_days": 17878,
+      "sum_squared_change": 8528454.0
+    },
+    "LEMD|2026-01": {
+      "day_shift_max_s": 11.57073808579795,
+      "day_shift_mean_s": 2.594985053599371,
+      "day_shift_min_s": -8.660877741095735,
+      "day_shift_sd_s": 5.355643444504616,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 184.0,
+      "mean_abs_change_s": 6.388584692298536,
+      "mean_change_s": 3.148613260326152,
+      "rows": 16802,
+      "rows_changed": 15790,
+      "rows_in_read_days": 16801,
+      "sum_squared_change": 1269893.0
+    },
+    "LEMD|2026-07": {
+      "day_shift_max_s": 15.728848096901377,
+      "day_shift_mean_s": -4.172818493026979,
+      "day_shift_min_s": -20.968927912193518,
+      "day_shift_sd_s": 10.483993707255317,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 120.0,
+      "mean_abs_change_s": 12.64638745533942,
+      "mean_change_s": -5.431421198888448,
+      "rows": 20152,
+      "rows_changed": 20150,
+      "rows_in_read_days": 20151,
+      "sum_squared_change": 4495336.0
+    },
+    "LFPG|2026-01": {
+      "day_shift_max_s": 16.12011282059255,
+      "day_shift_mean_s": 0.20912028566159932,
+      "day_shift_min_s": -17.162070075488128,
+      "day_shift_sd_s": 10.665720523430865,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 80.0,
+      "mean_abs_change_s": 12.761873241767335,
+      "mean_change_s": 0.6355562910254289,
+      "rows": 18129,
+      "rows_changed": 18083,
+      "rows_in_read_days": 18128,
+      "sum_squared_change": 4250576.0
+    },
+    "LFPG|2026-07": {
+      "day_shift_max_s": 13.726974000636094,
+      "day_shift_mean_s": -6.0306870556971415,
+      "day_shift_min_s": -18.40677689337265,
+      "day_shift_sd_s": 8.435981998937125,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 88.0,
+      "mean_abs_change_s": 10.456330773122383,
+      "mean_change_s": -7.256404360023915,
+      "rows": 21743,
+      "rows_changed": 21738,
+      "rows_in_read_days": 21742,
+      "sum_squared_change": 3346440.0
+    },
+    "LIRF|2026-01": {
+      "day_shift_max_s": 30.19021636918678,
+      "day_shift_mean_s": 9.619788877940602,
+      "day_shift_min_s": -10.243235797110392,
+      "day_shift_sd_s": 12.00672628884574,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 801.0,
+      "mean_abs_change_s": 21.730856161287406,
+      "mean_change_s": 16.595877407106048,
+      "rows": 11061,
+      "rows_changed": 11001,
+      "rows_in_read_days": 11061,
+      "sum_squared_change": 15700803.0
+    },
+    "LIRF|2026-07": {
+      "day_shift_max_s": 23.78214440997732,
+      "day_shift_mean_s": -7.875794527093169,
+      "day_shift_min_s": -39.27284503619812,
+      "day_shift_sd_s": 16.747101262645174,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 1918.0,
+      "mean_abs_change_s": 24.729511301932064,
+      "mean_change_s": -10.460790503851497,
+      "rows": 15838,
+      "rows_changed": 15341,
+      "rows_in_read_days": 15836,
+      "sum_squared_change": 22693616.0
+    },
+    "LSZH|2026-01": {
+      "day_shift_max_s": 6.671655945294758,
+      "day_shift_mean_s": 1.4960345811198816,
+      "day_shift_min_s": -6.218970201363024,
+      "day_shift_sd_s": 3.706431819702189,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 232.0,
+      "mean_abs_change_s": 6.9057528764382194,
+      "mean_change_s": 2.5739869934967485,
+      "rows": 9995,
+      "rows_changed": 9721,
+      "rows_in_read_days": 9995,
+      "sum_squared_change": 1717663.0
+    },
+    "LSZH|2026-07": {
+      "day_shift_max_s": 7.688617853286873,
+      "day_shift_mean_s": 1.1118175168611661,
+      "day_shift_min_s": -7.728101146368433,
+      "day_shift_sd_s": 4.894359078042304,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 101.0,
+      "mean_abs_change_s": 6.365868491068035,
+      "mean_change_s": 1.83846446218168,
+      "rows": 13155,
+      "rows_changed": 12105,
+      "rows_in_read_days": 13155,
+      "sum_squared_change": 923941.0
+    },
+    "LTFM|2026-01": {
+      "day_shift_max_s": 38.93017572494077,
+      "day_shift_mean_s": -30.159778177873005,
+      "day_shift_min_s": -52.0905615170623,
+      "day_shift_sd_s": 22.40622621744354,
+      "days_read": 30,
+      "days_without_use": 0,
+      "max_abs_change_s": 224.0,
+      "mean_abs_change_s": 39.75035720664405,
+      "mean_change_s": -34.33697981782461,
+      "rows": 22396,
+      "rows_changed": 21700,
+      "rows_in_read_days": 21755,
+      "sum_squared_change": 44262133.0
+    },
+    "LTFM|2026-07": {
+      "day_shift_max_s": 12.652530973783907,
+      "day_shift_mean_s": -17.6917256298476,
+      "day_shift_min_s": -51.42163075206074,
+      "day_shift_sd_s": 19.997102039111407,
+      "days_read": 31,
+      "days_without_use": 0,
+      "max_abs_change_s": 175.0,
+      "mean_abs_change_s": 23.579471907881675,
+      "mean_change_s": -19.565098272781416,
+      "rows": 25185,
+      "rows_changed": 24657,
+      "rows_in_read_days": 25185,
+      "sum_squared_change": 22271919.0
+    }
+  },
+  "checks": {
+    "exported_equals_reconciled_on_changed_rows": true,
+    "heavy_rows_beyond_their_schedule_interval": 0,
+    "heavy_rows_changed": 442,
+    "lirf_population_rows_changed": 352,
+    "pinned_rows": 671,
+    "pinned_rows_changed": 0,
+    "rows_changed_outside_read_days": 0
+  },
+  "created_at_utc": "2026-09-29T20:38:34.117918+00:00",
+  "declaration_object_hash": "d1ac2536efc6e83d5901ec15d552306b978596b66ed076a0754c6f2895599e4d",
+  "dry_run": false,
+  "fitted_from_development_months": {
+    "fit_rows": 672428,
+    "heavy_rows": 1130,
+    "noise_sd_s": {
+      "EDDF": 83.91515999987918,
+      "EDDM": 60.7866,
+      "EGLL": 81.54299999999999,
+      "EHAM": 2539.397280000069,
+      "LEBL": 71.1648,
+      "LEMD": 78.5778,
+      "LFPG": 2471.4941999999996,
+      "LIRF": 65.2344,
+      "LSZH": 524.8404000001726,
+      "LTFM": 78.5778
+    },
+    "noise_wide_share": {
+      "EDDF": 0.04065040650406504,
+      "EDDM": 0.024390243902439025,
+      "EGLL": 0.02,
+      "EHAM": 0.7723577235772358,
+      "LEBL": 0.11382113821138211,
+      "LEMD": 0.032520325203252036,
+      "LFPG": 0.6910569105691057,
+      "LIRF": 0.02,
+      "LSZH": 0.43902439024390244,
+      "LTFM": 0.024793388429752067
+    },
+    "tau_s": {
+      "EDDF": 6.173353888205783,
+      "EDDM": 9.774769145754496,
+      "EGLL": 18.10463966595649,
+      "EHAM": 5.0,
+      "LEBL": 11.892351853281962,
+      "LEMD": 10.006763598671586,
+      "LFPG": 19.06295943407767,
+      "LIRF": 21.75100901894372,
+      "LSZH": 7.295820762654908,
+      "LTFM": 21.927587167568223
+    }
+  },
+  "max_abs_change_s": 1918.0,
+  "mean_abs_change_s": 13.981226130303531,
+  "mean_change_s": -7.317894333910411,
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v50.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 111654,
+    "maximum_rounding_change_seconds": 0.49999932841399186,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 20,
+    "provenance": {
+      "audit_used": false,
+      "candidate": "temper_10",
+      "code": {
+        "src/prc2026_daily/reconcile.py": "30a2d2fc88480bf821208c6e52351325887aae72704ba3c45730acbc808c6a14",
+        "tools/export_daily_totals.py": "4d936c25263499009753bd5cc18f783d469647a8bc8b3f282825726d407cd2c7",
+        "tools/run_daily_totals.py": "63a7a68d13c27619a86865261a1c6e9221b3e83626c73478c8dc237d40043f85",
+        "tools/screen_daily_totals.py": "7be654b2dae87be5fa4b57a86c5e7220476830a7a7b084d37491b57deda26b4c"
+      },
+      "declaration": {
+        "configs/daily_totals_v3.json": {
+          "object_hash": "d1ac2536efc6e83d5901ec15d552306b978596b66ed076a0754c6f2895599e4d",
+          "sha256": "da901c5925bf61cb9d6d9ff17b176fabacbf8367bd0fbc550b999bd7c1126a0c"
+        }
+      },
+      "development_results": {
+        "docs/daily_totals/results_v3.json": "e2ea5ac76e5f9af4359385b0209a60b703c47bafb82ffcff8525feaa85248ca7"
+      },
+      "dry_run": false,
+      "experiment_id": "daily_totals_v3",
+      "external_data": {
+        "adsb": "adsb.lol globe_history (ODbL) surface positions, as in v46",
+        "published_totals": {
+          "name": "EUROCONTROL Performance Review Unit, All-causes pre-departure delay (airport, day)",
+          "sha256": "9ab45cc5977e154452ea3c0f137737f496003acfcab25d830d3f5211e3a1b218",
+          "terms_and_nature": "as recorded in configs/daily_totals_v1.json: not an open licence; per airport and off-block day the sum of max(off-block - schedule, 0), an aggregate of the hidden clock of the ranking rows. No official score and no leaderboard information is used.",
+          "url": "https://www.eurocontrol.int/performance/data/download/xls/All_Pre-Departure_Delay.xlsx"
+        }
+      },
+      "floor_seconds": -12.0,
+      "incumbent": {
+        "note": "the clean model line's best; v47 is a separate file on the same base",
+        "official_rmse_seconds": 223.9339,
+        "sha256": "8abdd87ad5098d7753927f407ffd7e8cd342aa84a2864392e1b64c0dde015af9",
+        "submission": "vigorous-whistle_v46.parquet"
+      },
+      "inputs": {
+        "data/raw/ranking.parquet": "9db75e3a56fa09b87aab72e191a53da3fe763d9887ad2b23aea9cde6a6325f86",
+        "runs/daily_totals/rows.parquet": "3a807e81989d18332795c905822a2a7d4281e66553a72b301d510a87c03de52f",
+        "runs/final_dryrun/run/recipe/detail.parquet": "2e79c78b25a4abd1032c211ec61968dc90942e58c2ccff8fceeccc4e3fdcaf5b",
+        "runs/submissions/vigorous-whistle_v46.parquet": "8abdd87ad5098d7753927f407ffd7e8cd342aa84a2864392e1b64c0dde015af9"
+      },
+      "official_scores_used": "none",
+      "recipe": "v46 reconciled with EUROCONTROL's published daily all-cause pre-departure delay per airport: every row of a read airport-day that is not heavy moves by the posterior day shift plus a first-order tilt; heavy rows move by the tempered posterior of the declaration, between their delay outcomes and their schedule interval; pinned rows and rows of airport-days not read keep v46; floor -12 s",
+      "selected_by": "the user's override: build it (29 September 2026; said for the cautious strength of configs/daily_totals_v2.json, from which v49 was built; this file is that candidate with the amendment of configs/daily_totals_v3.json, put to the user next to v49; nothing is uploaded without a further word)",
+      "user_decision": {
+        "context": "said after the v2 round's result was reported (the declared rule selected nothing; every month read better than v48's procedure) with the recommendation to build the cautious strength as an override, one candidate only. v49 was built from v2's temper_10 on these words. This amendment and its file are put to the user next to v49; nothing is uploaded without a further word.",
+        "date": "2026-09-29",
+        "words": "build it"
+      }
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "13a8c3a0844700ee5497ca712303cd29d1316a2ba39f354c0b4da6613be66325",
+    "size_bytes": 1356530,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-29T20:38:33.930868+00:00",
+    "version": 50
+  },
+  "rmse_at_the_development_alignment": {
+    "0.78": 223.33876368210517,
+    "0.84": 223.21102802764935,
+    "1.0": 222.87004169870747,
+    "1.17": 222.5071711625462
+  },
+  "rmse_if_every_changed_label_equals_the_new_value": 222.87004169870747,
+  "rmse_if_the_changes_are_noise": 224.99272799723195,
+  "rows": 344841,
+  "rows_changed": 333815,
+  "rows_changed_over_60s": 4991,
+  "sha256": "13a8c3a0844700ee5497ca712303cd29d1316a2ba39f354c0b4da6613be66325",
+  "sum_squared_change": 163915370.0,
+  "version": 50
+}

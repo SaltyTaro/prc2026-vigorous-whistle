@@ -168,5 +168,6 @@ The upload that was made:
 - The monthly and the daily source are not combined. Three further uses of the published figures were explored after v48 and none
   passes: separate shifts for tracked and untracked rows, the monthly source as the centre of the day shifts, one tilt per
   airport-month for the heavy rows. Record: [`followups.md`](followups.md).
-- Heavy rows moved by a tempered posterior (`configs/daily_totals_v2.json`): every month read is better, the declared rule selected
-  nothing (two intervals include zero), no file was built. Record: [`heavy_rows.md`](heavy_rows.md).
+- Heavy rows moved by a tempered posterior (`configs/daily_totals_v2.json`, amended in `configs/daily_totals_v3.json`): every month
+  read is better, the declared rule selected nothing (two intervals include zero). v49 and v50 were built on the user's word and are
+  not uploaded; v50 is the recommended one. Record: [`heavy_rows.md`](heavy_rows.md).

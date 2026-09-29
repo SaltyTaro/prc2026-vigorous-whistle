@@ -1,8 +1,16 @@
-# Heavy rows and the published daily totals (`configs/daily_totals_v2.json`, 29 September 2026)
+# Heavy rows and the published daily totals (`configs/daily_totals_v2.json`, `configs/daily_totals_v3.json`, 29 September 2026)
 
-**State: the declared rule selected nothing. No file was built. Every month read is better than v48's procedure, at both declared
-strengths; the rule fails on the paired-day intervals of July and December, which include zero by a small margin. Building and
-uploading a file from this round needs the user's override.** Results: [`results_v2.json`](results_v2.json). No official score is used.
+**State: two files are built on the user's word ("build it"), neither is uploaded. v50 is the recommended one. They are alternatives:
+at most one of them may be uploaded, and only at the user's word.**
+
+| File | What it is | SHA-256 | Against v48 |
+|---|---|---|---|
+| v49 | the cautious strength (power 0.10) as declared in `configs/daily_totals_v2.json` | `de96516e6eea43ddc44c3adf810756bbfd3449ef44a80af40ffc76e92b73bdaf` | 1,090 heavy rows differ, squared change 17.1e6 |
+| **v50** | the same with the amendment of `configs/daily_totals_v3.json`: a heavy row that holds an NM clock keeps its value | `13a8c3a0844700ee5497ca712303cd29d1316a2ba39f354c0b4da6613be66325` | 442 heavy rows differ, squared change 10.0e6 |
+
+The declared rule selected nothing in either round: every month read is better than v48's procedure, and the paired-day intervals of
+July and December include zero by a small margin. Both files are the user's override of that rule. Results:
+[`results_v2.json`](results_v2.json), [`results_v3.json`](results_v3.json). No official score is used.
 
 ## What changes against v48
 
@@ -94,13 +102,67 @@ rows predicted at or above their schedule interval, among them v40's fill pins. 
 weight, and "no delay in the total" then moves it up. The look used no label and no score. The declared form removes the effect by
 construction; on the twelve-month table it costs little (−0.310% against −0.339% at the power 0.10).
 
+## v49, what its check found, and the amendment (v50)
+
+v49 was built from the cautious strength as declared (`export_v49.json`, audit `docs/export_audit/v49_audit.json`, clean;
+byte-identical to its dry run). An independent label-free check of the file against the supplied ranking columns found that one row
+carries 40% of its squared change against v48 (6.9e6 of 17.1e6):
+
+| Flight | Schedule interval | NM clocks before takeoff | v46 = v48 | v49 |
+|---|---|---|---|---|
+
+The row is not a fill candidate. It holds an NM record and its prediction follows that clock. It sits in the class that carries the
+fill population's cells, as 17 of that class's 400 ranking rows and 25 of its 562 development rows do. In development those rows are
+worth 0.7e6 of squared error against 124e6 on the population, and none of them has a clock one day early: the move has no analogue
+in 2025.
+
+**Amendment** (`configs/daily_totals_v3.json`, declared at 20:32 UTC before any run of it): a heavy row that holds an NM off-block
+clock keeps its prediction. It still enters the day's arithmetic. No score and no label of the scored months is part of the reason.
+
+| Read (power 0.10) | As declared in v2 | Amended (v3) |
+|---|---|---|
+| January 2025 | −0.160% | −0.159%, interval [−1.47, −0.07] |
+| July 2025 | −0.129% | −0.129%, interval [−0.68, +0.02] |
+| November 2025 (reported) | −0.194% | −0.190%, interval [−0.83, −0.06] |
+| December 2025 | −0.215% | −0.215%, interval [−0.89, +0.04] |
+| twelve months, LIRF | 12 of 12, −0.310% | 12 of 12, −0.305% (`heavy_rows_twelve_amended.json`) |
+
+The rule is not passed, as before. **v50** is the amended procedure on the uploaded v46 values (`export_v50.json`, audit
+`docs/export_audit/v50_audit.json`, clean):
+
+| Rows of v50 against v48 | Rows that differ | Moved by more than 60 s | Largest | Squared change |
+|---|---|---|---|---|
+| LIRF fill population (no NM clock, no aircraft type) | 333 of 383 | 86 | 1,918 s | 9.14e6 |
+| rows that hold an NM clock (none is heavy-updated) | 15,597 | 4 | 118 s | 0.88e6 |
+| other rows | 249 | 0 | 46 s | 0.02e6 |
+
+- 14 rows move by more than 300 s, all fill candidates without a clock: 7 up, 7 down.
+- The nine rows that v40 pinned at their schedule interval are unchanged. No heavy row lies beyond its schedule interval.
+- 671 heavy rows keep their value (pins and rows with a clock).
+- With the options off the final code reproduces the uploaded v48 byte for byte, and with v2's settings v49.
+
+Size of the stake of v50, from v48's 222.6042 (arithmetic only; no score enters the file):
+
+| Case | Score |
+|---|---|
+| the moves are noise | 222.67 |
+| the moves are the truth's size | 222.54 |
+| the moves are right and as under-sized as in 2025 (alignment 3.5 to 4.2) | 222.21 to 222.12 |
+| the moves are as wrong as v43's were (alignment −0.46) | 222.73 |
+
+By direction (`heavy_rows_direction.json`): in 2025 the moves up gained on 95 of 125 rows (development stack) and 260 of 305
+(twelve months); the moves down gained on 74 of 110 and 108 of 191, with their gain concentrated in a few months. On the ranking
+rows v50 has 74 moves up (squared 6.1e6) and 66 moves down (3.0e6), 58 of the latter in July 2026, where the published totals
+exceed what the predictions imply.
+
 ## Standing
 
 - This is the third change of the LIRF fill population. The first two (v10, v43) passed development and lost on the leaderboard.
   Those were classifiers fitted on 2025. This one reads the published totals of the scored days themselves, and its direct
   analogue before v48 (the exact posterior) failed in development, which is why v48 left the rows alone.
 - With the new options off, the code reproduces v1's governing run bit for bit and the uploaded v48 byte for byte.
-- One candidate at most should be uploaded: choosing between the two strengths by their scores would be learning from the ranking.
+- One file at most should be uploaded: choosing between strengths, or between v49 and v50, by their scores would be learning from
+  the ranking. The recommendation is v50.
 
 ## Commands
 
@@ -110,4 +172,12 @@ construction; on the twelve-month table it costs little (−0.310% against −0.
 .venv\Scripts\python.exe -X utf8 -B tools\run_daily_totals.py --month 2025-03 --tag p12L_b10 --rows runs/daily_totals/rows12p.parquet --airports LIRF --heavy-temper 0.1 --heavy-prior bounded --pin 120
 .venv\Scripts\python.exe -X utf8 -B tools\screen_daily_followups.py --compare runs/daily_totals/rows12p.parquet p12L_control p12L_b10 p12L_b25
 .venv\Scripts\python.exe -X utf8 -B tools\export_daily_totals.py --dry-run DIR --version 49 --declaration configs/daily_totals_v2.json --candidate temper_10 --user-override "TEXT"
+.venv\Scripts\python.exe -X utf8 -B tools\run_daily_totals.py --score --declaration configs/daily_totals_v3.json
+.venv\Scripts\python.exe -X utf8 -B tools\export_daily_totals.py --version 50 --declaration configs/daily_totals_v3.json --candidate temper_10 --user-override "TEXT"
+```
+
+Upload of v50, only at the user's word:
+
+```
+.venv\Scripts\python.exe -X utf8 -B tools\prc_submit.py upload --file runs/submissions/vigorous-whistle_v50.parquet --expected-sha256 13a8c3a0844700ee5497ca712303cd29d1316a2ba39f354c0b4da6613be66325 --calendar-day
 ```
