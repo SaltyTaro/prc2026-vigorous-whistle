@@ -32,7 +32,7 @@ class Options:
     detail_ensembles: bool = False
     vocab_cache: Path | None = None
     repair_root: Path | None = None
-    layers: str = "v40"  # the final file's layer set: v40 (the official best, 224.4588; default), v39, v38, v35, v36 or v37
+    layers: str = "v45"  # the final file's layer set: v45 (the clean model line's best, 224.2398; default), v40, v41, v39, v38, v35, v36 or v37
 
 
 class Context:
@@ -314,6 +314,7 @@ def stage_stack(ctx: Context) -> dict:
 RECIPES = {"v35": "v35: v30 + EOBT_1 repair 0.5 + v33/v34 weights + u300 + callsign fix 0.5 + queue trust 0.75 (regular matches)",
            "v39": "v39: v38, then the fill pins (configs/fill_pin_v1.json: LIRF long-interval population and one-day-clock departures at their schedule interval)",
            "v40": "v40: v38, then configs/fill_pin_v2.json evidenced_nine (LIRF long-interval population departures with intervals in [43,200, 58,000] or above 79,200 s at their schedule interval)",
+           "v45": "v45: v40, then configs/lirf_gate_v1.json u600_m600 (LIRF non-population rows whose LIRF tree sits more than 600 s above the LIRF network lean to the tree)",
            "v41": "v41: v40, then configs/fill_pin_v3.json nosos431_one_day (population departures with intervals of 100,000 s or more at the one-day value, 86,400 s + the 2025 one-day taxi mean)",
            "v36": "v36: v35's layers after the mu600 mix gate, then the peer-congestion lifts (configs/higher_bundle_v2.json mu_pc_pcc)",
            "v37": "v37: v35, then the tail stretch above 1,500 s (configs/tail_stretch_v1.json v35_t1500, four-month k)",

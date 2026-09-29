@@ -50,7 +50,7 @@ def main() -> None:
                         help="a completed run root (features..recipe) of this file's EOBT_1-repaired input, reused by the repair stage instead of "
                              "running the chain in <root>/repair/run; refused unless its input has exactly the repair's content "
                              "(the ranking file: runs/final_lfpg_eobt/run)")
-    parser.add_argument("--layers", choices=["v35", "v36", "v37", "v38", "v39", "v40", "v41"], default="v40",
+    parser.add_argument("--layers", choices=["v35", "v36", "v37", "v38", "v39", "v40", "v41", "v45"], default="v45",
                         help="the final stage's layer set, recorded in its receipt (stages/final-<layers>.json): v40 (default: the official "
                              "best 224.4588, v38 + configs/fill_pin_v2.json evidenced_nine), v41 (v40 + configs/fill_pin_v3.json's one-day value on "
                              "population rows with intervals of 100,000 s or more), v39 (v38 + all fill pins of configs/fill_pin_v1.json), "

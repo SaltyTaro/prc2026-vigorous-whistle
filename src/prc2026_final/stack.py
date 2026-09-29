@@ -44,6 +44,7 @@ from prc2026.features import ID, PHASE, TIME
 
 from .common import ROOT, save_frame, source_file
 from .fill_pin import COLUMNS as FILL_COLUMNS, SCOPES as FILL_SCOPES, apply_pins, candidate_pins, fill_pins
+from . import lirf_gate
 
 sys.path.insert(0, str(ROOT / "tools"))
 import export_v33  # noqa: E402
@@ -64,11 +65,12 @@ REMATCH_OUTPUT_COLUMNS = ["MVT_ID_mvt", "airport", "flight", "mapped", "takeoff"
 DECLARATIONS = {"gate": "configs/disagreement_gate_v1.json", "callsign": "configs/callsign_fix_v1.json", "queue": "configs/queue_trust_v1.json",
                 "mix": "configs/mix_gate_v1.json", "peer": "configs/higher_bundle_v2.json", "stretch": "configs/tail_stretch_v1.json",
                 "stretch2": "configs/tail_stretch_v2.json", "fill_pin": "configs/fill_pin_v1.json", "fill_pin2": "configs/fill_pin_v2.json",
-                "fill_pin3": "configs/fill_pin_v3.json"}
+                "fill_pin3": "configs/fill_pin_v3.json", "lirf_gate": "configs/lirf_gate_v1.json"}
 RESULTS = ["docs/disagreement/tail_stretch_v1_results.json", "docs/disagreement/tail_stretch_v2_results.json"]  # the stretches' k (four-month fits), read by export_stack.tail_stretch
 CODE = ["tools/export_stack.py", "tools/peer_congestion.py", "tools/export_disagreement_gate.py", "tools/export_fair_weights.py", "tools/export_v33.py",
         "tools/run_callsign_fix.py", "tools/run_queue_trust.py", "tools/adsb_rematch_nonm.py"]
-LAYER_SETS = ["v35", "v36", "v37", "v38", "v39", "v40", "v41"]
+LAYER_SETS = ["v35", "v36", "v37", "v38", "v39", "v40", "v41", "v45"]
+LIRF_GATE_SCOPES = {"lirf_nonpop_unmatched": "unmatched", "lirf_nonpop_matched": "matched"}
 V35 = {"gate": "u300", "callsign": "u300_cs50", "queue": "qt75", "queue_source": "regular",
        "record": "docs/disagreement/export_v35.json (tools/export_stack.py --queue 0.75 --queue-source regular --version 35, user override)"}
 V36 = {**V35, "peer": "mu_pc_pcc",
@@ -83,6 +85,8 @@ V40 = {**V38, "fill_pin": "evidenced_nine",
        "record": "docs/fill_pin/export_v40.json (tools/export_fill_pin.py --declaration configs/fill_pin_v2.json --candidate evidenced_nine --version 40, the user's decision)"}
 V41 = {**V40, "fill_pin3": "nosos431_one_day",
        "record": "docs/fill_pin/export_v41.json (tools/export_fill_pin.py --declaration configs/fill_pin_v3.json --candidate nosos431_one_day --base-version 40 --version 41, the user's decision)"}
+V45 = {**V40, "lirf_gate": "u600_m600",
+       "record": "docs/lirf_gate/export_v45.json (tools/export_lirf_gate.py --version 45 --base 40, the declared rule's selection; official 224.2398)"}
 
 
 def pins(raw_path: Path) -> pd.DataFrame:
@@ -268,13 +272,31 @@ def compute(detail: pd.DataFrame, repaired_v30: np.ndarray | None, rematch_path:
     v41, pinned41 = apply_pins(v40, ids, candidate_pins(fill, one_day), detail["airport"].to_numpy())
     frame["v41"], frame["v41_one_day"] = v41, pinned41
     rows["v41"] = {"fill_pin": int(pinned40.sum()), "one_day": int(pinned41.sum()), "floored": int((v41 == FLOOR).sum())}
+    # v45 = v40 with configs/lirf_gate_v1.json's selected gate: LIRF non-population rows whose LIRF tree sits more than T above the LIRF
+    # network take the leaning blend (src/prc2026_final/lirf_gate.py); the delta against v34's blend is added to v40, floored
+    gate_spec = read_json(ROOT / DECLARATIONS["lirf_gate"])["candidates"][V45["lirf_gate"]]
+    v45, gated_mask = np.array(v40, dtype=float), np.zeros(len(ids), dtype=bool)
+    scope_column = detail["scope"].to_numpy()
+    for scope_name, scope in LIRF_GATE_SCOPES.items():
+        k = scope_column == scope_name
+        if not k.any():
+            continue
+        components = [detail.loc[k, c].to_numpy(dtype=float) for c in ["v9", "ens_ctx_lirf", "ens_v22_lirf_q"]]
+        blend_v34, _ = lirf_gate.gated(*components, scope, None)
+        blend_gated, fire = lirf_gate.gated(*components, scope, gate_spec.get(scope))
+        idx = np.flatnonzero(k)[fire]
+        v45[idx] = np.maximum(v40[idx] + (blend_gated - blend_v34)[fire], FLOOR)
+        gated_mask[idx] = True
+    frame["v45"], frame["v45_lirf_gate"] = v45, gated_mask
+    rows["v45"] = {"fill_pin": int(pinned40.sum()), "lirf_gate": int(gated_mask.sum()), "floored": int((v45 == FLOOR).sum())}
     specs = {**specs, "v39": {"base": "v38", "fill_pin": DECLARATIONS["fill_pin"], "pinned_value": "schedule interval (takeoff minus scheduled departure) in seconds"},
              "v40": {"base": "v38", "fill_pin": DECLARATIONS["fill_pin2"], "candidate": V40["fill_pin"], "scopes": nine["scopes"],
                      "population_interval_bands_s": nine["population_interval_bands_s"], "pinned_value": "schedule interval in seconds"},
              "v41": {"base": "v40", "fill_pin": DECLARATIONS["fill_pin3"], "candidate": V41["fill_pin3"], "scopes": one_day["scopes"],
-                     "population_interval_bands_s": one_day["population_interval_bands_s"], "pinned_value": one_day["pinned_value"]}}
+                     "population_interval_bands_s": one_day["population_interval_bands_s"], "pinned_value": one_day["pinned_value"]},
+             "v45": {"base": "v40", "lirf_gate": DECLARATIONS["lirf_gate"], "candidate": V45["lirf_gate"], "spec": gate_spec, "v34_blends": lirf_gate.V34}}
     record = {"recipe_checks_max_abs": checks, "lfpg_weight": LFPG_WEIGHT, "floor_seconds": FLOOR, "v33_outer": V33_OUTER, "v33_lirf": V33_LIRF,
-              "v34_lirf": V34_LIRF, "layer_sets": specs, "shipped_as": {"v35": V35, "v36": V36, "v37": V37, "v38": V38, "v39": V39, "v40": V40, "v41": V41},
+              "v34_lirf": V34_LIRF, "layer_sets": specs, "shipped_as": {"v35": V35, "v36": V36, "v37": V37, "v38": V38, "v39": V39, "v40": V40, "v41": V41, "v45": V45},
               "declarations": {p: {"sha256": sha256_file(ROOT / p), "object_hash": object_hash(read_json(ROOT / p))} for p in DECLARATIONS.values()},
               "results": {p: sha256_file(ROOT / p) for p in RESULTS},
               "stretch_k": {"v37": read_json(ROOT / RESULTS[0])["candidates"][V37["stretch"]]["k_all_months"],

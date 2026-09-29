@@ -1,0 +1,28 @@
+{
+  "created_at_utc": "2026-09-29T01:34:21.708134+00:00",
+  "root": "runs/final_dryrun/run",
+  "command": "tools/final_predict.py run --root runs/final_dryrun/run --stages stack final --layers v45 --version 945 --threads 12 (stack receipt removed first; stack 7.7 s, final 0.4 s)",
+  "runner_v945_vs_uploaded_v45": {
+    "rows_differing": 1182,
+    "max_abs_diff_s": 7.0,
+    "rows_abs_diff_over_1s": 22,
+    "reading": "float noise of the rebuilt v30 chain, as every earlier dry run (v35: 1,140 rows, max 6 s; v40: 1,157 rows, max 7 s)"
+  },
+  "stack_v45_lirf_gate_rows": {
+    "total": 100,
+    "2026-01": 26,
+    "2026-07": 74
+  },
+  "uploaded_v45_gated_rows": {
+    "total": 100,
+    "2026-01": 26,
+    "2026-07": 74
+  },
+  "runner_v945_minus_uploaded_v40": {
+    "nonzero_rows": 1257,
+    "gated": 100,
+    "non_gated_nonzero": 1157,
+    "max_abs_non_gated_diff_s": 7.0
+  },
+  "tests": "20 passed (tests/test_final_stack.py, tests/test_final_runner.py, tests/test_lirf_gate.py)"
+}

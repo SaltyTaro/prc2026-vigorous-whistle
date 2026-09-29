@@ -63,7 +63,9 @@ The runner stopped at v30. The four stages after `recipe` take it to the v35 inc
 not-uploaded v36, v37 and v38, in shipping order, each through the frozen code that built the layer. Module:
 `src/prc2026_final/stack.py`.
 
-**`--layers v35|v36|v37|v38|v39|v40`** picks the final file's layer set. The default is **v40**, the official best since its upload
+**`--layers v35|v36|v37|v38|v39|v40|v41|v45`** picks the final file's layer set. The default is **v45** (29 September: v40 plus the LIRF
+disagreement gate of `configs/lirf_gate_v1.json`, officially 224.2398, the clean model line's best; `docs/lirf_gate/README.md`; mask
+`v45_lirf_gate`). Before that the default was **v40**, the official best from its upload
 (224.4588 on 28 September; v38 226.8053, v39 226.8802, v35 226.8989). **v39** (`docs/fill_pin/README.md`) is v38 with every fill pin:
 the file's own LIRF departures with a schedule interval above 43,200 s that are the v9 population (no NM record, no aircraft type) or
 carry a one-day-early NM clock take their schedule interval (`stack/fill_pins.parquet` lists them). **v40** is v38 with
@@ -245,3 +247,10 @@ Additionally needed beyond this runner:
   adsb.lol surface files for their period (~12 MB per extracted day; extraction needs internet and 2–4 GB download per day).
   The challenge data's licence is unknown: do not put challenge rows or row-level derived tables in a public repo.
 - **Run time**: ~1.5–2.5 h on a 12-thread CPU for a 345k-departure file after extraction (extraction ~0.5–1 min per day per 14-core VM).
+   - **v45** = v40, then `configs/lirf_gate_v1.json` `u600_m600` (`src/prc2026_final/lirf_gate.py`): LIRF non-population rows whose LIRF
+     tree (`ens_v22_lirf_q`) sits more than 600 s above the LIRF network (`ens_ctx_lirf`) take the leaning blend (unmatched 0 / 0.2 / 0.8,
+     matched 0.15 / 0.2 / 0.65 over v9 / network / tree), added as a delta against v34's blend and floored. On the ranking file: 100 rows
+     (26 January, 74 July; `docs/lirf_gate/export_v45.json`); mask `v45_lirf_gate`. `--layers v45` (the default since 29 September).
+     Dry run (29 September, stack 7.7 s, final 0.4 s, `--layers v45 --version 945`): [`dryrun_v45_compare.json`](dryrun_v45_compare.json),
+     1,182 integers differ from the uploaded v45 by at most 7 s (the chain's float noise), the 100 gated rows match.
+     **Scored 224.2398 on 29 September (−0.219 s vs v40): the clean model line's best.**

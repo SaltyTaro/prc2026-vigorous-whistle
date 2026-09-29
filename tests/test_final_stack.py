@@ -63,8 +63,8 @@ def test_stack_arithmetic_on_the_routes(tmp_path, monkeypatch):
                                      "matched_no_lirf", "all_no_lirf", "all_no_lirf", "all_no_lirf", "matched_no_lirf"],
                            "v9": [1000.0, 600.0, 500.0, 1000.0, 900.0, 5000.0, 800.0, 900.0, 1000.0, 900.0, 2000.0, 3000.0], "residual": [0.0, 20.0] + [0.0] * 10,
                            "committee": committee, "ens_ctx_e24": nets, "ens_ctx_e24b": nets, "ens_ctx_e32": nets, "committee_mix": 0.25 * committee + 0.75 * nets,
-                           "ens_ctx_lirf": [0.0, 0.0, 0.0, 1200.0, 980.0, 7.0] + [0.0] * 6, "ens_v22_lirf_q": [0.0, 0.0, 0.0, 1100.0, 950.0, 3.0] + [0.0] * 6})
-    detail["v30"] = [0.3 * 1000 + 0.7 * 1100, 0.3 * 620 + 0.7 * 700, 0.3 * 500 + 0.7 * 900, 0.40 * 1000 + 0.35 * 1200 + 0.25 * 1100,
+                           "ens_ctx_lirf": [0.0, 0.0, 0.0, 1200.0, 980.0, 7.0] + [0.0] * 6, "ens_v22_lirf_q": [0.0, 0.0, 0.0, 1900.0, 950.0, 3.0] + [0.0] * 6})
+    detail["v30"] = [0.3 * 1000 + 0.7 * 1100, 0.3 * 620 + 0.7 * 700, 0.3 * 500 + 0.7 * 900, 0.40 * 1000 + 0.35 * 1200 + 0.25 * 1900,
                      0.15 * 900 + 0.40 * 980 + 0.45 * 950, 5000.0, 0.3 * 800 + 0.7 * 820, 0.3 * 900 + 0.7 * 1000, 1000.0, 900.0, 2000.0, 3000.0]
     repaired = detail["v30"].to_numpy() + np.array([0, 100.0] + [0.0] * 10)
     takeoff = 1.8e9
@@ -83,7 +83,7 @@ def test_stack_arithmetic_on_the_routes(tmp_path, monkeypatch):
     v35 = [1100.0,                                   # LTFM: outer weight 1.0
            0.4 * 620 + 0.6 * 700 + 0.5 * 100,        # matched EDDF: outer 0.6, plus half the repair effect
            900.0,                                    # unmatched EDDF, mix - base = 400 > 300: the mix
-           (0.35 * 1200 + 0.25 * 1100) / 0.60,       # LIRF unmatched: v9 share 0, net:tree 0.35:0.25
+           (0.35 * 1200 + 0.25 * 1900) / 0.60,       # LIRF unmatched: v9 share 0, net:tree 0.35:0.25 (tree 700 s above the net)
            0.15 * 900 + 0.40 * 980 + 0.45 * 950,     # LIRF matched: unchanged
            5000.0,                                   # fill population: v30
            0.5 * (2000 + 10) + 0.5 * (0.3 * 800 + 0.7 * 820),   # callsign fix 50%
@@ -123,6 +123,13 @@ def test_stack_arithmetic_on_the_routes(tmp_path, monkeypatch):
     # v41 (configs/fill_pin_v3.json): the pin's interval (50,000 s) is below the 100,000 s band, so nothing moves to the one-day value
     assert np.allclose(frame["v41"].to_numpy(), v39, rtol=0, atol=1e-9) and not frame["v41_one_day"].any()
     assert record["rows"]["v41"] == {"fill_pin": 1, "one_day": 0, "floored": 0} and record["layer_sets"]["v41"]["base"] == "v40"
+    # v45 (configs/lirf_gate_v1.json u600_m600): the LIRF unmatched row's tree sits 700 s above its network -> the leaning blend 0.2 net + 0.8 tree,
+    # added as a delta against v34's blend; the matched row (30 s apart) and the fixed row do not fire
+    v45 = list(v39)
+    v45[3] = v39[3] + (0.2 * 1200 + 0.8 * 1900 - (0.35 * 1200 + 0.25 * 1900) / 0.60)
+    assert np.allclose(frame["v45"].to_numpy(), v45, rtol=0, atol=1e-9) and frame["v45_lirf_gate"].tolist() == [False] * 3 + [True] + [False] * 8
+    assert record["rows"]["v45"] == {"fill_pin": 1, "lirf_gate": 1, "floored": 0} and record["layer_sets"]["v45"]["base"] == "v40"
+    assert record["layer_sets"]["v45"]["spec"]["unmatched"]["T"] == 600 and record["shipped_as"]["v45"]["lirf_gate"] == "u600_m600"
     assert "v35_peer_noclock" not in frame.columns and "v36_stretch_tracked" not in frame.columns
     assert export_stack.scope_table is not None and export_stack.ranking_peers.__module__ == "peer_congestion"  # readers restored
 
