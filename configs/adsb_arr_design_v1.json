@@ -1,0 +1,151 @@
+{
+  "experiment_id": "prc2026-adsb-arr-design-v1",
+  "created_at_utc": "2026-09-29T10:04:00+00:00",
+  "audit_used": false,
+  "purpose": "Design screen of the arrival second task: the plain committee network (variant nnb of configs/adsb_nn_network_v1.json, unchanged) with one added linear head that predicts the arrival taxi-in time, trained on arrival rows that include the monitored month's arrivals. Written before any fit of this network. Ordered by the user on 29 September 2026 ('we will do the untested idea before we spend the last submission slot of today').",
+  "prior": "Low. docs/tta_screen, docs/arrivalctx and docs/clean_line_screens/hour_effect.md read arrival information as blind to departure residuals, and the context network already attends to arrival tokens with their taxi-in.",
+  "protocol": {
+    "data": "tools/run_adsb_arr.py --fold design: the departure side is tools/run_adsb_nn.py --fold design exactly (fit on the seasonal fold's fit partition 2025-02..06, 08, 09, LIRF excluded, 1,130,307 rows; monitor October, LIRF excluded; write the October departure predictions only).",
+    "never_read": "No design run predicts, scores or reads a departure label of 2025-01, 2025-07, 2025-11, 2025-12 or of the ranking months. No ranking row is read. No official score enters. The published-aggregates workbook (docs/published_means) is not read and does not steer any choice here.",
+    "arrival_rows": {
+      "source": "data/raw training files, PHASE_mvt = ARR, by actual UTC movement month; built by tools/build_arr_rows.py",
+      "excluded": "LIRF arrivals (the design fit excludes LIRF departures; each variant differs from base in one thing); rows without a finite taxi-in",
+      "target": "TAXITIME_SEC_mvt of the arrival clipped to [0, 3600] s (0.02% of October arrivals lie above, 0.007% below), standardised by the mean and standard deviation of the fitting months' arrival rows (the same constants for every variant of a fold)",
+      "months_target_variants": "the seven fitting months and the monitored month (October)",
+      "months_notarget_variant": "the seven fitting months only",
+      "contract": "the same 314 columns as the departure rows, role-swapped: the reporting airport is ADES_mvt, the other end is ADEP_mvt (column 'destination'), the NM own-airport field is ADES_flt (column 'nm_origin') and the NM other-end field is ADEP_flt (column 'nm_destination'). Populated columns are listed in 'populated'; every other column is missing (NaN) on arrival rows. There is no task column: the missing-value flags of the departure-only columns identify the task, so the network is base's plus one head and nothing else.",
+      "populated": {
+        "categorical": [
+          "airport",
+          "destination",
+          "runway",
+          "stand",
+          "aircraft_type",
+          "movement_rule",
+          "nm_origin",
+          "nm_destination",
+          "nm_aircraft_type",
+          "market_segment",
+          "flight_type",
+          "wake_category",
+          "operator",
+          "record_flight_prefix",
+          "record_flight_shape"
+        ],
+        "calendar": [
+          "utc_hour",
+          "utc_weekday",
+          "month",
+          "minute_of_day",
+          "local_hour",
+          "local_weekday",
+          "local_minute_of_day",
+          "local_time_sin",
+          "local_time_cos",
+          "local_weekday_sin",
+          "local_weekday_cos",
+          "local_weekend",
+          "utc_offset_hours",
+          "day_of_year_sin",
+          "day_of_year_cos",
+          "movement_second"
+        ],
+        "record": [
+          "nm_missing",
+          "nm_origin_agrees",
+          "nm_destination_agrees",
+          "nm_aircraft_agrees",
+          "nm_rule_agrees",
+          "aircraft_missing",
+          "flight_missing",
+          "flight_designator_length",
+          "flight_prefix_length",
+          "flight_suffix_length",
+          "flight_digit_count",
+          "flight_prefix_unique_letters",
+          "flight_prefix_adjacent_repeats",
+          "flight_prefix_tail_repeat",
+          "flight_standard_shape"
+        ],
+        "traffic": "the phase-3 airport and runway histories at the landing time, keyed on the arrival's airport and runway: airport_dep_*, airport_arr_*, runway_dep_*, runway_arr_*, dep_schedule_delay_*, arr_schedule_delay_* (30 columns); strictly earlier events only, so the arrival itself is excluded",
+        "weather": "all 61 wx_* columns at the landing time, runway-relative wind against the arrival runway",
+        "surface": "the timeline bundle's takeoff-anchored airport and runway families at the landing time: surface_takeoff_{airport,runway}_{proxy,push}_* and surface_takeoff_{airport,runway}_active (24 columns); peers are the supplied departures with an NM off-block clock"
+      },
+      "missing_on_arrival_rows": "every schedule / EOBT / IOBT / ARVT interval and clock column, the NM off-block clock columns, the flown-arrival columns, the off-block-anchored and stand-keyed surface columns, the surface interval counts, the stand histories, lirf_missing_record, conditional_schedule_offset_s, the 27 ADS-B columns and the 11 v19 columns",
+      "builder_check": "tools/build_arr_rows.py --verify-departures builds the populated columns for the real departures of a month through the same code path and requires exact equality with the frozen timeline bundle"
+    },
+    "network": "prc2026_arr.model.TwoTaskNet = prc2026_nn.model.TabularNet (base architecture, unchanged) plus one linear head on the last hidden layer for taxi-in. Base's parameters are created first, in base's order, under the same seed.",
+    "preprocessing": {
+      "numeric_bins_and_departure_scaling": "from the departure fitting rows only, exactly base's Preprocessor.fit: arrival rows cannot move the departure encoding",
+      "vocabulary": "categories with at least 10 rows among the departure fitting rows and the variant's arrival rows together (base: departure fitting rows). Categories seen only in arrivals get embeddings trained by the arrival head alone; the slice of October departures whose stand, operator, aircraft type, runway or flight prefix is absent from base's vocabulary is reported separately."
+    },
+    "optimisation": {
+      "held_equal_to_base": "epochs (16), steps per epoch (ceil(departure fitting rows / 2048)), learning-rate schedule, optimiser, weight decay, gradient clip, and the departure batches (size 2,048, the permutation sequence of the same seed)",
+      "arrival_batches": "each step adds one arrival batch of 2,048 rows from an independent permutation of the variant's arrival rows (generator seed = seed + 7919; a new permutation when exhausted)",
+      "loss": "mean squared error of the step's departure batch (departure head, departure unit) + lambda x mean squared error of the step's arrival batch (arrival head, arrival unit); the gradient clip applies to the joint gradient",
+      "monitor": "October departure RMSE of non-LIRF rows per epoch, recorded only (fixed budget, final weights), as base"
+    },
+    "nesting_checks": [
+      "tests/test_arr.py: prc2026_arr.train.train without arrival rows ends with base's parameters exactly (prc2026_nn.train.train, same data and seed), bit for bit",
+      "one full design run with --no-arrivals at seed 1 on a worker at 8 threads is compared with runs/adsb_nn/design/base_s1 before the variants are read; the difference is recorded (a code check: base's score is known)"
+    ]
+  },
+  "base_config": "configs/adsb_nn_network_v1.json",
+  "base_variant": "nnb",
+  "variants": {
+    "mt_l025": {
+      "lambda": 0.25,
+      "arrival_months": "fit_and_target"
+    },
+    "mt_l05": {
+      "lambda": 0.5,
+      "arrival_months": "fit_and_target"
+    },
+    "mt_l1": {
+      "lambda": 1.0,
+      "arrival_months": "fit_and_target"
+    },
+    "mt_l05_notarget": {
+      "lambda": 0.5,
+      "arrival_months": "fit"
+    }
+  },
+  "arrival": {
+    "exclude_airports": [
+      "LIRF"
+    ],
+    "clip": [
+      0.0,
+      3600.0
+    ],
+    "batch_size": 2048,
+    "generator_offset": 7919
+  },
+  "seeds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "references": {
+    "base_runs": "runs/adsb_nn/design/base_s1..base_s4 (the plain network's design runs at the same seeds, 8 threads)",
+    "context_pool": "0.5 x mean(runs/adsb_ctx/ctx_s101..s116) + 0.5 x mean(runs/adsb_ctx/ctx_e24_s117..s132), seasonal-fold October predictions",
+    "committee": "runs/adsb_nn/design/committee_october.parquet"
+  },
+  "readings": {
+    "R1": "October RMSE on the monitored non-LIRF rows: every run, and each variant's four-seed mean against base's four-seed mean (seeds 1-4); the spread over seeds is the noise scale",
+    "R2": "recipe proxy (tools/nn_design_report.RecipeProxy, all October rows): table(b) = (1 - s) x committee + s x [(1 - b) x context pool + b x member], member = the variant's four-seed mean, b in {0.125, 0.25, 0.5}, against b = 0, with the paired-day 95% interval. The governing share is s = 0.75 (the context round's proxy, which keeps the bar comparable); s = 0.85 is reported beside it. The same grid is read with member = base's four-seed mean: that is what adding four plain networks gives without the second task.",
+    "R3": "the decisive pair: mt_l05 against mt_l05_notarget (R1 and R2). If they are equal within the seed spread, the target month's arrivals add nothing, whatever the second task as such does.",
+    "slices": "R1 by airport and by ADS-B match; the unseen-category slice of 'preprocessing.vocabulary'"
+  },
+  "rule": {
+    "go": "GO for a declared development round if, for some variant and b, the governing R2 is at or below -0.10% with its paired-day interval below zero, AND that variant's R2 at that b is below base's R2 at the same b, AND that variant's standalone four-seed mean (R1) is below base's.",
+    "otherwise": "The lever is recorded as closed by the screen. Nothing is built on it.",
+    "if_go": "The development round is declared separately before any development score: the plain two-task network at 16 seeds on the clean line's footing (leave-one-month-out January and July 2025 on eleven months plus the held month's arrivals, the forward fold for November, the January-November refit for December, the twelve-month refit with the January and July 2026 arrivals for the ranking file), control = the v46 stack, the clean line's unchanged rule. Any export is built on v46. Every upload is the user's decision."
+  },
+  "paths": {
+    "rows": "runs/adsb_arr/rows/arr_<month>.parquet",
+    "runs": "runs/adsb_arr/design/<variant>_s<seed>/design/{run.json, stop_predictions.parquet, model.pt}",
+    "report": "docs/adsb_arr/design_report.json"
+  }
+}
