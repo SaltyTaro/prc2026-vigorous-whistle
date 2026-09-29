@@ -30,7 +30,7 @@ def main():
     for old in out.glob("node*.txt"):
         old.unlink()
     for i in range(nodes):
-        (out / f"node{i}.txt").write_text("\n".join(jobs[i::nodes]) + "\n", encoding="utf-8")
+        (out / f"node{i}.txt").write_bytes(("\n".join(jobs[i::nodes]) + "\n").encode("utf-8"))  # bytes: no CRLF on Windows
     print(len(jobs), "jobs on", nodes, "nodes")
 
 
