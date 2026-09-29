@@ -1,0 +1,198 @@
+{
+  "auc_early_vs_agree": {
+    "classifier_label_free": {
+      "2025-01": 0.836550256587501,
+      "2025-07": 0.866811055381361,
+      "2025-11": 0.8592536140332754,
+      "2025-12": 0.870769139987006,
+      "all": 0.8637510367563824
+    },
+    "classifier_stack_outputs_only": {
+      "2025-01": 0.871348721440233,
+      "2025-07": 0.8904014231540509,
+      "2025-11": 0.8734342473955378,
+      "2025-12": 0.8902931713792293,
+      "all": 0.8864734720752664
+    },
+    "classifier_with_stack_outputs": {
+      "2025-01": 0.8695564892009158,
+      "2025-07": 0.8922558584387793,
+      "2025-11": 0.8774887574358594,
+      "2025-12": 0.8928598362387342,
+      "all": 0.888419410936244
+    },
+    "stack_minus_proxy": {
+      "2025-01": 0.8715582329489393,
+      "2025-07": 0.8893218098264749,
+      "2025-11": 0.8732920375393244,
+      "2025-12": 0.8869294874049714,
+      "all": 0.885245042696459
+    }
+  },
+  "auc_gain_over_stack": 0.003174368239785008,
+  "audit_used": false,
+  "calibration_by_probability_band": {
+    "(-0.001, 0.05]": {
+      "early_share": 0.027311522048364154,
+      "label_minus_proxy": -48.08456614509246,
+      "rows": 14060,
+      "stack_bias": 12.182067160035386,
+      "stack_minus_proxy": -60.26663330512785,
+      "stack_rmse": 157.99360366072776
+    },
+    "(0.05, 0.1]": {
+      "early_share": 0.09820160908660672,
+      "label_minus_proxy": 68.75035494557501,
+      "rows": 4226,
+      "stack_bias": -20.090104336478493,
+      "stack_minus_proxy": 88.8404592820535,
+      "stack_rmse": 229.7137372347219
+    },
+    "(0.1, 0.2]": {
+      "early_share": 0.1756129887342611,
+      "label_minus_proxy": 129.59200353434946,
+      "rows": 4527,
+      "stack_bias": -26.949089366105362,
+      "stack_minus_proxy": 156.54109290045483,
+      "stack_rmse": 266.33702692058984
+    },
+    "(0.2, 0.4]": {
+      "early_share": 0.3057351407716371,
+      "label_minus_proxy": 218.47153284671532,
+      "rows": 4795,
+      "stack_bias": -19.355214220331536,
+      "stack_minus_proxy": 237.82674706704688,
+      "stack_rmse": 284.7874203266096
+    },
+    "(0.4, 0.6]": {
+      "early_share": 0.4651022864019254,
+      "label_minus_proxy": 321.41486161251504,
+      "rows": 3324,
+      "stack_bias": -32.03633120133724,
+      "stack_minus_proxy": 353.45119281385234,
+      "stack_rmse": 315.04847298270687
+    },
+    "(0.6, 0.8]": {
+      "early_share": 0.6423204087766757,
+      "label_minus_proxy": 488.69131349564174,
+      "rows": 3327,
+      "stack_bias": -27.990242095431718,
+      "stack_minus_proxy": 516.6815555910734,
+      "stack_rmse": 394.25174327784913
+    },
+    "(0.8, 1.0]": {
+      "early_share": 0.8794309701492538,
+      "label_minus_proxy": 792.0739272388059,
+      "rows": 4288,
+      "stack_bias": -14.485118898092114,
+      "stack_minus_proxy": 806.559046136898,
+      "stack_rmse": 422.3521898708789
+    }
+  },
+  "classes": {
+    "agree": {
+      "bias": -75.77267954129748,
+      "label_median": 906.0,
+      "matched_share": 0.6225519922947954,
+      "proxy_median": 900.0,
+      "rmse": 199.04488908790753,
+      "rows": 28033,
+      "share": 0.5676419965576592,
+      "share_of_squared_error": 0.2208409096758261
+    },
+    "early": {
+      "bias": 164.92137521197617,
+      "label_median": 1451.0,
+      "matched_share": 0.6834696595016169,
+      "proxy_median": 898.0,
+      "rmse": 412.07079037230903,
+      "rows": 10514,
+      "share": 0.2128986534372785,
+      "share_of_squared_error": 0.3549927823682871
+    },
+    "fill": {
+      "bias": 150.97066687060735,
+      "label_median": 1081.0,
+      "matched_share": 0.5977674190382728,
+      "proxy_median": 901.0,
+      "rmse": 483.08488566464223,
+      "rows": 8152,
+      "share": 0.16507036549559584,
+      "share_of_squared_error": 0.3782848599384934
+    },
+    "late": {
+      "bias": -207.4734738308039,
+      "label_median": 711.0,
+      "matched_share": 0.5230826507818317,
+      "proxy_median": 1082.0,
+      "rmse": 293.09715920792297,
+      "rows": 2686,
+      "share": 0.054388984509466436,
+      "share_of_squared_error": 0.045881448017393474
+    }
+  },
+  "created_at_utc": "2026-09-29T09:27:04.915799+00:00",
+  "early_base_rate": 0.2727579318753729,
+  "inputs": {
+    "categorical": [
+      "AIRCRAFT_OPERATOR_flt",
+      "STAND_mvt",
+      "AIRCRAFT_TYPE_mvt",
+      "ADES_mvt",
+      "MARKET_SEGMENT_flt",
+      "RUNWAY_mvt",
+      "WK_TBL_CAT_flt",
+      "FLIGHT_TYPE_flt"
+    ],
+    "numeric": [
+      "proxy",
+      "sched_int",
+      "aobt_sched",
+      "aobt_eobt",
+      "hour",
+      "weekday",
+      "aobt_second",
+      "mvt_second",
+      "sched_second",
+      "matched_f",
+      "gate_f",
+      "motion_minus_aobt",
+      "segment_minus_aobt",
+      "adsb_taxi",
+      "points",
+      "first_dist_stand_m",
+      "stop_seconds",
+      "slow_start_s",
+      "taxi_stopped_s",
+      "taxi_path_m"
+    ],
+    "stack_outputs": [
+      "s_v46",
+      "s_v9",
+      "s_tree",
+      "s_net",
+      "s_fill"
+    ]
+  },
+  "note": "development months only; the block time defines the classes and never enters an input; no ranking row and no official score is read",
+  "params": {
+    "cat_smooth": 20,
+    "colsample_bytree": 0.7,
+    "learning_rate": 0.05,
+    "min_child_samples": 40,
+    "min_data_per_group": 50,
+    "n_estimators": 400,
+    "n_jobs": 8,
+    "num_leaves": 31,
+    "objective": "binary",
+    "random_state": 1,
+    "reg_lambda": 10.0,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "verbose": -1
+  },
+  "rows": 49385,
+  "stack_sha256": "a19aba8684c652836d5716f1d8ba9d84ab521155b6024df33edb1c7ed8aa3106",
+  "tool_sha256": "000d3a957c9c36b8622b8dffed080a34eb3e4476de242bef0a9631042c73e808",
+  "two_class_rows": 38547
+}
