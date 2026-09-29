@@ -1,0 +1,761 @@
+{
+  "assembly_check": {
+    "2025-07": {
+      "finite": {
+        "natural": true,
+        "thinned": true
+      },
+      "matched_share": {
+        "natural": {
+          "EDDF": 0.917268210368426,
+          "EDDM": 0.37541864139020537,
+          "EGLL": 0.23193843193843194,
+          "EHAM": 0.9541998310285028,
+          "LEBL": 0.9340974212034384,
+          "LEMD": 0.3689021149962802,
+          "LFPG": 0.0722641857037583,
+          "LIRF": 0.9389257773979357,
+          "LSZH": 0.9111093489810483,
+          "LTFM": 0.0
+        },
+        "thinned": {
+          "EDDF": 0.6491047154776414,
+          "EDDM": 0.37541864139020537,
+          "EGLL": 0.23193843193843194,
+          "EHAM": 0.9541998310285028,
+          "LEBL": 0.9340974212034384,
+          "LEMD": 0.3689021149962802,
+          "LFPG": 0.0722641857037583,
+          "LIRF": 0.005653803168759451,
+          "LSZH": 0.902862580287051,
+          "LTFM": 0.0
+        }
+      },
+      "natural_matched_equals_development": true,
+      "natural_v33_max_abs": 6.231002746074864,
+      "natural_v33_rms": 0.0580251721176856,
+      "natural_v33_rows_over_1s": 8,
+      "ok": true,
+      "rows": 190713,
+      "tolerance_s": 0.01,
+      "v33_development_rmse": 261.4748120499572,
+      "v33_natural_rebuild_rmse": 261.47475534196127
+    },
+    "2025-12": {
+      "finite": {
+        "natural": true,
+        "thinned": true
+      },
+      "matched_share": {
+        "natural": {
+          "EDDF": 0.9476448857076888,
+          "EDDM": 0.970835064395513,
+          "EGLL": 0.73295,
+          "EHAM": 0.9598622674478363,
+          "LEBL": 0.9663173111673292,
+          "LEMD": 0.9671948846260773,
+          "LFPG": 0.2413287491151785,
+          "LIRF": 0.792011932383162,
+          "LSZH": 0.9618327822390175,
+          "LTFM": 0.0
+        },
+        "thinned": {
+          "EDDF": 0.7939274994227661,
+          "EDDM": 0.970835064395513,
+          "EGLL": 0.73295,
+          "EHAM": 0.9598622674478363,
+          "LEBL": 0.9663173111673292,
+          "LEMD": 0.9671948846260773,
+          "LFPG": 0.2413287491151785,
+          "LIRF": 0.792011932383162,
+          "LSZH": 0.9618327822390175,
+          "LTFM": 0.0
+        }
+      },
+      "natural_matched_equals_development": true,
+      "natural_v33_max_abs": 15.118943168424039,
+      "natural_v33_rms": 0.07284233165635277,
+      "natural_v33_rows_over_1s": 12,
+      "ok": true,
+      "rows": 165677,
+      "tolerance_s": 0.01,
+      "v33_development_rmse": 168.16149917839468,
+      "v33_natural_rebuild_rmse": 168.16078216127903
+    }
+  },
+  "audit_used": false,
+  "candidates": {
+    "n100": {
+      "eligible": false,
+      "mean_thinned_ratio": 0.9994324006533657,
+      "natural_worse": [
+        "natural:2025-01"
+      ],
+      "network_share": 1.0,
+      "sets": {
+        "natural:2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 15,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.16634162716859038,
+              0.34192321457151964
+            ]
+          },
+          "ratio_to_control": 1.000220377520044,
+          "rmse": 323.48416264919825,
+          "rows_differing_from_control": 142389
+        },
+        "natural:2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 19,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.3309367167874001,
+              0.305489728609315
+            ]
+          },
+          "ratio_to_control": 0.9999284291267888,
+          "rmse": 259.4675329311044,
+          "rows_differing_from_control": 175501
+        },
+        "natural:2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 19,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.5022829966677513,
+              -0.07266239202510225
+            ]
+          },
+          "ratio_to_control": 0.9983712923232543,
+          "rmse": 167.82721863841894,
+          "rows_differing_from_control": 153609
+        },
+        "thinned:2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 15,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.16217668063196414,
+              0.5286228812759333
+            ]
+          },
+          "ratio_to_control": 1.0006227635680363,
+          "rmse": 265.51074196396536,
+          "rows_differing_from_control": 175502
+        },
+        "thinned:2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 20,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.5269368348167148,
+              -0.09940642591313498
+            ]
+          },
+          "ratio_to_control": 0.9982420377386951,
+          "rmse": 169.89236077962155,
+          "rows_differing_from_control": 153609
+        }
+      },
+      "thinned_intervals_below_zero": [
+        "thinned:2025-12"
+      ]
+    },
+    "n85": {
+      "eligible": false,
+      "mean_thinned_ratio": 0.999223365625533,
+      "natural_worse": [],
+      "network_share": 0.85,
+      "sets": {
+        "natural:2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 22,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.15719970582742987,
+              0.05391177007619205
+            ]
+          },
+          "ratio_to_control": 0.9998897587271761,
+          "rmse": 323.37723627000156,
+          "rows_differing_from_control": 142388
+        },
+        "natural:2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 19,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.24016847083176315,
+              0.01182256759346584
+            ]
+          },
+          "ratio_to_control": 0.999555472867862,
+          "rmse": 259.3707559642974,
+          "rows_differing_from_control": 175501
+        },
+        "natural:2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 26,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.334528955578547,
+              -0.12477332278360793
+            ]
+          },
+          "ratio_to_control": 0.9986561300486957,
+          "rmse": 167.87510014662305,
+          "rows_differing_from_control": 153608
+        },
+        "thinned:2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 19,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.17927194063763424,
+              0.10213154481397871
+            ]
+          },
+          "ratio_to_control": 0.9998365965503332,
+          "rmse": 265.3021360879271,
+          "rows_differing_from_control": 175502
+        },
+        "thinned:2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 28,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.34697507899327606,
+              -0.13605420783634942
+            ]
+          },
+          "ratio_to_control": 0.9986101347007329,
+          "rmse": 169.9550077725473,
+          "rows_differing_from_control": 153608
+        }
+      },
+      "thinned_intervals_below_zero": [
+        "thinned:2025-12"
+      ]
+    },
+    "n85_nd1200": {
+      "eligible": false,
+      "gate": {
+        "share_inside": 0.5,
+        "threshold_s": 1200
+      },
+      "mean_thinned_ratio": 0.9982284791133178,
+      "natural_worse": [],
+      "network_share": 0.85,
+      "sets": {
+        "natural:2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 24,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.39074416607271373,
+              -0.03668859773474795
+            ]
+          },
+          "ratio_to_control": 0.9995178562895777,
+          "rmse": 323.25695822796445,
+          "rows_differing_from_control": 142388
+        },
+        "natural:2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 26,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.7934840459462805,
+              -0.27582842542349517
+            ]
+          },
+          "ratio_to_control": 0.9980538230796754,
+          "rmse": 258.9810987103202,
+          "rows_differing_from_control": 175501
+        },
+        "natural:2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 23,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.43674194309161934,
+              0.018963221209271762
+            ]
+          },
+          "ratio_to_control": 0.9987522838060572,
+          "rmse": 167.8912636899698,
+          "rows_differing_from_control": 153608
+        },
+        "thinned:2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 28,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.9140086757637981,
+              -0.3387481176580594
+            ]
+          },
+          "ratio_to_control": 0.9977869872539279,
+          "rmse": 264.7582814957286,
+          "rows_differing_from_control": 175502
+        },
+        "thinned:2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 24,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.45765606394730013,
+              0.004810098393609479
+            ]
+          },
+          "ratio_to_control": 0.9986699709727076,
+          "rmse": 169.96519140048693,
+          "rows_differing_from_control": 153608
+        }
+      },
+      "thinned_intervals_below_zero": [
+        "thinned:2025-07"
+      ]
+    },
+    "nd1200": {
+      "eligible": false,
+      "gate": {
+        "share_inside": 0.5,
+        "threshold_s": 1200
+      },
+      "mean_thinned_ratio": 0.9993789979245713,
+      "natural_worse": [
+        "natural:2025-12"
+      ],
+      "sets": {
+        "natural:2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 6,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.21691714704092746,
+              -0.004202621473287175
+            ]
+          },
+          "ratio_to_control": 0.9997477854005129,
+          "rmse": 323.33132026616244,
+          "rows_differing_from_control": 14
+        },
+        "natural:2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 11,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.5125613302320395,
+              -0.07639656025793332
+            ]
+          },
+          "ratio_to_control": 0.9990106120654261,
+          "rmse": 259.22937215713597,
+          "rows_differing_from_control": 41
+        },
+        "natural:2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 5,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.14722500951393586,
+              0.2027217651680698
+            ]
+          },
+          "ratio_to_control": 1.0001658202251444,
+          "rmse": 168.1288805840889,
+          "rows_differing_from_control": 21
+        },
+        "thinned:2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 13,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.6596368185212143,
+              -0.15207031193641582
+            ]
+          },
+          "ratio_to_control": 0.9986204574788728,
+          "rmse": 264.9794390646819,
+          "rows_differing_from_control": 45
+        },
+        "thinned:2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 6,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.15135202946710252,
+              0.2009500010241929
+            ]
+          },
+          "ratio_to_control": 1.0001375383702698,
+          "rmse": 170.21495897222718,
+          "rows_differing_from_control": 21
+        }
+      },
+      "thinned_intervals_below_zero": [
+        "thinned:2025-07"
+      ]
+    },
+    "u100": {
+      "eligible": false,
+      "mean_thinned_ratio": 0.9996778825172582,
+      "natural_worse": [
+        "natural:2025-01"
+      ],
+      "network_share": 1.0,
+      "scope": "unmatched",
+      "sets": {
+        "natural:2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 16,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.0964171174262873,
+              0.34286024783746066
+            ]
+          },
+          "ratio_to_control": 1.0003005128474944,
+          "rmse": 323.5100794470175,
+          "rows_differing_from_control": 66176
+        },
+        "natural:2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 20,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.3992426509208606,
+              0.18827237098960545
+            ]
+          },
+          "ratio_to_control": 0.9996107396612279,
+          "rmse": 259.3850969292205,
+          "rows_differing_from_control": 88061
+        },
+        "natural:2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 21,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.3317572200360054,
+              0.0927259170669323
+            ]
+          },
+          "ratio_to_control": 0.9992386933314983,
+          "rmse": 167.97302962054263,
+          "rows_differing_from_control": 46454
+        },
+        "thinned:2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 16,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.260624485790202,
+              0.3842561615971345
+            ]
+          },
+          "ratio_to_control": 1.000155887127332,
+          "rmse": 265.38685840395635,
+          "rows_differing_from_control": 93887
+        },
+        "thinned:2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 21,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.33987045514597014,
+              0.085259255908464
+            ]
+          },
+          "ratio_to_control": 0.9991998779071845,
+          "rmse": 170.05537708360615,
+          "rows_differing_from_control": 49117
+        }
+      },
+      "thinned_intervals_below_zero": []
+    },
+    "u85": {
+      "eligible": false,
+      "mean_thinned_ratio": 0.9994297949020485,
+      "natural_worse": [],
+      "network_share": 0.85,
+      "scope": "unmatched",
+      "sets": {
+        "natural:2025-01": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 19,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.10110525499610076,
+              0.06574764275782148
+            ]
+          },
+          "ratio_to_control": 0.9999654886015387,
+          "rmse": 323.4017282875072,
+          "rows_differing_from_control": 66175
+        },
+        "natural:2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 21,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.2534163486389609,
+              -0.01553524345040103
+            ]
+          },
+          "ratio_to_control": 0.9994897700608207,
+          "rmse": 259.35370699883845,
+          "rows_differing_from_control": 88061
+        },
+        "natural:2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 23,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.23887418925452336,
+              -0.03856546831017558
+            ]
+          },
+          "ratio_to_control": 0.9991615454503607,
+          "rmse": 167.96006098410976,
+          "rows_differing_from_control": 46453
+        },
+        "thinned:2025-07": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 19,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.20236664322348902,
+              0.06023908002520522
+            ]
+          },
+          "ratio_to_control": 0.9997095213129095,
+          "rmse": 265.26841724621966,
+          "rows_differing_from_control": 93887
+        },
+        "thinned:2025-12": {
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 23,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.2427555506104561,
+              -0.043401707291248974
+            ]
+          },
+          "ratio_to_control": 0.9991500684911877,
+          "rmse": 170.0468999418381,
+          "rows_differing_from_control": 49116
+        }
+      },
+      "thinned_intervals_below_zero": [
+        "thinned:2025-12"
+      ]
+    }
+  },
+  "created_at_utc": "2026-09-29T06:16:17.588947+00:00",
+  "declaration": {
+    "audit_used": false,
+    "candidate_semantics": "network_share a on a scope: mix = (1 - a) committee + a nets on the scope's non-LIRF rows where both are finite (tools/run_adsb_nn_dev.mixed), 0.75 elsewhere; scope 'unmatched' = rows without an ADS-B match under the set's own coverage; gate: on non-LIRF rows with committee - nets > threshold_s the mix takes share_inside (configs/snow_higher_v1.json net_down); LIRF rows keep the control's blends; floor per row",
+    "candidates": {
+      "n100": {
+        "network_share": 1.0
+      },
+      "n85": {
+        "network_share": 0.85
+      },
+      "n85_nd1200": {
+        "gate": {
+          "share_inside": 0.5,
+          "threshold_s": 1200
+        },
+        "network_share": 0.85
+      },
+      "nd1200": {
+        "gate": {
+          "share_inside": 0.5,
+          "threshold_s": 1200
+        }
+      },
+      "u100": {
+        "network_share": 1.0,
+        "scope": "unmatched"
+      },
+      "u85": {
+        "network_share": 0.85,
+        "scope": "unmatched"
+      }
+    },
+    "control": {
+      "lirf": {
+        "lirf_nonpop_matched": {
+          "net": 0.4,
+          "tree": 0.45,
+          "v9": 0.15
+        },
+        "lirf_nonpop_unmatched": {
+          "net": 0.5833333333333334,
+          "tree": 0.4166666666666667,
+          "v9": 0.0
+        }
+      },
+      "name": "v34",
+      "network_share": 0.75,
+      "note": "the layers above v34 (u300 gate, callsign fix, queue trust, stretch, fill pins, LIRF gate) touch about 1,300 ranking rows plus the stretch and are left out, as in configs/lomo_weights_v1.json; a selection would be re-read on the full stack before any export",
+      "outer": {
+        "ltfm": 1.0,
+        "matched_other": 0.6,
+        "unmatched_other": 0.7
+      }
+    },
+    "declared_at_utc": "2026-09-29T06:17:00Z",
+    "experiment_id": "thinned_regime_round_v1",
+    "minimum_mean_improvement_fraction": 0.0002,
+    "motivation_disclosed": "The question was prompted by the 29 September leaderboard calibration, which read the network layers as under-applied on the ranking. No official score enters this round: its sets, candidates, weights and rule use 2025 labels only, and nothing is searched for agreement with that reading. Whatever the rule returns stands, including nothing.",
+    "natural_months": [
+      "2025-01",
+      "2025-07",
+      "2025-12"
+    ],
+    "natural_rows": "runs/lomo_dev/rows.parquet: January and July on the eleven-month footing (provenance lomo), December fair",
+    "prior_readings_disclosed": {
+      "consequence": "the no-harm condition below is already known to hold for n85 and to fail for n100 (January) and, on the v35 control, for nd1200 (December). n100 and nd1200 are scored for the record and cannot be selected unless their no-harm months read differently on this control. The new information of this round is the thinned months' reading.",
+      "gate": "configs/snow_higher_v1.json nd1200 (control v35 stack): Jan -0.025%, Jul -0.105%, Nov -0.047%, Dec +0.020%; not selected",
+      "natural_equal_footing": "docs/lomo_dev/lomo_weights_v1_results.json (28 September, control v34): n85 Jan -0.011% [-0.155, +0.052], Jul -0.045% [-0.247, +0.007], Dec -0.134% [-0.332, -0.129], Nov +0.040%; n100 Jan +0.022%, Jul -0.007%, Dec -0.163%, Nov +0.231%; nothing eligible",
+      "natural_recipe_months_fold_models": "docs/share_scope/screen.json (27 September, v30 level): share 0.85 helps July and December, not January and November; 1.0 helps only December; unmatched-only 0.85: Jan +0.001, Jul -0.054, Nov -0.031, Dec -0.132%; nothing passed"
+    },
+    "purpose": "One reading of the committee mix's network share on the ranking-regime development sets. The coverage campaign's thinned months (configs/coverage_regime_v1.json) reproduce the scored months' adsb.lol coverage: July 2025 thinned to July 2026 (EDDF 91.7% -> 64.9% matched, LIRF 93.9% -> 0.6%, LSZH), December 2025 thinned to January 2026 (EDDF 94.8% -> 79.4%). Under that coverage more rows are unmatched, where the network table scores better than the tree committee, so the share that suits the scored months may be higher than the share selected on natural coverage. The round asks whether a higher share, on all non-LIRF rows or on unmatched rows only, is supported there.",
+    "report": "docs/thinned_regime/results_v1.json",
+    "selection": "A candidate is eligible when, on BOTH thinned months, its whole-month RMSE is below the control's with the paired-day 95% interval (tools/run_adsb_v11.paired_days, seed 20260929) below zero, the mean thinned ratio is at least 0.02% below 1, and no natural equal-footing month (January, July, December) is worse on all rows. Lowest mean thinned ratio among the eligible; otherwise nothing. November is not read (nine-month fold side).",
+    "ship": "only if selected: re-read on the full v45 stack, then a delta (candidate minus control recipe) from the final-file dry run's components added to v45's floats, independent rebuild, audit; upload only on the user's decision",
+    "status": "DECLARED before any candidate is scored on a thinned set. The assembly check (tools/run_thinned_regime_round.py --check) ran first and reads no candidate: the natural assembly reproduces the shipped-provenance development v33 (month RMSE 261.47475 against 261.47481 in July, 168.16078 against 168.16150 in December).",
+    "thinned_months": {
+      "2025-07": "a13_jul (July 2026 regime; fold side: seasonal-fold models)",
+      "2025-12": "a13_dec (January 2026 regime; fold side: January-November refit models)"
+    },
+    "thinned_rows": "assembled by tools/run_thinned_regime_round.py from the saved thinned re-predictions: committee, LIRF trees and residual members (runs/coverage_regime/measure/<month>/predictions.parquet), context-network ensembles (runs/adsb_ctx/regime_check4/<month>.parquet, network table 0.25 ens_ctx_e24 + 0.25 ens_ctx_e24b + 0.5 ens_ctx_e32), LIRF context network (runs/adsb_ctx/regime_check_lirf/<month>.parquet); v9, labels, days, floors and population flags from runs/fair_dev/rows_shipped.parquet; matched = the thinned match class; residual stage 0.05 adj2 + 0.05 cat + 0.9 rnet on matched non-LIRF rows"
+  },
+  "declaration_sha256": "efdc2c640e21c4b4e19648b57c90703addb291745addd6057702354c9b1e03c9",
+  "eligible": [],
+  "environment": {
+    "disk_available_bytes": 62854987776,
+    "logical_cpus": 32,
+    "memory_total_bytes": 16858472448,
+    "packages": {
+      "numpy": "2.4.2",
+      "pandas": "3.0.0",
+      "psutil": "7.2.2",
+      "pyarrow": "23.0.1",
+      "tzdata": "2025.3"
+    },
+    "physical_cpus_reported": 24,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.2"
+  },
+  "inputs": {
+    "lirf_net:2025-07": "1cecadf01b194ce31e8103b7a889b25a46a177de115d46817bda23adb62fd134",
+    "lirf_net:2025-12": "f645c7245fd2a7d4712237dd86f2faf8019091637c9e9c7e9efdcab32bc483b3",
+    "lomo_rows_sha256": "9072bc730f2cac40b8d85633cc19d41967d88b19c6c97bd12cbb22b15d9c5ed5",
+    "measure:2025-07": "c3543d41a4cb2ae7b41f27a6098c3993ad5642174208c17ed9f3ca25d34b99ab",
+    "measure:2025-12": "80698c3f0e47bb5cb3a8ca421322efb7a511422ab415283447ac79d8deb33a74",
+    "nets:2025-07": "17f807ddb8120eb10fcc45ce4b3cf82e049249e5ff367cd7feb157d871a58669",
+    "nets:2025-12": "671a3e9e35ac442b2a7877df28c23c53dc7fb79f1815696ac4db088845b1e60e",
+    "rows_shipped_sha256": "7f8fcc3413aa951e5e9630370bd9ee2fba16626d96f0976df502a66d7189ca23"
+  },
+  "model_code": {
+    "tools/run_adsb_nn_dev.py": "22ce1e23e18234f37e1548f9c4831416cfbb1a8fd10eb760c6407ca375569276",
+    "tools/run_adsb_v11.py": "da79c6fdee46f2ab30619b706fbdf3879b5fbae748805ba444e75786415865d2",
+    "tools/run_fair_weights.py": "47eaafd1ddde46dfdf5da81f33bdccfe3aea9fb24e56badf98765a74fab4f5f9",
+    "tools/run_thinned_regime_round.py": "1f160036f89a37a01780f58ef65bf864252c8a040dafad8ddc1260a41ddf26ac"
+  },
+  "selected_candidate": null,
+  "sets": {
+    "natural:2025-01": {
+      "control_rmse": 323.4128897186118,
+      "matched_share_non_lirf": 0.5352449978579806,
+      "rows": 153706
+    },
+    "natural:2025-07": {
+      "control_rmse": 259.48610457819524,
+      "matched_share_non_lirf": 0.4982279404223314,
+      "rows": 190713
+    },
+    "natural:2025-12": {
+      "control_rmse": 168.10100603742077,
+      "matched_share_non_lirf": 0.6975828239230775,
+      "rows": 165677
+    },
+    "thinned:2025-07": {
+      "control_rmse": 265.34549445707495,
+      "matched_share_non_lirf": 0.4650374354708208,
+      "rows": 190713
+    },
+    "thinned:2025-12": {
+      "control_rmse": 170.19155110365472,
+      "matched_share_non_lirf": 0.6802466001341068,
+      "rows": 165677
+    }
+  }
+}
