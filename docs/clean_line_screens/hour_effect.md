@@ -80,3 +80,25 @@ between off-block and first movement, which no input observes. **Closed.**
    - Arrivals during the stop, the restart's discharge rate and the stop's length do not tell the two kinds apart.
    **Closed as a rule.** The ranking months hold about a dozen daytime stops (EHAM on 5 and 7 January, LEMD on 28 January,
    EDDM on 18 July among them); a lift there would be a coin flip per event.
+
+## Follow-up checks on what the hour state is (scratch, same rows)
+
+- **Not the wait before first movement.** For matched rows traced from the stand, label minus ADS-B taxi is the wait between
+  off-block and first movement. Its hour mean does not track the unmatched rows' hour residual (correlation 0.00 to +0.08 at
+  EDDF, EGLL, EHAM and LSZH; negative at LEMD and LIRF).
+- **Not visible in fully traced peers.** Trace states differ widely by airport (traced from the stand: EHAM 60%, EDDM 53%,
+  LSZH 34%, EGLL 14%, LFPG 0.2%, LTFM 0%). The traced peers' excess taxi against the month's median for the same stand and
+  runway correlates with the hour residual of untracked rows at +0.33 at EHAM, +0.18 at LEMD, +0.13 at EDDF and below +0.12
+  elsewhere, and with that of partly traced rows at about zero (EDDF +0.16 and LIRF +0.13 apart). The untracked rows of the
+  airports where it shows are few: the recoverable part is about 0.03% of the ordinary squared error. The traced peers' slow
+  starts, stand stops and taxi stops read the same (−0.10 to +0.22, mostly within ±0.05).
+- **Reading:** the shared hour state sits in the part of the taxi that no receiver sees, for the aircraft that are not traced
+  from their stand. The aircraft that are traced do not carry it.
+
+## Outside sources considered and not used
+
+EUROCONTROL's daily flow-management delay figures (network manager data, by airport and cause) would be new information
+and are not built from the labels. They are on record as not usable without an answer on their terms, which are
+non-commercial and need approval for modifications (`docs/adsb_coverage/external_sources_20260926.md`). Nothing was
+downloaded. The same record excludes the monthly taxi-out statistics outright, as aggregates of the target's own
+timestamps.
