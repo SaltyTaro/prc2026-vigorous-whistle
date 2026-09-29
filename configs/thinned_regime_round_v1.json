@@ -1,0 +1,81 @@
+{
+ "experiment_id": "thinned_regime_round_v1",
+ "declared_at_utc": "2026-09-29T06:17:00Z",
+ "audit_used": false,
+ "status": "DECLARED before any candidate is scored on a thinned set. The assembly check (tools/run_thinned_regime_round.py --check) ran first and reads no candidate: the natural assembly reproduces the shipped-provenance development v33 (month RMSE 261.47475 against 261.47481 in July, 168.16078 against 168.16150 in December).",
+ "purpose": "One reading of the committee mix's network share on the ranking-regime development sets. The coverage campaign's thinned months (configs/coverage_regime_v1.json) reproduce the scored months' adsb.lol coverage: July 2025 thinned to July 2026 (EDDF 91.7% -> 64.9% matched, LIRF 93.9% -> 0.6%, LSZH), December 2025 thinned to January 2026 (EDDF 94.8% -> 79.4%). Under that coverage more rows are unmatched, where the network table scores better than the tree committee, so the share that suits the scored months may be higher than the share selected on natural coverage. The round asks whether a higher share, on all non-LIRF rows or on unmatched rows only, is supported there.",
+ "motivation_disclosed": "The question was prompted by the 29 September leaderboard calibration, which read the network layers as under-applied on the ranking. No official score enters this round: its sets, candidates, weights and rule use 2025 labels only, and nothing is searched for agreement with that reading. Whatever the rule returns stands, including nothing.",
+ "prior_readings_disclosed": {
+  "natural_recipe_months_fold_models": "docs/share_scope/screen.json (27 September, v30 level): share 0.85 helps July and December, not January and November; 1.0 helps only December; unmatched-only 0.85: Jan +0.001, Jul -0.054, Nov -0.031, Dec -0.132%; nothing passed",
+  "natural_equal_footing": "docs/lomo_dev/lomo_weights_v1_results.json (28 September, control v34): n85 Jan -0.011% [-0.155, +0.052], Jul -0.045% [-0.247, +0.007], Dec -0.134% [-0.332, -0.129], Nov +0.040%; n100 Jan +0.022%, Jul -0.007%, Dec -0.163%, Nov +0.231%; nothing eligible",
+  "gate": "configs/snow_higher_v1.json nd1200 (control v35 stack): Jan -0.025%, Jul -0.105%, Nov -0.047%, Dec +0.020%; not selected",
+  "consequence": "the no-harm condition below is already known to hold for n85 and to fail for n100 (January) and, on the v35 control, for nd1200 (December). n100 and nd1200 are scored for the record and cannot be selected unless their no-harm months read differently on this control. The new information of this round is the thinned months' reading."
+ },
+ "thinned_months": {
+  "2025-07": "a13_jul (July 2026 regime; fold side: seasonal-fold models)",
+  "2025-12": "a13_dec (January 2026 regime; fold side: January-November refit models)"
+ },
+ "natural_months": [
+  "2025-01",
+  "2025-07",
+  "2025-12"
+ ],
+ "natural_rows": "runs/lomo_dev/rows.parquet: January and July on the eleven-month footing (provenance lomo), December fair",
+ "thinned_rows": "assembled by tools/run_thinned_regime_round.py from the saved thinned re-predictions: committee, LIRF trees and residual members (runs/coverage_regime/measure/<month>/predictions.parquet), context-network ensembles (runs/adsb_ctx/regime_check4/<month>.parquet, network table 0.25 ens_ctx_e24 + 0.25 ens_ctx_e24b + 0.5 ens_ctx_e32), LIRF context network (runs/adsb_ctx/regime_check_lirf/<month>.parquet); v9, labels, days, floors and population flags from runs/fair_dev/rows_shipped.parquet; matched = the thinned match class; residual stage 0.05 adj2 + 0.05 cat + 0.9 rnet on matched non-LIRF rows",
+ "control": {
+  "name": "v34",
+  "outer": {
+   "ltfm": 1.0,
+   "matched_other": 0.6,
+   "unmatched_other": 0.7
+  },
+  "lirf": {
+   "lirf_nonpop_matched": {
+    "v9": 0.15,
+    "net": 0.4,
+    "tree": 0.45
+   },
+   "lirf_nonpop_unmatched": {
+    "v9": 0.0,
+    "net": 0.5833333333333334,
+    "tree": 0.4166666666666667
+   }
+  },
+  "network_share": 0.75,
+  "note": "the layers above v34 (u300 gate, callsign fix, queue trust, stretch, fill pins, LIRF gate) touch about 1,300 ranking rows plus the stretch and are left out, as in configs/lomo_weights_v1.json; a selection would be re-read on the full stack before any export"
+ },
+ "candidates": {
+  "n85": {
+   "network_share": 0.85
+  },
+  "n100": {
+   "network_share": 1.0
+  },
+  "u85": {
+   "network_share": 0.85,
+   "scope": "unmatched"
+  },
+  "u100": {
+   "network_share": 1.0,
+   "scope": "unmatched"
+  },
+  "nd1200": {
+   "gate": {
+    "threshold_s": 1200,
+    "share_inside": 0.5
+   }
+  },
+  "n85_nd1200": {
+   "network_share": 0.85,
+   "gate": {
+    "threshold_s": 1200,
+    "share_inside": 0.5
+   }
+  }
+ },
+ "candidate_semantics": "network_share a on a scope: mix = (1 - a) committee + a nets on the scope's non-LIRF rows where both are finite (tools/run_adsb_nn_dev.mixed), 0.75 elsewhere; scope 'unmatched' = rows without an ADS-B match under the set's own coverage; gate: on non-LIRF rows with committee - nets > threshold_s the mix takes share_inside (configs/snow_higher_v1.json net_down); LIRF rows keep the control's blends; floor per row",
+ "minimum_mean_improvement_fraction": 0.0002,
+ "selection": "A candidate is eligible when, on BOTH thinned months, its whole-month RMSE is below the control's with the paired-day 95% interval (tools/run_adsb_v11.paired_days, seed 20260929) below zero, the mean thinned ratio is at least 0.02% below 1, and no natural equal-footing month (January, July, December) is worse on all rows. Lowest mean thinned ratio among the eligible; otherwise nothing. November is not read (nine-month fold side).",
+ "ship": "only if selected: re-read on the full v45 stack, then a delta (candidate minus control recipe) from the final-file dry run's components added to v45's floats, independent rebuild, audit; upload only on the user's decision",
+ "report": "docs/thinned_regime/results_v1.json"
+}
