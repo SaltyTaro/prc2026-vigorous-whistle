@@ -1,7 +1,11 @@
 # Published daily totals of off-block delay: screen, declared round and v48 (29 September 2026)
 
-**State: v48 is exported and audited, not uploaded.** The declared development rule accepted the procedure. The upload is the user's
-decision.
+**State: v48 was uploaded at the user's word ("upload v48") at 13:16 UTC on 29 September 2026 and officially scores 222.6042 on all
+344,841 rows: 1.3297 s (0.594%) better than v46 (223.9339). It is the clean model line's best. Never re-upload v1–v48.** Record: `official_result_v48.json`.
+
+The squared change against v46 was 1.529e8, so the result corresponds to an alignment of 1.17: the moves pointed the right way and
+were smaller than the truth, as in July 2025 (1.17). That figure describes the result. It is not used to rescale anything: no
+score-derived work is done on this line.
 
 ## The source, and what it is
 
@@ -151,7 +155,7 @@ much less at LIRF in July (−5.8 s against −45.0 s), where every row is untra
 .venv\Scripts\python.exe -X utf8 -B tools\export_daily_totals.py --version 48
 ```
 
-Upload, only at the user's word:
+The upload that was made:
 
 ```
 .venv\Scripts\python.exe -X utf8 -B tools\prc_submit.py upload --file runs/submissions/vigorous-whistle_v48.parquet --expected-sha256 714ce4257b9b224ee7720e7bcae5c9240bc829935a05aa541049314ab8e51e0e --calendar-day
