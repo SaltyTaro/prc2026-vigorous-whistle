@@ -130,3 +130,11 @@ If every implied error beyond the mapping's noise were removed exactly, v46 woul
 tight mapping and no extrapolation (EGLL, LEBL, LIRF July, LEMD January), the stake is about 6–8e7 of squared error, **0.4–0.5 s**.
 The reassuring half of the result needs no decision: the January 2026 levels that no 2025 month could verify (EDDM, EHAM, LIRF) agree
 with the published figures within 2–7 s.
+
+## 5. Published daily totals of off-block delay (`tools/screen_daily_totals.py`)
+
+EUROCONTROL's daily all-causes pre-departure delay per airport equals, on the 2025 clocks, the day's sum of max(off-block − schedule, 0)
+within 0.0–0.3 s per flight at seven airports. Spreading the day's discrepancy over the rows by error variance is worse than the stack
+(+0.06 to +2.2% in three of four months); a learned residual model with the discrepancy as a feature reads −0.53 / −0.32 / −1.67 /
++1.14%. Figures: [`daily_totals.json`](daily_totals.json). The screen led to a declared round and to v48:
+[`docs/daily_totals/README.md`](../daily_totals/README.md).
