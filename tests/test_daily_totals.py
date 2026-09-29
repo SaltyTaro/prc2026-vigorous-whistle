@@ -78,3 +78,48 @@ def test_month_prior():
     mean, sd = month_prior(x, np.full(31, 25.0))
     assert 12.0 < mean < 26.0 and 5.0 < sd < 14.0
     assert month_prior(np.array([1.0, 2.0]), np.array([1.0, 1.0])) == (0.0, 3.0)
+
+
+def two_part_day(shift_tracked: float, shift_untracked: float, share_untracked: float = 0.3, seed: int = 3):
+    a, yhat, y, groups, _ = day(0.0, None, seed)
+    component = (np.random.default_rng(seed).random(len(a)) < share_untracked).astype(np.int64)
+    y = y + np.where(component == 1, shift_untracked, shift_tracked)
+    return a, yhat, y, groups, component, float(np.maximum(a - y, 0).sum())
+
+
+def test_components_with_one_common_shift_equal_the_single_shift():
+    a, yhat, y, groups, component, total = two_part_day(30.0, 30.0)
+    single, info = reconcile_day(a, yhat, groups, total, 60.0, 0.02, 30.0)
+    p = prepare_day(a, yhat, groups, component=component, components=2)
+    assert p.n_eff_k.sum() == pytest.approx(p.n_eff)
+    both, info2 = solve_day(p, total, 60.0, 0.02, 0.0, 0.0, shift_cov=np.full((2, 2), 30.0 ** 2))
+    assert info2["shifts_s"][0] == pytest.approx(info2["shifts_s"][1])
+    assert info2["shift_s"] == pytest.approx(info["shift_s"], abs=1e-6)
+    assert np.allclose(both, single, atol=1e-6)
+
+
+def test_components_split_the_discrepancy_by_their_prior():
+    a, yhat, y, groups, component, total = two_part_day(0.0, 60.0)
+    p = prepare_day(a, yhat, groups, component=component, components=2)
+    cov = np.array([[5.0 ** 2, 0.0], [0.0, 40.0 ** 2]])
+    new, info = solve_day(p, total, 60.0, 0.02, 0.0, 0.0, shift_cov=cov)
+    tracked, untracked = info["shifts_s"]
+    assert abs(tracked) < 5.0 and untracked == pytest.approx(60.0, abs=12.0)
+    assert tracked / untracked == pytest.approx(25.0 * p.n_eff_k[0] / (1600.0 * p.n_eff_k[1]), rel=1e-6)   # load_k = cov_kk n_k without correlation
+    one, _ = reconcile_day(a, yhat, groups, total, 60.0, 0.02, 30.0)
+    rmse = lambda v: float(np.sqrt(np.mean((v - y) ** 2)))
+    assert rmse(new) < rmse(one) < rmse(yhat)
+    still, info = solve_day(p, total, 60.0, 0.02, 0.0, 0.0, shift_cov=np.array([[0.0, 0.0], [0.0, 40.0 ** 2]]))
+    assert info["shifts_s"][0] == 0.0 and info["shifts_s"][1] > 40.0
+
+
+def test_components_carry_a_prior_mean():
+    a, yhat, y, groups, component, total = two_part_day(0.0, 0.0)
+    p = prepare_day(a, yhat, groups, component=component, components=2)
+    implied = p.reference_total + p.mean_e
+    new, info = solve_day(p, implied - p.n_eff_k[1] * 25.0, 60.0, 0.02, np.array([0.0, 25.0]), 0.0, shift_cov=np.diag([100.0, 400.0]))
+    assert info["shifts_s"][0] == pytest.approx(0.0, abs=1.0) and info["shifts_s"][1] == pytest.approx(25.0, abs=1.0)
+    with pytest.raises(ValueError):
+        prepare_day(a, yhat, groups, component=component, components=1)
+    with pytest.raises(ValueError):
+        solve_day(p, implied, 60.0, 0.02, 0.0, 0.0, shift_cov=np.eye(3))

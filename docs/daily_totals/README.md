@@ -165,4 +165,6 @@ The upload that was made:
 
 - No layer in the final-file runner (`src/prc2026_final/stack.py`): it would need the published totals of the final file's period.
 - The LIRF fill population and other heavy rows are not resolved by the totals; two months gained and two lost in the exploration.
-- The monthly and the daily source are not combined.
+- The monthly and the daily source are not combined. Three further uses of the published figures were explored after v48 and none
+  passes: separate shifts for tracked and untracked rows, the monthly source as the centre of the day shifts, one tilt per
+  airport-month for the heavy rows. Record: [`followups.md`](followups.md).

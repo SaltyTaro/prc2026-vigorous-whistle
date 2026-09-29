@@ -12,7 +12,12 @@ published figure's accuracy per airport and the day-shift scale tau per airport 
                   scratch/v24 + runs/adsb_v25/dev) in place of the v46 stack; cells from the other eleven months. The cross-fit tables
                   leave out 14,092 departures of the eight non-recipe months (0.7%, mean positive delay 66 min); they enter their
                   airport-day with the airport-month's median prediction ("extra" rows), are never scored and never enter a cell.
-  --report [--tag NAME]                                          -> prints month / airport changes; runs/daily_totals/<tag>/report.json
+  --components tracked   two day shifts per airport-day, one for the tracked rows (ADS-B surface match) and one for the others, jointly
+                  Gaussian with the airport's scales and correlation from the fitting months (component_scales); one published total
+  --centres PATH  a JSON table {"AIRPORT|MONTH": {"mean_s", "sigma_s"}}: in those airport-months the day shift has the prior
+                  N(mean_s, tau_within^2 + sigma_s^2), tau_within = the day shift's sd about its month's mean from the fitting months
+  --report [--tag NAME] [--control TAG]                          -> prints month / airport changes; runs/daily_totals/<tag>/report.json
+                  with --control the changes are against the control run's values, not against the stack
   --score --declaration configs/daily_totals_v1.json             the governing run of a declaration -> its "report" path
 """
 from __future__ import annotations
@@ -38,6 +43,7 @@ ROWS = ROOT / "runs/daily_totals/rows.parquet"
 PRED_BANDS = [-1e9, 1800.0, 3600.0, 7200.0, 1e9]
 MIN_CELL, MAX_SAMPLES = 150, 1500
 SEED = 20260929
+COMPONENT_MIN_ROWS, COMPONENT_MIN_DAYS, COMPONENT_MIN_TAU_S, COMPONENT_MAX_CORRELATION = 10, 20, 5.0, 0.95
 
 
 def rows_table() -> pd.DataFrame:
@@ -170,13 +176,65 @@ def scales(fit: pd.DataFrame) -> tuple[dict, dict, dict]:
     return noise, wide, tau
 
 
-def run_month(month: str, tag: str, tau_scale: float, settings: Settings, rows: str = "stack", prior: str = "fixed") -> None:
+def within_month_tau(fit: pd.DataFrame) -> dict:
+    """Per airport, from the fitting months: the sd (s) of the day shift about its month's mean; as tau, the months' means removed."""
+    o = fit[fit["r"].abs() <= 600]
+    day = o.groupby(["airport", "month", "bday"])["r"].agg(["mean", "var", "size"])
+    day = day[day["size"] >= 100]
+    out = {}
+    for airport, g in day.groupby(level="airport"):
+        centred = g["mean"] - g.groupby(level="month")["mean"].transform("mean")
+        freedom = len(g) - g.index.get_level_values("month").nunique()
+        out[airport] = float(np.sqrt(max(float((centred ** 2).sum()) / max(freedom, 1) - float((g["var"] / g["size"]).mean()), 25.0)))
+    return out
+
+
+def component_scales(fit: pd.DataFrame, pooled: dict) -> dict:
+    """Per airport, from the fitting months: the covariance (s^2) of the day shifts of the tracked rows (component 0) and of the
+    others (component 1). Scales as the pooled tau (airport-day means of residuals within 600 s, sampling variance removed, at least
+    5 s), over the airport-days that hold at least COMPONENT_MIN_ROWS rows of the component; the covariance from the airport-days
+    that hold both, the correlation kept inside [0, 0.95]. A component with fewer than COMPONENT_MIN_DAYS such days takes the
+    airport's pooled tau; without enough days that hold both, the correlation is the median of the airports that have one."""
+    o = fit[fit["r"].abs() <= 600]
+    found = {}
+    for airport, g in o.groupby("airport"):
+        d = g.groupby(["bday", "matched"])["r"].agg(["mean", "var", "size"])
+        e = {}
+        for k, flag in enumerate((True, False)):
+            x = d.xs(flag, level="matched") if flag in d.index.get_level_values("matched") else d.iloc[:0]
+            x = x[x["size"] >= COMPONENT_MIN_ROWS]
+            e[k] = x
+        tau = [float(np.sqrt(max(x["mean"].var() - (x["var"] / x["size"]).mean(), COMPONENT_MIN_TAU_S ** 2))) if len(x) >= COMPONENT_MIN_DAYS else None for x in (e[0], e[1])]
+        both = e[0][["mean"]].join(e[1][["mean"]], how="inner", lsuffix="_0", rsuffix="_1")
+        rho = None
+        if len(both) >= COMPONENT_MIN_DAYS and tau[0] is not None and tau[1] is not None:
+            rho = float(np.clip(np.cov(both["mean_0"], both["mean_1"])[0, 1] / (tau[0] * tau[1]), 0.0, COMPONENT_MAX_CORRELATION))
+        found[airport] = {"tau_s": tau, "correlation": rho, "days": [int(len(e[0])), int(len(e[1])), int(len(both))]}
+    known = [v["correlation"] for v in found.values() if v["correlation"] is not None]
+    fallback = float(np.median(known)) if known else 0.0
+    out = {}
+    for airport, v in found.items():
+        tau = [pooled[airport] if s is None else s for s in v["tau_s"]]
+        rho = fallback if v["correlation"] is None else v["correlation"]
+        out[airport] = {"tau_s": tau, "correlation": rho, "days": v["days"], "estimated": [s is not None for s in v["tau_s"]] + [v["correlation"] is not None],
+                        "cov": [[tau[0] ** 2, rho * tau[0] * tau[1]], [rho * tau[0] * tau[1], tau[1] ** 2]]}
+    return out
+
+
+def run_month(month: str, tag: str, tau_scale: float, settings: Settings, rows: str = "stack", prior: str = "fixed", components: str = "one", centres: str | None = None) -> None:
     t = add_keys(table(rows))
     if "extra" not in t:
         t["extra"] = False
     fit, use = t[t["month"].ne(month) & ~t["extra"]], t[t["month"].eq(month) & t["complete"]]
     cells = Cells(fit)
     noise, wide, tau = scales(fit)
+    if components not in ("one", "tracked") or (components == "tracked" and prior != "fixed"):
+        raise ValueError("Components: one or tracked; tracked with the fixed prior only.")
+    by_component = component_scales(fit, tau) if components == "tracked" else {}
+    if centres is not None and (components != "one" or prior != "fixed"):
+        raise ValueError("Centres: with one component and the fixed prior only.")
+    centre = read_json(Path(centres)) if centres is not None else {}
+    within = within_month_tau(fit) if centre else {}
     out, infos = [], []
     started = time.time()
     priors = {}
@@ -184,22 +242,31 @@ def run_month(month: str, tag: str, tau_scale: float, settings: Settings, rows: 
         days = []
         for bday, day in month_rows.groupby("bday", sort=True):
             day = day.reset_index(drop=True)
-            days.append((bday, day[ID].to_numpy(), float(day["pub"].iat[0]), prepare_day(day["a"].to_numpy(dtype=float), day["stack"].to_numpy(dtype=float), cells.resolve(day), settings)))
+            split = {"component": (~day["matched"].to_numpy(dtype=bool)).astype(np.int64), "components": 2} if components == "tracked" else {}
+            days.append((bday, day[ID].to_numpy(), float(day["pub"].iat[0]), prepare_day(day["a"].to_numpy(dtype=float), day["stack"].to_numpy(dtype=float), cells.resolve(day), settings, **split)))
         mean, sd = 0.0, tau_scale * tau[airport]
         if prior == "adaptive":  # from the month's own published totals and predictions; no label
             mean, sd = month_prior(np.array([shift_estimate(p, total) for _, _, total, p in days]),
                                    np.array([(p.var_bulk + noise[airport] ** 2) / max(p.n_eff, 1.0) ** 2 for _, _, _, p in days]))
             sd *= tau_scale
+        if f"{airport}|{month}" in centre:
+            c = centre[f"{airport}|{month}"]
+            mean, sd = float(c["mean_s"]), tau_scale * float(np.sqrt(within[airport] ** 2 + float(c["sigma_s"]) ** 2))
         priors[airport] = {"mean_s": mean, "sd_s": sd}
+        cov = tau_scale ** 2 * np.array(by_component[airport]["cov"]) if components == "tracked" else None
         for bday, ids, total, p in days:
-            new, info = solve_day(p, total, noise[airport], wide[airport], mean, sd, settings)
-            out.append(pd.DataFrame({ID: ids, "new": np.maximum(new, -12.0), "shift": info["shift_s"]}))
+            new, info = solve_day(p, total, noise[airport], wide[airport], mean, sd, settings, shift_cov=cov)
+            shifts = info.pop("shifts_s", None)
+            if shifts is not None:
+                info.update({"shift_tracked_s": shifts[0], "shift_untracked_s": shifts[1], "n_eff_tracked": float(p.n_eff_k[0]), "n_eff_untracked": float(p.n_eff_k[1])})
+            out.append(pd.DataFrame({ID: ids, "new": np.maximum(new, -12.0), "shift": info["shift_s"] if shifts is None else np.asarray(shifts)[p.component]}))
             infos.append({"airport": airport, "bday": bday, **info})
     target = ROOT / f"runs/daily_totals/{tag}"
     target.mkdir(parents=True, exist_ok=True)
     pd.concat(out, ignore_index=True).to_parquet(target / f"{month}.parquet", index=False)
     pd.DataFrame(infos).to_parquet(target / f"{month}_days.parquet", index=False)
     write_json(target / f"{month}_settings.json", {"created_at_utc": utc_now(), "month": month, "tau_scale": tau_scale, "settings": settings.__dict__, "prior": prior, "shift_priors": priors, "noise_sd_s": noise, "noise_wide_share": wide, "tau_s": tau,
+                                                   "components": components, "component_scales": by_component, "centres": centres, "tau_within_s": within,
                                                    "min_cell": MIN_CELL, "max_samples": MAX_SAMPLES, "seconds": time.time() - started})
     print(month, "airport-days", len(infos), "seconds", round(time.time() - started, 1), flush=True)
 
@@ -244,17 +311,26 @@ def govern(path: str) -> None:
     print({"accepted": accepted, "mean_change_pct_equal_footing": round(result["mean_change_pct_equal_footing"], 4), "intervals_below_zero": below})
 
 
-def report(tag: str, rows: str = "stack") -> dict:
+def report(tag: str, rows: str = "stack", control: str | None = None) -> dict:
+    """Changes of the run `tag` against the stack, or against the run `control` (then "stack" below reads "control")."""
     t = table(rows)
     if "extra" in t:
         t = t[~t["extra"]].reset_index(drop=True)
     months = sorted(t["month"].unique())
     target = ROOT / f"runs/daily_totals/{tag}"
+    if control is not None:
+        source = ROOT / f"runs/daily_totals/{control}"
+        if any((target / f"{m}.parquet").exists() and not (source / f"{m}.parquet").exists() for m in months):
+            raise ValueError("The control run lacks a month of the run.")
+        base = pd.concat([pd.read_parquet(source / f"{m}.parquet", columns=[ID, "new"]) for m in months if (source / f"{m}.parquet").exists()], ignore_index=True).rename(columns={"new": "control"})
+        t = t.merge(base, on=ID, how="left")
+        t["stack"] = t["control"].fillna(t["stack"])
+        t["se"] = (t["stack"] - t["label"]) ** 2
     new = pd.concat([pd.read_parquet(target / f"{m}.parquet") for m in months if (target / f"{m}.parquet").exists()], ignore_index=True)
     t = t.merge(new, on=ID, how="left")
     t["new"] = t["new"].fillna(t["stack"])
     t["se_new"] = (t["new"] - t["label"]) ** 2
-    out = {"created_at_utc": utc_now(), "tag": tag, "months": {}, "airports": {}}
+    out = {"created_at_utc": utc_now(), "tag": tag, "control": control or "the stack", "months": {}, "airports": {}}
     for month, g in t.groupby("month"):
         if not (target / f"{month}.parquet").exists():
             continue
@@ -274,7 +350,7 @@ def report(tag: str, rows: str = "stack") -> dict:
     out["airports"] = {a: {m: float(v) for m, v in r.items()} for a, r in pct.iterrows()}
     out["airport_month_cells"] = {"better": int((pct < 0).sum().sum()), "worse": int((pct > 0).sum().sum())}
     print(pct.round(2).to_string())
-    write_json(target / "report.json", out)
+    write_json(target / ("report.json" if control is None else f"report_against_{control}.json"), out)
     return out
 
 
@@ -288,15 +364,18 @@ def main() -> None:
     parser.add_argument("--report", action="store_true")
     parser.add_argument("--rows", choices=["stack", "twelve"], default="stack")
     parser.add_argument("--prior", choices=["fixed", "adaptive"], default="fixed")
+    parser.add_argument("--components", choices=["one", "tracked"], default="one")
+    parser.add_argument("--control")
+    parser.add_argument("--centres")
     parser.add_argument("--score", action="store_true")
     parser.add_argument("--declaration")
     args = parser.parse_args()
     if args.score:
         govern(args.declaration)
     elif args.report:
-        report(args.tag, args.rows)
+        report(args.tag, args.rows, args.control)
     else:
-        run_month(args.month, args.tag, args.tau_scale, Settings(heavy_sd_s=args.heavy, heavy_updates=not args.no_heavy_updates), args.rows, args.prior)
+        run_month(args.month, args.tag, args.tau_scale, Settings(heavy_sd_s=args.heavy, heavy_updates=not args.no_heavy_updates), args.rows, args.prior, args.components, args.centres)
 
 
 if __name__ == "__main__":
