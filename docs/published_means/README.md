@@ -37,3 +37,34 @@ If the estimates hold, v46 would read 223.47 (−0.46 s). Without LEMD the expec
 ## Standing
 
 Per the declaration nothing is exported without a further decision of the user. No file was built.
+
+## Second declaration and v47 (29 September, built on the user's decision; NOT uploaded)
+
+`configs/published_means_v2.json` (10:55 UTC, commit `9be00c6`) is the first declaration with the noise limit at 5 s instead of 8 s. That
+removes LEMD (noise 7.0 s) and nothing else. **It was chosen after the first read**, so its development read confirms the arithmetic
+and is not independent evidence.
+
+| month | change in RMSE | interval (s) | cells shifted |
+|---|---|---|---|
+| January | −0.003% | [−0.03, +0.01] | EGLL, LEBL |
+| July | −0.017% | [−0.16, +0.08] | EGLL, LEBL, LIRF |
+| November | −0.078% | [−0.23, −0.06] | EGLL, LEBL |
+| December | −0.011% | [−0.06, +0.02] | EGLL |
+
+Accepted by the rule (no equal-footing month worse, mean −0.010%). The development gain is small because 2025's levels are right.
+
+**v47** = v46 with the four eligible cells shifted (`tools/run_published_means.py --export --version 47 --declaration
+configs/published_means_v2.json`, [`export_v47.json`](export_v47.json)): `runs/submissions/vigorous-whistle_v47.parquet`, SHA-256
+`b487310c5eb8cedf9c2a4edbaf4d716117c83402674a360b513e73e3059ca47c`.
+
+| cell | shift | rows |
+|---|---|---|
+| EGLL January 2026 | −10.0 s | 19,283 |
+| EGLL July 2026 | −30.2 s | 20,554 |
+| LEBL July 2026 | −22.7 s | 17,879 |
+| LIRF July 2026 | −45.0 s | 15,782 |
+
+73,498 rows change (mean −26.3 s, largest 45 s, sum of squared moves 6.18e7); every other row equals v46. Audit
+`docs/export_audit/v47_audit.json`: clean. Tests: `tests/test_published_means.py` (2 pass).
+
+**Expectation against v46's 223.9339:** 223.53 (−0.41 s) if the estimates hold; 224.33 (+0.40 s) if every move is noise. Upload is the user's decision.

@@ -1,0 +1,111 @@
+{
+  "cells": {
+    "EGLL 2026-01": {
+      "rows": 19283,
+      "shift_s": 9.95239529163388
+    },
+    "EGLL 2026-07": {
+      "rows": 20554,
+      "shift_s": 30.173801694520847
+    },
+    "LEBL 2026-07": {
+      "rows": 17879,
+      "shift_s": 22.710184602927846
+    },
+    "LIRF 2026-07": {
+      "rows": 15782,
+      "shift_s": 44.953271777098266
+    }
+  },
+  "created_at_utc": "2026-09-29T09:42:33.575649+00:00",
+  "declaration": "configs/published_means_v2.json",
+  "dry_run": false,
+  "max_abs_change_s": 45.0,
+  "mean_change_s": -26.270878119132494,
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v47.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 111654,
+    "maximum_rounding_change_seconds": 0.28981539707228876,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 24,
+    "provenance": {
+      "audit_used": false,
+      "cells": {
+        "EGLL 2026-01": {
+          "rows": 19283,
+          "shift_s": 9.95239529163388
+        },
+        "EGLL 2026-07": {
+          "rows": 20554,
+          "shift_s": 30.173801694520847
+        },
+        "LEBL 2026-07": {
+          "rows": 17879,
+          "shift_s": 22.710184602927846
+        },
+        "LIRF 2026-07": {
+          "rows": 15782,
+          "shift_s": 44.953271777098266
+        }
+      },
+      "code": {
+        "tools/run_published_means.py": "feb04aa44fbe85a034438c3a32a616dc312cd17e64d69b622a6659d38b480a4c",
+        "tools/screen_published_means.py": "1f24ebab6d28e1cfac1f786b09efa99b26c1aad18f3d43320ab9e5a66c1bf6e2"
+      },
+      "declaration": {
+        "configs/published_means_v2.json": {
+          "object_hash": "05c49215a4ab8da1efcae6fc7429a13f3ce996fab54e876f89e328accd4d53fd",
+          "sha256": "958bb56eae5d1067af7645e67b596354ecd8d065eb49728e49ce0a208962d5fb"
+        }
+      },
+      "dry_run": false,
+      "experiment_id": "published_means_v2",
+      "external_data": {
+        "local_path": "data/external/eurocontrol_aiu/Taxi-Out_Additional_Time.xlsx (not in the repository)",
+        "name": "EUROCONTROL Performance Review Unit, Taxi-Out Additional Time (airport, month)",
+        "nature": "aggregates of the scored months' hidden target (mean taxi-out of the unit's valid flights per airport and month). No official score and no leaderboard information is used.",
+        "organiser_statement": "Ambiguous; recorded as such. With the full thread (pasted by the user on 29 September) the 'above' most plausibly refers to espinielli's statement of 26 September, 'As said before open data sources can be usable to devise a better model', given in reply to questions about data covering January and July 2026; on that reading the reply permits the use. He also wrote 'the focus is on a predicting model not predictin Jan/Jul 2026'.",
+        "retrieved_at_utc": "2026-09-29T09:25:23Z",
+        "sha256": "82d119ed3cfaf7a3c2f29b27ce942f0a36ea599b3af76e777e4eb354a7a4adb8",
+        "terms": "published by EUROCONTROL for information purposes; may be copied in whole or in part provided EUROCONTROL is mentioned as the source and it is not used for commercial purposes; no modification without prior written permission (ansperformance.eu disclaimer). Not an open licence.",
+        "url": "https://www.eurocontrol.int/performance/data/download/xls/Taxi-Out_Additional_Time.xlsx",
+        "version": "2026-09-15 V.1.0, period 2018-01-01 to 2026-07-31"
+      },
+      "floor_seconds": -12.0,
+      "incumbent": {
+        "official_rmse_seconds": 223.9339,
+        "sha256": "8abdd87ad5098d7753927f407ffd7e8cd342aa84a2864392e1b64c0dde015af9",
+        "submission": "vigorous-whistle_v46.parquet"
+      },
+      "official_scores_used": "none",
+      "recipe": "v46 with a level shift on the eligible airport-months' predictions in (0, 7200] s, from EUROCONTROL's published airport-month taxi-out aggregates; floor -12 s",
+      "results": {
+        "docs/published_means/results_v2.json": "a8ecbe873ee5d508b9f829f53bed6bc562dccec19dc752fd292baea5d27812eb"
+      },
+      "selected_by": "the declared procedure, used on the user's decision: yes use it"
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "b487310c5eb8cedf9c2a4edbaf4d716117c83402674a360b513e73e3059ca47c",
+    "size_bytes": 1356018,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-29T09:42:33.551431+00:00",
+    "version": 47
+  },
+  "rmse_expected_if_estimates_hold": 223.52822119454464,
+  "rmse_if_every_move_is_noise": 224.33397106061045,
+  "rows_changed": 73498,
+  "sha256": "b487310c5eb8cedf9c2a4edbaf4d716117c83402674a360b513e73e3059ca47c",
+  "sum_squared_change": 61843441.0,
+  "version": 47
+}
