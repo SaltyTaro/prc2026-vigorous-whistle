@@ -1,0 +1,195 @@
+{
+  "base": 45,
+  "by_airport": {
+    "EDDF": {
+      "changed": 30248,
+      "max_abs_change_s": 634.0,
+      "mean_change_s": 0.08354214279813861,
+      "rms_change_s": 7.255462633700364,
+      "rows": 36317
+    },
+    "EDDM": {
+      "changed": 20044,
+      "max_abs_change_s": 334.0,
+      "mean_change_s": 0.3679812061927136,
+      "rms_change_s": 4.33603079548397,
+      "rows": 25966
+    },
+    "EGLL": {
+      "changed": 33794,
+      "max_abs_change_s": 424.0,
+      "mean_change_s": -0.6460090361445783,
+      "rms_change_s": 6.506825656223004,
+      "rows": 39840
+    },
+    "EHAM": {
+      "changed": 29465,
+      "max_abs_change_s": 447.0,
+      "mean_change_s": 0.46762872557749724,
+      "rms_change_s": 10.083623172664842,
+      "rows": 38182
+    },
+    "LEBL": {
+      "changed": 23005,
+      "max_abs_change_s": 130.0,
+      "mean_change_s": 0.024800531914893616,
+      "rms_change_s": 3.4035338331198486,
+      "rows": 30080
+    },
+    "LEMD": {
+      "changed": 29450,
+      "max_abs_change_s": 420.0,
+      "mean_change_s": -0.0726037776695351,
+      "rms_change_s": 5.6873613309612905,
+      "rows": 36954
+    },
+    "LFPG": {
+      "changed": 34897,
+      "max_abs_change_s": 665.0,
+      "mean_change_s": -0.9679474317817014,
+      "rms_change_s": 12.564143210851782,
+      "rows": 39872
+    },
+    "LIRF": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 26899
+    },
+    "LSZH": {
+      "changed": 18563,
+      "max_abs_change_s": 223.0,
+      "mean_change_s": 0.7085961123110152,
+      "rms_change_s": 5.64814998668929,
+      "rows": 23150
+    },
+    "LTFM": {
+      "changed": 44441,
+      "max_abs_change_s": 462.0,
+      "mean_change_s": -0.8602803640108446,
+      "rms_change_s": 13.401540599164502,
+      "rows": 47581
+    }
+  },
+  "by_month": {
+    "2026-01": {
+      "changed": 117460,
+      "max_abs_change_s": 634.0,
+      "mean_change_s": -0.20313124103746097,
+      "rms_change_s": 10.885401942886375,
+      "rows": 152719
+    },
+    "2026-07": {
+      "changed": 146447,
+      "max_abs_change_s": 665.0,
+      "mean_change_s": -0.1526686168163979,
+      "rms_change_s": 6.034045343666139,
+      "rows": 192122
+    }
+  },
+  "candidate": "n85_nd1200",
+  "checks": {
+    "changed_rows_equal_v38_in_v45": true,
+    "control_rounds_to_uploaded_v38": true,
+    "lirf_rows_changed": 0,
+    "rows_changed_outside_scope": 0
+  },
+  "created_at_utc": "2026-09-29T06:34:02.850932+00:00",
+  "dry_run": false,
+  "gate": {
+    "share_inside": 0.5,
+    "threshold_s": 1200
+  },
+  "gate_rows": 55,
+  "gate_rows_by_month": {
+    "2026-01": 40,
+    "2026-07": 15
+  },
+  "independent_rebuild": {
+    "gate_rows_mask_disagreement": 0,
+    "max_abs_integer_difference": 1,
+    "rows_differing": 181,
+    "source": "runs/adsb_ctx/export_v30/ranking_values.parquet"
+  },
+  "max_abs_change_s": 665.0,
+  "mean_abs_change_s": 4.088633495890598,
+  "mean_change_gate_rows_s": 340.8545454545455,
+  "mean_change_s": -0.22869040987923775,
+  "network_share": 0.85,
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v46.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 111654,
+    "maximum_rounding_change_seconds": 0.4999989368457136,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 24,
+    "provenance": {
+      "audit_used": false,
+      "candidate": "n85_nd1200",
+      "code": {
+        "src/prc2026_final/share_gate.py": "015df26644d701497bc06874b9e3319013f8d56dbb282f96d12f5f9f52fefdbe",
+        "tools/export_disagreement_gate.py": "c1033a0141ab59df4ec37eed4cafbe3d889f1a33b57800d882898fce921df892",
+        "tools/export_fair_weights.py": "224fb363d7399d9f81f46364a7f27a2596850872d5646568c214af300db24168",
+        "tools/export_share_gate.py": "53aab53bb9ae7d28ea7ba31282190c37b53b81e00bf5705e4ce42159b854a4a8",
+        "tools/export_stack.py": "808c79f6a16372736d5c8859bc2fb059c8b4f17eb7ea695cc21c41c50e330bff",
+        "tools/export_v33.py": "3f788f5d83b6339a2ce60eb0884bb854eb4b05e56b215dc01d801a7f6f45f3bb"
+      },
+      "declaration": {
+        "configs/thinned_regime_round_v1.json": {
+          "object_hash": "efdc2c640e21c4b4e19648b57c90703addb291745addd6057702354c9b1e03c9",
+          "sha256": "34809b9b38b89a976a99fa76ef0b46083110e63b64e3c3c670e1b66c4480543d"
+        }
+      },
+      "development_results": {
+        "docs/thinned_regime/reread_n85_nd1200.json": "94c3c0cd57004d98a16aad0ae18da367fd70521a18d4334ecf1f2331fbae5c82",
+        "docs/thinned_regime/results_v1.json": "9f44cd29903e0399622985013653d309829b644de58252140d90bdfc6cf61cc1"
+      },
+      "dry_run": false,
+      "experiment_id": "thinned_regime_round_v1",
+      "external_data": "adsb.lol globe_history (ODbL) surface positions, as in v45",
+      "floor_seconds": -12.0,
+      "incumbent": {
+        "note": "the clean model line's best",
+        "official_rmse_seconds": 224.2398,
+        "sha256": "72d24155e6b6b8dbb4d6caf7a590679d3b242ad7c83793dcc3d28d5b88fd77fa",
+        "submission": "vigorous-whistle_v45.parquet"
+      },
+      "inputs": {
+        "runs/adsb_ctx/export_v30/ranking_values.parquet": "b91c57bc18bf65fabd5d4424cda802d28febd3dba0ed1cb303e702e389e9ae4d",
+        "runs/final_dryrun/run/recipe/detail.parquet": "2e79c78b25a4abd1032c211ec61968dc90942e58c2ccff8fceeccc4e3fdcaf5b",
+        "runs/final_lfpg_eobt/run/recipe/detail.parquet": "a73455834db2342f6407a438e631deda3a04879fe5a01fa2f15b90111363bdfd",
+        "runs/submissions/vigorous-whistle_v38.parquet": "61264cdb7f0a37a8e5cf943f8e950441df38b826132cfc1097f00ca9d0519fe4",
+        "runs/submissions/vigorous-whistle_v45.parquet": "72d24155e6b6b8dbb4d6caf7a590679d3b242ad7c83793dcc3d28d5b88fd77fa"
+      },
+      "official_scores_used": "none",
+      "recipe": "v45 with the committee mix at network share 0.85 and share 0.5 where the committee sits more than 1200 s above the networks, through the shipped stack (v34 weights, u300 gate, callsign fix 50%, queue trust 0.75, two-sided stretch 1500 / 900); LIRF rows unchanged; floor -12 s",
+      "selected_by": "the user's override of the declared rule, which selected nothing: ok build it (29 September 2026, in reply to: shall I build n85_nd1200 on v45 as v46 for you to upload)"
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "8abdd87ad5098d7753927f407ffd7e8cd342aa84a2864392e1b64c0dde015af9",
+    "size_bytes": 1356169,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-29T06:34:00.594355+00:00",
+    "version": 46
+  },
+  "rmse_if_every_changed_label_equals_the_new_value": 224.07750132388293,
+  "rmse_if_every_changed_label_equals_the_old_value": 224.4019812936714,
+  "rows": 344841,
+  "rows_changed_float": 317931,
+  "rows_changed_in_anchored_layers": 304,
+  "rows_changed_integer": 263907,
+  "sha256": "8abdd87ad5098d7753927f407ffd7e8cd342aa84a2864392e1b64c0dde015af9",
+  "sum_squared_change": 25091081.0,
+  "version": 46
+}

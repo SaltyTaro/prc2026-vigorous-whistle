@@ -1,0 +1,129 @@
+{
+  "audit_used": false,
+  "candidate": "n85_nd1200",
+  "code": {
+    "src/prc2026_final/lirf_gate.py": "1720860b7ac801d521a685770e42e3f5d8afa1257b60e5514c46974416d501ef",
+    "src/prc2026_final/share_gate.py": "015df26644d701497bc06874b9e3319013f8d56dbb282f96d12f5f9f52fefdbe",
+    "tools/run_mix_gate.py": "5b524e492cfc13f9b183aef3619e44fa9477c471551f1c94e2f1273438eee592",
+    "tools/run_share_gate_reread.py": "5cc04bdd9b772f543119a9338116901614b8507b6e7f18b36f981ec0d3ffa286"
+  },
+  "created_at_utc": "2026-09-29T06:32:16.518965+00:00",
+  "declaration": "configs/thinned_regime_round_v1.json",
+  "declaration_object_hash": "efdc2c640e21c4b4e19648b57c90703addb291745addd6057702354c9b1e03c9",
+  "gate": {
+    "share_inside": 0.5,
+    "threshold_s": 1200
+  },
+  "mean_change_pct_equal_footing": -0.09171007448414518,
+  "months": {
+    "2025-01": {
+      "alignment_sum_d_r": -10286442.527848432,
+      "candidate_rmse": 322.8584733629641,
+      "change_pct": -0.04257631915839388,
+      "control_rmse": 322.9959931678841,
+      "gate_rows": 14,
+      "mean_change_s": 0.21023139228792725,
+      "paired_days_vs_control": {
+        "days": 31,
+        "days_with_lower_squared_error": 22,
+        "interpretation": "descriptive on reused development data",
+        "replicates": 2000,
+        "rmse_difference_95pct_interval_seconds": [
+          -0.3580126550940165,
+          -0.02644772858429008
+        ]
+      },
+      "provenance": [
+        "lomo"
+      ],
+      "rows": 153706,
+      "rows_changed": 142368,
+      "sum_squared_change": 6921059.325511811
+    },
+    "2025-07": {
+      "alignment_sum_d_r": -29124652.54292974,
+      "candidate_rmse": 257.7184562213178,
+      "change_pct": -0.1686130019019405,
+      "control_rmse": 258.15373698677325,
+      "gate_rows": 41,
+      "mean_change_s": 0.14079161533695123,
+      "paired_days_vs_control": {
+        "days": 31,
+        "days_with_lower_squared_error": 25,
+        "interpretation": "descriptive on reused development data",
+        "replicates": 2000,
+        "rmse_difference_95pct_interval_seconds": [
+          -0.7635341768458908,
+          -0.17215293190351139
+        ]
+      },
+      "provenance": [
+        "lomo"
+      ],
+      "rows": 190713,
+      "rows_changed": 175485,
+      "sum_squared_change": 15424845.27951449
+    },
+    "2025-11": {
+      "alignment_sum_d_r": -4931616.693205165,
+      "candidate_rmse": 184.90496465003605,
+      "change_pct": -0.016632077017741942,
+      "control_rmse": 184.93572330196895,
+      "gate_rows": 28,
+      "mean_change_s": 0.3541264688926212,
+      "paired_days_vs_control": {
+        "days": 30,
+        "days_with_lower_squared_error": 20,
+        "interpretation": "descriptive on reused development data",
+        "replicates": 2000,
+        "rmse_difference_95pct_interval_seconds": [
+          -0.19259616918544467,
+          0.13719442199813442
+        ]
+      },
+      "provenance": [
+        "fair"
+      ],
+      "rows": 162332,
+      "rows_changed": 151000,
+      "sum_squared_change": 8016576.8598843515
+    },
+    "2025-12": {
+      "alignment_sum_d_r": -6998080.853068969,
+      "candidate_rmse": 167.51368475587924,
+      "change_pct": -0.06394090239210115,
+      "control_rmse": 167.62086304830976,
+      "gate_rows": 21,
+      "mean_change_s": 0.19242544901188632,
+      "paired_days_vs_control": {
+        "days": 31,
+        "days_with_lower_squared_error": 20,
+        "interpretation": "descriptive on reused development data",
+        "replicates": 2000,
+        "rmse_difference_95pct_interval_seconds": [
+          -0.36304365843766107,
+          0.13704604427585904
+        ]
+      },
+      "provenance": [
+        "fair"
+      ],
+      "rows": 165677,
+      "rows_changed": 153601,
+      "sum_squared_change": 8045184.928816414
+    }
+  },
+  "network_share": 0.85,
+  "note": "descriptive re-read on the full v45 stack; the declared rule selected nothing (docs/thinned_regime/results_v1.json); November's fold side is on nine months",
+  "rows_sha256": "9072bc730f2cac40b8d85633cc19d41967d88b19c6c97bd12cbb22b15d9c5ed5",
+  "stretch_k": {
+    "tracked": [
+      0.08477999327622773,
+      -0.036195286491497544
+    ],
+    "untracked": [
+      0.12580569556630752,
+      -0.04355418251929831
+    ]
+  }
+}
