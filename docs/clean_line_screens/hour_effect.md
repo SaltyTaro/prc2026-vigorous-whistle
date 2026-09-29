@@ -66,10 +66,17 @@ between off-block and first movement, which no input observes. **Closed.**
 1. **Rows without an NM record outside LIRF**: 1.2% of rows, 6.8% of the ordinary squared error, 84% of it in 428 rows with
    an error above 600 s. At six airports their schedule time is at least an hour before the block time in 90% of the rows:
    they are mostly heavily delayed or refiled flights. On record as examined; not reopened.
-2. **Departure stops** (no take-off for at least 20 minutes after a busy half hour): the rows that left their stand before
-   a stop carry 1.0% of the ordinary squared error in the four months (212 rows; EGLL on 30 July 2025 alone 0.34 points).
-   For those rows the NM off-block clock is late (median proxy 600–1,700 s against labels of 2,200–3,700 s). With oracle
-   knowledge of who left before the stop, a lower bound of take-off minus stop start removes 0.6 points. Without it, a
-   schedule-based rule fails: only 28% of the flights scheduled before a stop had left their stand, and the bound then
-   multiplies the squared error by 4.6. Stops of 45 minutes or more in a busy period are the exception: in all four such
-   events of 2025 most of the first departures after the restart had left before the stop.
+2. **Departure stops** (no take-off for at least 30 minutes after a busy half hour, with at least ten of the following
+   departures scheduled before or during the stop): 16 events in the twelve months of 2025. The rows that left their stand
+   before a stop are badly under-predicted (EGLL on 30 July 2025: labels of 5,300–5,600 s against 2,800–2,900 s), and for
+   them the NM off-block clock is late (median proxy 600–1,700 s against labels of 2,200–3,700 s). But the events are of
+   two kinds that no label-free descriptor separates: in six the queue waited through the stop (53–88% of the first
+   fifteen departures had left their stand before it), in the others the aircraft were held at the gate (0–20%).
+   - Tested rule: for the first K departures after the restart that were scheduled before the stop began and have no ADS-B
+     trace from the stand, move the prediction a fraction α of the way up to take-off minus stop start.
+   - Against the twelve-month out-of-sample baseline (cross-fitted v9 plus the leave-one-month-out residual): at best −0.06%
+     of the squared error (K = 15, α = 0.25–0.5), 9 events better and 7 worse. Against the v46 stack on the five events of
+     the development months: −0.08% to −0.12% of the squared error, all of it from EGLL on 30 July; both EDDF events worsen.
+   - Arrivals during the stop, the restart's discharge rate and the stop's length do not tell the two kinds apart.
+   **Closed as a rule.** The ranking months hold about a dozen daytime stops (EHAM on 5 and 7 January, LEMD on 28 January,
+   EDDM on 18 July among them); a lift there would be a coin flip per event.
