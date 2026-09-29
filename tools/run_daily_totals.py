@@ -106,6 +106,9 @@ def rows12_table() -> pd.DataFrame:
 
 
 def table(rows: str) -> pd.DataFrame:
+    """stack (the development stack, four months), twelve (the independent check's table) or the path of a table of that form."""
+    if rows.endswith(".parquet"):
+        return pd.read_parquet(ROOT / rows)
     return rows12_table() if rows == "twelve" else rows_table()
 
 
@@ -221,11 +224,14 @@ def component_scales(fit: pd.DataFrame, pooled: dict) -> dict:
     return out
 
 
-def run_month(month: str, tag: str, tau_scale: float, settings: Settings, rows: str = "stack", prior: str = "fixed", components: str = "one", centres: str | None = None) -> None:
+def run_month(month: str, tag: str, tau_scale: float, settings: Settings, rows: str = "stack", prior: str = "fixed", components: str = "one", centres: str | None = None,
+              airports: list[str] | None = None, placebo: int | None = None) -> None:
     t = add_keys(table(rows))
     if "extra" not in t:
         t["extra"] = False
     fit, use = t[t["month"].ne(month) & ~t["extra"]], t[t["month"].eq(month) & t["complete"]]
+    if airports:  # the fitting side is unchanged; only these airports' days are read
+        use = use[use["airport"].isin(airports)]
     cells = Cells(fit)
     noise, wide, tau = scales(fit)
     if components not in ("one", "tracked") or (components == "tracked" and prior != "fixed"):
@@ -244,6 +250,10 @@ def run_month(month: str, tag: str, tau_scale: float, settings: Settings, rows: 
             day = day.reset_index(drop=True)
             split = {"component": (~day["matched"].to_numpy(dtype=bool)).astype(np.int64), "components": 2} if components == "tracked" else {}
             days.append((bday, day[ID].to_numpy(), float(day["pub"].iat[0]), prepare_day(day["a"].to_numpy(dtype=float), day["stack"].to_numpy(dtype=float), cells.resolve(day), settings, **split)))
+        if placebo is not None:  # each day reads another day's discrepancy (total minus the total its predictions imply)
+            order = np.random.default_rng(placebo).permutation(len(days))
+            delta = [days[j][2] - days[j][3].reference_total for j in order]
+            days = [(bday, ids, p.reference_total + d, p) for (bday, ids, _, p), d in zip(days, delta)]
         mean, sd = 0.0, tau_scale * tau[airport]
         if prior == "adaptive":  # from the month's own published totals and predictions; no label
             mean, sd = month_prior(np.array([shift_estimate(p, total) for _, _, total, p in days]),
@@ -266,25 +276,33 @@ def run_month(month: str, tag: str, tau_scale: float, settings: Settings, rows: 
     pd.concat(out, ignore_index=True).to_parquet(target / f"{month}.parquet", index=False)
     pd.DataFrame(infos).to_parquet(target / f"{month}_days.parquet", index=False)
     write_json(target / f"{month}_settings.json", {"created_at_utc": utc_now(), "month": month, "tau_scale": tau_scale, "settings": settings.__dict__, "prior": prior, "shift_priors": priors, "noise_sd_s": noise, "noise_wide_share": wide, "tau_s": tau,
-                                                   "components": components, "component_scales": by_component, "centres": centres, "tau_within_s": within,
+                                                   "components": components, "component_scales": by_component, "centres": centres, "tau_within_s": within, "airports": airports, "placebo": placebo,
                                                    "min_cell": MIN_CELL, "max_samples": MAX_SAMPLES, "seconds": time.time() - started})
     print(month, "airport-days", len(infos), "seconds", round(time.time() - started, 1), flush=True)
 
 
-def settings_from(declaration: dict) -> tuple[Settings, float, str]:
-    spec = declaration["procedure"]["settings"]
+def settings_from(declaration: dict, candidate: str | None = None) -> tuple[Settings, float, str]:
+    """The declaration's settings; with a candidate, its declared values replace the common ones."""
+    spec = dict(declaration["procedure"]["settings"])
+    if candidate is not None:
+        extra = declaration["candidates"][candidate]
+        if set(extra) - {"heavy_temper", "note"}:
+            raise ValueError("A candidate may set heavy_temper only.")
+        spec.update({k: v for k, v in extra.items() if k != "note"})
     if spec["grid_s"] != 30.0 or spec["min_cell"] != MIN_CELL or spec["max_samples"] != MAX_SAMPLES or spec["seed"] != SEED or spec["complete_share"] != 0.9:
         raise ValueError("The declaration's constants differ from the code's.")
     return (Settings(heavy_sd_s=float(spec["heavy_sd_s"]), max_heavy=int(spec["max_heavy"]), heavy_updates=bool(spec["heavy_updates"]), tilt_sd_s=float(spec["tilt_sd_s"]),
-                     noise_wide_sd_s=tuple(float(v) for v in spec["noise_wide_sd_s"])), float(spec["tau_scale"]), str(spec["prior"]))
+                     noise_wide_sd_s=tuple(float(v) for v in spec["noise_wide_sd_s"]), heavy_temper=float(spec.get("heavy_temper", 1.0)), heavy_prior=str(spec.get("heavy_prior", "tilt")),
+                     pin_s=float(spec.get("pin_s", 0.0))), float(spec["tau_scale"]), str(spec["prior"]))
 
 
 def _month(args: tuple) -> None:
     run_month(*args)
 
 
-def govern(path: str) -> None:
-    """The governing run of a declaration on the four development months, and its rule."""
+def govern_candidates(path: str) -> None:
+    """The governing run of a declaration with candidates: each candidate on the four development months against the control run,
+    the declared rule per candidate, the selection among those that pass."""
     from concurrent.futures import ProcessPoolExecutor
     decl = read_json(ROOT / path)
     if not decl.get("declared_at_utc") or decl.get("audit_used"):
@@ -292,12 +310,58 @@ def govern(path: str) -> None:
     out = ROOT / decl["report"]
     if out.exists():
         raise ValueError("Preserve the original result.")
+    read = decl["development_read"]
+    control, equal = read["control_run"], read["equal_footing"]
+    if not all((ROOT / f"runs/daily_totals/{control}/{m}.parquet").exists() for m in MONTHS):
+        raise ValueError("The control run is not complete.")
+    rows_table()
+    jobs = []
+    for name in decl["candidates"]:
+        settings, tau_scale, prior = settings_from(decl, name)
+        jobs += [(m, f"{decl['experiment_id']}_{name}", tau_scale, settings, "stack", prior) for m in MONTHS]
+    with ProcessPoolExecutor(max_workers=int(decl.get("execution", {}).get("parallel_months", 2))) as pool:
+        list(pool.map(_month, jobs))
+    result = {"created_at_utc": utc_now(), "declaration": path, "declaration_sha256": object_hash(decl), "audit_used": False, "official_scores_used": "none", "equal_footing_months": equal,
+              "control_run": {"tag": control, "files": {m: sha256_file(ROOT / f"runs/daily_totals/{control}/{m}.parquet") for m in MONTHS}}, "candidates": {},
+              "workbook_sha256": sha256_file(ROOT / "data/external/eurocontrol_aiu/All_Pre-Departure_Delay.xlsx"), "rows_sha256": sha256_file(ROWS),
+              "code": {c: sha256_file(ROOT / c) for c in ["tools/run_daily_totals.py", "src/prc2026_daily/reconcile.py", "tools/screen_daily_totals.py", "tools/run_share_gate_reread.py"]}}
+    for name in decl["candidates"]:
+        tag = f"{decl['experiment_id']}_{name}"
+        r = report(tag, "stack", control)
+        changes = [r["months"][m]["change_pct"] for m in equal]
+        below = [m for m in equal if r["months"][m]["paired_days"]["rmse_difference_95pct_interval_seconds"][1] < 0]
+        r.update({"mean_change_pct_equal_footing": float(np.mean(changes)), "intervals_below_zero": below,
+                  "passes": bool(all(c < 0 for c in changes) and float(np.mean(changes)) <= -100 * read["minimum_mean_improvement_fraction"] and len(below) == len(equal)),
+                  "settings_per_month": {m: read_json(ROOT / f"runs/daily_totals/{tag}/{m}_settings.json") for m in MONTHS}})
+        result["candidates"][name] = r
+    passing = [n for n, r in result["candidates"].items() if r["passes"]]
+    result["selected"] = min(passing, key=lambda n: (result["candidates"][n]["mean_change_pct_equal_footing"], n)) if passing else None
+    result["accepted"] = result["selected"] is not None
+    write_json(out, result)
+    print({"selected": result["selected"], "candidates": {n: {"mean_change_pct_equal_footing": round(r["mean_change_pct_equal_footing"], 4), "months": {m: round(r["months"][m]["change_pct"], 4) for m in MONTHS},
+                                                                "intervals_below_zero": r["intervals_below_zero"], "passes": r["passes"]} for n, r in result["candidates"].items()}})
+
+
+def govern(path: str) -> None:
+    """The governing run of a declaration on the four development months, and its rule."""
+    from concurrent.futures import ProcessPoolExecutor
+    decl = read_json(ROOT / path)
+    if decl.get("candidates"):
+        return govern_candidates(path)
+    if not decl.get("declared_at_utc") or decl.get("audit_used"):
+        raise ValueError("The round is not declared, or does not respect its own contract.")
+    out = ROOT / decl["report"]
+    if out.exists():
+        raise ValueError("Preserve the original result.")
     settings, tau_scale, prior = settings_from(decl)
     tag = decl["experiment_id"]
+    control = decl["development_read"].get("control_run")   # a saved run (the declared procedure before this one); absent: the stack
+    if control is not None and not all((ROOT / f"runs/daily_totals/{control}/{m}.parquet").exists() for m in MONTHS):
+        raise ValueError("The control run is not complete.")
     rows_table()
-    with ProcessPoolExecutor(max_workers=4) as pool:
+    with ProcessPoolExecutor(max_workers=int(decl.get("execution", {}).get("parallel_months", 4))) as pool:
         list(pool.map(_month, [(m, tag, tau_scale, settings, "stack", prior) for m in MONTHS]))
-    result = report(tag)
+    result = report(tag, "stack", control)
     equal = decl["development_read"]["equal_footing"]
     changes = [result["months"][m]["change_pct"] for m in equal]
     below = [m for m in equal if result["months"][m]["paired_days"]["rmse_difference_95pct_interval_seconds"][1] < 0]
@@ -306,6 +370,7 @@ def govern(path: str) -> None:
                    "mean_change_pct_equal_footing": float(np.mean(changes)), "intervals_below_zero": below, "accepted": accepted,
                    "workbook_sha256": sha256_file(ROOT / "data/external/eurocontrol_aiu/All_Pre-Departure_Delay.xlsx"), "rows_sha256": sha256_file(ROWS),
                    "settings_per_month": {m: read_json(ROOT / f"runs/daily_totals/{tag}/{m}_settings.json") for m in MONTHS},
+                   "control_run": {"tag": control, "files": {m: sha256_file(ROOT / f"runs/daily_totals/{control}/{m}.parquet") for m in MONTHS}} if control is not None else None,
                    "code": {c: sha256_file(ROOT / c) for c in ["tools/run_daily_totals.py", "src/prc2026_daily/reconcile.py", "tools/screen_daily_totals.py", "tools/run_share_gate_reread.py"]}})
     write_json(out, result)
     print({"accepted": accepted, "mean_change_pct_equal_footing": round(result["mean_change_pct_equal_footing"], 4), "intervals_below_zero": below})
@@ -361,12 +426,19 @@ def main() -> None:
     parser.add_argument("--tau-scale", type=float, default=1.0)
     parser.add_argument("--heavy", type=float, default=900.0)
     parser.add_argument("--no-heavy-updates", action="store_true")
+    parser.add_argument("--heavy-temper", type=float, default=1.0)
+    parser.add_argument("--heavy-tilt", action="store_true")
+    parser.add_argument("--heavy-prior", choices=["tilt", "groups", "bounded"], default="tilt")
+    parser.add_argument("--pin", type=float, default=0.0)
+    parser.add_argument("--placebo", type=int, help="exploration: the airport's published totals permuted over the month's days, this seed")
+    parser.add_argument("--score-clip", type=float, default=3.0)
     parser.add_argument("--report", action="store_true")
-    parser.add_argument("--rows", choices=["stack", "twelve"], default="stack")
+    parser.add_argument("--rows", default="stack", help="stack, twelve or the path of a table of that form")
     parser.add_argument("--prior", choices=["fixed", "adaptive"], default="fixed")
     parser.add_argument("--components", choices=["one", "tracked"], default="one")
     parser.add_argument("--control")
     parser.add_argument("--centres")
+    parser.add_argument("--airports", nargs="*")
     parser.add_argument("--score", action="store_true")
     parser.add_argument("--declaration")
     args = parser.parse_args()
@@ -375,7 +447,8 @@ def main() -> None:
     elif args.report:
         report(args.tag, args.rows, args.control)
     else:
-        run_month(args.month, args.tag, args.tau_scale, Settings(heavy_sd_s=args.heavy, heavy_updates=not args.no_heavy_updates), args.rows, args.prior, args.components, args.centres)
+        run_month(args.month, args.tag, args.tau_scale, Settings(heavy_sd_s=args.heavy, heavy_updates=not args.no_heavy_updates, heavy_temper=args.heavy_temper, heavy_tilt=args.heavy_tilt,
+                                                                 score_clip=args.score_clip, heavy_prior=args.heavy_prior, pin_s=args.pin), args.rows, args.prior, args.components, args.centres, args.airports, args.placebo)
 
 
 if __name__ == "__main__":

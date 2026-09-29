@@ -12,7 +12,12 @@ Control everywhere: the declared procedure of configs/daily_totals_v1.json (tags
   --centres                 -> docs/daily_totals/centres_stack.json, centres_twelve.json
   --heavy AIRPORT           -> docs/daily_totals/followup_heavy_<AIRPORT>.json (development stack, four months)
   --summary                 -> docs/daily_totals/followups.json (needs the four tagged runs and the centre tables)
-Nothing is declared, selected or exported.
+  --population-table        -> runs/daily_totals/rows12p.parquet: the twelve-month table with the LIRF fill population in every
+                               month; the population rows that the cross-fit tables lack enter with a leave-one-month-out mixture
+                               (the v9 mixture's classifier, features and normal component, fitted on the other eleven months)
+  --compare ROWS CONTROL TAG [TAG ...] [--output PATH]
+                            a run against a control run on a table: month changes, paired-day intervals, the LIRF population's part
+Nothing is declared, selected or exported here.
 """
 from __future__ import annotations
 
@@ -173,6 +178,88 @@ def heavy(airport: str) -> None:
     write_json(DOCS / f"followup_heavy_{airport}.json", out)
 
 
+def population_table() -> None:
+    from prc2026.features import TARGET, TIME
+    from prc2026_lirf_mixture.features import ARRIVAL_COLUMNS, DEPARTURE_COLUMNS, classifier_features, label_modes, population_rows
+    from prc2026_lirf_mixture.model import band_values, fit_classifier, normal_component, predict_modes
+    from screen_daily_totals import published
+    target = ROOT / "runs/daily_totals/rows12p.parquet"
+    if target.exists():
+        raise ValueError("The table exists.")
+    config = read_json(ROOT / "configs/lirf_mixture_v1.json")
+    columns = sorted(set(DEPARTURE_COLUMNS + ARRIVAL_COLUMNS + [TARGET]))
+    raw = pd.concat([pd.read_parquet(p, columns=columns) for p in sorted((ROOT / "data/raw").glob("training_2025-*.parquet"))], ignore_index=True)
+    raw = raw[raw["ADEP_mvt"].eq("LIRF") | raw["ADES_mvt"].eq("LIRF")].reset_index(drop=True)
+    pop = population_rows(raw)
+    pop = pop[pop[TARGET].notna()].reset_index(drop=True)
+    features = classifier_features(pop, raw, config["turnaround_features"]["previous_arrival_margin_seconds"])
+    labels, interval = pop[TARGET].to_numpy(dtype=float), features["schedule_interval_s"].to_numpy()
+    modes = label_modes(labels, interval, config)
+    month, dates = pop[TIME].dt.strftime("%Y-%m").to_numpy(), pop[TIME].dt.strftime("%Y-%m-%d").to_numpy()
+    value = np.full(len(pop), np.nan)
+    for m in sorted(set(month)):
+        fit, use = month != m, month == m
+        model = fit_classifier(features[fit].reset_index(drop=True), modes[fit], dates[fit], config)
+        component = normal_component(labels[fit], interval[fit], modes[fit], config)
+        pr = predict_modes(model, features[use].reset_index(drop=True))
+        normal = band_values(component, interval[use])
+        two = pr[:, 0] / (pr[:, 0] + pr[:, 1])
+        three = pr[:, 0] * interval[use] + pr[:, 1] * normal + pr[:, 2] * (86400.0 + component["overall_median"])
+        value[use] = np.where(interval[use] <= 43200, two * interval[use] + (1 - two) * normal, three)
+        print(m, "population rows", int(use.sum()), "fill share", round(float((modes[use] == 0).mean()), 3), flush=True)
+    mixture = pd.Series(np.maximum(value, -12.0), index=pop[ID].to_numpy())
+    t = runner.rows12_table().copy()
+    k = t[ID].map(mixture)
+    swap = (t["extra"] & k.notna()).to_numpy()
+    t.loc[swap, "stack"] = k[swap]
+    t.loc[swap, ["extra", "population", "cls"]] = [False, True, "LIRF_pop"]
+    takeoff = pd.to_datetime(raw[raw["PHASE_mvt"].eq("DEP")].drop_duplicates(ID).set_index(ID)[TIME].reindex(t.loc[swap, ID]), utc=True).reset_index(drop=True)
+    t.loc[swap, "bday"] = (takeoff - pd.to_timedelta(t.loc[swap, "stack"].to_numpy(), unit="s")).dt.strftime("%Y-%m-%d").to_numpy()
+    t["pos_hat"] = np.maximum(t["a"] - t["stack"], 0.0)
+    t["r"] = t["label"] - t["stack"]
+    t["se"] = t["r"] ** 2
+    t = t.drop(columns=["pub", "n_pub", "complete"]).join(published(), on=["airport", "bday"])
+    t["complete"] = (t["pub"].notna() & (t.groupby(["airport", "bday"])["a"].transform("size") >= 0.9 * t["n_pub"])).to_numpy()
+    t.to_parquet(target, index=False)
+    print({"rows": int(len(t)), "population_rows": int(t["population"].sum()), "population_rows_entered_here": int(swap.sum())})
+
+
+def compare(rows: str, control: str, tags: list[str], output: str | None) -> None:
+    t = runner.add_keys(runner.table(rows))
+    if "extra" in t:
+        t = t[~t["extra"]].reset_index(drop=True)
+    months = sorted(t["month"].unique())
+
+    def values(tag: str) -> tuple[np.ndarray, list]:
+        d = ROOT / f"runs/daily_totals/{tag}"
+        have = [m for m in months if (d / f"{m}.parquet").exists()]
+        new = pd.concat([pd.read_parquet(d / f"{m}.parquet", columns=[ID, "new"]) for m in have]).set_index(ID)["new"]
+        return t[ID].map(new).fillna(t["stack"]).to_numpy(dtype=float), have
+    base, have_control = values(control)
+    y, pop = t["label"].to_numpy(dtype=float), t["cls"].eq("LIRF_pop").to_numpy()
+    out = {"created_at_utc": utc_now(), "rows": rows, "control": control, "runs": {}}
+    for tag in tags:
+        c, have = values(tag)
+        record = {}
+        for m in have:
+            if m not in have_control:
+                continue
+            k = t["month"].eq(m).to_numpy()
+            sse = float(((base[k] - y[k]) ** 2).sum())
+            d = (c - y) ** 2 - (base - y) ** 2
+            record[m] = {"change_pct": 100 * (rmse(y[k], c[k]) / rmse(y[k], base[k]) - 1),
+                         "interval_s": paired_days(t.loc[k, "bday"].to_numpy(), y[k], c[k], base[k], runner.SEED)["rmse_difference_95pct_interval_seconds"],
+                         "population_part_pct_of_squared_error": 100 * float(d[k & pop].sum()) / sse, "other_rows_part_pct_of_squared_error": 100 * float(d[k & ~pop].sum()) / sse,
+                         "population_rows": int((k & pop).sum())}
+            print(tag, m, f"{record[m]['change_pct']:+.3f}%", [round(v, 3) for v in record[m]["interval_s"]], "population part", round(record[m]["population_part_pct_of_squared_error"], 3))
+        changes = [v["change_pct"] for v in record.values()]
+        out["runs"][tag] = {"months": record, "months_better": int(sum(v < 0 for v in changes)), "mean_change_pct": float(np.mean(changes)),
+                            "intervals_below_zero": int(sum(v["interval_s"][1] < 0 for v in record.values()))}
+        print(tag, {k: out["runs"][tag][k] for k in ("months_better", "mean_change_pct", "intervals_below_zero")})
+    if output:
+        write_json(ROOT / output, out)
+
+
 def summary() -> None:
     out = {"created_at_utc": utc_now(), "control": CONTROLS, "audit_used": False, "official_scores_used": "none", "runs": {}, "recentred": {}}
     for tag, rows in (("fu1_tracked", "stack"), ("fu1_tracked12", "twelve"), ("fu2_centre", "stack"), ("fu2_centre12", "twelve")):
@@ -195,8 +282,15 @@ def main() -> None:
     parser.add_argument("--centres", action="store_true")
     parser.add_argument("--heavy")
     parser.add_argument("--summary", action="store_true")
+    parser.add_argument("--population-table", action="store_true")
+    parser.add_argument("--compare", nargs="+")
+    parser.add_argument("--output")
     args = parser.parse_args()
-    if args.centres:
+    if args.population_table:
+        population_table()
+    elif args.compare:
+        compare(args.compare[0], args.compare[1], args.compare[2:], args.output)
+    elif args.centres:
         centres()
     elif args.heavy:
         heavy(args.heavy)

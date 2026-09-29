@@ -38,6 +38,12 @@ class Settings:
     heavy_sd_s: float = 900.0        # a row is heavy when the sd of its e_i exceeds this
     max_heavy: int = 64
     heavy_updates: bool = True       # False: heavy rows enter the convolution but keep their prediction
+    heavy_temper: float = 1.0        # heavy_updates: the leave-one-out likelihood enters to this power (1 = the exact posterior)
+    heavy_tilt: bool = False         # without heavy_updates: heavy rows get the first-order tilt of the other rows (no day shift)
+    heavy_prior: str = "tilt"        # "groups": heavy rows get their prior weights from group_weights; "bounded": the same, and
+                                     # their outcomes without a visible delay count as the schedule interval, so that the total
+                                     # moves a row between its delay outcomes and its schedule interval and never beyond
+    pin_s: float = 0.0               # heavy rows predicted within this of their schedule interval (declared fills) keep their prediction
     tilt_sd_s: float = 300.0         # rows whose scenarios spread more than this get prior weights matched to the prediction
     noise_wide_sd_s: tuple = (3600.0, 28800.0)
     score_clip: float = 3.0
@@ -61,20 +67,67 @@ def scenarios(a: np.ndarray, yhat: np.ndarray, sample_a: np.ndarray, sample_yhat
     return np.where(lower, np.minimum(sl, yhat), out)
 
 
-def matched_weights(y: np.ndarray, target: np.ndarray, iterations: int = 50) -> np.ndarray:
-    """Row weights proportional to exp(lambda y) whose weighted mean of y equals target (where target lies inside the scenarios)."""
+def matched_weights(y: np.ndarray, target: np.ndarray, iterations: int = 50, allowed: np.ndarray | None = None) -> np.ndarray:
+    """Row weights proportional to exp(lambda y) whose weighted mean of y equals target (where target lies inside the scenarios).
+    allowed (rows x samples): the scenarios that may carry weight; every row needs one."""
     scale = y.std(axis=1, keepdims=True) + 1e-9
     z = (y - np.asarray(target, dtype=float)[:, None]) / scale
     lo, hi = np.full(len(y), -80.0), np.full(len(y), 80.0)
+    if allowed is None:
+        for _ in range(iterations):
+            mid = 0.5 * (lo + hi)
+            x = mid[:, None] * z
+            w = np.exp(x - x.max(axis=1, keepdims=True))
+            above = (w * z).sum(axis=1) > 0
+            hi, lo = np.where(above, mid, hi), np.where(above, lo, mid)
+        x = (0.5 * (lo + hi))[:, None] * z
+        w = np.exp(x - x.max(axis=1, keepdims=True))
+        return w / w.sum(axis=1, keepdims=True)
+    allowed = np.asarray(allowed, dtype=bool)
+    if not allowed.any(axis=1).all():
+        raise ValueError("A row has no allowed scenario.")
+
+    def weights(slope: np.ndarray) -> np.ndarray:
+        x = np.where(allowed, slope[:, None] * z, -np.inf)
+        return np.exp(x - x.max(axis=1, keepdims=True))
     for _ in range(iterations):
         mid = 0.5 * (lo + hi)
-        x = mid[:, None] * z
-        w = np.exp(x - x.max(axis=1, keepdims=True))
+        w = weights(mid)
         above = (w * z).sum(axis=1) > 0
         hi, lo = np.where(above, mid, hi), np.where(above, lo, mid)
-    x = (0.5 * (lo + hi))[:, None] * z
-    w = np.exp(x - x.max(axis=1, keepdims=True))
+    w = weights(0.5 * (lo + hi))
     return w / w.sum(axis=1, keepdims=True)
+
+
+def group_weights(y: np.ndarray, a: np.ndarray, target: np.ndarray) -> np.ndarray:
+    """Prior weights of rows hedged between a delay and none (rows x samples).
+
+    The published total tells a visible delay (label below the schedule interval) from none (a fill, an off-block before schedule,
+    a one-day label); it cannot tell the outcomes without delay apart. The scenarios of each of the two groups keep the proportions
+    their cell recorded; the groups' weights make the mean the target where it lies between the two groups' means. A target above the
+    mean without delay is matched by a tilt inside that group alone, a target below the mean with delay by a tilt inside the other:
+    such a row holds one hypothesis and the total does not move it between the two."""
+    y, target = np.asarray(y, dtype=float), np.asarray(target, dtype=float)
+    high = y >= np.asarray(a, dtype=float)[:, None] - FILL_S
+    n_high = high.sum(axis=1)
+    n_low = y.shape[1] - n_high
+    both = (n_high > 0) & (n_low > 0)
+    m_high = (y * high).sum(axis=1) / np.maximum(n_high, 1)
+    m_low = (y * ~high).sum(axis=1) / np.maximum(n_low, 1)
+    between = both & (target >= m_low) & (target <= m_high)
+    out = np.empty_like(y)
+    if between.any():
+        share = ((target - m_low) / np.maximum(m_high - m_low, 1e-9))[between][:, None]
+        out[between] = share * high[between] / n_high[between][:, None] + (1 - share) * ~high[between] / n_low[between][:, None]
+    single = ~both
+    if single.any():
+        out[single] = matched_weights(y[single], target[single])
+    above, below = both & (target > m_high), both & (target < m_low)
+    if above.any():
+        out[above] = matched_weights(y[above], target[above], allowed=high[above])
+    if below.any():
+        out[below] = matched_weights(y[below], target[below], allowed=~high[below])
+    return out
 
 
 def _pmf(e: np.ndarray, weights: np.ndarray) -> np.ndarray:
@@ -119,6 +172,7 @@ class Prepared:
     var_bulk: float      # prior variance of the sum of e_i over the rows that are not heavy
     component: np.ndarray | None = None   # shift component of each row
     n_eff_k: np.ndarray | None = None     # n_eff by component
+    pinned: np.ndarray | None = None      # rows predicted at their schedule interval (Settings.pin_s)
 
 
 def prepare_day(a: np.ndarray, yhat: np.ndarray, groups: list, settings: Settings = Settings(), component: np.ndarray | None = None, components: int = 1) -> Prepared:
@@ -131,6 +185,8 @@ def prepare_day(a: np.ndarray, yhat: np.ndarray, groups: list, settings: Setting
         raise ValueError("Every row needs a shift component below `components`.")
     reference = np.maximum(a - yhat, 0.0)
     prior, sd, late, mean = np.zeros(n), np.zeros(n), np.zeros(n), np.zeros(n)
+    if settings.heavy_prior not in ("tilt", "groups", "bounded"):
+        raise ValueError("heavy_prior: tilt, groups or bounded.")
     cf = np.empty((n, N // 2 + 1), dtype=np.complex128)
     store = []
     for rows, (sa, sy, sl) in groups:
@@ -144,6 +200,14 @@ def prepare_day(a: np.ndarray, yhat: np.ndarray, groups: list, settings: Setting
         mean[rows] = (w * e).sum(axis=1)
         prior[rows], late[rows] = (w * y).sum(axis=1), (w * (pos > 0)).sum(axis=1)
         sd[rows] = np.sqrt(np.maximum((w * (e - mean[rows][:, None]) ** 2).sum(axis=1), 0.0))
+        if settings.heavy_prior != "tilt":   # the rows that are heavy by the weights above stay the heavy rows
+            k = sd[rows] > settings.heavy_sd_s
+            if k.any():
+                if settings.heavy_prior == "bounded":
+                    y[k] = np.where(y[k] >= a[rows][k][:, None] - FILL_S, a[rows][k][:, None], y[k])
+                w[k] = group_weights(y[k], a[rows][k], yhat[rows][k])
+                mean[rows[k]] = (w[k] * e[k]).sum(axis=1)
+                prior[rows[k]], late[rows[k]] = (w[k] * y[k]).sum(axis=1), (w[k] * (pos[k] > 0)).sum(axis=1)
         cf[rows] = np.fft.rfft(_pmf(e, w), axis=1)
         store.append((rows, y.astype(np.float32), e.astype(np.float32), w.astype(np.float32)))
     heavy = np.flatnonzero(sd > settings.heavy_sd_s)
@@ -153,7 +217,8 @@ def prepare_day(a: np.ndarray, yhat: np.ndarray, groups: list, settings: Setting
     is_heavy[heavy] = True
     return Prepared(yhat=yhat, reference_total=float(reference.sum()), prior=prior, is_heavy=is_heavy, heavy=heavy, heavy_cf=cf[heavy].copy(), bulk_cf=np.prod(cf[~is_heavy], axis=0),
                     store=store, n_eff=float(late[~is_heavy].sum()), mean_e=float(mean.sum()), var_bulk=float((sd[~is_heavy] ** 2).sum()),
-                    component=component, n_eff_k=np.bincount(component[~is_heavy], weights=late[~is_heavy], minlength=components).astype(float))
+                    component=component, n_eff_k=np.bincount(component[~is_heavy], weights=late[~is_heavy], minlength=components).astype(float),
+                    pinned=(np.abs(yhat - a) <= settings.pin_s) if settings.pin_s > 0 else np.zeros(n, dtype=bool))
 
 
 def shift_estimate(p: Prepared, total_s: float) -> float:
@@ -224,11 +289,16 @@ def solve_day(p: Prepared, total_s: float, noise_sd_s: float, noise_wide_share: 
         post[rows] = (w * y).sum(axis=1) / w.sum(axis=1)
         for local, r in enumerate(rows):
             if int(r) in position:
+                if not settings.heavy_updates and settings.heavy_tilt:
+                    continue
                 post[r] = p.prior[r]
-                if settings.heavy_updates:
+                if settings.heavy_updates and not p.pinned[r]:
                     j = position[int(r)]
                     q = np.maximum(np.fft.irfft(base * shift_cf * prefix[j] * suffix[j + 1], n=N), 0.0)
-                    w = w0[local] * (_at(q, delta - e[local] / GRID_S) + floor)
+                    likelihood = _at(q, delta - e[local] / GRID_S) + floor
+                    if settings.heavy_temper != 1.0:
+                        likelihood = (likelihood / likelihood.max()) ** settings.heavy_temper
+                    w = w0[local] * likelihood
                     post[r] = float(np.sum(w * y[local]) / np.sum(w))
     new = p.yhat + (post - p.prior) + np.where(p.is_heavy, 0.0, row_shift)
     info.update({"shift_s": shift, "score": score, "used": True})

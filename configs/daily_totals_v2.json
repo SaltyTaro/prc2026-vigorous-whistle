@@ -1,0 +1,96 @@
+{
+ "experiment_id": "daily_totals_v2",
+ "declared_at_utc": "2026-09-29T18:40:00Z",
+ "audit_used": false,
+ "status": "DECLARED before any run of these candidates on the development stack (tools/run_daily_totals.py --score). The procedure was shaped in the exploration disclosed below, which read a different table (twelve months of 2025, LIRF only) and, on the development stack, an earlier form of the prior. The governing run is therefore the first read of the declared form on the development stack; it is not independent of the months, which the exploration has seen.",
+ "user_decision": {
+  "words": "i will compact and then we will continue with the published-data follow-ups",
+  "date": "2026-09-29",
+  "context": "after v48 (222.6042); earlier the same day, on using EUROCONTROL's published figures: 'yes use it' and 'go' (configs/daily_totals_v1.json). This round is one of those follow-ups. Nothing is exported or uploaded without a further word of the user."
+ },
+ "external_data": {
+  "name": "EUROCONTROL Performance Review Unit, All-causes pre-departure delay (airport, day)",
+  "url": "https://www.eurocontrol.int/performance/data/download/xls/All_Pre-Departure_Delay.xlsx",
+  "sha256": "9ab45cc5977e154452ea3c0f137737f496003acfcab25d830d3f5211e3a1b218",
+  "terms_and_nature": "as recorded in configs/daily_totals_v1.json: not an open licence; per airport and off-block day the sum of max(off-block - schedule, 0), an aggregate of the hidden clock of the ranking rows. No official score and no leaderboard information is used."
+ },
+ "procedure": {
+  "code": "src/prc2026_daily/reconcile.py, tools/run_daily_totals.py",
+  "summary": "the procedure of configs/daily_totals_v1.json, and in addition the heavy rows (sd of their positive-delay error above 900 s: fill candidates and similar), which v1 leaves at their prediction, move by a tempered posterior: the likelihood of the day's published total without the row, at each of the row's outcomes, enters to the power heavy_temper. A heavy row never receives the day shift.",
+  "heavy_prior": "bounded: the row's outcomes without a visible delay (label at least the schedule interval minus 120 s: fills, off-block before schedule, one-day labels) count as the schedule interval, because the total tells a delay from none and cannot tell those outcomes apart; the outcomes with and without delay keep their cell's proportions inside their group and the two groups' weights make the mean the row's prediction (reconcile.group_weights). A row predicted above its schedule interval, or below the mean of its delay outcomes, holds one hypothesis and is not moved between the two. The heavy rows are the rows that are heavy under v1's weights.",
+  "pins": "a heavy row predicted within 120 s of its schedule interval (a declared fill) keeps its prediction",
+  "bound": "by construction a heavy row moves between the mean of its delay outcomes and its schedule interval, never beyond",
+  "settings": {
+   "grid_s": 30.0,
+   "heavy_sd_s": 900.0,
+   "max_heavy": 64,
+   "heavy_updates": true,
+   "heavy_prior": "bounded",
+   "pin_s": 120.0,
+   "tilt_sd_s": 300.0,
+   "noise_wide_sd_s": [
+    3600.0,
+    28800.0
+   ],
+   "tau_scale": 1.0,
+   "prior": "fixed",
+   "min_cell": 150,
+   "max_samples": 1500,
+   "seed": 20260929,
+   "complete_share": 0.9
+  },
+  "fitting_side": "as v1: cells, the published figure's accuracy and the day-shift scale per airport from the months other than the one read",
+  "floor": "-12 s",
+  "free_parameters": "heavy_temper, declared per candidate; nothing fitted on scores or on the scored months"
+ },
+ "candidates": {
+  "temper_10": {
+   "heavy_temper": 0.1,
+   "note": "the cautious strength: on the twelve-month table 12 of 12 months better, mean -0.310%"
+  },
+  "temper_25": {
+   "heavy_temper": 0.25,
+   "note": "twelve-month table: 12 of 12 months better, mean -0.519%"
+  }
+ },
+ "execution": {
+  "parallel_months": 2
+ },
+ "development_read": {
+  "months": [
+   "2025-01",
+   "2025-07",
+   "2025-11",
+   "2025-12"
+  ],
+  "equal_footing": [
+   "2025-01",
+   "2025-07",
+   "2025-12"
+  ],
+  "control_run": "daily_totals_v1",
+  "control": "the declared procedure of configs/daily_totals_v1.json on the v46 development stack (its governing run, docs/daily_totals/results_v1.json)",
+  "construction": "for each month, the fitting side from the other three months",
+  "minimum_mean_improvement_fraction": 0.0002,
+  "rule": "a candidate passes when no equal-footing month is worse than the control on all rows, the mean change over them is at least 0.02% below zero and every equal-footing month's paired-day 95% interval (by off-block day, seed 20260929) lies below zero. Among the candidates that pass, the one with the lower mean change is selected. November is reported. If none passes, nothing is selected.",
+  "expectation_disclosed": "the change sits in a few hundred rows a month with errors of thousands of seconds, so a month's paired-day interval is wide; with the earlier form of the prior the intervals of July and December included zero at the power 0.1. The rule is the standing one and is not adapted to that."
+ },
+ "prior_exploration_disclosed": {
+  "record": "docs/daily_totals/followups.md (three further uses, none passes) and docs/daily_totals/heavy_rows.md (this round)",
+  "v1_exploration": "heavy rows updated by the exact posterior with the exponential-tilt prior (explore2): Jan -0.62 / Jul +1.56 / Nov -1.23 / Dec +0.20% against the stack; the LIRF fill population -1.0 / +3.8 / -1.8 / +1.2% of the month's squared error. v1 therefore left heavy rows at their prediction.",
+  "learned_model": "a LightGBM residual model with the published features, read as f(x, delta) - f(x, 0) and applied to the LIRF population rows on top of v1: -0.354 / -0.315 / -0.349 / -0.280% against v1 on the four months; with the days' discrepancies permuted within airport-month no gain. It showed that a moderate response to the day's discrepancy works where the exact posterior does not.",
+  "development_stack_earlier_prior": "tempered posterior with the exponential-tilt prior, all airports, against v1: power 0.10: -0.207 / -0.052 / -0.565 / -0.043% (intervals below zero in January and November); power 0.25: -0.314 / +0.041 / -0.825 / +0.147%; first-order tilt for heavy rows: +2.9 / +9.1 / -0.2% (three months run). All of the change is on the LIRF fill population; heavy rows at other airports move by seconds.",
+  "twelve_month_table": "runs/daily_totals/rows12p.parquet: the twelve-month table of the v1 check with the LIRF fill population in every month (1,487 rows; the 950 population rows that the cross-fit tables lack enter with a leave-one-month-out v9 mixture). LIRF's airport-days only, against v1's procedure on the same table. Exponential-tilt prior: power 0.05 -0.207%, 0.10 -0.339%, 0.25 -0.536% (mean over twelve months, each 12 of 12 better). Two-group prior with pins: 0.10 -0.363%, 0.25 -0.587% (12 of 12). Bounded prior with pins (the declared form): 0.10 -0.310% (12 of 12, ten intervals below zero), 0.25 -0.519% (12 of 12, nine intervals below zero), 1.00 -0.810% (11 of 12; July +0.50%).",
+  "placebo": "each day reads another day's discrepancy of the same airport-month: bounded prior, power 0.25: mean -0.137%, 7 of 12 months better. About half of the population's gain survives the placebo: a day's ordinary discrepancy, whichever day, excludes a delay of many hours. The true totals are better than the placebo on the population rows in 12 of 12 months.",
+  "why_the_prior_changed": "a label-free look at the ranking rows: with the exponential-tilt prior the largest moves (+1,500 to +2,500 s) fell on rows predicted at or above their schedule interval, among them v40's fill pins, because that prior gives such rows about a fifth of one-day weight. The two-group prior, the pins and the bound remove this. The look used no label and no score.",
+  "ranking_rows_label_free": "declared form at the power 0.10, LIRF's airport-days: 350 population rows move (largest +2,617 s), sum of squared change against v48 17.0e6",
+  "note": "this is the third change of the LIRF fill population after v10 and v43, which passed development and lost on the leaderboard. Those were classifiers fitted on 2025; this one reads the published totals of the days themselves."
+ },
+ "export": {
+  "version": 49,
+  "base": "vigorous-whistle_v46.parquet (223.9339), as v48: the selected candidate's procedure on the ranking rows with the uploaded v46 values as predictions",
+  "relation_to_v48": "v48 is the same procedure with heavy rows kept; the file differs from v48 on the heavy rows and, by seconds, on the other rows of their airport-days",
+  "condition": "only if a candidate is selected, or on the user's override, and only on the user's decision"
+ },
+ "report": "docs/daily_totals/results_v2.json"
+}

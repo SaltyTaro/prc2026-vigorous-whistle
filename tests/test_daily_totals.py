@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from prc2026_daily.reconcile import Settings, matched_weights, month_prior, prepare_day, reconcile_day, scenarios, shift_estimate, solve_day
+from prc2026_daily.reconcile import Settings, group_weights, matched_weights, month_prior, prepare_day, reconcile_day, scenarios, shift_estimate, solve_day
 
 
 def test_scenarios_transfer_each_kind_of_outcome():
@@ -123,3 +123,40 @@ def test_components_carry_a_prior_mean():
         prepare_day(a, yhat, groups, component=component, components=1)
     with pytest.raises(ValueError):
         solve_day(p, implied, 60.0, 0.02, 0.0, 0.0, shift_cov=np.eye(3))
+
+
+def test_group_weights_keep_the_proportions_inside_each_group():
+    rng = np.random.default_rng(4)
+    a = np.full(3, 40000.0)
+    y = np.concatenate([40000.0 + rng.normal(0, 5, (3, 45)), rng.normal(1200, 200, (3, 50)), np.full((3, 5), 87000.0)], axis=1)
+    target = np.array([30000.0, 40000.0, 60000.0])
+    w = group_weights(y, a, target)
+    assert np.allclose(w.sum(axis=1), 1.0) and np.allclose((w * y).sum(axis=1), target, atol=1.0)
+    assert np.allclose(w[:2, :45].sum(axis=1) / w[:2, 95:].sum(axis=1), 9.0)      # fills to one-day labels as recorded, 45 to 5
+    assert np.allclose(w[:2, 45:95], w[:2, 45:46])                                # the delay outcomes share their group's weight evenly
+    assert w[2, 45:95].sum() == 0.0                                               # a target above the mean without delay: no delay outcome
+
+
+def test_tempered_heavy_rows_move_between_their_delay_outcomes_and_the_schedule_interval():
+    bounded = Settings(heavy_temper=0.25, heavy_prior="bounded", pin_s=120.0)
+    for truth in (32000.0, 900.0):
+        a, yhat, y, groups, total = day(0.0, truth)
+        new, info = reconcile_day(a, yhat, groups, total, 60.0, 0.02, 20.0, bounded)
+        full, _ = reconcile_day(a, yhat, groups, total, 60.0, 0.02, 20.0, Settings(heavy_prior="bounded", pin_s=120.0))
+        assert info["heavy"] == 1
+        assert abs(new[-1] - truth) < abs(yhat[-1] - truth)                       # towards the truth
+        assert abs(full[-1] - yhat[-1]) > abs(new[-1] - yhat[-1]) > 0             # less far than the exact posterior
+        assert 0.0 < new[-1] <= a[-1] and 0.0 < full[-1] <= a[-1]                 # never beyond the schedule interval
+    a, yhat, y, groups, total = day(0.0, 32000.0)
+    yhat[-1] = a[-1] - 60.0                                                       # a declared fill
+    new, _ = reconcile_day(a, yhat, groups, float(np.maximum(a - y, 0).sum()), 60.0, 0.02, 20.0, bounded)
+    assert new[-1] == yhat[-1]
+    rng = np.random.default_rng(5)                                                # a prediction above the schedule interval holds no delay outcome
+    h_a, h_yhat = rng.uniform(30000, 36000, 400), np.full(400, 16000.0)
+    u = rng.random(400)
+    h_y = np.where(u < 0.45, h_a + rng.normal(0, 10, 400), np.where(u < 0.9, 900 + rng.normal(0, 100, 400), 87000.0))
+    above = yhat.copy()
+    above[-1] = a[-1] + 5000.0
+    groups[-1] = (groups[-1][0], (h_a, h_yhat, h_y))
+    new, info = reconcile_day(a, above, groups, float(np.maximum(a - y, 0).sum()), 60.0, 0.02, 20.0, bounded)
+    assert info["heavy"] == 1 and new[-1] == pytest.approx(above[-1], abs=1e-6)
