@@ -72,3 +72,61 @@ Change in month RMSE against the v46 stack, by the weight given to the predicted
 
 Out of month, the v46 stack's residual is not predictable from its own components or from the clock and schedule intervals.
 **Closed.** ([`learned_gate_screen.json`](learned_gate_screen.json))
+
+## 4. Published airport-month taxi-out aggregates as a level check (`tools/screen_published_means.py`)
+
+**Status: a screen only. These are aggregates of the hidden target in the scored months.
+
+Source: EUROCONTROL Performance Review Unit, "Taxi-Out Additional Time" workbook, version 15 September 2026, period to 31 July 2026
+(`https://www.eurocontrol.int/performance/data/download/xls/Taxi-Out_Additional_Time.xlsx`, retrieved 29 September 2026 09:25 UTC,
+SHA-256 `82d119ed…` in [`published_means.json`](published_means.json); kept under `data/external/eurocontrol_aiu/`, not in the
+repository). Per airport and month it gives the departures, the departures with valid data and, for those with a reference time, the
+total reference and additional taxi-out minutes. P = their sum per flight is the published mean taxi-out of the valid flights.
+
+**What the figures are, against the 2025 labels** (mean label over labels in (0, 7200] s minus P, twelve months):
+
+| airport | offset, mean ± sd (s) | note |
+|---|---|---|
+| EGLL | −0.8 ± 0.6 | the published mean is the label mean |
+| LEBL | 6.2 ± 2.4 | |
+| EHAM | 3.2 ± 4.0 | |
+| LIRF | 9.3 ± 4.0 | the labels above two hours (fills, one-day rows) are outside the figure |
+| LEMD | 8.2 ± 6.4 | |
+| EDDF, LSZH, EDDM, LFPG | 0–15 in summer, 20–165 in winter | the unit leaves out 5–20% of winter departures (valid share 0.80–0.95); the offset grows with that share, so they are the slow (de-iced) flights |
+| LTFM | 40 ± 71 | February 2025 alone is 264 s off |
+
+The share left out is itself informative: in January 2026 it is 31% at EDDM, 20% at LSZH, 13% at EDDF and 10% at LFPG, against 20%,
+10%, 5% and 9% in January 2025.
+
+**Development read** (the v46 stack; mapping fitted on the other eleven months of 2025; every prediction in (0, 7200] of the
+airport-month shifted by −w × the estimated level error):
+
+| month | w = 0.5, all airports | w = 1.0, all airports | estimate against the true level error |
+|---|---|---|---|
+| January | +0.032% | +0.139% | rms difference 16 s (EDDF 42 estimated, −3 true: the winter line extrapolates) |
+| July | −0.075% | −0.080% | 7 s |
+| November | −0.030% | +0.017% | 9 s |
+| December | −0.022% | +0.020% | 8 s |
+
+In 2025 the stack's level errors are small (mostly under 13 s), about the size of the method's own noise, so the shift does not pay in
+development. Where the mapping is tight the estimate is right: EGLL 7.1 / 8.4 / 18.0 / 7.2 s estimated against 6.9 / 7.5 / 18.3 / 7.2 true.
+
+**Scored months, implied level error of the uploaded v46** (no label involved):
+
+| airport | January 2026 | July 2026 | reliability |
+|---|---|---|---|
+| EGLL | +10 s | **+30 s** | tight mapping |
+| LEBL | +6 s | **+23 s** | tight |
+| EHAM | +7 s | −6 s | tight |
+| LIRF | +2 s | **+53 s** | the estimate ran 5–14 s high in development |
+| LEMD | +27 s | +1 s | moderate |
+| LFPG | +13 s | −2 s | loose (sd 18 s) |
+| EDDF | +39 s | +9 s | January extrapolates the winter line |
+| LSZH | +31 s | −1 s | January extrapolates |
+| EDDM | +2 s | +6 s | January extrapolates |
+| LTFM | +32 s | +16 s | unusable (sd 68–149 s) |
+
+If every implied error beyond the mapping's noise were removed exactly, v46 would read 223.17 (−0.76 s). Counting only the cells with a
+tight mapping and no extrapolation (EGLL, LEBL, LIRF July, LEMD January), the stake is about 6–8e7 of squared error, **0.4–0.5 s**.
+The reassuring half of the result needs no decision: the January 2026 levels that no 2025 month could verify (EDDM, EHAM, LIRF) agree
+with the published figures within 2–7 s.
