@@ -241,7 +241,7 @@ and the same month pattern: not a learner effect worth a round, and well above r
 
 Uploaded at the user's word at 00:40 UTC (the first slot of 29 September UTC); processed 00:41:01 UTC, 344,841 rows
 (`official_result_v43.json`). The squared error rose by 5.0e8 against a sum of squared moves of 2.6e8, i.e. the moves were aligned
-*against* the residuals on average (Σ d·r ≈ +3.8e8), not merely noise (which would have cost about +1.7 s). No row-level attribution
+*against* the residuals on average, not merely noise (which would have cost about +1.7 s). No row-level attribution
 is attempted (no labels). **Reading:** the second population-classifier change to pass its development protocol and lose on the
 ranking (v10: folds −0.38% / −0.58%, ranking +0.52 s; v43: twelve-month LOMO −7.4%, bootstrap below zero, ranking +3.22 s). The 2026
 population rows do not behave like 2025's under signals learned from 2025's labels; the twelve-month protocol, the seed bag and the
