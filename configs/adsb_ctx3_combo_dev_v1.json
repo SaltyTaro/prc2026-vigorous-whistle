@@ -1,0 +1,181 @@
+{
+ "experiment_id": "prc2026-adsb-ctx3-combo-dev-v1",
+ "declared_at_utc": "2026-09-29T17:35:28+00:00",
+ "audit_used": false,
+ "purpose": "Development round of the context network's combination (design batch docs/adsb_ctx3_combo/README.md: two items passed; the declared tie-break carries combo_all, and the user confirmed 'Full combination' on 29 September 2026). Declared before any fit of these seeds and before any development score.",
+ "disclosed": "The design record notes that the other passing item (the masked network alone on unmatched rows) reads better standalone, at full member weight and at every airport, and that the two differ by 0.015 points at the governing reading. The user was shown both and chose the combination.",
+ "member": {
+  "name": "combo_all",
+  "column": "adsb_full",
+  "routing": "per seed and leaf: the dl32 network's prediction on rows with adsb_matched = 1, the m25dl32 network's prediction on the other rows (tools/build_combo_member.py); LIRF rows are left to the shipped table by the scorer",
+  "tables": {
+   "2025-01": [
+    "runs/adsb_ctx3_combo/member/s601/2025-01.parquet",
+    "runs/adsb_ctx3_combo/member/s602/2025-01.parquet",
+    "runs/adsb_ctx3_combo/member/s603/2025-01.parquet",
+    "runs/adsb_ctx3_combo/member/s604/2025-01.parquet",
+    "runs/adsb_ctx3_combo/member/s605/2025-01.parquet",
+    "runs/adsb_ctx3_combo/member/s606/2025-01.parquet",
+    "runs/adsb_ctx3_combo/member/s607/2025-01.parquet",
+    "runs/adsb_ctx3_combo/member/s608/2025-01.parquet",
+    "runs/adsb_ctx3_combo/member/s609/2025-01.parquet",
+    "runs/adsb_ctx3_combo/member/s610/2025-01.parquet",
+    "runs/adsb_ctx3_combo/member/s611/2025-01.parquet",
+    "runs/adsb_ctx3_combo/member/s612/2025-01.parquet",
+    "runs/adsb_ctx3_combo/member/s613/2025-01.parquet",
+    "runs/adsb_ctx3_combo/member/s614/2025-01.parquet",
+    "runs/adsb_ctx3_combo/member/s615/2025-01.parquet",
+    "runs/adsb_ctx3_combo/member/s616/2025-01.parquet"
+   ],
+   "2025-07": [
+    "runs/adsb_ctx3_combo/member/s601/2025-07.parquet",
+    "runs/adsb_ctx3_combo/member/s602/2025-07.parquet",
+    "runs/adsb_ctx3_combo/member/s603/2025-07.parquet",
+    "runs/adsb_ctx3_combo/member/s604/2025-07.parquet",
+    "runs/adsb_ctx3_combo/member/s605/2025-07.parquet",
+    "runs/adsb_ctx3_combo/member/s606/2025-07.parquet",
+    "runs/adsb_ctx3_combo/member/s607/2025-07.parquet",
+    "runs/adsb_ctx3_combo/member/s608/2025-07.parquet",
+    "runs/adsb_ctx3_combo/member/s609/2025-07.parquet",
+    "runs/adsb_ctx3_combo/member/s610/2025-07.parquet",
+    "runs/adsb_ctx3_combo/member/s611/2025-07.parquet",
+    "runs/adsb_ctx3_combo/member/s612/2025-07.parquet",
+    "runs/adsb_ctx3_combo/member/s613/2025-07.parquet",
+    "runs/adsb_ctx3_combo/member/s614/2025-07.parquet",
+    "runs/adsb_ctx3_combo/member/s615/2025-07.parquet",
+    "runs/adsb_ctx3_combo/member/s616/2025-07.parquet"
+   ],
+   "2025-11": [
+    "runs/adsb_ctx3_combo/member/s601/2025-11.parquet",
+    "runs/adsb_ctx3_combo/member/s602/2025-11.parquet",
+    "runs/adsb_ctx3_combo/member/s603/2025-11.parquet",
+    "runs/adsb_ctx3_combo/member/s604/2025-11.parquet",
+    "runs/adsb_ctx3_combo/member/s605/2025-11.parquet",
+    "runs/adsb_ctx3_combo/member/s606/2025-11.parquet",
+    "runs/adsb_ctx3_combo/member/s607/2025-11.parquet",
+    "runs/adsb_ctx3_combo/member/s608/2025-11.parquet",
+    "runs/adsb_ctx3_combo/member/s609/2025-11.parquet",
+    "runs/adsb_ctx3_combo/member/s610/2025-11.parquet",
+    "runs/adsb_ctx3_combo/member/s611/2025-11.parquet",
+    "runs/adsb_ctx3_combo/member/s612/2025-11.parquet",
+    "runs/adsb_ctx3_combo/member/s613/2025-11.parquet",
+    "runs/adsb_ctx3_combo/member/s614/2025-11.parquet",
+    "runs/adsb_ctx3_combo/member/s615/2025-11.parquet",
+    "runs/adsb_ctx3_combo/member/s616/2025-11.parquet"
+   ],
+   "2025-12": [
+    "runs/adsb_ctx3_combo/member/s601/2025-12.parquet",
+    "runs/adsb_ctx3_combo/member/s602/2025-12.parquet",
+    "runs/adsb_ctx3_combo/member/s603/2025-12.parquet",
+    "runs/adsb_ctx3_combo/member/s604/2025-12.parquet",
+    "runs/adsb_ctx3_combo/member/s605/2025-12.parquet",
+    "runs/adsb_ctx3_combo/member/s606/2025-12.parquet",
+    "runs/adsb_ctx3_combo/member/s607/2025-12.parquet",
+    "runs/adsb_ctx3_combo/member/s608/2025-12.parquet",
+    "runs/adsb_ctx3_combo/member/s609/2025-12.parquet",
+    "runs/adsb_ctx3_combo/member/s610/2025-12.parquet",
+    "runs/adsb_ctx3_combo/member/s611/2025-12.parquet",
+    "runs/adsb_ctx3_combo/member/s612/2025-12.parquet",
+    "runs/adsb_ctx3_combo/member/s613/2025-12.parquet",
+    "runs/adsb_ctx3_combo/member/s614/2025-12.parquet",
+    "runs/adsb_ctx3_combo/member/s615/2025-12.parquet",
+    "runs/adsb_ctx3_combo/member/s616/2025-12.parquet"
+   ],
+   "ranking": [
+    "runs/adsb_ctx3_combo/member/s601/ranking.parquet",
+    "runs/adsb_ctx3_combo/member/s602/ranking.parquet",
+    "runs/adsb_ctx3_combo/member/s603/ranking.parquet",
+    "runs/adsb_ctx3_combo/member/s604/ranking.parquet",
+    "runs/adsb_ctx3_combo/member/s605/ranking.parquet",
+    "runs/adsb_ctx3_combo/member/s606/ranking.parquet",
+    "runs/adsb_ctx3_combo/member/s607/ranking.parquet",
+    "runs/adsb_ctx3_combo/member/s608/ranking.parquet",
+    "runs/adsb_ctx3_combo/member/s609/ranking.parquet",
+    "runs/adsb_ctx3_combo/member/s610/ranking.parquet",
+    "runs/adsb_ctx3_combo/member/s611/ranking.parquet",
+    "runs/adsb_ctx3_combo/member/s612/ranking.parquet",
+    "runs/adsb_ctx3_combo/member/s613/ranking.parquet",
+    "runs/adsb_ctx3_combo/member/s614/ranking.parquet",
+    "runs/adsb_ctx3_combo/member/s615/ranking.parquet",
+    "runs/adsb_ctx3_combo/member/s616/ranking.parquet"
+   ]
+  },
+  "external_data": "adsb.lol globe_history (ODbL), as every network of the table; nothing new"
+ },
+ "fits": {
+  "network_config": "configs/adsb_ctx3_combo_network_v1.json",
+  "variants": [
+   "dl32",
+   "m25dl32"
+  ],
+  "seeds": [
+   601,
+   602,
+   603,
+   604,
+   605,
+   606,
+   607,
+   608,
+   609,
+   610,
+   611,
+   612,
+   613,
+   614,
+   615,
+   616
+  ],
+  "folds": {
+   "2025-01": {
+    "fold": "lomo_2025-01",
+    "file": "predictions.parquet"
+   },
+   "2025-07": {
+    "fold": "lomo_2025-07",
+    "file": "predictions.parquet"
+   },
+   "2025-11": {
+    "fold": "forward",
+    "file": "predictions.parquet"
+   },
+   "2025-12": {
+    "fold": "refit",
+    "file": "december_predictions.parquet"
+   },
+   "ranking": {
+    "fold": "refit12",
+    "file": "ranking_predictions.parquet"
+   }
+  },
+  "footing": "January and July 2025: leave-one-month-out on the other eleven months of 2025; November: the forward fold (reported only); December: the January-November refit; ranking: the twelve-month refit. Equal to the control rows' footing (runs/lomo_dev/rows.parquet).",
+  "runner": "tools/run_adsb_ctx_lomo.py, unchanged; jobs tools/combo_jobs.py; queue tools/combo_queue.sh",
+  "outputs": "runs/adsb_ctx3_combo/nets/<variant>_s<seed>/<fold>/",
+  "count": 160
+ },
+ "hardware": "four AWS g6e.2xlarge (one L40S each) via SkyPilot (infra/aws/gpu_authorization_20260929.json), tools/run_adsb_ctx_lomo.py --device cuda, float32 with TF32 matrix products, two lanes per GPU. The design batch ran on CPU; the shipped e32 seeds 401-416 were GPU-trained on the same node type. If AWS cannot supply four nodes the same fits run on fewer nodes of the same type; any other hardware would be an amendment recorded before its fits.",
+ "candidates": {
+  "w15": {
+   "member_weight": 0.15
+  },
+  "w25": {
+   "member_weight": 0.25
+  },
+  "w40": {
+   "member_weight": 0.4
+  }
+ },
+ "semantics": "tools/run_network_member.py: table' = (1 - w) x (0.25 e24 + 0.25 e24b + 0.5 e32) + w x member seed mean on non-LIRF rows where both are finite; the mix is v46's on table' (network share 0.85; share 0.5 where the committee sits more than 1,200 s above table'); then the whole v46 development stack. Control = the v46 stack.",
+ "rule": "the clean line's unchanged rule (the scorer's defaults): eligible when no equal-footing month (January, July, December) is worse on all rows, the mean ratio is at least 0.02% below 1 and every equal-footing month's paired-day 95% interval lies below zero; the lowest mean ratio among the eligible is selected; otherwise nothing",
+ "equal_footing_months": [
+  "2025-01",
+  "2025-07",
+  "2025-12"
+ ],
+ "minimum_mean_improvement_fraction": 0.0002,
+ "never_read": "No official score enters. The published-aggregates sources (docs/published_means, docs/daily_totals) are not read; any export of this round is built on v46.",
+ "selection": "runs/adsb_ctx3_combo/dev/selection.json",
+ "report": "docs/adsb_ctx3_combo/results_v1.json",
+ "export_report_dir": "docs/adsb_ctx3_combo",
+ "automatic_submission": false
+}
