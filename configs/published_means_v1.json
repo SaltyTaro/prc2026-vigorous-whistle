@@ -1,0 +1,63 @@
+{
+ "experiment_id": "published_means_v1",
+ "declared_at_utc": "2026-09-29T10:20:00Z",
+ "audit_used": false,
+ "status": "DECLARED before the governing run (tools/run_published_means.py --score). The descriptive screen that motivated it (tools/screen_published_means.py, docs/clean_line_screens/README.md section 4) is disclosed below: its ungated level shift on every airport was read on the four development months. The gated procedure declared here has not been scored.",
+ "user_decision": {
+  "words": "yes use it",
+  "date": "2026-09-29",
+  "context": "asked whether EUROCONTROL's published airport-month taxi-out aggregates of the scored months may enter a submission, after being told that the organiser's reply is ambiguous, that the data's terms are not an open licence and that the figures are aggregates of the hidden target"
+ },
+ "external_data": {
+  "name": "EUROCONTROL Performance Review Unit, Taxi-Out Additional Time (airport, month)",
+  "url": "https://www.eurocontrol.int/performance/data/download/xls/Taxi-Out_Additional_Time.xlsx",
+  "retrieved_at_utc": "2026-09-29T09:25:23Z",
+  "sha256": "82d119ed3cfaf7a3c2f29b27ce942f0a36ea599b3af76e777e4eb354a7a4adb8",
+  "version": "2026-09-15 V.1.0, period 2018-01-01 to 2026-07-31",
+  "local_path": "data/external/eurocontrol_aiu/Taxi-Out_Additional_Time.xlsx (not in the repository)",
+  "terms": "published by EUROCONTROL for information purposes; may be copied in whole or in part provided EUROCONTROL is mentioned as the source and it is not used for commercial purposes; no modification without prior written permission (ansperformance.eu disclaimer). Not an open licence.",
+  "organiser_statement": "Ambiguous; recorded as such.",
+  "nature": "aggregates of the scored months' hidden target (mean taxi-out of the unit's valid flights per airport and month). No official score and no leaderboard information is used."
+ },
+ "definitions": {
+  "P": "60 x (TOTAL_REF_TIME_MIN + TOTAL_ADD_TIME_MIN) / TOTAL_REF_NB_FL, seconds",
+  "u": "1 - VALID_FL / TF, the share of departures the unit leaves out",
+  "label_mean": "mean 2025 label over labels in (0, 7200] s per airport and month (data/raw/training_2025-*.parquet)",
+  "mapping": "per airport D(u) = label_mean - P over the fitting months: a constant, or a least-squares line in u when u ranges over more than 0.03; sd_map = the leave-one-month-out standard deviation of P + D(u) - label_mean",
+  "level_estimate": "mean of the stack's predictions in (0, 7200] s of the airport-month minus (P + D(u))",
+  "method_bias_and_noise": "from the development months (2025-01, 2025-07, 2025-11, 2025-12; v46 stack on runs/lomo_dev/rows.parquet; the mapping excludes the month read): bias_a = mean of (level_estimate - true level error on rows with labels in (0, 7200]), noise_a = root mean square of that difference about bias_a; sigma_a = max(sd_map, noise_a)",
+  "cell": "an airport-month"
+ },
+ "procedure": {
+  "eligible_cell": "u within the fitting months' maximum + 0.02 (no extrapolation of the winter line), sigma_a <= 8 s, and |level_estimate - bias_a| >= 3 x sigma_a",
+  "shift": "every prediction in (0, 7200] s of an eligible cell moves by -(level_estimate - bias_a) x max(0, 1 - sigma_a^2 / (level_estimate - bias_a)^2); floor -12 s; every other row unchanged",
+  "free_parameters": "none fitted on scores or on the scored months; the thresholds 8 s and 3 sigma are declared here"
+ },
+ "development_read": {
+  "months": [
+   "2025-01",
+   "2025-07",
+   "2025-11",
+   "2025-12"
+  ],
+  "equal_footing": [
+   "2025-01",
+   "2025-07",
+   "2025-12"
+  ],
+  "construction": "for each month, mapping and method bias / noise from the other months only (mapping: the other eleven months of 2025; bias and noise: the other three development months), then the procedure on the v46 stack",
+  "rule": "the procedure is accepted when no equal-footing month is worse than the control and the mean change over the equal-footing months is below zero. Otherwise nothing is exported without a further decision of the user.",
+  "expectation_disclosed": "2025 level errors are small (mostly under 13 s), so few cells should pass the gate in development and the read is mainly a no-harm check; the value of the procedure lies in the scored months, which no 2025 month can score"
+ },
+ "prior_exploration_disclosed": {
+  "screen": "ungated shift on all ten airports: January +0.032% (w 0.5) / +0.139% (w 1), July -0.075% / -0.080%, November -0.030% / +0.017%, December -0.022% / +0.020%",
+  "scored_months_implied_level_errors_of_v46": "EGLL +10 / +30 s (January / July), LEBL +6 / +23, EHAM +7 / -6, LIRF +2 / +53, LEMD +27 / +1, LFPG +13 / -2, EDDF +39 / +9, LSZH +31 / -1, EDDM +2 / +6, LTFM +32 / +16",
+  "note": "the gate and the shrinkage were chosen after these readings; the cells they will select on the scored months are therefore foreseeable (EGLL both months, LEBL July, LIRF July, LEMD January)"
+ },
+ "export": {
+  "version": 47,
+  "base": "vigorous-whistle_v46.parquet (223.9339, the clean model line's best)",
+  "construction": "v46's integers, shifted on the eligible cells' rows with a prediction in (0, 7200]; nearest integer; every other row byte-identical"
+ },
+ "report": "docs/published_means/results_v1.json"
+}
