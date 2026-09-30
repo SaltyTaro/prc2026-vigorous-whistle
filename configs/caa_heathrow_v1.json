@@ -1,0 +1,50 @@
+{
+ "experiment_id": "caa_heathrow_v1",
+ "declared_at_utc": "2026-09-30T03:20:00Z",
+ "audit_used": false,
+ "status": "DECLARED before the governing run (tools/run_caa_heathrow.py --score). Exploration disclosed below: a ceiling on the four development months and the 2025 verification of the source; no procedure was scored on any month before this declaration.",
+ "user_decision": {
+  "words": "proceed",
+  "date": "2026-09-30",
+  "context": "after the source was sized at about 0.05 s of RMSE (at most 0.1 s) and the recommendation to build it only as a declared round with a rule and to ship only if the rule passes. Earlier the same day the user asked for research other than the GPU round. Nothing is uploaded without a further word."
+ },
+ "external_data": {
+  "name": "UK Civil Aviation Authority, Punctuality statistics, full analysis (arrival / departure) CSV, per month",
+  "url": "https://www.caa.co.uk/data-and-analysis/uk-aviation-market/flight-punctuality/uk-flight-punctuality-statistics/2026/ (and .../2025/)",
+  "retrieved_at_utc": "2026-09-30T00:20:00Z to 01:10:00Z",
+  "files": {
+   "202601_arrdep.csv": "ce50fff0e7bb2f85724d7713a00ace1fc247f24d6d8869b65f638e14227c1859",
+   "202607_arrdep.csv": "9391705e6928c4aed57ec1de5241f4908e2dcfdbacb760d67058f60dd40b96e0",
+   "2025": "twelve monthly files, hashes in docs/caa_heathrow/verification.json"
+  },
+  "local_path": "data/external/caa_punctuality/ (not in the repository)",
+  "columns_used": "reporting_airport (HEATHROW), arrival_departure (D), airline_name, origin_destination, scheduled_charter, number_flights_matched, average_delay_mins",
+  "terms": "page statement: 'No statistical data provided by CAA may be sold on to a third party. CAA insists that they are referenced in any publication that makes reference to CAA Statistics.' No open licence named on the page.",
+  "nature": "per airport, airline, origin/destination and month: the number of matched flights and their average departure delay in whole minutes, delay = actual off-block minus the planned gate time, early flights counted as zero, cargo / positioning / private movements excluded. In 2025 the published mean equals the mean of max(off-block - schedule, 0) from the supplied clocks within the minute rounding in 58-87% of groups per month (rounding alone gives 100% within half a minute only when centred), with an offset of 0.10-0.44 minutes (published higher) and a robust sd of 0.34-0.43 minutes across groups (rounding alone: 0.29). It is an aggregate of the hidden off-block clock of the ranking rows at Heathrow. No official score and no leaderboard information is used."
+ },
+ "procedure": {
+  "code": "src/prc2026_caa/heathrow.py (implied mean, shrinkage, shift), tools/run_caa_heathrow.py (groups, offsets, months, export)",
+  "mapping": "docs/caa_heathrow/destinations.csv (204 CAA destination names to ICAO codes by name and 2025 monthly counts, 95.6% of the published departures), docs/caa_heathrow/airlines.csv (67 callsign prefixes to CAA airline names by 2025 counts per destination-month)",
+  "summary": "per Heathrow airline x destination group of the month whose published count is at least 30 and agrees with our count within max(2, 3%): the group's implied mean of max(delay, 0) under the row error (delay = schedule interval minus prediction, normal row error with the class sd) plus the definitional offset, against the published mean; the level error is clipped to +-2 minutes; its noise is the rounding variance (1/12 min^2) plus the row noise (sd^2 / n) plus the definitional noise; the group biases' variance is the month's own dispersion of the level errors beyond their noise (empirical Bayes, label-free, at least 0.01 min^2); the shrunk correction is applied as one taxi shift per group, solved so that the group's implied mean drops by the correction; rows predicted at 10,800 s or more keep their value; floor -12 s; every other row keeps the base",
+  "fitting_side": "the class row-error sd (matched / unmatched) from v48's residuals at Heathrow in the other development months; the definitional offset and noise from the labels of the other months of 2025 (docs/caa_heathrow/verification.json)",
+  "settings": {"min_group": 30, "count_tolerance": 0.03, "clip_min": 2.0, "max_pred_s": 10800.0, "min_prior_var": 0.01},
+  "base": "v48's procedure (the daily totals) applied first; this layer moves Heathrow rows only",
+  "free_parameters": "none fitted on scores or on the scored months"
+ },
+ "development_read": {
+  "months": ["2025-01", "2025-07", "2025-11", "2025-12"],
+  "equal_footing": ["2025-01", "2025-07", "2025-12"],
+  "control": "v48's procedure on the v46 development stack (runs/daily_totals/daily_totals_v1/<month>.parquet)",
+  "reading": "RMSE of the complete month (every airport) with the Heathrow rows replaced, against the control; the paired-day 95% interval; the Heathrow-only change; a placebo that reads the published figures of another 2025 month (month + 6)"
+ },
+ "rule": {
+  "min_mean_improvement_pct_equal_footing": 0.01,
+  "text": "no equal-footing month worse than the control and the mean improvement over the equal-footing months at least 0.01% of RMSE; November reported only; the paired-day intervals and the placebo are reported, not part of the rule (the expected change is below what a month's days can resolve)"
+ },
+ "exploration_disclosed": {
+  "ceiling": "on the four development months, with v48's values, the airline x destination group-level part of Heathrow's squared error beyond the noise floor is 0.75-1.25% of Heathrow's squared error (0.05-0.13% of the month's); docs/adsb_coverage/sources_20260930.md section 2",
+  "verification": "docs/caa_heathrow/verification.json (labels of 2025 against the published figures; no prediction involved)",
+  "nothing_else": "no variant of the procedure was scored before this declaration"
+ },
+ "report": "docs/caa_heathrow/results_v1.json"
+}
