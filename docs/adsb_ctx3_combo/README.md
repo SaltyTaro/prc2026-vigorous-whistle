@@ -126,3 +126,12 @@ hash-checked (a 04:07, d 04:11, b 04:28 UTC).
    put it near 222.34.
 
 The versioned export and any upload are the user's decision. The tool change (`--base`) is commit 6dc28c6.
+
+## Official result: v51 = 222.2306 (30 September 2026)
+
+Exported at the user's word ("Build v51 and upload it"): `runs/submissions/vigorous-whistle_v51.parquet`, SHA-256
+`f61405232d03b82a4ef04b71a45fffc521bc3fbc2247cc755b45f3f1a9e4b469`, byte-identical to the dry run; audit clean
+(`docs/export_audit/v51_audit.json`: identifiers match the template, no missing or extra rows, minimum −12 s; the four airport-months
+flagged for a mean shift above 15% are the same as in v50's audit and come from the reconciliation).
+It is the official best and the clean line's best. Record: `docs/adsb_ctx3_combo/official_result_v51.json`. Nothing is derived from
+the score.
