@@ -103,3 +103,26 @@ changed after them.
 December's table. It now reads the tables the fits read (`runs/adsb_ctx2/inputs/adsb_features_arcw0`, twelve months and the ranking
 rows) and checks every table's hash against every fit's record (`inputs.adsb_cache_sha256`). The January and July tables were rebuilt
 with it and are unchanged (the two caches carry identical flags for those months).
+
+## Export path: v51 = v46 + the w40 member, then v48's procedure applied last (30 September, dry runs 04:20–04:25 UTC)
+
+All 160 fits finished without a failure (last fit 04:20 UTC); the three nodes were torn down right after their files were copied and
+hash-checked (a 04:07, d 04:11, b 04:28 UTC).
+
+1. **Member file** (`tools/export_network_member.py --candidate w40 --dry-run runs/adsb_ctx3_combo/export_dry --version 51`, a dry-run
+   file, no version number spent): the v46 stack with the network table replaced by 0.6 × table + 0.4 × member on the 317,942 non-LIRF
+   ranking rows. Checks: the v38 stack rounds to the uploaded v38 and the v46 stack reproduces the uploaded v46 on every row; no LIRF
+   row and no row outside the member's rows changes. Against v46: 286,836 rows differ, mean +0.72 s, mean absolute 5.1 s, largest
+   457 s, squared change 3.64e7 (EHAM 1.0e7, the January no-clock rows; LTFM, LFPG, EDDF next). SHA-256 `bd8f73aa…`.
+2. **Reconciled file** (`tools/export_daily_totals.py --base <the member file> --dry-run runs/daily_totals/dry_v51 --version 51`,
+   `configs/daily_totals_v1.json`, the procedure that made v48): the same 619 airport-days read, 648 rows outside them keep the base,
+   no heavy or pinned row moved, the 66 LIRF population rows that move with their day are the same count as in v48's run. The
+   reconciliation's change on the member file has squared size 1.533e8 against 1.529e8 on v46 (correlation 0.995), and the member's
+   change survives it: correlation 0.98, slope 0.985 between (member − v46) and (reconciled member − v48).
+3. **Against the uploaded v48** (the incumbent): 280,893 rows differ, mean absolute 5.0 s, largest 478 s, squared change 3.68e7;
+   1,293 rows move by more than 60 s and carry 59% of it; by airport-month EHAM January 1.07e7, LTFM January 0.67e7, LFPG January
+   0.58e7, EDDF January 0.29e7. LIRF rows are identical to v48. Size of the stake, arithmetic on v48's published score only:
+   222.365 if every change is right in full, 222.843 if the changes are noise; December's reading (−0.119%, alignment 1.07) would
+   put it near 222.34.
+
+The versioned export and any upload are the user's decision. The tool change (`--base`) is commit 6dc28c6.
