@@ -18,7 +18,7 @@ from . import adsb, features, leaves, networks, recipe, residual, tokens, v9
 from .common import ROOT, Run, departures_of, inspect, load_movements, save_frame
 
 CHAIN = ["features", "adsb", "tokens", "v9", "leaves", "networks", "residual", "recipe"]  # v30 on the file (also run on the repaired input)
-STAGES = CHAIN + ["repair", "rematch", "stack", "final"]  # default order: v30 -> v35 / v36 and the chosen layer set's file
+STAGES = CHAIN + ["repair", "rematch", "members", "stack", "final"]  # default order: v30 -> v35 .. v52m and the chosen layer set's file
 EXTRA_STAGES = ["export"]  # v30's own integer file (component check against the uploaded v30); run only when named
 
 
@@ -32,7 +32,7 @@ class Options:
     detail_ensembles: bool = False
     vocab_cache: Path | None = None
     repair_root: Path | None = None
-    layers: str = "v46"  # the final file's layer set: v46 (the clean model line's best, 223.9339; default), v45, v40, v41, v39, v38, v35, v36 or v37
+    layers: str = "v52m"  # the final file's layer set: v52m (v52's open-data model part; default), v51m, v46, v45, v40, v41, v39, v38, v35, v36 or v37
 
 
 class Context:
@@ -165,6 +165,42 @@ def stage_networks(ctx: Context, threads: int, ensembles: list[str]) -> dict:
         table[ensemble] = np.mean(columns, axis=0)
     out = save_frame(table, ctx.run.path("networks", "ensembles.parquet"))
     return ctx.run.finish("networks", {"ensembles": {e: len(learners[e]) for e in ensembles}, "learners_predicted_this_session": info}, [out], started)
+
+
+def stage_members(ctx: Context, threads: int) -> dict:
+    """The network members v51 / v52 ship (src/prc2026_final/members.py): three seed means (48 GPU-trained twelve-month refits,
+    predicted on the CPU like e32), routed by the file's own ADS-B match flag."""
+    from . import members
+    started = time.time()
+    from prc2026_ctx.tokens import TokenStore
+    frame = learner_frame(ctx)
+    host = TokenStore(ctx.run.root / "tokens", [tokens.NAME])
+    learners = members.learners()
+    cache, info, sources = {}, {}, {}
+    table = pd.DataFrame({ID: ctx.ids})
+    for ensemble, names in learners.items():
+        columns = []
+        for learner in names:
+            target = ctx.run.path("members", ensemble, learner.replace("/", "__") + ".parquet")
+            if target.exists():
+                values = pd.read_parquet(target)["adsb_full"].to_numpy(dtype=float)
+            else:
+                t0 = time.time()
+                values, info[learner] = networks.predict_learner(learner, frame, host, threads, cache)
+                save_frame(pd.DataFrame({ID: ctx.ids, "adsb_full": values}), target)
+                print(f"{ensemble} {learner} {round(time.time() - t0)} s", flush=True)
+            sources[learner] = sha256_file(ROOT / learner / "refit12" / "model.pt")
+            columns.append(values)
+        table[ensemble] = np.mean(columns, axis=0)
+    adsb_table = pd.read_parquet(ctx.run.root / "adsb" / "learner_adsb.parquet", columns=[ID, "adsb_matched"]).set_index(ID)["adsb_matched"].reindex(ctx.ids)
+    if adsb_table.isna().any():
+        raise ValueError("The ADS-B table does not cover every departure.")
+    frame_out = members.members(ctx.ids, table, adsb_table.to_numpy() == 1)
+    out = save_frame(frame_out, ctx.run.path("members", "members.parquet"))
+    ens_out = save_frame(table, ctx.run.path("members", "ensembles.parquet"))
+    return ctx.run.finish("members", {"ensembles": {e: len(v) for e, v in learners.items()}, "declarations": [members.COMBO, members.MASK],
+                                      "weights": members.WEIGHTS, "models_sha256": sources, "matched_rows": int(frame_out["adsb_matched"].sum()),
+                                      "learners_predicted_this_session": info}, [out, ens_out], started)
 
 
 def stage_residual(ctx: Context, threads: int) -> dict:
@@ -303,7 +339,11 @@ def stage_stack(ctx: Context) -> dict:
     peer_out = save_frame(peer, ctx.run.path("stack", "peers.parquet"))
     fill = stack.pins(ctx.raw_path)
     fill_out = save_frame(fill, ctx.run.path("stack", "fill_pins.parquet"))
-    frame, record = stack.compute(detail, repaired, ctx.run.root / "rematch" / "out.parquet", regular, peer, fill)
+    member_frame = None
+    if ctx.run.receipt_path("members").exists():
+        ctx.run.verify_outputs("members")
+        member_frame = pd.read_parquet(ctx.run.root / "members" / "members.parquet")
+    frame, record = stack.compute(detail, repaired, ctx.run.root / "rematch" / "out.parquet", regular, peer, fill, member_frame)
     flagged = {(f["airport"], f["month"]) for f in rep["flagged"]}
     in_flagged = np.array([(a, m) in flagged for a, m in zip(frame["airport"], frame["month"])], dtype=bool)
     record["rows"]["repair_effect_nonzero_outside_flagged"] = int(((frame["repair_effect"].to_numpy() != 0) & ~in_flagged).sum())
@@ -319,7 +359,9 @@ RECIPES = {"v35": "v35: v30 + EOBT_1 repair 0.5 + v33/v34 weights + u300 + calls
            "v41": "v41: v40, then configs/fill_pin_v3.json nosos431_one_day (population departures with intervals of 100,000 s or more at the one-day value, 86,400 s + the 2025 one-day taxi mean)",
            "v36": "v36: v35's layers after the mu600 mix gate, then the peer-congestion lifts (configs/higher_bundle_v2.json mu_pc_pcc)",
            "v37": "v37: v35, then the tail stretch above 1,500 s (configs/tail_stretch_v1.json v35_t1500, four-month k)",
-           "v38": "v38: v35, then the two-sided stretch (above 1,500 s, below 900 s; configs/tail_stretch_v2.json two_sided_900, four-month k)"}
+           "v38": "v38: v35, then the two-sided stretch (above 1,500 s, below 900 s; configs/tail_stretch_v2.json two_sided_900, four-month k)",
+           "v51m": "v51m: v46 with the combination member (configs/adsb_ctx3_combo_dev_v1.json w40) in the network table, v46's mix, v34's recipe and v38's layers recomputed; v51's open-data model part (v51 adds the published daily totals)",
+           "v52m": "v52m: v51m with the masked member (configs/adsb_ctx3_mask_dev_v1.json w40, the user's override) added after it; v52's open-data model part (v52 adds the published daily totals)"}
 
 
 def receipt_key(stage: str, options: Options) -> str:
@@ -338,7 +380,7 @@ def stage_final(ctx: Context, version: int, layers: str) -> dict:
     output = ctx.run.path("final", f"vigorous-whistle_v{version}.parquet")
     provenance = {"runner": "tools/final_predict.py", "layers": layers, "recipe": RECIPES[layers],
                   "input": {k: ctx.meta[k] for k in ["raw", "raw_sha256", "template", "template_sha256", "months", "departures"]},
-                  "stages": {s: sha256_file(ctx.run.receipt_path(s)) for s in STAGES[:-1]},
+                  "stages": {s: sha256_file(ctx.run.receipt_path(s)) for s in STAGES[:-1] if s != "members" or ctx.run.receipt_path(s).exists()},
                   "note": "written into the run root only; never copied to runs/submissions or uploaded by this tool"}
     receipt = export_submission(pd.DataFrame({ID: frame[ID].to_numpy(), "prediction": frame[layers].to_numpy(dtype=float)}), ctx.template, output, provenance)
     return ctx.run.finish(f"final-{layers}", {"layers": layers, "version": version, "receipt": receipt}, [output, output.with_suffix(".receipt.json")], started)
@@ -358,6 +400,8 @@ def run_stage(ctx: Context, stage: str, options: Options) -> dict:
     if stage == "networks":
         from .networks import DETAIL_ONLY, RECIPE_ENSEMBLES
         return stage_networks(ctx, options.threads, RECIPE_ENSEMBLES + (DETAIL_ONLY if options.detail_ensembles else []))
+    if stage == "members":
+        return stage_members(ctx, options.threads)
     if stage == "residual":
         return stage_residual(ctx, options.threads)
     if stage == "recipe":

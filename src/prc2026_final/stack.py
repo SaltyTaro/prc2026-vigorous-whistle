@@ -31,6 +31,12 @@
         0.85, and 0.5 where the committee sits more than 1,200 s above the networks): v34's recipe and v38's layers (u300 gate, callsign
         fix, queue trust, two-sided stretch) are recomputed on that mix through export_stack.layers, and every row whose value changes
         takes the recomputed value; LIRF rows do not depend on the mix and keep v45 (tools/export_share_gate.py, the user's override).
+  v51m = v46 with the combination member in the network table (src/prc2026_final/members.py; configs/adsb_ctx3_combo_dev_v1.json w40):
+        v46's mix, v34's recipe and v38's layers recomputed on that table through export_stack.layers; every row whose value moves
+        takes the recomputed value (tools/export_network_member.py's construction of v51's member file). v51 = v51m + the published daily
+        totals (tools/export_daily_totals.py --base), not part of this runner.
+  v52m = v51m with the masked member added after it (configs/adsb_ctx3_mask_dev_v1.json w40, the user's override), the same way;
+        v52 = v52m + the published daily totals.
   export_stack's three ranking-bound readers (scope_table, segments, ranking_peers) answer from the run's own tables during the
   call (run_tables): the file's rematch, its residual match tables and tools/peer_congestion.peer_table on the file itself.
 """
@@ -48,7 +54,7 @@ from prc2026.features import ID, PHASE, TIME
 
 from .common import ROOT, save_frame, source_file
 from .fill_pin import COLUMNS as FILL_COLUMNS, SCOPES as FILL_SCOPES, apply_pins, candidate_pins, fill_pins
-from . import lirf_gate, share_gate
+from . import lirf_gate, members as network_members, share_gate
 
 sys.path.insert(0, str(ROOT / "tools"))
 import export_v33  # noqa: E402
@@ -73,7 +79,8 @@ DECLARATIONS = {"gate": "configs/disagreement_gate_v1.json", "callsign": "config
 RESULTS = ["docs/disagreement/tail_stretch_v1_results.json", "docs/disagreement/tail_stretch_v2_results.json"]  # the stretches' k (four-month fits), read by export_stack.tail_stretch
 CODE = ["src/prc2026_final/share_gate.py", "tools/export_stack.py", "tools/peer_congestion.py", "tools/export_disagreement_gate.py", "tools/export_fair_weights.py", "tools/export_v33.py",
         "tools/run_callsign_fix.py", "tools/run_queue_trust.py", "tools/adsb_rematch_nonm.py"]
-LAYER_SETS = ["v35", "v36", "v37", "v38", "v39", "v40", "v41", "v45", "v46"]
+LAYER_SETS = ["v35", "v36", "v37", "v38", "v39", "v40", "v41", "v45", "v46", "v51m", "v52m"]
+MEMBER_LAYER_SETS = ["v51m", "v52m"]
 LIRF_GATE_SCOPES = {"lirf_nonpop_unmatched": "unmatched", "lirf_nonpop_matched": "matched"}
 V35 = {"gate": "u300", "callsign": "u300_cs50", "queue": "qt75", "queue_source": "regular",
        "record": "docs/disagreement/export_v35.json (tools/export_stack.py --queue 0.75 --queue-source regular --version 35, user override)"}
@@ -93,6 +100,10 @@ V45 = {**V40, "lirf_gate": "u600_m600",
        "record": "docs/lirf_gate/export_v45.json (tools/export_lirf_gate.py --version 45 --base 40, the declared rule's selection; official 224.2398)"}
 V46 = {**V45, "share_gate": "n85_nd1200",
        "record": "docs/thinned_regime/export_v46.json (tools/export_share_gate.py --candidate n85_nd1200 --version 46, the user's override of the declared rule; official 223.9339)"}
+V51M = {**V46, "member": "combo_all w40",
+        "record": "docs/adsb_ctx3_combo/member_export_dry_v51.json (tools/export_network_member.py --candidate w40 --dry-run; SHA-256 bd8f73aa...); v51 = it + the daily totals, official 222.2306"}
+V52M = {**V51M, "member2": "mask_unmatched w40",
+        "record": "docs/adsb_ctx3_mask/member_export_dry_v52.json (the user's override 'ship it anyway'; SHA-256 16e9f33a...); v52 = it + the daily totals, official 222.0519"}
 
 
 def pins(raw_path: Path) -> pd.DataFrame:
@@ -223,9 +234,10 @@ def run_tables(callsign: pd.DataFrame, segments: pd.DataFrame, peer: pd.DataFram
 
 
 def compute(detail: pd.DataFrame, repaired_v30: np.ndarray | None, rematch_path: Path, regular: pd.DataFrame,
-            peer: pd.DataFrame, fill: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+            peer: pd.DataFrame, fill: pd.DataFrame, member_frame: pd.DataFrame | None = None) -> tuple[pd.DataFrame, dict]:
     """`detail`: the recipe stage's detail (v30's columns); `repaired_v30`: v30 on the repaired input in detail order (None: no repair);
-    `regular`: the run's residual match tables; `peer`: peers() of the file; `fill`: pins() of the file (v39's fill pins).
+    `regular`: the run's residual match tables; `peer`: peers() of the file; `fill`: pins() of the file (v39's fill pins);
+    `member_frame`: the members stage's table (members.members; None: no v51m / v52m).
     Returns v30 .. v34 and every layer set's values and masks."""
     ids = detail[ID].to_numpy()
     v30 = detail["v30"].to_numpy(dtype=float)
@@ -277,6 +289,21 @@ def compute(detail: pd.DataFrame, repaired_v30: np.ndarray | None, rematch_path:
                                              s38["peer"], s38["stretch"], s38["stretch_lower"])
         if not np.isfinite(candidate38).all():
             raise ValueError("Non-finite v46 candidate values.")
+        # v51m / v52m: the network members in the table under v46's mix, through v34's recipe and v38's layers (tools/export_network_member.through_stack)
+        member_floats, member_inside, member_fire = {}, {}, {}
+        if member_frame is not None:
+            if not np.array_equal(member_frame[ID].to_numpy(), ids):
+                raise ValueError("The members table is not in the detail's order.")
+            t51, in51, t52, in52 = network_members.tables(nets, member_frame, detail["airport"].to_numpy() == "LIRF")
+            for name, tab, inside in [("v51m", t51, in51), ("v52m", t52, in52)]:
+                mix_m, fire_m = share_gate.mix(committee, tab, share, share_spec)
+                detail_m = detail.assign(committee_mix=mix_m)
+                at_m = recipe(detail_m, V33_OUTER, V34_LIRF)
+                values_m, _ = export_stack.layers(v34 + (at_m - at34), detail_m, at_m, ids, s38["queue"], s38["queue_source"], s38["mix_up"],
+                                                  s38["peer"], s38["stretch"], s38["stretch_lower"])
+                if not np.isfinite(values_m).all():
+                    raise ValueError(f"Non-finite {name} values.")
+                member_floats[name], member_inside[name], member_fire[name] = values_m, inside, fire_m
     # v39 = v38 with the fill pins (configs/fill_pin_v1.json): the file's own in-scope LIRF departures at their schedule interval
     v39, pinned = apply_pins(frame["v38"].to_numpy(dtype=float), ids, fill, detail["airport"].to_numpy())
     frame["v39"], frame["v39_fill_pin"] = v39, pinned
@@ -318,6 +345,19 @@ def compute(detail: pd.DataFrame, repaired_v30: np.ndarray | None, rematch_path:
     frame["v46"], frame["v46_share"], frame["v46_share_gate"] = v46, share_changed, share_fire & non_lirf
     rows["v46"] = {"fill_pin": int(pinned40.sum()), "lirf_gate": int(gated_mask.sum()), "share": int(share_changed.sum()),
                    "share_gate": int((share_fire & non_lirf).sum()), "floored": int((v46 == FLOOR).sum())}
+    # v51m = v46 where the combination moves the v38-level value; v52m = v51m where the masked member moves it further (never a LIRF,
+    # pinned or LIRF-gated row, never a row without a member value)
+    if member_frame is not None:
+        previous_floats, previous = candidate38, v46
+        for name in MEMBER_LAYER_SETS:
+            moved = np.abs(member_floats[name] - previous_floats) > 1e-9
+            if (moved & (~non_lirf | pinned40 | gated_mask | ~member_inside[name])).any():
+                raise ValueError(f"{name} moved a LIRF, pinned, LIRF-gated or member-less row.")
+            values = np.where(moved, member_floats[name], previous)
+            frame[name], frame[f"{name}_member"], frame[f"{name}_share_gate"] = values, moved, member_fire[name] & non_lirf
+            rows[name] = {"member_rows": int(member_inside[name].sum()), "moved": int(moved.sum()), "share_gate": int((member_fire[name] & non_lirf).sum()),
+                          "floored": int((values == FLOOR).sum())}
+            previous_floats, previous = member_floats[name], values
     specs = {**specs, "v39": {"base": "v38", "fill_pin": DECLARATIONS["fill_pin"], "pinned_value": "schedule interval (takeoff minus scheduled departure) in seconds"},
              "v40": {"base": "v38", "fill_pin": DECLARATIONS["fill_pin2"], "candidate": V40["fill_pin"], "scopes": nine["scopes"],
                      "population_interval_bands_s": nine["population_interval_bands_s"], "pinned_value": "schedule interval in seconds"},
@@ -326,8 +366,11 @@ def compute(detail: pd.DataFrame, repaired_v30: np.ndarray | None, rematch_path:
              "v45": {"base": "v40", "lirf_gate": DECLARATIONS["lirf_gate"], "candidate": V45["lirf_gate"], "spec": gate_spec, "v34_blends": lirf_gate.V34},
              "v46": {"base": "v45", "share_gate": DECLARATIONS["share_gate"], "candidate": V46["share_gate"], "network_share": share, "gate": share_spec,
                      "control_share": share_gate.CONTROL_SHARE, "network_table": share_gate.NETWORK}}
+    if member_frame is not None:
+        specs["v51m"] = {"base": "v46", "member": network_members.COMBO, "weight": network_members.WEIGHTS["combo_all"], "ensembles": ["combo_dl32", "combo_m25dl32"]}
+        specs["v52m"] = {"base": "v51m", "member": network_members.MASK, "weight": network_members.WEIGHTS["mask_unmatched"], "ensembles": ["mask_m25_32"]}
     record = {"recipe_checks_max_abs": checks, "lfpg_weight": LFPG_WEIGHT, "floor_seconds": FLOOR, "v33_outer": V33_OUTER, "v33_lirf": V33_LIRF,
-              "v34_lirf": V34_LIRF, "layer_sets": specs, "shipped_as": {"v35": V35, "v36": V36, "v37": V37, "v38": V38, "v39": V39, "v40": V40, "v41": V41, "v45": V45, "v46": V46},
+              "v34_lirf": V34_LIRF, "layer_sets": specs, "shipped_as": {"v35": V35, "v36": V36, "v37": V37, "v38": V38, "v39": V39, "v40": V40, "v41": V41, "v45": V45, "v46": V46, "v51m": V51M, "v52m": V52M},
               "declarations": {p: {"sha256": sha256_file(ROOT / p), "object_hash": object_hash(read_json(ROOT / p))} for p in DECLARATIONS.values()},
               "results": {p: sha256_file(ROOT / p) for p in RESULTS},
               "stretch_k": {"v37": read_json(ROOT / RESULTS[0])["candidates"][V37["stretch"]]["k_all_months"],

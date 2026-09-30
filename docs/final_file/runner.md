@@ -23,7 +23,7 @@ python tools/final_predict.py refit-adj2   --root R --month YYYY-MM [--threads 1
 python tools/final_predict.py run          --root R [--stages ...] [--threads 12] [--workers 8]
                                            [--weather-inventory data/external/iem_final/<R>/inventory.json] [--version N] [--detail-ensembles]
                                            [--vocab-cache runs/final_dryrun/run/leaves/vocabularies.json] [--repair-root DIR]
-                                           [--layers v35|v36|v37|v38|v39]
+                                           [--layers v35|v36|v37|v38|v39|v40|v41|v45|v46|v51m|v52m]
 python tools/final_compare.py --root R --output OUT.json [--version N] [--allow-subset]
 ```
 
@@ -53,6 +53,7 @@ External data and model inference are separate commands: `external` / `extract-a
 | recipe | v30 arithmetic: mix 0.25 e24 + 0.25 e24b + 0.5 e32 at share 0.75, outer 0.7, round-B LIRF blends, floor −12; scope column | `mixed`, `weighted`, `lirf_blends`, `spec_for`, `candidate_values` | `recipe/detail.parquet` (v30 detail's columns) |
 | repair | v31's input: label-free EOBT_1 detector per airport-month; for a flagged one, EOBT_1 := IOBT where EOBT_1 > IOBT and the chain features → recipe again in `<root>/repair/run` (or `--repair-root`, a completed run of exactly that content) | the chain's own stages | `repair/shares.parquet`, `repair/edited_ids.parquet` |
 | rematch | the callsign fix's ADS-B rematch of the no-NM EDDF / EHAM departures | `tools/adsb_rematch_nonm.py` main, unchanged (its `REPO` pointed at this workspace) | `rematch/{deps,out}.parquet` |
+| members | the 48 twelve-month member networks of v51 / v52 (`combo_dl32`, `combo_m25dl32`, `mask_m25_32`, 16 seeds each, GPU-trained, predicted on CPU), seed means, routed by the file's ADS-B match flag into `combo_all` and `mask_unmatched` (`src/prc2026_final/members.py`) | `prc2026_ctx3` load/predict via `networks.predict_learner` | `members/<ensemble>/*.parquet`, `members/ensembles.parquet`, `members/members.parquet` |
 | stack | v31 → v33 → v34, then v35 / v36 / v37 / v38 on the recipe detail (the exports' construction; deltas from the file's own detail), then v39 = v38 + the fill pins of the file's own LIRF long-interval departures (`configs/fill_pin_v1.json`, `src/prc2026_final/fill_pin.py`) | `export_v33.recipe`, `export_fair_weights.recipe` + `V33_OUTER`/`V33_LIRF`, `export_disagreement_gate.V34_LIRF`; `tools/export_stack.layers` itself, its readers answering from the run's tables (`run_callsign_fix.scope_table`, `run_queue_trust` segment rule, `peer_congestion.peer_table`) | `stack/detail.parquet` (v30, repair effect, v31, v33, v34, v35–v38, per-set layer masks), `stack/peers.parquet` |
 | final | the `--layers` set (default v38) as the nearest-integer file in the template's order (`--version N` names it); receipt `stages/final-<layers>.json` | `export_submission` | `final/vigorous-whistle_v<N>.parquet` + receipt |
 | export | only when named (`--stages export`): v30's own file, a component check against the uploaded v30 | `export_submission` | `export/vigorous-whistle_v<N>.parquet` + receipt |
@@ -63,9 +64,11 @@ The runner stopped at v30. The four stages after `recipe` take it to the v35 inc
 not-uploaded v36, v37 and v38, in shipping order, each through the frozen code that built the layer. Module:
 `src/prc2026_final/stack.py`.
 
-**`--layers v35|v36|v37|v38|v39|v40|v41|v45|v46`** picks the final file's layer set. The default is **v46** (29 September: v45 with the
+**`--layers v35|v36|v37|v38|v39|v40|v41|v45|v46|v51m|v52m`** picks the final file's layer set. The default is **v52m** (30 September:
+v46 with the two member networks in the network table, the model part of v52 before the daily-totals reconciliation; see
+[v51m / v52m](#v51m--v52m-30-september) at the end). Before that the default was **v46** (29 September: v45 with the
 committee mix of `configs/thinned_regime_round_v1.json` `n85_nd1200`, officially 223.9339, the clean model line's best;
-`docs/thinned_regime/README.md`; masks `v46_share`, `v46_share_gate`). Before that the default was **v45** (v40 plus the LIRF
+`docs/thinned_regime/README.md`; masks `v46_share`, `v46_share_gate`). Before that it was **v45** (v40 plus the LIRF
 disagreement gate of `configs/lirf_gate_v1.json`, officially 224.2398; `docs/lirf_gate/README.md`; mask
 `v45_lirf_gate`), and before that **v40**, the official best from its upload
 (224.4588 on 28 September; v38 226.8053, v39 226.8802, v35 226.8989). **v39** (`docs/fill_pin/README.md`) is v38 with every fill pin:
@@ -238,7 +241,7 @@ Additionally needed beyond this runner:
   Windows but not on Linux (docs: v25 round) — for a package, ship the fitted classifier instead of refitting it.
 - **Model files** (measured): the 29 leaves 4.59 GB (the CatBoosts dominate), the surface-refit run incl. v6/v5 fallback 235 MB, v7
   twelve-month nodes 101 MB, residual trees 221 MB, 16 rnet seeds 44 MB, the 64 recipe networks 644 MB (the 80 detail-only nets are
-  not needed): **~5.8 GB**. Plus the twelve-month vocabulary JSON (0.5 MB, replaces the December build and the 2025 labels) and the
+  not needed): **~5.8 GB**, plus the 48 member networks of v51m / v52m (702 MB). Plus the twelve-month vocabulary JSON (0.5 MB, replaces the December build and the 2025 labels) and the
   frozen stands tables.
 - **v31–v38 layers** add no models. The detector reads the 2025 movement files, which are already shipped as context. The rematch
   reads the `matches_v11` stands table and the period's surface files. The callsign / queue offsets come from the 2025 labels and
@@ -265,3 +268,47 @@ Additionally needed beyond this runner:
      Dry run (29 September, stack 8.9 s, final 0.4 s, `--layers v46 --version 946`): [`dryrun_v46_compare.json`](dryrun_v46_compare.json),
      1,196 integers differ from the uploaded v46 by at most 7 s (the chain's float noise), the 55 gate rows match.
      **Scored 223.9339 on 29 September (−0.306 s vs v45): the clean model line's best.**
+
+## v51m / v52m (30 September)
+
+The model parts of v51 and v52, from the saved models only. The EUROCONTROL daily-totals reconciliation that v51 / v52 apply last
+is **not** part of the runner: it reads published aggregates of the scored months, so it stays in
+`tools/export_daily_totals.py --base FILE` (`configs/daily_totals_v1.json`) and applies to the ranking file only. The runner's
+v52m file is therefore the open-data model file (adsb.lol ODbL traces, IEM, OurAirports, OSM, the challenge data).
+
+- **Stage `members`** (new, between `rematch` and `stack`; `src/prc2026_final/members.py`). It predicts the 48 twelve-month
+  networks named by the two declarations: `configs/adsb_ctx3_combo_dev_v1.json` (dl32 and m25dl32, seeds 601–616) and
+  `configs/adsb_ctx3_mask_dev_v1.json` (m25_32, seeds 701–716), with `networks.predict_learner` on CPU. It writes one file per
+  learner, the three seed means (`members/ensembles.parquet`) and the routed members (`members/members.parquet`, match flag from
+  `adsb/learner_adsb.parquet`): `combo_all` = dl32 on ADS-B-matched rows, m25dl32 on the others; `mask_unmatched` = m25_32 on
+  unmatched rows, empty on matched ones. The receipt records every model's hash. On the ranking file: 2,320.6 s on 12 threads
+  (about 47 s per model), 225,278 matched rows.
+- **Stack.** With a members receipt present, the stack stage adds two layer sets, built inside the same table block as v46 and in
+  `tools/export_network_member.through_stack`'s order. The network table (0.25 e24 + 0.25 e24b + 0.5 e32) takes `combo_all` at
+  0.40 where it has a value (v51m), then `mask_unmatched` at 0.40 (v52m); LIRF rows keep the shipped table. The v46 mix
+  (network share 0.85, 0.5 where the committee sits more than 1,200 s above the table), v34's recipe and v38's layers are
+  recomputed through `export_stack.layers`. Every row whose value moves against the previous set takes the new value (v51m on
+  v46, v52m on v51m). Columns `v51m`, `v52m`, masks `*_member`, `*_share_gate`. Without the members stage the stack is
+  unchanged and `--layers v51m|v52m` fails.
+- **Dry run** (`runs/final_dryrun/run`, members 2,320.6 s, stack 15.3 s, final 0.4 s; `--layers v51m --version 951`,
+  `--layers v52m --version 952`). `tools/final_compare_members.py` →
+  [`dryrun_members_compare.json`](dryrun_members_compare.json):
+  - Every earlier layer column (v30 … v46) equals the stack detail from before the members stage exactly (max |Δ| 0.0).
+  - Seed means, runner CPU against the shipped GPU per-seed predictions: RMS 0.065 / 0.053 / 0.057 s (dl32 / m25dl32 / m25_32),
+    p99 0.08 s, single-row maxima 23 / 11 / 11 s. The routed members against the exported member tables: RMS 0.064 / 0.029 s,
+    with exactly the same rows without a value.
+  - Layer rows equal the exports' records: v51m 317,942 member rows, 317,935 moved, 65 share-gate rows
+    (`docs/adsb_ctx3_combo/member_export_dry_v51.json`); v52m 101,507 member rows, 101,500 moved, 64 share-gate rows
+    (`docs/adsb_ctx3_mask/member_export_dry_v52.json`).
+
+| layer set | shipped member file | integers differing (max) | ±1 s | runner file (never uploaded) |
+|---|---|---:|---:|---|
+| v51m | `runs/adsb_ctx3_combo/export_dry/vigorous-whistle_v51.parquet` `bd8f73aa…` | 1,669 (10 s) | 1,639 | `v951` `531251ba…` |
+| v52m | `runs/adsb_ctx3_mask/export_dry/vigorous-whistle_v52.parquet` `16e9f33a…` | 1,744 (101 s) | 1,713 | `v952` `42b4692d…` |
+
+The runner's v46 column differs from the uploaded v46 on 1,196 integers (max 7 s), the chain's known e32 GPU → CPU noise. The
+  member networks add about 500 rows on top of it, nearly all ±1 s. Its committee mix sits 300.041 s above v9 in the shipped construction and 299.988 s in the runner's, so the u300
+  disagreement gate (`configs/disagreement_gate_v1.json` `unm_up` 300) fires in the shipped v52 (1,769) and not in the runner
+  (1,668). The 0.053 s gap is the members' CPU / GPU seed-mean difference on that row (m25_32 1,800.45 against 1,800.59;
+  combination 1,755.02 against 1,755.06). It is a hard threshold meeting float noise, not a construction difference. The same
+  can happen on any file; earlier dry runs had no such row by chance.

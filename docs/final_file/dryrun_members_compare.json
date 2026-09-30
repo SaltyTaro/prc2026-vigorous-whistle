@@ -1,0 +1,133 @@
+{
+  "combo_all_vs_exported_member_tables_s": {
+    "max_abs": 23.21834654408667,
+    "p99_abs": 0.08538188006395998,
+    "rms": 0.06395139916239283,
+    "rows_differing": 344840,
+    "same_rows_without_value": true
+  },
+  "created_at_utc": "2026-09-30T09:59:09.911694+00:00",
+  "earlier_layers_max_abs_vs_before": {
+    "v30": 0.0,
+    "v31": 0.0,
+    "v33": 0.0,
+    "v34": 0.0,
+    "v35": 0.0,
+    "v36": 0.0,
+    "v37": 0.0,
+    "v38": 0.0,
+    "v39": 0.0,
+    "v40": 0.0,
+    "v41": 0.0,
+    "v45": 0.0,
+    "v46": 0.0
+  },
+  "earlier_layers_unchanged": true,
+  "files": {
+    "member_step": {
+      "v51m_minus_v46": {
+        "difference_of_steps": {
+          "max_abs": 5.0,
+          "p99_abs": 0.0,
+          "rms": 0.08962526166463974,
+          "rows_differing": 2723
+        },
+        "runner_rows": 286895,
+        "shipped_rows": 286836
+      },
+      "v52m_minus_v51m": {
+        "difference_of_steps": {
+          "max_abs": 101.0,
+          "p99_abs": 0.0,
+          "rms": 0.18257656831995622,
+          "rows_differing": 1292
+        },
+        "runner_rows": 91407,
+        "shipped_rows": 91409
+      }
+    },
+    "v51m": {
+      "runner_file": "runs/final_dryrun/run/final/vigorous-whistle_v951.parquet",
+      "runner_sha256": "531251ba086af9d4f38dbb28f3460d7037160ca56abb93ee43c555bf4024128e",
+      "runner_v46_vs_uploaded_v46": {
+        "max_abs": 7.0,
+        "p99_abs": 0.0,
+        "rms": 0.06551208321900964,
+        "rows_differing": 1196
+      },
+      "runner_vs_shipped": {
+        "max_abs": 10.0,
+        "p99_abs": 0.0,
+        "rms": 0.08059619913761089,
+        "rows_differing": 1669
+      },
+      "shipped_file": "runs/adsb_ctx3_combo/export_dry/vigorous-whistle_v51.parquet"
+    },
+    "v52m": {
+      "runner_file": "runs/final_dryrun/run/final/vigorous-whistle_v952.parquet",
+      "runner_sha256": "42b4692de20c6f169826361fb60fc39fa0d3b3e39a3fb8ae506e2a3c7a75ca50",
+      "runner_v46_vs_uploaded_v46": {
+        "max_abs": 7.0,
+        "p99_abs": 0.0,
+        "rms": 0.06551208321900964,
+        "rows_differing": 1196
+      },
+      "runner_vs_shipped": {
+        "max_abs": 101.0,
+        "p99_abs": 0.0,
+        "rms": 0.19050482470994679,
+        "rows_differing": 1744
+      },
+      "shipped_file": "runs/adsb_ctx3_mask/export_dry/vigorous-whistle_v52.parquet"
+    }
+  },
+  "mask_unmatched_vs_exported_member_tables_s": {
+    "max_abs": 3.848657859746595,
+    "p99_abs": 0.08633537783987788,
+    "rms": 0.028834802361965003,
+    "rows_differing": 119560,
+    "same_rows_without_value": true
+  },
+  "root": "runs/final_dryrun/run",
+  "seed_means_runner_cpu_vs_shipped_gpu_s": {
+    "combo_dl32": {
+      "max_abs": 23.21834654408667,
+      "p99_abs": 0.08657909700250431,
+      "rms": 0.06464453519810656,
+      "rows_differing": 344837
+    },
+    "combo_m25dl32": {
+      "max_abs": 11.05296459664396,
+      "p99_abs": 0.08144562147281242,
+      "rms": 0.05290320441192014,
+      "rows_differing": 344838
+    },
+    "mask_m25_32": {
+      "max_abs": 10.952891023286156,
+      "p99_abs": 0.07849929056765155,
+      "rms": 0.05696790365253364,
+      "rows_differing": 344833
+    }
+  },
+  "stack_record_rows": {
+    "v46": {
+      "fill_pin": 9,
+      "floored": 11,
+      "lirf_gate": 100,
+      "share": 317931,
+      "share_gate": 55
+    },
+    "v51m": {
+      "floored": 7,
+      "member_rows": 317942,
+      "moved": 317935,
+      "share_gate": 65
+    },
+    "v52m": {
+      "floored": 7,
+      "member_rows": 101507,
+      "moved": 101500,
+      "share_gate": 64
+    }
+  }
+}
