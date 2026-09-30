@@ -1,0 +1,268 @@
+{
+  "accepted": false,
+  "control": "v48's procedure on the development stack (runs/daily_totals/daily_totals_v1)",
+  "created_at_utc": "2026-09-30T03:19:22.120546+00:00",
+  "declaration_sha256": "8a899b9fef3a3f2c6321ce8d3f1ccc81c1c2b293b38493793c8323377a15e92d",
+  "equal_footing_months_worse": [
+    "2025-01"
+  ],
+  "mean_change_pct_equal_footing": 0.004115892513515777,
+  "months": {
+    "2025-01": {
+      "definitional_var_min2": 0.061493547844236336,
+      "delta_min": 0.24504797279987817,
+      "placebo": {
+        "alignment": 0.022682366989900896,
+        "change_pct": 0.5646731214565825,
+        "groups_read": 75,
+        "groups_with_a_gain": 3,
+        "heathrow_change_pct": 12.300263690228563,
+        "heathrow_rmse_after": 212.2082581652084,
+        "heathrow_rmse_before": 188.9650577763274,
+        "max_abs_shift_s": 578.1357742111187,
+        "mean_abs_shift_s": 180.8518950193514,
+        "mean_noise_sd_s": 35.56346124008126,
+        "paired_days": {
+          "days": 32,
+          "days_with_lower_squared_error": 0,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            1.238377222459833,
+            3.200470194697292
+          ]
+        },
+        "prior_sd_s": 111.96953957951558,
+        "prior_var_min2": 3.482549387124641,
+        "published_month": "2025-07",
+        "rmse_after": 324.3492164642126,
+        "rmse_before": 322.5279876090097,
+        "rows_moved": 5271
+      },
+      "read": {
+        "alignment": 0.2829189136856236,
+        "change_pct": 0.027513204728490948,
+        "groups_read": 182,
+        "groups_with_a_gain": 102,
+        "heathrow_change_pct": 0.6324745946947319,
+        "heathrow_rmse_after": 190.16021375961287,
+        "heathrow_rmse_before": 188.9650577763274,
+        "max_abs_shift_s": 144.14018835857576,
+        "mean_abs_shift_s": 23.252435996693137,
+        "mean_noise_sd_s": 33.32992286462647,
+        "paired_days": {
+          "days": 32,
+          "days_with_lower_squared_error": 7,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            0.04487831417454515,
+            0.1735838124515111
+          ]
+        },
+        "prior_sd_s": 27.27772255147019,
+        "prior_var_min2": 0.2066872632208293,
+        "published_month": "2025-01",
+        "rmse_after": 322.61672539454725,
+        "rmse_before": 322.5279876090097,
+        "rows_moved": 16398
+      },
+      "row_sd_s": {
+        "m": 168.31499957500884,
+        "u": 218.28897816315475
+      }
+    },
+    "2025-07": {
+      "definitional_var_min2": 0.06402238150143791,
+      "delta_min": 0.2641392530866755,
+      "placebo": {
+        "alignment": -0.08018972761538531,
+        "change_pct": 0.602806472064743,
+        "groups_read": 74,
+        "groups_with_a_gain": 6,
+        "heathrow_change_pct": 4.876245119394329,
+        "heathrow_rmse_after": 283.8927903700304,
+        "heathrow_rmse_before": 270.6931298377799,
+        "max_abs_shift_s": 387.1062288772615,
+        "mean_abs_shift_s": 146.9928844156026,
+        "mean_noise_sd_s": 35.652626981111275,
+        "paired_days": {
+          "days": 32,
+          "days_with_lower_squared_error": 0,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            1.3546524940351574,
+            1.7456868430574999
+          ]
+        },
+        "prior_sd_s": 111.32610370634234,
+        "prior_var_min2": 3.442639268454247,
+        "published_month": "2025-01",
+        "rmse_after": 258.4375035987832,
+        "rmse_before": 256.8889603199547,
+        "rows_moved": 5610
+      },
+      "read": {
+        "alignment": 0.598362087458351,
+        "change_pct": -0.010610514734299414,
+        "groups_read": 216,
+        "groups_with_a_gain": 127,
+        "heathrow_change_pct": -0.087693236814812,
+        "heathrow_rmse_after": 270.45575027038984,
+        "heathrow_rmse_before": 270.6931298377799,
+        "max_abs_shift_s": 148.39284880364866,
+        "mean_abs_shift_s": 19.773795381070233,
+        "mean_noise_sd_s": 34.46431041535335,
+        "paired_days": {
+          "days": 32,
+          "days_with_lower_squared_error": 13,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            -0.144250074521932,
+            0.059569297940306805
+          ]
+        },
+        "prior_sd_s": 29.429714715327936,
+        "prior_var_min2": 0.24058558561821938,
+        "published_month": "2025-07",
+        "rmse_after": 256.8617030789692,
+        "rmse_before": 256.8889603199547,
+        "rows_moved": 18224
+      },
+      "row_sd_s": {
+        "m": 164.1053765945206,
+        "u": 201.8100966895474
+      }
+    },
+    "2025-11": {
+      "definitional_var_min2": 0.06295199110572271,
+      "delta_min": 0.2759900664098012,
+      "placebo": {
+        "alignment": -0.020801390163959956,
+        "change_pct": 1.2440659040961366,
+        "groups_read": 78,
+        "groups_with_a_gain": 2,
+        "heathrow_change_pct": 12.180046792050515,
+        "heathrow_rmse_after": 186.05150625209657,
+        "heathrow_rmse_before": 165.8508010760438,
+        "max_abs_shift_s": 428.54910493775316,
+        "mean_abs_shift_s": 146.2029893894007,
+        "mean_noise_sd_s": 37.62487347521919,
+        "paired_days": {
+          "days": 31,
+          "days_with_lower_squared_error": 0,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            1.9727952684795682,
+            2.650457376083866
+          ]
+        },
+        "prior_sd_s": 95.94886309747235,
+        "prior_var_min2": 2.55727342491597,
+        "published_month": "2025-05",
+        "rmse_after": 186.61078947257656,
+        "rmse_before": 184.31775512586032,
+        "rows_moved": 4904
+      },
+      "read": {
+        "alignment": 0.6407767013921308,
+        "change_pct": -0.005468505452566053,
+        "groups_read": 186,
+        "groups_with_a_gain": 115,
+        "heathrow_change_pct": -0.05646332214856997,
+        "heathrow_rmse_after": 165.75715620394627,
+        "heathrow_rmse_before": 165.8508010760438,
+        "max_abs_shift_s": 34.68312400081701,
+        "mean_abs_shift_s": 8.138923645029653,
+        "mean_noise_sd_s": 34.149189911619445,
+        "paired_days": {
+          "days": 31,
+          "days_with_lower_squared_error": 16,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            -0.02521772659547352,
+            0.005277385924900094
+          ]
+        },
+        "prior_sd_s": 14.63631894877704,
+        "prior_var_min2": 0.059506064547313844,
+        "published_month": "2025-11",
+        "rmse_after": 184.3076756993712,
+        "rmse_before": 184.31775512586032,
+        "rows_moved": 16455
+      },
+      "row_sd_s": {
+        "m": 175.83868421733203,
+        "u": 224.57338961387845
+      }
+    },
+    "2025-12": {
+      "definitional_var_min2": 0.064199713917365,
+      "delta_min": 0.27015714436566957,
+      "placebo": {
+        "alignment": -0.02385856516826068,
+        "change_pct": 1.0976496600974661,
+        "groups_read": 64,
+        "groups_with_a_gain": 0,
+        "heathrow_change_pct": 8.241493608137596,
+        "heathrow_rmse_after": 186.40347219478716,
+        "heathrow_rmse_before": 172.21073544089873,
+        "max_abs_shift_s": 461.1574821027416,
+        "mean_abs_shift_s": 146.06676450497554,
+        "mean_noise_sd_s": 36.54358721827235,
+        "paired_days": {
+          "days": 32,
+          "days_with_lower_squared_error": 0,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            1.6686548233046168,
+            2.0256303634867283
+          ]
+        },
+        "prior_sd_s": 98.80261370510303,
+        "prior_var_min2": 2.7116545763777262,
+        "published_month": "2025-06",
+        "rmse_after": 168.66943669323683,
+        "rmse_before": 166.83813843380523,
+        "rows_moved": 3994
+      },
+      "read": {
+        "alignment": 0.5866612487617918,
+        "change_pct": -0.004555012453644203,
+        "groups_read": 202,
+        "groups_with_a_gain": 118,
+        "heathrow_change_pct": -0.03542085612423529,
+        "heathrow_rmse_after": 172.14973692406772,
+        "heathrow_rmse_before": 172.21073544089873,
+        "max_abs_shift_s": 38.63618183578177,
+        "mean_abs_shift_s": 9.178434694694312,
+        "mean_noise_sd_s": 34.08748277426793,
+        "paired_days": {
+          "days": 32,
+          "days_with_lower_squared_error": 16,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            -0.03695735980993575,
+            0.017848343486524212
+          ]
+        },
+        "prior_sd_s": 16.968591362570717,
+        "prior_var_min2": 0.07998141467497485,
+        "published_month": "2025-12",
+        "rmse_after": 166.83053893582215,
+        "rmse_before": 166.83813843380523,
+        "rows_moved": 17440
+      },
+      "row_sd_s": {
+        "m": 175.90313787049683,
+        "u": 220.24810417170607
+      }
+    }
+  }
+}
