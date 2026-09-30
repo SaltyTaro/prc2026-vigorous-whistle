@@ -1,7 +1,16 @@
 # Heavy rows and the published daily totals (`configs/daily_totals_v2.json`, `configs/daily_totals_v3.json`, 29 September 2026)
 
-**State: two files are built on the user's word ("build it"), neither is uploaded. v50 is the recommended one. They are alternatives:
-at most one of them may be uploaded, and only at the user's word.**
+**State: v50 was uploaded at the user's word ("submit v50 now") at 00:01 UTC on 30 September 2026 and officially scores 222.6146 on
+all 344,841 rows: 0.0104 s worse than v48 (222.6042).
+The heavy-row lever is closed. v49 is the alternative of v50 and is never uploaded. Never re-upload v1–v50.** Record:
+[`official_result_v50.json`](official_result_v50.json).
+
+The squared change against v48 was 10.04e6 and the squared error rose by 1.60e6, so the result corresponds to an alignment of 0.42
+(break-even 0.5; 3.5 to 4.2 in 2025): the moves pointed weakly the right way and were too large for how often they were right. That
+figure describes the result. It is not used to rescale or to select anything: no score-derived work.
+
+State before the upload: two files were built on the user's word ("build it"); v50 was the recommended one; they are alternatives, at
+most one of them may be uploaded.
 
 | File | What it is | SHA-256 | Against v48 |
 |---|---|---|---|
@@ -162,7 +171,10 @@ exceed what the predictions imply.
   analogue before v48 (the exact posterior) failed in development, which is why v48 left the rows alone.
 - With the new options off, the code reproduces v1's governing run bit for bit and the uploaded v48 byte for byte.
 - One file at most should be uploaded: choosing between strengths, or between v49 and v50, by their scores would be learning from
-  the ranking. The recommendation is v50.
+  the ranking. The recommendation was v50.
+- **Result (30 September): v50 = 222.6146, +0.0104 s against v48.** Three changes of the LIRF fill population (v10, v43, v50) read
+  better on 2025 and lost on the scored months. The rule's verdict (nothing selected) was the right one. No further change of these
+  rows is proposed; v49, the other strength (power 0.25) and any rescaled form of v50 stay unbuilt or unuploaded.
 
 ## Commands
 
@@ -176,7 +188,7 @@ exceed what the predictions imply.
 .venv\Scripts\python.exe -X utf8 -B tools\export_daily_totals.py --version 50 --declaration configs/daily_totals_v3.json --candidate temper_10 --user-override "TEXT"
 ```
 
-Upload of v50, only at the user's word:
+Upload of v50 (done once, 00:01 UTC 30 September; never again):
 
 ```
 .venv\Scripts\python.exe -X utf8 -B tools\prc_submit.py upload --file runs/submissions/vigorous-whistle_v50.parquet --expected-sha256 13a8c3a0844700ee5497ca712303cd29d1316a2ba39f354c0b4da6613be66325 --calendar-day

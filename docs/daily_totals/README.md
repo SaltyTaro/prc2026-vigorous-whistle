@@ -169,5 +169,6 @@ The upload that was made:
   passes: separate shifts for tracked and untracked rows, the monthly source as the centre of the day shifts, one tilt per
   airport-month for the heavy rows. Record: [`followups.md`](followups.md).
 - Heavy rows moved by a tempered posterior (`configs/daily_totals_v2.json`, amended in `configs/daily_totals_v3.json`): every month
-  read is better, the declared rule selected nothing (two intervals include zero). v49 and v50 were built on the user's word and are
-  not uploaded; v50 is the recommended one. Record: [`heavy_rows.md`](heavy_rows.md).
+  read is better, the declared rule selected nothing (two intervals include zero). v49 and v50 were built on the user's word. v50
+  was uploaded at the user's word on 30 September and scores 222.6146, 0.0104 s worse than v48; v49 is never uploaded; the lever is
+  closed. Record: [`heavy_rows.md`](heavy_rows.md), `official_result_v50.json`.
