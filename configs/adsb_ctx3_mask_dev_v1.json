@@ -1,0 +1,196 @@
+{
+ "experiment_id": "prc2026-adsb-ctx3-mask-dev-v1",
+ "declared_at_utc": "2026-09-30T05:28:56+00:00",
+ "audit_used": false,
+ "purpose": "Development round of the masked context network as a second member on top of v51's model part (the user: 'go ahead with the masked network round', 30 September 2026). The design batch passed two items; the combination went to the first round and became v51; this round tests the other item, the masked network on rows without an ADS-B match, added to v51's network table. Declared before any fit of these seeds and before any development score of this member.",
+ "disclosed": "Known before this declaration: the design batch's readings on the October design fold (route_m25: standalone -0.66%, unmatched rows 209.91 against 212.13 s, better at all nine airports); the combination round's development readings (the combination member on unmatched non-LIRF rows about equal to the shipped table); v51's official score (222.2306). The item, the candidate grid (the combination round's 0.15 / 0.25 / 0.40) and the rule were fixed by those earlier records; nothing in this round is derived from the official score.",
+ "base_members": [
+  {
+   "declaration": "configs/adsb_ctx3_combo_dev_v1.json",
+   "candidate": "w40",
+   "results": "docs/adsb_ctx3_combo/results_v1.json",
+   "export": {
+    "path": "runs/adsb_ctx3_combo/export_dry/vigorous-whistle_v51.parquet",
+    "sha256": "bd8f73aa3f9b15efb941de27848693e81298b26b3f4f10159bacb3ceb4f46cd5"
+   },
+   "note": "v51's model part: the combination member at weight 0.40 in the network table. On the development rows the control built with it must reproduce the combination round's recorded w40 month RMSEs; on the ranking rows it must reproduce the member file v51 was reconciled from."
+  }
+ ],
+ "member": {
+  "name": "mask_unmatched",
+  "column": "adsb_full",
+  "route": {
+   "matched": null,
+   "unmatched": "m25_32"
+  },
+  "routing": "per seed and leaf: the m25_32 network's prediction on rows with adsb_matched = 0 (tools/build_combo_member.py with this declaration); rows with a match carry no member value and keep v51's table; LIRF rows are left to the shipped table by the scorer",
+  "tables": {
+   "2025-01": [
+    "runs/adsb_ctx3_mask/member/s701/2025-01.parquet",
+    "runs/adsb_ctx3_mask/member/s702/2025-01.parquet",
+    "runs/adsb_ctx3_mask/member/s703/2025-01.parquet",
+    "runs/adsb_ctx3_mask/member/s704/2025-01.parquet",
+    "runs/adsb_ctx3_mask/member/s705/2025-01.parquet",
+    "runs/adsb_ctx3_mask/member/s706/2025-01.parquet",
+    "runs/adsb_ctx3_mask/member/s707/2025-01.parquet",
+    "runs/adsb_ctx3_mask/member/s708/2025-01.parquet",
+    "runs/adsb_ctx3_mask/member/s709/2025-01.parquet",
+    "runs/adsb_ctx3_mask/member/s710/2025-01.parquet",
+    "runs/adsb_ctx3_mask/member/s711/2025-01.parquet",
+    "runs/adsb_ctx3_mask/member/s712/2025-01.parquet",
+    "runs/adsb_ctx3_mask/member/s713/2025-01.parquet",
+    "runs/adsb_ctx3_mask/member/s714/2025-01.parquet",
+    "runs/adsb_ctx3_mask/member/s715/2025-01.parquet",
+    "runs/adsb_ctx3_mask/member/s716/2025-01.parquet"
+   ],
+   "2025-07": [
+    "runs/adsb_ctx3_mask/member/s701/2025-07.parquet",
+    "runs/adsb_ctx3_mask/member/s702/2025-07.parquet",
+    "runs/adsb_ctx3_mask/member/s703/2025-07.parquet",
+    "runs/adsb_ctx3_mask/member/s704/2025-07.parquet",
+    "runs/adsb_ctx3_mask/member/s705/2025-07.parquet",
+    "runs/adsb_ctx3_mask/member/s706/2025-07.parquet",
+    "runs/adsb_ctx3_mask/member/s707/2025-07.parquet",
+    "runs/adsb_ctx3_mask/member/s708/2025-07.parquet",
+    "runs/adsb_ctx3_mask/member/s709/2025-07.parquet",
+    "runs/adsb_ctx3_mask/member/s710/2025-07.parquet",
+    "runs/adsb_ctx3_mask/member/s711/2025-07.parquet",
+    "runs/adsb_ctx3_mask/member/s712/2025-07.parquet",
+    "runs/adsb_ctx3_mask/member/s713/2025-07.parquet",
+    "runs/adsb_ctx3_mask/member/s714/2025-07.parquet",
+    "runs/adsb_ctx3_mask/member/s715/2025-07.parquet",
+    "runs/adsb_ctx3_mask/member/s716/2025-07.parquet"
+   ],
+   "2025-11": [
+    "runs/adsb_ctx3_mask/member/s701/2025-11.parquet",
+    "runs/adsb_ctx3_mask/member/s702/2025-11.parquet",
+    "runs/adsb_ctx3_mask/member/s703/2025-11.parquet",
+    "runs/adsb_ctx3_mask/member/s704/2025-11.parquet",
+    "runs/adsb_ctx3_mask/member/s705/2025-11.parquet",
+    "runs/adsb_ctx3_mask/member/s706/2025-11.parquet",
+    "runs/adsb_ctx3_mask/member/s707/2025-11.parquet",
+    "runs/adsb_ctx3_mask/member/s708/2025-11.parquet",
+    "runs/adsb_ctx3_mask/member/s709/2025-11.parquet",
+    "runs/adsb_ctx3_mask/member/s710/2025-11.parquet",
+    "runs/adsb_ctx3_mask/member/s711/2025-11.parquet",
+    "runs/adsb_ctx3_mask/member/s712/2025-11.parquet",
+    "runs/adsb_ctx3_mask/member/s713/2025-11.parquet",
+    "runs/adsb_ctx3_mask/member/s714/2025-11.parquet",
+    "runs/adsb_ctx3_mask/member/s715/2025-11.parquet",
+    "runs/adsb_ctx3_mask/member/s716/2025-11.parquet"
+   ],
+   "2025-12": [
+    "runs/adsb_ctx3_mask/member/s701/2025-12.parquet",
+    "runs/adsb_ctx3_mask/member/s702/2025-12.parquet",
+    "runs/adsb_ctx3_mask/member/s703/2025-12.parquet",
+    "runs/adsb_ctx3_mask/member/s704/2025-12.parquet",
+    "runs/adsb_ctx3_mask/member/s705/2025-12.parquet",
+    "runs/adsb_ctx3_mask/member/s706/2025-12.parquet",
+    "runs/adsb_ctx3_mask/member/s707/2025-12.parquet",
+    "runs/adsb_ctx3_mask/member/s708/2025-12.parquet",
+    "runs/adsb_ctx3_mask/member/s709/2025-12.parquet",
+    "runs/adsb_ctx3_mask/member/s710/2025-12.parquet",
+    "runs/adsb_ctx3_mask/member/s711/2025-12.parquet",
+    "runs/adsb_ctx3_mask/member/s712/2025-12.parquet",
+    "runs/adsb_ctx3_mask/member/s713/2025-12.parquet",
+    "runs/adsb_ctx3_mask/member/s714/2025-12.parquet",
+    "runs/adsb_ctx3_mask/member/s715/2025-12.parquet",
+    "runs/adsb_ctx3_mask/member/s716/2025-12.parquet"
+   ],
+   "ranking": [
+    "runs/adsb_ctx3_mask/member/s701/ranking.parquet",
+    "runs/adsb_ctx3_mask/member/s702/ranking.parquet",
+    "runs/adsb_ctx3_mask/member/s703/ranking.parquet",
+    "runs/adsb_ctx3_mask/member/s704/ranking.parquet",
+    "runs/adsb_ctx3_mask/member/s705/ranking.parquet",
+    "runs/adsb_ctx3_mask/member/s706/ranking.parquet",
+    "runs/adsb_ctx3_mask/member/s707/ranking.parquet",
+    "runs/adsb_ctx3_mask/member/s708/ranking.parquet",
+    "runs/adsb_ctx3_mask/member/s709/ranking.parquet",
+    "runs/adsb_ctx3_mask/member/s710/ranking.parquet",
+    "runs/adsb_ctx3_mask/member/s711/ranking.parquet",
+    "runs/adsb_ctx3_mask/member/s712/ranking.parquet",
+    "runs/adsb_ctx3_mask/member/s713/ranking.parquet",
+    "runs/adsb_ctx3_mask/member/s714/ranking.parquet",
+    "runs/adsb_ctx3_mask/member/s715/ranking.parquet",
+    "runs/adsb_ctx3_mask/member/s716/ranking.parquet"
+   ]
+  }
+ },
+ "fits": {
+  "network_config": "configs/adsb_ctx3_mask_network_v1.json",
+  "variants": [
+   "m25_32"
+  ],
+  "seeds": [
+   701,
+   702,
+   703,
+   704,
+   705,
+   706,
+   707,
+   708,
+   709,
+   710,
+   711,
+   712,
+   713,
+   714,
+   715,
+   716
+  ],
+  "folds": {
+   "2025-01": {
+    "fold": "lomo_2025-01",
+    "file": "predictions.parquet"
+   },
+   "2025-07": {
+    "fold": "lomo_2025-07",
+    "file": "predictions.parquet"
+   },
+   "2025-11": {
+    "fold": "forward",
+    "file": "predictions.parquet"
+   },
+   "2025-12": {
+    "fold": "refit",
+    "file": "december_predictions.parquet"
+   },
+   "ranking": {
+    "fold": "refit12",
+    "file": "ranking_predictions.parquet"
+   }
+  },
+  "footing": "January and July 2025: leave-one-month-out on the other eleven months of 2025; November: the forward fold (reported only); December: the January-November refit; ranking: the twelve-month refit. Equal to the control rows' footing (runs/lomo_dev/rows.parquet) and to the combination round's.",
+  "runner": "tools/run_adsb_ctx_lomo.py, unchanged; jobs tools/combo_jobs.py --declaration; queue tools/combo_queue.sh",
+  "outputs": "runs/adsb_ctx3_mask/nets/<variant>_s<seed>/<fold>/",
+  "count": 80
+ },
+ "hardware": "four AWS g6e.2xlarge (one L40S each) via SkyPilot (infra/aws/gpu_authorization_20260930.json), tools/run_adsb_ctx_lomo.py --device cuda, float32 with TF32 matrix products, two lanes per GPU; fewer nodes of the same type if AWS cannot supply four. GPU for turnaround: about 3-4 hours against about 29 hours on the eight Azure CPU workers. Any other hardware would be an amendment recorded before its fits.",
+ "candidates": {
+  "w15": {
+   "member_weight": 0.15
+  },
+  "w25": {
+   "member_weight": 0.25
+  },
+  "w40": {
+   "member_weight": 0.4
+  }
+ },
+ "semantics": "tools/run_network_member.py with base members: table_base = (1 - 0.40) x (0.25 e24 + 0.25 e24b + 0.5 e32) + 0.40 x combo_all (v51's member) on non-LIRF rows where both are finite; table' = (1 - w) x table_base + w x mask member seed mean on non-LIRF rows without a match; the mix is v46's on table' (network share 0.85; share 0.5 where the committee sits more than 1,200 s above table'); then the whole v46 development stack. Control = the same with w = 0: v51's model part.",
+ "rule": "the clean line's unchanged rule (the scorer's defaults): eligible when no equal-footing month (January, July, December) is worse on all rows, the mean ratio is at least 0.02% below 1 and every equal-footing month's paired-day 95% interval lies below zero; the lowest mean ratio among the eligible is selected; otherwise nothing",
+ "equal_footing_months": [
+  "2025-01",
+  "2025-07",
+  "2025-12"
+ ],
+ "minimum_mean_improvement_fraction": 0.0002,
+ "never_read": "No official score enters. The published daily totals enter only the export step (configs/daily_totals_v1.json applied last, as for v51), never a development score.",
+ "export_plan": "if a candidate is selected and the user says so: the control's ranking values must reproduce v51's member file; the candidate member file is written as a dry run (no version number); configs/daily_totals_v1.json is applied last with tools/export_daily_totals.py --base; the versioned file is the reconciled one.",
+ "selection": "runs/adsb_ctx3_mask/dev/selection.json",
+ "report": "docs/adsb_ctx3_mask/results_v1.json",
+ "export_report_dir": "docs/adsb_ctx3_mask",
+ "automatic_submission": false
+}

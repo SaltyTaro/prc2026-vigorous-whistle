@@ -1,0 +1,103 @@
+{
+ "experiment_id": "prc2026-adsb-ctx3-mask-network-v1",
+ "declared_at_utc": "2026-09-30T05:28:56+00:00",
+ "audit_used": false,
+ "purpose": "The masked context network of the design batch's routed item (docs/adsb_ctx3_combo/README.md, route_m25: m25_32 on rows without an ADS-B match), with the design batch's settings unchanged: masking 0.25 on the 32-epoch base (numeric embeddings 8 wide, learning rate 0.001). Every development and refit fit of configs/adsb_ctx3_mask_dev_v1.json uses this file.",
+ "defaults": {
+  "architecture": {
+   "cat_cap": 16,
+   "d_num": 8,
+   "depth": 3,
+   "dropout": 0.1,
+   "heads": 4,
+   "max_tokens": 128,
+   "n_aux": 0,
+   "sa_dropout": 0.0,
+   "sa_ff": 2,
+   "sa_heads": 4,
+   "sa_layers": 0,
+   "tok_dim": 96,
+   "width": 512
+  },
+  "aux": {
+   "targets": [],
+   "weight": 0.0
+  },
+  "context": {
+   "departures_only": false,
+   "use_adsb": true
+  },
+  "features": {
+   "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+   "extra_features": [
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed",
+    "sfc_ground_10m",
+    "sfc_moving_10m",
+    "sfc_moving_20m",
+    "sfc_rwy_queue_5m",
+    "sfc_rwy_queue_10m"
+   ]
+  },
+  "masking": {
+   "columns": [
+    "adsb_gate",
+    "adsb_first_point_s",
+    "adsb_motion_s",
+    "adsb_first_gs_kt",
+    "adsb_first_dist_stand_m",
+    "adsb_stop_seconds",
+    "adsb_taxi_path_m",
+    "adsb_taxi_stops",
+    "adsb_taxi_stopped_s",
+    "adsb_slow_start_s",
+    "adsb_gap_before_s",
+    "adsb_turnaround_s",
+    "adsb_anchor_dist_stand_m",
+    "adsb_last_ground_s",
+    "adsb_points",
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed"
+   ],
+   "matched": "adsb_matched",
+   "p": 0.0
+  },
+  "preprocess": {
+   "bins": 32,
+   "min_count": 10,
+   "target_clip": null
+  },
+  "rows": {
+   "exclude_airports": [
+    "LIRF"
+   ],
+   "exclude_population": false,
+   "max_label": null
+  },
+  "tokens_dir": "data/ctx/tokens_v1",
+  "training": {
+   "batch_size": 2048,
+   "epochs": 32,
+   "grad_clip": 5.0,
+   "lr": 0.001,
+   "min_lr_fraction": 0.02,
+   "warmup_epochs": 1.0,
+   "weight_decay": 0.0001
+  }
+ },
+ "variants": {
+  "m25_32": {
+   "masking": {
+    "p": 0.25
+   }
+  }
+ }
+}
