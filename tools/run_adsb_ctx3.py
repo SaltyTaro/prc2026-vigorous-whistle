@@ -8,7 +8,8 @@
             predicted into <file>_<name>.parquet beside every prediction file of the final weights
 The final weights and their prediction files are named as in round 2.
 Two input options (30 September, positional batch), also off unless the variant sets them:
-  features.drop         focal ADS-B / neighbour columns (of the 27) left out of the network's inputs
+  features.drop         ADS-B columns (of the 27) or extra (v19) columns left out of the network's inputs; the extra tables
+                        are still loaded whole
   context.blank_tokens  token quantities blanked (NaN) in every context token, for fitting and prediction alike: `first_seen`
                         (the segment start, so mvt - segment start) and `adsb_gate`; recorded in run.json (the saved model's
                         own context settings keep only use_adsb / departures_only, so a predictor must re-apply the blanking)
@@ -108,10 +109,11 @@ def main():
         raise ValueError(f"Preserve the existing run: {out}")
     extra_names = list(variant["features"]["extra_features"])
     dropped = list(variant["features"].get("drop", []))
-    if len(set(dropped)) != len(dropped) or any(n not in ADSB_NAMES or n == "adsb_matched" for n in dropped):
-        raise ValueError(f"features.drop names each of the 27 ADS-B columns at most once, never adsb_matched: {dropped}")
+    if len(set(dropped)) != len(dropped) or any(n not in [*ADSB_NAMES, *extra_names] or n == "adsb_matched" for n in dropped):
+        raise ValueError(f"features.drop names each ADS-B or extra column at most once, never adsb_matched: {dropped}")
     adsb_names = [n for n in ADSB_NAMES if n not in dropped]
-    names = [*BUNDLE_NAMES, *adsb_names, *extra_names]
+    used_extras = [n for n in extra_names if n not in dropped]  # the extra tables are loaded whole (build_tables checks their columns)
+    names = [*BUNDLE_NAMES, *adsb_names, *used_extras]
     numeric = [n for n in names if n not in CATEGORICAL_COLUMNS]
     categorical = [n for n in names if n in CATEGORICAL_COLUMNS]
     rows_spec, context_settings = variant["rows"], variant["context"]
@@ -266,7 +268,7 @@ def main():
               "target_mean": pre.target_mean, "target_scale": pre.target_scale, "parameters": int(sum(p.numel() for p in model.parameters())),
               "smoke_limit_rows": args.limit_rows,
               "inputs": {"bundle_id": manifest["bundle_id"], **input_hashes, **extra_inputs, "code": code_receipt(), "features": len(names), "adsb_features": ADSB_NAMES,
-                         "adsb_features_dropped": dropped, "adsb_features_used": adsb_names,
+                         "features_dropped": dropped, "adsb_features_used": adsb_names, "extra_features_used": used_extras,
                          "extra_features": extra_names, "rows": rows_spec, "context": context_settings, "torch": torch.__version__, "threads": args.threads, "device": str(device),
                          "cuda_device": torch.cuda.get_device_name(device) if device.type == "cuda" else None, "float32_matmul_precision": "high",
                          "tokens": {"directory": variant["tokens_dir"], "manifest_sha256": sha256_file(tokens_dir / "manifest.json"), "k": token_manifest["k"],
