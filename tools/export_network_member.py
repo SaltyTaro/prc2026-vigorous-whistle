@@ -11,6 +11,10 @@ Construction, on the ranking rows:
      and the stretch act on the candidate's own values.
   5. export = the candidate's float where it differs from v46's float, v46's integer elsewhere. LIRF rows do not depend on the committee
      mix and must not change; a changed row must carry no layer above v38 in v46 other than the mix.
+With a base member (the declaration's "base_members", at most one: a member already shipped, with its member file): the base member
+enters the table first at its weight; the control (v46's stack on that table) must reproduce the base member file on every row; the
+candidate member enters after it, and the export = the candidate's float where it differs from the control's float, the base file's
+integer elsewhere.
 Independent rebuild from the recorded v30 detail's components. Nothing is uploaded.
 
   --declaration PATH --candidate NAME --dry-run DIR
@@ -37,7 +41,7 @@ from export_disagreement_gate import V34_LIRF, rebuild_v34  # noqa: E402
 from export_fair_weights import FLOOR, V33_OUTER, recipe, stats  # noqa: E402
 from export_share_gate import STACK, V38, V45, uploaded  # noqa: E402
 from export_stack import layers  # noqa: E402
-from run_network_member import member_values  # noqa: E402
+from run_network_member import base_members, member_values  # noqa: E402
 
 V46 = ("runs/submissions/vigorous-whistle_v46.parquet", "8abdd87ad5098d7753927f407ffd7e8cd342aa84a2864392e1b64c0dde015af9", 223.9339)
 CODE = ["tools/export_network_member.py", "tools/run_network_member.py", "src/prc2026_final/network_member.py", "src/prc2026_final/share_gate.py", "tools/export_share_gate.py",
@@ -53,17 +57,22 @@ def through_stack(detail: pd.DataFrame, table: np.ndarray, v34: np.ndarray, at34
     return values, masks, fire & (detail["airport"].to_numpy() != "LIRF")
 
 
-def stacks(detail: pd.DataFrame, member: np.ndarray, weight: float, v34: np.ndarray, at34: np.ndarray, ids: np.ndarray):
-    """(v38 floats, v46 floats, candidate floats, masks, candidate gate mask, rows where the member enters)."""
+def stacks(detail: pd.DataFrame, member: np.ndarray, weight: float, v34: np.ndarray, at34: np.ndarray, ids: np.ndarray, bases: tuple = ()):
+    """(v38 floats, v46 floats, control floats, candidate floats, masks, candidate gate mask, rows where the member enters); bases =
+    ((member values, weight), ...) enter the table before the candidate member; without bases the control is v46."""
     table = share_gate.network_table(detail)
     v38, masks, _ = through_stack(detail, table, v34, at34, ids, share_gate.CONTROL_SHARE, None)
     if not float(np.nanmax(np.abs(share_gate.mix(detail["committee"].to_numpy(dtype=float), table, share_gate.CONTROL_SHARE)[0] - detail["committee_mix"].to_numpy(dtype=float)))) <= 1e-9:
         raise ValueError("The detail's committee_mix is not the v38 mix.")
     v46, _, _ = through_stack(detail, table, v34, at34, ids, network_member.V46_SHARE, network_member.V46_GATE)
     lirf = detail["airport"].to_numpy() == "LIRF"
-    new, inside = network_member.table_with_member(table, np.where(lirf, np.nan, member), weight)
+    base = table
+    for values, w in bases:
+        base, _ = network_member.table_with_member(base, np.where(lirf, np.nan, values), w)
+    control = through_stack(detail, base, v34, at34, ids, network_member.V46_SHARE, network_member.V46_GATE)[0] if bases else v46
+    new, inside = network_member.table_with_member(base, np.where(lirf, np.nan, member), weight)
     candidate, _, fire = through_stack(detail, new, v34, at34, ids, network_member.V46_SHARE, network_member.V46_GATE)
-    return v38, v46, candidate, masks, fire, inside
+    return v38, v46, control, candidate, masks, fire, inside
 
 
 def main() -> None:
@@ -97,29 +106,43 @@ def main() -> None:
     rec, ids, dry, lfpg, _, v34, at34 = rebuild_v34()
     v38, v45, v46 = uploaded(*V38, ids), uploaded(V45[0], V45[1], ids), uploaded(V46[0], V46[1], ids)
     member, sources = member_values(decl["member"], "ranking", ids)
-    f38, f46, candidate, masks, fire, inside = stacks(dry, member, weight, v34, at34, ids)
-    if not (np.isfinite(f38).all() and np.isfinite(f46).all() and np.isfinite(candidate).all()):
+    bases, base_sources = base_members(decl), {}
+    base_arrays = []
+    for b in bases:
+        values, found = member_values(b["member"], "ranking", ids)
+        base_sources.update(found)
+        base_arrays.append((values, b["weight"]))
+    f38, f46, control, candidate, masks, fire, inside = stacks(dry, member, weight, v34, at34, ids, tuple(base_arrays))
+    if not (np.isfinite(f38).all() and np.isfinite(f46).all() and np.isfinite(control).all() and np.isfinite(candidate).all()):
         raise ValueError("Non-finite stack values.")
     if not np.array_equal(np.rint(f38).astype(np.int64), v38):
         raise ValueError("The v38 stack does not round to the uploaded v38.")
     shared = np.abs(f46 - f38) > 1e-9
     if not np.array_equal(np.where(shared, np.rint(f46).astype(np.int64), v45), v46):
         raise ValueError("The v46 stack does not reproduce the uploaded v46.")
+    reference = v46  # the file the candidate is written on: v46, or the base member's file
+    if bases:
+        reference = uploaded(bases[0]["export"]["path"], bases[0]["export"]["sha256"], ids)
+        if not np.array_equal(np.rint(np.where(np.abs(control - f46) > 1e-9, control, v46.astype(float))).astype(np.int64), reference):
+            raise ValueError("The control with the base member does not reproduce the base member's file.")
     airport, month = dry["airport"].to_numpy(), dry["month"].to_numpy()
-    changed = np.abs(candidate - f46) > 1e-9
+    changed = np.abs(candidate - control) > 1e-9
     if (changed & (airport == "LIRF")).any():
         raise ValueError("A LIRF row depends on the committee mix.")
     if (changed & ~inside).any():
         raise ValueError("A row without a member value changed.")
     if not np.array_equal(v45[changed], v38[changed]):
         raise ValueError("A changed row carries a layer above v38 in v45.")
-    values = np.where(changed, candidate, v46.astype(float))
+    values = np.where(changed, candidate, reference.astype(float))
     provenance = {"experiment_id": decl["experiment_id"], "candidate": args.candidate, "dry_run": args.dry_run is not None,
                   "selected_by": ("dry run" if args.dry_run is not None else "the declared rule" if selected == args.candidate
                                   else f"the user's override of the declared rule, which selected {selected}: {args.user_override}"),
-                  "recipe": f"v46 with the network table at (1 - {weight}) x (0.25 e24 + 0.25 e24b + 0.5 e32) + {weight} x {decl['member']['name']} ({len(sources)} seeds, twelve-month refit) "
-                            "where the member has a value, through the shipped stack (v34 weights, network share 0.85 with the networks-far-below gate, u300 gate, callsign fix 50%, "
-                            "queue trust 0.75, two-sided stretch 1500 / 900); LIRF rows unchanged; floor -12 s",
+                  "recipe": (f"v46 with the network table at (1 - {weight}) x " + (f"(v46's table with {bases[0]['member']['name']} at {bases[0]['weight']})" if bases
+                                                                                   else "(0.25 e24 + 0.25 e24b + 0.5 e32)")
+                             + f" + {weight} x {decl['member']['name']} ({len(sources)} seeds, twelve-month refit) "
+                             "where the member has a value, through the shipped stack (v34 weights, network share 0.85 with the networks-far-below gate, u300 gate, callsign fix 50%, "
+                             "queue trust 0.75, two-sided stretch 1500 / 900); LIRF rows unchanged; floor -12 s"),
+                  "base_members": [{"declaration": b["declaration"], "candidate": b["candidate"], "weight": b["weight"], "file": b["export"], "tables": base_sources} for b in bases],
                   "incumbent": {"submission": Path(V46[0]).name, "official_rmse_seconds": V46[2], "sha256": V46[1], "note": "the clean model line's best"},
                   "declaration": {args.declaration: {"sha256": sha256_file(ROOT / args.declaration), "object_hash": object_hash(decl)}},
                   "development_results": {decl["report"]: sha256_file(ROOT / decl["report"])} if (ROOT / decl["report"]).exists() else {},
@@ -129,20 +152,20 @@ def main() -> None:
                   "official_scores_used": "none"}
     receipt = export_submission(pd.DataFrame({ID: ids, "prediction": values}), ROOT / "data/raw/submitting.parquet", output, provenance)
     exported = pd.read_parquet(output).set_index(ID)[TARGET].reindex(ids).to_numpy().astype(np.int64)
-    change = exported.astype(float) - v46.astype(float)
+    change = exported.astype(float) - reference.astype(float)
     if ((change != 0) & ~changed).any():
         raise ValueError("A row outside the candidate's scope changed.")
 
     # independent rebuild from the recorded v30 detail's own components
     rec34 = recipe(rec, V33_OUTER, V34_LIRF)
-    _, f46_r, candidate_r, _, fire_r, _ = stacks(rec, member, weight, np.maximum(rec34 + lfpg, FLOOR), rec34, ids)
-    independent = np.where(np.abs(candidate_r - f46_r) > 1e-9, candidate_r, v46.astype(float))
+    _, _, control_r, candidate_r, _, fire_r, _ = stacks(rec, member, weight, np.maximum(rec34 + lfpg, FLOOR), rec34, ids, tuple(base_arrays))
+    independent = np.where(np.abs(candidate_r - control_r) > 1e-9, candidate_r, reference.astype(float))
     differing = np.rint(independent).astype(np.int64) != exported
     n = len(ids)
     moved = change != 0
     anchored = masks["callsign"] | masks["queue"]
     report = {"created_at_utc": utc_now(), "version": args.version, "candidate": args.candidate, "member": decl["member"]["name"], "member_weight": weight, "seeds": len(sources),
-              "base": 46, "dry_run": args.dry_run is not None, "output": output.as_posix(), "sha256": sha256_file(output), "receipt": receipt, "rows": n,
+              "base": 46 if not bases else {"file": bases[0]["export"], "note": "v46 with the base member"}, "dry_run": args.dry_run is not None, "output": output.as_posix(), "sha256": sha256_file(output), "receipt": receipt, "rows": n,
               "checks": {"v38_stack_rounds_to_uploaded_v38": True, "v46_stack_reproduces_uploaded_v46": True, "lirf_rows_changed": 0, "changed_rows_equal_v38_in_v45": True,
                          "rows_changed_outside_scope": 0},
               "member_rows": int(inside.sum()), "member_share_of_non_lirf": float(inside[airport != "LIRF"].mean()),
@@ -154,8 +177,8 @@ def main() -> None:
               "by_month": {m: stats(change, month == m) for m in sorted(set(month))}, "by_airport": {a: stats(change, airport == a) for a in sorted(set(airport))},
               "independent_rebuild": {"source": export_v33.V30_DETAIL, "rows_differing": int(differing.sum()), "gate_rows_mask_disagreement": int((fire != fire_r).sum()),
                                       "max_abs_integer_difference": int(np.abs(np.rint(independent).astype(np.int64) - exported).max())},
-              "rmse_if_every_changed_label_equals_the_new_value": float(np.sqrt(max(n * V46[2] ** 2 - (change ** 2).sum(), 0.0) / n)),
-              "rmse_if_every_changed_label_equals_the_old_value": float(np.sqrt((n * V46[2] ** 2 + (change ** 2).sum()) / n))}
+              "rmse_if_every_changed_label_equals_the_new_value": None if bases else float(np.sqrt(max(n * V46[2] ** 2 - (change ** 2).sum(), 0.0) / n)),
+              "rmse_if_every_changed_label_equals_the_old_value": None if bases else float(np.sqrt((n * V46[2] ** 2 + (change ** 2).sum()) / n))}
     report_path.parent.mkdir(parents=True, exist_ok=True)
     write_json(report_path, report)
     print({k: report[k] for k in ["sha256", "member_rows", "rows_changed_integer", "gate_rows", "gate_rows_by_month", "mean_change_s", "mean_abs_change_s", "max_abs_change_s",

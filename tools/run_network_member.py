@@ -10,6 +10,10 @@ the January-November refit) and the candidates {name: {"member_weight": w}}.
            trust 0.75 -> two-sided stretch -> LIRF disagreement gate
 Before any candidate is read, the control's month RMSEs must equal the v46 re-read (docs/thinned_regime/reread_n85_nd1200.json).
 
+Base member (optional "base_members": [{"declaration", "candidate", "results", "export"}], at most one): a member already shipped enters the
+table first at its declared weight, the candidate member after it, and the control is the stack with the base member; its month RMSEs
+must equal the base round's recorded RMSEs of that candidate (the base round's "results" file) before any candidate is read.
+
 Rule, unless the declaration states its own months or margin: eligible when no equal-footing month (January, July, December) is worse
 on all rows, the mean ratio is at least 0.02% below 1 and every equal-footing month's paired-day 95% interval lies below zero; the
 lowest mean ratio among the eligible is selected, otherwise nothing. November is reported only (nine-month fold side).
@@ -63,6 +67,28 @@ def member_values(spec: dict, month: str, ids: np.ndarray) -> tuple[np.ndarray, 
         tables.append(t.set_index(ID)[column].reindex(ids).to_numpy(dtype=float))
         sources[rel] = sha256_file(ROOT / rel)
     return network_member.seed_mean(tables), sources
+
+
+def base_members(decl: dict) -> list[dict]:
+    """The declaration's base member (at most one): its member spec, weight, candidate and recorded results."""
+    out = []
+    for b in decl.get("base_members", []):
+        base = read_json(ROOT / b["declaration"])
+        out.append({"declaration": b["declaration"], "candidate": b["candidate"], "member": base["member"],
+                    "weight": network_member.candidate_weight(base, b["candidate"]), "results": b.get("results"), "export": b.get("export")})
+    if len(out) > 1:
+        raise ValueError("At most one base member is wired.")
+    return out
+
+
+def with_bases(nets: np.ndarray, lirf: np.ndarray, ids: np.ndarray, month: str, bases: list[dict], sources: dict) -> np.ndarray:
+    """The network table with the base members in it (LIRF rows keep the table)."""
+    table = nets
+    for b in bases:
+        values, found = member_values(b["member"], month, ids)
+        sources.update(found)
+        table, _ = network_member.table_with_member(table, np.where(lirf, np.nan, values), b["weight"])
+    return table
 
 
 def select(entries: dict, equal: list[str], minimum: float) -> tuple[list[str], str | None]:
@@ -126,18 +152,38 @@ def main() -> None:
             raise ValueError(f"The control does not reproduce the v46 re-read on {month}: {score} against {reread[month]['candidate_rmse']}.")
         frames[month], controls[month] = f, control
     print("control reproduces the v46 re-read on", MONTHS, flush=True)
+    bases, base_sources, base_tables, base_control = base_members(decl), {}, {}, {}
+    for b in bases:
+        recorded = read_json(ROOT / b["results"])
+        if recorded.get("declaration_sha256") != object_hash(read_json(ROOT / b["declaration"])):
+            raise ValueError("The base member's recorded results are not for its declaration.")
+        for month in MONTHS:
+            f = frames[month]
+            if month not in b["member"]["tables"]:
+                raise ValueError(f"The base member has no table for {month}.")
+            table = with_bases(f["nets"].to_numpy(dtype=float), f["airport"].to_numpy() == "LIRF", f[ID].to_numpy(), month, [b], base_sources)
+            mix, _ = share_gate.mix(f["committee"].to_numpy(dtype=float), table, network_member.V46_SHARE, network_member.V46_GATE)
+            control = full_stack(f, mix, cs, off_cs, seg, off, k, gate_spec)
+            score, want = rmse(f["label"].to_numpy(dtype=float), control), recorded["candidates"][b["candidate"]]["months"][month]["rmse"]
+            if not abs(score - want) <= 1e-9:
+                raise ValueError(f"The control with the base member does not reproduce its recorded {b['candidate']} on {month}: {score} against {want}.")
+            base_tables[month], controls[month], base_control[month] = table, control, score
+        print("control with the base member", b["declaration"], b["candidate"], "reproduces its recorded RMSEs on", MONTHS, flush=True)
     if args.check_control:
         return
 
     months = [m for m in MONTHS if m in decl["member"]["tables"]]
     report = {"created_at_utc": utc_now(), "declaration": decl, "declaration_sha256": object_hash(decl), "audit_used": False, "rows_sha256": sha256_file(ROOT / ROWS),
-              "control": {"name": "v46 development stack", "network_share": network_member.V46_SHARE, "gate": network_member.V46_GATE, "reread": REREAD},
+              "control": {"name": "v46 development stack" + (" with the base member" if bases else ""), "network_share": network_member.V46_SHARE,
+                          "gate": network_member.V46_GATE, "reread": REREAD,
+                          "base_members": [{"declaration": b["declaration"], "candidate": b["candidate"], "weight": b["weight"], "results": b["results"],
+                                            "month_rmse": base_control, "tables": base_sources} for b in bases]},
               "equal_footing_months": equal, "minimum_mean_improvement_fraction": minimum, "member_sources": {}, "months": {}, "candidates": {}}
     entries = {name: {**decl["candidates"][name], "months": {}} for name in decl["candidates"]}
     for month in months:
         f, control = frames[month], controls[month]
         y, days = f["label"].to_numpy(dtype=float), f["day"].to_numpy()
-        committee, nets = f["committee"].to_numpy(dtype=float), f["nets"].to_numpy(dtype=float)
+        committee, nets = f["committee"].to_numpy(dtype=float), (base_tables[month] if bases else f["nets"].to_numpy(dtype=float))
         lirf = f["airport"].to_numpy() == "LIRF"
         member, sources = member_values(decl["member"], month, f[ID].to_numpy())
         member = np.where(lirf, np.nan, member)  # LIRF rows take their own blends; the committee mix does not reach them
