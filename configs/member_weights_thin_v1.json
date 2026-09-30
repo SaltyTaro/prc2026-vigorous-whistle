@@ -1,0 +1,219 @@
+{
+ "experiment_id": "prc2026-member-weights-thin-v1",
+ "declared_at_utc": "2026-09-30T16:02:48+00:00",
+ "audit_used": false,
+ "purpose": "Do v52's member weights (combination 0.40, masked 0.40), chosen on 2025's natural adsb.lol coverage, still hold when the ADS-B inputs come from the scored months' coverage regime? Read at the network-table level on December 2025 with its inputs as they are and thinned to January 2026's coverage (coverage-regime attempt a13: EDDF).",
+ "scope_limits": "December only: the July leave-one-month-out models of the base networks (e24, e24b, e32) kept their predictions but not their model files, so July (EDDF / LSZH under July 2026's regime) cannot be re-predicted on the footing the development table used. December's thinning changes EDDF only. The committee and the rest of the stack are not re-predicted: this is the network table, where the member weights act.",
+ "disclosed": "Known before this declaration: the member-weight round (configs/member_weights_v1.json, null; best c40_m70 -0.013% on natural development months), the positional batch (docs/adsb_ctx3_pos/: the thinning penalty on the context network is +19.6% on EDDF / LSZH rows, EDDF December 94.3 -> 128.1 s for ref32 design-fold models), and the official scores of v51 / v52. No thinned prediction of the models below exists yet.",
+ "models": {
+  "fold": "refit (January-November 2025; predicts December)",
+  "nets": {
+   "e24": [
+    "runs/adsb_ctx/ctx_e24_s117",
+    "runs/adsb_ctx/ctx_e24_s118",
+    "runs/adsb_ctx/ctx_e24_s119",
+    "runs/adsb_ctx/ctx_e24_s120",
+    "runs/adsb_ctx/ctx_e24_s121",
+    "runs/adsb_ctx/ctx_e24_s122",
+    "runs/adsb_ctx/ctx_e24_s123",
+    "runs/adsb_ctx/ctx_e24_s124",
+    "runs/adsb_ctx/ctx_e24_s125",
+    "runs/adsb_ctx/ctx_e24_s126",
+    "runs/adsb_ctx/ctx_e24_s127",
+    "runs/adsb_ctx/ctx_e24_s128",
+    "runs/adsb_ctx/ctx_e24_s129",
+    "runs/adsb_ctx/ctx_e24_s130",
+    "runs/adsb_ctx/ctx_e24_s131",
+    "runs/adsb_ctx/ctx_e24_s132"
+   ],
+   "e24b": [
+    "runs/adsb_ctx/ctx_e24_s133",
+    "runs/adsb_ctx/ctx_e24_s134",
+    "runs/adsb_ctx/ctx_e24_s135",
+    "runs/adsb_ctx/ctx_e24_s136",
+    "runs/adsb_ctx/ctx_e24_s137",
+    "runs/adsb_ctx/ctx_e24_s138",
+    "runs/adsb_ctx/ctx_e24_s139",
+    "runs/adsb_ctx/ctx_e24_s140",
+    "runs/adsb_ctx/ctx_e24_s141",
+    "runs/adsb_ctx/ctx_e24_s142",
+    "runs/adsb_ctx/ctx_e24_s143",
+    "runs/adsb_ctx/ctx_e24_s144",
+    "runs/adsb_ctx/ctx_e24_s145",
+    "runs/adsb_ctx/ctx_e24_s146",
+    "runs/adsb_ctx/ctx_e24_s147",
+    "runs/adsb_ctx/ctx_e24_s148"
+   ],
+   "e32": [
+    "runs/adsb_ctx_gpu/ctx_e32_s401",
+    "runs/adsb_ctx_gpu/ctx_e32_s402",
+    "runs/adsb_ctx_gpu/ctx_e32_s403",
+    "runs/adsb_ctx_gpu/ctx_e32_s404",
+    "runs/adsb_ctx_gpu/ctx_e32_s405",
+    "runs/adsb_ctx_gpu/ctx_e32_s406",
+    "runs/adsb_ctx_gpu/ctx_e32_s407",
+    "runs/adsb_ctx_gpu/ctx_e32_s408",
+    "runs/adsb_ctx_gpu/ctx_e32_s409",
+    "runs/adsb_ctx_gpu/ctx_e32_s410",
+    "runs/adsb_ctx_gpu/ctx_e32_s411",
+    "runs/adsb_ctx_gpu/ctx_e32_s412",
+    "runs/adsb_ctx_gpu/ctx_e32_s413",
+    "runs/adsb_ctx_gpu/ctx_e32_s414",
+    "runs/adsb_ctx_gpu/ctx_e32_s415",
+    "runs/adsb_ctx_gpu/ctx_e32_s416"
+   ],
+   "weights": {
+    "e24": 0.25,
+    "e24b": 0.25,
+    "e32": 0.5
+   }
+  },
+  "members": {
+   "dl32": [
+    "runs/adsb_ctx3_combo/nets/dl32_s601",
+    "runs/adsb_ctx3_combo/nets/dl32_s602",
+    "runs/adsb_ctx3_combo/nets/dl32_s603",
+    "runs/adsb_ctx3_combo/nets/dl32_s604",
+    "runs/adsb_ctx3_combo/nets/dl32_s605",
+    "runs/adsb_ctx3_combo/nets/dl32_s606",
+    "runs/adsb_ctx3_combo/nets/dl32_s607",
+    "runs/adsb_ctx3_combo/nets/dl32_s608",
+    "runs/adsb_ctx3_combo/nets/dl32_s609",
+    "runs/adsb_ctx3_combo/nets/dl32_s610",
+    "runs/adsb_ctx3_combo/nets/dl32_s611",
+    "runs/adsb_ctx3_combo/nets/dl32_s612",
+    "runs/adsb_ctx3_combo/nets/dl32_s613",
+    "runs/adsb_ctx3_combo/nets/dl32_s614",
+    "runs/adsb_ctx3_combo/nets/dl32_s615",
+    "runs/adsb_ctx3_combo/nets/dl32_s616"
+   ],
+   "m25dl32": [
+    "runs/adsb_ctx3_combo/nets/m25dl32_s601",
+    "runs/adsb_ctx3_combo/nets/m25dl32_s602",
+    "runs/adsb_ctx3_combo/nets/m25dl32_s603",
+    "runs/adsb_ctx3_combo/nets/m25dl32_s604",
+    "runs/adsb_ctx3_combo/nets/m25dl32_s605",
+    "runs/adsb_ctx3_combo/nets/m25dl32_s606",
+    "runs/adsb_ctx3_combo/nets/m25dl32_s607",
+    "runs/adsb_ctx3_combo/nets/m25dl32_s608",
+    "runs/adsb_ctx3_combo/nets/m25dl32_s609",
+    "runs/adsb_ctx3_combo/nets/m25dl32_s610",
+    "runs/adsb_ctx3_combo/nets/m25dl32_s611",
+    "runs/adsb_ctx3_combo/nets/m25dl32_s612",
+    "runs/adsb_ctx3_combo/nets/m25dl32_s613",
+    "runs/adsb_ctx3_combo/nets/m25dl32_s614",
+    "runs/adsb_ctx3_combo/nets/m25dl32_s615",
+    "runs/adsb_ctx3_combo/nets/m25dl32_s616"
+   ],
+   "m25_32": [
+    "runs/adsb_ctx3_mask/nets/m25_32_s701",
+    "runs/adsb_ctx3_mask/nets/m25_32_s702",
+    "runs/adsb_ctx3_mask/nets/m25_32_s703",
+    "runs/adsb_ctx3_mask/nets/m25_32_s704",
+    "runs/adsb_ctx3_mask/nets/m25_32_s705",
+    "runs/adsb_ctx3_mask/nets/m25_32_s706",
+    "runs/adsb_ctx3_mask/nets/m25_32_s707",
+    "runs/adsb_ctx3_mask/nets/m25_32_s708",
+    "runs/adsb_ctx3_mask/nets/m25_32_s709",
+    "runs/adsb_ctx3_mask/nets/m25_32_s710",
+    "runs/adsb_ctx3_mask/nets/m25_32_s711",
+    "runs/adsb_ctx3_mask/nets/m25_32_s712",
+    "runs/adsb_ctx3_mask/nets/m25_32_s713",
+    "runs/adsb_ctx3_mask/nets/m25_32_s714",
+    "runs/adsb_ctx3_mask/nets/m25_32_s715",
+    "runs/adsb_ctx3_mask/nets/m25_32_s716"
+   ],
+   "combo_all": "dl32 seed mean on rows with adsb_matched = 1, m25dl32 seed mean on the others",
+   "mask_unmatched": "m25_32 seed mean on rows with adsb_matched = 0, empty on matched rows",
+   "routing": "each regime routes by its own adsb_matched (a row that loses its match under thinning goes to m25dl32 and the masked member)"
+  }
+ },
+ "inputs": {
+  "natural": "the December build (data/december/d198dea10625b0a75977) + the tables every refit run read (runs/adsb_ctx2/inputs/adsb_features_arcw0, data/external/adsblol/features_v19; hashes checked against the runs' records) + tokens data/ctx/tokens_v1",
+  "thinned": "the same December rows with runs/coverage_regime/a13_dec/features/thinned/{committee,v19} and tokens data/ctx/tokens_thin_a13/2025-12 (rebuilt from the thinned pass-2 matches); every other input unchanged",
+  "device": "workstation CPU for both regimes (GPU-trained models predicted on CPU, as the final-file runner does)"
+ },
+ "table": "T(c, m) = (1 - m) [(1 - c) nets + c combo_all] + m mask_unmatched where each member has a value (non-LIRF rows); LIRF rows unchanged",
+ "candidates": {
+  "c25_m25": {
+   "combo_weight": 0.25,
+   "mask_weight": 0.25
+  },
+  "c25_m40": {
+   "combo_weight": 0.25,
+   "mask_weight": 0.4
+  },
+  "c25_m55": {
+   "combo_weight": 0.25,
+   "mask_weight": 0.55
+  },
+  "c25_m70": {
+   "combo_weight": 0.25,
+   "mask_weight": 0.7
+  },
+  "c40_m25": {
+   "combo_weight": 0.4,
+   "mask_weight": 0.25
+  },
+  "c40_m40": {
+   "combo_weight": 0.4,
+   "mask_weight": 0.4
+  },
+  "c40_m55": {
+   "combo_weight": 0.4,
+   "mask_weight": 0.55
+  },
+  "c40_m70": {
+   "combo_weight": 0.4,
+   "mask_weight": 0.7
+  },
+  "c55_m25": {
+   "combo_weight": 0.55,
+   "mask_weight": 0.25
+  },
+  "c55_m40": {
+   "combo_weight": 0.55,
+   "mask_weight": 0.4
+  },
+  "c55_m55": {
+   "combo_weight": 0.55,
+   "mask_weight": 0.55
+  },
+  "c55_m70": {
+   "combo_weight": 0.55,
+   "mask_weight": 0.7
+  },
+  "c70_m25": {
+   "combo_weight": 0.7,
+   "mask_weight": 0.25
+  },
+  "c70_m40": {
+   "combo_weight": 0.7,
+   "mask_weight": 0.4
+  },
+  "c70_m55": {
+   "combo_weight": 0.7,
+   "mask_weight": 0.55
+  },
+  "c70_m70": {
+   "combo_weight": 0.7,
+   "mask_weight": 0.7
+  }
+ },
+ "control": "c40_m40 (v52's weights)",
+ "checks_before_any_candidate": [
+  "each learner's CPU prediction of December with natural inputs against its own recorded december_predictions.parquet: RMS at most 0.01 s for the CPU-trained e24 / e24b, at most 0.25 s for the GPU-trained e32 and members",
+  "the natural nets table (0.25 e24 + 0.25 e24b + 0.5 e32) against the December nets column of runs/lomo_dev/rows.parquet: RMS at most 0.25 s"
+ ],
+ "readings": "table RMSE on non-LIRF December departures and on EDDF, natural and thinned, per candidate; change against c40_m40 in each regime; paired-day 95% intervals (December days) of the thinned change, whole month and EDDF; matched / unmatched split",
+ "decision": "A candidate shifts the weights when, on thinned inputs, its whole-month non-LIRF table RMSE is at least 0.05% below c40_m40's and the paired-day interval of that difference lies below zero. The lowest such thinned RMSE is carried forward to a separately declared follow-up (the stack with the committee also on thinned inputs, then the usual January / July / December development reading) before any export; every upload stays the user's decision. Without such a candidate, v52's weights stand for the January 2026 regime.",
+ "labels_read": "December 2025 only (a development month). No ranking row, official score or published aggregate.",
+ "paths": {
+  "predictions": "runs/member_thin/<family>/<learner>/{natural,thinned}.parquet",
+  "report": "docs/member_thin/report.json"
+ },
+ "tools": [
+  "tools/member_thin_predict.py",
+  "tools/member_thin_report.py"
+ ]
+}
