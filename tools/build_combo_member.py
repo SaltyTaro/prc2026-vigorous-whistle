@@ -23,18 +23,31 @@ DECLARATION = "configs/adsb_ctx3_combo_dev_v1.json"
 MATCHED_VARIANT, OTHER_VARIANT = "dl32", "m25dl32"
 
 
-def matched_flags(cache: Path) -> pd.Series:
-    parts = [pd.read_parquet(p, columns=[ID, "adsb_matched"]) for p in sorted(cache.glob("adsb_*.parquet"))]
+def matched_flags(cache: Path) -> tuple[pd.Series, dict]:
+    """Match flag per row over every table of the cache (twelve months and the ranking rows), and the tables' hashes."""
+    paths = sorted(cache.glob("adsb_*.parquet"))
+    parts = [pd.read_parquet(p, columns=[ID, "adsb_matched"]) for p in paths]
     table = pd.concat(parts, ignore_index=True)
     if table[ID].duplicated().any() or table["adsb_matched"].isna().any():
         raise ValueError("The ADS-B feature tables hold duplicate or incomplete rows.")
-    return table.set_index(ID)["adsb_matched"].eq(1)
+    return table.set_index(ID)["adsb_matched"].eq(1), {p.name: sha256_file(p) for p in paths}
+
+
+def check_cache(record: dict, hashes: dict, directory: Path) -> None:
+    """The flags must come from the very tables the fit read (run.json records their hashes by raw file name)."""
+    for raw, sha in record["inputs"]["adsb_cache_sha256"].items():
+        name = f"adsb_{raw}"
+        if name not in hashes:
+            raise ValueError(f"{directory}: the local cache lacks {name}.")
+        if hashes[name] != sha:
+            raise ValueError(f"{directory}: {name} differs from the table the fit read.")
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--nets", type=Path, default=Path("runs/adsb_ctx3_combo/nets"))
-    parser.add_argument("--adsb-cache", type=Path, default=Path("runs/adsb_nn/features"))
+    parser.add_argument("--adsb-cache", type=Path, default=Path("runs/adsb_ctx2/inputs/adsb_features_arcw0"),
+                        help="the ADS-B feature tables the fits read (the arcw0 build, twelve months and the ranking rows; hash-checked against every run.json)")
     parser.add_argument("--leaves", nargs="*", help="default: every declared leaf")
     parser.add_argument("--report", type=Path, default=Path("docs/adsb_ctx3_combo/member_build.json"))
     args = parser.parse_args()
@@ -43,7 +56,7 @@ def main():
     if fits["variants"] != [MATCHED_VARIANT, OTHER_VARIANT]:
         raise ValueError("The declared variants changed.")
     network_sha = sha256_file(ROOT / fits["network_config"])
-    flags = matched_flags(ROOT / args.adsb_cache)
+    flags, cache_hashes = matched_flags(ROOT / args.adsb_cache)
     leaves = args.leaves or list(fits["folds"])
     built = {}
     for leaf in leaves:
@@ -59,6 +72,7 @@ def main():
                 if (record["config_sha256"] != network_sha or record["variant"] != variant or record["seed"] != seed or record["fold"] != fold
                         or record.get("smoke_limit_rows") is not None or record["inputs"]["device"] != "cuda"):
                     raise ValueError(f"{directory} is not a declared fit.")
+                check_cache(record, cache_hashes, directory)
                 frames[variant] = pd.read_parquet(directory / name)
             ids = frames[MATCHED_VARIANT][ID].to_numpy()
             if not np.array_equal(ids, frames[OTHER_VARIANT][ID].to_numpy()):
@@ -79,8 +93,9 @@ def main():
         print(leaf, "seeds", len(fits["seeds"]), "rows", int(len(reference)), flush=True)
     (ROOT / args.report).parent.mkdir(parents=True, exist_ok=True)
     write_json(ROOT / args.report, {"created_at_utc": utc_now(), "declaration_sha256": sha256_file(ROOT / DECLARATION), "network_config_sha256": network_sha, "leaves": leaves,
-                                    "tables": built, "tool_sha256": sha256_file(ROOT / "tools/build_combo_member.py"), "audit_used": False,
-                                    "note": "routing by the label-free match flag; no label read"})
+                                    "adsb_cache": {"path": str(args.adsb_cache), "sha256": cache_hashes}, "tables": built,
+                                    "tool_sha256": sha256_file(ROOT / "tools/build_combo_member.py"), "audit_used": False,
+                                    "note": "routing by the label-free match flag of the tables the fits read; no label read"})
 
 
 if __name__ == "__main__":

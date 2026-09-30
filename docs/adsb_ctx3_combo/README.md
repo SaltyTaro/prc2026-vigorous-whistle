@@ -57,3 +57,49 @@ A development round, declared separately before any development score: the maske
 footing (leave-one-month-out January and July 2025, the forward fold, the January–November refit, the twelve-month refit),
 as a member for unmatched rows only, control = the v46 stack, scored with `tools/run_network_member.py`. Every upload is the
 user's decision.
+
+## Development round (declared 17:35 UTC 29 September; fits 29–30 September on three L40S nodes)
+
+`configs/adsb_ctx3_combo_dev_v1.json`: the user chose the full combination (`combo_all`) and GPU hardware. Member = per seed and leaf,
+the dl32 network on rows with `adsb_matched = 1` and the m25dl32 network on the other rows (`tools/build_combo_member.py`); LIRF rows
+are left to the shipped table by the scorer. Seeds 601–616, folds leave-one-month-out January and July 2025, the forward fold
+(November, reported only), the January–November refit (December) and the twelve-month refit (ranking): 160 fits with
+`tools/run_adsb_ctx_lomo.py --device cuda`, two lanes per GPU, 13–16 minutes per fit. Candidates: member weight 0.15 / 0.25 / 0.40
+inside the network table; control = the v46 development stack; the clean line's unchanged rule.
+
+AWS supplied three of the four nodes (the fourth shut itself down after a failed runtime set-up); the round ran on three nodes with
+two lanes each from 21:00 UTC. Two fits finished before a carriage-return fault in the job lists was fixed (`tools/combo_jobs.py`,
+commit 6b889fc); their run folders were renamed, four unfinished fits restarted. No fit failed; every fit ran 32 epochs; the
+monitors flagged one forward fit (m25dl32 seed 608) for a last-epoch training-loss bump, its October and November readings are in
+line with its peers.
+
+**Governing run (`docs/adsb_ctx3_combo/results_v1.json`, 03:05 UTC 30 September): every candidate is eligible; `w40` is selected.**
+
+| candidate | January 2025 | July 2025 | December 2025 | mean (rule months) | November 2025 (reported only) |
+|---|---:|---:|---:|---:|---:|
+| control (v46 stack) | 322.8585 | 257.7185 | 167.5137 | | 184.9050 |
+| `w15` | −0.037% [−0.23, −0.07] | −0.040% [−0.16, −0.06] | −0.066% [−0.15, −0.07] | −0.048% | −0.032% [−0.12, +0.01] |
+| `w25` | −0.057% [−0.34, −0.11] | −0.060% [−0.24, −0.08] | −0.094% [−0.23, −0.09] | −0.070% | −0.045% [−0.18, +0.02] |
+| **`w40`** | **−0.066%** [−0.41, −0.11] | **−0.071%** [−0.33, −0.05] | **−0.119%** [−0.31, −0.10] | **−0.086%** | −0.044% [−0.25, +0.11] |
+
+Brackets: paired-day 95% interval of the RMSE difference (seconds). December: 25 of 31 days better at `w40`.
+
+- **The gain grows with the weight up to the largest declared weight.** The alignment of the change (the factor by which the change
+  would have to be scaled to minimise the error) is 1.5 / 1.2 / 0.8 / 1.1 at `w40` on January / July / November / December, so 0.40
+  sits near the optimum; no weight was added after the scores.
+- **Standalone the member is worse than the shipped network table** (318.67 against 317.88 s in January, 202.17 against 200.84 s in
+  July, 148.90 against 147.04 s in December): it helps as an added member, not as a replacement. On unmatched non-LIRF rows it is
+  about equal to the table (447.58 against 447.58 s in January); the gain of the stack comes from the mixture.
+- By rows: unmatched non-LIRF rows −0.07% / −0.20% / −0.11% / −0.18% (January / July / November / December) at `w40`; matched
+  non-LIRF rows −0.09% / +0.03% / −0.03% / −0.16%. The July matched rows are the one slice that does not improve.
+- On the ranking file the reading is worth about −0.1% to −0.12% (December is the closest month): about −0.25 s on v46's 223.93.
+
+**Disclosed interim readings.** While the other fits ran, the scorer's code was run on the finished months (January and July at
+00:10 UTC; January, July and December at 01:45 UTC; `runs/adsb_ctx3_combo/dev/interim_*.json`, `interim3_*.json`). They read the
+same numbers as the governing run (the tables are the same); the rule and the candidates were fixed before either. Nothing was
+changed after them.
+
+**Tool fix before the December leaf.** `tools/build_combo_member.py` read the match flags from `runs/adsb_nn/features`, which lacks
+December's table. It now reads the tables the fits read (`runs/adsb_ctx2/inputs/adsb_features_arcw0`, twelve months and the ranking
+rows) and checks every table's hash against every fit's record (`inputs.adsb_cache_sha256`). The January and July tables were rebuilt
+with it and are unchanged (the two caches carry identical flags for those months).
