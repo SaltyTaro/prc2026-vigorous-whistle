@@ -1,0 +1,251 @@
+{
+  "base": {
+    "file": {
+      "path": "runs/adsb_ctx3_combo/export_dry/vigorous-whistle_v51.parquet",
+      "sha256": "bd8f73aa3f9b15efb941de27848693e81298b26b3f4f10159bacb3ceb4f46cd5"
+    },
+    "note": "v46 with the base member"
+  },
+  "by_airport": {
+    "EDDF": {
+      "changed": 7309,
+      "max_abs_change_s": 282.0,
+      "mean_change_s": -0.08012776385714679,
+      "rms_change_s": 6.227126274040388,
+      "rows": 36317
+    },
+    "EDDM": {
+      "changed": 691,
+      "max_abs_change_s": 119.0,
+      "mean_change_s": 0.05276130324270199,
+      "rms_change_s": 1.9274765851469542,
+      "rows": 25966
+    },
+    "EGLL": {
+      "changed": 2552,
+      "max_abs_change_s": 138.0,
+      "mean_change_s": 0.11598895582329317,
+      "rms_change_s": 2.511384720199477,
+      "rows": 39840
+    },
+    "EHAM": {
+      "changed": 1985,
+      "max_abs_change_s": 333.0,
+      "mean_change_s": 0.8843695982400084,
+      "rms_change_s": 12.152339343801154,
+      "rows": 38182
+    },
+    "LEBL": {
+      "changed": 1121,
+      "max_abs_change_s": 143.0,
+      "mean_change_s": -0.049102393617021275,
+      "rms_change_s": 1.9004916077330702,
+      "rows": 30080
+    },
+    "LEMD": {
+      "changed": 5092,
+      "max_abs_change_s": 161.0,
+      "mean_change_s": -0.0020024895816420415,
+      "rms_change_s": 2.4277847225141675,
+      "rows": 36954
+    },
+    "LFPG": {
+      "changed": 27794,
+      "max_abs_change_s": 422.0,
+      "mean_change_s": 0.15737861155698235,
+      "rms_change_s": 8.146215664644268,
+      "rows": 39872
+    },
+    "LIRF": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 26899
+    },
+    "LSZH": {
+      "changed": 1300,
+      "max_abs_change_s": 286.0,
+      "mean_change_s": 0.08371490280777538,
+      "rms_change_s": 4.662492219114637,
+      "rows": 23150
+    },
+    "LTFM": {
+      "changed": 43565,
+      "max_abs_change_s": 156.0,
+      "mean_change_s": 0.006410121687228095,
+      "rms_change_s": 9.954129679356257,
+      "rows": 47581
+    }
+  },
+  "by_month": {
+    "2026-01": {
+      "changed": 41542,
+      "max_abs_change_s": 422.0,
+      "mean_change_s": 0.3051552197172585,
+      "rms_change_s": 9.094957602230249,
+      "rows": 152719
+    },
+    "2026-07": {
+      "changed": 49867,
+      "max_abs_change_s": 274.0,
+      "mean_change_s": -0.014511612412945941,
+      "rms_change_s": 3.920018920754875,
+      "rows": 192122
+    }
+  },
+  "candidate": "w40",
+  "checks": {
+    "changed_rows_equal_v38_in_v45": true,
+    "lirf_rows_changed": 0,
+    "rows_changed_outside_scope": 0,
+    "v38_stack_rounds_to_uploaded_v38": true,
+    "v46_stack_reproduces_uploaded_v46": true
+  },
+  "created_at_utc": "2026-09-30T09:03:08.911624+00:00",
+  "dry_run": true,
+  "gate_rows": 64,
+  "gate_rows_by_month": {
+    "2026-01": 46,
+    "2026-07": 18
+  },
+  "independent_rebuild": {
+    "gate_rows_mask_disagreement": 0,
+    "max_abs_integer_difference": 1,
+    "rows_differing": 237,
+    "source": "runs/adsb_ctx/export_v30/ranking_values.parquet"
+  },
+  "max_abs_change_s": 422.0,
+  "mean_abs_change_s": 6.065518712599416,
+  "mean_change_s": 0.4793291689002177,
+  "member": "mask_unmatched",
+  "member_rows": 101507,
+  "member_share_of_non_lirf": 0.3192626328072416,
+  "member_weight": 0.4,
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v52.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 111654,
+    "maximum_rounding_change_seconds": 0.4999839929478185,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 24,
+    "provenance": {
+      "audit_used": false,
+      "base_members": [
+        {
+          "candidate": "w40",
+          "declaration": "configs/adsb_ctx3_combo_dev_v1.json",
+          "file": {
+            "path": "runs/adsb_ctx3_combo/export_dry/vigorous-whistle_v51.parquet",
+            "sha256": "bd8f73aa3f9b15efb941de27848693e81298b26b3f4f10159bacb3ceb4f46cd5"
+          },
+          "tables": {
+            "runs/adsb_ctx3_combo/member/s601/ranking.parquet": "698e84bb107261e5126295ee6e719690f2b1dc3a768633e76a34f0d13400628c",
+            "runs/adsb_ctx3_combo/member/s602/ranking.parquet": "dfc75f764d82f046dbcb954207f18e4674c4e01123be19d6059d22280c27d5d5",
+            "runs/adsb_ctx3_combo/member/s603/ranking.parquet": "d3168e008a8accc864a9ef1e4734806b2092bc374b16ea1caada9d2d9d6bfe79",
+            "runs/adsb_ctx3_combo/member/s604/ranking.parquet": "ee88fd02ff90680ea2e1ef6e1e4e1353346ab1e9a0afa5a4b90b983b13faee67",
+            "runs/adsb_ctx3_combo/member/s605/ranking.parquet": "362525674d5959568c5dcf72bd094364bc0a04e30406814e012bfcfeefa65b8e",
+            "runs/adsb_ctx3_combo/member/s606/ranking.parquet": "41c2782336faaae6512d2096b45752179c102c12cc8758cf10555e796c0c85ed",
+            "runs/adsb_ctx3_combo/member/s607/ranking.parquet": "677ada71603bd14a427f6d842d48a524832197ff83404b9c45daac03bb1531f2",
+            "runs/adsb_ctx3_combo/member/s608/ranking.parquet": "7f82c7c2a374527913f4fce585e17d9c28e562425273bdb5c6b00848bbfc137e",
+            "runs/adsb_ctx3_combo/member/s609/ranking.parquet": "c1be6f77b6ccb7365e7f1c93dd8b79ee1a419d31403f787e10c4c94808a21c2a",
+            "runs/adsb_ctx3_combo/member/s610/ranking.parquet": "3b0603d18d690bec48c85242da2aa2ca7e3a932a53a7f24dddbf861c951f9858",
+            "runs/adsb_ctx3_combo/member/s611/ranking.parquet": "0fdbef8c7ab71ab72003e5b05b23d106d88d317d788f5663ce83f98990c3e612",
+            "runs/adsb_ctx3_combo/member/s612/ranking.parquet": "4f7af6d4296625bcb4aed3a822c50d62ec5307c195dc294d754f9a53fcd57cd6",
+            "runs/adsb_ctx3_combo/member/s613/ranking.parquet": "db00b577a62db1cc887487243cebfa1f7917604d9e32187204a3543fae089562",
+            "runs/adsb_ctx3_combo/member/s614/ranking.parquet": "6f47ab71cd54b077b14ba0ba83a24ddf7eb724e9798629441dd2fe683bd484a8",
+            "runs/adsb_ctx3_combo/member/s615/ranking.parquet": "b3b12668985eb9bc028ba74a7f6113afbc31cd7d6ecc83839dcf40901b69731d",
+            "runs/adsb_ctx3_combo/member/s616/ranking.parquet": "8a364c3d8e2bc99b8a178fc21ab0851639a5db69a8adfdb18e40968d41ffb5ed"
+          },
+          "weight": 0.4
+        }
+      ],
+      "candidate": "w40",
+      "code": {
+        "src/prc2026_final/network_member.py": "d2ce137c38e3ab39aaad6b2d3f0152c859fc05918253d518a7a0cd10460f6126",
+        "src/prc2026_final/share_gate.py": "015df26644d701497bc06874b9e3319013f8d56dbb282f96d12f5f9f52fefdbe",
+        "tools/export_disagreement_gate.py": "c1033a0141ab59df4ec37eed4cafbe3d889f1a33b57800d882898fce921df892",
+        "tools/export_fair_weights.py": "224fb363d7399d9f81f46364a7f27a2596850872d5646568c214af300db24168",
+        "tools/export_network_member.py": "1a71bc4db897bbf6e044b914db861a617f7d3f6fbebaaf931f8429abdc80b712",
+        "tools/export_share_gate.py": "53aab53bb9ae7d28ea7ba31282190c37b53b81e00bf5705e4ce42159b854a4a8",
+        "tools/export_stack.py": "808c79f6a16372736d5c8859bc2fb059c8b4f17eb7ea695cc21c41c50e330bff",
+        "tools/export_v33.py": "3f788f5d83b6339a2ce60eb0884bb854eb4b05e56b215dc01d801a7f6f45f3bb",
+        "tools/run_network_member.py": "a76f39a29a492c32badad26bf3964adc01bc8a2125440fddea74d1d3bb0e5ca4"
+      },
+      "declaration": {
+        "configs/adsb_ctx3_mask_dev_v1.json": {
+          "object_hash": "315c8319347456bd5dd142a74eaf7cbfc9df1961b9767bee30e58b9152050b1f",
+          "sha256": "d81817a201e561fbeda8c1b1bbee754129f78fe32b48bb7eca09a95f2556858d"
+        }
+      },
+      "development_results": {
+        "docs/adsb_ctx3_mask/results_v1.json": "5b8a27c0dc92b30a4da764d99ddfd62d821f1b39ea156cce5a1739b84d98db92"
+      },
+      "dry_run": true,
+      "experiment_id": "prc2026-adsb-ctx3-mask-dev-v1",
+      "external_data": "adsb.lol globe_history (ODbL) surface positions, as in v46",
+      "floor_seconds": -12.0,
+      "incumbent": {
+        "note": "the clean model line's best",
+        "official_rmse_seconds": 223.9339,
+        "sha256": "8abdd87ad5098d7753927f407ffd7e8cd342aa84a2864392e1b64c0dde015af9",
+        "submission": "vigorous-whistle_v46.parquet"
+      },
+      "inputs": {
+        "runs/adsb_ctx/export_v30/ranking_values.parquet": "b91c57bc18bf65fabd5d4424cda802d28febd3dba0ed1cb303e702e389e9ae4d",
+        "runs/final_dryrun/run/recipe/detail.parquet": "2e79c78b25a4abd1032c211ec61968dc90942e58c2ccff8fceeccc4e3fdcaf5b",
+        "runs/final_lfpg_eobt/run/recipe/detail.parquet": "a73455834db2342f6407a438e631deda3a04879fe5a01fa2f15b90111363bdfd",
+        "runs/submissions/vigorous-whistle_v38.parquet": "61264cdb7f0a37a8e5cf943f8e950441df38b826132cfc1097f00ca9d0519fe4",
+        "runs/submissions/vigorous-whistle_v45.parquet": "72d24155e6b6b8dbb4d6caf7a590679d3b242ad7c83793dcc3d28d5b88fd77fa",
+        "runs/submissions/vigorous-whistle_v46.parquet": "8abdd87ad5098d7753927f407ffd7e8cd342aa84a2864392e1b64c0dde015af9"
+      },
+      "member_tables": {
+        "runs/adsb_ctx3_mask/member/s701/ranking.parquet": "defa9e6e66ec7123f18c95209ae852547e73e6cc98a0e74e169fcfbcedde0e20",
+        "runs/adsb_ctx3_mask/member/s702/ranking.parquet": "5fdec1de1c59071dadcfe94b975fbfe58b3201553ed55e313f1f8a2acc673ab5",
+        "runs/adsb_ctx3_mask/member/s703/ranking.parquet": "2d89528a4855e77cd60923f23f2186c37e3dbf2ea50d23b52dc6bd9cede1319f",
+        "runs/adsb_ctx3_mask/member/s704/ranking.parquet": "f563d6695b245b9a71434e158392491e95d4025eb358d3f3bfba12bc411a4923",
+        "runs/adsb_ctx3_mask/member/s705/ranking.parquet": "18346fbff8e778e8eddc2b5e8ad00d7627fb0e42420e6e6b0b6bc2c40c04b6e2",
+        "runs/adsb_ctx3_mask/member/s706/ranking.parquet": "573336a26ba411e65ac70deaf31e1cbe8c8167217d32b836d1cb503b28964cbd",
+        "runs/adsb_ctx3_mask/member/s707/ranking.parquet": "0d378480ef05dd6e475dbe99ca1cb86320478e2e30e4586218e64c089ac65717",
+        "runs/adsb_ctx3_mask/member/s708/ranking.parquet": "fcfab540d6de580acafe3dda9a6922fac367db2dcc1c0c9aff33e0da132347d8",
+        "runs/adsb_ctx3_mask/member/s709/ranking.parquet": "ac246d0509aa9e7a69a2702bb2af4c580f3791f72f796d678d0bb4745133ed39",
+        "runs/adsb_ctx3_mask/member/s710/ranking.parquet": "6f3ca402cc836965139e60f7ce643cfbe4810b3af8ede47b316be665d79c733f",
+        "runs/adsb_ctx3_mask/member/s711/ranking.parquet": "2d7cd419a78aea496a96832d078365651196a147d153e28c36e8ffe259507d9c",
+        "runs/adsb_ctx3_mask/member/s712/ranking.parquet": "23fc69b28708b99e3db6a0aeef2d334695ac5bd244592489620cb4dba447ef38",
+        "runs/adsb_ctx3_mask/member/s713/ranking.parquet": "298b94a4c1773d080254fbeb3858101ae78119ee6e9da3f92ba65c1183f284ac",
+        "runs/adsb_ctx3_mask/member/s714/ranking.parquet": "3c924a947c0b3ee38271f9d6ac48cde70bbd08d7d0ea4dc1d69d5b1a85bfcaa4",
+        "runs/adsb_ctx3_mask/member/s715/ranking.parquet": "d51c9756e98f4deb614944d13f7da7df867f595422ad68c779d8e6cb3f290208",
+        "runs/adsb_ctx3_mask/member/s716/ranking.parquet": "bf4a7c76ea86f0a0729830d594a1d0b3a872471f6b5f523257d0a3b6dd24ab0c"
+      },
+      "official_scores_used": "none",
+      "recipe": "v46 with the network table at (1 - 0.4) x (v46's table with combo_all at 0.4) + 0.4 x mask_unmatched (16 seeds, twelve-month refit) where the member has a value, through the shipped stack (v34 weights, network share 0.85 with the networks-far-below gate, u300 gate, callsign fix 50%, queue trust 0.75, two-sided stretch 1500 / 900); LIRF rows unchanged; floor -12 s",
+      "selected_by": "dry run; the user's override of the declared rule: ship it anyway"
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "16e9f33a3dae2f330dca0477274cb6120ad4ef33ae563425561989c4a2e99965",
+    "size_bytes": 1355678,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-30T09:03:01.682346+00:00",
+    "version": 52
+  },
+  "rmse_if_every_changed_label_equals_the_new_value": null,
+  "rmse_if_every_changed_label_equals_the_old_value": null,
+  "rows": 344841,
+  "rows_changed_float": 101500,
+  "rows_changed_in_anchored_layers": 154,
+  "rows_changed_integer": 91409,
+  "seeds": 16,
+  "sha256": "16e9f33a3dae2f330dca0477274cb6120ad4ef33ae563425561989c4a2e99965",
+  "sum_squared_change": 15584901.0,
+  "version": 52
+}
