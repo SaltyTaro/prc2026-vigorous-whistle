@@ -135,7 +135,8 @@ def main() -> None:
         raise ValueError("A changed row carries a layer above v38 in v45.")
     values = np.where(changed, candidate, reference.astype(float))
     provenance = {"experiment_id": decl["experiment_id"], "candidate": args.candidate, "dry_run": args.dry_run is not None,
-                  "selected_by": ("dry run" if args.dry_run is not None else "the declared rule" if selected == args.candidate
+                  "selected_by": (("dry run" + (f"; the user's override of the declared rule: {args.user_override}" if args.user_override else ""))
+                                  if args.dry_run is not None else "the declared rule" if selected == args.candidate
                                   else f"the user's override of the declared rule, which selected {selected}: {args.user_override}"),
                   "recipe": (f"v46 with the network table at (1 - {weight}) x " + (f"(v46's table with {bases[0]['member']['name']} at {bases[0]['weight']})" if bases
                                                                                    else "(0.25 e24 + 0.25 e24b + 0.5 e32)")
