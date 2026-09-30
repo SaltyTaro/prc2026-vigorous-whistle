@@ -17,6 +17,9 @@ Nothing is uploaded.
   --dry-run DIR
   --version 48 [--user-override TEXT]
   --version 49 --declaration configs/daily_totals_v2.json [--candidate NAME --user-override TEXT]
+  --base runs/submissions/vigorous-whistle_v51.parquet --version 52   the same procedure on another file of the clean line instead
+        of the uploaded v46 (a layer on the v46 base takes v48's procedure last); the base's hash is recorded; with the uploaded v46 as
+        the base the output is the uploaded v48 byte for byte
 """
 from __future__ import annotations
 
@@ -49,7 +52,8 @@ FLOOR = -12.0
 SCOPES = {"matched_no_lirf": True, "all_no_lirf": False, "lirf_nonpop_matched": True, "lirf_nonpop_unmatched": False, "fixed": False}
 
 
-def ranking_table() -> pd.DataFrame:
+def ranking_table(base: tuple[str, str] = (V46[0], V46[1])) -> pd.DataFrame:
+    """The ranking rows with `stack` = the base file's values (the uploaded v46 unless another file of the clean line is named)."""
     detail = pd.read_parquet(ROOT / export_v33.DRY, columns=[ID, "airport", "month", "scope"])
     ids = detail[ID].to_numpy()
     if set(detail["scope"]) - set(SCOPES):
@@ -59,7 +63,7 @@ def ranking_table() -> pd.DataFrame:
     if raw["MVT_TIME_UTC_mvt"].isna().any() or raw["SCHED_TIME_UTC_mvt"].isna().any() or not (raw["ADEP_mvt"].to_numpy() == detail["airport"].to_numpy()).all():
         raise ValueError("The ranking clocks do not cover the ranking rows.")
     takeoff, schedule = (pd.to_datetime(raw[c], utc=True).reset_index(drop=True) for c in ["MVT_TIME_UTC_mvt", "SCHED_TIME_UTC_mvt"])
-    t = pd.DataFrame({ID: ids, "airport": detail["airport"].to_numpy(), "month": detail["month"].to_numpy(), "stack": uploaded(V46[0], V46[1], ids).astype(float),
+    t = pd.DataFrame({ID: ids, "airport": detail["airport"].to_numpy(), "month": detail["month"].to_numpy(), "stack": uploaded(base[0], base[1], ids).astype(float),
                       "matched": detail["scope"].map(SCOPES).to_numpy(dtype=bool)})
     t["a"] = (takeoff - schedule).dt.total_seconds().to_numpy()
     t["bday"] = (takeoff - pd.to_timedelta(t["stack"], unit="s")).dt.strftime("%Y-%m-%d").to_numpy()
@@ -101,7 +105,10 @@ def main() -> None:
     parser.add_argument("--user-override")
     parser.add_argument("--declaration", default=DECLARATION)
     parser.add_argument("--candidate")
+    parser.add_argument("--base", help="another file of the clean line as the base instead of the uploaded v46 (path under the project root)")
     args = parser.parse_args()
+    base = (V46[0], V46[1]) if args.base is None else (Path(args.base).as_posix(), sha256_file(ROOT / args.base))
+    on_v46 = base[1] == V46[1]
     declaration = args.declaration
     decl = read_json(ROOT / declaration)
     results = read_json(ROOT / decl["report"])
@@ -132,9 +139,9 @@ def main() -> None:
     if prior != "fixed":
         raise ValueError("Only the fixed prior is wired for the ranking rows.")
 
-    t = ranking_table()
+    t = ranking_table(base)
     ids = t[ID].to_numpy()
-    v46 = t["stack"].to_numpy().astype(np.int64)
+    v46 = t["stack"].to_numpy().astype(np.int64)  # the base's values (the uploaded v46 unless --base names another file)
     new, days, fitted = reconcile(t, settings, tau_scale)
     heavy, pinned = fitted.pop("heavy"), fitted.pop("pinned")
     if not np.isfinite(new).all():
@@ -152,23 +159,29 @@ def main() -> None:
     provenance = {"experiment_id": decl["experiment_id"], "dry_run": args.dry_run is not None,
                   "selected_by": "dry run" if args.dry_run is not None else (f"the user's override: {args.user_override}" if args.user_override else "the declared development rule (accepted)"),
                   "candidate": candidate,
-                  "recipe": "v46 reconciled with EUROCONTROL's published daily all-cause pre-departure delay per airport: every row of a read airport-day that is not heavy moves by the "
+                  "base": {"path": base[0], "sha256": base[1], "uploaded_v46": on_v46,
+                           "note": "the uploaded v46" if on_v46 else "another file of the clean line built on v46; this file is that base with v48's procedure applied last"},
+                  "recipe": ("v46" if on_v46 else "the base") + " reconciled with EUROCONTROL's published daily all-cause pre-departure delay per airport: every row of a read airport-day that is not heavy moves by the "
                             "posterior day shift plus a first-order tilt; " + ("heavy rows move by the tempered posterior of the declaration, between their delay outcomes and their "
                                                                                 "schedule interval; pinned rows and rows of airport-days not read keep v46" if settings.heavy_updates else
                                                                                 "heavy rows and rows of airport-days not read keep v46") + "; floor -12 s",
-                  "incumbent": {"submission": Path(V46[0]).name, "official_rmse_seconds": V46[2], "sha256": V46[1],
-                                "note": "the clean model line's best; v47 is a separate file on the same base"},
+                  "incumbent": ({"submission": Path(V46[0]).name, "official_rmse_seconds": V46[2], "sha256": V46[1],
+                                 "note": "the clean model line's best; v47 is a separate file on the same base"}
+                                if on_v46 else
+                                {"submission": Path(V48[0]).name, "official_rmse_seconds": V48[2], "sha256": V48[1],
+                                 "note": "the clean line's best (the uploaded v46 with this procedure); this file is another base of the clean line with the same procedure applied last; "
+                                         ""}),
                   "declaration": {declaration: {"sha256": sha256_file(ROOT / declaration), "object_hash": object_hash(decl)}},
                   "development_results": {decl["report"]: sha256_file(ROOT / decl["report"])},
                   "code": {p: sha256_file(ROOT / p) for p in CODE},
-                  "inputs": {p: sha256_file(ROOT / p) for p in [export_v33.DRY, V46[0], RANKING, "runs/daily_totals/rows.parquet"]},
+                  "inputs": {p: sha256_file(ROOT / p) for p in [export_v33.DRY, V46[0], base[0], RANKING, "runs/daily_totals/rows.parquet"]},
                   "external_data": {"adsb": "adsb.lol globe_history (ODbL) surface positions, as in v46", "published_totals": decl["external_data"]},
                   "user_decision": decl["user_decision"], "audit_used": False, "floor_seconds": FLOOR, "official_scores_used": "none"}
     receipt = export_submission(pd.DataFrame({ID: ids, "prediction": values}), ROOT / "data/raw/submitting.parquet", output, provenance)
     exported = pd.read_parquet(output).set_index(ID)[TARGET].reindex(ids).to_numpy().astype(np.int64)
     change = exported.astype(float) - v46.astype(float)
     if ((change != 0) & ~changed).any() or not np.array_equal(exported[changed], np.rint(new[changed]).astype(np.int64)):
-        raise ValueError("The exported file is not the reconciled v46.")
+        raise ValueError("The exported file is not the reconciled base.")
     detail_path.mkdir(parents=True, exist_ok=True)
     days.to_parquet(detail_path / "days.parquet", index=False)
     pd.DataFrame({ID: ids, "v46": v46, "reconciled": new, "exported": exported}).to_parquet(detail_path / "values.parquet", index=False)
@@ -184,7 +197,8 @@ def main() -> None:
                                        "day_shift_sd_s": float(d["shift_s"].std()) if len(d) > 1 else 0.0, "day_shift_min_s": float(d["shift_s"].min()) if len(d) else 0.0,
                                        "day_shift_max_s": float(d["shift_s"].max()) if len(d) else 0.0, "sum_squared_change": float((g["change"] ** 2).sum())}
     counts = t[t["complete"]].groupby(["airport", "bday"]).agg(n=("a", "size"), n_pub=("n_pub", "first"))
-    report = {"created_at_utc": utc_now(), "version": args.version, "base": 46, "dry_run": args.dry_run is not None, "output": output.as_posix(), "sha256": sha256_file(output),
+    score_base = V46[2] if on_v46 else None   # the score arithmetic needs the base's official score; another base has none
+    report = {"created_at_utc": utc_now(), "version": args.version, "base": 46 if on_v46 else {"path": base[0], "sha256": base[1]}, "dry_run": args.dry_run is not None, "output": output.as_posix(), "sha256": sha256_file(output),
               "receipt": receipt, "rows": n, "declaration_object_hash": object_hash(decl), "fitted_from_development_months": fitted,
               "checks": {"rows_changed_outside_read_days": 0, "exported_equals_reconciled_on_changed_rows": True, "heavy_rows_changed": int((change != 0)[heavy].sum()),
                          "pinned_rows": int(pinned.sum()), "pinned_rows_changed": 0, "heavy_rows_beyond_their_schedule_interval": 0 if settings.heavy_prior == "bounded" else None},
@@ -193,13 +207,14 @@ def main() -> None:
                                                                   "max": float((counts["n"] / counts["n_pub"]).max())}},
               "rows_changed": int((change != 0).sum()), "mean_change_s": float(change.mean()), "mean_abs_change_s": float(np.abs(change).mean()), "max_abs_change_s": float(np.abs(change).max()),
               "rows_changed_over_60s": int((np.abs(change) > 60).sum()), "sum_squared_change": float((change ** 2).sum()), "cells": cells,
-              "rmse_if_every_changed_label_equals_the_new_value": float(np.sqrt(max(n * V46[2] ** 2 - (change ** 2).sum(), 0.0) / n)),
-              "rmse_if_the_changes_are_noise": float(np.sqrt((n * V46[2] ** 2 + (change ** 2).sum()) / n)),
-              "rmse_at_the_development_alignment": {f"{b}": float(np.sqrt(max(n * V46[2] ** 2 - (2 * b - 1) * (change ** 2).sum(), 0.0) / n)) for b in (0.78, 0.84, 1.0, 1.17)}}
-    if settings.heavy_updates:   # the file against the uploaded v48: the heavy rows' part, and what it does to the other rows of their days
+              "rmse_if_every_changed_label_equals_the_new_value": float(np.sqrt(max(n * score_base ** 2 - (change ** 2).sum(), 0.0) / n)) if score_base else None,
+              "rmse_if_the_changes_are_noise": float(np.sqrt((n * score_base ** 2 + (change ** 2).sum()) / n)) if score_base else None,
+              "rmse_at_the_development_alignment": {f"{b}": float(np.sqrt(max(n * score_base ** 2 - (2 * b - 1) * (change ** 2).sum(), 0.0) / n)) for b in (0.78, 0.84, 1.0, 1.17)} if score_base else None}
+    if settings.heavy_updates or not on_v46:   # the file against the uploaded v48 (the incumbent): the heavy rows' part, or another base's part
         v48 = uploaded(V48[0], V48[1], ids).astype(float)
         d = exported.astype(float) - v48
         report["against_v48"] = {"base": {"submission": Path(V48[0]).name, "official_rmse_seconds": V48[2], "sha256": V48[1]}, "rows_that_differ": int((d != 0).sum()),
+                                 "mean_abs_change_s": float(np.abs(d[d != 0]).mean()) if (d != 0).any() else 0.0, "rows_that_differ_over_60s": int((np.abs(d) > 60).sum()),
                                  "heavy_rows_that_differ": int((d != 0)[heavy].sum()), "sum_squared_change": float((d ** 2).sum()), "sum_squared_change_heavy_rows": float((d[heavy] ** 2).sum()),
                                  "mean_abs_change_heavy_rows_s": float(np.abs(d[heavy & (d != 0)]).mean()) if (heavy & (d != 0)).any() else 0.0, "max_abs_change_s": float(np.abs(d).max()),
                                  "heavy_rows_up": int((d[heavy] > 0).sum()), "heavy_rows_down": int((d[heavy] < 0).sum()),
