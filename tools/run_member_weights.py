@@ -6,6 +6,9 @@
 
 Before any candidate is read: the v46 stack must reproduce the v46 re-read, and the control (c, m) = (0.40, 0.40) must reproduce the masked
 round's recorded w40 month RMSEs (docs/adsb_ctx3_mask/results_v1.json). Rule and readings as in tools/run_network_member.py.
+Optional (1 October 2026, off unless a declaration uses it): a candidate's "mask_member" names an entry of the declaration's
+"alternative_members" (a member spec with its own tables, e.g. more seeds) that replaces mask_unmatched for that candidate only; a
+candidate with "reported_only": true is read and reported but never enters the selection.
 
   --declaration PATH --check-control     the two control reproductions only
   --declaration PATH --score --select    -> the declaration's "selection" and "report" paths
@@ -36,7 +39,7 @@ CODE = ["tools/run_member_weights.py", "tools/run_network_member.py", "src/prc20
 
 
 def weights(spec: dict) -> tuple[float, float]:
-    if set(spec) - {"combo_weight", "mask_weight", "note", "results", "results_candidate"}:
+    if set(spec) - {"combo_weight", "mask_weight", "note", "results", "results_candidate", "mask_member", "reported_only"}:
         raise ValueError(f"Unwired keys in {sorted(spec)}.")
     c, m = float(spec["combo_weight"]), float(spec["mask_weight"])
     if not (0.0 <= c <= 1.0 and 0.0 <= m <= 1.0):
@@ -103,12 +106,20 @@ def main() -> None:
             values, found = member_values(mem, month, ids)
             sources.update(found)
             members.append(np.where(lirf, np.nan, values))
+        alternatives = {}
+        for alt_name, alt in decl.get("alternative_members", {}).items():
+            values, found = member_values(alt, month, ids)
+            sources.update(found)
+            alternatives[alt_name] = np.where(lirf, np.nan, values)
+        unknown = {s["mask_member"] for s in decl["candidates"].values() if s.get("mask_member")} - set(alternatives)
+        if unknown:
+            raise ValueError(f"Candidates name undeclared alternative members: {sorted(unknown)}")
         tab, _ = table(nets, members[0], members[1], c0, m0)
         control, _ = stack(f, tab)
         want = recorded["candidates"][decl["control"]["results_candidate"]]["months"][month]["rmse"]
         if not abs(rmse(y, control) - want) <= 1e-9:
             raise ValueError(f"The control does not reproduce the recorded {decl['control']['results_candidate']} on {month}: {rmse(y, control)} against {want}.")
-        frames[month] = (f, nets, members, control)
+        frames[month] = (f, nets, members, control, alternatives)
     print("v46 re-read and the control (v52's model part) reproduce on", MONTHS, flush=True)
     if args.check_control:
         return
@@ -117,12 +128,13 @@ def main() -> None:
               "control": {"combo_weight": c0, "mask_weight": m0, "month_rmse": {}}, "equal_footing_months": equal, "minimum_mean_improvement_fraction": minimum,
               "member_sources": sources, "candidates": {}}
     entries = {name: {**spec, "months": {}} for name, spec in decl["candidates"].items()}
-    for month, (f, nets, members, control) in frames.items():
+    for month, (f, nets, members, control, alternatives) in frames.items():
         y, days, lirf = f["label"].to_numpy(dtype=float), f["day"].to_numpy(), f["airport"].to_numpy() == "LIRF"
         report["control"]["month_rmse"][month] = rmse(y, control)
         for name, spec in decl["candidates"].items():
             c, m = weights(spec)
-            tab, inside = table(nets, members[0], members[1], c, m)
+            mask = alternatives[spec["mask_member"]] if spec.get("mask_member") else members[1]
+            tab, inside = table(nets, members[0], mask, c, m)
             values, fire = stack(f, tab)
             if not np.isfinite(values).all():
                 raise ValueError(f"{name} has non-finite values on {month}.")
@@ -138,7 +150,11 @@ def main() -> None:
                                               "alignment": float(-np.sum(d * (control - y)) / np.sum(d ** 2)) if changed.any() else None,
                                               "by_scope_change_pct": {s: 100 * (rmse(y[q], values[q]) / rmse(y[q], control[q]) - 1) for s, q in slices(f).items()},
                                               "paired_days_vs_control": paired_days(days, y, values, control, SEED)}
-    eligible, selected = select(entries, equal, minimum)
+    select(entries, equal, minimum)  # the rule's readings on every entry, reported-only ones included
+    for e in entries.values():
+        if e.get("reported_only"):
+            e["eligible"] = False
+    eligible, selected = select({n: e for n, e in entries.items() if not e.get("reported_only")}, equal, minimum)
     report["candidates"], report["eligible"], report["selected_candidate"] = entries, eligible, selected
     report["model_code"] = {p: sha256_file(ROOT / p) for p in CODE}
     report["environment"] = environment(ROOT)
