@@ -1,0 +1,247 @@
+{
+ "experiment_id": "prc2026-member-weights-v2",
+ "declared_at_utc": "2026-09-30T21:56:02+00:00",
+ "audit_used": false,
+ "purpose": "Adaptive follow-up (the user: 're-run the full-prediction weight', 1 October 2026): the combination weight 0.25, which the member-weight round's grid (0.40 / 0.55 / 0.70) did not contain, read at the stack level on the four development months with the unchanged scorer, control and rule. No new fit. Declared before any stack-level score of these candidates.",
+ "disclosed": "This grid is chosen from earlier readings of the same development months, so it is adaptive: (1) the member-weight round (configs/member_weights_v1.json, docs/member_weights/results_v1.json) selected nothing, best c40_m70 at -0.013% (mean), and read the masked weight a little higher as mildly better; (2) the thinned-coverage check (configs/member_weights_thin_v1.json, docs/member_thin/) read December at the network-table level only, where c25_m70 was -0.171% on natural inputs, the combination member slightly hurting matched rows and a higher masked weight helping unmatched rows; (3) the combination round (configs/adsb_ctx3_combo_dev_v1.json) preferred 0.40 over 0.25 at the stack level before the masked member existed. Also known: the official scores of v51 (222.2306) and v52 (222.0519); no official score enters this round.",
+ "members": [
+  {
+   "name": "combo_all",
+   "declaration": "configs/adsb_ctx3_combo_dev_v1.json",
+   "weight_key": "combo_weight",
+   "tables": {
+    "2025-01": [
+     "runs/adsb_ctx3_combo/member/s601/2025-01.parquet",
+     "runs/adsb_ctx3_combo/member/s602/2025-01.parquet",
+     "runs/adsb_ctx3_combo/member/s603/2025-01.parquet",
+     "runs/adsb_ctx3_combo/member/s604/2025-01.parquet",
+     "runs/adsb_ctx3_combo/member/s605/2025-01.parquet",
+     "runs/adsb_ctx3_combo/member/s606/2025-01.parquet",
+     "runs/adsb_ctx3_combo/member/s607/2025-01.parquet",
+     "runs/adsb_ctx3_combo/member/s608/2025-01.parquet",
+     "runs/adsb_ctx3_combo/member/s609/2025-01.parquet",
+     "runs/adsb_ctx3_combo/member/s610/2025-01.parquet",
+     "runs/adsb_ctx3_combo/member/s611/2025-01.parquet",
+     "runs/adsb_ctx3_combo/member/s612/2025-01.parquet",
+     "runs/adsb_ctx3_combo/member/s613/2025-01.parquet",
+     "runs/adsb_ctx3_combo/member/s614/2025-01.parquet",
+     "runs/adsb_ctx3_combo/member/s615/2025-01.parquet",
+     "runs/adsb_ctx3_combo/member/s616/2025-01.parquet"
+    ],
+    "2025-07": [
+     "runs/adsb_ctx3_combo/member/s601/2025-07.parquet",
+     "runs/adsb_ctx3_combo/member/s602/2025-07.parquet",
+     "runs/adsb_ctx3_combo/member/s603/2025-07.parquet",
+     "runs/adsb_ctx3_combo/member/s604/2025-07.parquet",
+     "runs/adsb_ctx3_combo/member/s605/2025-07.parquet",
+     "runs/adsb_ctx3_combo/member/s606/2025-07.parquet",
+     "runs/adsb_ctx3_combo/member/s607/2025-07.parquet",
+     "runs/adsb_ctx3_combo/member/s608/2025-07.parquet",
+     "runs/adsb_ctx3_combo/member/s609/2025-07.parquet",
+     "runs/adsb_ctx3_combo/member/s610/2025-07.parquet",
+     "runs/adsb_ctx3_combo/member/s611/2025-07.parquet",
+     "runs/adsb_ctx3_combo/member/s612/2025-07.parquet",
+     "runs/adsb_ctx3_combo/member/s613/2025-07.parquet",
+     "runs/adsb_ctx3_combo/member/s614/2025-07.parquet",
+     "runs/adsb_ctx3_combo/member/s615/2025-07.parquet",
+     "runs/adsb_ctx3_combo/member/s616/2025-07.parquet"
+    ],
+    "2025-11": [
+     "runs/adsb_ctx3_combo/member/s601/2025-11.parquet",
+     "runs/adsb_ctx3_combo/member/s602/2025-11.parquet",
+     "runs/adsb_ctx3_combo/member/s603/2025-11.parquet",
+     "runs/adsb_ctx3_combo/member/s604/2025-11.parquet",
+     "runs/adsb_ctx3_combo/member/s605/2025-11.parquet",
+     "runs/adsb_ctx3_combo/member/s606/2025-11.parquet",
+     "runs/adsb_ctx3_combo/member/s607/2025-11.parquet",
+     "runs/adsb_ctx3_combo/member/s608/2025-11.parquet",
+     "runs/adsb_ctx3_combo/member/s609/2025-11.parquet",
+     "runs/adsb_ctx3_combo/member/s610/2025-11.parquet",
+     "runs/adsb_ctx3_combo/member/s611/2025-11.parquet",
+     "runs/adsb_ctx3_combo/member/s612/2025-11.parquet",
+     "runs/adsb_ctx3_combo/member/s613/2025-11.parquet",
+     "runs/adsb_ctx3_combo/member/s614/2025-11.parquet",
+     "runs/adsb_ctx3_combo/member/s615/2025-11.parquet",
+     "runs/adsb_ctx3_combo/member/s616/2025-11.parquet"
+    ],
+    "2025-12": [
+     "runs/adsb_ctx3_combo/member/s601/2025-12.parquet",
+     "runs/adsb_ctx3_combo/member/s602/2025-12.parquet",
+     "runs/adsb_ctx3_combo/member/s603/2025-12.parquet",
+     "runs/adsb_ctx3_combo/member/s604/2025-12.parquet",
+     "runs/adsb_ctx3_combo/member/s605/2025-12.parquet",
+     "runs/adsb_ctx3_combo/member/s606/2025-12.parquet",
+     "runs/adsb_ctx3_combo/member/s607/2025-12.parquet",
+     "runs/adsb_ctx3_combo/member/s608/2025-12.parquet",
+     "runs/adsb_ctx3_combo/member/s609/2025-12.parquet",
+     "runs/adsb_ctx3_combo/member/s610/2025-12.parquet",
+     "runs/adsb_ctx3_combo/member/s611/2025-12.parquet",
+     "runs/adsb_ctx3_combo/member/s612/2025-12.parquet",
+     "runs/adsb_ctx3_combo/member/s613/2025-12.parquet",
+     "runs/adsb_ctx3_combo/member/s614/2025-12.parquet",
+     "runs/adsb_ctx3_combo/member/s615/2025-12.parquet",
+     "runs/adsb_ctx3_combo/member/s616/2025-12.parquet"
+    ],
+    "ranking": [
+     "runs/adsb_ctx3_combo/member/s601/ranking.parquet",
+     "runs/adsb_ctx3_combo/member/s602/ranking.parquet",
+     "runs/adsb_ctx3_combo/member/s603/ranking.parquet",
+     "runs/adsb_ctx3_combo/member/s604/ranking.parquet",
+     "runs/adsb_ctx3_combo/member/s605/ranking.parquet",
+     "runs/adsb_ctx3_combo/member/s606/ranking.parquet",
+     "runs/adsb_ctx3_combo/member/s607/ranking.parquet",
+     "runs/adsb_ctx3_combo/member/s608/ranking.parquet",
+     "runs/adsb_ctx3_combo/member/s609/ranking.parquet",
+     "runs/adsb_ctx3_combo/member/s610/ranking.parquet",
+     "runs/adsb_ctx3_combo/member/s611/ranking.parquet",
+     "runs/adsb_ctx3_combo/member/s612/ranking.parquet",
+     "runs/adsb_ctx3_combo/member/s613/ranking.parquet",
+     "runs/adsb_ctx3_combo/member/s614/ranking.parquet",
+     "runs/adsb_ctx3_combo/member/s615/ranking.parquet",
+     "runs/adsb_ctx3_combo/member/s616/ranking.parquet"
+    ]
+   },
+   "note": "enters the network table first (non-LIRF rows)"
+  },
+  {
+   "name": "mask_unmatched",
+   "declaration": "configs/adsb_ctx3_mask_dev_v1.json",
+   "weight_key": "mask_weight",
+   "tables": {
+    "2025-01": [
+     "runs/adsb_ctx3_mask/member/s701/2025-01.parquet",
+     "runs/adsb_ctx3_mask/member/s702/2025-01.parquet",
+     "runs/adsb_ctx3_mask/member/s703/2025-01.parquet",
+     "runs/adsb_ctx3_mask/member/s704/2025-01.parquet",
+     "runs/adsb_ctx3_mask/member/s705/2025-01.parquet",
+     "runs/adsb_ctx3_mask/member/s706/2025-01.parquet",
+     "runs/adsb_ctx3_mask/member/s707/2025-01.parquet",
+     "runs/adsb_ctx3_mask/member/s708/2025-01.parquet",
+     "runs/adsb_ctx3_mask/member/s709/2025-01.parquet",
+     "runs/adsb_ctx3_mask/member/s710/2025-01.parquet",
+     "runs/adsb_ctx3_mask/member/s711/2025-01.parquet",
+     "runs/adsb_ctx3_mask/member/s712/2025-01.parquet",
+     "runs/adsb_ctx3_mask/member/s713/2025-01.parquet",
+     "runs/adsb_ctx3_mask/member/s714/2025-01.parquet",
+     "runs/adsb_ctx3_mask/member/s715/2025-01.parquet",
+     "runs/adsb_ctx3_mask/member/s716/2025-01.parquet"
+    ],
+    "2025-07": [
+     "runs/adsb_ctx3_mask/member/s701/2025-07.parquet",
+     "runs/adsb_ctx3_mask/member/s702/2025-07.parquet",
+     "runs/adsb_ctx3_mask/member/s703/2025-07.parquet",
+     "runs/adsb_ctx3_mask/member/s704/2025-07.parquet",
+     "runs/adsb_ctx3_mask/member/s705/2025-07.parquet",
+     "runs/adsb_ctx3_mask/member/s706/2025-07.parquet",
+     "runs/adsb_ctx3_mask/member/s707/2025-07.parquet",
+     "runs/adsb_ctx3_mask/member/s708/2025-07.parquet",
+     "runs/adsb_ctx3_mask/member/s709/2025-07.parquet",
+     "runs/adsb_ctx3_mask/member/s710/2025-07.parquet",
+     "runs/adsb_ctx3_mask/member/s711/2025-07.parquet",
+     "runs/adsb_ctx3_mask/member/s712/2025-07.parquet",
+     "runs/adsb_ctx3_mask/member/s713/2025-07.parquet",
+     "runs/adsb_ctx3_mask/member/s714/2025-07.parquet",
+     "runs/adsb_ctx3_mask/member/s715/2025-07.parquet",
+     "runs/adsb_ctx3_mask/member/s716/2025-07.parquet"
+    ],
+    "2025-11": [
+     "runs/adsb_ctx3_mask/member/s701/2025-11.parquet",
+     "runs/adsb_ctx3_mask/member/s702/2025-11.parquet",
+     "runs/adsb_ctx3_mask/member/s703/2025-11.parquet",
+     "runs/adsb_ctx3_mask/member/s704/2025-11.parquet",
+     "runs/adsb_ctx3_mask/member/s705/2025-11.parquet",
+     "runs/adsb_ctx3_mask/member/s706/2025-11.parquet",
+     "runs/adsb_ctx3_mask/member/s707/2025-11.parquet",
+     "runs/adsb_ctx3_mask/member/s708/2025-11.parquet",
+     "runs/adsb_ctx3_mask/member/s709/2025-11.parquet",
+     "runs/adsb_ctx3_mask/member/s710/2025-11.parquet",
+     "runs/adsb_ctx3_mask/member/s711/2025-11.parquet",
+     "runs/adsb_ctx3_mask/member/s712/2025-11.parquet",
+     "runs/adsb_ctx3_mask/member/s713/2025-11.parquet",
+     "runs/adsb_ctx3_mask/member/s714/2025-11.parquet",
+     "runs/adsb_ctx3_mask/member/s715/2025-11.parquet",
+     "runs/adsb_ctx3_mask/member/s716/2025-11.parquet"
+    ],
+    "2025-12": [
+     "runs/adsb_ctx3_mask/member/s701/2025-12.parquet",
+     "runs/adsb_ctx3_mask/member/s702/2025-12.parquet",
+     "runs/adsb_ctx3_mask/member/s703/2025-12.parquet",
+     "runs/adsb_ctx3_mask/member/s704/2025-12.parquet",
+     "runs/adsb_ctx3_mask/member/s705/2025-12.parquet",
+     "runs/adsb_ctx3_mask/member/s706/2025-12.parquet",
+     "runs/adsb_ctx3_mask/member/s707/2025-12.parquet",
+     "runs/adsb_ctx3_mask/member/s708/2025-12.parquet",
+     "runs/adsb_ctx3_mask/member/s709/2025-12.parquet",
+     "runs/adsb_ctx3_mask/member/s710/2025-12.parquet",
+     "runs/adsb_ctx3_mask/member/s711/2025-12.parquet",
+     "runs/adsb_ctx3_mask/member/s712/2025-12.parquet",
+     "runs/adsb_ctx3_mask/member/s713/2025-12.parquet",
+     "runs/adsb_ctx3_mask/member/s714/2025-12.parquet",
+     "runs/adsb_ctx3_mask/member/s715/2025-12.parquet",
+     "runs/adsb_ctx3_mask/member/s716/2025-12.parquet"
+    ],
+    "ranking": [
+     "runs/adsb_ctx3_mask/member/s701/ranking.parquet",
+     "runs/adsb_ctx3_mask/member/s702/ranking.parquet",
+     "runs/adsb_ctx3_mask/member/s703/ranking.parquet",
+     "runs/adsb_ctx3_mask/member/s704/ranking.parquet",
+     "runs/adsb_ctx3_mask/member/s705/ranking.parquet",
+     "runs/adsb_ctx3_mask/member/s706/ranking.parquet",
+     "runs/adsb_ctx3_mask/member/s707/ranking.parquet",
+     "runs/adsb_ctx3_mask/member/s708/ranking.parquet",
+     "runs/adsb_ctx3_mask/member/s709/ranking.parquet",
+     "runs/adsb_ctx3_mask/member/s710/ranking.parquet",
+     "runs/adsb_ctx3_mask/member/s711/ranking.parquet",
+     "runs/adsb_ctx3_mask/member/s712/ranking.parquet",
+     "runs/adsb_ctx3_mask/member/s713/ranking.parquet",
+     "runs/adsb_ctx3_mask/member/s714/ranking.parquet",
+     "runs/adsb_ctx3_mask/member/s715/ranking.parquet",
+     "runs/adsb_ctx3_mask/member/s716/ranking.parquet"
+    ]
+   },
+   "note": "enters after the combination (non-LIRF rows without an ADS-B match)"
+  }
+ ],
+ "control": {
+  "combo_weight": 0.4,
+  "mask_weight": 0.4,
+  "note": "v52's model part; its month RMSEs must equal the masked round's recorded w40 RMSEs (docs/adsb_ctx3_mask/results_v1.json) before any candidate is read",
+  "results": "docs/adsb_ctx3_mask/results_v1.json",
+  "results_candidate": "w40"
+ },
+ "candidates": {
+  "c25_m25": {
+   "combo_weight": 0.25,
+   "mask_weight": 0.25
+  },
+  "c25_m40": {
+   "combo_weight": 0.25,
+   "mask_weight": 0.4
+  },
+  "c25_m55": {
+   "combo_weight": 0.25,
+   "mask_weight": 0.55
+  },
+  "c25_m70": {
+   "combo_weight": 0.25,
+   "mask_weight": 0.7
+  }
+ },
+ "semantics": "table_1 = (1 - c) x (0.25 e24 + 0.25 e24b + 0.5 e32) + c x combo_all on non-LIRF rows where both are finite; table_2 = (1 - m) x table_1 + m x mask_unmatched on non-LIRF rows where both are finite; v46's mix on table_2 (network share 0.85; share 0.5 where the committee sits more than 1,200 s above the table); then the whole v46 development stack (tools/run_member_weights.py).",
+ "rule": "the clean line's unchanged rule: eligible when no equal-footing month (January, July, December) is worse on all rows than the control, the mean ratio is at least 0.02% below 1 and every equal-footing month's paired-day 95% interval lies below zero; the lowest mean ratio among the eligible is selected; otherwise nothing",
+ "equal_footing_months": [
+  "2025-01",
+  "2025-07",
+  "2025-12"
+ ],
+ "minimum_mean_improvement_fraction": 0.0002,
+ "never_read": "No official score enters. The published daily totals enter only the export step (configs/daily_totals_v1.json applied last, as for v51 and v52).",
+ "export_plan": "if a candidate is selected and the user says so: the members at the selected weights on the ranking rows; the control's ranking values must reproduce v52's member file (runs/adsb_ctx3_mask/export_dry/vigorous-whistle_v52.parquet, SHA-256 16e9f33a3dae2f330dca0477274cb6120ad4ef33ae563425561989c4a2e99965); the candidate's member file is a dry run; configs/daily_totals_v1.json is applied last with tools/export_daily_totals.py --base.",
+ "selection": "runs/member_weights/selection_v2.json",
+ "report": "docs/member_weights/results_v2.json",
+ "automatic_submission": false,
+ "previous_round": {
+  "declaration": "configs/member_weights_v1.json",
+  "results": "docs/member_weights/results_v1.json"
+ }
+}
