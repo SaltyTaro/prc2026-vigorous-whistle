@@ -7,6 +7,11 @@
   readouts  EMA and end-of-training weight means (prc2026_ctx3.train), saved next to the final weights (model_<name>.pt) and
             predicted into <file>_<name>.parquet beside every prediction file of the final weights
 The final weights and their prediction files are named as in round 2.
+Two input options (30 September, positional batch), also off unless the variant sets them:
+  features.drop         focal ADS-B / neighbour columns (of the 27) left out of the network's inputs
+  context.blank_tokens  token quantities blanked (NaN) in every context token, for fitting and prediction alike: `first_seen`
+                        (the segment start, so mvt - segment start) and `adsb_gate`; recorded in run.json (the saved model's
+                        own context settings keep only use_adsb / departures_only, so a predictor must re-apply the blanking)
 
 Round 2's description: otherwise identical to tools/run_adsb_nn.py (whose data path, folds and row rules are imported unchanged: the 314 x19 committee columns,
 LIRF left out of fitting and monitoring, every row predicted) except that every row also gets its context tokens from the token
@@ -49,6 +54,21 @@ CODE_FILES = ["src/prc2026_ctx/__init__.py", "src/prc2026_ctx/tokens.py", "src/p
 TOKEN_FILES = [*TRAINING_MONTHS, DECEMBER, "ranking"]
 
 
+BLANKABLE_TOKENS = {"first_seen": ("times", 6), "adsb_gate": ("values", 3)}  # tokens.TIME_COLUMNS t_seg, VALUE_COLUMNS adsb_gate
+
+
+def blank_tokens(host_store, names: list[str]) -> None:
+    """Set the named token quantities to NaN in every token of the store (context.blank_tokens)."""
+    from prc2026_ctx.tokens import TIME_COLUMNS, VALUE_COLUMNS
+    if TIME_COLUMNS[6] != "t_seg" or VALUE_COLUMNS[3] != "adsb_gate":
+        raise ValueError("Token column layout changed.")
+    if len(set(names)) != len(names) or any(n not in BLANKABLE_TOKENS for n in names):
+        raise ValueError(f"context.blank_tokens may name {sorted(BLANKABLE_TOKENS)} once each: {names}")
+    for name in names:
+        attr, column = BLANKABLE_TOKENS[name]
+        getattr(host_store, attr)[:, column] = np.nan
+
+
 def code_receipt() -> dict:
     hashes = {p: sha256_file(ROOT / p) for p in CODE_FILES}
     return {"files": hashes, "sha256": object_hash(hashes)}
@@ -87,7 +107,11 @@ def main():
     if (out / "run.json").exists():
         raise ValueError(f"Preserve the existing run: {out}")
     extra_names = list(variant["features"]["extra_features"])
-    names = [*BUNDLE_NAMES, *ADSB_NAMES, *extra_names]
+    dropped = list(variant["features"].get("drop", []))
+    if len(set(dropped)) != len(dropped) or any(n not in ADSB_NAMES or n == "adsb_matched" for n in dropped):
+        raise ValueError(f"features.drop names each of the 27 ADS-B columns at most once, never adsb_matched: {dropped}")
+    adsb_names = [n for n in ADSB_NAMES if n not in dropped]
+    names = [*BUNDLE_NAMES, *adsb_names, *extra_names]
     numeric = [n for n in names if n not in CATEGORICAL_COLUMNS]
     categorical = [n for n in names if n in CATEGORICAL_COLUMNS]
     rows_spec, context_settings = variant["rows"], variant["context"]
@@ -105,6 +129,7 @@ def main():
     tokens_dir = ROOT / variant["tokens_dir"]
     token_manifest = read_json(tokens_dir / "manifest.json")
     host_store = TokenStore(tokens_dir, TOKEN_FILES)
+    blank_tokens(host_store, context_settings.get("blank_tokens", []))
     store = Store.build(host_store, device)
     print({"tables": len(tables), "tokens": int(len(host_store.times)), "device": str(device), "seconds": round(time.time() - started, 1)}, flush=True)
 
@@ -241,6 +266,7 @@ def main():
               "target_mean": pre.target_mean, "target_scale": pre.target_scale, "parameters": int(sum(p.numel() for p in model.parameters())),
               "smoke_limit_rows": args.limit_rows,
               "inputs": {"bundle_id": manifest["bundle_id"], **input_hashes, **extra_inputs, "code": code_receipt(), "features": len(names), "adsb_features": ADSB_NAMES,
+                         "adsb_features_dropped": dropped, "adsb_features_used": adsb_names,
                          "extra_features": extra_names, "rows": rows_spec, "context": context_settings, "torch": torch.__version__, "threads": args.threads, "device": str(device),
                          "cuda_device": torch.cuda.get_device_name(device) if device.type == "cuda" else None, "float32_matmul_precision": "high",
                          "tokens": {"directory": variant["tokens_dir"], "manifest_sha256": sha256_file(tokens_dir / "manifest.json"), "k": token_manifest["k"],

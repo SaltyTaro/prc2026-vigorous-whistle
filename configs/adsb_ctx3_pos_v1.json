@@ -1,0 +1,266 @@
+{
+ "experiment_id": "prc2026-adsb-ctx3-positional-design-v1",
+ "declared_at_utc": "2026-09-30T10:17:45+00:00",
+ "audit_used": false,
+ "purpose": "Positional-feature ablation of the context network, declared before any fit of these seeds. Another team reported that adsb.lol features encoding where an aircraft was heard did not transfer between years while features describing its movement did. Our coverage fell between 2025 and the scored months (EDDF gate share 38% -> 8% -> 4%, docs/adsb_coverage), so our networks may carry the same drift. Question: does a context network without the first-point / coverage-anchored inputs (and/or without the coverage-dependent counts) predict better when its ADS-B inputs come from the scored months' coverage regime, at little cost on natural 2025 coverage?",
+ "prior": "Low to moderate. The coverage-regime study (docs/coverage_regime/README.md) found the ranking regime's penalty mostly unavoidable for the residual stage (16.8% / 20.5% recoverable by retraining on the thinned regime); the networks were not measured. Dropping inputs usually costs accuracy on natural coverage.",
+ "hardware": "Azure arcw0-arcw7 (Standard_D16ds_v7), CPU, tools/run_adsb_ctx3.py --device cpu --threads 8, two lanes per worker; every run of this declaration, the reference included, on that hardware; workers deallocated after the mirror. Transfer readings (predictions of the saved models) on the workstation CPU.",
+ "protocol": {
+  "data": "tools/run_adsb_ctx3.py --fold design, with the two input options added before this declaration (features.drop, context.blank_tokens; defaults unchanged): the seasonal fold's fit partition (2025-02..06, 08, 09, LIRF excluded), October monitored, October predictions written by the fit",
+  "groups": {
+   "positional": {
+    "focal_dropped": [
+     "adsb_gate",
+     "adsb_first_point_s",
+     "adsb_first_gs_kt",
+     "adsb_first_dist_stand_m",
+     "adsb_stop_seconds",
+     "adsb_gap_before_s",
+     "adsb_anchor_dist_stand_m",
+     "adsb_points",
+     "nb_runway_30m_median_first_point_s"
+    ],
+    "v19_dropped": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed"
+    ],
+    "token_quantities_blanked": [
+     "first_seen",
+     "adsb_gate"
+    ],
+    "principle": "every quantity anchored to where or when the aircraft was first heard: first-point time, speed, distance to stand and gate class, stationary time from the first point, silence before the segment, points per segment, stand-anchor and imputed-stand distances, last point at the stand, appearance time and the pre-motion gap; in the tokens first_seen and adsb_gate"
+   },
+   "counts": {
+    "focal_dropped": [
+     "nb_runway_10m_count",
+     "nb_airport_10m_count",
+     "nb_runway_30m_count"
+    ],
+    "v19_dropped": [
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m"
+    ],
+    "principle": "the coverage-dependent counts: aircraft heard near the runway / airport and on the surface"
+   },
+   "kept": "adsb_matched and every movement quantity: motion start, taxi path, stops, stopped time, slow start, last ground point, turnaround, neighbour taxi / stopped medians, previous / next runway taxi, first motion; tokens rel_motion, rel_motion_fa, adsb_taxi, adsb_stopped, adsb_matched"
+  },
+  "items": {
+   "nopos": "positional group removed",
+   "nocount": "counts group removed",
+   "nopos_nocount": "both removed",
+   "reference": "ref32 (the 32-epoch base, unchanged)"
+  },
+  "readings": {
+   "R1": "October non-LIRF RMSE of each variant's four-seed mean; matched / unmatched; by airport (as the combination batch)",
+   "R2": "recipe proxy on October (tools/nn_design_report.RecipeProxy, the combination batch's pool P and committee): table = 0.25 committee + 0.75 [(1 - b) P + b X], b in {0.25, 0.5, 1.0}, % RMSE against b = 0; share 0.85 reported beside it",
+   "R3_transfer": "each variant's four-seed mean predicts the non-LIRF departures of July 2025 and December 2025 (neither is a fit or monitoring month of the design fold) twice: with natural inputs (the tables and tokens the fits read; December from the December build and runs/adsb_ctx2/inputs/adsb_features_arcw0, hash-checked) and with thinned inputs (coverage-regime attempt a13, docs/coverage_regime: the thinned committee and v19 tables under runs/coverage_regime/a13_{jul,dec}/features/thinned, and token files rebuilt by tools/build_ctx_tokens.py from the thinned pass-2 matches data/external/adsblol/regime/a13_{jul,dec}/matches; departures, timeline features and every other airport unchanged). Thinned rows = EDDF December, EDDF and LSZH July (LIRF is not a network row). Reported: RMSE natural / thinned on the thinned rows (each month and pooled) and on each whole non-LIRF month, the penalty thinned - natural, by airport",
+   "scorer_check": "before any July / December label is read, the scorer's October predictions of every run must reproduce the run's own stop_predictions.parquet (CPU to CPU): RMS difference at most 0.05 s per run"
+  },
+  "labels_read": "October 2025 (design monitoring, as every design batch) and, for R3 only, July and December 2025. Those two months are the development rule's months: a later development round of a GO item would re-read them with other models (disclosed). January, November 2025 and the ranking months are not read; no official score enters; the published aggregates are not read.",
+  "decision": "An item is GO when (a) on the thinned rows, pooled over July and December, its thinned-input RMSE is below ref32's thinned-input RMSE and the paired-day 95% interval of the difference (days of both months) lies below zero; (b) on thinned inputs its whole non-LIRF RMSE is below ref32's in July and in December; and (c) its October R2 at b = 0.5 is at most 0.02 points above ref32's (the cost on natural 2025 coverage stays small). Of several GO items the one with the lowest pooled thinned-row RMSE is carried forward. A GO goes to a separately declared development round (the item as a network member or a replacement; its rule adds the thinned-regime reading to the usual January / July / December reading; hardware named then); every upload is the user's decision. Without a GO the positional-drift question is closed for falling coverage, with the penalties on record. Coverage that rose (EGLL, EDDM, LEMD in July 2026) cannot be simulated by removal and is not covered by this batch."
+ },
+ "defaults": {
+  "architecture": {
+   "cat_cap": 16,
+   "d_num": 8,
+   "depth": 3,
+   "dropout": 0.1,
+   "heads": 4,
+   "max_tokens": 128,
+   "n_aux": 0,
+   "sa_dropout": 0.0,
+   "sa_ff": 2,
+   "sa_heads": 4,
+   "sa_layers": 0,
+   "tok_dim": 96,
+   "width": 512
+  },
+  "aux": {
+   "targets": [],
+   "weight": 0.0
+  },
+  "context": {
+   "departures_only": false,
+   "use_adsb": true
+  },
+  "features": {
+   "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+   "extra_features": [
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed",
+    "sfc_ground_10m",
+    "sfc_moving_10m",
+    "sfc_moving_20m",
+    "sfc_rwy_queue_5m",
+    "sfc_rwy_queue_10m"
+   ]
+  },
+  "masking": {
+   "columns": [
+    "adsb_gate",
+    "adsb_first_point_s",
+    "adsb_motion_s",
+    "adsb_first_gs_kt",
+    "adsb_first_dist_stand_m",
+    "adsb_stop_seconds",
+    "adsb_taxi_path_m",
+    "adsb_taxi_stops",
+    "adsb_taxi_stopped_s",
+    "adsb_slow_start_s",
+    "adsb_gap_before_s",
+    "adsb_turnaround_s",
+    "adsb_anchor_dist_stand_m",
+    "adsb_last_ground_s",
+    "adsb_points",
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed"
+   ],
+   "matched": "adsb_matched",
+   "p": 0.0
+  },
+  "preprocess": {
+   "bins": 32,
+   "min_count": 10,
+   "target_clip": null
+  },
+  "rows": {
+   "exclude_airports": [
+    "LIRF"
+   ],
+   "exclude_population": false,
+   "max_label": null
+  },
+  "tokens_dir": "data/ctx/tokens_v1",
+  "training": {
+   "batch_size": 2048,
+   "epochs": 32,
+   "grad_clip": 5.0,
+   "lr": 0.001,
+   "min_lr_fraction": 0.02,
+   "warmup_epochs": 1.0,
+   "weight_decay": 0.0001
+  }
+ },
+ "variants": {
+  "ref32": {},
+  "nopos": {
+   "features": {
+    "drop": [
+     "adsb_gate",
+     "adsb_first_point_s",
+     "adsb_first_gs_kt",
+     "adsb_first_dist_stand_m",
+     "adsb_stop_seconds",
+     "adsb_gap_before_s",
+     "adsb_anchor_dist_stand_m",
+     "adsb_points",
+     "nb_runway_30m_median_first_point_s"
+    ],
+    "extra_features": [
+     "adsb_first_motion_s",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m"
+    ]
+   },
+   "context": {
+    "blank_tokens": [
+     "first_seen",
+     "adsb_gate"
+    ]
+   }
+  },
+  "nocount": {
+   "features": {
+    "drop": [
+     "nb_runway_10m_count",
+     "nb_airport_10m_count",
+     "nb_runway_30m_count"
+    ],
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed"
+    ]
+   }
+  },
+  "nopos_nocount": {
+   "features": {
+    "drop": [
+     "adsb_gate",
+     "adsb_first_point_s",
+     "adsb_first_gs_kt",
+     "adsb_first_dist_stand_m",
+     "adsb_stop_seconds",
+     "adsb_gap_before_s",
+     "adsb_anchor_dist_stand_m",
+     "adsb_points",
+     "nb_runway_30m_median_first_point_s",
+     "nb_runway_10m_count",
+     "nb_airport_10m_count",
+     "nb_runway_30m_count"
+    ],
+    "extra_features": [
+     "adsb_first_motion_s"
+    ]
+   },
+   "context": {
+    "blank_tokens": [
+     "first_seen",
+     "adsb_gate"
+    ]
+   }
+  }
+ },
+ "runs": {
+  "ref32": [
+   13,
+   14,
+   15,
+   16
+  ],
+  "nopos": [
+   13,
+   14,
+   15,
+   16
+  ],
+  "nocount": [
+   13,
+   14,
+   15,
+   16
+  ],
+  "nopos_nocount": [
+   13,
+   14,
+   15,
+   16
+  ]
+ },
+ "paths": {
+  "runs": "runs/adsb_ctx3_pos/design/<variant>_s<seed>/design",
+  "report": "docs/adsb_ctx3_pos/design_report.json",
+  "thinned_tokens": "data/ctx/tokens_thin_a13/<month>/"
+ },
+ "report": "tools/ctx3_pos_report.py"
+}

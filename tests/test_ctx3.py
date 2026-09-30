@@ -146,3 +146,29 @@ def test_masked_aux_training_save_load(tmp_path):
     with pytest.raises(ValueError):
         train(build_model(pre, ARCH, seed=5, device=torch.device("cpu")), pre, xn, xc, context, torch.from_numpy(pre.scale_target(target)), TRAINING, seed=5,
               log=lambda e: None, aux={"targets": torch.zeros(len(xn), 2), "weight": 0.3})
+
+
+def test_blank_tokens_blanks_only_the_named_quantities(tmp_path):
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
+    from run_adsb_ctx3 import blank_tokens
+    from prc2026_ctx.model import TOKEN_FEATURES, token_features
+    store, dep_ids, frame, target, pre = fixture(tmp_path)
+    before_t, before_v = store.times.copy(), store.values.copy()
+    self_rows, nb = store.lookup(dep_ids)
+    args = (torch.from_numpy(store.times), torch.from_numpy(store.values), torch.from_numpy(store.codes), torch.from_numpy(self_rows).long(),
+            torch.from_numpy(nb).long())
+    x0, nan0, _, _ = token_features(*args)
+    blank_tokens(store, ["first_seen", "adsb_gate"])
+    assert np.isnan(store.times[:, 6]).all() and np.isnan(store.values[:, 3]).all()
+    keep_t, keep_v = [j for j in range(before_t.shape[1]) if j != 6], [j for j in range(before_v.shape[1]) if j != 3]
+    assert np.array_equal(store.times[:, keep_t], before_t[:, keep_t], equal_nan=True)
+    assert np.array_equal(store.values[:, keep_v], before_v[:, keep_v], equal_nan=True)
+    args = (torch.from_numpy(store.times), torch.from_numpy(store.values), torch.from_numpy(store.codes), torch.from_numpy(self_rows).long(),
+            torch.from_numpy(nb).long())
+    x1, nan1, _, _ = token_features(*args)
+    changed = [TOKEN_FEATURES[j] for j in range(len(TOKEN_FEATURES)) if not torch.equal(nan0[..., j], nan1[..., j]) or not torch.equal(x0[..., j], x1[..., j])]
+    assert set(changed) <= {"first_seen", "adsb_gate"} and nan1[..., TOKEN_FEATURES.index("first_seen")].all()
+    with pytest.raises(ValueError):
+        blank_tokens(store, ["rel_motion"])
