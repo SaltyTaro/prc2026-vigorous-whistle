@@ -1,0 +1,216 @@
+{
+  "base": 46,
+  "by_airport": {
+    "EDDF": {
+      "changed": 32401,
+      "max_abs_change_s": 282.0,
+      "mean_change_s": 0.8357518517498692,
+      "rms_change_s": 9.937542098418675,
+      "rows": 36317
+    },
+    "EDDM": {
+      "changed": 23635,
+      "max_abs_change_s": 258.0,
+      "mean_change_s": 1.736154971886313,
+      "rms_change_s": 5.581570752486086,
+      "rows": 25966
+    },
+    "EGLL": {
+      "changed": 35236,
+      "max_abs_change_s": 257.0,
+      "mean_change_s": -0.5156626506024097,
+      "rms_change_s": 7.164812499473412,
+      "rows": 39840
+    },
+    "EHAM": {
+      "changed": 34211,
+      "max_abs_change_s": 425.0,
+      "mean_change_s": 0.4638311246136923,
+      "rms_change_s": 16.43006203116448,
+      "rows": 38182
+    },
+    "LEBL": {
+      "changed": 26674,
+      "max_abs_change_s": 215.0,
+      "mean_change_s": 0.9373005319148936,
+      "rms_change_s": 5.339130686671914,
+      "rows": 30080
+    },
+    "LEMD": {
+      "changed": 31846,
+      "max_abs_change_s": 186.0,
+      "mean_change_s": 0.5578286518374195,
+      "rms_change_s": 4.979483805638102,
+      "rows": 36954
+    },
+    "LFPG": {
+      "changed": 36795,
+      "max_abs_change_s": 457.0,
+      "mean_change_s": 1.0973113964686998,
+      "rms_change_s": 13.350612883533516,
+      "rows": 39872
+    },
+    "LIRF": {
+      "changed": 0,
+      "max_abs_change_s": 0.0,
+      "mean_change_s": 0.0,
+      "rms_change_s": 0.0,
+      "rows": 26899
+    },
+    "LSZH": {
+      "changed": 20878,
+      "max_abs_change_s": 183.0,
+      "mean_change_s": 1.3168466522678186,
+      "rms_change_s": 7.321918926091655,
+      "rows": 23150
+    },
+    "LTFM": {
+      "changed": 45160,
+      "max_abs_change_s": 335.0,
+      "mean_change_s": 0.20440932304911624,
+      "rms_change_s": 14.168062339585333,
+      "rows": 47581
+    }
+  },
+  "by_month": {
+    "2026-01": {
+      "changed": 128183,
+      "max_abs_change_s": 457.0,
+      "mean_change_s": 0.07488917554462772,
+      "rms_change_s": 13.682666511172602,
+      "rows": 152719
+    },
+    "2026-07": {
+      "changed": 158653,
+      "max_abs_change_s": 293.0,
+      "mean_change_s": 1.0094263020372471,
+      "rms_change_s": 6.383608340098306,
+      "rows": 192122
+    }
+  },
+  "candidate": "w40",
+  "checks": {
+    "changed_rows_equal_v38_in_v45": true,
+    "lirf_rows_changed": 0,
+    "rows_changed_outside_scope": 0,
+    "v38_stack_rounds_to_uploaded_v38": true,
+    "v46_stack_reproduces_uploaded_v46": true
+  },
+  "created_at_utc": "2026-09-30T04:20:08.135318+00:00",
+  "dry_run": true,
+  "gate_rows": 65,
+  "gate_rows_by_month": {
+    "2026-01": 47,
+    "2026-07": 18
+  },
+  "independent_rebuild": {
+    "gate_rows_mask_disagreement": 0,
+    "max_abs_integer_difference": 3,
+    "rows_differing": 388,
+    "source": "runs/adsb_ctx/export_v30/ranking_values.parquet"
+  },
+  "max_abs_change_s": 457.0,
+  "mean_abs_change_s": 5.137869723465673,
+  "mean_change_s": 0.7159840466329191,
+  "member": "combo_all",
+  "member_rows": 317942,
+  "member_share_of_non_lirf": 1.0,
+  "member_weight": 0.4,
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v51.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 111654,
+    "maximum_rounding_change_seconds": 0.4999943722139051,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 20,
+    "provenance": {
+      "audit_used": false,
+      "candidate": "w40",
+      "code": {
+        "src/prc2026_final/network_member.py": "d2ce137c38e3ab39aaad6b2d3f0152c859fc05918253d518a7a0cd10460f6126",
+        "src/prc2026_final/share_gate.py": "015df26644d701497bc06874b9e3319013f8d56dbb282f96d12f5f9f52fefdbe",
+        "tools/export_disagreement_gate.py": "c1033a0141ab59df4ec37eed4cafbe3d889f1a33b57800d882898fce921df892",
+        "tools/export_fair_weights.py": "224fb363d7399d9f81f46364a7f27a2596850872d5646568c214af300db24168",
+        "tools/export_network_member.py": "75baf8e3c85164cbdb6ace704e8ee8c1729022faf9726d69c6ec8384c22432b6",
+        "tools/export_share_gate.py": "53aab53bb9ae7d28ea7ba31282190c37b53b81e00bf5705e4ce42159b854a4a8",
+        "tools/export_stack.py": "808c79f6a16372736d5c8859bc2fb059c8b4f17eb7ea695cc21c41c50e330bff",
+        "tools/export_v33.py": "3f788f5d83b6339a2ce60eb0884bb854eb4b05e56b215dc01d801a7f6f45f3bb",
+        "tools/run_network_member.py": "fc1d1b9a8ab0ac86fcaf8e7ef8d6df717b9291c347c28fce023e19eca43a761c"
+      },
+      "declaration": {
+        "configs/adsb_ctx3_combo_dev_v1.json": {
+          "object_hash": "02d9d3a1a9a4832c24da2d8d117829f918b3d491596e10865324d4e6e58194db",
+          "sha256": "7f594b5386caa3333df43acf4244754e69ef0aed2fbe8ae5cc26556c17ce8577"
+        }
+      },
+      "development_results": {
+        "docs/adsb_ctx3_combo/results_v1.json": "b33a91e6767713cdafc2c32d2e6fb6bd2cdd12fde40a3249ce2345e6ba0069b2"
+      },
+      "dry_run": true,
+      "experiment_id": "prc2026-adsb-ctx3-combo-dev-v1",
+      "external_data": "adsb.lol globe_history (ODbL), as every network of the table; nothing new",
+      "floor_seconds": -12.0,
+      "incumbent": {
+        "note": "the clean model line's best",
+        "official_rmse_seconds": 223.9339,
+        "sha256": "8abdd87ad5098d7753927f407ffd7e8cd342aa84a2864392e1b64c0dde015af9",
+        "submission": "vigorous-whistle_v46.parquet"
+      },
+      "inputs": {
+        "runs/adsb_ctx/export_v30/ranking_values.parquet": "b91c57bc18bf65fabd5d4424cda802d28febd3dba0ed1cb303e702e389e9ae4d",
+        "runs/final_dryrun/run/recipe/detail.parquet": "2e79c78b25a4abd1032c211ec61968dc90942e58c2ccff8fceeccc4e3fdcaf5b",
+        "runs/final_lfpg_eobt/run/recipe/detail.parquet": "a73455834db2342f6407a438e631deda3a04879fe5a01fa2f15b90111363bdfd",
+        "runs/submissions/vigorous-whistle_v38.parquet": "61264cdb7f0a37a8e5cf943f8e950441df38b826132cfc1097f00ca9d0519fe4",
+        "runs/submissions/vigorous-whistle_v45.parquet": "72d24155e6b6b8dbb4d6caf7a590679d3b242ad7c83793dcc3d28d5b88fd77fa",
+        "runs/submissions/vigorous-whistle_v46.parquet": "8abdd87ad5098d7753927f407ffd7e8cd342aa84a2864392e1b64c0dde015af9"
+      },
+      "member_tables": {
+        "runs/adsb_ctx3_combo/member/s601/ranking.parquet": "698e84bb107261e5126295ee6e719690f2b1dc3a768633e76a34f0d13400628c",
+        "runs/adsb_ctx3_combo/member/s602/ranking.parquet": "dfc75f764d82f046dbcb954207f18e4674c4e01123be19d6059d22280c27d5d5",
+        "runs/adsb_ctx3_combo/member/s603/ranking.parquet": "d3168e008a8accc864a9ef1e4734806b2092bc374b16ea1caada9d2d9d6bfe79",
+        "runs/adsb_ctx3_combo/member/s604/ranking.parquet": "ee88fd02ff90680ea2e1ef6e1e4e1353346ab1e9a0afa5a4b90b983b13faee67",
+        "runs/adsb_ctx3_combo/member/s605/ranking.parquet": "362525674d5959568c5dcf72bd094364bc0a04e30406814e012bfcfeefa65b8e",
+        "runs/adsb_ctx3_combo/member/s606/ranking.parquet": "41c2782336faaae6512d2096b45752179c102c12cc8758cf10555e796c0c85ed",
+        "runs/adsb_ctx3_combo/member/s607/ranking.parquet": "677ada71603bd14a427f6d842d48a524832197ff83404b9c45daac03bb1531f2",
+        "runs/adsb_ctx3_combo/member/s608/ranking.parquet": "7f82c7c2a374527913f4fce585e17d9c28e562425273bdb5c6b00848bbfc137e",
+        "runs/adsb_ctx3_combo/member/s609/ranking.parquet": "c1be6f77b6ccb7365e7f1c93dd8b79ee1a419d31403f787e10c4c94808a21c2a",
+        "runs/adsb_ctx3_combo/member/s610/ranking.parquet": "3b0603d18d690bec48c85242da2aa2ca7e3a932a53a7f24dddbf861c951f9858",
+        "runs/adsb_ctx3_combo/member/s611/ranking.parquet": "0fdbef8c7ab71ab72003e5b05b23d106d88d317d788f5663ce83f98990c3e612",
+        "runs/adsb_ctx3_combo/member/s612/ranking.parquet": "4f7af6d4296625bcb4aed3a822c50d62ec5307c195dc294d754f9a53fcd57cd6",
+        "runs/adsb_ctx3_combo/member/s613/ranking.parquet": "db00b577a62db1cc887487243cebfa1f7917604d9e32187204a3543fae089562",
+        "runs/adsb_ctx3_combo/member/s614/ranking.parquet": "6f47ab71cd54b077b14ba0ba83a24ddf7eb724e9798629441dd2fe683bd484a8",
+        "runs/adsb_ctx3_combo/member/s615/ranking.parquet": "b3b12668985eb9bc028ba74a7f6113afbc31cd7d6ecc83839dcf40901b69731d",
+        "runs/adsb_ctx3_combo/member/s616/ranking.parquet": "8a364c3d8e2bc99b8a178fc21ab0851639a5db69a8adfdb18e40968d41ffb5ed"
+      },
+      "official_scores_used": "none",
+      "recipe": "v46 with the network table at (1 - 0.4) x (0.25 e24 + 0.25 e24b + 0.5 e32) + 0.4 x combo_all (16 seeds, twelve-month refit) where the member has a value, through the shipped stack (v34 weights, network share 0.85 with the networks-far-below gate, u300 gate, callsign fix 50%, queue trust 0.75, two-sided stretch 1500 / 900); LIRF rows unchanged; floor -12 s",
+      "selected_by": "dry run"
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "bd8f73aa3f9b15efb941de27848693e81298b26b3f4f10159bacb3ceb4f46cd5",
+    "size_bytes": 1356236,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-09-30T04:20:03.037214+00:00",
+    "version": 51
+  },
+  "rmse_if_every_changed_label_equals_the_new_value": 223.6979582200869,
+  "rmse_if_every_changed_label_equals_the_old_value": 224.1695934478721,
+  "rows": 344841,
+  "rows_changed_float": 317935,
+  "rows_changed_in_anchored_layers": 311,
+  "rows_changed_integer": 286836,
+  "seeds": 16,
+  "sha256": "bd8f73aa3f9b15efb941de27848693e81298b26b3f4f10159bacb3ceb4f46cd5",
+  "sum_squared_change": 36420402.0,
+  "version": 51
+}
