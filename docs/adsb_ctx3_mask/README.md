@@ -57,3 +57,15 @@ recommended stopping after December; the user said "let it finish".
 
 **The user's override (30 September): "ship it anyway"**, for `w40`, after the plain-language summary of the interim readings. The
 override is recorded in the export's provenance. The user chose to upload v52 only, without an open-data backup file for now.
+
+## Official result: v52 = 222.0519 (30 September 2026)
+
+v52 = v51's model part + the masked member at w40 (the user's override), then v48's daily-totals reconciliation applied last.
+Member file (dry run on v51's member file, override recorded): SHA-256 `16e9f33a…`, 91,409 rows differ from v51's member file,
+squared change 1.56e7, largest 422 s; the control reproduces v51's member file on every row; LIRF rows unchanged
+(`docs/adsb_ctx3_mask/member_export_dry_v52.json`). Reconciled file `runs/submissions/vigorous-whistle_v52.parquet`, SHA-256
+`9b17130a8cbce4e76e0093805009f3313f72048e9c25880a057e579dcca000d2`, byte-identical to its dry run
+(`docs/daily_totals/export_v52.json`); audit clean (`docs/export_audit/v52_audit.json`; RMS difference to v51 6.8 s, LIRF identical,
+no row over 600 s). Uploaded at 09:09 UTC, processed at 09:09:30 UTC: **222.0519 on all 344,841 rows, 0.1787 s (0.080%) better than
+v51 (222.2306)**, the official best. Record: `docs/adsb_ctx3_mask/official_result_v52.json`.
+Nothing is derived from the score.
