@@ -43,3 +43,9 @@ receiver dark). No openly licensed source gives surface positions or per-flight 
 - EUROCONTROL daily delay data: not used without an organiser answer on its licence (the user decides whether to ask).
 - FlyItalyADSB: not pursued (needs a contact; the LIRF gap looks like a local receiver).
 - Open weather (ERA5 / national services): the one candidate for a later screen, if CPU rounds leave room.
+
+## Addendum, 30 September 2026
+
+See [`sources_20260930.md`](sources_20260930.md): airplanes.live is dark at LIRF in July 2026 as well (closed); the UK CAA's
+airline-route punctuality statistics for Heathrow are a real aggregate of the target with a ceiling of about 0.1% of a month's
+squared error (parked); FlyItalyADSB's July 2026 archive needs a registration and a request (the user's decision).
