@@ -74,3 +74,11 @@ byte-identical to the dry run. Record `docs/daily_totals/export_v54.json`. Audit
 only LIRF rows differ (RMS 6.2 s over the file, none above 600 s), every other airport identical; the remaining flags (January 2026
 level shifts, EHAM 2–9 January disruption days) are v53's unchanged. Upload only at the user's word:
 `tools/prc_submit.py upload --file runs/submissions/vigorous-whistle_v54.parquet --expected-sha256 d9dcefe7… --calendar-day`.
+
+## v54 official: 221.8686 (18:38 UTC, 1 October) — −0.0240 s against v53; the official best
+
+Uploaded at the user's word ("upload v54") at about 18:38 UTC (`tools/prc_submit.py upload --calendar-day`), processed 18:38:47 UTC,
+344,841 rows ([`official_result_v54.json`](official_result_v54.json)). The squared change against v53 was 1.31e7 and the score moved by
+ΔSSE ≈ −3.7e6, an alignment of about 0.64: below alignment 1 and far below thinned July's 1.89, and equal to January 2025's reading
+(0.64), the dark set that barely preferred the change. The figure describes the outcome; nothing is rescaled from it. Never re-upload v1–v54. New layers build on v54's steps: v52's members, the LIRF masked member, the
+dark-month LIRF re-read, then the reconciliation last.
