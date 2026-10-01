@@ -1,0 +1,27 @@
+{
+ "experiment_id": "prc2026-tree-mask-design-v1",
+ "declared_at_utc": "2026-10-01T08:47:00+00:00",
+ "audit_used": false,
+ "purpose": "Does the context network's training-time masking (src/prc2026_ctx3/train.py: a matched row shown as unmatched with probability p, label unchanged), which made the masked network member of v51 / v52, also improve the tree committee on rows without an ADS-B match? Never tried for trees: the unmatched-row specialist (docs/adsb_unm) only re-weighted or restricted the existing unmatched rows, and the coverage-regime study (docs/coverage_regime) only retrained the residual stage on thinned inputs. Design reading on the October fold only (the seasonal fit partition, October held out): no scoring month, ranking row or official score is read.",
+ "rationale": "In 2025 a large share of rows at well-covered airports is matched, so the trees see few unmatched examples there, while the scored months have far fewer matches at some of them (EDDF a third of its 2025 gate share, LIRF dark in July 2026; docs/adsb_coverage). Masked copies give the unmatched branch labelled examples with the matched rows' non-ADS-B inputs. The network's masked member read -1.05% on unmatched October rows standalone (docs/adsb_ctx3_combo).",
+ "contract": "tools/run_tree_mask_design.py: the data path of tools/run_learner_family_design.py unchanged (tools/run_adsb_learner.py: 276 timeline-bundle features + 27 ADS-B + 11 v19 = 314; label target; LIRF left out of fitting and early stopping, every row predicted). The fitting rows pass through prc2026_tree_mask.augment: every matched fitting row keeps weight 1 - p and gains a copy with weight p whose 21 focal ADS-B columns (the network's declared masking columns, configs/adsb_ctx3_design_v1.json defaults.masking.columns) are NaN and adsb_matched 0. This is the exact expected loss of the network's per-step draw. Neighbour columns (nb_*, sfc_*) are untouched; October rows are never masked. p = 0 is the unweighted control call.",
+ "variants": {
+  "lgb_m25": {"kind": "lightgbm", "mask_p": 0.25, "overrides": {}, "control": "ref_lgb"},
+  "lgb_m50": {"kind": "lightgbm", "mask_p": 0.5, "overrides": {}, "control": "ref_lgb"},
+  "cat_ref": {"kind": "catboost", "mask_p": 0.0, "overrides": {"max_ctr_complexity": 2}, "rounds": 20000, "role": "control: the committee's cat_ctr2_x19 recipe (configs/adsb_v20_v1.json) on design seeds"},
+  "cat_m25": {"kind": "catboost", "mask_p": 0.25, "overrides": {"max_ctr_complexity": 2}, "rounds": 20000, "control": "cat_ref"}
+ },
+ "seeds": {"lgb_m25": [1, 2, 3, 4], "lgb_m50": [1, 2, 3, 4], "cat_ref": [1, 2, 3, 4], "cat_m25": [1, 2, 3, 4]},
+ "existing_control": {"ref_lgb": "runs/learner_family/design/ref_lgb_s{1..4} (configs/learner_family_design_v1.json, the same data path, seeds and settings, fitted 1 October; not refitted)"},
+ "reading": {
+  "rows": "October non-LIRF rows; every label kept (no clipping). Unmatched = adsb_matched 0 in the proxy table.",
+  "table": "RecipeProxy on runs/adsb_nn/design/committee_october.parquet as tools/learner_family_report.py; network pool P0 = 0.5 * mean(ctx_s101..116) + 0.5 * mean(ctx_e24_s117..132); P1 = P0 on matched rows and 0.6 * P0 + 0.4 * M on unmatched rows, M = the four-seed mean of m25_32 seeds 9-12 (runs/adsb_ctx3_combo/design), standing in for v52's masked member. Table = (1 - share) * committee' + share * P1, share 0.75 (0.85 reported).",
+  "standalone": "RMSE on unmatched non-LIRF rows of the variant's four-seed mean against its control's four-seed mean; paired-day 95% interval of the difference.",
+  "swap_proxy": "committee' = committee + w * (X_variant - X_control) on unmatched rows only (w in 0.5, 1): what retraining the committee's members with the masking would do, transplanted from the same-family pair. R2 = 100 * (RMSE(table with committee') / RMSE(table with committee) - 1).",
+  "member_proxy": "P1' = (1 - b) * P1 + b * X on unmatched rows (b in 0.25, 0.4) with X the variant's mean, read against the same with X the control's mean (and against no member, reported).",
+  "GO": "Per variant: standalone unmatched RMSE at least 0.3% below its control's with the paired-day interval below zero, AND the swap proxy at w = 1 or the member proxy at b = 0.4 at least 0.05 points of R2 below the same reading of the control (swap: below zero, i.e. below the unchanged table) with that reading's paired-day interval below zero.",
+  "families": "The LightGBM family is read when its eight fits are complete; the CatBoost family when its eight fits are complete. The two readings are separate and both are reported."
+ },
+ "after": "A GO goes to a separately declared development round on the clean line's footing (leave-one-month-out January and July 2025, the forward fold, the January-November refit, the twelve-month refit; tools/run_network_member.py semantics for a member, or a committee re-fit for a swap), with the coverage-thinned January / July sets reported. No GO: masked-tree lever closed on evidence. Every upload is the user's decision; nothing is derived from official scores.",
+ "hardware": "CPU, arcw0-arcw7 (infra/azure/parallel_authorization_20260915.json), 16 threads per fit: arcw0-3 lgb_m25 then lgb_m50 (seed n+1) then cat_ref s3/s4 (arcw0/1) or cat_m25 s3/s4 (arcw2/3); arcw4-7 cat_ref s1, cat_ref s2, cat_m25 s1, cat_m25 s2. Workers deallocated after the mirror."
+}
