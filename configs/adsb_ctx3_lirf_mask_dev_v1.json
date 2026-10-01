@@ -1,0 +1,41 @@
+{
+ "experiment_id": "prc2026-adsb-ctx3-lirf-mask-dev-v1",
+ "declared_at_utc": "2026-10-01T13:15:57+00:00",
+ "audit_used": false,
+ "session": "project4 (1 October afternoon)",
+ "purpose": "Development round of the LIRF masked member: the masked LIRF context network (configs/adsb_ctx3_lirf_mask_network_v1.json, variant lm25_32 = the LIRF design's masked variant) blended into the shipped LIRF network (ens_ctx_lirf, v29) on LIRF's non-population rows WITHOUT an ADS-B match: the route of v52's masked member carried to LIRF, which v52 skips. Read inside the shipped LIRF arithmetic (v34's unmatched blend and v45's gate).",
+ "disclosed": {
+  "design": "docs/adsb_ctx3_lirf/README.md (a59a00c): the declared design selected nothing (the 32-epoch base is not better than the shipped round-1 network); masking helped LIRF's unmatched rows in every month read, most on July 2025 thinned to July 2026's coverage (LIRF dark).",
+  "exploration_after_the_design_reading": "On the design-fold transfer readings, X = shipped on matched rows and (1 - w) shipped + w lm25_32 on unmatched rows, at the design's L2 (0.65 v9 + 0.35 X): w 0.5 October -0.035%, July -0.020%, thinned July -0.362% (interval below zero), December -0.054%; w 0.25 about half of that. This exploration chose the member's route and the weight grid; nothing else was tried."
+ },
+ "hardware": "four AWS g6e.2xlarge (one L40S each), two lanes per GPU, tools/run_adsb_ctx_lomo.py --device cuda via tools/combo_queue.sh (ROUND=runs/adsb_ctx3_lirf_mask), infra/aws/gpu_authorization_20261001b.json (the user chose 'GPU, 16 seeds'). Thinned re-predictions on the workstation CPU.",
+ "fits": {
+  "network_config": "configs/adsb_ctx3_lirf_mask_network_v1.json",
+  "variants": ["lm25_32"],
+  "seeds": [801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 811, 812, 813, 814, 815, 816],
+  "order": ["seasonal", "lomo_2025-01", "lomo_2025-07", "refit", "forward", "refit12"],
+  "folds": {
+   "thinned_july": {"fold": "seasonal", "file": "re-predicted on coverage-regime attempt a13 (July 2025 thinned to July 2026's coverage) on the workstation CPU; each model checked against its own October predictions"},
+   "2025-01": {"fold": "lomo_2025-01", "file": "predictions.parquet"},
+   "2025-07": {"fold": "lomo_2025-07", "file": "predictions.parquet"},
+   "2025-11": {"fold": "forward", "file": "predictions.parquet"},
+   "2025-12": {"fold": "refit", "file": "december_predictions.parquet"},
+   "ranking": {"fold": "refit12", "file": "ranking_predictions.parquet"}
+  },
+  "footing": "January / July 2025: leave-one-month-out on the other eleven months; November: the forward fold; December: the January-November refit; ranking: the twelve-month refit; equal to the control rows' footing (runs/lomo_dev/rows.parquet: lirf_net = ens_ctx_lirf on the same folds). Thinned July: the seasonal fold (fit 2025-02..06, 08, 09; October monitored), the footing of the shipped network's and LIRF tree's thinned re-predictions (runs/adsb_ctx/regime_check_lirf/2025-07.parquet, runs/coverage_regime/measure/2025-07/predictions.parquet) that v45's gate round read.",
+  "outputs": "runs/adsb_ctx3_lirf_mask/nets/<variant>_s<seed>/<fold>/",
+  "count": 96
+ },
+ "member": "M = the 16-seed mean of lm25_32 on each fold.",
+ "route": "LIRF non-population rows without an ADS-B match: natural months = runs/lomo_dev/rows.parquet lirf_u (the stack's lirf_nonpop_unmatched scope); thinned July = July's LIRF non-population rows (lirf_m or lirf_u) whose thinned class is unmatched. Matched rows, population rows and every other airport keep their values exactly.",
+ "control": "The shipped LIRF unmatched value: v34's unmatched blend (v9 0, network 0.35/0.60, tree 0.25/0.60) with v45's gate u600 (tree - network > 600 s: v9 0 / network 0.2 / tree 0.8), floor -12 (src/prc2026_final/lirf_gate.py); network = ens_ctx_lirf, tree = ens_v22_lirf_q, v9 as the rows table.",
+ "candidates": {"w25": {"member_weight": 0.25}, "w40": {"member_weight": 0.40}, "w55": {"member_weight": 0.55}},
+ "semantics": "network' = (1 - w) ens_ctx_lirf + w M on the route; the blend and the gate are recomputed with network' (the gate fires on tree - network' > 600 s).",
+ "metric": "Primary: squared error of the route's rows with labels below 20,000 s (v45's gate round's primary; one-day and clock-day labels excluded), relative change against the control with a paired-day 95% interval (10,000 day draws, seed 20261001). Unfiltered SSE change and whole-month RMSE change (every row of the month, all others unchanged) are reported.",
+ "rule": "A candidate is eligible when (1) thinned July's primary change is at most -0.5% with the interval below zero, (2) January 2025's primary change (LIRF naturally dark: no LIRF ground coverage before May 2025) is at most 0, and (3) no natural month's interval lies entirely above zero. Selection: among eligible candidates the lowest sum of thinned July's and January's primary changes. No eligible candidate: nothing selected.",
+ "never_read": "No official score, ranking label or published aggregate is read. Ranking predictions (refit12) are turned into a file only after a selection; every export and upload is the user's decision.",
+ "export_plan": "If selected and the user says so: v52's model part (the members' dry-run file before the reconciliation) with the route's ranking rows recomputed from the refit12 member (LIRF non-population rows without a match: all of July 2026's, January 2026's unmatched ones), then v48's reconciliation with the published daily totals applied last (tools/export_daily_totals.py --base), audit, and a check that every other row equals v52's model part.",
+ "scorer": "tools/run_lirf_member.py (written before any member fit finished)",
+ "report": "docs/adsb_ctx3_lirf_mask/results_v1.json",
+ "automatic_submission": false
+}
