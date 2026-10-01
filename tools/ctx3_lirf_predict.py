@@ -10,6 +10,8 @@ airports in --airports (default LIRF) are predicted; their context tokens are lo
   <month>_thinned      coverage-regime attempt a13: the thinned committee and v19 tables and the thinned token file
 Output: runs/adsb_ctx3_lirf/transfer/<variant>_s<seed>/<reading>.parquet (ID, adsb_full) and transfer/predictions.json. No label is read.
 Usage: tools/ctx3_lirf_predict.py [--threads 12] [--runs R] [--only VARIANT_SEED ...] [--airports LIRF]
+       tools/ctx3_lirf_predict.py --declaration configs/adsb_ctx3_lirf_mask_dev_v1.json --fold seasonal
+                                  --runs runs/adsb_ctx3_lirf_mask/nets --output runs/adsb_ctx3_lirf_mask/transfer
 """
 from __future__ import annotations
 
@@ -42,8 +44,11 @@ TOKENS = {"natural": "data/ctx/tokens_v1", "thinned": "data/ctx/tokens_thin_a13/
 BATCH = 50000
 
 
-def runs_of(decl: dict, runs_root: Path) -> list[tuple[str, int, Path]]:
-    return [(v, s, runs_root / f"{v}_s{s}" / "design") for v in decl["runs"] for s in decl["runs"][v]]
+def runs_of(decl: dict, runs_root: Path, fold: str = "design") -> list[tuple[str, int, Path]]:
+    """Declared runs: a design declaration's `runs` (variant -> seeds), or a development declaration's `fits` (variants x seeds)."""
+    if "fits" in decl:
+        return [(v, s, runs_root / f"{v}_s{s}" / fold) for v in decl["fits"]["variants"] for s in decl["fits"]["seeds"]]
+    return [(v, s, runs_root / f"{v}_s{s}" / fold) for v in decl["runs"] for s in decl["runs"][v]]
 
 
 BASELINE = ("ctx_lirf", [1, 2, 3, 4], "runs/adsb_ctx/lirf_design")  # the shipped round-1 LIRF network's round-B design seeds (same fit partition)
@@ -66,6 +71,8 @@ def table(month: str, committee_dir: Path, v19_dir: Path) -> tuple[pd.DataFrame,
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--declaration", default=DECLARATION, help="design declaration (runs) or development declaration (fits)")
+    parser.add_argument("--fold", default="design", help="run subdirectory: design, or seasonal for a development round")
     parser.add_argument("--runs", type=Path, default=Path("runs/adsb_ctx3_lirf/design"))
     parser.add_argument("--output", type=Path, default=Path("runs/adsb_ctx3_lirf/transfer"))
     parser.add_argument("--threads", type=int, default=12)
@@ -78,10 +85,10 @@ def main() -> None:
     from prc2026_ctx.tokens import TokenStore
     from prc2026_ctx3.train import Context, Store, load, predict
     device = torch.device("cpu")
-    decl = read_json(ROOT / DECLARATION)
+    decl = read_json(ROOT / args.declaration)
     base = ROOT / read_json(ROOT / "data/timeline/latest.json")["bundle"]
     manifest, parent, original, catalog = load_bundle(ROOT, base)
-    runs = [r for r in (baseline_runs() if args.baseline else runs_of(decl, ROOT / args.runs)) if args.only is None or f"{r[0]}_s{r[1]}" in args.only]
+    runs = [r for r in (baseline_runs() if args.baseline else runs_of(decl, ROOT / args.runs, args.fold)) if args.only is None or f"{r[0]}_s{r[1]}" in args.only]
     missing = [f"{v}_s{s}" for v, s, d in runs if not (d / "run.json").exists()]
     if missing:
         raise ValueError(f"Runs not finished or not mirrored: {missing}")
@@ -133,7 +140,7 @@ def main() -> None:
         return frames, hashes_by
 
     out_root = ROOT / args.output / ("baseline" if args.baseline else "")
-    receipt = {"created_at_utc": utc_now(), "declaration": DECLARATION, "declaration_sha256": sha256_file(ROOT / DECLARATION), "inputs": {},
+    receipt = {"created_at_utc": utc_now(), "declaration": args.declaration, "declaration_sha256": sha256_file(ROOT / args.declaration), "fold": args.fold, "inputs": {},
                "tokens": {"natural": sha256_file(ROOT / TOKENS["natural"] / "manifest.json"),
                           **{f"thinned_{m}": sha256_file(ROOT / TOKENS["thinned"].format(month=m) / f"manifest_{m}.json") for m in REGIME}},
                "code": {p: sha256_file(ROOT / p) for p in ["tools/ctx3_lirf_predict.py", "tools/ctx3_pos_predict.py", "tools/run_adsb_ctx3.py", "src/prc2026_ctx3/train.py"]}, "airports": args.airports,
