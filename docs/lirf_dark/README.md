@@ -65,3 +65,12 @@ runs/daily_totals/dry_v54 --version 54`): SHA-256 `d9dcefe7857ef45d1298757fb8068
 `b0fbbd19…`). Against the uploaded v53: 15,128 rows differ, **all LIRF July 2026** (mean −1.6 s, largest 376 s), squared change 1.31e7:
 −0.09 s at alignment 1, about −0.24 s at thinned July's implied alignment, +0.09 s if noise. Building v54 under `runs/submissions`, its audit
 and any upload are the user's decision.
+
+## v54 (built at the user's word, "build v54"; NOT uploaded)
+
+`tools/export_daily_totals.py --base runs/lirf_dark/export_dry/vigorous-whistle_v54.parquet --version 54` →
+`runs/submissions/vigorous-whistle_v54.parquet`, SHA-256 `d9dcefe7857ef45d1298757fb8068553cd00690eab6f7e073fac0e8bcef2bed1`,
+byte-identical to the dry run. Record `docs/daily_totals/export_v54.json`. Audit (`docs/export_audit/v54_audit.json`): clean; against v53
+only LIRF rows differ (RMS 6.2 s over the file, none above 600 s), every other airport identical; the remaining flags (January 2026
+level shifts, EHAM 2–9 January disruption days) are v53's unchanged. Upload only at the user's word:
+`tools/prc_submit.py upload --file runs/submissions/vigorous-whistle_v54.parquet --expected-sha256 d9dcefe7… --calendar-day`.
