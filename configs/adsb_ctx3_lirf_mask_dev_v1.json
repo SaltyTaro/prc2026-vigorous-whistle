@@ -74,11 +74,10 @@
    "lomo_2025-01",
    "lomo_2025-07",
    "refit",
-   "forward"
-  ],
-  "cpu_folds": [
+   "forward",
    "refit12"
-  ]
+  ],
+  "cpu_folds": []
  },
  "member": "M = the 16-seed mean of lm25_32 on each fold.",
  "route": "LIRF non-population rows without an ADS-B match: natural months = runs/lomo_dev/rows.parquet lirf_u (the stack's lirf_nonpop_unmatched scope); thinned July = July's LIRF non-population rows (lirf_m or lirf_u) whose thinned class is unmatched. Matched rows, population rows and every other airport keep their values exactly.",
@@ -107,6 +106,11 @@
    "at_utc": "2026-10-01T13:19:30+00:00",
    "before": "any fit of this round",
    "change": "Hardware split. The refit12 fold (16 fits, ranking predictions only, needed for an export alone) runs on the Azure CPUs arcw0-arcw7 (tools/run_adsb_ctx_lomo.py --device cpu --threads 8, two lanes per worker); the other 80 fits stay on the AWS L40S nodes (tools/lirf_mask_jobs.py --exclude-folds refit12). Reason: at launch AWS had no g6e.2xlarge capacity in any us-east-2 zone for three of the four nodes (InsufficientInstanceCapacity; relaunched with retry-until-up). Settings, seeds, folds, members, candidates and rule are unchanged; CPU- and GPU-trained networks differ by float noise only (docs/member_thin: at most 0.074 s per prediction)."
+  },
+  {
+   "at_utc": "2026-10-01T16:54:02+00:00",
+   "before": "any refit12 result was read (the CPU refit12 fits were at epoch 16 of 32)",
+   "change": "Second hardware amendment, after the governing run selected w55: the refit12 fold (16 fits, ranking predictions for the export) runs on four AWS L40S nodes (tools/lirf_mask_jobs.py --exclude-folds seasonal lomo_2025-01 lomo_2025-07 refit forward), at the user's choice (\"GPU now\") to have the export the same evening. The Azure CPU refit12 fits continue only as a backup and are stopped, unread, once the GPU set is mirrored and hash-checked. Settings, seeds, members and the selected candidate are unchanged."
   }
  ]
 }
