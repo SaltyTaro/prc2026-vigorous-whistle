@@ -138,3 +138,15 @@ within 0.0–0.3 s per flight at seven airports. Spreading the day's discrepancy
 (+0.06 to +2.2% in three of four months); a learned residual model with the discrepancy as a feature reads −0.53 / −0.32 / −1.67 /
 +1.14%. Figures: [`daily_totals.json`](daily_totals.json). The screen led to a declared round and to v48:
 [`docs/daily_totals/README.md`](../daily_totals/README.md).
+
+## 6. Unused EUROCONTROL daily series: ATC pre-departure delay and ATFM slot adherence (1 October 2026, `tools/screen_published_daily_extra.py`)
+
+Question (the "more published aggregates" check): after the all-causes daily total (section 5), do the other two daily airport series carry
+anything about the stack's day-level residual? Features per airport-day: ATC delay per IFR departure, share of departures with ATC delay,
+mean ATC delay of those, regulated share, late/early slot-departure shares, ATC share of the all-causes total. Ridge per airport fitted on three
+months' airport-day mean residuals of the v33 stack, read on the fourth (2025 months, labels 0-7,200 s), shifted at half weight.
+
+Gain as a share of the held-out month's squared error: January −0.02%, July +0.01%, November −0.28%, December +0.01% (adding the all-causes
+per-flight value: −0.02 / +0.03 / +0.02 / +0.02%). Pooled correlations with the day residual change sign between airports. **Nothing there; closed.**
+The page's other series are not target-linked: airport traffic (counts), arrival ATFM delay and taxi-in (arrival side), CODA taxi-time planning
+values (to 2022), OPDI (closed in the survey). Taxi-out exists only monthly, and is already used (v47 / v48 path). [`daily_extra.json`](daily_extra.json)
