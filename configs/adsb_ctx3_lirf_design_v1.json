@@ -1,0 +1,145 @@
+{
+ "experiment_id": "prc2026-adsb-ctx3-lirf-design-v1",
+ "declared_at_utc": "2026-10-01T09:13:35+00:00",
+ "audit_used": false,
+ "purpose": "Does a LIRF network built like v51 / v52's non-LIRF members beat the shipped LIRF network on LIRF's ordinary rows, above all where LIRF has no ADS-B (July 2026)? The masking that made v52's masked member was only ever used on non-LIRF rows: the member route skips LIRF (src/prc2026_final/members.py), and LIRF's unmatched rows are predicted by v29's round-1 LIRF context network (ens_ctx_lirf, 16 epochs, docs/adsb_ctx_lirf). Design reading: October (the fit partition's held-out month) and the transfer readings of the same design-fold models on July 2025 natural and thinned to July 2026's coverage (coverage-regime attempt a13: LIRF dark) and December 2025, exactly as the positional batch read its design models (tools/ctx3_pos_predict.py). No official score, ranking row or published aggregate is read.",
+ "rationale": "LIRF holds about 40% of the projected ranking error (docs/error_map); in July 2026 every LIRF row is unmatched (0.2% matched against 93.9% in July 2025; docs/coverage_regime). On thinned July 2025 v29's LIRF network gained 0.85% on LIRF unmatched rows against 0.3% natural, and v29 transferred at twice its development gain. Since then the non-LIRF networks moved to 32 epochs (v30), a combination member (v51) and a masked member routed to unmatched rows (v52, -1.05% on October's unmatched rows in the combination batch). None of that reached LIRF.",
+ "hardware": "Azure arcw0-arcw3 (Standard_D16ds_v7), CPU, tools/run_adsb_ctx3.py --device cpu --threads 8, two lanes per worker (one lref32 and one lm25_32 seed per worker). CPU because the user's compute rule puts context-network rounds on CPU unless turnaround matters; arcw4-7 are finishing configs/tree_mask_design_v1.json's CatBoost seeds.",
+ "protocol": {
+  "data": "tools/run_adsb_ctx3.py --fold design, unchanged: the seasonal fold's fit partition (2025-02..06, 08, 09) with LIRF's non-population rows included in fitting and monitoring (the fill population = LIRF, no NM clock, no aircraft type, excluded as for ctx_lirf and nnl), October monitored, October predictions only.",
+  "transfer": "tools/ctx3_lirf_predict.py (tools/ctx3_pos_predict.py with this declaration's runs): every saved model predicts October (scorer check against stop_predictions, RMS at most 0.05 s), July 2025 natural and a13-thinned, December 2025 natural and a13-thinned, on the workstation CPU. No label is read by the predictor.",
+  "never_read": "No run trains on or monitors 2025-01, 2025-07, 2025-11, 2025-12 or the ranking months. July and December enter only as the transfer readings below, as in configs/adsb_ctx3_pos_v1.json.",
+  "variants": {
+   "lref32": "ref32 (the combination batch's 32-epoch reference) with LIRF non-population rows in fitting",
+   "lm25_32": "the same with masking p = 0.25 (v52's masked member's setting)"
+  },
+  "items": {
+   "refresh": "X = lref32's four-seed mean on every LIRF non-population row",
+   "refresh_mask": "X = lref32's mean on matched rows and lm25_32's mean on unmatched rows (the route of v52's member)"
+  },
+  "baseline": "B = the shipped LIRF network family ctx_lirf: October = the four round-B design seeds (runs/adsb_ctx/lirf_design/ctx_lirf_s1..s4/design/stop_predictions.parquet, the same fit partition); July natural / thinned = ens_ctx_lirf, the 16 development seeds 301-316 of the seasonal fold (the same fit partition) as re-predicted by the v29 coverage check (runs/adsb_ctx/regime_check_lirf/2025-07.parquet, hash-bound in docs/adsb_ctx_lirf/regime_check_2025-07.json). A 16-seed baseline against 4 new seeds is deliberately conservative.",
+  "rows": "LIRF non-population rows (the rows ctx_lirf predicts in the stack); matched / unmatched by adsb_matched of the reading's own ADS-B table (natural or thinned). Every label kept, no clipping.",
+  "readings": {
+   "L1": "standalone RMSE (all / matched / unmatched) of B, refresh and refresh_mask, and lm25_32 alone, per reading (October, July natural, July thinned, December natural)",
+   "L2": "blend with v9 as round B: (1 - b) v9 + b X for b in 0.35, 0.5 (v9 = the cross-fitted v9 of the month: October scratch/v24/2025-10.parquet, July / December from runs/clean_line_screens/hour/dev_stack.parquet), against the same with B; paired-day 95% interval of the difference",
+   "masking": "refresh_mask against refresh on unmatched rows (seed-matched): what masking adds, per reading"
+  },
+  "GO": "An item is GO when its L2 blend at b = 0.35 is at least 0.3% below B's on October's LIRF non-population rows with the paired-day interval below zero, AND at least 0.3% below B's on the a13-thinned July LIRF non-population rows (the July 2026 regime) with the interval below zero, AND not worse than B on natural July and December. If both items are GO, refresh_mask is carried only if it also beats refresh on thinned July's unmatched rows; otherwise refresh.",
+  "after": "A GO item goes to a separately declared development round on the clean line's footing (LIRF network seeds on the leave-one-month-out January and July folds, the forward fold, the January-November refit and the twelve-month refit; GPU only if turnaround then matters, said before launch), read inside the shipped stack's LIRF blends and gate (v45). No GO: closed on evidence. Every upload is the user's decision; nothing is derived from official scores."
+ },
+ "defaults": {
+  "architecture": {
+   "cat_cap": 16,
+   "d_num": 8,
+   "depth": 3,
+   "dropout": 0.1,
+   "heads": 4,
+   "max_tokens": 128,
+   "n_aux": 0,
+   "sa_dropout": 0.0,
+   "sa_ff": 2,
+   "sa_heads": 4,
+   "sa_layers": 0,
+   "tok_dim": 96,
+   "width": 512
+  },
+  "aux": {
+   "targets": [],
+   "weight": 0.0
+  },
+  "context": {
+   "departures_only": false,
+   "use_adsb": true
+  },
+  "features": {
+   "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+   "extra_features": [
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed",
+    "sfc_ground_10m",
+    "sfc_moving_10m",
+    "sfc_moving_20m",
+    "sfc_rwy_queue_5m",
+    "sfc_rwy_queue_10m"
+   ]
+  },
+  "masking": {
+   "columns": [
+    "adsb_gate",
+    "adsb_first_point_s",
+    "adsb_motion_s",
+    "adsb_first_gs_kt",
+    "adsb_first_dist_stand_m",
+    "adsb_stop_seconds",
+    "adsb_taxi_path_m",
+    "adsb_taxi_stops",
+    "adsb_taxi_stopped_s",
+    "adsb_slow_start_s",
+    "adsb_gap_before_s",
+    "adsb_turnaround_s",
+    "adsb_anchor_dist_stand_m",
+    "adsb_last_ground_s",
+    "adsb_points",
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed"
+   ],
+   "matched": "adsb_matched",
+   "p": 0.0
+  },
+  "preprocess": {
+   "bins": 32,
+   "min_count": 10,
+   "target_clip": null
+  },
+  "rows": {
+   "exclude_airports": [],
+   "exclude_population": true,
+   "max_label": null
+  },
+  "tokens_dir": "data/ctx/tokens_v1",
+  "training": {
+   "batch_size": 2048,
+   "epochs": 32,
+   "grad_clip": 5.0,
+   "lr": 0.001,
+   "min_lr_fraction": 0.02,
+   "warmup_epochs": 1.0,
+   "weight_decay": 0.0001
+  }
+ },
+ "variants": {
+  "lref32": {},
+  "lm25_32": {
+   "masking": {
+    "p": 0.25
+   }
+  }
+ },
+ "runs": {
+  "lref32": [
+   21,
+   22,
+   23,
+   24
+  ],
+  "lm25_32": [
+   21,
+   22,
+   23,
+   24
+  ]
+ },
+ "paths": {
+  "runs": "runs/adsb_ctx3_lirf/design/<variant>_s<seed>/design",
+  "transfer": "runs/adsb_ctx3_lirf/transfer",
+  "report": "docs/adsb_ctx3_lirf/design_report.json"
+ }
+}
