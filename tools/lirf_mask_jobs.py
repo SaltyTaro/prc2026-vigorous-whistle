@@ -17,6 +17,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("nodes", nargs="?", type=int, default=4)
     parser.add_argument("--declaration", default="configs/adsb_ctx3_lirf_mask_dev_v1.json")
+    parser.add_argument("--exclude-folds", nargs="*", default=[], help="folds run elsewhere (declared in the amendment)")
     args = parser.parse_args()
     decl = json.loads((ROOT / args.declaration).read_text(encoding="utf-8"))
     if not decl.get("declared_at_utc"):
@@ -26,8 +27,9 @@ def main():
     if sorted(fits["order"]) != sorted(f["fold"] for f in fits["folds"].values()):
         raise ValueError("fits.order and fits.folds disagree.")
     jobs = [f"{fits['network_config']} {variant} {seed} {fold} {round_dir}/nets/{variant}_s{seed}"
-            for fold in fits["order"] for seed in fits["seeds"] for variant in fits["variants"]]
-    if len(jobs) != fits["count"]:
+            for fold in fits["order"] if fold not in args.exclude_folds for seed in fits["seeds"] for variant in fits["variants"]]
+    expected = fits["count"] * (len(fits["order"]) - len(set(args.exclude_folds) & set(fits["order"]))) // len(fits["order"])
+    if len(jobs) != expected:
         raise ValueError("The job count differs from the declaration.")
     out = ROOT / round_dir / "jobs"
     out.mkdir(parents=True, exist_ok=True)
