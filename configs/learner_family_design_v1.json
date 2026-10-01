@@ -1,0 +1,43 @@
+{
+ "experiment_id": "prc2026-learner-family-design-v1",
+ "declared_at_utc": "2026-10-01T00:00:00+00:00",
+ "audit_used": false,
+ "purpose": "Does a tree learner with a different inductive bias add anything to the committee slot of the v52 network table? Design reading on the October fold only (the seasonal fit partition, October held out: no scoring month, no ranking row, no official score is read). The question follows the 1 October screens that closed weather (docs/weather_ceiling) and the unused daily EUROCONTROL series (docs/clean_line_screens section 6).",
+ "contract": "The x19 committee learners' data path unchanged (tools/run_adsb_learner.py: 276 timeline-bundle features + 27 ADS-B + 11 v19 = 314; label target; LIRF handling as the committee). Settings = the lightgbm block of configs/timeline_v1.json with only the overrides below. Seeds 1-4 per variant.",
+ "variants": {
+  "ref_lgb": {
+   "overrides": {},
+   "role": "control: the committee's own LightGBM recipe on the same seeds (must reproduce the committee's October readings)"
+  },
+  "dart": {
+   "overrides": {
+    "boosting_type": "dart",
+    "drop_rate": 0.1,
+    "skip_drop": 0.5,
+    "rounds": "the control's selected round count (no early stopping under dart)"
+   }
+  },
+  "linear_tree": {
+   "overrides": {
+    "linear_tree": true,
+    "linear_lambda": 1.0
+   }
+  },
+  "huber_tail": {
+   "overrides": {
+    "objective": "huber",
+    "alpha": 600
+   },
+   "note": "loss with a different tail treatment; reported against the squared-error control, scored in RMSE"
+  }
+ },
+ "reading": {
+  "table": "runs/adsb_nn/design/committee_october.parquet (the incumbent network table P and committee, as tools/ctx3_combo_report.py)",
+  "recipe_proxy": "table = (1-share) * committee' + share * P with share 0.75 (0.85 reported); committee' = (1-c) * committee + c * X where X is the variant's four-seed mean, c in {0.25, 0.5}",
+  "control_gain": "ref_lgb in the same slot (the extra members of the same family) so that diversity from a different seed set is not credited to the variant",
+  "GO": "R2 at c = 0.5 at least 0.05 points below ref_lgb's AND the variant's four-seed standalone RMSE not more than 0.5% above ref_lgb's AND the paired-day 95% interval of the difference below zero",
+  "sets": "non-LIRF rows, October; every label kept (no clipping)"
+ },
+ "after": "A GO variant goes to a separately declared development round on the clean line's footing (leave-one-month-out January and July 2025, the forward fold, the January-November refit, the twelve-month refit) with tools/run_network_member.py semantics adapted to the committee slot; hardware named then. No GO: the learner-family lever is closed on evidence. Every upload is the user's decision; nothing is derived from official scores.",
+ "hardware": "CPU only (local detached job, or arcw0-arcw7 if started per infra/azure/parallel_authorization_20260915.json; deallocate after the mirror)."
+}
