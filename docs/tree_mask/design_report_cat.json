@@ -1,0 +1,89 @@
+{
+  "audit_used": false,
+  "base_table_rmse": {
+    "0.75": 176.1773549625793,
+    "0.85": 176.07777877276598
+  },
+  "committee_rmse_unmatched": 215.8791886149827,
+  "created_at_utc": "2026-10-01T10:40:08.594760+00:00",
+  "declaration_sha256": "a9dc2c12ad225f6f598b101548071cd0e963e8a4910a2b86ea922a75936e52aa",
+  "family": "cat",
+  "go": [],
+  "note": "October only; no scoring month, ranking row or official score read.",
+  "p0_rmse_unmatched": 207.86370625288106,
+  "p1_rmse_unmatched": 207.5259287812645,
+  "unmatched_rows": 58494,
+  "variants": {
+    "cat_m25": {
+      "best_iterations": {
+        "1": 11038,
+        "2": 7735
+      },
+      "checks": {
+        "member": false,
+        "standalone": false,
+        "swap": false
+      },
+      "go": false,
+      "member_gain_vs_control_b0.4_pts": -0.007265552663371366,
+      "member_interval_b0.4_vs_control_s": [
+        -0.05641530208587255,
+        0.08964363318460465
+      ],
+      "member_r2_pct": {
+        "b0.25_share0.75": 0.17733915200082162,
+        "b0.25_share0.85": 0.12179287427998009,
+        "b0.4_share0.75": 0.36737415054395317,
+        "b0.4_share0.85": 0.302615168282383
+      },
+      "per_seed_rmse_unmatched": {
+        "1": 216.8575114662495,
+        "2": 217.8644310932179
+      },
+      "predictions_sha256": {
+        "1": "33470eae79ff41a216a0120307dead78e9d1818d6a27363c0636c14514f1f648",
+        "2": "373f9d96116ac2292a83cb367a69af807c4eeaec57255b49145770409eb93879"
+      },
+      "rmse_matched_non_lirf": 121.56492210888396,
+      "rmse_unmatched": 216.61846302776434,
+      "seconds": {
+        "1": 6368.2,
+        "2": 5001.2
+      },
+      "standalone_interval_s": [
+        -0.9258577453002758,
+        1.9067738284127458
+      ],
+      "standalone_vs_control_pct": 0.22499199059553554,
+      "swap_interval_w1_s": [
+        -0.025569444860984447,
+        0.09652733602776989
+      ],
+      "swap_r2_pct": {
+        "w0.5_share0.75": 0.005798655460154123,
+        "w0.5_share0.85": 0.0027461454635613336,
+        "w1.0_share0.75": 0.019452325546764904,
+        "w1.0_share0.85": 0.008323585175773474
+      }
+    },
+    "control": {
+      "best_iterations": {
+        "1": 8850,
+        "2": 14873
+      },
+      "member_r2_pct": {
+        "b0.25_share0.75": 0.17344537365520107,
+        "b0.25_share0.85": 0.11662176952782488,
+        "b0.4_share0.75": 0.3601085978805818,
+        "b0.4_share0.85": 0.2930086582378033
+      },
+      "name": "cat_ref",
+      "per_seed_rmse_unmatched": {
+        "1": 217.4259016742015,
+        "2": 216.4369962559659
+      },
+      "rmse_matched_non_lirf": 119.86274290171434,
+      "rmse_unmatched": 216.13218292707913
+    }
+  }
+}
