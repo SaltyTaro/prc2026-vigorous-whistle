@@ -1,0 +1,75 @@
+{
+ "experiment_id": "prc2026-lirf-dark-reread-v1",
+ "declared_at_utc": "2026-10-01T18:24:29+00:00",
+ "audit_used": false,
+ "session": "project4 (1 October evening, after v53)",
+ "purpose": "Re-read of v53's LIRF unmatched arithmetic in LIRF's dark regime, no new fit: the member weight w inside network' = (1 - w) ens_ctx_lirf + w M (v53: 0.55) and the unmatched blend's network share s (v34: 0.35/0.60 = 0.583, tree 1 - s, v9 0), with v45's gate u600 recomputed on network'. Applied only where LIRF is dark for the whole month, the regime in which M (the masked LIRF network) was designed to help.",
+ "regime": {
+  "definition": "A LIRF month is dark when its non-population LIRF rows have an ADS-B match share below 5% (label-free: the stack's lirf_nonpop_matched / lirf_nonpop_unmatched scopes).",
+  "ranking": "July 2026: 34 matched of 15,549 (0.2%) -> dark, its 15,515 lirf_nonpop_unmatched rows take the candidate; January 2026: 8,747 of 10,950 (79.9%) -> covered, its 2,203 unmatched rows keep v53 exactly.",
+  "development": "Dark sets: thinned July (July 2025 thinned to July 2026's coverage, coverage-regime attempt a13, LIRF matched 0.6%; 14,771 route rows below 20,000 s) and January 2025 (0 of 11,254 matched; no LIRF ground coverage before May 2025). Covered months July / November / December 2025 keep v53 by construction; their readings are reported descriptively only."
+ },
+ "disclosed": {
+  "member_weight_trend": "docs/adsb_ctx3_lirf_mask/results_v1.json (the round that selected w55 on these same sets): thinned July -0.351 / -0.510 / -0.627% and January 2025 -0.122 / -0.222 / -0.411% at w 0.25 / 0.40 / 0.55, monotone; November +0.151 / +0.297 / +0.484% (covered month). This trend chose the w grid above 0.55 and the restriction to dark months. These are the same two dark sets that selected w55: reuse, not fresh evidence.",
+  "network_share": "No reading of any network share other than v34's 0.583 with the masked member has been made. Earlier readings with the shipped network alone: docs/lirf_gate/README.md (thinned July, shipped blend 425.5 s vs v9 alone 438.4 s, labels below 20,000 s) and docs/pop_signals/README.md (January 2025, v33 273.1 s vs a least-squares optimum 271.9 s). The share grid goes upward only, because M lowers the network's error on these rows.",
+  "gate": "v45's gate round (docs/lirf_gate) found T 600 and 1200 equivalent; it is kept at 600 for every candidate and read descriptively at 1200 and off."
+ },
+ "inputs": "Exactly the tables of tools/run_lirf_member.py: runs/lomo_dev/rows.parquet (v9, lirf_net, lirf_tree, label, day), runs/coverage_regime/measure/2025-07/predictions.parquet and runs/adsb_ctx/regime_check_lirf/2025-07.parquet (thinned tree and network), the 16 lm25_32 seeds 801-816 of configs/adsb_ctx3_lirf_mask_dev_v1.json on each fold (thinned July: runs/adsb_ctx3_lirf_mask/transfer; January 2025: lomo_2025-01).",
+ "control": "v53's arithmetic: w 0.55, s 0.583 (tree 0.417, v9 0), gate u600 (tree - network' > 600 s: v9 0 / network' 0.2 / tree 0.8), floor -12. Check before any candidate: the control equals results_v1.json's w55 reading on both dark sets (route RMSE within 0.01 s).",
+ "candidates": {
+  "w55_s667": {
+   "member_weight": 0.55,
+   "network_share": 0.6667
+  },
+  "w55_s750": {
+   "member_weight": 0.55,
+   "network_share": 0.75
+  },
+  "w70_s583": {
+   "member_weight": 0.7,
+   "network_share": 0.5833
+  },
+  "w70_s667": {
+   "member_weight": 0.7,
+   "network_share": 0.6667
+  },
+  "w70_s750": {
+   "member_weight": 0.7,
+   "network_share": 0.75
+  },
+  "w85_s583": {
+   "member_weight": 0.85,
+   "network_share": 0.5833
+  },
+  "w85_s667": {
+   "member_weight": 0.85,
+   "network_share": 0.6667
+  },
+  "w85_s750": {
+   "member_weight": 0.85,
+   "network_share": 0.75
+  },
+  "w100_s583": {
+   "member_weight": 1.0,
+   "network_share": 0.5833
+  },
+  "w100_s667": {
+   "member_weight": 1.0,
+   "network_share": 0.6667
+  },
+  "w100_s750": {
+   "member_weight": 1.0,
+   "network_share": 0.75
+  }
+ },
+ "semantics": "network' = (1 - w) ens_ctx_lirf + w M; unmatched blend = s network' + (1 - s) tree (v9 0), floored at -12; where tree - network' > 600 s the gate's lean blend (v9 0 / network' 0.2 / tree 0.8) replaces it. 0.5833 stands for v34's exact 0.35/0.60.",
+ "descriptive_only": "Not selectable: the control with the gate at T 1200 and with no gate; every candidate on the covered months' route rows (July / November / December 2025 natural); the least-squares optimum of (s, w) on each dark set. Any use of these would need a new declaration.",
+ "metric": "Primary: squared error of the dark set's route rows with labels below 20,000 s, relative change against the control with a paired-day 95% interval (10,000 day draws, seed 20261001), as in results_v1.json. Unfiltered change reported.",
+ "rule": "A candidate is eligible when (1) thinned July's primary change is at most -0.25% with the interval below zero and (2) January 2025's primary change is at most 0 with its interval not entirely above zero. Selection: among eligible candidates the lowest sum of thinned July's and January's primary changes. No eligible candidate: nothing selected, v53 stands.",
+ "expectation_scale": "July 2026 route SSE is about 15,515 x 416^2 = 2.7e9; a -0.25% change is about -6.7e6, about -0.04 s on 222 s at alignment 1.",
+ "never_read": "No official score, ranking label or published aggregate. The ranking member (refit12, already mirrored) is turned into a file only after a selection; export and upload are the user's decision.",
+ "export_plan": "If selected and the user says so: v53's model part (runs/adsb_ctx3_lirf_mask/export_dry/vigorous-whistle_v53.parquet, before the reconciliation) with July 2026's lirf_nonpop_unmatched rows recomputed from the refit12 member at the selected (w, s), January 2026 untouched, then v48's reconciliation last (tools/export_daily_totals.py --base), audit, and a check that every other row equals v53's model part.",
+ "scorer": "tools/run_lirf_dark.py (written before any candidate was read)",
+ "report": "docs/lirf_dark/results_v1.json",
+ "automatic_submission": false
+}
