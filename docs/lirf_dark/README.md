@@ -57,3 +57,11 @@ Member step on v53's model part (`tools/export_lirf_dark.py`, dry run `runs/lirf
 change, mean −2.3 s, RMS 28 s, largest 352 s; squared change S = 1.25e7; gate rows 72 → 72; no other row changes. ΔSSE = S(1 − 2α):
 −0.08 s at alignment 1, about −0.23 s at thinned July's implied alignment (1.89: S 1.44e7, ΔSSE −4.0e7 on its route), about −0.02 s
 at January 2025's (0.64: S 3.2e6, ΔSSE −0.9e6), +0.08 s if the moves are noise.
+
+## Dry run of a v54 (not built under runs/submissions, not uploaded)
+
+v48's reconciliation applied last (`tools/export_daily_totals.py --base runs/lirf_dark/export_dry/vigorous-whistle_v54.parquet --dry-run
+runs/daily_totals/dry_v54 --version 54`): SHA-256 `d9dcefe7857ef45d1298757fb8068553cd00690eab6f7e073fac0e8bcef2bed1` (member step
+`b0fbbd19…`). Against the uploaded v53: 15,128 rows differ, **all LIRF July 2026** (mean −1.6 s, largest 376 s), squared change 1.31e7:
+−0.09 s at alignment 1, about −0.24 s at thinned July's implied alignment, +0.09 s if noise. Building v54 under `runs/submissions`, its audit
+and any upload are the user's decision.
