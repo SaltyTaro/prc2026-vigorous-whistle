@@ -141,5 +141,13 @@
   "runs": "runs/adsb_ctx3_lirf/design/<variant>_s<seed>/design",
   "transfer": "runs/adsb_ctx3_lirf/transfer",
   "report": "docs/adsb_ctx3_lirf/design_report.json"
- }
+ },
+ "amendments": [
+  {
+   "at_utc": "2026-10-01T09:16:25+00:00",
+   "before": "any prediction or score of the declared lref32 / lm25_32 runs (all eight were still training)",
+   "change": "The baseline B of every reading is the four round-B design seeds of ctx_lirf (runs/adsb_ctx/lirf_design/ctx_lirf_s1..s4/design, the same fit partition and October monitor), predicted on the same inputs as the new runs by tools/ctx3_lirf_predict.py --baseline (October scorer check against their stop predictions; July natural / thinned, December natural / thinned). The declaration named no fold-matched December baseline (the v29 check read December from the refit fold), and a 16-seed July baseline against four new seeds mixes seed count into the comparison. The 16-seed ens_ctx_lirf July reading (runs/adsb_ctx/regime_check_lirf/2025-07.parquet) stays in the report as a reference, not in the rule.",
+   "rule": "GO unchanged otherwise: L2 at b = 0.35 at least 0.3% below B on October and on a13-thinned July (intervals below zero), not worse than B on natural July and natural December."
+  }
+ ]
 }
