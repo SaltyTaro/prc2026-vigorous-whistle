@@ -6,13 +6,62 @@
  "rationale": "In 2025 a large share of rows at well-covered airports is matched, so the trees see few unmatched examples there, while the scored months have far fewer matches at some of them (EDDF a third of its 2025 gate share, LIRF dark in July 2026; docs/adsb_coverage). Masked copies give the unmatched branch labelled examples with the matched rows' non-ADS-B inputs. The network's masked member read -1.05% on unmatched October rows standalone (docs/adsb_ctx3_combo).",
  "contract": "tools/run_tree_mask_design.py: the data path of tools/run_learner_family_design.py unchanged (tools/run_adsb_learner.py: 276 timeline-bundle features + 27 ADS-B + 11 v19 = 314; label target; LIRF left out of fitting and early stopping, every row predicted). The fitting rows pass through prc2026_tree_mask.augment: every matched fitting row keeps weight 1 - p and gains a copy with weight p whose 21 focal ADS-B columns (the network's declared masking columns, configs/adsb_ctx3_design_v1.json defaults.masking.columns) are NaN and adsb_matched 0. This is the exact expected loss of the network's per-step draw. Neighbour columns (nb_*, sfc_*) are untouched; October rows are never masked. p = 0 is the unweighted control call.",
  "variants": {
-  "lgb_m25": {"kind": "lightgbm", "mask_p": 0.25, "overrides": {}, "control": "ref_lgb"},
-  "lgb_m50": {"kind": "lightgbm", "mask_p": 0.5, "overrides": {}, "control": "ref_lgb"},
-  "cat_ref": {"kind": "catboost", "mask_p": 0.0, "overrides": {"max_ctr_complexity": 2}, "rounds": 20000, "role": "control: the committee's cat_ctr2_x19 recipe (configs/adsb_v20_v1.json) on design seeds"},
-  "cat_m25": {"kind": "catboost", "mask_p": 0.25, "overrides": {"max_ctr_complexity": 2}, "rounds": 20000, "control": "cat_ref"}
+  "lgb_m25": {
+   "kind": "lightgbm",
+   "mask_p": 0.25,
+   "overrides": {},
+   "control": "ref_lgb"
+  },
+  "lgb_m50": {
+   "kind": "lightgbm",
+   "mask_p": 0.5,
+   "overrides": {},
+   "control": "ref_lgb"
+  },
+  "cat_ref": {
+   "kind": "catboost",
+   "mask_p": 0.0,
+   "overrides": {
+    "max_ctr_complexity": 2
+   },
+   "rounds": 20000,
+   "role": "control: the committee's cat_ctr2_x19 recipe (configs/adsb_v20_v1.json) on design seeds"
+  },
+  "cat_m25": {
+   "kind": "catboost",
+   "mask_p": 0.25,
+   "overrides": {
+    "max_ctr_complexity": 2
+   },
+   "rounds": 20000,
+   "control": "cat_ref"
+  }
  },
- "seeds": {"lgb_m25": [1, 2, 3, 4], "lgb_m50": [1, 2, 3, 4], "cat_ref": [1, 2, 3, 4], "cat_m25": [1, 2, 3, 4]},
- "existing_control": {"ref_lgb": "runs/learner_family/design/ref_lgb_s{1..4} (configs/learner_family_design_v1.json, the same data path, seeds and settings, fitted 1 October; not refitted)"},
+ "seeds": {
+  "lgb_m25": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "lgb_m50": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "cat_ref": [
+   1,
+   2
+  ],
+  "cat_m25": [
+   1,
+   2
+  ]
+ },
+ "existing_control": {
+  "ref_lgb": "runs/learner_family/design/ref_lgb_s{1..4} (configs/learner_family_design_v1.json, the same data path, seeds and settings, fitted 1 October; not refitted)"
+ },
  "reading": {
   "rows": "October non-LIRF rows; every label kept (no clipping). Unmatched = adsb_matched 0 in the proxy table.",
   "table": "RecipeProxy on runs/adsb_nn/design/committee_october.parquet as tools/learner_family_report.py; network pool P0 = 0.5 * mean(ctx_s101..116) + 0.5 * mean(ctx_e24_s117..132); P1 = P0 on matched rows and 0.6 * P0 + 0.4 * M on unmatched rows, M = the four-seed mean of m25_32 seeds 9-12 (runs/adsb_ctx3_combo/design), standing in for v52's masked member. Table = (1 - share) * committee' + share * P1, share 0.75 (0.85 reported).",
@@ -23,5 +72,13 @@
   "families": "The LightGBM family is read when its eight fits are complete; the CatBoost family when its eight fits are complete. The two readings are separate and both are reported."
  },
  "after": "A GO goes to a separately declared development round on the clean line's footing (leave-one-month-out January and July 2025, the forward fold, the January-November refit, the twelve-month refit; tools/run_network_member.py semantics for a member, or a committee re-fit for a swap), with the coverage-thinned January / July sets reported. No GO: masked-tree lever closed on evidence. Every upload is the user's decision; nothing is derived from official scores.",
- "hardware": "CPU, arcw0-arcw7 (infra/azure/parallel_authorization_20260915.json), 16 threads per fit: arcw0-3 lgb_m25 then lgb_m50 (seed n+1) then cat_ref s3/s4 (arcw0/1) or cat_m25 s3/s4 (arcw2/3); arcw4-7 cat_ref s1, cat_ref s2, cat_m25 s1, cat_m25 s2. Workers deallocated after the mirror."
+ "hardware": "CPU, arcw0-arcw7 (infra/azure/parallel_authorization_20260915.json), 16 threads per fit: arcw0-3 lgb_m25 then lgb_m50 (seed n+1) then cat_ref s3/s4 (arcw0/1) or cat_m25 s3/s4 (arcw2/3); arcw4-7 cat_ref s1, cat_ref s2, cat_m25 s1, cat_m25 s2. Workers deallocated after the mirror.",
+ "amendments": [
+  {
+   "at_utc": "2026-10-01T09:08:48+00:00",
+   "change": "CatBoost family reduced to seeds 1-2 (cat_ref s1/s2 and cat_m25 s1/s2, running on arcw4-7). The four seed-3/4 CatBoost fits on arcw0-3 were stopped about five minutes after they started; no CatBoost prediction or score had been read.",
+   "reason": "The LightGBM family read null (lgb_m25: unmatched -0.105%, interval -1.00..+0.57 s; committee swap +0.006%; matched rows +2.2%), so the CatBoost reading is kept as a two-seed check and arcw0-3 go to the LIRF context-network design (configs/adsb_ctx3_lirf_design_v1.json).",
+   "reading": "Unchanged rule; the CatBoost seed means are two-seed means."
+  }
+ ]
 }
