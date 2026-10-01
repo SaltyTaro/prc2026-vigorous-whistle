@@ -63,3 +63,21 @@ label above 20,000 s changes the sums). w55 moves route RMSE 416.9 → 415.6 s o
 The ranking member needs the 16 `refit12` fits (Azure CPUs, running). Then: v52's model part with the route's ranking rows recomputed
 (network' = 0.45 ens_ctx_lirf + 0.55 M inside v34's blend and v45's gate), v48's reconciliation with the published daily totals applied
 last, an audit, and a check that every other row equals v52's model part. Export and upload only at the user's word.
+
+## v53 (built 1 October, 18:10 UTC; NOT uploaded)
+
+- refit12 (16 fits) on four L40S at the user's choice ("GPU now"; second hardware amendment 7db721e), 17:18–18:00 UTC, no failure;
+  all 64 refit12 files hash-checked against the nodes; nodes terminated. Before the launch every node's timeline bundle (13 files) and
+  December build (3 files) were hash-checked against the workstation. The Azure CPU backup fits were stopped unread and arcw0–7
+  deallocated.
+- Member step (`tools/export_lirf_member.py --dry-run runs/adsb_ctx3_lirf_mask/export_dry --version 53`,
+  [`export_member_v53.json`](export_member_v53.json)): v52's model part (SHA-256 `16e9f33a…`) holds the shipped LIRF value on all
+  17,718 route rows (July 2026 15,515, January 2026 2,203; max 0.96 s, rounding); 16,839 rows change (mean −0.6 s, mean absolute
+  12 s, largest 463 s), gate rows 79 → 78; dry file SHA-256 `1cb22c38…`.
+- v48's reconciliation applied last (`tools/export_daily_totals.py --base <member dry file> --version 53`; the dry run
+  `runs/daily_totals/dry_v53` and the export are byte-identical): `runs/submissions/vigorous-whistle_v53.parquet`, SHA-256
+  `864cc5f4220cee5a617b19e6ddc0a73d49ccb8a385241b50a93c4cb8e3e3a35a`. Record `docs/daily_totals/export_v53.json`.
+- Audit (`docs/export_audit/v53_audit.json`): clean. Against v52 only LIRF rows differ (20,533 rows: the route plus LIRF rows moved by
+  their changed daily shift; RMS 5.2 s over the file, none above 600 s); every other airport identical.
+- Expectation against v52 (222.0519), not a prediction: squared change S = 9.34e6; −0.06 s if the moves are right at alignment 1,
+  about −0.12 s at the development reading's implied alignment (~1.5), +0.06 s if they are noise.

@@ -1,0 +1,106 @@
+{
+  "base": "runs/adsb_ctx3_mask/export_dry/vigorous-whistle_v52.parquet",
+  "by_month": {
+    "2026-01": {
+      "mean_abs_change_s": 9.502042669087608,
+      "mean_change_s": -0.3336359509759419,
+      "route_rows": 2203,
+      "rows_changed": 2064
+    },
+    "2026-07": {
+      "mean_abs_change_s": 12.068385433451498,
+      "mean_change_s": -0.638543345149855,
+      "route_rows": 15515,
+      "rows_changed": 14775
+    }
+  },
+  "candidate": "w55",
+  "checks": {
+    "base_minus_control_max_abs_s": 0.9626152778396317,
+    "base_minus_control_rows_over_1s": 0,
+    "gate_rows_candidate": 78,
+    "gate_rows_control": 79,
+    "member_mean_s": 1231.2054236282531,
+    "member_minus_network_rms_s": 70.07763932875159,
+    "network_mean_s": 1232.9209400967459,
+    "route_rows": 17718
+  },
+  "created_at_utc": "2026-10-01T18:04:04.384285+00:00",
+  "declaration": "configs/adsb_ctx3_lirf_mask_dev_v1.json",
+  "max_abs_change_s": 463.0,
+  "member_weight": 0.55,
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v53.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 111654,
+    "maximum_rounding_change_seconds": 0.499956264075081,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 24,
+    "provenance": {
+      "audit_used": false,
+      "candidate": "w55",
+      "code": {
+        "src/prc2026_final/lirf_gate.py": "1720860b7ac801d521a685770e42e3f5d8afa1257b60e5514c46974416d501ef",
+        "tools/export_lirf_member.py": "49b5d256497c79599ade332ab2158bba813489d024b54f79a9bf2554db561a62"
+      },
+      "declaration": {
+        "configs/adsb_ctx3_lirf_mask_dev_v1.json": {
+          "object_hash": "e17f40ebc9e412d5a80b88de6df3be036a43a6630f48c49c29d21c751634d930",
+          "sha256": "5144e88f7e02ba184465620d349af6d5124c7765d124a04b5fa3b0aa3f36c27b"
+        }
+      },
+      "dry_run": true,
+      "experiment_id": "prc2026-adsb-ctx3-lirf-mask-dev-v1",
+      "external_data": "none for this step (adsb.lol / OSM inputs of the networks as before)",
+      "inputs": {
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s801/refit12/ranking_predictions.parquet": "8cd1eb9d6614b56414a39cae7d91c768135d90fabd4dafdad85e54765990ad40",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s802/refit12/ranking_predictions.parquet": "f11e363310c932a7b2ca1c0820e98746f031ccace53fc284bfc878345911e417",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s803/refit12/ranking_predictions.parquet": "f22d6bec66674608ab0313a1fb808090b4eb1f9defb6adb403d5eee474acdd4a",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s804/refit12/ranking_predictions.parquet": "cfbb1a1e1fdab81c64cd84930d3c74ea56861e5cfc5ddcd0101d791d18a9e99f",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s805/refit12/ranking_predictions.parquet": "500b88df583dd666f8fd6ca68d3fc3002e1fdaf9ac926736776c793dfcf30ff6",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s806/refit12/ranking_predictions.parquet": "a863e99283bc582af140ce9e8932c845154674300cfceecb45ae523a5e358677",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s807/refit12/ranking_predictions.parquet": "ad7e77344bf2a39b953383266733add4a187175cffdf330bff4e12c35f89b5dd",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s808/refit12/ranking_predictions.parquet": "7b47e48a6b3025a727cc671567a6486b7ae87f740452c2907df7923ffcb95bd4",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s809/refit12/ranking_predictions.parquet": "a25c77324869ff74d4f805afa448f078e4678a4d8b9c6611965f7e83263c16c6",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s810/refit12/ranking_predictions.parquet": "50aa24399ac5a7d67ebbeba69dc86c1209aece71558f69740f813b0ad473a974",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s811/refit12/ranking_predictions.parquet": "074f76778fad43c46b700bd7b0e30af5dc7753c736615a74de44534ebc021bc4",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s812/refit12/ranking_predictions.parquet": "6d99ef7c0b4e3078361d5a7c6633895047fabddc721270b2e913e1fbee05ed99",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s813/refit12/ranking_predictions.parquet": "ac1ccfb516c4ccae1a0ce643c59ae611fea199c6c4b29d4468e516c42dfc270f",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s814/refit12/ranking_predictions.parquet": "ae91315e7b820fb10c45317cc0010602cbae429edc5ece3a7e78681da1eef5a3",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s815/refit12/ranking_predictions.parquet": "97269e2f7468950cd7d7eebd5246a0d7ab0fec2ea6e78e3f66bee773f909dcfa",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s816/refit12/ranking_predictions.parquet": "79c7719966be3f21a89dec629e432c30b934c4d4362370f8ceff40f0409d1d6c",
+        "runs/adsb_ctx3_mask/export_dry/vigorous-whistle_v52.parquet": "16e9f33a3dae2f330dca0477274cb6120ad4ef33ae563425561989c4a2e99965",
+        "runs/final_dryrun/run/recipe/detail.parquet": "2e79c78b25a4abd1032c211ec61968dc90942e58c2ccff8fceeccc4e3fdcaf5b"
+      },
+      "member_weight": 0.55,
+      "recipe": "v52's model part + (gated blend with (1 - 0.55) ens_ctx_lirf + 0.55 M - gated blend with ens_ctx_lirf) on lirf_nonpop_unmatched rows, floored at -12 s",
+      "results": {
+        "docs/adsb_ctx3_lirf_mask/results_v1.json": {
+          "sha256": "2e744d0ed4c0dbce016597ce33cd9bf19aa1a64c5aae2a7a96b7c17d70bdd07f"
+        }
+      },
+      "selected_by": "the declared rule (docs/adsb_ctx3_lirf_mask/results_v1.json)",
+      "step": "member (before the reconciliation)"
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "1cb22c38a869247db1a26e3f19d7efd0aefb4fd6e958ca3697935b8b18a88218",
+    "size_bytes": 1355691,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-10-01T18:04:04.260430+00:00",
+    "version": 53
+  },
+  "rows": 344841,
+  "rows_changed": 16839,
+  "sha256": "1cb22c38a869247db1a26e3f19d7efd0aefb4fd6e958ca3697935b8b18a88218",
+  "sum_squared_change": 9108976.0
+}
