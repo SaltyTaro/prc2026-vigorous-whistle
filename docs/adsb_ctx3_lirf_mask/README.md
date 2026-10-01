@@ -81,3 +81,11 @@ last, an audit, and a check that every other row equals v52's model part. Export
   their changed daily shift; RMS 5.2 s over the file, none above 600 s); every other airport identical.
 - Expectation against v52 (222.0519), not a prediction: squared change S = 9.34e6; −0.06 s if the moves are right at alignment 1,
   about −0.12 s at the development reading's implied alignment (~1.5), +0.06 s if they are noise.
+
+## v53 official: 221.8926 (18:14 UTC, 1 October) — −0.1593 s against v52; the official best
+
+Uploaded at the user's word ("upload v53") at about 18:13 UTC (`tools/prc_submit.py upload --calendar-day`), processed 18:14:18 UTC,
+344,841 rows ([`official_result_v53.json`](official_result_v53.json)). The squared change against v52 was 9.34e6, so the result
+corresponds to an alignment of about 1.8 (the upper end of the stated expectation, like v29's LIRF network at about twice its
+development reading). The figure describes the outcome; nothing is rescaled from it. Never
+re-upload v1–v53. New layers build on v53's steps: v52's members, the LIRF masked member, then the reconciliation last.
