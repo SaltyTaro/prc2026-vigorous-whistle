@@ -1,0 +1,62 @@
+{
+ "experiment_id": "prc2026-lirf-mask2-design-v1",
+ "declared_at_utc": "2026-10-01T18:43:33+00:00",
+ "audit_used": false,
+ "session": "project4 (1 October evening, after v54)",
+ "purpose": "Design of stronger masking for LIRF's dark months: the masked LIRF context network with masking probability 0.5 (lm50_32) and 0.75 (lm75_32) instead of 0.25 (lm25_32, the member of v53/v54), read inside v54's dark-month arithmetic. A GO opens a separately declared development round (16 seeds, the twelve-month refit for the ranking); this design exports nothing.",
+ "disclosed": {
+  "v54_lesson": "docs/lirf_dark/README.md: v54's dark-month re-read transferred at alignment 0.64, January 2025's development reading, while thinned July had promised 1.89. January 2025 (LIRF naturally dark, leave-one-month-out on the other eleven months) therefore governs this design; thinned July is a no-harm check.",
+  "masking_trend": "docs/adsb_ctx3_lirf/README.md and docs/adsb_ctx3_lirf_mask/README.md: masking at 0.25 helped LIRF's unmatched rows most where LIRF is dark; no masking probability other than 0 and 0.25 has been fitted for LIRF.",
+  "same_sets": "Thinned July and January 2025 are the sets that selected w55 (v53) and w70_s750 (v54)."
+ },
+ "hardware": "four AWS g6e.2xlarge (one L40S each), two lanes per GPU, tools/run_adsb_ctx_lomo.py --device cuda via tools/combo_queue.sh (ROUND=runs/lirf_mask2), infra/aws/gpu_authorization_20261001d.json (the user: 'yes, launch item 3 on GPU'). Thinned July re-predictions on the workstation CPU (tools/ctx3_lirf_predict.py --fold seasonal).",
+ "fits": {
+  "network_config": "configs/lirf_mask2_network_v1.json",
+  "variants": [
+   "lm50_32",
+   "lm75_32"
+  ],
+  "seeds": [
+   901,
+   902,
+   903,
+   904,
+   905,
+   906,
+   907,
+   908
+  ],
+  "order": [
+   "seasonal",
+   "lomo_2025-01"
+  ],
+  "folds": {
+   "thinned_july": {
+    "fold": "seasonal",
+    "file": "re-predicted on coverage-regime attempt a13 (July 2025 thinned to July 2026's coverage) on the workstation CPU"
+   },
+   "2025-01": {
+    "fold": "lomo_2025-01",
+    "file": "predictions.parquet"
+   }
+  },
+  "footing": "As configs/adsb_ctx3_lirf_mask_dev_v1.json for the same two folds: the control member's fits (lm25_32, seeds 801-816) were made on the same folds with the same code, settings except masking p, and the same hardware type.",
+  "outputs": "runs/lirf_mask2/nets/<variant>_s<seed>/<fold>/",
+  "count": 32
+ },
+ "sets": "Exactly tools/run_lirf_dark.build_sets' dark sets: thinned_july (14,771 route rows below 20,000 s) and natural:2025-01 (11,254 LIRF non-population unmatched rows), with their v9 / shipped network / LIRF tree / label / day.",
+ "arithmetic": "v54's dark-month value: network' = 0.30 ens_ctx_lirf + 0.70 M; blend 0.75 network' + 0.25 tree (v9 0), floor -12; gate u600 (tree - network' > 600 s: v9 0 / network' 0.2 / tree 0.8) (tools/run_lirf_dark.values with w 0.70, s 0.75).",
+ "control": "M = the 8-seed mean of lm25_32 seeds 801-808 on the same fold (equal seed count).",
+ "candidates": {
+  "lm50_32": "M = the 8-seed mean of lm50_32 seeds 901-908",
+  "lm75_32": "M = the 8-seed mean of lm75_32 seeds 901-908"
+ },
+ "seed_split_null": "M = the 8-seed mean of lm25_32 seeds 809-816 against the control (the same variant, other seeds): the seed noise of an 8-seed comparison, computed with the same code.",
+ "metric": "Primary: squared error of the set's rows with labels below 20,000 s, relative change against the control, paired-day 95% interval (10,000 day draws, seed 20261001), as in docs/lirf_dark/results_v1.json. Reported also: each variant against v54's own 16-seed lm25_32 member, and the variant's standalone route RMSE.",
+ "rule": "GO for a variant when (1) January 2025's primary change is at most -B, where B = max(0.25%, 2 x |the seed-split null's January change|), and (2) thinned July's primary change is at most 0. Among GO variants the lowest January change. No GO: stronger masking closed for LIRF.",
+ "next_if_go": "A separately declared development round for the GO variant: 8 more seeds (909-916) on both folds and 16 refit12 fits, read in v54's dark arithmetic against v54 (16 + 16 seeds), exported only at the user's word (v54's model part with July 2026's route rows recomputed, the reconciliation last).",
+ "never_read": "No official score, ranking label or published aggregate. No ranking prediction is made by this design.",
+ "scorer": "tools/lirf_mask2_report.py (written before any fit of this design finished)",
+ "report": "docs/lirf_mask2/design_report.json",
+ "automatic_submission": false
+}
