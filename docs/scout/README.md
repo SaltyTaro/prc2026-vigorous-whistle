@@ -439,3 +439,9 @@ Control: the shipped chain on the shipped model part (`runs/scout/refit/ctl_v55m
   The chain's residuals carry no simple group bias. Closed.
 - **Prediction clamps** at the airport × match label quantiles of the fitting months: low side 0.1% / 0.5% / 1% / 2% neutral to worse
   (up to +0.085%); high side 99.5% / 99.9% badly worse (+0.3 to +5.1%). Closed.
+- **Group-specific day slopes after v57** (residual on I_d by airport, airport × match, airport × prediction band, match × prediction band;
+  month-blocked, shrunk; scratch `group_slope.py`): every variant worse or within noise (equal-footing means −0.004 to +0.051%). Closed.
+- **ADS-B matching gaps in 2026** (label-free; scratch `match_rate.py`, `match_rate2.py`): Turkish Airlines' new alphanumeric callsigns
+  did not cost matches outside LTFM (THY match rates at the other airports equal 2025's or better). EDDF's lower 2026 match rate
+  (0.92 → 0.76–0.80) is uniform across its large carriers (DLH −18, CFG −19, OCN −18 points), i.e. receiver coverage, not matching; the
+  cargo prefixes fall a little more (ACA, GEC, CCA −22..−26 points beyond the airport). Nothing to recover. Closed.
