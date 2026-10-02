@@ -427,3 +427,15 @@ without an NM record 1.2% of rows and 20.2% of ordinary squared error.
 
 **v57's layer with v48's heavy rows (outside the LIRF population) made eligible**, same 100 s cap, on the v55m chain: −0.0002 / +0.0054 /
 −0.0008 / +0.0032% (scratch `heavy_in.py`). Closed.
+
+## 17. Systematic small-cell scans on the shipped chain's development proxy — closed (2 October 2026, 2025 only)
+
+Control: the shipped chain on the shipped model part (`runs/scout/refit/ctl_v55m.parquet`). Scratch `bias_scan.py`, `low_clamp.py`.
+
+- **Month-blocked group-bias corrections** (shrunk means of the other three months, k = 200 rows; LIRF population never changed) over
+  18 groupings: airport, × ADS-B match, × take-off-minus-schedule band, × prediction band, × hour band, × weekday, × NM status, × wake
+  category, × market segment, × runway, × stand area, × flight type, and prediction / delay bands alone. **No grouping improves all four
+  months.** Best: airport × prediction band −0.056% equal-footing mean but January +0.035%; airport alone −0.025% with November +0.014%.
+  The chain's residuals carry no simple group bias. Closed.
+- **Prediction clamps** at the airport × match label quantiles of the fitting months: low side 0.1% / 0.5% / 1% / 2% neutral to worse
+  (up to +0.085%); high side 99.5% / 99.9% badly worse (+0.3 to +5.1%). Closed.
