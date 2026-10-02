@@ -362,3 +362,10 @@ run. No official score is used, nothing is re-read from v57's score.
   by a few seconds, so a size-dependent k has nothing to gain. A second pass on the same basis after the layer leaves a slope of 0.07.
 - **Richer variance inputs** (runway, stand / aircraft-type / operator frequency, |I_d|): −0.0999% / −0.0998% against −0.0977%; the
   variance model is saturated on label-free inputs. Closed.
+- **Day signal**: allocating v48's posterior day shift instead of I_d reads −0.067%, the shift in effect after the extreme-day layer
+  −0.077%, against −0.098% for I_d (scratch `va_signal.py`). Closed.
+
+**Chain step.** `tools/scout_var_alloc.py` now checks its rebuilt extreme-day step against the chain's previous file
+(`--previous FILE --previous-sha256 SHA`, the output of `tools/scout_extreme_shift.py` on the same base and reconciliation; default the
+uploaded v55), so the final-file chain can run it on a fresh runner output. With v55 given explicitly it rebuilds v57 byte for byte
+(SHA-256 `31d909ff...`, `runs/scout/var_alloc/dry_v57_chaincheck/`).

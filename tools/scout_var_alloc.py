@@ -5,8 +5,11 @@
         both, the control is the extreme-day layer on v48's procedure, fitted month-blocked as its own governing run; this layer's
         models and k are fitted without the scored month (month-blocked); the declared rule -> the declaration's "report"
   --base FILE --recon DIR --version N --dry-run OUT [--declaration ...]
-        the ranking on v55's chain: FILE = the model part, DIR = v48's procedure on FILE; the extreme-day layer re-applied and checked
-        against the uploaded v55; models and k from the four development months; the layer on top
+        the ranking: FILE = the model part, DIR = v48's procedure on FILE; the extreme-day layer re-applied and checked byte for byte
+        against the previous step's file (--previous PREV --previous-sha256 SHA: tools/scout_extreme_shift.py's output on the same
+        FILE and DIR; default the uploaded v55, whose chain is the documented one); models and k from the four development months;
+        the layer on top. In the final-file chain: runner -> tools/export_daily_totals.py --base -> tools/scout_extreme_shift.py ->
+        this tool with --previous set to the extreme-day step's file
   --base FILE --recon DIR --version N --declaration ... [--user-override TEXT]   a real export under runs/submissions (never uploads)
 """
 from __future__ import annotations
@@ -157,8 +160,9 @@ def export(args) -> None:
         output, report_path, detail = out / f"vigorous-whistle_v{args.version}.parquet", out / f"export_v{args.version}.json", out
     if output.exists():
         raise ValueError(f"{output} exists; never overwrite.")
-    if sha256_file(V55) != V55_SHA:
-        raise ValueError("v55's file is not the uploaded one.")
+    previous, previous_sha = (ROOT / args.previous, args.previous_sha256) if args.previous else (V55, V55_SHA)
+    if not previous_sha or sha256_file(previous) != previous_sha:
+        raise ValueError("The previous step's file does not have the expected SHA-256.")
     # development side: the control and the out-of-fold weights (for k), then the models on all four months
     dev, _ = layered("stack")
     elig_d = var_alloc.eligible(dev)
@@ -166,14 +170,14 @@ def export(args) -> None:
     f_d = var_alloc.features(dev, departures(sorted(glob.glob(str(ROOT / "data/raw/training_2025-*.parquet")))), KEYS)
     models = var_alloc.fit_models(f_d, dev["a"].to_numpy(dtype=float), dev["label"].to_numpy(dtype=float), dev["r"].to_numpy(dtype=float), elig_d)
     params = extreme_shift.fit(extreme_shift.day_frame(dev, KEYS).droplevel("month"))
-    # ranking: v55's chain, checked against the uploaded file, then the layer
+    # ranking: the chain up to the extreme-day layer, checked against the previous step's file, then the layer
     t = ranking_rows(Path(args.base).as_posix(), ROOT / args.recon)
     days = extreme_shift.day_frame(t, ["airport", "bday"])
     ext, mask = extreme_shift.apply(t, extreme_shift.shifts(days, params), ["airport", "bday"])
     v55 = np.where(mask, np.rint(ext), t["v48_exported"].to_numpy(dtype=float)).astype(np.int64)
-    uploaded = pd.read_parquet(V55).set_index(ID)[TARGET].reindex(t[ID]).to_numpy().astype(np.int64)
+    uploaded = pd.read_parquet(previous).set_index(ID)[TARGET].reindex(t[ID]).to_numpy().astype(np.int64)
     if not np.array_equal(v55, uploaded):
-        raise ValueError("v55's chain does not reproduce the uploaded v55.")
+        raise ValueError("The chain up to the extreme-day layer does not reproduce the previous step's file.")
     t["month"] = t["bday"].str[:7]
     I = implied(t, days, params["c0"], ["airport", "bday"])
     elig = var_alloc.eligible(t, GUARD)
@@ -184,7 +188,7 @@ def export(args) -> None:
     values = np.where(elig, np.rint(new), v55)
     provenance = {"experiment_id": "scout_var_alloc_v1", "dry_run": args.dry_run is not None, "base": {"path": args.base, "sha256": sha256_file(ROOT / args.base)},
                   "reconciliation": {"dir": args.recon, "values_sha256": sha256_file(ROOT / args.recon / "values.parquet"), "days_sha256": sha256_file(ROOT / args.recon / "days.parquet")},
-                  "v55": {"path": str(V55.relative_to(ROOT)), "sha256": V55_SHA, "reproduced": True},
+                  "previous_step": {"path": str(previous.relative_to(ROOT)) if previous.is_relative_to(ROOT) else str(previous), "sha256": previous_sha, "reproduced": True},
                   "selected_by": "dry run" if args.dry_run is not None else (f"the user's override: {args.user_override}" if args.user_override else "the declared rule (accepted)"),
                   "recipe": "v55's chain (the base, v48's reconciliation, the extreme-day layer), then the airport-day's discrepancy re-allocated by a learned per-row error variance (cap 100 s; heavy rows, the LIRF population and the two 4-5 July guard rows unchanged)",
                   "declaration": {args.declaration: sha256_file(ROOT / args.declaration)} if args.declaration else None, "code": {c: sha256_file(ROOT / c) for c in CODE},
@@ -218,6 +222,8 @@ def main() -> None:
     parser.add_argument("--version", type=int)
     parser.add_argument("--dry-run", type=Path)
     parser.add_argument("--user-override")
+    parser.add_argument("--previous", help="the extreme-day step's file on the same base (default: the uploaded v55)")
+    parser.add_argument("--previous-sha256")
     args = parser.parse_args()
     if args.score:
         govern(args.declaration)
