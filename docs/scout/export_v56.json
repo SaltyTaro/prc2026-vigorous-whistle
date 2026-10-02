@@ -1,0 +1,219 @@
+{
+ "by_airport": {
+  "LEBL": {
+   "rows_changed": 12,
+   "sum_squared_change": 1082799.0
+  },
+  "LEMD": {
+   "rows_changed": 23,
+   "sum_squared_change": 730464.0
+  },
+  "LIRF": {
+   "rows_changed": 14,
+   "sum_squared_change": 786187536.0
+  },
+  "LTFM": {
+   "rows_changed": 124,
+   "sum_squared_change": 7973290.0
+  }
+ },
+ "created_at_utc": "2026-10-02T06:39:16.532592+00:00",
+ "max_abs_change_s": 24148,
+ "receipt": {
+  "columns": [
+   "MVT_ID_mvt",
+   "TAXITIME_SEC_mvt"
+  ],
+  "exact_template_order": true,
+  "filename": "vigorous-whistle_v56.parquet",
+  "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+  "maximum_prediction_seconds": 111654,
+  "maximum_rounding_change_seconds": 0.0,
+  "minimum_prediction_seconds": -12,
+  "negative_predictions": 18,
+  "provenance": {
+   "audit_used": false,
+   "base": {
+    "path": "runs/submissions/vigorous-whistle_v55.parquet",
+    "sha256": "aa02ff597a619f223888370726cdcbf5c6d055720ef2f95b0c93818133fd1ece"
+   },
+   "code": {
+    "src/prc2026_daily/reconcile.py": "30a2d2fc88480bf821208c6e52351325887aae72704ba3c45730acbc808c6a14",
+    "src/prc2026_scout/count_days.py": "f25cd09a425a1fdc17b790ee199f0f9329adb7b6637a16812b0105c70372cc76",
+    "tools/run_daily_totals.py": "63a7a68d13c27619a86865261a1c6e9221b3e83626c73478c8dc237d40043f85",
+    "tools/scout_count_days.py": "c3504c15dd153823f96492dee4204aa7d0b9e0d8a4348fd514b89deb6a87103a"
+   },
+   "declaration": {
+    "configs/scout_count_days_v1.json": "09c3e38a3e88fd8bba96d6b7c1947455a9cc87946fe44c9c6f9864eba4710f8e"
+   },
+   "dry_run": false,
+   "experiment_id": "scout_count_days_v1",
+   "official_scores_used": "none",
+   "options": {},
+   "recipe": "the base (v55: model part, v48's reconciliation, extreme-day layer), then the count-day layer: where EUROCONTROL's daily departure counts disagree with the values' off-block days, candidates near a midnight take the change of their posterior mean",
+   "selected_by": "the declared rule (accepted)"
+  },
+  "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+  "rows": 344841,
+  "sha256": "7be7f3e13a7624bc701aacdf3e05748d1bbfb88b4e47ae63bcd6bf25dc64517b",
+  "size_bytes": 1356756,
+  "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+  "types": {
+   "MVT_ID_mvt": "double",
+   "TAXITIME_SEC_mvt": "int32"
+  },
+  "validated_at_utc": "2026-10-02T06:39:16.446358+00:00",
+  "version": 56
+ },
+ "reports": [
+  {
+   "airport": "EGLL",
+   "big": 0,
+   "candidates": 0,
+   "flagged_candidates": [],
+   "heavy": 0,
+   "kept_big": 0,
+   "log_evidence": -0.08462629024924022,
+   "month": "2026-01",
+   "moved": [],
+   "seconds": 2.0,
+   "skipped": 0,
+   "status": "ok"
+  },
+  {
+   "airport": "EGLL",
+   "big": 0,
+   "candidates": 0,
+   "flagged_candidates": [],
+   "heavy": 0,
+   "kept_big": 0,
+   "log_evidence": -0.08462629024924022,
+   "month": "2026-07",
+   "moved": [],
+   "seconds": 2.2,
+   "skipped": 0,
+   "status": "ok"
+  },
+  {
+   "airport": "LEBL",
+   "big": 0,
+   "candidates": 17,
+   "flagged_candidates": [],
+   "heavy": 0,
+   "kept_big": 0,
+   "log_evidence": -0.5286327218078994,
+   "month": "2026-01",
+   "moved": [],
+   "seconds": 1.8,
+   "skipped": 0,
+   "status": "ok"
+  },
+  {
+   "airport": "LEBL",
+   "big": 0,
+   "candidates": 40,
+   "flagged_candidates": [],
+   "heavy": 0,
+   "kept_big": 0,
+   "log_evidence": -8.00492820880378,
+   "month": "2026-07",
+   "moved": [],
+   "seconds": 3.1,
+   "skipped": 0,
+   "status": "ok"
+  },
+  {
+   "airport": "LEMD",
+   "big": 1,
+   "candidates": 35,
+   "flagged_candidates": [],
+   "heavy": 1,
+   "kept_big": 0,
+   "log_evidence": -6.532241456073079,
+   "month": "2026-01",
+   "moved": [],
+   "seconds": 2.0,
+   "skipped": 0,
+   "status": "ok"
+  },
+  {
+   "airport": "LEMD",
+   "big": 0,
+   "candidates": 38,
+   "flagged_candidates": [],
+   "heavy": 0,
+   "kept_big": 0,
+   "log_evidence": -9.908386255755326,
+   "month": "2026-07",
+   "moved": [],
+   "seconds": 1.9,
+   "skipped": 0,
+   "status": "ok"
+  },
+  {
+   "airport": "LIRF",
+   "big": 38,
+   "candidates": 47,
+   "flagged_candidates": [],
+   "heavy": 20,
+   "kept_big": 18,
+   "log_evidence": 5.739687570340551,
+   "month": "2026-01",
+   "moved": [],
+   "seconds": 7.5,
+   "skipped": 0,
+   "status": "ok"
+  },
+  {
+   "airport": "LIRF",
+   "big": 46,
+   "candidates": 54,
+   "flagged_candidates": [],
+   "heavy": 29,
+   "kept_big": 17,
+   "log_evidence": -7.31096070748205,
+   "month": "2026-07",
+   "moved": [],
+   "seconds": 16.2,
+   "skipped": 0,
+   "status": "ok"
+  },
+  {
+   "airport": "LTFM",
+   "big": 10,
+   "candidates": 196,
+   "flagged_candidates": [],
+   "heavy": 6,
+   "kept_big": 10,
+   "log_evidence": -22.434090442939986,
+   "month": "2026-01",
+   "moved": [],
+   "seconds": 10.7,
+   "skipped": 0,
+   "status": "ok"
+  },
+  {
+   "airport": "LTFM",
+   "big": 0,
+   "candidates": 49,
+   "flagged_candidates": [],
+   "heavy": 0,
+   "kept_big": 0,
+   "log_evidence": -6.801712448060804,
+   "month": "2026-07",
+   "moved": [],
+   "seconds": 5.9,
+   "skipped": 0,
+   "status": "ok"
+  }
+ ],
+ "rows_changed": 173,
+ "sha256": "7be7f3e13a7624bc701aacdf3e05748d1bbfb88b4e47ae63bcd6bf25dc64517b",
+ "sum_squared_change_against_base": 795974089.0,
+ "user_decision": {
+  "context": "after being told that v2 was rejected by its rule and v1 stays the accepted procedure, with the 5 July risk (about +3.8 s if the other row is the one) stated; upload only at a further word",
+  "date": "2026-10-02",
+  "words": "Build v56 from v1"
+ },
+ "version": 56
+}

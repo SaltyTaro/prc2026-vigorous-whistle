@@ -242,3 +242,16 @@ What v1 means for 5 July on the ranking: v55 is wrong on one of the two rows if 
 has a lower expected squared error than v55 whenever the probability that it is the one that left on the 5th exceeds one half (expected
 (1 − p) × 2.74e9 against v55's p × 5.8e8 + (1 − p) × 2.2e9). Every reading favours it: v48's row model about 3:1, the 5 July delay total
 2:1 against the month's own residuals up to about 30:1 under the day model; the cost if wrong is about 3.8 s.
+
+## 10. v56 built from v1 (user: "Build v56 from v1"), not uploaded
+
+`tools/scout_count_days.py --base runs/submissions/vigorous-whistle_v55.parquet --version 56 --declaration configs/scout_count_days_v1.json`
+(the accepted v1; v2 rejected).
+
+- **`runs/submissions/vigorous-whistle_v56.parquet`, SHA-256 `7be7f3e13a7624bc701aacdf3e05748d1bbfb88b4e47ae63bcd6bf25dc64517b`**,
+  byte-identical to the dry run; record [`export_v56.json`](export_v56.json), receipt [`vigorous-whistle_v56.receipt.json`](vigorous-whistle_v56.receipt.json).
+- Audit [`../export_audit/v56_audit.json`](../export_audit/v56_audit.json)
+  clean: integrity passes; airport-month, daily-outlier and disruption flags as in v55's audit (only the means of LIRF 5 January / 2 July
+  and LTFM 12 / 18 / 19 January move by 1–27 s).
+- Upload only at the user's word:
+  `.venv\Scripts\python.exe -X utf8 -B tools\prc_submit.py upload --file runs/submissions/vigorous-whistle_v56.parquet --expected-sha256 7be7f3e13a7624bc701aacdf3e05748d1bbfb88b4e47ae63bcd6bf25dc64517b --calendar-day`
