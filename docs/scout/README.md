@@ -98,3 +98,18 @@ below zero" cannot hold for months without extreme days).
   `tools/scout_export_daily.py` (ranking dry run of a variant; not run for an export)
 - `tests/test_scout_published_figure.py`, `tests/test_scout_shift_prior.py` (10 tests)
 - Runs: `runs/scout/` (not in the repository)
+
+## 5. LTFM input drift 2025 → 2026 (label-free for 2026) — nothing actionable, closed
+
+Scratch `ltfm_drift.py` / `ltfm_34l.py` in the session scratchpad. Not repeated here: the THY IOBT convention (docs/input_shift).
+
+- AOBT_3 at LTFM is takeoff minus a fixed allowance per runway (about 1,140 / 1,200 / 1,440 / 1,500 s), in 2026 as in 2025; NM record
+  share stable (98.5%); departures per day as in 2025.
+- Runways: January 2026 uses 34L (4.3%) and 16R (2.4%), unused in January 2025 but used in July / December 2025 (4.6 / 5.2% for 34L).
+  The 34L rows concentrate on the 18–19 January snow days (takeoff minus schedule median 3,358–4,017 s); the model's high predictions
+  there (2,657–3,152 s) sit on disruption days, where the daily totals already pull LTFM down (v54 dry run: −34 s per row in January).
+- Stands: 1 (January) and 5 (July) departures from stands unseen in 2025, against a 2025 leave-one-month-out baseline of 0–0.03%.
+  Remote numeric stands carry 3,760 July 2026 departures against about 2,600 a month in 2025, all known stands; in July 2025 their mean
+  taxi time was 1,117 s against 1,094 s overall.
+- Takeoff minus schedule is much larger in January 2026 (median 1,615 s against 1,194 s in January 2025): winter delay, a level the
+  reconciliation reads.
