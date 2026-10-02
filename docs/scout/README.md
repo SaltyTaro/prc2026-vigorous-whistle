@@ -348,3 +348,17 @@ v55 (January 2026 airport-month levels, the EHAM 2–7 January and LFPG 7 Januar
 The squared-error gain on the scored months is 1.84 times the layer's squared change (5.58e7 against 3.03e7), inside the 2025 range
 (0.7–5.1, median about 2): the layer transferred as its development readings said. Nothing is re-selected or re-tuned from the score. Never re-upload v1–v57. Final-file chain for this file: runner `--layers v55m` →
 `tools/export_daily_totals.py --base` → `tools/scout_extreme_shift.py` → `tools/scout_var_alloc.py`.
+
+## 14. After v57: refinements of the same mechanism — closed (2 October 2026, 2025 only, nothing declared)
+
+Scratch `va_next.py`, `va_feat.py` in the session scratchpad; development stack, control v57's layer, month-blocked as its governing
+run. No official score is used, nothing is re-read from v57's score.
+
+- **Splitting v48's own day shift by the variance model** is v57 itself: its I_d is the whole airport-day
+  discrepancy on every day with a published total, not the extreme-day residual.
+- **One k per airport**: equal-footing mean −0.082% against the global k's −0.098% (in-sample k from 0.05 at EHAM to 0.41 at LIRF; the
+  spread is noise at this sample size). Closed.
+- **k by the size of I_d**: 0.54 / 0.28 / 0.26 / 0.19 for |I| in [0, 10) / [10, 30) / [30, 80) / [80, 600] s; the small-|I| rows move
+  by a few seconds, so a size-dependent k has nothing to gain. A second pass on the same basis after the layer leaves a slope of 0.07.
+- **Richer variance inputs** (runway, stand / aircraft-type / operator frequency, |I_d|): −0.0999% / −0.0998% against −0.0977%; the
+  variance model is saturated on label-free inputs. Closed.
