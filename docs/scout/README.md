@@ -418,3 +418,12 @@ Equal-footing mean +0.003% (bar −0.02%), no interval below zero: **rejected**.
 parameters are already right for the shipped model part, and the chain keeps its full gain on it (−0.15 / −0.55 / −0.35 / −0.49%
 against v55m alone). Selection inheritance (the members were chosen on these months) and the missing twelve-month check are stated in
 the declaration; neither matters for a null.
+
+**Census of the shipped chain on the shipped model part** (development, `runs/scout/refit/ctl_v55m.parquet`, pooled RMSE 239.33 s;
+scratch `census57.py`): the 78 labels above 3 h hold 35.3% of all squared error (three LFPG rows 26.6%, among them the two unidentifiable
+January recording errors; 70 LIRF population rows 7.9%). Ordinary labels: LTFM unmatched 15.5%, LFPG unmatched 14.5%, LIRF matched 13.9%,
+LIRF population 13.4% (492 rows, RMSE 2,605 s), EGLL unmatched / matched 7.1% / 5.9%, LIRF unmatched 6.1%, LEBL matched 4.8%; rows
+without an NM record 1.2% of rows and 20.2% of ordinary squared error.
+
+**v57's layer with v48's heavy rows (outside the LIRF population) made eligible**, same 100 s cap, on the v55m chain: −0.0002 / +0.0054 /
+−0.0008 / +0.0032% (scratch `heavy_in.py`). Closed.
