@@ -1,0 +1,463 @@
+{
+  "bootstrap": {
+    "draws": 10000,
+    "seed": 20261002
+  },
+  "cap_s": 20000.0,
+  "code": {
+    "src/prc2026_final/lirf_gate.py": "1720860b7ac801d521a685770e42e3f5d8afa1257b60e5514c46974416d501ef",
+    "tools/run_lirf_combo.py": "9760a94b530ed3688d465fc60f5c8cf5df8d726fc0789e5de560d8c86de925d1"
+  },
+  "control_checks": {
+    "2025-07": {
+      "lirf_net_vs_shipped_runs_rms_s": 0.0,
+      "passes": true,
+      "rows": 13992
+    },
+    "2025-11": {
+      "lirf_net_vs_shipped_runs_rms_s": 0.0,
+      "passes": true,
+      "rows": 7401
+    },
+    "2025-12": {
+      "lirf_net_vs_shipped_runs_rms_s": 1.440913499438492e-13,
+      "passes": true,
+      "rows": 9506
+    }
+  },
+  "created_at_utc": "2026-10-02T03:05:41.808760+00:00",
+  "declaration": {
+    "configs/lirf_combo_reread_v1.json": {
+      "object_hash": "967f1aa3358da2c3c8ec5fa1847cf14458e5328dcd6de817f57a2f473c6e3e67",
+      "sha256": "ae15271f3e6cef1f15320e44dac303a8a0c27436a0467c01721a0ced4fa85977"
+    }
+  },
+  "eligible": [
+    "mw25",
+    "mw40"
+  ],
+  "gate": {
+    "T": 600,
+    "lean": {
+      "net": 0.2,
+      "tree": 0.65,
+      "v9": 0.15
+    }
+  },
+  "inputs": {
+    "runs/lomo_dev/rows.parquet": "9072bc730f2cac40b8d85633cc19d41967d88b19c6c97bd12cbb22b15d9c5ed5"
+  },
+  "member": {
+    "seeds": [
+      801,
+      802,
+      803,
+      804,
+      805,
+      806,
+      807,
+      808,
+      809,
+      810,
+      811,
+      812,
+      813,
+      814,
+      815,
+      816
+    ],
+    "variant": "lm25_32"
+  },
+  "results": {
+    "mw25": {
+      "natural:2025-07": {
+        "gate_rows": 98,
+        "gate_rows_control": 98,
+        "primary": {
+          "days": 31,
+          "days_better": 17,
+          "interval_95": [
+            -0.00172498319386789,
+            0.000981899487577448
+          ],
+          "relative_change": -0.0003859950436260265,
+          "rmse": 400.08533291688707,
+          "rmse_control": 400.1625707554403,
+          "rows_kept": 13992
+        },
+        "route_sse_change_share_of_month_v33": -6.729733252634583e-05,
+        "rows": 13992,
+        "unfiltered": {
+          "days": 31,
+          "days_better": 17,
+          "interval_95": [
+            -0.00172498319386789,
+            0.000981899487577448
+          ],
+          "relative_change": -0.0003859950436260265,
+          "rmse": 400.08533291688707,
+          "rmse_control": 400.1625707554403,
+          "rows_kept": 13992
+        }
+      },
+      "natural:2025-11": {
+        "gate_rows": 4,
+        "gate_rows_control": 5,
+        "primary": {
+          "days": 30,
+          "days_better": 21,
+          "interval_95": [
+            -0.0038589730096342508,
+            0.0019074243660583067
+          ],
+          "relative_change": -0.0013955223439349202,
+          "rmse": 281.57126261910787,
+          "rmse_control": 281.76793798591257,
+          "rows_kept": 7401
+        },
+        "route_sse_change_share_of_month_v33": -0.00014604007561521578,
+        "rows": 7401,
+        "unfiltered": {
+          "days": 30,
+          "days_better": 21,
+          "interval_95": [
+            -0.0038589730096342508,
+            0.0019074243660583067
+          ],
+          "relative_change": -0.0013955223439349202,
+          "rmse": 281.57126261910787,
+          "rmse_control": 281.76793798591257,
+          "rows_kept": 7401
+        }
+      },
+      "natural:2025-12": {
+        "gate_rows": 12,
+        "gate_rows_control": 12,
+        "primary": {
+          "days": 31,
+          "days_better": 24,
+          "interval_95": [
+            -0.006110274465484978,
+            -0.0020534069431977346
+          ],
+          "relative_change": -0.003990463231815775,
+          "rmse": 263.0458021899671,
+          "rmse_control": 263.57221549057306,
+          "rows_kept": 9506
+        },
+        "route_sse_change_share_of_month_v33": -0.0005624373273499539,
+        "rows": 9506,
+        "unfiltered": {
+          "days": 31,
+          "days_better": 24,
+          "interval_95": [
+            -0.006110274465484978,
+            -0.0020534069431977346
+          ],
+          "relative_change": -0.003990463231815775,
+          "rmse": 263.0458021899671,
+          "rmse_control": 263.57221549057306,
+          "rows_kept": 9506
+        }
+      }
+    },
+    "mw40": {
+      "natural:2025-07": {
+        "gate_rows": 102,
+        "gate_rows_control": 98,
+        "primary": {
+          "days": 31,
+          "days_better": 15,
+          "interval_95": [
+            -0.002242778041472461,
+            0.0022588898608813784
+          ],
+          "relative_change": -7.717700710199717e-05,
+          "rmse": 400.14712878271064,
+          "rmse_control": 400.1625707554403,
+          "rows_kept": 13992
+        },
+        "route_sse_change_share_of_month_v33": -1.3455630573752408e-05,
+        "rows": 13992,
+        "unfiltered": {
+          "days": 31,
+          "days_better": 15,
+          "interval_95": [
+            -0.002242778041472461,
+            0.0022588898608813784
+          ],
+          "relative_change": -7.717700710199717e-05,
+          "rmse": 400.14712878271064,
+          "rmse_control": 400.1625707554403,
+          "rows_kept": 13992
+        }
+      },
+      "natural:2025-11": {
+        "gate_rows": 6,
+        "gate_rows_control": 5,
+        "primary": {
+          "days": 30,
+          "days_better": 20,
+          "interval_95": [
+            -0.006889860740455325,
+            0.00021056311138035983
+          ],
+          "relative_change": -0.003477978793776405,
+          "rmse": 281.2775197418961,
+          "rmse_control": 281.76793798591257,
+          "rows_kept": 7401
+        },
+        "route_sse_change_share_of_month_v33": -0.0003639671469530481,
+        "rows": 7401,
+        "unfiltered": {
+          "days": 30,
+          "days_better": 20,
+          "interval_95": [
+            -0.006889860740455325,
+            0.00021056311138035983
+          ],
+          "relative_change": -0.003477978793776405,
+          "rmse": 281.2775197418961,
+          "rmse_control": 281.76793798591257,
+          "rows_kept": 7401
+        }
+      },
+      "natural:2025-12": {
+        "gate_rows": 12,
+        "gate_rows_control": 12,
+        "primary": {
+          "days": 31,
+          "days_better": 25,
+          "interval_95": [
+            -0.009673878195299931,
+            -0.0031607962753242105
+          ],
+          "relative_change": -0.006300556368770624,
+          "rmse": 262.7405776749974,
+          "rmse_control": 263.57221549057306,
+          "rows_kept": 9506
+        },
+        "route_sse_change_share_of_month_v33": -0.0008880342654495805,
+        "rows": 9506,
+        "unfiltered": {
+          "days": 31,
+          "days_better": 25,
+          "interval_95": [
+            -0.009673878195299931,
+            -0.0031607962753242105
+          ],
+          "relative_change": -0.006300556368770624,
+          "rmse": 262.7405776749974,
+          "rmse_control": 263.57221549057306,
+          "rows_kept": 9506
+        }
+      }
+    },
+    "mw55": {
+      "natural:2025-07": {
+        "gate_rows": 105,
+        "gate_rows_control": 98,
+        "primary": {
+          "days": 31,
+          "days_better": 14,
+          "interval_95": [
+            -0.002399271438461822,
+            0.003546188518783407
+          ],
+          "relative_change": 0.0005222707111301506,
+          "rmse": 400.2670537103223,
+          "rmse_control": 400.1625707554403,
+          "rows_kept": 13992
+        },
+        "route_sse_change_share_of_month_v33": 9.1056676234811e-05,
+        "rows": 13992,
+        "unfiltered": {
+          "days": 31,
+          "days_better": 14,
+          "interval_95": [
+            -0.002399271438461822,
+            0.003546188518783407
+          ],
+          "relative_change": 0.0005222707111301506,
+          "rmse": 400.2670537103223,
+          "rmse_control": 400.1625707554403,
+          "rows_kept": 13992
+        }
+      },
+      "natural:2025-11": {
+        "gate_rows": 6,
+        "gate_rows_control": 5,
+        "primary": {
+          "days": 30,
+          "days_better": 21,
+          "interval_95": [
+            -0.008860220597143979,
+            -0.0009589860098770919
+          ],
+          "relative_change": -0.004943034885829007,
+          "rmse": 281.0706809033847,
+          "rmse_control": 281.76793798591257,
+          "rows_kept": 7401
+        },
+        "route_sse_change_share_of_month_v33": -0.0005172838626572234,
+        "rows": 7401,
+        "unfiltered": {
+          "days": 30,
+          "days_better": 21,
+          "interval_95": [
+            -0.008860220597143979,
+            -0.0009589860098770919
+          ],
+          "relative_change": -0.004943034885829007,
+          "rmse": 281.0706809033847,
+          "rmse_control": 281.76793798591257,
+          "rows_kept": 7401
+        }
+      },
+      "natural:2025-12": {
+        "gate_rows": 12,
+        "gate_rows_control": 12,
+        "primary": {
+          "days": 31,
+          "days_better": 25,
+          "interval_95": [
+            -0.013912653596255951,
+            -0.004881866796021607
+          ],
+          "relative_change": -0.009265684801049081,
+          "rmse": 262.34828521904274,
+          "rmse_control": 263.57221549057306,
+          "rows_kept": 9506
+        },
+        "route_sse_change_share_of_month_v33": -0.0013059553973631813,
+        "rows": 9506,
+        "unfiltered": {
+          "days": 31,
+          "days_better": 25,
+          "interval_95": [
+            -0.013912653596255951,
+            -0.004881866796021607
+          ],
+          "relative_change": -0.009265684801049081,
+          "rmse": 262.34828521904274,
+          "rmse_control": 263.57221549057306,
+          "rows_kept": 9506
+        }
+      }
+    },
+    "mw70": {
+      "natural:2025-07": {
+        "gate_rows": 108,
+        "gate_rows_control": 98,
+        "primary": {
+          "days": 31,
+          "days_better": 14,
+          "interval_95": [
+            -0.002879939956070894,
+            0.003945508085319715
+          ],
+          "relative_change": 0.0005606725699862412,
+          "rmse": 400.274735124251,
+          "rmse_control": 400.1625707554403,
+          "rows_kept": 13992
+        },
+        "route_sse_change_share_of_month_v33": 9.775195045592765e-05,
+        "rows": 13992,
+        "unfiltered": {
+          "days": 31,
+          "days_better": 14,
+          "interval_95": [
+            -0.002879939956070894,
+            0.003945508085319715
+          ],
+          "relative_change": 0.0005606725699862412,
+          "rmse": 400.274735124251,
+          "rmse_control": 400.1625707554403,
+          "rows_kept": 13992
+        }
+      },
+      "natural:2025-11": {
+        "gate_rows": 7,
+        "gate_rows_control": 5,
+        "primary": {
+          "days": 30,
+          "days_better": 21,
+          "interval_95": [
+            -0.010623980356267639,
+            -0.0016240315186176058
+          ],
+          "relative_change": -0.006096833687229976,
+          "rmse": 280.9076786385434,
+          "rmse_control": 281.76793798591257,
+          "rows_kept": 7401
+        },
+        "route_sse_change_share_of_month_v33": -0.0006380278012502991,
+        "rows": 7401,
+        "unfiltered": {
+          "days": 30,
+          "days_better": 21,
+          "interval_95": [
+            -0.010623980356267639,
+            -0.0016240315186176058
+          ],
+          "relative_change": -0.006096833687229976,
+          "rmse": 280.9076786385434,
+          "rmse_control": 281.76793798591257,
+          "rows_kept": 7401
+        }
+      },
+      "natural:2025-12": {
+        "gate_rows": 12,
+        "gate_rows_control": 12,
+        "primary": {
+          "days": 31,
+          "days_better": 24,
+          "interval_95": [
+            -0.017103930291009522,
+            -0.005580111526947195
+          ],
+          "relative_change": -0.011209251357306344,
+          "rmse": 262.09082887579825,
+          "rmse_control": 263.57221549057306,
+          "rows_kept": 9506
+        },
+        "route_sse_change_share_of_month_v33": -0.0015798921099514794,
+        "rows": 9506,
+        "unfiltered": {
+          "days": 31,
+          "days_better": 24,
+          "interval_95": [
+            -0.017103930291009522,
+            -0.005580111526947195
+          ],
+          "relative_change": -0.011209251357306344,
+          "rmse": 262.09082887579825,
+          "rmse_control": 263.57221549057306,
+          "rows_kept": 9506
+        }
+      }
+    }
+  },
+  "rule": "A candidate is eligible when (1) December's primary change is at most -0.25% with its interval below zero, (2) July's and November's primary changes are at most 0, and (3) no set's interval lies entirely above zero. Selection: among eligible candidates the lowest mean of the three primary changes. No eligible candidate: nothing selected, v54 stands.",
+  "scores": {
+    "mw25": -0.0019239935397922408,
+    "mw40": -0.003285237389883009,
+    "mw55": -0.004562149658582646,
+    "mw70": -0.005581804158183361
+  },
+  "selected_candidate": "mw40",
+  "standalone_primary_rows": {
+    "natural:2025-07": {
+      "control_network_rmse": 421.3643352495365,
+      "member_rmse": 423.0644029826747
+    },
+    "natural:2025-11": {
+      "control_network_rmse": 285.04975246006705,
+      "member_rmse": 282.78921138932265
+    },
+    "natural:2025-12": {
+      "control_network_rmse": 265.01936622853674,
+      "member_rmse": 261.53699328951313
+    }
+  }
+}

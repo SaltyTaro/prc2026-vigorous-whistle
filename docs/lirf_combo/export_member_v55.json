@@ -1,0 +1,98 @@
+{
+  "base": "runs/lirf_dark/export_dry/vigorous-whistle_v54.parquet",
+  "candidate": "mw40",
+  "checks": {
+    "base_minus_control_max_abs_s": 3.6731871490915182,
+    "base_minus_control_rows_over_1s": 3,
+    "candidate_minus_control_mean_s": 0.01698650055454955,
+    "candidate_minus_control_rms_s": 6.874327689896554,
+    "gate_rows_candidate": 18,
+    "gate_rows_control": 21,
+    "route_rows": 8781,
+    "route_rows_by_month": {
+      "2026-01": 8747,
+      "2026-07": 34
+    }
+  },
+  "created_at_utc": "2026-10-02T03:06:22.613647+00:00",
+  "declaration": "configs/lirf_combo_reread_v1.json",
+  "max_abs_change_s": 134.0,
+  "mean_abs_change_s": 3.743423300307482,
+  "mean_change_s": 0.016285161143377747,
+  "member_weight": 0.4,
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v55.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 111654,
+    "maximum_rounding_change_seconds": 0.4999975778409862,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 24,
+    "provenance": {
+      "audit_used": false,
+      "candidate": "mw40",
+      "code": {
+        "src/prc2026_final/lirf_gate.py": "1720860b7ac801d521a685770e42e3f5d8afa1257b60e5514c46974416d501ef",
+        "tools/export_lirf_combo.py": "b6e15d0dfc754de98edc658eea631e5ead6396ae99b23ca24749e35c24275ceb",
+        "tools/run_lirf_combo.py": "9760a94b530ed3688d465fc60f5c8cf5df8d726fc0789e5de560d8c86de925d1"
+      },
+      "declaration": {
+        "configs/lirf_combo_reread_v1.json": {
+          "object_hash": "967f1aa3358da2c3c8ec5fa1847cf14458e5328dcd6de817f57a2f473c6e3e67",
+          "sha256": "ae15271f3e6cef1f15320e44dac303a8a0c27436a0467c01721a0ced4fa85977"
+        }
+      },
+      "dry_run": true,
+      "experiment_id": "prc2026-lirf-matched-member-v1",
+      "external_data": "none for this step (adsb.lol / OSM inputs of the networks as before)",
+      "inputs": {
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s801/refit12/ranking_predictions.parquet": "8cd1eb9d6614b56414a39cae7d91c768135d90fabd4dafdad85e54765990ad40",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s802/refit12/ranking_predictions.parquet": "f11e363310c932a7b2ca1c0820e98746f031ccace53fc284bfc878345911e417",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s803/refit12/ranking_predictions.parquet": "f22d6bec66674608ab0313a1fb808090b4eb1f9defb6adb403d5eee474acdd4a",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s804/refit12/ranking_predictions.parquet": "cfbb1a1e1fdab81c64cd84930d3c74ea56861e5cfc5ddcd0101d791d18a9e99f",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s805/refit12/ranking_predictions.parquet": "500b88df583dd666f8fd6ca68d3fc3002e1fdaf9ac926736776c793dfcf30ff6",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s806/refit12/ranking_predictions.parquet": "a863e99283bc582af140ce9e8932c845154674300cfceecb45ae523a5e358677",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s807/refit12/ranking_predictions.parquet": "ad7e77344bf2a39b953383266733add4a187175cffdf330bff4e12c35f89b5dd",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s808/refit12/ranking_predictions.parquet": "7b47e48a6b3025a727cc671567a6486b7ae87f740452c2907df7923ffcb95bd4",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s809/refit12/ranking_predictions.parquet": "a25c77324869ff74d4f805afa448f078e4678a4d8b9c6611965f7e83263c16c6",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s810/refit12/ranking_predictions.parquet": "50aa24399ac5a7d67ebbeba69dc86c1209aece71558f69740f813b0ad473a974",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s811/refit12/ranking_predictions.parquet": "074f76778fad43c46b700bd7b0e30af5dc7753c736615a74de44534ebc021bc4",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s812/refit12/ranking_predictions.parquet": "6d99ef7c0b4e3078361d5a7c6633895047fabddc721270b2e913e1fbee05ed99",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s813/refit12/ranking_predictions.parquet": "ac1ccfb516c4ccae1a0ce643c59ae611fea199c6c4b29d4468e516c42dfc270f",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s814/refit12/ranking_predictions.parquet": "ae91315e7b820fb10c45317cc0010602cbae429edc5ece3a7e78681da1eef5a3",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s815/refit12/ranking_predictions.parquet": "97269e2f7468950cd7d7eebd5246a0d7ab0fec2ea6e78e3f66bee773f909dcfa",
+        "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s816/refit12/ranking_predictions.parquet": "79c7719966be3f21a89dec629e432c30b934c4d4362370f8ceff40f0409d1d6c",
+        "runs/final_dryrun/run/recipe/detail.parquet": "2e79c78b25a4abd1032c211ec61968dc90942e58c2ccff8fceeccc4e3fdcaf5b",
+        "runs/lirf_dark/export_dry/vigorous-whistle_v54.parquet": "b0fbbd1902ecbb30cd61ef5cc933a726defcacbdc812efdda59189cd49abb932"
+      },
+      "member_weight": 0.4,
+      "recipe": "v54's model part + (value at w 0.4 - value at w 0; v34 matched blend, gate m600) on lirf_nonpop_matched rows, floored at -12 s",
+      "results": {
+        "docs/lirf_combo/results_v1.json": {
+          "sha256": "1fb667e38b415f847f5bb912f3a6cce80d750c9227761ced94d47acf7cf015c5"
+        }
+      },
+      "selected_by": "the declared rule (docs/lirf_combo/results_v1.json)",
+      "step": "LIRF matched-row member (before the reconciliation)"
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "266b8c936f2625578e4980f1b11c3a26cc63594a13916510fa3fe86925ec800f",
+    "size_bytes": 1355660,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-10-02T03:06:22.578689+00:00",
+    "version": 55
+  },
+  "rows": 344841,
+  "rows_changed": 7724,
+  "sha256": "266b8c936f2625578e4980f1b11c3a26cc63594a13916510fa3fe86925ec800f",
+  "sum_squared_change": 415773.0
+}
