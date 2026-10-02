@@ -342,3 +342,9 @@ v55 (January 2026 airport-month levels, the EHAM 2–7 January and LFPG 7 Januar
 ```
 .venv\Scripts\python.exe -X utf8 -B tools\prc_submit.py upload --file runs/submissions/vigorous-whistle_v57.parquet --expected-sha256 31d909ff2e5d1937e65404c396893b9e5524d082c07422be9390c75aad4daed8 --calendar-day
 ```
+
+**v57 = 221.3289 OFFICIAL, the official best** (uploaded at the user's word, "upload it"; processed 08:53:14 UTC 2 October, submissionId
+`9dc2c761-cbaa-4839-8ac3-1d521030e67e`; record [`official_result_v57.json`](official_result_v57.json)): **−0.3652 s against v55 (221.6941)**.
+The squared-error gain on the scored months is 1.84 times the layer's squared change (5.58e7 against 3.03e7), inside the 2025 range
+(0.7–5.1, median about 2): the layer transferred as its development readings said. Nothing is re-selected or re-tuned from the score. Never re-upload v1–v57. Final-file chain for this file: runner `--layers v55m` →
+`tools/export_daily_totals.py --base` → `tools/scout_extreme_shift.py` → `tools/scout_var_alloc.py`.
