@@ -67,7 +67,7 @@ def month_days(month: str) -> list[str]:
     return [d.strftime("%Y-%m-%d") for d in pd.date_range(start, start + pd.offsets.MonthEnd(0), freq="D")]
 
 
-def run_frame(t: pd.DataFrame, cells: Cells, noise: dict, wide: dict, tau: dict, exact: pd.DataFrame, settings: Settings) -> tuple[np.ndarray, list]:
+def run_frame(t: pd.DataFrame, cells: Cells, noise: dict, wide: dict, tau: dict, exact: pd.DataFrame, settings: Settings, options: dict | None = None) -> tuple[np.ndarray, list]:
     """t: one month's rows with takeoff, a, value, in_figure, airport, month and the cell keys. New values (aligned with t) and reports."""
     n_pub, pub_total = published_maps()
     new = t["value"].to_numpy(dtype=float).copy()
@@ -82,7 +82,7 @@ def run_frame(t: pd.DataFrame, cells: Cells, noise: dict, wide: dict, tau: dict,
             complete = {d for d in days[:-1] if d in npub}
             started = time.time()
             values, rep = cd.solve_month(f, cells.resolve(f), days, npub, complete, float(exact.loc[airport, "eps"]), noise[airport], wide[airport], tau[airport],
-                                         cells.resolve, ptot, settings)
+                                         cells.resolve, ptot, settings, **(options or {}))
             new[sel] = values
             for m in rep.get("flagged_candidates", []):
                 r = f.iloc[m["position"]]
@@ -106,7 +106,7 @@ def dev_tables(month: str) -> tuple[pd.DataFrame, pd.DataFrame]:
     return t, fit
 
 
-def dev_run(tag: str, settings: Settings) -> dict:
+def dev_run(tag: str, settings: Settings, options: dict | None = None) -> dict:
     exact = exactness()
     out = {"exactness": exact.reset_index().to_dict(orient="records"), "months": {}}
     target = OUT / tag
@@ -115,7 +115,7 @@ def dev_run(tag: str, settings: Settings) -> dict:
         t, fit = dev_tables(month)
         cells = Cells(fit)
         noise, wide, tau = scales(fit)
-        new, reports = run_frame(t, cells, noise, wide, tau, exact, settings)
+        new, reports = run_frame(t, cells, noise, wide, tau, exact, settings, options)
         pd.DataFrame({ID: t[ID], "base": t["value"], "new": new}).to_parquet(target / f"{month}.parquet", index=False)
         out["months"][month] = reports
     write_json(target / "reports.json", out)
@@ -125,12 +125,14 @@ def dev_run(tag: str, settings: Settings) -> dict:
 def score(declaration: str) -> None:
     decl = read_json(ROOT / declaration)
     settings = Settings()
-    run = dev_run("governing", settings)
+    options = decl["procedure"].get("options", {})
+    tag = "governing" if decl["experiment_id"] == "scout_count_days_v1" else f"governing_{decl['experiment_id']}"
+    run = dev_run(tag, settings, options)
     rows = rows_table()
     rng = np.random.default_rng(20260929)
-    result = {"declaration": declaration, "declaration_sha256": object_hash(decl), "created_at_utc": utc_now(), "months": {}}
+    result = {"declaration": declaration, "declaration_sha256": object_hash(decl), "created_at_utc": utc_now(), "options": options, "months": {}}
     for month in DEV:
-        v = pd.read_parquet(OUT / "governing" / f"{month}.parquet")
+        v = pd.read_parquet(OUT / tag / f"{month}.parquet")
         t = rows[rows["month"].eq(month)][[ID, "label", "airport", "bday"]].merge(v, on=ID)
         se0, se1 = (t["label"] - t["base"]) ** 2, (t["label"] - np.round(t["new"])) ** 2
         rmse0, rmse1 = float(np.sqrt(se0.mean())), float(np.sqrt(se1.mean()))
@@ -178,7 +180,7 @@ def decide(declaration: str) -> dict:
     result = read_json(path)
     if result.get("declaration_sha256") != object_hash(decl):
         raise ValueError("The recorded result is not for this declaration.")
-    rule, cal = decl["rule"], result["calibration"]
+    rule, cal = (decl["rule"] if isinstance(decl["rule"], dict) else decl["rule_values"]), result["calibration"]
     worst = max(v["change_pct"] for v in result["months"].values())
     total = sum(v["sse_change"] for v in result["months"].values())
     crossed = cal["crossed"]
@@ -224,11 +226,12 @@ def ranking(base: Path, out_dir: Path | None, version: int, declaration: str | N
     fit = add_keys(rows_table())
     cells = Cells(fit)
     noise, wide, tau = scales(fit)
-    new, reports = run_frame(t, cells, noise, wide, tau, exactness(), Settings())
+    options = read_json(ROOT / declaration)["procedure"].get("options", {}) if declaration else {}
+    new, reports = run_frame(t, cells, noise, wide, tau, exactness(), Settings(), options)
     base_values = sub.set_index(ID)[TARGET].reindex(t[ID]).to_numpy(dtype=float)
     moved = np.abs(new - t["value"].to_numpy(dtype=float)) > 1e-9
     values = np.where(moved, np.rint(new), base_values)
-    provenance = {"experiment_id": "scout_count_days_v1", "dry_run": out_dir is not None, "base": {"path": Path(base).as_posix(), "sha256": sha256_file(base)},
+    provenance = {"experiment_id": read_json(ROOT / declaration)["experiment_id"] if declaration else "scout_count_days_dry", "options": options, "dry_run": out_dir is not None, "base": {"path": Path(base).as_posix(), "sha256": sha256_file(base)},
                   "selected_by": "dry run" if out_dir is not None else (f"the user's override: {user_override}" if user_override else "the declared rule (accepted)"),
                   "recipe": "the base (v55: model part, v48's reconciliation, extreme-day layer), then the count-day layer: where EUROCONTROL's daily departure counts disagree "
                             "with the values' off-block days, candidates near a midnight take the change of their posterior mean",

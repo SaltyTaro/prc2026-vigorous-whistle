@@ -136,11 +136,27 @@ def _log_density(cf_rest: np.ndarray, extra: list, delta_bins: float) -> float:
     return float(np.log(_at(q, np.array([delta_bins]))[0] + 1e-300))
 
 
+def _kde(x: float, ref: np.ndarray) -> float:
+    """Gaussian kernel density of the reference values at x, Silverman's bandwidth."""
+    ref = np.asarray(ref, dtype=float)
+    sd = float(ref.std(ddof=1))
+    iqr = float(np.subtract(*np.percentile(ref, [75, 25])))
+    spread = min(sd, iqr / 1.34) if iqr > 0 else sd
+    h = max(0.9 * spread * len(ref) ** -0.2, 1.0)
+    return float(np.mean(np.exp(-0.5 * ((x - ref) / h) ** 2)) / (h * np.sqrt(2 * np.pi))) + 1e-300
+
+
 def solve_month(f: pd.DataFrame, groups: list, days: list[str], n_pub: dict, complete: set, eps: float, noise_sd_s: float, noise_wide_share: float,
-                tau_s: float, resolve, pub_total: dict, settings: Settings = Settings()) -> tuple[np.ndarray, dict]:
+                tau_s: float, resolve, pub_total: dict, settings: Settings = Settings(), density: str = "model", big_rule: str = "cross") -> tuple[np.ndarray, dict]:
     """New values of one airport-month (positional, as f) and a report. f: takeoff, a, value (+ the cell keys used by groups).
     n_pub: published count by day; complete: the days whose count is read; resolve: the cell partition of a frame of rows (Cells.resolve);
-    pub_total: published delay total (DLY_ALL_PRE_2 x 60, seconds) by day."""
+    pub_total: published delay total (DLY_ALL_PRE_2 x 60, seconds) by day.
+    density "model" (v1): the delay total's density under v48's day model; "empirical" (v2): the kernel density of the month's own day
+    residuals (published total minus the values' implied total, sum of max(a - value, 0) over the day's rows), the day itself left out.
+    big_rule "cross" (v1): a big candidate moves only when the posterior crosses midnight; "implicated" (v2): when the posterior
+    probability of the side opposite its value rises (the counts point at it), by its posterior-mean change, otherwise it keeps its value."""
+    if density not in ("model", "empirical") or big_rule not in ("cross", "implicated"):
+        raise ValueError("density: model or empirical; big_rule: cross or implicated.")
     base_day, cands, skipped = row_days(f, groups, days, settings)
     value = f["value"].to_numpy(dtype=float)
     a = f["a"].to_numpy(dtype=float)
@@ -160,10 +176,21 @@ def solve_month(f: pd.DataFrame, groups: list, days: list[str], n_pub: dict, com
 
     # the delay-total density of each day, for the heavy candidates placed on it
     day_rest = {}
+    pos_value = np.maximum(a - value, 0.0)
+    implied = np.bincount(base_day[base_day >= 0], weights=pos_value[base_day >= 0], minlength=K)
+    resid = {d: pub_total[days[d]] - implied[d] for d in range(K) if days[d] in complete and days[d] in pub_total and np.isfinite(pub_total[days[d]])}
     for d in range(K):
         if not (heavy[d] or heavy.get(d + 1)) or days[d] not in pub_total or not np.isfinite(pub_total[days[d]]):
             continue
-        rows = np.flatnonzero((base_day == d) & ~np.isin(np.arange(len(f)), [c.position for c in heavy[d] + heavy.get(d + 1, [])]))
+        out_rows = [c.position for c in heavy[d] + heavy.get(d + 1, [])]
+        if density == "empirical":
+            ref = np.array([r for dd, r in resid.items() if dd != d])
+            if d not in resid or len(ref) < 5:   # complete days only: the last day's published total holds departures of the next month
+                continue
+            base = implied[d] - sum(pos_value[p] for p in out_rows if base_day[p] == d)
+            day_rest[d] = (base, ref)
+            continue
+        rows = np.flatnonzero((base_day == d) & ~np.isin(np.arange(len(f)), out_rows))
         if not len(rows):
             continue
         sub = f.iloc[rows].reset_index(drop=True)
@@ -179,8 +206,12 @@ def solve_month(f: pd.DataFrame, groups: list, days: list[str], n_pub: dict, com
         key = (d, tuple(b for b in h_d), tuple(b for b in h_n))
         if key not in density_cache:
             extra = [c.pos_e[1] for c, b in zip(heavy[d], h_d) if not b] + [c.pos_e[0] for c, b in zip(heavy.get(d + 1, []), h_n) if b]
-            cf, delta = day_rest[d]
-            density_cache[key] = float(np.exp(_log_density(cf, extra, delta) - _log_density(cf, [], delta))) if extra else 1.0
+            if density == "empirical":
+                base, ref = day_rest[d]
+                density_cache[key] = _kde(pub_total[days[d]] - base - sum(float(np.dot(v, w)) for v, w in extra), ref)
+            else:
+                cf, delta = day_rest[d]
+                density_cache[key] = float(np.exp(_log_density(cf, extra, delta) - _log_density(cf, [], delta))) if extra else 1.0
         return density_cache[key]
 
     def day_factor(d: int, s_d: tuple, s_next: tuple) -> float:
@@ -241,7 +272,11 @@ def solve_month(f: pd.DataFrame, groups: list, days: list[str], n_pub: dict, com
     kept = []
     for c, p_e in moved:
         value_early = base_day[c.position] == c.k - 1
-        if c.big and (p_e > 0.5) == value_early:   # the counts leave a big candidate on its value's side of midnight: it keeps its value
+        if c.big and big_rule == "cross" and (p_e > 0.5) == value_early:   # v1: the counts leave a big candidate on its value's side: it keeps its value
+            kept.append((c, p_e))
+            continue
+        opposite_up = (p_e < c.p_early) if value_early else (p_e > c.p_early)
+        if c.big and big_rule == "implicated" and not opposite_up:            # v2: the counts do not point at it: it keeps its value
             kept.append((c, p_e))
             continue
         new[c.position] = value[c.position] + (p_e - c.p_early) * (c.mean[0] - c.mean[1])
