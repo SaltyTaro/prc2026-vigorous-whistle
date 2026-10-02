@@ -329,3 +329,16 @@ Build and upload only on the user's word, as the next unused version (v57):
 
 Final-file chain if shipped: runner `--layers v55m` → `tools/export_daily_totals.py --base` → `tools/scout_extreme_shift.py` →
 `tools/scout_var_alloc.py`.
+
+## 13. v57 built (user: "build v57"), not uploaded
+
+`runs/submissions/vigorous-whistle_v57.parquet`, SHA-256 `31d909ff2e5d1937e65404c396893b9e5524d082c07422be9390c75aad4daed8` = v55's chain
+→ the variance re-allocation layer of section 12, built by the command there from the accepted declaration; byte-identical to the dry run.
+Against v55: 256,015 rows, sum of squared change 3.03e7, RMS 9.37 s, largest change 100 s; the two 4–5 July guard rows keep 25,499 and
+47,705 s; no LIRF population row changes. Receipt [`vigorous-whistle_v57.receipt.json`](vigorous-whistle_v57.receipt.json), report
+[`export_v57.json`](export_v57.json), audit [`../export_audit/v57_audit.json`](../export_audit/v57_audit.json): clean, the same flags as
+v55 (January 2026 airport-month levels, the EHAM 2–7 January and LFPG 7 January disruption days). Upload only on the user's word:
+
+```
+.venv\Scripts\python.exe -X utf8 -B tools\prc_submit.py upload --filename vigorous-whistle_v57.parquet
+```

@@ -1,0 +1,172 @@
+{
+  "by_airport_month": {
+    "EDDF 2026-01": {
+      "mean_change_s": 0.12191229973830343,
+      "rows_changed": 11301,
+      "sum_squared_change": 1283542.0
+    },
+    "EDDF 2026-07": {
+      "mean_change_s": -0.007312348668280871,
+      "rows_changed": 15078,
+      "sum_squared_change": 298745.0
+    },
+    "EDDM 2026-01": {
+      "mean_change_s": 0.09549895005934447,
+      "rows_changed": 6258,
+      "sum_squared_change": 380330.0
+    },
+    "EDDM 2026-07": {
+      "mean_change_s": -0.05708386065409978,
+      "rows_changed": 8411,
+      "sum_squared_change": 335621.0
+    },
+    "EGLL 2026-01": {
+      "mean_change_s": 0.017269097132188976,
+      "rows_changed": 17269,
+      "sum_squared_change": 1736649.0
+    },
+    "EGLL 2026-07": {
+      "mean_change_s": 0.08887483582234762,
+      "rows_changed": 18984,
+      "sum_squared_change": 2561111.0
+    },
+    "EHAM 2026-01": {
+      "mean_change_s": -0.1344874322326269,
+      "rows_changed": 9886,
+      "sum_squared_change": 2436951.0
+    },
+    "EHAM 2026-07": {
+      "mean_change_s": 0.017904328018223236,
+      "rows_changed": 9787,
+      "sum_squared_change": 119909.0
+    },
+    "LEBL 2026-01": {
+      "mean_change_s": -0.029423817719859028,
+      "rows_changed": 9083,
+      "sum_squared_change": 274175.0
+    },
+    "LEBL 2026-07": {
+      "mean_change_s": 0.0990602975724354,
+      "rows_changed": 16056,
+      "sum_squared_change": 1553875.0
+    },
+    "LEMD 2026-01": {
+      "mean_change_s": -0.002916493065888935,
+      "rows_changed": 8213,
+      "sum_squared_change": 213091.0
+    },
+    "LEMD 2026-07": {
+      "mean_change_s": 0.008932559178204555,
+      "rows_changed": 15118,
+      "sum_squared_change": 502594.0
+    },
+    "LFPG 2026-01": {
+      "mean_change_s": 0.0029236540158870256,
+      "rows_changed": 14148,
+      "sum_squared_change": 1001923.0
+    },
+    "LFPG 2026-07": {
+      "mean_change_s": 0.0411645662772514,
+      "rows_changed": 16198,
+      "sum_squared_change": 904767.0
+    },
+    "LIRF 2026-01": {
+      "mean_change_s": -0.01835277099719736,
+      "rows_changed": 9250,
+      "sum_squared_change": 859297.0
+    },
+    "LIRF 2026-07": {
+      "mean_change_s": 0.20068199040161658,
+      "rows_changed": 13668,
+      "sum_squared_change": 3899550.0
+    },
+    "LSZH 2026-01": {
+      "mean_change_s": 0.028914457228614306,
+      "rows_changed": 6822,
+      "sum_squared_change": 703143.0
+    },
+    "LSZH 2026-07": {
+      "mean_change_s": 0.012618776130748764,
+      "rows_changed": 7294,
+      "sum_squared_change": 142256.0
+    },
+    "LTFM 2026-01": {
+      "mean_change_s": 0.6124408323658123,
+      "rows_changed": 20117,
+      "sum_squared_change": 7430323.0
+    },
+    "LTFM 2026-07": {
+      "mean_change_s": 0.2394282310899345,
+      "rows_changed": 23074,
+      "sum_squared_change": 3637284.0
+    }
+  },
+  "created_at_utc": "2026-10-02T08:49:42.832776+00:00",
+  "k": 0.24186632360173135,
+  "max_abs_change_s": 100.0,
+  "receipt": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v57.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 111654,
+    "maximum_rounding_change_seconds": 0.0,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 17,
+    "provenance": {
+      "audit_used": false,
+      "base": {
+        "path": "runs/lirf_combo/export_dry/vigorous-whistle_v55.parquet",
+        "sha256": "266b8c936f2625578e4980f1b11c3a26cc63594a13916510fa3fe86925ec800f"
+      },
+      "code": {
+        "src/prc2026_daily/reconcile.py": "30a2d2fc88480bf821208c6e52351325887aae72704ba3c45730acbc808c6a14",
+        "src/prc2026_scout/extreme_shift.py": "119545c6a3d7c8e8e26785bdbf9070b966983dbb86f2d27884c2ad7e29abf0c1",
+        "src/prc2026_scout/published_figure.py": "ca5cd3a50bfcd2b100d1c1b78b53546ef993db6c946e585b6903c4c52c71ab0e",
+        "src/prc2026_scout/var_alloc.py": "91d1788d597f23550ccfa1d68d8b08fea12fe496ba94e69b19ff99f7e81989c0",
+        "tools/export_daily_totals.py": "ba5d42641295edcfcad15b290e207746ecee8d2a65e312b035141a332967565e",
+        "tools/run_daily_totals.py": "63a7a68d13c27619a86865261a1c6e9221b3e83626c73478c8dc237d40043f85",
+        "tools/scout_daily_ifr.py": "656c1b8149bda4d21d8a2943d325d133def05722da6561316b8593de4983feec",
+        "tools/scout_extreme_shift.py": "88cebba56adb77f56799b8da2d6dde1d0aa5c5bca77d30960679c4daa5c0f2bc",
+        "tools/scout_var_alloc.py": "3fed9283c67a94698ab44f537a102ea15f0f2d0694d23710853fa041ca25cd8e"
+      },
+      "declaration": {
+        "configs/scout_var_alloc_v1.json": "865a50f079276af23c98144ad35f5d2f9b3d2a0885c2a088ed6eba27b24a99fb"
+      },
+      "dry_run": false,
+      "experiment_id": "scout_var_alloc_v1",
+      "official_scores_used": "none",
+      "recipe": "v55's chain (the base, v48's reconciliation, the extreme-day layer), then the airport-day's discrepancy re-allocated by a learned per-row error variance (cap 100 s; heavy rows, the LIRF population and the two 4-5 July guard rows unchanged)",
+      "reconciliation": {
+        "days_sha256": "7ba21f3106d3b311fad3ad1a779b7858b7384c9a439c1283419e866831114b9e",
+        "dir": "runs/scout/v55_build/recon",
+        "values_sha256": "e5a1b0c1954963376f3bd077e8dd8340ee275a21cfdba3188327054d71d5acc6"
+      },
+      "selected_by": "the declared rule (accepted)",
+      "v55": {
+        "path": "runs\\submissions\\vigorous-whistle_v55.parquet",
+        "reproduced": true,
+        "sha256": "aa02ff597a619f223888370726cdcbf5c6d055720ef2f95b0c93818133fd1ece"
+      }
+    },
+    "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+    "rows": 344841,
+    "sha256": "31d909ff2e5d1937e65404c396893b9e5524d082c07422be9390c75aad4daed8",
+    "size_bytes": 1355950,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-10-02T08:49:42.530459+00:00",
+    "version": 57
+  },
+  "rms_change_s": 9.369870820601495,
+  "rows_changed": 256015,
+  "sha256": "31d909ff2e5d1937e65404c396893b9e5524d082c07422be9390c75aad4daed8",
+  "sum_squared_change_against_v55": 30275136.0,
+  "version": 57
+}
