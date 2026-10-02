@@ -23,7 +23,7 @@ python tools/final_predict.py refit-adj2   --root R --month YYYY-MM [--threads 1
 python tools/final_predict.py run          --root R [--stages ...] [--threads 12] [--workers 8]
                                            [--weather-inventory data/external/iem_final/<R>/inventory.json] [--version N] [--detail-ensembles]
                                            [--vocab-cache runs/final_dryrun/run/leaves/vocabularies.json] [--repair-root DIR]
-                                           [--layers v35|v36|v37|v38|v39|v40|v41|v45|v46|v51m|v52m]
+                                           [--layers v35|v36|v37|v38|v39|v40|v41|v45|v46|v51m|v52m|v53m|v54m|v55m]
 python tools/final_compare.py --root R --output OUT.json [--version N] [--allow-subset]
 ```
 
@@ -64,9 +64,11 @@ The runner stopped at v30. The four stages after `recipe` take it to the v35 inc
 not-uploaded v36, v37 and v38, in shipping order, each through the frozen code that built the layer. Module:
 `src/prc2026_final/stack.py`.
 
-**`--layers v35|v36|v37|v38|v39|v40|v41|v45|v46|v51m|v52m`** picks the final file's layer set. The default is **v52m** (30 September:
-v46 with the two member networks in the network table, the model part of v52 before the daily-totals reconciliation; see
-[v51m / v52m](#v51m--v52m-30-september) at the end). Before that the default was **v46** (29 September: v45 with the
+**`--layers v35|v36|v37|v38|v39|v40|v41|v45|v46|v51m|v52m|v53m|v54m|v55m`** picks the final file's layer set. The default is **v54m**
+(2 October: v52m with the masked LIRF member and the dark-month re-read, the model part of v54 before the daily-totals reconciliation;
+see [v53m / v54m / v55m](#v53m--v54m--v55m-2-october) at the end; v55m is built but never uploaded). Before that the default was
+**v52m** (30 September: v46 with the two member networks in the network table, the model part of v52 before the daily-totals
+reconciliation; see [v51m / v52m](#v51m--v52m-30-september)). Before that the default was **v46** (29 September: v45 with the
 committee mix of `configs/thinned_regime_round_v1.json` `n85_nd1200`, officially 223.9339, the clean model line's best;
 `docs/thinned_regime/README.md`; masks `v46_share`, `v46_share_gate`). Before that it was **v45** (v40 plus the LIRF
 disagreement gate of `configs/lirf_gate_v1.json`, officially 224.2398; `docs/lirf_gate/README.md`; mask
@@ -241,7 +243,7 @@ Additionally needed beyond this runner:
   Windows but not on Linux (docs: v25 round) — for a package, ship the fitted classifier instead of refitting it.
 - **Model files** (measured): the 29 leaves 4.59 GB (the CatBoosts dominate), the surface-refit run incl. v6/v5 fallback 235 MB, v7
   twelve-month nodes 101 MB, residual trees 221 MB, 16 rnet seeds 44 MB, the 64 recipe networks 644 MB (the 80 detail-only nets are
-  not needed): **~5.8 GB**, plus the 48 member networks of v51m / v52m (702 MB). Plus the twelve-month vocabulary JSON (0.5 MB, replaces the December build and the 2025 labels) and the
+  not needed): **~5.8 GB**, plus the 48 member networks of v51m / v52m (702 MB) and the 16 masked LIRF networks of v53m–v55m (159 MB). Plus the twelve-month vocabulary JSON (0.5 MB, replaces the December build and the 2025 labels) and the
   frozen stands tables.
 - **v31–v38 layers** add no models. The detector reads the 2025 movement files, which are already shipped as context. The rematch
   reads the `matches_v11` stands table and the period's surface files. The callsign / queue offsets come from the 2025 labels and
@@ -312,3 +314,53 @@ The runner's v46 column differs from the uploaded v46 on 1,196 integers (max 7 s
   (1,668). The 0.053 s gap is the members' CPU / GPU seed-mean difference on that row (m25_32 1,800.45 against 1,800.59;
   combination 1,755.02 against 1,755.06). It is a hard threshold meeting float noise, not a construction difference. The same
   can happen on any file; earlier dry runs had no such row by chance.
+
+## v53m / v54m / v55m (2 October)
+
+The LIRF layers of v53, v54 and the not-uploaded v55, from the saved models only (`src/prc2026_final/lirf_members.py`). As for
+v51m / v52m, the daily-totals reconciliation that v53 / v54 apply last stays outside the runner: **v54m (the new default) is v54's
+open-data model part.**
+
+- **Stage `members`** gains a fourth ensemble, `lirf_lm25_32`: the 16 twelve-month refits (seeds 801–816) of the masked LIRF context
+  network of `configs/adsb_ctx3_lirf_mask_dev_v1.json`, GPU-trained, predicted on the CPU with `networks.predict_learner` (ctx3 path, the
+  same token store). Its seed mean enters `members/members.parquet` as `lirf_mask` on every row, unrouted. The receipt adds the
+  declaration and the 16 model hashes. On the ranking file: 743.6 s for the stage at 8 threads (45–52 s per network; the 48 earlier
+  member predictions were reused from their per-learner files). A members table without `lirf_mask` builds no LIRF layer set.
+- **Stack.** After v52m, each LIRF layer adds a delta against the shipped LIRF arithmetic on its own route of the recipe detail
+  (v9, `ens_ctx_lirf`, `ens_v22_lirf_q`), through the frozen scorers' functions, and floors at −12 s:
+  - **v53m** (w55, the declared rule's selection): `lirf_nonpop_unmatched` rows, v34's unmatched blend with v45's gate u600 on
+    network' = 0.45 `ens_ctx_lirf` + 0.55 M, minus the same on `ens_ctx_lirf` (`tools/export_lirf_member.py`'s arithmetic).
+  - **v54m** (w70_s750): the same rows in **dark LIRF months only**, read from the file's own scopes (LIRF non-population ADS-B match
+    share below 5%); `tools/run_lirf_dark.values` at (0.70, 0.75) minus v53's (0.55, 0.35/0.60), gate u600. On the ranking file the
+    dark month is July 2026 (34 matched of 15,549); January 2026 (79.9% matched) is covered.
+  - **v55m** (mw40, `configs/lirf_combo_reread_v1.json`, never uploaded): `lirf_nonpop_matched` rows, v34's matched blend with the
+    m600 gate on network' = 0.60 `ens_ctx_lirf` + 0.40 M minus the same on `ens_ctx_lirf` (`tools/run_lirf_combo.values`).
+  Guards: a route row that is not LIRF, or that is pinned, or a missing member value on a route row stops the stack; no row outside the
+  route may move. The selected candidates are read from each declaration's report and must be the shipped ones. Columns `v53m`,
+  `v54m`, `v55m`, masks `*_lirf`; the stack record keeps each layer's route rows, gate rows (control / candidate), the dark-month
+  shares and the base-minus-control check. Stack stage 16.9 s; each final file 0.5–0.6 s.
+- **Dry run** (`runs/final_dryrun/run`, versions 953 / 954 / 955). `tools/final_compare_lirf.py` →
+  [`dryrun_lirf_compare.json`](dryrun_lirf_compare.json):
+  - Every earlier column (v30 … v46, v51m, v52m) equals the stack detail from before the LIRF layers exactly (max |Δ| 0.0;
+    `runs/final_dryrun/before_lirf/stack_detail.parquet`).
+  - The seed mean, runner CPU against the shipped GPU refit12 predictions, on the 26,499 LIRF non-population rows: RMS 0.106 s,
+    p99 0.14 s, one row at 9.6 s.
+  - Route and gate rows equal the exports' records: v53m 17,718 rows, gate 79 → 78; v54m 15,515 rows (July 2026), gate 72; v55m
+    8,781 rows (January 2026 8,747, July 2026 34), gate 21 → 18. v52m holds the control value on every route row (max 1.8e-12 s).
+  - No step moves a non-LIRF row, in the runner or in the shipped files. Each layer's step (runner vN − runner vN−1 against shipped
+    vN − shipped vN−1) differs by at most 1 s (v53m, v54m) and 2 s (v55m).
+
+| layer set | shipped model part | integers differing (max) | ±1 s | on LIRF non-population rows | runner file (never uploaded) |
+|---|---|---:|---:|---:|---|
+| v53m | `runs/adsb_ctx3_lirf_mask/export_dry/vigorous-whistle_v53.parquet` `1cb22c38…` | 6,305 (101 s) | 6,274 | 4,591 (max 4 s) | `v953` `729d48aa…` |
+| v54m | `runs/lirf_dark/export_dry/vigorous-whistle_v54.parquet` `b0fbbd19…` | 7,560 (101 s) | 7,529 | 5,846 (max 4 s) | `v954` `f3b1ae1a…` |
+| v55m | `runs/lirf_combo/export_dry/vigorous-whistle_v55.parquet` `266b8c93…` | 9,777 (101 s) | 9,745 | 8,063 (max 5 s) | `v955` `0d3dc265…` |
+
+  Outside the LIRF routes the differences are v52m's (1,714 rows, including the 101 s LEMD u300 flip above). The new LIRF rows are
+  rounding: each shipped export added a float delta to the previous step's **integer** file and rounded again, while the runner chains
+  the floats and rounds once, so a route row can land one second apart per step (the largest new differences are 1 s; the member's
+  CPU / GPU noise is about 0.03 s after its weights). The 4–5 s rows are the 30 LIRF rows on which v52m already differed.
+  Runner SHA-256: v953 `729d48aacb60c0c92b941dc873d4f4c7ee3e09784bc3853a022157c17310c675`, v954
+  `f3b1ae1a98c26d88b271fdb2c22367d0b0a4e96e35ee596cfbcc69ffe6667826`, v955 `0d3dc26597a59d95ab7693d972590dbead0497e26bb6ac530b0d5e93e27250e9`.
+- Tests: `tests/test_final_lirf_members.py` (hand-computed v53m / v54m / v55m on the stack fixture's LIRF rows, a dark and a covered
+  month, the 5% rule, no LIRF layer without the member, route guards) and the updated `tests/test_final_members.py`.

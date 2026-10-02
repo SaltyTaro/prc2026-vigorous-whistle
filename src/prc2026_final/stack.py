@@ -37,6 +37,10 @@
         totals (tools/export_daily_totals.py --base), not part of this runner.
   v52m = v51m with the masked member added after it (configs/adsb_ctx3_mask_dev_v1.json w40, the user's override), the same way;
         v52 = v52m + the published daily totals.
+  v53m / v54m / v55m = v52m with the LIRF layers of src/prc2026_final/lirf_members.py, each added as a delta against the shipped LIRF
+        arithmetic on its route and floored at -12: v53m the masked LIRF member on lirf_nonpop_unmatched rows (w55), v54m the dark re-read
+        (w70_s750) on those rows in dark LIRF months, v55m the matched-row member (mw40) on lirf_nonpop_matched rows; never a non-LIRF,
+        population or pinned row. v53 / v54 = v53m / v54m + the published daily totals; v55m was never uploaded.
   export_stack's three ranking-bound readers (scope_table, segments, ranking_peers) answer from the run's own tables during the
   call (run_tables): the file's rematch, its residual match tables and tools/peer_congestion.peer_table on the file itself.
 """
@@ -54,7 +58,7 @@ from prc2026.features import ID, PHASE, TIME
 
 from .common import ROOT, save_frame, source_file
 from .fill_pin import COLUMNS as FILL_COLUMNS, SCOPES as FILL_SCOPES, apply_pins, candidate_pins, fill_pins
-from . import lirf_gate, members as network_members, share_gate
+from . import lirf_gate, lirf_members, members as network_members, share_gate
 
 sys.path.insert(0, str(ROOT / "tools"))
 import export_v33  # noqa: E402
@@ -79,8 +83,9 @@ DECLARATIONS = {"gate": "configs/disagreement_gate_v1.json", "callsign": "config
 RESULTS = ["docs/disagreement/tail_stretch_v1_results.json", "docs/disagreement/tail_stretch_v2_results.json"]  # the stretches' k (four-month fits), read by export_stack.tail_stretch
 CODE = ["src/prc2026_final/share_gate.py", "tools/export_stack.py", "tools/peer_congestion.py", "tools/export_disagreement_gate.py", "tools/export_fair_weights.py", "tools/export_v33.py",
         "tools/run_callsign_fix.py", "tools/run_queue_trust.py", "tools/adsb_rematch_nonm.py"]
-LAYER_SETS = ["v35", "v36", "v37", "v38", "v39", "v40", "v41", "v45", "v46", "v51m", "v52m"]
+LAYER_SETS = ["v35", "v36", "v37", "v38", "v39", "v40", "v41", "v45", "v46", "v51m", "v52m", "v53m", "v54m", "v55m"]
 MEMBER_LAYER_SETS = ["v51m", "v52m"]
+LIRF_LAYER_SETS = ["v53m", "v54m", "v55m"]
 LIRF_GATE_SCOPES = {"lirf_nonpop_unmatched": "unmatched", "lirf_nonpop_matched": "matched"}
 V35 = {"gate": "u300", "callsign": "u300_cs50", "queue": "qt75", "queue_source": "regular",
        "record": "docs/disagreement/export_v35.json (tools/export_stack.py --queue 0.75 --queue-source regular --version 35, user override)"}
@@ -104,6 +109,12 @@ V51M = {**V46, "member": "combo_all w40",
         "record": "docs/adsb_ctx3_combo/member_export_dry_v51.json (tools/export_network_member.py --candidate w40 --dry-run; SHA-256 bd8f73aa...); v51 = it + the daily totals, official 222.2306"}
 V52M = {**V51M, "member2": "mask_unmatched w40",
         "record": "docs/adsb_ctx3_mask/member_export_dry_v52.json (the user's override 'ship it anyway'; SHA-256 16e9f33a...); v52 = it + the daily totals, official 222.0519"}
+V53M = {**V52M, "lirf_member": "configs/adsb_ctx3_lirf_mask_dev_v1.json w55",
+        "record": "docs/adsb_ctx3_lirf_mask/export_member_v53.json (tools/export_lirf_member.py, the declared rule's selection; SHA-256 1cb22c38...); v53 = it + the daily totals, official 221.8926"}
+V54M = {**V53M, "lirf_dark": "configs/lirf_dark_reread_v1.json w70_s750",
+        "record": "runs/lirf_dark/export_dry/export_v54.json (tools/export_lirf_dark.py, the declared rule's selection; SHA-256 b0fbbd19...); v54 = it + the daily totals, official 221.8686"}
+V55M = {**V54M, "lirf_matched": "configs/lirf_combo_reread_v1.json mw40",
+        "record": "runs/lirf_combo/export_dry/export_v55.json (tools/export_lirf_combo.py, the declared rule's selection; SHA-256 266b8c93...); not uploaded"}
 
 
 def pins(raw_path: Path) -> pd.DataFrame:
@@ -358,6 +369,29 @@ def compute(detail: pd.DataFrame, repaired_v30: np.ndarray | None, rematch_path:
             rows[name] = {"member_rows": int(member_inside[name].sum()), "moved": int(moved.sum()), "share_gate": int((member_fire[name] & non_lirf).sum()),
                           "floored": int((values == FLOOR).sum())}
             previous_floats, previous = member_floats[name], values
+    # v53m / v54m / v55m = v52m with the LIRF layers (src/prc2026_final/lirf_members.py): a delta against the shipped LIRF arithmetic on
+    # each layer's route, floored (never a non-LIRF, population or pinned row)
+    lirf_record = None
+    if member_frame is not None and "lirf_mask" in member_frame:
+        components = [detail[c].to_numpy(dtype=float) for c in ["v9", "ens_ctx_lirf", "ens_v22_lirf_q"]]
+        lirf_deltas, lirf_record = lirf_members.deltas(*components, member_frame["lirf_mask"].to_numpy(dtype=float), scope_column, detail["month"].to_numpy())
+        previous = frame["v52m"].to_numpy(dtype=float)
+        for name in LIRF_LAYER_SETS:
+            route, delta, control = lirf_deltas[name]
+            if (route & (non_lirf | pinned40)).any():
+                raise ValueError(f"{name}'s route holds a non-LIRF or pinned row.")
+            base_gap = previous[route] - control
+            values = previous.copy()
+            values[route] = np.maximum(previous[route] + delta, FLOOR)
+            moved = np.abs(values - previous) > 1e-9
+            if (moved & ~route).any():
+                raise ValueError(f"{name} moved a row outside its route.")
+            frame[name], frame[f"{name}_lirf"] = values, moved
+            lirf_record[name].update({"moved": int(moved.sum()), "floored": int((values == FLOOR).sum()),
+                                      "base_minus_control_max_abs_s": float(np.max(np.abs(base_gap))) if route.any() else 0.0,
+                                      "base_minus_control_rows_over_1s": int((np.abs(base_gap) > 1.0).sum())})
+            rows[name] = {k: lirf_record[name][k] for k in ["route_rows", "moved", "gate_rows_control", "gate_rows", "floored"]}
+            previous = values
     specs = {**specs, "v39": {"base": "v38", "fill_pin": DECLARATIONS["fill_pin"], "pinned_value": "schedule interval (takeoff minus scheduled departure) in seconds"},
              "v40": {"base": "v38", "fill_pin": DECLARATIONS["fill_pin2"], "candidate": V40["fill_pin"], "scopes": nine["scopes"],
                      "population_interval_bands_s": nine["population_interval_bands_s"], "pinned_value": "schedule interval in seconds"},
@@ -369,13 +403,23 @@ def compute(detail: pd.DataFrame, repaired_v30: np.ndarray | None, rematch_path:
     if member_frame is not None:
         specs["v51m"] = {"base": "v46", "member": network_members.COMBO, "weight": network_members.WEIGHTS["combo_all"], "ensembles": ["combo_dl32", "combo_m25dl32"]}
         specs["v52m"] = {"base": "v51m", "member": network_members.MASK, "weight": network_members.WEIGHTS["mask_unmatched"], "ensembles": ["mask_m25_32"]}
+    if lirf_record is not None:
+        selected = lirf_members.selections()
+        specs["v53m"] = {"base": "v52m", "declaration": lirf_members.MASK_DEV, "candidate": selected[lirf_members.MASK_DEV], "route": "lirf_nonpop_unmatched",
+                         "ensembles": ["lirf_lm25_32"]}
+        specs["v54m"] = {"base": "v53m", "declaration": lirf_members.DARK, "candidate": selected[lirf_members.DARK], "route": "lirf_nonpop_unmatched in dark LIRF months",
+                         "dark_share_below": lirf_members.DARK_SHARE, "dark_months": lirf_record["dark_months"], "match_shares": lirf_record["match_shares"]}
+        specs["v55m"] = {"base": "v54m", "declaration": lirf_members.COMBO, "candidate": selected[lirf_members.COMBO], "route": "lirf_nonpop_matched"}
+        for name in LIRF_LAYER_SETS:
+            specs[name]["checks"] = lirf_record[name]
     record = {"recipe_checks_max_abs": checks, "lfpg_weight": LFPG_WEIGHT, "floor_seconds": FLOOR, "v33_outer": V33_OUTER, "v33_lirf": V33_LIRF,
-              "v34_lirf": V34_LIRF, "layer_sets": specs, "shipped_as": {"v35": V35, "v36": V36, "v37": V37, "v38": V38, "v39": V39, "v40": V40, "v41": V41, "v45": V45, "v46": V46, "v51m": V51M, "v52m": V52M},
+              "v34_lirf": V34_LIRF, "layer_sets": specs, "shipped_as": {"v35": V35, "v36": V36, "v37": V37, "v38": V38, "v39": V39, "v40": V40, "v41": V41, "v45": V45, "v46": V46, "v51m": V51M, "v52m": V52M,
+                                                                       "v53m": V53M, "v54m": V54M, "v55m": V55M},
               "declarations": {p: {"sha256": sha256_file(ROOT / p), "object_hash": object_hash(read_json(ROOT / p))} for p in DECLARATIONS.values()},
               "results": {p: sha256_file(ROOT / p) for p in RESULTS},
               "stretch_k": {"v37": read_json(ROOT / RESULTS[0])["candidates"][V37["stretch"]]["k_all_months"],
                             "v38": read_json(ROOT / RESULTS[1])["candidates"][V38["stretch"]]["k_all_months"]},
-              "code": {p: sha256_file(ROOT / p) for p in CODE}, "offsets_callsign_s": offsets(), "offsets_queue_s": offsets_all(),
+              "code": {p: sha256_file(ROOT / p) for p in CODE + (lirf_members.CODE if lirf_record is not None else [])}, "offsets_callsign_s": offsets(), "offsets_queue_s": offsets_all(),
               "rows": rows, "rematch_rows": int(len(rematch_out)), "callsign_scope_rows": int(len(callsign)),
               "peer": {"departures": int(len(peer)), "rows_with_5_peers": int((peer["peer_n"] >= 5).sum()), "no_clock": int(peer["no_clock"].sum())}}
     return frame, record

@@ -8,10 +8,11 @@ from prc2026_final import members, stack
 
 def test_learners_follow_the_declarations():
     found = members.learners()
-    assert sorted(found) == ["combo_dl32", "combo_m25dl32", "mask_m25_32"]
+    assert sorted(found) == ["combo_dl32", "combo_m25dl32", "lirf_lm25_32", "mask_m25_32"]
     assert all(len(v) == 16 for v in found.values())
     assert found["combo_dl32"][0] == "runs/adsb_ctx3_combo/nets/dl32_s601" and found["mask_m25_32"][-1] == "runs/adsb_ctx3_mask/nets/m25_32_s716"
-    assert "v51m" in stack.LAYER_SETS and "v52m" in stack.LAYER_SETS
+    assert found["lirf_lm25_32"][0] == "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s801" and found["lirf_lm25_32"][-1] == "runs/adsb_ctx3_lirf_mask/nets/lm25_32_s816"
+    assert all(name in stack.LAYER_SETS for name in ["v51m", "v52m", "v53m", "v54m", "v55m"])
 
 
 def test_members_route_by_the_match_flag():
@@ -20,8 +21,11 @@ def test_members_route_by_the_match_flag():
     out = members.members(ids, ens, np.array([True, False, True]))
     assert out["combo_all"].tolist() == [100.0, 210.0, 300.0]
     assert np.isnan(out["mask_unmatched"].to_numpy()[[0, 2]]).all() and out["mask_unmatched"].to_numpy()[1] == 220.0
+    assert "lirf_mask" not in out  # a table without the LIRF ensemble builds no LIRF layer
     with pytest.raises(ValueError):
         members.members(ids[::-1], ens, np.array([True, False, True]))
+    lirf = members.members(ids, ens.assign(lirf_lm25_32=[130.0, 230.0, 330.0]), np.array([True, False, True]))
+    assert lirf["lirf_mask"].tolist() == [130.0, 230.0, 330.0]  # unrouted: matched and unmatched rows alike
 
 
 def test_tables_weights_and_lirf():

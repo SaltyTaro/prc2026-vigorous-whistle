@@ -1,4 +1,4 @@
-"""The two network members v51 and v52 ship, on any file's rows (stage `members`; layer sets v51m and v52m in stack.py).
+"""The network members v51, v52 and v53 / v54 / v55 ship, on any file's rows (stage `members`; layer sets v51m, v52m, v53m-v55m in stack.py).
 
 - combo_all (configs/adsb_ctx3_combo_dev_v1.json, w40 selected by its rule): the dl32 seed mean on rows with adsb_matched = 1 and the
   m25dl32 seed mean on the other rows (16 seeds each, twelve-month refits).
@@ -8,6 +8,9 @@ They enter the network table in that order at 0.40 each on non-LIRF rows where b
 as tools/export_network_member.py built v51's and v52's member files. The seed mean of the routed per-seed tables (how the exports
 read them) equals the routing of the per-variant seed means, row for row. v51 and v52 then add the published daily totals
 (tools/export_daily_totals.py --base), which is not part of this runner: v51m and v52m are the open-data model parts.
+- lirf_mask (configs/adsb_ctx3_lirf_mask_dev_v1.json): the lm25_32 seed mean (16 seeds 801-816, twelve-month refits) on every row,
+  unrouted; src/prc2026_final/lirf_members.py routes it to the LIRF scopes of v53m / v54m / v55m. A members table written before this
+  ensemble existed has no lirf_mask column, and the stack then builds no LIRF layer set.
 """
 from __future__ import annotations
 
@@ -21,7 +24,8 @@ from . import network_member
 from .common import ROOT
 
 COMBO, MASK = "configs/adsb_ctx3_combo_dev_v1.json", "configs/adsb_ctx3_mask_dev_v1.json"
-ENSEMBLES = {"combo_dl32": (COMBO, "dl32"), "combo_m25dl32": (COMBO, "m25dl32"), "mask_m25_32": (MASK, "m25_32")}
+LIRF_MASK = "configs/adsb_ctx3_lirf_mask_dev_v1.json"
+ENSEMBLES = {"combo_dl32": (COMBO, "dl32"), "combo_m25dl32": (COMBO, "m25dl32"), "mask_m25_32": (MASK, "m25_32"), "lirf_lm25_32": (LIRF_MASK, "lm25_32")}
 WEIGHTS = {"combo_all": 0.40, "mask_unmatched": 0.40}
 
 
@@ -38,13 +42,16 @@ def learners() -> dict[str, list[str]]:
 
 
 def members(ids: np.ndarray, ensembles: pd.DataFrame, matched: np.ndarray) -> pd.DataFrame:
-    """The two member columns from the three seed means (`ensembles` in `ids` order) and the file's match flag."""
+    """The member columns from the seed means (`ensembles` in `ids` order) and the file's match flag (lirf_mask: unrouted, when present)."""
     if not np.array_equal(ensembles[ID].to_numpy(), ids):
         raise ValueError("The member ensembles are not in the file's departure order.")
     matched = np.asarray(matched, dtype=bool)
     combo = np.where(matched, ensembles["combo_dl32"].to_numpy(dtype=float), ensembles["combo_m25dl32"].to_numpy(dtype=float))
     mask = np.where(matched, np.nan, ensembles["mask_m25_32"].to_numpy(dtype=float))
-    return pd.DataFrame({ID: ids, "adsb_matched": matched, "combo_all": combo, "mask_unmatched": mask})
+    out = pd.DataFrame({ID: ids, "adsb_matched": matched, "combo_all": combo, "mask_unmatched": mask})
+    if "lirf_lm25_32" in ensembles:
+        out["lirf_mask"] = ensembles["lirf_lm25_32"].to_numpy(dtype=float)
+    return out
 
 
 def tables(nets: np.ndarray, frame: pd.DataFrame, lirf: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
@@ -55,4 +62,4 @@ def tables(nets: np.ndarray, frame: pd.DataFrame, lirf: np.ndarray) -> tuple[np.
     return t51, in51, t52, in52
 
 
-__all__ = ["COMBO", "MASK", "ENSEMBLES", "WEIGHTS", "learners", "members", "tables"]
+__all__ = ["COMBO", "MASK", "LIRF_MASK", "ENSEMBLES", "WEIGHTS", "learners", "members", "tables"]

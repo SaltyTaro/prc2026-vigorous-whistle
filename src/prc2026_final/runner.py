@@ -18,7 +18,7 @@ from . import adsb, features, leaves, networks, recipe, residual, tokens, v9
 from .common import ROOT, Run, departures_of, inspect, load_movements, save_frame
 
 CHAIN = ["features", "adsb", "tokens", "v9", "leaves", "networks", "residual", "recipe"]  # v30 on the file (also run on the repaired input)
-STAGES = CHAIN + ["repair", "rematch", "members", "stack", "final"]  # default order: v30 -> v35 .. v52m and the chosen layer set's file
+STAGES = CHAIN + ["repair", "rematch", "members", "stack", "final"]  # default order: v30 -> v35 .. v55m and the chosen layer set's file
 EXTRA_STAGES = ["export"]  # v30's own integer file (component check against the uploaded v30); run only when named
 
 
@@ -32,7 +32,7 @@ class Options:
     detail_ensembles: bool = False
     vocab_cache: Path | None = None
     repair_root: Path | None = None
-    layers: str = "v52m"  # the final file's layer set: v52m (v52's open-data model part; default), v51m, v46, v45, v40, v41, v39, v38, v35, v36 or v37
+    layers: str = "v54m"  # the final file's layer set: v54m (v54's open-data model part; default), v55m, v53m, v52m, v51m, v46, v45, v40, v41, v39, v38, v35, v36 or v37
 
 
 class Context:
@@ -168,8 +168,8 @@ def stage_networks(ctx: Context, threads: int, ensembles: list[str]) -> dict:
 
 
 def stage_members(ctx: Context, threads: int) -> dict:
-    """The network members v51 / v52 ship (src/prc2026_final/members.py): three seed means (48 GPU-trained twelve-month refits,
-    predicted on the CPU like e32), routed by the file's own ADS-B match flag."""
+    """The network members v51 / v52 / v53-v55 ship (src/prc2026_final/members.py): four seed means (64 GPU-trained twelve-month refits,
+    predicted on the CPU like e32); v51 / v52's routed by the file's own ADS-B match flag, the masked LIRF network unrouted."""
     from . import members
     started = time.time()
     from prc2026_ctx.tokens import TokenStore
@@ -198,7 +198,7 @@ def stage_members(ctx: Context, threads: int) -> dict:
     frame_out = members.members(ctx.ids, table, adsb_table.to_numpy() == 1)
     out = save_frame(frame_out, ctx.run.path("members", "members.parquet"))
     ens_out = save_frame(table, ctx.run.path("members", "ensembles.parquet"))
-    return ctx.run.finish("members", {"ensembles": {e: len(v) for e, v in learners.items()}, "declarations": [members.COMBO, members.MASK],
+    return ctx.run.finish("members", {"ensembles": {e: len(v) for e, v in learners.items()}, "declarations": [members.COMBO, members.MASK, members.LIRF_MASK],
                                       "weights": members.WEIGHTS, "models_sha256": sources, "matched_rows": int(frame_out["adsb_matched"].sum()),
                                       "learners_predicted_this_session": info}, [out, ens_out], started)
 
@@ -361,7 +361,10 @@ RECIPES = {"v35": "v35: v30 + EOBT_1 repair 0.5 + v33/v34 weights + u300 + calls
            "v37": "v37: v35, then the tail stretch above 1,500 s (configs/tail_stretch_v1.json v35_t1500, four-month k)",
            "v38": "v38: v35, then the two-sided stretch (above 1,500 s, below 900 s; configs/tail_stretch_v2.json two_sided_900, four-month k)",
            "v51m": "v51m: v46 with the combination member (configs/adsb_ctx3_combo_dev_v1.json w40) in the network table, v46's mix, v34's recipe and v38's layers recomputed; v51's open-data model part (v51 adds the published daily totals)",
-           "v52m": "v52m: v51m with the masked member (configs/adsb_ctx3_mask_dev_v1.json w40, the user's override) added after it; v52's open-data model part (v52 adds the published daily totals)"}
+           "v52m": "v52m: v51m with the masked member (configs/adsb_ctx3_mask_dev_v1.json w40, the user's override) added after it; v52's open-data model part (v52 adds the published daily totals)",
+           "v53m": "v53m: v52m with the masked LIRF member (configs/adsb_ctx3_lirf_mask_dev_v1.json w55) on LIRF non-population unmatched rows; v53's open-data model part (v53 adds the published daily totals)",
+           "v54m": "v54m: v53m with the dark re-read (configs/lirf_dark_reread_v1.json w70_s750) on LIRF non-population unmatched rows of dark LIRF months; v54's open-data model part (v54 adds the published daily totals)",
+           "v55m": "v55m: v54m with the matched-row LIRF member (configs/lirf_combo_reread_v1.json mw40) on LIRF non-population matched rows; not uploaded"}
 
 
 def receipt_key(stage: str, options: Options) -> str:

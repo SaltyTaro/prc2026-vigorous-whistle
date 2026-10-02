@@ -1,0 +1,219 @@
+{
+  "created_at_utc": "2026-10-02T03:25:23.684110+00:00",
+  "earlier_layers_max_abs_vs_before": {
+    "v30": 0.0,
+    "v31": 0.0,
+    "v33": 0.0,
+    "v34": 0.0,
+    "v35": 0.0,
+    "v36": 0.0,
+    "v37": 0.0,
+    "v38": 0.0,
+    "v39": 0.0,
+    "v40": 0.0,
+    "v41": 0.0,
+    "v45": 0.0,
+    "v46": 0.0,
+    "v51m": 0.0,
+    "v52m": 0.0
+  },
+  "earlier_layers_unchanged": true,
+  "files": {
+    "v52m": {
+      "lirf_nonpop_rows": {
+        "max_abs": 4.0,
+        "p99_abs": 0.0,
+        "rms": 0.050657028842164546,
+        "rows": 26499,
+        "rows_differing": 30
+      },
+      "other_rows": {
+        "max_abs": 101.0,
+        "p99_abs": 0.0,
+        "rms": 0.1977358315336865,
+        "rows": 318342,
+        "rows_differing": 1714
+      },
+      "runner_file": "runs/final_dryrun/run/final/vigorous-whistle_v952.parquet",
+      "runner_sha256": "42b4692de20c6f169826361fb60fc39fa0d3b3e39a3fb8ae506e2a3c7a75ca50",
+      "runner_vs_shipped": {
+        "max_abs": 101.0,
+        "p99_abs": 0.0,
+        "rms": 0.19050482470994679,
+        "rows": 344841,
+        "rows_differing": 1744
+      },
+      "shipped_file": "runs/adsb_ctx3_mask/export_dry/vigorous-whistle_v52.parquet"
+    },
+    "v53m": {
+      "lirf_nonpop_rows": {
+        "max_abs": 4.0,
+        "p99_abs": 1.0,
+        "rms": 0.4179543482264586,
+        "rows": 26499,
+        "rows_differing": 4591
+      },
+      "other_rows": {
+        "max_abs": 101.0,
+        "p99_abs": 0.0,
+        "rms": 0.1977358315336865,
+        "rows": 318342,
+        "rows_differing": 1714
+      },
+      "runner_file": "runs/final_dryrun/run/final/vigorous-whistle_v953.parquet",
+      "runner_sha256": "729d48aacb60c0c92b941dc873d4f4c7ee3e09784bc3853a022157c17310c675",
+      "runner_vs_shipped": {
+        "max_abs": 101.0,
+        "p99_abs": 1.0,
+        "rms": 0.22252746736385567,
+        "rows": 344841,
+        "rows_differing": 6305
+      },
+      "shipped_file": "runs/adsb_ctx3_lirf_mask/export_dry/vigorous-whistle_v53.parquet"
+    },
+    "v54m": {
+      "lirf_nonpop_rows": {
+        "max_abs": 4.0,
+        "p99_abs": 1.0,
+        "rms": 0.47121769379739326,
+        "rows": 26499,
+        "rows_differing": 5846
+      },
+      "other_rows": {
+        "max_abs": 101.0,
+        "p99_abs": 0.0,
+        "rms": 0.1977358315336865,
+        "rows": 318342,
+        "rows_differing": 1714
+      },
+      "runner_file": "runs/final_dryrun/run/final/vigorous-whistle_v954.parquet",
+      "runner_sha256": "f3b1ae1a98c26d88b271fdb2c22367d0b0a4e96e35ee596cfbcc69ffe6667826",
+      "runner_vs_shipped": {
+        "max_abs": 101.0,
+        "p99_abs": 1.0,
+        "rms": 0.23055982338718287,
+        "rows": 344841,
+        "rows_differing": 7560
+      },
+      "shipped_file": "runs/lirf_dark/export_dry/vigorous-whistle_v54.parquet"
+    },
+    "v55m": {
+      "lirf_nonpop_rows": {
+        "max_abs": 5.0,
+        "p99_abs": 1.0,
+        "rms": 0.5541713891257873,
+        "rows": 26499,
+        "rows_differing": 8063
+      },
+      "other_rows": {
+        "max_abs": 101.0,
+        "p99_abs": 0.0,
+        "rms": 0.1977358315336865,
+        "rows": 318342,
+        "rows_differing": 1714
+      },
+      "runner_file": "runs/final_dryrun/run/final/vigorous-whistle_v955.parquet",
+      "runner_sha256": "0d3dc26597a59d95ab7693d972590dbead0497e26bb6ac530b0d5e93e27250e9",
+      "runner_vs_shipped": {
+        "max_abs": 101.0,
+        "p99_abs": 1.0,
+        "rms": 0.24432392002519898,
+        "rows": 344841,
+        "rows_differing": 9777
+      },
+      "shipped_file": "runs/lirf_combo/export_dry/vigorous-whistle_v55.parquet"
+    }
+  },
+  "largest_new_lirf_differences": {
+    "v53m": [],
+    "v54m": [],
+    "v55m": []
+  },
+  "lirf_member_runner_cpu_vs_shipped_gpu_s": {
+    "all_rows": {
+      "max_abs": 12.487376250345278,
+      "p99_abs": 0.09031534732976065,
+      "rms": 0.06296057285015845,
+      "rows": 344841,
+      "rows_differing": 344836
+    },
+    "lirf_nonpop_rows": {
+      "max_abs": 9.588448849689485,
+      "p99_abs": 0.14225360666694997,
+      "rms": 0.10609597517390588,
+      "rows": 26499,
+      "rows_differing": 26497
+    }
+  },
+  "root": "runs/final_dryrun/run",
+  "stack_record_rows": {
+    "v52m": {
+      "floored": 7,
+      "member_rows": 101507,
+      "moved": 101500,
+      "share_gate": 64
+    },
+    "v53m": {
+      "floored": 7,
+      "gate_rows": 78,
+      "gate_rows_control": 79,
+      "moved": 17718,
+      "route_rows": 17718
+    },
+    "v54m": {
+      "floored": 7,
+      "gate_rows": 72,
+      "gate_rows_control": 72,
+      "moved": 15515,
+      "route_rows": 15515
+    },
+    "v55m": {
+      "floored": 7,
+      "gate_rows": 18,
+      "gate_rows_control": 21,
+      "moved": 8781,
+      "route_rows": 8781
+    }
+  },
+  "steps": {
+    "v53m_minus_v52m": {
+      "difference_of_steps": {
+        "max_abs": 1.0,
+        "p99_abs": 1.0,
+        "rms": 0.11520756784480136,
+        "rows": 344841,
+        "rows_differing": 4577
+      },
+      "runner_rows": 16848,
+      "runner_rows_outside_lirf": 0,
+      "shipped_rows": 16839,
+      "shipped_rows_outside_lirf": 0
+    },
+    "v54m_minus_v53m": {
+      "difference_of_steps": {
+        "max_abs": 1.0,
+        "p99_abs": 1.0,
+        "rms": 0.1056487851856326,
+        "rows": 344841,
+        "rows_differing": 3849
+      },
+      "runner_rows": 15031,
+      "runner_rows_outside_lirf": 0,
+      "shipped_rows": 15024,
+      "shipped_rows_outside_lirf": 0
+    },
+    "v55m_minus_v54m": {
+      "difference_of_steps": {
+        "max_abs": 2.0,
+        "p99_abs": 0.0,
+        "rms": 0.08030783971891674,
+        "rows": 344841,
+        "rows_differing": 2221
+      },
+      "runner_rows": 7762,
+      "runner_rows_outside_lirf": 0,
+      "shipped_rows": 7724,
+      "shipped_rows_outside_lirf": 0
+    }
+  }
+}

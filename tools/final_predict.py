@@ -13,8 +13,8 @@ Subcommands (all take --root, a fresh directory per input file; every stage is r
   refit-adj2   --month M              the declared residual adj2 refit for a target month without a saved booster (~5 min, 16 threads)
   run          [--stages ...]         features, adsb, tokens, v9, leaves, networks, residual, recipe (v30), repair (v31's EOBT_1 detector;
                                       a flag reruns features..recipe on the edited input in <root>/repair/run, or --repair-root reuses one),
-                                      rematch (the callsign fix's ADS-B rematch), members (the two network members of v51 / v52), stack (v31 -> v35 .. v52m),
-                                      final (--layers v35 .. v46|v51m|v52m; default: all pending);
+                                      rematch (the callsign fix's ADS-B rematch), members (the network members of v51 / v52 and the masked LIRF network of v53-v55), stack (v31 -> v35 .. v55m),
+                                      final (--layers v35 .. v46|v51m .. v55m; default: all pending);
                                       `export` (v30's own file) runs only when named
 Nothing is uploaded and nothing is written to runs/submissions; the final stage writes <root>/final/vigorous-whistle_v<N>.parquet.
 """
@@ -51,8 +51,11 @@ def main() -> None:
                         help="a completed run root (features..recipe) of this file's EOBT_1-repaired input, reused by the repair stage instead of "
                              "running the chain in <root>/repair/run; refused unless its input has exactly the repair's content "
                              "(the ranking file: runs/final_lfpg_eobt/run)")
-    parser.add_argument("--layers", choices=["v35", "v36", "v37", "v38", "v39", "v40", "v41", "v45", "v46", "v51m", "v52m"], default="v52m",
-                        help="the final stage's layer set, recorded in its receipt (stages/final-<layers>.json): v52m (default: v52's open-data model part, "
+    parser.add_argument("--layers", choices=["v35", "v36", "v37", "v38", "v39", "v40", "v41", "v45", "v46", "v51m", "v52m", "v53m", "v54m", "v55m"], default="v54m",
+                        help="the final stage's layer set, recorded in its receipt (stages/final-<layers>.json): v54m (default: v54's open-data model part, "
+                             "v53m + the dark re-read of configs/lirf_dark_reread_v1.json; v54 adds the published daily totals), v55m (v54m + the matched-row LIRF "
+                             "member of configs/lirf_combo_reread_v1.json, not uploaded), v53m (v52m + the masked LIRF member of configs/adsb_ctx3_lirf_mask_dev_v1.json), "
+                             "v52m (v52's open-data model part, "
                              "v46 + the combination and masked network members; v52 adds the published daily totals), v51m (v46 + the combination), v46 (the clean model "
                              "line's best 223.9339, v45 + configs/thinned_regime_round_v1.json n85_nd1200), v45 (v40 + the LIRF gate of "
                              "configs/lirf_gate_v1.json), v40 (v38 + configs/fill_pin_v2.json evidenced_nine), v41 (v40 + configs/fill_pin_v3.json's one-day value on "
