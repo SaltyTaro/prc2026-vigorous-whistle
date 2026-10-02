@@ -1,0 +1,42 @@
+{
+ "experiment_id": "prc2026-lirf-matched-member-v1",
+ "declared_at_utc": "2026-10-02T03:05:33+00:00",
+ "audit_used": false,
+ "purpose": "Re-read with no new fit: the LIRF masked member M (lm25_32, the 16 seeds 801-816 of configs/adsb_ctx3_lirf_mask_dev_v1.json, shipped in v53/v54 on unmatched rows only) blended into the shipped LIRF network on LIRF's non-population rows WITH an ADS-B match: network' = (1 - w) ens_ctx_lirf + w M, read inside v34's matched blend (v9 0.15 / network 0.40 / tree 0.45) with v45's matched gate m600. This is the matched-row half of v51's combination member (a second network on matched rows, which v51 gained from outside LIRF) carried to LIRF with an existing network, so no fit is needed.",
+ "disclosed": {
+  "design_reading": "docs/adsb_ctx3_lirf/design_report.json (1 October, 4 design-fold seeds 21-24, transfer readings): lm25_32 alone on matched LIRF rows, network-only RMSE against the shipped family's four round-B seeds: October 370.79 vs 374.28 s, July natural 433.68 vs 436.70 s, December natural 283.25 vs 283.58 s. That reading (a different seed set and fold) suggested this re-read. The 16-seed development-fold member has never been read on matched rows: docs/adsb_ctx3_lirf_mask/results_v1.json and docs/lirf_dark/results_v1.json score unmatched rows only.",
+  "v51": "docs/adsb_ctx3_combo/README.md: outside LIRF, the combination member's matched-row network (dl32) gained by being different from the pool rather than by standalone accuracy; v51 = 222.2306 official (-0.374 s against v48). Recorded as the motivation only; no official score steers the grid.",
+  "grid": "The weights follow the unmatched round's grid (0.25 / 0.40 / 0.55) plus 0.70; nothing else was tried."
+ },
+ "inputs": "runs/lomo_dev/rows.parquet (v9, lirf_net, lirf_tree, label, day, lirf_m) and the 16 lm25_32 seeds per fold, exactly the files of tools/run_lirf_member.py: July 2025 = lomo_2025-07/predictions.parquet, November 2025 = forward/predictions.parquet, December 2025 = refit/december_predictions.parquet.",
+ "sets": {
+  "natural:2025-07": "July 2025 LIRF non-population matched rows (lirf_m, 13,992), eleven-month LOMO footing",
+  "natural:2025-11": "November 2025 LIRF non-population matched rows (lirf_m, 7,401), forward fold",
+  "natural:2025-12": "December 2025 LIRF non-population matched rows (lirf_m, 9,506), January-November refit: the month next to January 2026, the only ranking month with LIRF ADS-B coverage (8,747 of 10,950 non-population rows matched)",
+  "not_used": "January 2025 has no matched LIRF row; thinned July has 85 (not a set)."
+ },
+ "control": "v54's arithmetic on matched rows, which v53 and v54 did not change: v34's matched blend on ens_ctx_lirf with v45's gate m600 (tree - network > 600 s: v9 0.15 / network 0.2 / tree 0.65), floor -12. Check before any candidate: each month's lirf_net on the set equals the mean of the shipped network's saved fold predictions (seeds 301-316) within 0.01 s RMS.",
+ "candidates": {
+  "mw25": {
+   "member_weight": 0.25
+  },
+  "mw40": {
+   "member_weight": 0.4
+  },
+  "mw55": {
+   "member_weight": 0.55
+  },
+  "mw70": {
+   "member_weight": 0.7
+  }
+ },
+ "semantics": "network' = (1 - w) ens_ctx_lirf + w M on the set; the matched blend and the m600 gate are recomputed with network' (the gate fires on tree - network' > 600 s).",
+ "metric": "Primary: squared error of the set's rows with labels below 20,000 s, relative change against the control with a paired-day 95% interval (10,000 day draws, seed 20261002). Reported as well: the unfiltered change, and the route's SSE change as a share of the whole month's SSE at the rows table's v33 column (every row of the month; a scale reference, not the shipped stack).",
+ "rule": "A candidate is eligible when (1) December's primary change is at most -0.25% with its interval below zero, (2) July's and November's primary changes are at most 0, and (3) no set's interval lies entirely above zero. Selection: among eligible candidates the lowest mean of the three primary changes. No eligible candidate: nothing selected, v54 stands.",
+ "expectation_scale": "January 2026's 8,747 matched route rows at about December's matched RMSE (~285 s) hold about 7.1e8 SSE; -0.5% is about -3.6e6, about -0.02 s on 221.9 s at alignment 1. Small; read because it costs no fit.",
+ "never_read": "No official score, ranking label or published aggregate.",
+ "export_plan": "If selected and the user says so: v54's model part (runs/lirf_dark/export_dry/vigorous-whistle_v54.parquet, before the reconciliation) with the ranking's lirf_nonpop_matched rows recomputed from the refit12 member (16-seed mean) at the selected w: value = base + (candidate - control), floor -12; every other row keeps the base integer; then v48's reconciliation last (tools/export_daily_totals.py --base), audit, and a check that every other row equals v54's model part.",
+ "scorer": "tools/run_lirf_combo.py (written before any candidate was read)",
+ "report": "docs/lirf_combo/results_v1.json",
+ "automatic_submission": false
+}
