@@ -1,0 +1,37 @@
+{
+ "experiment_id": "scout_refit_layers_v1",
+ "declared_at_utc": "2026-10-02T10:06:00Z",
+ "declared_by": "declaring and the governing run are research; building a file under runs/submissions and any upload stay the user's word",
+ "audit_used": false,
+ "status": "DECLARED before any published-data layer was run on the current model part's development predictions. Seen before declaring: the table's model-part RMSEs (docs/dev_model_part/README.md: v46 -> v55m January 322.86 -> 322.55, July 257.72 -> 257.41, November 184.91 -> 184.65, December 167.51 -> 167.07).",
+ "question": "The three published-data steps (v48's reconciliation, the extreme-day layer, v57's variance re-allocation) were fitted on the v46-era development stack's residuals and are applied to the shipped model part v55m. Does refitting them on v55m's own development residuals do better?",
+ "inputs": {
+  "model_part_table": "runs/dev_model_part/rows.parquet",
+  "external_data": "as configs/daily_totals_v1.json, configs/scout_extreme_shift_v1.json, configs/scout_var_alloc_v1.json"
+ },
+ "procedure": {
+  "tables": "runs/daily_totals/rows.parquet with stack := v55m, the implied off-block day (take-off minus the prediction), the published totals joined on it and 'complete' recomputed exactly as tools/screen_daily_totals.py builds the table (session scratch refit_prep.py)",
+  "control": "for scored month m: the fitting months keep the v46 stack (the shipped parameters' footing), month m is v55m; v48's declared procedure (configs/daily_totals_v1.json settings) for month m, then the extreme-day layer and v57's layer exactly as tools/scout_var_alloc.py layered(), fitted on the other months of that table",
+  "candidate": "every month v55m; the same three steps fitted on the other months of that table",
+  "code": "session scratch refit_prep.py, refit_run.py; tools/run_daily_totals.py run_month, tools/scout_var_alloc.py layered (unchanged)",
+  "free_parameters": "none new; every parameter is refitted by the existing procedures"
+ },
+ "rule": {
+  "text": "accepted when (1) no development month is worse than the control by more than 0.005% of its RMSE (all rows); (2) the mean change over the equal-footing months is at least 0.02% below zero; (3) every equal-footing month's paired-day 95% interval (by off-block day, seed 20260929) lies below zero. November is reported in (1).",
+  "equal_footing": [
+   "2025-01",
+   "2025-07",
+   "2025-12"
+  ],
+  "max_month_worsening_pct": 0.005,
+  "min_mean_improvement_pct": 0.02
+ },
+ "limitations": {
+  "selection_inherited": "the member layers inside v55m were selected on these same development months (v51 / v52 on January / July / December, v53 / v54 on January 2025, v55 on July / November / December), so a refit on v55m's residuals inherits that selection",
+  "no_twelve_month_check": "the twelve-month table carries no v55m members, so it cannot test this refit; the development months are the only evidence, and the rule is the dense-layer rule of v48 accordingly",
+  "nesting": "v55m's development values are out-of-sample for their own month but the fitting months' values came from models that saw the scored month (the frozen out-of-fold footing of every development read)"
+ },
+ "also_reported": "v55m alone, the control and the candidate per month, so the shipped chain's own gain on v55m is on record",
+ "export": "only if accepted and on the user's word: a ranking export path for refitted parameters does not exist yet and would be written then",
+ "report": "docs/scout/refit_layers_results_v1.json"
+}
