@@ -165,7 +165,7 @@ def export(args) -> None:
     ch = extreme_shift.shifts(days, params)
     new, mask = extreme_shift.apply(t, ch, ["airport", "bday"])
     values = np.where(mask, np.rint(new), t["v48_exported"].to_numpy(dtype=float))
-    provenance = {"experiment": "scout_extreme_shift_v1", "dry_run": args.dry_run is not None, "base": {"path": args.base, "sha256": sha256_file(ROOT / args.base)},
+    provenance = {"experiment_id": "scout_extreme_shift_v1", "dry_run": args.dry_run is not None, "base": {"path": args.base, "sha256": sha256_file(ROOT / args.base)},
                   "reconciliation": {"dir": args.recon, "values_sha256": sha256_file(ROOT / args.recon / "values.parquet"), "days_sha256": sha256_file(ROOT / args.recon / "days.parquet")},
                   "selected_by": "dry run" if args.dry_run is not None else (f"the user's override: {args.user_override}" if args.user_override else "the declared rule (accepted)"),
                   "recipe": "the base, v48's reconciliation with the published daily totals, then on extreme days at calibrated airports the day shift beta_a * I_d in place of v48's",

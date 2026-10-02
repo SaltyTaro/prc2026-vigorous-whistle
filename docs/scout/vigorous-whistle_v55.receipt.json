@@ -23,13 +23,13 @@
       "tools/export_daily_totals.py": "ba5d42641295edcfcad15b290e207746ecee8d2a65e312b035141a332967565e",
       "tools/run_daily_totals.py": "63a7a68d13c27619a86865261a1c6e9221b3e83626c73478c8dc237d40043f85",
       "tools/scout_daily_ifr.py": "656c1b8149bda4d21d8a2943d325d133def05722da6561316b8593de4983feec",
-      "tools/scout_extreme_shift.py": "d588e635d495e5e17de732b75121fd2f872c8bcc04c975a03b8e09d11c061f6f"
+      "tools/scout_extreme_shift.py": "88cebba56adb77f56799b8da2d6dde1d0aa5c5bca77d30960679c4daa5c0f2bc"
     },
     "declaration": {
       "configs/scout_extreme_shift_v1.json": "03693dc61f7cd8d634c48d40efc822b3826f239e0bfec0191f42d54af4a8e969"
     },
     "dry_run": false,
-    "experiment": "scout_extreme_shift_v1",
+    "experiment_id": "scout_extreme_shift_v1",
     "official_scores_used": "none",
     "recipe": "the base, v48's reconciliation with the published daily totals, then on extreme days at calibrated airports the day shift beta_a * I_d in place of v48's",
     "reconciliation": {
@@ -48,6 +48,6 @@
     "MVT_ID_mvt": "double",
     "TAXITIME_SEC_mvt": "int32"
   },
-  "validated_at_utc": "2026-10-02T05:06:34.190891+00:00",
+  "validated_at_utc": "2026-10-02T05:08:51.960342+00:00",
   "version": 55
 }

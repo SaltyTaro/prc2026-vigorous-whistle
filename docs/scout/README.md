@@ -142,7 +142,7 @@ airport-days change: EDDF 29 January (−94 s day shift against v48's −1 s), E
 moves are right as in 2025 (alignment 1), 0 at alignment 0.5, +0.07 s if they are noise. The file version is assigned when the user
 decides to build it (v55 if built on v54 alone, otherwise the number after the LIRF candidate).
 
-## 7. v55 built (user: "build v55"), not uploaded
+## 7. v55 built (user: "build v55") and uploaded (user: "upload it"): 221.6941 official, the official best
 
 - **`runs/submissions/vigorous-whistle_v55.parquet`, SHA-256 `aa02ff597a619f223888370726cdcbf5c6d055720ef2f95b0c93818133fd1ece`**,
   byte-identical to the combined dry run; record [`export_v55.json`](export_v55.json), receipt
@@ -153,3 +153,13 @@ decides to build it (v55 if built on v54 alone, otherwise the number after the L
 - Expected against v54 (221.8686): about −0.10 s if both parts transfer as their 2025 readings, about +0.10 s if both are noise.
 - Upload only at the user's word:
   `.venv\Scripts\python.exe -X utf8 -B tools\prc_submit.py upload --file runs/submissions/vigorous-whistle_v55.parquet --expected-sha256 aa02ff597a619f223888370726cdcbf5c6d055720ef2f95b0c93818133fd1ece --calendar-day`
+
+**Official result (2 October 2026).** Uploaded at the user's word ("upload it") at 05:09:10 UTC; processed 05:09:44 UTC:
+**221.6941 on all 344,841 rows, −0.1745 s against v54 (221.8686): the new official best.** Record
+[`official_result_v55.json`](official_result_v55.json). The squared-error change (−2.67e7 on a squared change of 1.14e7) corresponds to an
+alignment of about 1.67 for the two parts together; that figure describes the outcome only and is not used to rescale anything. Never
+re-upload v1–v55.
+
+The first upload attempt stopped before anything was sent (the uploader reads `provenance.experiment_id`; the export tool had written
+`experiment`). The tool was corrected, the never-uploaded local file and receipt were removed and rebuilt: the parquet is byte-identical
+(SHA-256 `aa02ff59…`), only the receipt's provenance key changed.
