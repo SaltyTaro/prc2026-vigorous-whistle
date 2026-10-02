@@ -1,0 +1,74 @@
+{
+ "experiment_id": "prc2026-lirf-dark-div-design-v1",
+ "declared_at_utc": "2026-10-02T06:11:52+00:00",
+ "audit_used": false,
+ "purpose": "Design of a second, diverse masked LIRF network for LIRF's dark months: lm25dl32 (the masked LIRF network lm25_32 with numeric embeddings 16 wide and learning rate 0.002) averaged with v54's member lm25_32, read inside v54's dark-month arithmetic. A GO opens a separately declared development round (forward / refit / refit12 fits); this design exports nothing.",
+ "disclosed": {
+  "diversity": "docs/adsb_ctx3_combo/README.md: outside LIRF the dl settings (d_num 16, lr 0.002) did not add standalone accuracy; dl32 / m25dl32 gained only by being different from the pool, and v51's combination member transferred (-0.374 s official). docs/lirf_combo/README.md (2 October): a second LIRF network on matched rows (mw40) passed its rule the same way.",
+  "closed_neighbours": "docs/lirf_mask2/README.md (stronger masking p 0.5 / 0.75: no GO; 8-seed LIRF comparisons are dominated by seed noise, January 2025 null +0.287%) and docs/lirf_tree_mask/README.md (masked LIRF trees: no GO). lm25dl32 has never been fitted for LIRF.",
+  "v54_lesson": "docs/lirf_dark/README.md: v54 transferred at January 2025's development alignment, while thinned July overstated it about threefold; January 2025 governs, thinned July is a no-harm check.",
+  "same_sets": "Thinned July and January 2025 are the sets that selected v53's w55 and v54's w70_s750 and read the two closed designs above.",
+  "code_path_test": "Before this commit the scorer was run with lm25_32 seeds 801-816 standing in for the candidate (mix and dl_alone read exactly 0.0 on both sets, as they must). That run also printed the reported-only doubling reading of existing models: thinned July -0.616% [-0.97, -0.29], January 2025 -0.103% [-0.55, +0.31]. It involves no new fit and does not enter the rule or the bar."
+ },
+ "hardware": "four AWS g6e.2xlarge (one L40S each, SkyPilot clusters prc-ctx3a (head) / prc-ctx3b-d), two lanes per GPU, tools/run_adsb_ctx_lomo.py --device cuda via tools/combo_queue.sh (ROUND=runs/lirf_dark_div) and tools/combo_nodes.sh; infra/aws/gpu_authorization_20261002.json. Thinned July re-predictions on the workstation CPU (tools/ctx3_lirf_predict.py --declaration configs/lirf_dark_div_design_v1.json --fold seasonal).",
+ "fits": {
+  "network_config": "configs/lirf_dark_div_network_v1.json",
+  "variants": [
+   "lm25dl32"
+  ],
+  "seeds": [
+   1001,
+   1002,
+   1003,
+   1004,
+   1005,
+   1006,
+   1007,
+   1008,
+   1009,
+   1010,
+   1011,
+   1012,
+   1013,
+   1014,
+   1015,
+   1016
+  ],
+  "order": [
+   "seasonal",
+   "lomo_2025-01"
+  ],
+  "folds": {
+   "thinned_july": {
+    "fold": "seasonal",
+    "file": "re-predicted on coverage-regime attempt a13 (July 2025 thinned to July 2026's coverage) on the workstation CPU"
+   },
+   "2025-01": {
+    "fold": "lomo_2025-01",
+    "file": "predictions.parquet"
+   }
+  },
+  "footing": "As configs/adsb_ctx3_lirf_mask_dev_v1.json for the same two folds: v54's member lm25_32 (seeds 801-816) was fitted on the same folds with the same code, every setting except d_num / lr identical, on the same hardware type.",
+  "outputs": "runs/lirf_dark_div/nets/<variant>_s<seed>/<fold>/",
+  "count": 32
+ },
+ "sets": "Exactly tools/run_lirf_dark.build_sets' dark sets: thinned_july (route rows with the thinned class unmatched) and natural:2025-01 (LIRF non-population unmatched rows), with their v9 / shipped network / LIRF tree / label / day.",
+ "arithmetic": "v54's dark-month value: network' = 0.30 ens_ctx_lirf + 0.70 M; blend 0.75 network' + 0.25 tree (v9 0), floor -12; gate u600 (tree - network' > 600 s: v9 0 / network' 0.2 / tree 0.8) (tools/run_lirf_dark.values with w 0.70, s 0.75).",
+ "control": "M = v54's member: the 16-seed mean of lm25_32 seeds 801-816 on the same fold (checked equal to run_lirf_dark's member before any candidate is read).",
+ "candidate": {
+  "mix": "M' = 0.5 x the 16-seed lm25_32 mean + 0.5 x the 16-seed lm25dl32 mean (seeds 1001-1016)"
+ },
+ "reported_only": {
+  "dl_alone": "M' = the 16-seed lm25dl32 mean alone",
+  "doubling_reading": "M' = 0.5 x lm25_32 seeds 801-808 + 0.5 x seeds 809-816 against M = seeds 801-808: what adding eight more networks of the same variant does on these sets (seed averaging and seed noise together); descriptive scale for the candidate, not part of the rule",
+  "standalone": "route RMSE of each member mean"
+ },
+ "bar": "B = max(0.25%, 2 x 0.287%) = 0.574%: the 16-vs-16 seed-split null of lm25_32 is not computable (16 seeds exist), so the 8-seed January 2025 null of docs/lirf_mask2 is used, as instructed. The candidate's own seed noise is smaller than an 8-vs-8 comparison's, so the bar is conservative.",
+ "metric": "Primary: squared error of the set's rows with labels below 20,000 s, relative change against the control, paired-day 95% interval (10,000 day draws, seed 20261001), as in docs/lirf_dark/results_v1.json.",
+ "rule": "GO when (1) January 2025's primary change of the mix is at most -0.574%, (2) thinned July's primary change is at most 0, and (3) neither set's interval lies entirely above zero. No GO: the dl diversity member is closed for LIRF.",
+ "next_if_go": "A separately declared development round: lm25dl32 seeds 1001-1016 on the forward, refit (December) and refit12 folds, the mix read in v54's dark arithmetic on all dark and covered sets, exported only at the user's word (v55's model part with July 2026's route rows recomputed, the reconciliation and the extreme-day layer last).",
+ "never_read": "No official score, ranking label or published aggregate. No ranking prediction is made by this design.",
+ "scorer": "tools/lirf_dark_div_report.py (written before any fit of this design)",
+ "report": "docs/lirf_dark_div/design_report.json",
+ "automatic_submission": false
+}
