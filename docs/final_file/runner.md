@@ -364,3 +364,16 @@ open-data model part.**
   `f3b1ae1a98c26d88b271fdb2c22367d0b0a4e96e35ee596cfbcc69ffe6667826`, v955 `0d3dc26597a59d95ab7693d972590dbead0497e26bb6ac530b0d5e93e27250e9`.
 - Tests: `tests/test_final_lirf_members.py` (hand-computed v53m / v54m / v55m on the stack fixture's LIRF rows, a dark and a covered
   month, the 5% rule, no LIRF layer without the member, route guards) and the updated `tests/test_final_members.py`.
+
+## The ranking file after the runner (2 October): v55 / v57 chain
+
+The runner writes model parts only. The steps that read EUROCONTROL's published daily figures for the scored period stay outside it and
+run last, in this order, each with its own tool and declaration:
+
+1. `tools/final_predict.py --layers v55m` (model part: v54m plus the LIRF matched-row member, `configs/lirf_combo_reread_v1.json`);
+2. `tools/export_daily_totals.py --base <step 1 file>` (v48's reconciliation, `configs/daily_totals_v1.json`);
+3. `tools/scout_extreme_shift.py` (extreme-day calibration, `configs/scout_extreme_shift_v1.json`) -> v55 = 221.6941;
+4. `tools/scout_var_alloc.py` (variance re-allocation of the day shift, `configs/scout_var_alloc_v1.json`; models and k from the four
+   development months) -> **v57 = 221.3289, the official best**.
+
+The count-day layer (`configs/scout_count_days_v1.json`, v56 = 224.0957) is not part of the chain.
