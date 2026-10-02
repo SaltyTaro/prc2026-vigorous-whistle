@@ -1,0 +1,1096 @@
+{
+  "accepted": true,
+  "audit_used": false,
+  "checks": {
+    "equal_footing_mean": true,
+    "largest_gain_interval_below_zero": true,
+    "no_development_month_worse_than": true,
+    "twelve_changed_months_better_share": true,
+    "twelve_no_month_worse_than": true
+  },
+  "code": {
+    "src/prc2026_daily/reconcile.py": "30a2d2fc88480bf821208c6e52351325887aae72704ba3c45730acbc808c6a14",
+    "src/prc2026_scout/extreme_shift.py": "119545c6a3d7c8e8e26785bdbf9070b966983dbb86f2d27884c2ad7e29abf0c1",
+    "src/prc2026_scout/published_figure.py": "ca5cd3a50bfcd2b100d1c1b78b53546ef993db6c946e585b6903c4c52c71ab0e",
+    "tools/export_daily_totals.py": "ba5d42641295edcfcad15b290e207746ecee8d2a65e312b035141a332967565e",
+    "tools/run_daily_totals.py": "63a7a68d13c27619a86865261a1c6e9221b3e83626c73478c8dc237d40043f85",
+    "tools/scout_daily_ifr.py": "656c1b8149bda4d21d8a2943d325d133def05722da6561316b8593de4983feec",
+    "tools/scout_extreme_shift.py": "d588e635d495e5e17de732b75121fd2f872c8bcc04c975a03b8e09d11c061f6f"
+  },
+  "created_at_utc": "2026-10-02T04:19:43.273265+00:00",
+  "declaration": "configs/scout_extreme_shift_v1.json",
+  "declaration_sha256": "e4085dbd2aaa30ee55d1756548f8dedc24952d023b688f4bb139f00c743d9707",
+  "inputs": {
+    "runs\\daily_totals\\rows.parquet": "3a807e81989d18332795c905822a2a7d4281e66553a72b301d510a87c03de52f",
+    "runs\\daily_totals\\rows12.parquet": "af8d46221266183b0c94f382eb62eb6762a466dc1382beba71e1b58efd64a27c"
+  },
+  "official_scores_used": "none",
+  "rule_values": {
+    "equal_footing_mean_pct": -0.03550278901877461,
+    "largest_gain_month": "2025-07",
+    "twelve_changed_months": 8,
+    "twelve_changed_months_better_share": 1.0,
+    "worst_development_month_pct": 0.0004724432494995767,
+    "worst_twelve_month_pct": 0.0
+  },
+  "stack": {
+    "airports": {
+      "EDDF": {
+        "2025-01": 0.0,
+        "2025-07": 0.0,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "EDDM": {
+        "2025-01": 0.0,
+        "2025-07": 0.0,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "EGLL": {
+        "2025-01": 0.0,
+        "2025-07": -0.1584630753365679,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "EHAM": {
+        "2025-01": 0.0,
+        "2025-07": 0.0,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "LEBL": {
+        "2025-01": 0.0,
+        "2025-07": -1.4307340022813753,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "LEMD": {
+        "2025-01": 0.0,
+        "2025-07": 0.0,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "LFPG": {
+        "2025-01": 0.0,
+        "2025-07": 0.0,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "LIRF": {
+        "2025-01": 0.0,
+        "2025-07": 0.0,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "LSZH": {
+        "2025-01": 0.0,
+        "2025-07": 0.0,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "LTFM": {
+        "2025-01": 0.017758780168164456,
+        "2025-07": -0.6029214267942118,
+        "2025-11": 0.0,
+        "2025-12": -0.1624769626662914
+      }
+    },
+    "months": {
+      "2025-01": {
+        "calibrated_airports": {
+          "EDDF": 0.8094759496302896,
+          "EDDM": 0.898401264485104,
+          "EHAM": 0.8322694529698648,
+          "LEBL": 0.7558228606250745,
+          "LEMD": 0.7670349981585441,
+          "LSZH": 0.926383403600968,
+          "LTFM": 0.7066724404888933
+        },
+        "change_pct": 0.0004724432494995767,
+        "control_rmse": 322.5279876090097,
+        "days_changed": [
+          {
+            "I": -85.23175340959776,
+            "airport": "LTFM",
+            "bday": "2025-01-03",
+            "dn": 0.0,
+            "n_eff": 486.0,
+            "rows": 732.0,
+            "shift_new": -60.230931189108006
+          }
+        ],
+        "paired_days": {
+          "days": 32,
+          "days_with_lower_squared_error": 0,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            0.0,
+            0.005783221813047128
+          ]
+        },
+        "rmse": 322.5295113707149,
+        "rows_changed": 732
+      },
+      "2025-07": {
+        "calibrated_airports": {
+          "EDDF": 0.8580678182416458,
+          "EDDM": 0.745347085752359,
+          "EGLL": 0.5572970385721128,
+          "LEBL": 0.6130087721734447,
+          "LEMD": 0.7627480474284832,
+          "LTFM": 0.5044339608829368
+        },
+        "change_pct": -0.09293715395293223,
+        "control_rmse": 256.8889603199547,
+        "days_changed": [
+          {
+            "I": 101.66852425428337,
+            "airport": "EGLL",
+            "bday": "2025-07-30",
+            "dn": 0.0,
+            "n_eff": 533.0,
+            "rows": 652.0,
+            "shift_new": 56.65956748290914
+          },
+          {
+            "I": 118.19949105405662,
+            "airport": "LEBL",
+            "bday": "2025-07-09",
+            "dn": 0.0,
+            "n_eff": 450.0,
+            "rows": 544.0,
+            "shift_new": 72.45732488257332
+          },
+          {
+            "I": 107.53877473185227,
+            "airport": "LEBL",
+            "bday": "2025-07-15",
+            "dn": 0.0,
+            "n_eff": 435.0,
+            "rows": 524.0,
+            "shift_new": 65.92221225940942
+          },
+          {
+            "I": 104.75649970531624,
+            "airport": "LEBL",
+            "bday": "2025-07-18",
+            "dn": 0.0,
+            "n_eff": 474.0,
+            "rows": 562.0,
+            "shift_new": 64.21665326154374
+          },
+          {
+            "I": 131.97265163822695,
+            "airport": "LTFM",
+            "bday": "2025-07-13",
+            "dn": 0.0,
+            "n_eff": 625.0,
+            "rows": 821.0,
+            "shift_new": 66.57148739409482
+          },
+          {
+            "I": 86.00837091488475,
+            "airport": "LTFM",
+            "bday": "2025-07-21",
+            "dn": 1.0,
+            "n_eff": 719.0,
+            "rows": 839.0,
+            "shift_new": 43.385543209684094
+          },
+          {
+            "I": 80.86831448392121,
+            "airport": "LTFM",
+            "bday": "2025-07-23",
+            "dn": 0.0,
+            "n_eff": 614.0,
+            "rows": 820.0,
+            "shift_new": 40.79272418505134
+          }
+        ],
+        "paired_days": {
+          "days": 32,
+          "days_with_lower_squared_error": 7,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            -0.4206670649156926,
+            -0.07845761419400796
+          ]
+        },
+        "rmse": 256.65021503141406,
+        "rows_changed": 4759
+      },
+      "2025-11": {
+        "calibrated_airports": {
+          "EDDF": 0.8431170058260451,
+          "EDDM": 0.8738277259670137,
+          "EHAM": 0.724910593420254,
+          "LEBL": 0.7720725383342346,
+          "LEMD": 0.7710120342827985,
+          "LTFM": 0.6676094584577048
+        },
+        "change_pct": 0.0,
+        "control_rmse": 184.31775512586032,
+        "days_changed": [],
+        "paired_days": {
+          "days": 31,
+          "days_with_lower_squared_error": 0,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            0.0,
+            0.0
+          ]
+        },
+        "rmse": 184.31775512586032,
+        "rows_changed": 0
+      },
+      "2025-12": {
+        "calibrated_airports": {
+          "EDDF": 0.8439896613262433,
+          "EDDM": 0.8589789044241433,
+          "LEBL": 0.7687831695141144,
+          "LEMD": 0.7735401885859386,
+          "LTFM": 0.6326152224632677
+        },
+        "change_pct": -0.014043656352891176,
+        "control_rmse": 166.83813843380523,
+        "days_changed": [
+          {
+            "I": -91.52268912748875,
+            "airport": "LTFM",
+            "bday": "2025-12-07",
+            "dn": -2.0,
+            "n_eff": 681.0,
+            "rows": 745.0,
+            "shift_new": -57.898646342822786
+          }
+        ],
+        "paired_days": {
+          "days": 32,
+          "days_with_lower_squared_error": 1,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            -0.07383257204207609,
+            0.0
+          ]
+        },
+        "rmse": 166.81470825897802,
+        "rows_changed": 717
+      }
+    }
+  },
+  "twelve": {
+    "airports": {
+      "EDDF": {
+        "2025-01": 0.0,
+        "2025-02": 0.0,
+        "2025-03": 0.0,
+        "2025-04": 0.0,
+        "2025-05": 0.0,
+        "2025-06": -1.2423467465215943,
+        "2025-07": 0.0,
+        "2025-08": 0.0,
+        "2025-09": 0.0,
+        "2025-10": 0.0,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "EDDM": {
+        "2025-01": 0.0,
+        "2025-02": 0.0,
+        "2025-03": 0.0,
+        "2025-04": 0.0,
+        "2025-05": 0.0,
+        "2025-06": 0.0,
+        "2025-07": 0.0,
+        "2025-08": 0.0,
+        "2025-09": 0.0,
+        "2025-10": 0.0,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "EGLL": {
+        "2025-01": 0.0,
+        "2025-02": 0.0,
+        "2025-03": 0.0,
+        "2025-04": 0.0,
+        "2025-05": 0.0,
+        "2025-06": 0.0,
+        "2025-07": -0.19135650608005372,
+        "2025-08": 0.0,
+        "2025-09": 0.0,
+        "2025-10": 0.0,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "EHAM": {
+        "2025-01": 0.0,
+        "2025-02": 0.0,
+        "2025-03": 0.0,
+        "2025-04": -2.630323532026857,
+        "2025-05": 0.0,
+        "2025-06": 0.0,
+        "2025-07": 0.0,
+        "2025-08": 0.0,
+        "2025-09": 0.0,
+        "2025-10": -1.9982951882205002,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "LEBL": {
+        "2025-01": 0.0,
+        "2025-02": 0.0,
+        "2025-03": 0.0,
+        "2025-04": 0.0,
+        "2025-05": 0.0,
+        "2025-06": 0.0,
+        "2025-07": -0.782280571495475,
+        "2025-08": -0.410938482920864,
+        "2025-09": -0.5141237127810006,
+        "2025-10": 0.0,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "LEMD": {
+        "2025-01": 0.0,
+        "2025-02": 0.0,
+        "2025-03": 0.0,
+        "2025-04": -0.7357800731576769,
+        "2025-05": 0.0,
+        "2025-06": 0.0,
+        "2025-07": 0.0,
+        "2025-08": 0.0,
+        "2025-09": 0.0,
+        "2025-10": 0.0,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "LFPG": {
+        "2025-01": -0.016270285880748414,
+        "2025-02": 0.0,
+        "2025-03": 0.0,
+        "2025-04": -0.2775219035606624,
+        "2025-05": 0.0,
+        "2025-06": 0.0,
+        "2025-07": 0.0,
+        "2025-08": 0.0,
+        "2025-09": 0.0,
+        "2025-10": 0.0,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "LIRF": {
+        "2025-01": 0.0,
+        "2025-02": 0.0,
+        "2025-03": 0.0,
+        "2025-04": 0.0,
+        "2025-05": 0.0,
+        "2025-06": 0.0,
+        "2025-07": 0.0,
+        "2025-08": 0.0,
+        "2025-09": 0.0,
+        "2025-10": 0.0,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "LSZH": {
+        "2025-01": 0.0,
+        "2025-02": 0.0,
+        "2025-03": 0.0,
+        "2025-04": 0.0,
+        "2025-05": 0.0,
+        "2025-06": 0.0,
+        "2025-07": 0.0,
+        "2025-08": 0.0,
+        "2025-09": 0.0,
+        "2025-10": 0.0,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      },
+      "LTFM": {
+        "2025-01": 0.0,
+        "2025-02": -1.8449932504672084,
+        "2025-03": 0.0,
+        "2025-04": 0.0,
+        "2025-05": 0.0,
+        "2025-06": 0.0,
+        "2025-07": -0.9416932452239513,
+        "2025-08": 0.0,
+        "2025-09": 0.0,
+        "2025-10": -0.13602140172344068,
+        "2025-11": 0.0,
+        "2025-12": 0.0
+      }
+    },
+    "months": {
+      "2025-01": {
+        "calibrated_airports": {
+          "EDDF": 0.3427802943112927,
+          "EDDM": 0.7390385760326833,
+          "EHAM": 0.3590485505711889,
+          "LEBL": 0.30141163136044447,
+          "LEMD": 0.9028309177210931,
+          "LFPG": 0.42797889850739723,
+          "LSZH": 0.36748501778594855,
+          "LTFM": 0.6490999216034072
+        },
+        "change_pct": -0.0056024961193612555,
+        "control_rmse": 328.3168685486486,
+        "days_changed": [
+          {
+            "I": 91.63856819683255,
+            "airport": "LFPG",
+            "bday": "2025-01-17",
+            "dn": 9.0,
+            "n_eff": 579.0,
+            "rows": 600.0,
+            "shift_new": 39.2193734776754
+          }
+        ],
+        "paired_days": {
+          "days": 32,
+          "days_with_lower_squared_error": 1,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            -0.06852921427579801,
+            0.0
+          ]
+        },
+        "rmse": 328.29847460882894,
+        "rows_changed": 574
+      },
+      "2025-02": {
+        "calibrated_airports": {
+          "EDDF": 0.5687537111823024,
+          "EDDM": 0.7404557404065143,
+          "EHAM": 0.42932093587985254,
+          "LEBL": 0.42434875665543076,
+          "LEMD": 0.8714354742736264,
+          "LFPG": 0.5797104381837369,
+          "LSZH": 0.7539535610993188,
+          "LTFM": 0.6711066771971042
+        },
+        "change_pct": -0.4498106732295559,
+        "control_rmse": 199.46991225441698,
+        "days_changed": [
+          {
+            "I": 416.3476540884015,
+            "airport": "LTFM",
+            "bday": "2025-02-06",
+            "dn": 4.0,
+            "n_eff": 398.0,
+            "rows": 616.0,
+            "shift_new": 279.4136906940764
+          },
+          {
+            "I": 424.18911892713083,
+            "airport": "LTFM",
+            "bday": "2025-02-11",
+            "dn": 0.0,
+            "n_eff": 429.0,
+            "rows": 607.0,
+            "shift_new": 284.67615010635404
+          },
+          {
+            "I": -136.58723935322115,
+            "airport": "LTFM",
+            "bday": "2025-02-17",
+            "dn": 0.0,
+            "n_eff": 385.0,
+            "rows": 685.0,
+            "shift_new": -91.66460834986579
+          },
+          {
+            "I": 1124.4070866546524,
+            "airport": "LTFM",
+            "bday": "2025-02-19",
+            "dn": 2.0,
+            "n_eff": 483.0,
+            "rows": 569.0,
+            "shift_new": 754.5971037416801
+          },
+          {
+            "I": 134.40178829358683,
+            "airport": "LTFM",
+            "bday": "2025-02-22",
+            "dn": 13.0,
+            "n_eff": 357.0,
+            "rows": 441.0,
+            "shift_new": 90.1979375510577
+          },
+          {
+            "I": -103.3833562769584,
+            "airport": "LTFM",
+            "bday": "2025-02-25",
+            "dn": 0.0,
+            "n_eff": 382.0,
+            "rows": 674.0,
+            "shift_new": -69.38126070851393
+          }
+        ],
+        "paired_days": {
+          "days": 28,
+          "days_with_lower_squared_error": 4,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            -2.250969045161745,
+            0.08646680780596477
+          ]
+        },
+        "rmse": 198.57267529921498,
+        "rows_changed": 2945
+      },
+      "2025-03": {
+        "calibrated_airports": {
+          "EDDF": 0.5532148288003716,
+          "EDDM": 0.7296085749965466,
+          "EHAM": 0.42667359407865363,
+          "LEBL": 0.4174556407167729,
+          "LEMD": 0.8093735627541314,
+          "LFPG": 0.618020074038811,
+          "LSZH": 0.7759197782800705,
+          "LTFM": 0.6220938736145349
+        },
+        "change_pct": 0.0,
+        "control_rmse": 164.80758710943252,
+        "days_changed": [],
+        "paired_days": {
+          "days": 31,
+          "days_with_lower_squared_error": 0,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            0.0,
+            0.0
+          ]
+        },
+        "rmse": 164.80758710943252,
+        "rows_changed": 0
+      },
+      "2025-04": {
+        "calibrated_airports": {
+          "EDDF": 0.4955737841579752,
+          "EDDM": 0.7322985770945738,
+          "EHAM": 0.10379228433983555,
+          "LEBL": 0.5173088871793453,
+          "LEMD": 0.8745219284504651,
+          "LFPG": 0.6112200161130141,
+          "LSZH": 0.7540686386158367,
+          "LTFM": 0.6180770222300412
+        },
+        "change_pct": -0.13270249767499687,
+        "control_rmse": 168.01600249118513,
+        "days_changed": [
+          {
+            "I": 95.08058951078637,
+            "airport": "EHAM",
+            "bday": "2025-04-06",
+            "dn": 0.0,
+            "n_eff": 605.0,
+            "rows": 681.0,
+            "shift_new": 9.868631581702724
+          },
+          {
+            "I": 88.55455189528374,
+            "airport": "EHAM",
+            "bday": "2025-04-07",
+            "dn": 0.0,
+            "n_eff": 594.0,
+            "rows": 686.0,
+            "shift_new": 9.191279229902012
+          },
+          {
+            "I": 114.54030538448028,
+            "airport": "EHAM",
+            "bday": "2025-04-08",
+            "dn": 0.0,
+            "n_eff": 546.0,
+            "rows": 671.0,
+            "shift_new": 11.888399944837573
+          },
+          {
+            "I": 99.81459587406478,
+            "airport": "EHAM",
+            "bday": "2025-04-09",
+            "dn": 0.0,
+            "n_eff": 579.0,
+            "rows": 682.0,
+            "shift_new": 10.359984916226708
+          },
+          {
+            "I": 90.70073844674181,
+            "airport": "EHAM",
+            "bday": "2025-04-11",
+            "dn": 0.0,
+            "n_eff": 644.0,
+            "rows": 703.0,
+            "shift_new": 9.41403683469728
+          },
+          {
+            "I": 103.67170482815372,
+            "airport": "EHAM",
+            "bday": "2025-04-12",
+            "dn": 0.0,
+            "n_eff": 571.0,
+            "rows": 645.0,
+            "shift_new": 10.760323065519232
+          },
+          {
+            "I": 87.06525292512595,
+            "airport": "EHAM",
+            "bday": "2025-04-13",
+            "dn": 0.0,
+            "n_eff": 551.0,
+            "rows": 674.0,
+            "shift_new": 9.03670148772437
+          },
+          {
+            "I": 86.03444405671029,
+            "airport": "EHAM",
+            "bday": "2025-04-14",
+            "dn": 0.0,
+            "n_eff": 588.0,
+            "rows": 685.0,
+            "shift_new": 8.929711480553749
+          },
+          {
+            "I": 91.62646016910503,
+            "airport": "EHAM",
+            "bday": "2025-04-15",
+            "dn": 0.0,
+            "n_eff": 588.0,
+            "rows": 671.0,
+            "shift_new": 9.510119606924366
+          },
+          {
+            "I": 116.11028987791019,
+            "airport": "EHAM",
+            "bday": "2025-04-18",
+            "dn": 0.0,
+            "n_eff": 637.0,
+            "rows": 718.0,
+            "shift_new": 12.051352221788784
+          },
+          {
+            "I": 99.44576019424733,
+            "airport": "EHAM",
+            "bday": "2025-04-19",
+            "dn": 0.0,
+            "n_eff": 565.0,
+            "rows": 666.0,
+            "shift_new": 10.321702618472418
+          },
+          {
+            "I": 87.82714004738133,
+            "airport": "EHAM",
+            "bday": "2025-04-20",
+            "dn": 0.0,
+            "n_eff": 567.0,
+            "rows": 706.0,
+            "shift_new": 9.115779492552361
+          },
+          {
+            "I": -82.0617030030969,
+            "airport": "LEMD",
+            "bday": "2025-04-28",
+            "dn": 0.0,
+            "n_eff": 437.0,
+            "rows": 505.0,
+            "shift_new": -71.76475876219762
+          },
+          {
+            "I": 86.95373339665258,
+            "airport": "LFPG",
+            "bday": "2025-04-23",
+            "dn": 2.0,
+            "n_eff": 538.0,
+            "rows": 671.0,
+            "shift_new": 53.14786232778872
+          }
+        ],
+        "paired_days": {
+          "days": 31,
+          "days_with_lower_squared_error": 14,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            -0.3317797569358767,
+            -0.12698966736308615
+          ]
+        },
+        "rmse": 167.79304105938564,
+        "rows_changed": 9301
+      },
+      "2025-05": {
+        "calibrated_airports": {
+          "EDDF": 0.564070875568046,
+          "EDDM": 0.7300528954547457,
+          "EHAM": 0.4673490078805108,
+          "LEBL": 0.5670918781281107,
+          "LEMD": 0.8660431843921947,
+          "LFPG": 0.5302675126706308,
+          "LSZH": 0.7697568200643234,
+          "LTFM": 0.6179955320011413
+        },
+        "change_pct": 0.0,
+        "control_rmse": 171.70235106590664,
+        "days_changed": [],
+        "paired_days": {
+          "days": 31,
+          "days_with_lower_squared_error": 0,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            0.0,
+            0.0
+          ]
+        },
+        "rmse": 171.70235106590664,
+        "rows_changed": 0
+      },
+      "2025-06": {
+        "calibrated_airports": {
+          "EDDF": 0.5005177260919101,
+          "EHAM": 0.5067213446818319,
+          "LEBL": 0.5147819921641659,
+          "LEMD": 0.8625140836296658,
+          "LFPG": 0.6719953319547395,
+          "LSZH": 0.7847795899888182,
+          "LTFM": 0.6125017203332691
+        },
+        "change_pct": -0.034315931275941125,
+        "control_rmse": 199.17862198472443,
+        "days_changed": [
+          {
+            "I": 112.96367818311946,
+            "airport": "EDDF",
+            "bday": "2025-06-08",
+            "dn": 0.0,
+            "n_eff": 623.0,
+            "rows": 685.0,
+            "shift_new": 56.54032333519327
+          }
+        ],
+        "paired_days": {
+          "days": 31,
+          "days_with_lower_squared_error": 1,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            -0.21097440134870737,
+            0.0
+          ]
+        },
+        "rmse": 199.11027198568777,
+        "rows_changed": 678
+      },
+      "2025-07": {
+        "calibrated_airports": {
+          "EDDF": 0.34070532335301895,
+          "EGLL": 0.7504888514071187,
+          "EHAM": 0.348292357124592,
+          "LEBL": 0.21001540369055863,
+          "LEMD": 0.8711772862726405,
+          "LFPG": 0.46438938146821546,
+          "LSZH": 0.3469645751140479,
+          "LTFM": 0.5897541230696044
+        },
+        "change_pct": -0.10005553565324288,
+        "control_rmse": 270.06835925442317,
+        "days_changed": [
+          {
+            "I": 103.66399512784236,
+            "airport": "EGLL",
+            "bday": "2025-07-30",
+            "dn": 0.0,
+            "n_eff": 538.0,
+            "rows": 652.0,
+            "shift_new": 77.79867263576756
+          },
+          {
+            "I": 81.50017788232367,
+            "airport": "LEBL",
+            "bday": "2025-07-05",
+            "dn": 0.0,
+            "n_eff": 453.0,
+            "rows": 506.0,
+            "shift_new": 17.116292758808545
+          },
+          {
+            "I": 145.80916467228002,
+            "airport": "LEBL",
+            "bday": "2025-07-09",
+            "dn": 0.0,
+            "n_eff": 447.0,
+            "rows": 544.0,
+            "shift_new": 30.622170580432027
+          },
+          {
+            "I": 131.1996029079944,
+            "airport": "LEBL",
+            "bday": "2025-07-15",
+            "dn": 0.0,
+            "n_eff": 433.0,
+            "rows": 524.0,
+            "shift_new": 27.553937568763434
+          },
+          {
+            "I": 125.27537321414398,
+            "airport": "LEBL",
+            "bday": "2025-07-18",
+            "dn": 0.0,
+            "n_eff": 472.0,
+            "rows": 562.0,
+            "shift_new": 26.309758078053843
+          },
+          {
+            "I": 89.64318368131727,
+            "airport": "LTFM",
+            "bday": "2025-07-05",
+            "dn": 0.0,
+            "n_eff": 611.0,
+            "rows": 802.0,
+            "shift_new": 52.86743718114273
+          },
+          {
+            "I": 156.53913999686773,
+            "airport": "LTFM",
+            "bday": "2025-07-13",
+            "dn": 0.0,
+            "n_eff": 641.0,
+            "rows": 821.0,
+            "shift_new": 92.31960323492277
+          },
+          {
+            "I": 86.68497087661211,
+            "airport": "LTFM",
+            "bday": "2025-07-22",
+            "dn": 0.0,
+            "n_eff": 654.0,
+            "rows": 813.0,
+            "shift_new": 51.12281898265057
+          },
+          {
+            "I": 105.30681073276446,
+            "airport": "LTFM",
+            "bday": "2025-07-23",
+            "dn": 0.0,
+            "n_eff": 633.0,
+            "rows": 820.0,
+            "shift_new": 62.10512581695831
+          }
+        ],
+        "paired_days": {
+          "days": 32,
+          "days_with_lower_squared_error": 8,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            -0.46422170801821494,
+            -0.09005169553741882
+          ]
+        },
+        "rmse": 269.79814091094124,
+        "rows_changed": 6037
+      },
+      "2025-08": {
+        "calibrated_airports": {
+          "EDDF": 0.5729911875048119,
+          "EDDM": 0.7453252912514565,
+          "EHAM": 0.5197635483490525,
+          "LEBL": 0.5458356200467921,
+          "LEMD": 0.8646575171141346,
+          "LFPG": 0.6973730819884674,
+          "LSZH": 0.8240892047208871,
+          "LTFM": 0.6064026786224341
+        },
+        "change_pct": -0.019967999073078335,
+        "control_rmse": 194.68996314465068,
+        "days_changed": [
+          {
+            "I": 80.2549559262485,
+            "airport": "LEBL",
+            "bday": "2025-08-07",
+            "dn": 0.0,
+            "n_eff": 460.0,
+            "rows": 560.0,
+            "shift_new": 43.806013629831824
+          },
+          {
+            "I": 81.41590960500896,
+            "airport": "LEBL",
+            "bday": "2025-08-08",
+            "dn": 0.0,
+            "n_eff": 449.0,
+            "rows": 556.0,
+            "shift_new": 44.43970350092364
+          }
+        ],
+        "paired_days": {
+          "days": 31,
+          "days_with_lower_squared_error": 2,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            -0.09724234236521667,
+            0.0
+          ]
+        },
+        "rmse": 194.65108745461458,
+        "rows_changed": 1106
+      },
+      "2025-09": {
+        "calibrated_airports": {
+          "EDDF": 0.5720532396915181,
+          "EDDM": 0.7730173169690846,
+          "EHAM": 0.5178017342630546,
+          "LEBL": 0.5767788359450357,
+          "LEMD": 0.8654164651482414,
+          "LFPG": 0.6717422178278701,
+          "LSZH": 0.8205625400002231,
+          "LTFM": 0.6011266231666436
+        },
+        "change_pct": -0.02335198515851511,
+        "control_rmse": 182.91369267165888,
+        "days_changed": [
+          {
+            "I": 84.43873201488009,
+            "airport": "LEBL",
+            "bday": "2025-09-29",
+            "dn": 0.0,
+            "n_eff": 495.0,
+            "rows": 550.0,
+            "shift_new": 48.70247356021735
+          },
+          {
+            "I": 81.73120653750519,
+            "airport": "LEBL",
+            "bday": "2025-09-30",
+            "dn": 0.0,
+            "n_eff": 371.0,
+            "rows": 518.0,
+            "shift_new": 47.14083016708553
+          }
+        ],
+        "paired_days": {
+          "days": 31,
+          "days_with_lower_squared_error": 2,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            -0.10826942651000734,
+            0.0
+          ]
+        },
+        "rmse": 182.8709786932933,
+        "rows_changed": 1049
+      },
+      "2025-10": {
+        "calibrated_airports": {
+          "EDDF": 0.5750337798547567,
+          "EDDM": 0.7410128846632269,
+          "EHAM": 0.4950151887841964,
+          "LEBL": 0.5855944042080785,
+          "LEMD": 0.8685563720428359,
+          "LFPG": 0.7996185671657821,
+          "LSZH": 0.8263595523559824,
+          "LTFM": 0.6052550002422542
+        },
+        "change_pct": -0.04418871348823572,
+        "control_rmse": 180.07733066383767,
+        "days_changed": [
+          {
+            "I": -94.77383098882993,
+            "airport": "EHAM",
+            "bday": "2025-10-23",
+            "dn": 0.0,
+            "n_eff": 571.0,
+            "rows": 632.0,
+            "shift_new": -46.91448583873717
+          },
+          {
+            "I": 105.51684996336166,
+            "airport": "LTFM",
+            "bday": "2025-10-02",
+            "dn": 0.0,
+            "n_eff": 609.0,
+            "rows": 789.0,
+            "shift_new": 63.864601050136365
+          }
+        ],
+        "paired_days": {
+          "days": 31,
+          "days_with_lower_squared_error": 2,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            -0.2180474394490659,
+            0.0
+          ]
+        },
+        "rmse": 179.99775680813337,
+        "rows_changed": 1374
+      },
+      "2025-11": {
+        "calibrated_airports": {
+          "EDDF": 0.3465034176229999,
+          "EDDM": 0.7378752631795501,
+          "EHAM": 0.3572535591478148,
+          "LEBL": 0.3027666925777985,
+          "LEMD": 0.8660145911264572,
+          "LFPG": 0.34101375255782823,
+          "LSZH": 0.342601118768993,
+          "LTFM": 0.639092991184316
+        },
+        "change_pct": 0.0,
+        "control_rmse": 190.25370159093015,
+        "days_changed": [],
+        "paired_days": {
+          "days": 31,
+          "days_with_lower_squared_error": 0,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            0.0,
+            0.0
+          ]
+        },
+        "rmse": 190.25370159093015,
+        "rows_changed": 0
+      },
+      "2025-12": {
+        "calibrated_airports": {
+          "EDDF": 0.3455012227019934,
+          "EDDM": 0.7408381363228187,
+          "EHAM": 0.3555497897049456,
+          "LEBL": 0.3016385987184288,
+          "LEMD": 0.8677843859879741,
+          "LFPG": 0.45073527585800943,
+          "LSZH": 0.3583952212203489,
+          "LTFM": 0.6408924768511233
+        },
+        "change_pct": 0.0,
+        "control_rmse": 179.15236335672478,
+        "days_changed": [],
+        "paired_days": {
+          "days": 32,
+          "days_with_lower_squared_error": 0,
+          "interpretation": "descriptive on reused development data",
+          "replicates": 2000,
+          "rmse_difference_95pct_interval_seconds": [
+            0.0,
+            0.0
+          ]
+        },
+        "rmse": 179.15236335672478,
+        "rows_changed": 0
+      }
+    }
+  }
+}

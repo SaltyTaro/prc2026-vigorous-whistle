@@ -113,3 +113,31 @@ Scratch `ltfm_drift.py` / `ltfm_34l.py` in the session scratchpad. Not repeated 
   taxi time was 1,117 s against 1,094 s overall.
 - Takeoff minus schedule is much larger in January 2026 (median 1,615 s against 1,194 s in January 2025): winter delay, a level the
   reconciliation reads.
+
+## 6. Declared round: extreme-day calibration — ACCEPTED by its rule (2 October 2026)
+
+The user answered "YES" to declaring section 4's candidate. Declaration `configs/scout_extreme_shift_v1.json` (04:20 UTC, commit
+9bfed66, before the governing run), thresholds fixed as found (80 s, correlation 0.9), selection history disclosed. Code
+`src/prc2026_scout/extreme_shift.py`, `tools/scout_extreme_shift.py`, `tests/test_scout_extreme_shift.py`. Governing run →
+[`extreme_shift_results_v1.json`](extreme_shift_results_v1.json):
+
+| Reading (against v48's procedure) | Result |
+|---|---|
+| development stack | January +0.0005% (1 day), July −0.0929% [−0.42, −0.08] (7 days), November 0, December −0.0140% (1 day); equal-footing mean −0.0355% |
+| twelve months, v23-recipe predictor (control = `runs/daily_totals/check12f`, reproduced exactly) | 8 months changed, all 8 better, none worse; February −0.45%, April −0.13%, July −0.10% |
+| rule | no month worse than 0.005% ✓, mean ≤ −0.02% ✓, July's interval below zero ✓, twelve-month check ✓ → **accepted** |
+
+The governing run confirms the exploration's arithmetic (section 4); its only independence is the twelve-month table's other predictor.
+
+**Dry runs** (label-free, nothing under `runs/submissions`, nothing uploaded):
+
+| Base (model part → v48's procedure → this layer) | File (SHA-256) | Against the reconciled base |
+|---|---|---|
+| v54: `runs/lirf_dark/export_dry/vigorous-whistle_v54.parquet` + `runs/daily_totals/dry_v54` (= the uploaded v54 byte for byte) | `runs/scout/extreme_dry_v54base/vigorous-whistle_v56.parquet` (`78314a49be21e3be…`) | 7,372 rows, LTFM 6,495 / EDDF 503 / EHAM 374, S 1.098e7, mean −16.1 s, max 138 s |
+| v55 candidate: `runs/lirf_combo/export_dry/vigorous-whistle_v55.parquet` + `runs/daily_totals/dry_v55` | `runs/scout/extreme_dry_v55base/vigorous-whistle_v56.parquet` (`aa02ff597a619f22…`) | the same 7,372 changes (v55 differs from v54 at LIRF only) |
+
+Receipts: [`extreme_dry_v54base.json`](extreme_dry_v54base.json), [`extreme_dry_v55base.json`](extreme_dry_v55base.json). Twelve
+airport-days change: EDDF 29 January (−94 s day shift against v48's −1 s), EHAM 5 January (+138 against +0.2 s; dn +2, sign-safe) and
+7 January (−72 against −1 s), and nine LTFM days (−51 … −70 s against v48's −30 … −52 s). Stake at v54's score: about −0.07 s if the
+moves are right as in 2025 (alignment 1), 0 at alignment 0.5, +0.07 s if they are noise. The file version is assigned when the user
+decides to build it (v55 if built on v54 alone, otherwise the number after the LIRF candidate).
