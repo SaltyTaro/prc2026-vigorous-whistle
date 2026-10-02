@@ -1,0 +1,163 @@
+{
+  "accepted": false,
+  "calibration": {
+    "by_airport": [
+      {
+        "airport": "LEBL",
+        "crossed": 5,
+        "n": 21,
+        "right": 0.8095238095238095
+      },
+      {
+        "airport": "LEMD",
+        "crossed": 12,
+        "n": 55,
+        "right": 0.9454545454545454
+      },
+      {
+        "airport": "LIRF",
+        "crossed": 7,
+        "n": 19,
+        "right": 0.8947368421052632
+      },
+      {
+        "airport": "LTFM",
+        "crossed": 23,
+        "n": 220,
+        "right": 0.9636363636363636
+      }
+    ],
+    "by_confidence": [
+      {
+        "band": "(0.499, 0.7]",
+        "mean_conf": 0.5902647409999261,
+        "n": 21,
+        "right": 0.7619047619047619
+      },
+      {
+        "band": "(0.7, 0.9]",
+        "mean_conf": 0.8065000928851958,
+        "n": 22,
+        "right": 0.8181818181818182
+      },
+      {
+        "band": "(0.9, 0.99]",
+        "mean_conf": 0.960940444492142,
+        "n": 44,
+        "right": 0.9090909090909091
+      },
+      {
+        "band": "(0.99, 1.0]",
+        "mean_conf": 0.9990596780240281,
+        "n": 228,
+        "right": 0.9824561403508771
+      }
+    ],
+    "candidates": 315,
+    "crossed": {
+      "big_n": 4,
+      "big_right": 0,
+      "n": 47,
+      "right": 39
+    },
+    "neither_day": 2
+  },
+  "created_at_utc": "2026-10-02T06:35:26.997555+00:00",
+  "declaration": "configs/scout_count_days_v2.json",
+  "declaration_sha256": "7441dde9ec393d206010414cf98494d1ca40cfb774326e62698a504de3e74e61",
+  "months": {
+    "2025-01": {
+      "by_airport": {
+        "LTFM": -173853.1065951885
+      },
+      "change_pct": -0.0008380988846146131,
+      "interval_pct": [
+        -0.002717844828956928,
+        1.0442738807009714e-06
+      ],
+      "rmse_layer": 322.52528450554297,
+      "rmse_v48": 322.5279876090097,
+      "rows": 153706,
+      "rows_changed": 32,
+      "sse_change": -268008.81151008606
+    },
+    "2025-07": {
+      "by_airport": {
+        "LEBL": 51144.02870757104,
+        "LEMD": 76269.66930225678,
+        "LTFM": 17270970.40363127
+      },
+      "change_pct": 0.06894346025569931,
+      "interval_pct": [
+        -0.014344012924082938,
+        0.23850507758798375
+      ],
+      "rmse_layer": 257.0660684582142,
+      "rmse_v48": 256.8889603199547,
+      "rows": 190713,
+      "rows_changed": 102,
+      "sse_change": 17359768.742084503
+    },
+    "2025-11": {
+      "by_airport": {
+        "LEBL": -784.8603995942649,
+        "LEMD": -432329.1965574941,
+        "LIRF": -70726.51031037616,
+        "LTFM": -1876729.2306656018
+      },
+      "change_pct": -0.02183085084613845,
+      "interval_pct": [
+        -0.047334214374021855,
+        -0.004222506978977809
+      ],
+      "rmse_layer": 184.27751699165583,
+      "rmse_v48": 184.31775512586032,
+      "rows": 162332,
+      "rows_changed": 96,
+      "sse_change": -2407641.022870064
+    },
+    "2025-12": {
+      "by_airport": {
+        "LEBL": 10913191.055270169,
+        "LEMD": -284260.15569639247,
+        "LIRF": 7417336821.290643,
+        "LTFM": -370489.4247509362
+      },
+      "change_pct": 61.5742455493441,
+      "interval_pct": [
+        -0.042738751430835276,
+        130.41011648738427
+      ],
+      "rmse_layer": 269.5674634629911,
+      "rmse_v48": 166.83813843380523,
+      "rows": 165677,
+      "rows_changed": 68,
+      "sse_change": 7427573761.127292
+    }
+  },
+  "options": {
+    "big_rule": "implicated",
+    "density": "empirical"
+  },
+  "rule_checks": {
+    "(1) no month worse than +0.005%": {
+      "ok": false,
+      "worst_month_pct": 61.5742455493441
+    },
+    "(2) total squared error not up": {
+      "ok": false,
+      "sse_change": 7442257880.034996
+    },
+    "(3) crossings right": {
+      "n": 47,
+      "ok": true,
+      "right": 39,
+      "share": 0.8297872340425532
+    },
+    "(4) confident candidates right": {
+      "n": 272,
+      "ok": true,
+      "share": 0.9705882352941176
+    }
+  }
+}

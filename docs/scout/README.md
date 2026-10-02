@@ -225,3 +225,20 @@ What is at stake: if every move is right, about −5 s on v55; if every move wer
 25,499 s row; if the other row were the one that left on the 5th, the layer would cost about 3.8 s and miss a larger gain.
 Order: the layer runs last on v55's file; re-solving v48's day with the moved rows would shift the other rows of those days by a few
 seconds (disclosed, not done). Build and upload only at the user's word (as the next unused version, after `tools/audit_export.py`).
+
+### 9a. Amendment v2 — REJECTED by its rule (2 October 2026)
+
+[`configs/scout_count_days_v2.json`](../../configs/scout_count_days_v2.json) (308110b, declared after v1's
+governing run, ranking-side motivation only, rule unchanged) took the delay-total likelihood from each airport-month's own day residuals
+(kernel density, the day left out) and moved big candidates whenever the counts raise the probability of the side opposite their value.
+
+**Governing run** ([`count_days_results_v2.json`](count_days_results_v2.json)): January −0.0008%, July **+0.069%**, November −0.0218%,
+December **+61.57%**; all four big crossings wrong; total squared error +7.44e9. **Rejected.** Cause: with the month's own wide residuals
+the delay total no longer tells the hypotheses apart, and the counts were "explained" by moving two LIRF same-day fill rows of December 2025
+(labels 14,471 and 39,120 s) to the row model's one-day outcomes (85,885 and 87,492 s) at posterior 0.98 and 1.0. v1's day-model
+density kept them. The empirical density is not a safe replacement; v1 stays the accepted procedure.
+
+What v1 means for 5 July on the ranking: v55 is wrong on one of the two rows if the counts are exact. Moving the 25,499 s row fully (v1)
+has a lower expected squared error than v55 whenever the probability that it is the one that left on the 5th exceeds one half (expected
+(1 − p) × 2.74e9 against v55's p × 5.8e8 + (1 − p) × 2.2e9). Every reading favours it: v48's row model about 3:1, the 5 July delay total
+2:1 against the month's own residuals up to about 30:1 under the day model; the cost if wrong is about 3.8 s.
