@@ -369,3 +369,11 @@ run. No official score is used, nothing is re-read from v57's score.
 (`--previous FILE --previous-sha256 SHA`, the output of `tools/scout_extreme_shift.py` on the same base and reconciliation; default the
 uploaded v55), so the final-file chain can run it on a fresh runner output. With v55 given explicitly it rebuilds v57 byte for byte
 (SHA-256 `31d909ff...`, `runs/scout/var_alloc/dry_v57_chaincheck/`).
+- **A uniform extra day shift after v57** (beta2 x I_d on eligible rows, month-blocked): all days +0.0013 / −0.016 / +0.0005 /
+  +0.032% (equal-footing mean +0.006%), |I| < 80 s only +0.007%: the general day-level calibrations of section 3 still fail with the
+  allocation fixed (scratch `va_level.py`). Closed.
+- **Allocating along member disagreement** (I_d x the day-centred committee − networks, v9 − mix or stack − v9 gap; development rows
+  of `runs/lomo_dev/rows.parquet`): the slope changes sign between folds (committee − networks +0.16 / −0.35 / +0.06 / +0.05) and every
+  variant is worse (equal-footing means +0.007 to +0.012%; scratch `va_member.py`). Closed.
+- **Month-end days** are reconciled in the ranking (published counts equal our rows) except LTFM on 31 January 2026 (713 published,
+  639 rows): one airport-day, worth about 0.003 s. Not pursued.
