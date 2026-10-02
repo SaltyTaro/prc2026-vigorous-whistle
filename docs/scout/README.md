@@ -377,3 +377,23 @@ uploaded v55), so the final-file chain can run it on a fresh runner output. With
   variant is worse (equal-footing means +0.007 to +0.012%; scratch `va_member.py`). Closed.
 - **Month-end days** are reconciled in the ranking (published counts equal our rows) except LTFM on 31 January 2026 (713 published,
   639 rows): one airport-day, worth about 0.003 s. Not pursued.
+
+## 15. More cells after v57 — closed (2 October 2026, 2025 only, nothing declared)
+
+No official score is used.
+
+- **Fill blocks on LIRF rows with an NM clock (outside the population).** LIRF matched rows: RMSE 442 s against 75–183 s elsewhere; the
+  recorded block sits a median 593 s before the first ADS-B motion; the 337 rows whose block is more than an hour before first motion hold
+  30% of the cell's squared error; 20% of the rows have block = schedule (36.7% of the squared error). Delayed rows (takeoff − schedule
+  > 1,800 s) hold 89% of the cell's squared error, with a fill share of 7.8% (stable by month); the operator shifts it from 0.5% to 19%.
+  A month-blocked fill classifier reaches AUC 0.866 (timing + operator / stand / runway / type / destination; the stack's own hedge
+  control / a alone 0.819). But the explicit mixture p · a + (1 − p) · t loses badly (July +0.59% at half strength, +2.32% at full,
+  intervals above zero; the real-taxi model is worse than the stack on non-fill rows), and a residual correction with p as input is
+  inconsistent (January +0.005% at half strength, the LIRF-dark month that resembles July 2026). Closed.
+- **The extreme-day layer at the uncalibrated airports.** On the scored months only LFPG (7 January, I −91 s), LSZH (10 January) and
+  LIRF (seven July days, where the 2025 analogue put the excess in the population rows) have |I| ≥ 80 s; EGLL none. At most about 0.01 s.
+  Closed.
+- **De-icing / cold mornings.** January and November 2025 residuals after v57's layer by temperature band × local hour stay within about
+  ±10 s at EDDF, EDDM, LSZH, EHAM and EGLL (no cold-morning under-prediction); the weather inputs and the daily totals already carry it.
+  Closed. (Already closed elsewhere and not repeated: the aircraft-rotation link, `fresh-lens` 28 September; test-time adaptation from
+  matched rows, `docs/tta_screen/`.)
