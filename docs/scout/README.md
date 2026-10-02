@@ -281,3 +281,51 @@ Scratch scripts `day_ceiling.py`, `alloc_screen.py` in the session scratchpad; n
   hour bank worse. Closed.
 - Guard for every later file: the two 4–5 July LIRF rows stay at their v55 values (25,499 and 47,705 s), since v56's score now bears on
   them; LIRF population rows are not touched by any scout layer.
+
+## 12. Declared round: variance re-allocation of the day's discrepancy — ACCEPTED by its rule (2 October 2026)
+
+Declaration
+[`configs/scout_var_alloc_v1.json`](../../configs/scout_var_alloc_v1.json) (08:36 UTC, 028aeba); code `src/prc2026_scout/var_alloc.py`,
+`tools/scout_var_alloc.py`, tests `tests/test_scout_var_alloc.py`; governing run [`var_alloc_results_v1.json`](var_alloc_results_v1.json).
+No official score is used.
+
+**What it does.** v48 moves the ordinary rows of an airport-day by one posterior day shift plus a tilt sized by the row's cell. This
+layer, after the extreme-day layer, re-allocates the day's discrepancy I_d (the extreme-day layer's implied shift: in-figure rows, c0
+offset) between rows by a learned, label-free weight w = exp(LightGBM of log r²) × P(late), each row moving by
+clip(k · I_d · (w / day mean of w − 1), ±100 s); the changes of a day sum to zero before the cap, so the day's level stays the earlier
+layers'. Heavy rows, rows of unread days, the LIRF population and the two 4–5 July guard rows never move. k (one slope) and both
+models are fitted without the scored month.
+
+**Disclosed before declaring:** the four development months' readings of this procedure (exploration in the session scratchpad: an
+uncapped variance form, a sensitivity form, caps on the weight and on the change, heavy rows kept or not; the 100 s cap was chosen for
+the least concentration), and a label-free ranking dry run. **Not seen before declaring:** any twelve-month reading (the exploration run
+was stopped on its third fold; the governing run is the first).
+
+| Development stack (control: extreme-day layer on v48) | change | paired-day 95% interval (s) | k | best ten rows' share of gain |
+|---|---|---|---|---|
+| January 2025 | −0.0440% | [−0.300, −0.067] | 0.238 | 33% |
+| July 2025 | −0.1377% | [−0.563, −0.163] | 0.223 | 18% |
+| November 2025 | −0.0613% | [−0.249, +0.009] | 0.260 | 59% |
+| December 2025 | −0.1114% | [−0.301, −0.074] | 0.242 | 38% |
+
+Twelve-month check (v23-recipe predictor, eleven-month fitting side): **all twelve months better**, mean −0.134%: January −0.042,
+February −0.499, March −0.225, April −0.078, May −0.111, June −0.110, July −0.140, August −0.046, September −0.026, October −0.155,
+November −0.083, December −0.097%; ten of twelve intervals below zero (April and September touch zero). Rule: no development month
+worse (worst −0.044%), equal-footing mean −0.098% (bar −0.02%), every equal-footing interval below zero, twelve-month no month worse and
+at least two thirds better (12 of 12): **accepted**. On the development stack 30 of 40 airport-months are better, LIRF in all four.
+
+**Ranking dry run** (`runs/scout/var_alloc/dry_v57/`, [`var_alloc_dry_v57.json`](var_alloc_dry_v57.json); v55's chain reproduced byte for
+byte first): 256,015 rows change, sum of squared change 3.03e7 (0.18% of v55's squared error), largest change 100 s, root-mean-square
+9.4 s; largest cells LTFM January 2026 (7.4e6), LIRF July 2026 (3.9e6), LTFM July 2026 (3.6e6); guard rows and LIRF population unchanged.
+Dry-run file SHA-256 `31d909ff2e5d1937e65404c396893b9e5524d082c07422be9390c75aad4daed8` (not under runs/submissions). Expected size:
+across the sixteen 2025 readings the squared-error gain is 0.7–5.1 times the squared change (median about 2), so about −0.4 s if the
+scored months behave like 2025 (−0.13 s at the weakest month's ratio), about +0.2 s if the change carries no information.
+
+Build and upload only on the user's word, as the next unused version (v57):
+
+```
+.venv\Scripts\python.exe -X utf8 -B tools\scout_var_alloc.py --base runs/lirf_combo/export_dry/vigorous-whistle_v55.parquet --recon runs/scout/v55_build/recon --version 57 --declaration configs/scout_var_alloc_v1.json
+```
+
+Final-file chain if shipped: runner `--layers v55m` → `tools/export_daily_totals.py --base` → `tools/scout_extreme_shift.py` →
+`tools/scout_var_alloc.py`.
