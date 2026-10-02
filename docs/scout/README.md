@@ -340,5 +340,5 @@ Against v55: 256,015 rows, sum of squared change 3.03e7, RMS 9.37 s, largest cha
 v55 (January 2026 airport-month levels, the EHAM 2–7 January and LFPG 7 January disruption days). Upload only on the user's word:
 
 ```
-.venv\Scripts\python.exe -X utf8 -B tools\prc_submit.py upload --filename vigorous-whistle_v57.parquet
+.venv\Scripts\python.exe -X utf8 -B tools\prc_submit.py upload --file runs/submissions/vigorous-whistle_v57.parquet --expected-sha256 31d909ff2e5d1937e65404c396893b9e5524d082c07422be9390c75aad4daed8 --calendar-day
 ```
