@@ -1,0 +1,47 @@
+{
+ "experiment_id": "scout_var_alloc_v1",
+ "declared_at_utc": "2026-10-02T08:36:00Z",
+ "declared_by": "declaring and the governing run are research; building a file under runs/submissions and any upload stay the user's word",
+ "audit_used": false,
+ "status": "DECLARED after the development-table exploration listed below and BEFORE any twelve-month reading of this layer: the twelve-month exploration run was still on its second of twelve folds when this file was written, and its output was not read. The governing run (tools/scout_var_alloc.py --score) recomputes both tables.",
+ "what_is_different": "v48 moves every ordinary row of an airport-day by the same posterior day shift plus a first-order tilt whose size comes from the row's cell (airport, ADS-B match, schedule-interval band, prediction band). This layer re-allocates the day's discrepancy between rows by a learned, label-free estimate of each row's error variance and chance of a visible delay: rows the model expects to carry more of the day's error move more, the others less, with zero net change per airport-day before the cap. It does not change the day's level (v48 and the extreme-day layer keep that) and never moves heavy rows or the LIRF population.",
+ "external_data": "as configs/daily_totals_v1.json and configs/scout_extreme_shift_v1.json (EUROCONTROL All-causes pre-departure delay, DLY_ALL_PRE_2 and FLT_DEP_IFR_2; used on the user's decision)",
+ "procedure": {
+  "position": "a layer after the extreme-day layer: model part -> v48's reconciliation -> extreme-day layer (configs/scout_extreme_shift_v1.json) -> this layer; on v55's chain for the ranking",
+  "I_d": "the extreme-day layer's implied shift of the airport-day: -(published - c0_a - implied total) / n_eff over in-figure rows (IFR only at EHAM / LSZH / LEBL), c0_a from the fitting months; every airport-day with a published total and n_eff >= 1, clipped to [-600, 600] s; 0 on rows of days the table marks incomplete",
+  "eligible": "rows in the figure and moved by v48 (heavy rows and rows of unread days keep their value), not the LIRF population (cls LIRF_pop)",
+  "variance_model": "LightGBM regression of log(r^2 + 100), r = label - the extreme-day layer's value, on eligible fitting rows with |r| < 1800 s; late model: LightGBM binary of (a > label) on eligible fitting rows; settings for both: learning rate 0.05, 15 leaves, min_data_in_leaf 2000, feature_fraction 0.8, bagging 0.8 every round, lambda_l2 10, 300 rounds, seed 20261002",
+  "inputs": "label-free: airport, ADS-B match, schedule interval a, prediction (the model part), a - prediction, takeoff hour (UTC, fractional), AOBT_3 present, (takeoff - AOBT_3) - prediction, (takeoff - EOBT_1) - a, (takeoff - LOBT) - prediction, wake category, market segment, rows of the airport-day",
+  "weights": "w_i = exp(variance model) x P(late); wr_i = w_i / mean of w over the eligible rows of its airport-day",
+  "update": "c_i = clip(k x I_d x (wr_i - 1), -100, 100) s; value + c_i, floor -12 s; nearest integer in the export",
+  "k": "least-squares slope through zero of r on I_d x (wr - 1) over eligible fitting rows with |r| < 1800 s (fitting months only; their weights out-of-fold as in the governing run); on the ranking from the four development months",
+  "fitting_side": "development month m: both models and k from the other development months (stack table) or the other eleven months (twelve-month table); the extreme-day layer under it fitted the same way (as its own governing run); ranking: models and k from the four development months",
+  "free_parameters": "k only, fitted on the fitting months; the cap (100 s), the clip (600 s) and the model settings are fixed here and were not tuned on the twelve-month table"
+ },
+ "rule": {
+  "text": "accepted when (1) no development month is worse than the control (the extreme-day layer on v48's procedure) by more than 0.005% of its RMSE (all rows); (2) the mean change over the equal-footing months is at least 0.02% below zero; (3) every equal-footing month's paired-day 95% interval (by off-block day, seed 20260929) lies below zero; (4) in the twelve-month check no month is worse than its control by more than 0.005% and at least two thirds of the months are better. November is reported in (1).",
+  "equal_footing": [
+   "2025-01",
+   "2025-07",
+   "2025-12"
+  ],
+  "max_month_worsening_pct": 0.005,
+  "min_mean_improvement_pct": 0.02,
+  "twelve_min_better_share": 0.6667
+ },
+ "prior_exploration_disclosed": {
+  "record": "session scratchpad: var_alloc.py, var_alloc_var.py, var_alloc2.py, va2_air.py, va_rank.py",
+  "screen_on_v48": "the four development months against v48's declared run, I_d over all rows without c0: variance form (no cap) Jan -0.045 / Jul -0.268 / Nov -0.059 / Dec -0.134% (k 0.21-0.28); a sensitivity form (LightGBM of r / I with weight I^2) -0.084% mean at half weight; the variance form's gain was concentrated (one EHAM July row +1,907 s carried most of July)",
+  "variants_seen_on_v48": "heavy rows kept, caps on wr (3, 5, 10) and on |c| (100, 300 s): every variant better in all four months, means -0.061 to -0.127%",
+  "on_the_extreme_layer_with_its_I_d": "uncapped Jan -0.055 / Jul -0.144 / Nov -0.055 / Dec -0.120%; cap |c| 100 s (THIS procedure) Jan -0.044 [-0.30, -0.07] / Jul -0.138 [-0.56, -0.16] / Nov -0.061 [-0.25, +0.01] / Dec -0.111% [-0.30, -0.07]; cap wr 5 Jan -0.049 / Jul -0.149 / Nov -0.052 / Dec -0.061%. The cap |c| 100 s variant is chosen for the least concentration (best ten rows 18-59% of a month's gain), not for the mean",
+  "airports": "cap 100 s on the development stack: 30 of 40 airport-months better; LIRF better in all four months",
+  "ranking_label_free": "dry run on v55's chain (v55 reproduced byte for byte first): 256,015 rows change, sum of squared change 3.03e7, max 100 s, root-mean-square change 9.4 s; largest LTFM January 2026 (7.4e6), LIRF July 2026 (3.9e6), LTFM July 2026 (3.6e6); the guard rows and the LIRF population unchanged",
+  "not_seen": "any twelve-month reading of this layer"
+ },
+ "export": {
+  "base": "v55's chain (runs/submissions/vigorous-whistle_v55.parquet, SHA-256 aa02ff597a619f223888370726cdcbf5c6d055720ef2f95b0c93818133fd1ece), reproduced from runs/lirf_combo/export_dry/vigorous-whistle_v55.parquet and runs/scout/v55_build/recon before the layer",
+  "changed_rows": "only eligible rows; every other row equals v55",
+  "condition": "a dry run first; a file under runs/submissions and any upload only on the user's word"
+ },
+ "report": "docs/scout/var_alloc_results_v1.json"
+}
