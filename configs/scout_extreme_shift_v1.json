@@ -1,0 +1,55 @@
+{
+ "experiment_id": "scout_extreme_shift_v1",
+ "declared_at_utc": "2026-10-02T04:20:00Z",
+ "audit_used": false,
+ "status": "DECLARED before the governing run (tools/scout_extreme_shift.py --score). Every setting below was chosen in an exploration on the same 2025 data (the four development months of the v46 stack and the twelve-month table), disclosed in prior_exploration_disclosed; no untouched 2025 data remains. The governing run therefore confirms arithmetic and the independence it has is the twelve-month table's other predictor, as with v48 (configs/daily_totals_v1.json).",
+ "user_decision": {
+  "words": "YES",
+  "date": "2026-10-02",
+  "context": "answer to: 'should I declare it as a round? That means a written rule before the governing run, then a dry run on v54's model part (or on v55 ...). Building and uploading would still be your call.' after being told that the candidate was found after four general variants failed, that its thresholds were chosen in exploration, that it touches 12 ranking airport-days (sum of squared change 1.1e7, about -0.07 s if 2026 behaves as 2025, +0.07 s if not), and that EHAM 5 January 2026 carries about a third of the stake. Nothing is built under runs/submissions or uploaded without a further word."
+ },
+ "external_data": {
+  "name": "EUROCONTROL Performance Review Unit, All-causes pre-departure delay (airport, day), as in v48",
+  "local_path": "data/external/eurocontrol_aiu/All_Pre-Departure_Delay.xlsx / .parquet (not in the repository)",
+  "sha256": "9ab45cc5977e154452ea3c0f137737f496003acfcab25d830d3f5211e3a1b218",
+  "terms": "as recorded in configs/daily_totals_v1.json (not an open licence); used on the user's decision recorded there",
+  "definition": "docs/scout/published_definition.json: DLY_ALL_PRE_2 x 60 = sum over departures of max(round((block - schedule) / 60), 0) x 60 on every equal-count 2025 day at EGLL, LIRF, EDDM, LEMD, LTFM, LFPG, LEBL; EHAM, LSZH, LEBL count IFR departures only"
+ },
+ "procedure": {
+  "code": "src/prc2026_scout/extreme_shift.py (day_frame, fit, shifts, apply), tools/scout_extreme_shift.py",
+  "position": "a layer after v48's procedure (configs/daily_totals_v1.json, unchanged): v48 reconciles every read airport-day as before; on the days this layer selects, the rows v48 moved that enter the published figure take v48's value minus v48's day shift plus beta_a * I_d",
+  "implied_shift": "I_d = -(published - c0_a - sum over in-figure rows of max(a - prediction, 0)) / n_eff, n_eff = in-figure rows with a > prediction; in-figure = every departure except non-IFR rows at EHAM, LSZH, LEBL",
+  "fitted_on_fitting_days": "c0_a = median(published - own total of the labels); over days with dn = 0 (published count = in-figure rows) and n_eff >= 100: corr_a and the least-squares slope through zero beta_a of the day's mean residual (label - prediction) of in-figure, v48-moved, non-extra rows with |residual| < 1800 s, on I_d; beta clipped to [0, 1]",
+  "calibrated_airports": "corr_a >= 0.9 over at least 30 fitting days",
+  "days_changed": "|I_d| >= 80 s, n_eff >= 100, published total present, and dn = 0 or sign-safe: dn > 0 with published below implied, or dn < 0 with published above implied (missing flights can only raise the published total, extra rows only the implied total)",
+  "constants": {"I_MIN_S": 80.0, "CORR_MIN": 0.9, "MIN_DAYS": 30, "MIN_NEFF": 100, "NEED_CLIP_S": 1800.0, "FLOOR_S": -12.0},
+  "fitting_side": "development read: for each month, the other three development months (v46 stack, declared v48 run); twelve-month check: the other eleven months (v23-recipe predictor, v48's procedure on that table = runs/daily_totals/check12f); ranking: all four development months",
+  "free_parameters": "none fitted on scores or on the scored months"
+ },
+ "rule": {
+  "equal_footing": ["2025-01", "2025-07", "2025-12"],
+  "max_month_worsening_pct": 0.005,
+  "min_mean_improvement_pct": 0.02,
+  "twelve_min_better_share": 0.5,
+  "text": "accepted when (1) no development month is worse than v48 by more than 0.005% of its RMSE, (2) the mean change over the equal-footing months is at least 0.02% below zero, (3) the development month with the largest gain has its paired-day 95% interval (by off-block day, seed 20260929) below zero, (4) in the twelve-month check no month is worse by more than 0.005% and at least half of the months the layer changes are better. A sparse layer cannot meet v48's 'every equal-footing interval below zero': months without an extreme day do not change. November is reported in (1)."
+ },
+ "prior_exploration_disclosed": {
+  "record": "docs/scout/README.md sections 2-4; scratch scripts in the session scratchpad, docs/scout/explore_calibrated_shift.py",
+  "path": "published-figure noise model (dev mean -0.0135%, closed) -> day shift under-applied (labels confirm ~0.6 of I, v48 applies ~0.4) -> four general variants each failing a development month: tau x 1.5 (December +0.025%), scale-mixture prior (November +0.27%, December +0.24%), calibrated beta on all days dn <= 2 (January +0.058%) / dn = 0 (January +0.028%), calibrated beta at airports with corr >= 0.9 (January +0.006%, November +0.013%, December +0.014%) -> restriction to extreme days (|I| >= 80) -> sign-safe days added after seeing that EHAM 5 January 2026 (dn +2, published below implied) was excluded by dn = 0",
+  "readings_seen_before_declaring": {
+   "extreme_days_dn0_dev": "January +0.0005%, July -0.0857%, November 0, December 0",
+   "extreme_days_dn0_twelve": "7 of 12 better, none worse, mean -0.0454%",
+   "threshold_sensitivity_dn0": "corr 0.85 / 0.95 at 80 s, 60 / 100 s at corr 0.9: worst month of 80 month-readings +0.0014%; at 60 s all twelve months better (mean -0.063%)",
+   "sign_safe_dev": "January +0.0005%, July -0.0929% [-0.42, -0.08], November 0, December -0.0140%",
+   "sign_safe_twelve": "none worse, February -0.45%, April -0.13%, July -0.10%, mean -0.0675%",
+   "ranking_label_free": "on v54's model part with v48's procedure: 12 airport-days, 7,372 rows, sum of squared change 1.10e7; EHAM 5 January 2026 +138 s on 184 rows"
+  },
+  "thresholds_fixed_as_found": "80 s and 0.9 are the values the exploration used first; they are kept, not re-tuned"
+ },
+ "export": {
+  "base": "the model part of the file it is applied to (v54: runs/lirf_dark/export_dry/vigorous-whistle_v54.parquet; v55 if the user takes it), then v48's procedure (tools/export_daily_totals.py --base), then this layer",
+  "changed_rows": "only rows the layer selects; every other row equals the reconciled base",
+  "condition": "a dry run first; a file under runs/submissions and any upload only on the user's word"
+ },
+ "report": "docs/scout/extreme_shift_results_v1.json"
+}
