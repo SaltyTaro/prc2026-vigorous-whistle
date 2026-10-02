@@ -255,3 +255,10 @@ has a lower expected squared error than v55 whenever the probability that it is 
   and LTFM 12 / 18 / 19 January move by 1–27 s).
 - Upload only at the user's word:
   `.venv\Scripts\python.exe -X utf8 -B tools\prc_submit.py upload --file runs/submissions/vigorous-whistle_v56.parquet --expected-sha256 7be7f3e13a7624bc701aacdf3e05748d1bbfb88b4e47ae63bcd6bf25dc64517b --calendar-day`
+
+**Official result (2 October 2026).** Uploaded at the user's word ("upload it"); processed 06:41:43 UTC: **224.0957 on all 344,841 rows,
++2.4016 s against v55 (221.6941). v55 remains the official best.** Record [`official_result_v56.json`](official_result_v56.json),
+submissionId `5d0fb9df-4ff7-4869-95b7-fac28b4f8b8e`. The squared-error change is +3.69e8 on a layer whose squared change is 7.96e8. No
+row-level reading is drawn from the score: which moves were right is not inferred, nothing is rescaled or re-selected from it, and no
+further version of this layer is built on it. The count-day layer is the fourth change touching LIRF population rows that read well on
+2025 and lost on the scored months (v10, v43, v50). Never re-upload v1–v56.
