@@ -397,3 +397,24 @@ No official score is used.
   ±10 s at EDDF, EDDM, LSZH, EHAM and EGLL (no cold-morning under-prediction); the weather inputs and the daily totals already carry it.
   Closed. (Already closed elsewhere and not repeated: the aircraft-rotation link, `fresh-lens` 28 September; test-time adaptation from
   matched rows, `docs/tta_screen/`.)
+
+## 16. Declared round: refit the published-data steps on the shipped model part — REJECTED by its rule (2 October 2026)
+
+Declaration [`configs/scout_refit_layers_v1.json`](../../configs/scout_refit_layers_v1.json) (10:06 UTC, 6365780), declared before any
+layer ran on the table; result [`refit_layers_results_v1.json`](refit_layers_results_v1.json); code `tools/scout_refit_prep.py`,
+`tools/scout_refit_run.py`. No official score is used.
+
+Control = the shipped parameters (v48's cells and scales, the extreme-day betas and c0, v57's models and k, all fitted on the v46-era
+months) applied to v55m's scored month; candidate = the same three steps refitted on v55m's own months. Month-blocked in both.
+
+| Month | v55m model part | shipped chain on v55m (control) | refitted chain (candidate) | change | interval (s) |
+|---|---|---|---|---|---|
+| January 2025 | 322.5451 | 322.0588 | 322.0697 | +0.0034% | [−0.002, +0.034] |
+| July 2025 | 257.4099 | 255.9946 | 256.0015 | +0.0027% | [−0.014, +0.029] |
+| November 2025 | 184.6512 | 184.0052 | 183.9712 | −0.0184% | [−0.085, +0.007] |
+| December 2025 | 167.0696 | 166.2473 | 166.2517 | +0.0026% | [−0.022, +0.031] |
+
+Equal-footing mean +0.003% (bar −0.02%), no interval below zero: **rejected**. The refit moves v57's k by less than 0.01. The shipped
+parameters are already right for the shipped model part, and the chain keeps its full gain on it (−0.15 / −0.55 / −0.35 / −0.49%
+against v55m alone). Selection inheritance (the members were chosen on these months) and the missing twelve-month check are stated in
+the declaration; neither matters for a null.

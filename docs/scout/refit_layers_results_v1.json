@@ -1,0 +1,80 @@
+{
+  "accepted": false,
+  "audit_used": false,
+  "checks": {
+    "equal_footing_intervals_below_zero": false,
+    "equal_footing_mean": false,
+    "no_development_month_worse_than": true
+  },
+  "code": {
+    "tools/run_daily_totals.py": "63a7a68d13c27619a86865261a1c6e9221b3e83626c73478c8dc237d40043f85",
+    "tools/scout_extreme_shift.py": "88cebba56adb77f56799b8da2d6dde1d0aa5c5bca77d30960679c4daa5c0f2bc",
+    "tools/scout_refit_prep.py": "e7c891b9b6db9bc417bec96ddf80cf2275fbe6dfa38923ced78f6219d19a9d3e",
+    "tools/scout_refit_run.py": "841ab29382ae512795e970497ddffe806e3bb43e946e9a6246475c794a8212a9",
+    "tools/scout_var_alloc.py": "b23abc934d7be5500fd868dcf2cef977a36845bb681ea9c5aab4d6e7781e7641"
+  },
+  "created_at_utc": "2026-10-02T10:14:19.380791+00:00",
+  "declaration": "configs/scout_refit_layers_v1.json",
+  "declaration_sha256": "d01057f9ecc95e3c9af9fe8dbe4965fa395ee410db29bef288e55ef8e84da294",
+  "inputs": {
+    "runs/daily_totals/rows.parquet": "3a807e81989d18332795c905822a2a7d4281e66553a72b301d510a87c03de52f",
+    "runs/dev_model_part/rows.parquet": "f4d75869db5e61eabe92308a55c74536a8b1a397debba35bd9ed3e68e97d25de"
+  },
+  "months": {
+    "2025-01": {
+      "candidate": 322.0696546950675,
+      "change_pct": 0.003375608695233012,
+      "control": 322.05878325077634,
+      "interval": [
+        -0.0018251538315638526,
+        0.034224299465741806
+      ],
+      "model_part": 322.54508374459283,
+      "rows_changed": 152934
+    },
+    "2025-07": {
+      "candidate": 256.001476213767,
+      "change_pct": 0.002678565084357487,
+      "control": 255.99461923127842,
+      "interval": [
+        -0.01436693128436346,
+        0.029024661183453294
+      ],
+      "model_part": 257.4098505483463,
+      "rows_changed": 189590
+    },
+    "2025-11": {
+      "candidate": 183.97124717273678,
+      "change_pct": -0.018447035342417095,
+      "control": 184.00519067529254,
+      "interval": [
+        -0.0853980868802374,
+        0.006909608202195721
+      ],
+      "model_part": 184.6511625612809,
+      "rows_changed": 162246
+    },
+    "2025-12": {
+      "candidate": 166.25166978693798,
+      "change_pct": 0.0026465808867337515,
+      "control": 166.2472699184676,
+      "interval": [
+        -0.02235820380849631,
+        0.03130777803368686
+      ],
+      "model_part": 167.06960334136767,
+      "rows_changed": 165509
+    }
+  },
+  "note": "the shipped chain on v55m (control vs model part) is on record per month; the refit (candidate) changes k by less than 0.01 and the month RMSEs by at most 0.02%",
+  "official_scores_used": "none",
+  "rule_values": {
+    "equal_footing_intervals_below_zero": {
+      "2025-01": false,
+      "2025-07": false,
+      "2025-12": false
+    },
+    "equal_footing_mean_pct": 0.0029002515554414168,
+    "worst_development_month_pct": 0.003375608695233012
+  }
+}
