@@ -262,3 +262,22 @@ submissionId `5d0fb9df-4ff7-4869-95b7-fac28b4f8b8e`. The squared-error change is
 row-level reading is drawn from the score: which moves were right is not inferred, nothing is rescaled or re-selected from it, and no
 further version of this layer is built on it. The count-day layer is the fourth change touching LIRF population rows that read well on
 2025 and lost on the scored months (v10, v43, v50). Never re-upload v1–v56.
+
+## 11. After v56: screens that stay closed (2 October 2026)
+
+Scratch scripts `day_ceiling.py`, `alloc_screen.py` in the session scratchpad; no official score is used.
+
+- **No daily taxi-out figure exists.** EUROCONTROL's airport data page lists taxi-out (and taxi-in, ASMA) additional time monthly only;
+  the daily series are traffic counts (now used by the count-day layer), arrival ATFM delay, ATC and all-causes pre-departure delay and
+  slot adherence (all tried). After v48 the airport-day level of the development residuals is 0.10–0.59% of squared error, the ceiling a
+  daily figure would have had.
+- **EGLL's denser 2026 ADS-B traces are not a bias signal.** On gate-matched rows, prediction minus ADS-B taxi (takeoff − motion start)
+  falls from a median 301–443 s in the development months to 206 s in July 2026 (47% gate rows); in every development month the
+  prediction's offset tracks the label's (January 415 / 417, July 443 / 453, November 301 / 287 s) and the label's offset itself falls as
+  coverage densifies (November, the densest 2025 month, 287 s). July 2026 continues that relation.
+- **Allocating v48's day shift by row group** (leave-one-month-out slope of label − v48 on the implied day shift, half weight): predicted
+  late vs on-time rows January −0.013%, July −0.045%, November −0.020%, December +0.004% (equal-footing mean −0.018%, under the 0.02% bar,
+  and a variant of the general day-shift calibrations that failed in section 3); by hour bank, tracked / untracked, airport or airport ×
+  hour bank worse. Closed.
+- Guard for every later file: the two 4–5 July LIRF rows stay at their v55 values (25,499 and 47,705 s), since v56's score now bears on
+  them; LIRF population rows are not touched by any scout layer.
