@@ -4,7 +4,9 @@
   --exactness                 2025 count exactness per airport -> docs/scout/count_exactness.json
   --dry-dev                   label-free run on the four development months (candidates, posteriors, moves; no score) -> runs/scout/count_days/dry_dev/
   --score --declaration FILE  the governing run on the development months against v48's procedure (runs/daily_totals/daily_totals_v1)
-  --base FILE --out DIR       the layer on a ranking file (a dry run; never under runs/submissions)
+  --decide --declaration FILE the declared rule on the recorded governing result (no re-run)
+  --base FILE --version N --out DIR [--declaration FILE]   the layer on a ranking file as a dry run (never under runs/submissions)
+  --base FILE --version N --declaration FILE               the same as a version under runs/submissions: only on the user's word
 
 Development month m: base values = v48's procedure (the declared run's values, the stack where it did not read the day); cells, the
 published figure's noise and tau from the other three development months (as run_daily_totals.run_month). Ranking: cells and scales
@@ -169,11 +171,49 @@ def score(declaration: str) -> None:
     write_json(ROOT / decl["report"], result)
 
 
-def ranking(base: Path, out_dir: Path) -> None:
-    out_dir = out_dir.resolve()
-    if (ROOT / "runs/submissions").resolve() in [out_dir, *out_dir.parents]:
-        raise ValueError("A dry run never writes under runs/submissions.")
-    out_dir.mkdir(parents=True, exist_ok=True)
+def decide(declaration: str) -> dict:
+    """The declared rule on the recorded governing result (no re-run); writes accepted and the checks into the report."""
+    decl = read_json(ROOT / declaration)
+    path = ROOT / decl["report"]
+    result = read_json(path)
+    if result.get("declaration_sha256") != object_hash(decl):
+        raise ValueError("The recorded result is not for this declaration.")
+    rule, cal = decl["rule"], result["calibration"]
+    worst = max(v["change_pct"] for v in result["months"].values())
+    total = sum(v["sse_change"] for v in result["months"].values())
+    crossed = cal["crossed"]
+    cross_ok = (crossed["right"] == crossed["n"]) if crossed["n"] < 5 else (crossed["right"] / crossed["n"] >= rule["crossing_min_right_share"])
+    conf = [b for b in cal["by_confidence"] if b["band"] in ("(0.9, 0.99]", "(0.99, 1.0]")]
+    n_conf = sum(b["n"] for b in conf)
+    right_conf = sum(b["n"] * b["right"] for b in conf) / n_conf if n_conf else float("nan")
+    conf_ok = n_conf < 10 or right_conf >= rule["confident_min_right_share"]
+    checks = {"(1) no month worse than +0.005%": {"worst_month_pct": worst, "ok": bool(worst <= rule["max_month_worsening_pct"])},
+              "(2) total squared error not up": {"sse_change": total, "ok": bool(total <= 0)},
+              "(3) crossings right": {"n": crossed["n"], "right": crossed["right"], "share": crossed["right"] / crossed["n"] if crossed["n"] else None, "ok": bool(cross_ok)},
+              "(4) confident candidates right": {"n": n_conf, "share": right_conf, "ok": bool(conf_ok)}}
+    result["rule_checks"] = checks
+    result["accepted"] = all(c["ok"] for c in checks.values())
+    write_json(path, result)
+    print(result["accepted"], checks)
+    return result
+
+
+def ranking(base: Path, out_dir: Path | None, version: int, declaration: str | None, user_override: str | None) -> None:
+    """The layer on a ranking file: a dry run under out_dir, or (accepted declaration, the user's word) runs/submissions/vigorous-whistle_v{version}.parquet."""
+    from prc2026_submission.contract import export_submission
+    if out_dir is None:
+        decl = read_json(ROOT / declaration)
+        result = read_json(ROOT / decl["report"])
+        if result.get("declaration_sha256") != object_hash(decl) or not (result.get("accepted") or user_override):
+            raise ValueError("A real export needs the accepted declaration (or the user's override).")
+        output, report_path = ROOT / f"runs/submissions/vigorous-whistle_v{version}.parquet", ROOT / f"docs/scout/export_v{version}.json"
+    else:
+        out_dir = out_dir.resolve()
+        if (ROOT / "runs/submissions").resolve() in [out_dir, *out_dir.parents]:
+            raise ValueError("A dry run never writes under runs/submissions.")
+        output, report_path = out_dir / f"vigorous-whistle_v{version}.parquet", out_dir / f"export_v{version}.json"
+    if output.exists():
+        raise ValueError(f"{output} exists; never overwrite.")
     sub = pd.read_parquet(base)
     raw = raw_clocks([ROOT / "data/raw/ranking.parquet"])
     import export_daily_totals as edt
@@ -185,15 +225,28 @@ def ranking(base: Path, out_dir: Path) -> None:
     cells = Cells(fit)
     noise, wide, tau = scales(fit)
     new, reports = run_frame(t, cells, noise, wide, tau, exactness(), Settings())
-    values = pd.Series(np.round(new), index=t[ID])
-    out = sub.copy()
-    out[TARGET] = values.reindex(out[ID]).to_numpy()
-    changed = out[TARGET].to_numpy() != sub[TARGET].to_numpy()
-    path = out_dir / base.name.replace(".parquet", "_count_days.parquet")
-    out.to_parquet(path, index=False)
-    write_json(out_dir / "count_days_ranking.json", {"created_at_utc": utc_now(), "base": str(base), "base_sha256": sha256_file(base), "output": str(path), "output_sha256": sha256_file(path),
-                                                       "rows_changed": int(changed.sum()), "sum_sq_change": float(((out[TARGET] - sub[TARGET])[changed] ** 2).sum()), "reports": reports})
-    print("rows changed", int(changed.sum()), "sum of squared change", float(((out[TARGET] - sub[TARGET])[changed] ** 2).sum()))
+    base_values = sub.set_index(ID)[TARGET].reindex(t[ID]).to_numpy(dtype=float)
+    moved = np.abs(new - t["value"].to_numpy(dtype=float)) > 1e-9
+    values = np.where(moved, np.rint(new), base_values)
+    provenance = {"experiment_id": "scout_count_days_v1", "dry_run": out_dir is not None, "base": {"path": Path(base).as_posix(), "sha256": sha256_file(base)},
+                  "selected_by": "dry run" if out_dir is not None else (f"the user's override: {user_override}" if user_override else "the declared rule (accepted)"),
+                  "recipe": "the base (v55: model part, v48's reconciliation, extreme-day layer), then the count-day layer: where EUROCONTROL's daily departure counts disagree "
+                            "with the values' off-block days, candidates near a midnight take the change of their posterior mean",
+                  "declaration": {declaration: sha256_file(ROOT / declaration)} if declaration else None,
+                  "code": {c: sha256_file(ROOT / c) for c in ["src/prc2026_scout/count_days.py", "tools/scout_count_days.py", "src/prc2026_daily/reconcile.py", "tools/run_daily_totals.py"]},
+                  "official_scores_used": "none", "audit_used": False}
+    receipt = export_submission(pd.DataFrame({ID: t[ID].to_numpy(), "prediction": values}), ROOT / "data/raw/submitting.parquet", output, provenance)
+    exported = pd.read_parquet(output).set_index(ID)[TARGET].reindex(t[ID]).to_numpy().astype(np.int64)
+    change = exported - base_values.astype(np.int64)
+    if ((change != 0) & ~moved).any():
+        raise ValueError("A row outside the layer changed.")
+    airport = t["airport"].to_numpy()
+    by_airport = {a: {"rows_changed": int(((change != 0) & (airport == a)).sum()), "sum_squared_change": float((change[airport == a].astype(float) ** 2).sum())}
+                  for a in sorted(set(airport[change != 0]))}
+    rep = {"created_at_utc": utc_now(), "version": version, "output": output.as_posix(), "sha256": sha256_file(output), "receipt": receipt, "rows_changed": int((change != 0).sum()),
+           "sum_squared_change_against_base": float((change.astype(float) ** 2).sum()), "max_abs_change_s": int(np.abs(change).max()), "by_airport": by_airport, "reports": reports}
+    write_json(report_path, rep)
+    print({k: rep[k] for k in ["sha256", "rows_changed", "sum_squared_change_against_base", "max_abs_change_s"]}, by_airport)
 
 
 def main() -> None:
@@ -202,8 +255,11 @@ def main() -> None:
     ap.add_argument("--dry-dev", action="store_true")
     ap.add_argument("--score", action="store_true")
     ap.add_argument("--declaration")
+    ap.add_argument("--decide", action="store_true")
     ap.add_argument("--base", type=Path)
-    ap.add_argument("--out", type=Path)
+    ap.add_argument("--out", type=Path, help="dry-run directory (never under runs/submissions)")
+    ap.add_argument("--version", type=int)
+    ap.add_argument("--user-override")
     args = ap.parse_args()
     if args.exactness:
         e = exactness()
@@ -213,8 +269,10 @@ def main() -> None:
         dev_run("dry_dev", Settings())
     if args.score:
         score(args.declaration)
+    if args.decide:
+        decide(args.declaration)
     if args.base is not None:
-        ranking(args.base, args.out)
+        ranking(args.base, args.out, args.version, args.declaration, args.user_override)
 
 
 if __name__ == "__main__":

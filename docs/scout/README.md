@@ -163,3 +163,65 @@ re-upload v1–v55.
 The first upload attempt stopped before anything was sent (the uploader reads `provenance.experiment_id`; the export tool had written
 `experiment`). The tool was corrected, the never-uploaded local file and receipt were removed and rebuilt: the parquet is byte-identical
 (SHA-256 `aa02ff59…`), only the receipt's provenance key changed.
+
+## 8. Screens after v55 (2 October 2026) — closed, nothing declared
+
+Scratch scripts in the session scratchpad (`rwy_ceiling.py`, `lfpg_screen.py`, `lfpg_exact.py`, `ltfm_screen.py`). No score is used.
+
+- **Per-runway monthly taxi-out figures (AIU dashboard, never fetched).** Ceiling after v48's reconciliation on the development stack: if
+  every (airport, runway, month) mean residual of labels in (0, 7,200] s were known exactly, the squared error would fall by 0.065% beyond
+  the airport-month level (0.03–0.11% by month; RMSE about 0.03%); the biases involved are 12–25 s, the size of the published figure's own
+  noise (`docs/clean_line_screens` section 4). Not fetched.
+- **LFPG unmatched rows.** 76% of their development squared error sits in 15 rows without an NM record (labels up to 84,240 s). Elsewhere
+  label minus NM proxy (AOBT_3 − block) is one smooth bell around 0 with an sd of about 4 minutes; the 21% within 60 s are its centre,
+  not a separable population; no label-free field (operator, stand, runway, clock disagreements, market, hour, destination) carries a
+  stable bias. LFPG block and takeoff times sit within ±6 s of a whole minute.
+- **LTFM.** Residuals of the development stack carry no group bias (month × runway at most 33 s, July 2025) and no correlation with
+  runway or airport queue counts from the known takeoff times (|corr| ≤ 0.011).
+
+## 9. Declared round: count-day layer — ACCEPTED by its rule (2 October 2026)
+
+**The finding.** EUROCONTROL's daily departure count `FLT_DEP_IFR_2` equals the number of in-figure departures whose recorded off-block
+time, rounded to the minute, falls on that UTC day — on every non-month-end day of 2025 at LIRF, EGLL and LEBL, and all but 2 / 1 days at
+LEMD / LTFM ([`count_exactness.json`](count_exactness.json)). The −1/+1 day pairs that looked like noise are departures blocked at
+23:59:5x, which the figure counts on the next day. A prediction fixes a row's off-block day (takeoff − prediction); where the predicted
+days disagree with the published counts, some row sits on the wrong side of a midnight. This is a hard constraint on each day, not a
+classifier of label regimes.
+
+**The procedure** (`src/prc2026_scout/count_days.py`, `tools/scout_count_days.py`, declaration
+[`configs/scout_count_days_v1.json`](../../configs/scout_count_days_v1.json), 3744096, declared before the governing run): v48's own row
+model gives each row's scenarios and their off-block days; rows with mass on two adjacent days are candidates; the posterior over the
+month's midnights is exact (forward-backward), with the counts as near-exact constraints and the daily delay totals as v48's day-model
+density for candidates whose two days differ by more than an hour of positive delay. Only midnights where a count disagrees move; a
+candidate whose two days differ by more than an hour in mean label moves only when the posterior puts it across midnight; a moved row
+takes the change of its posterior mean (never a hard assignment).
+
+**Governing run** ([`count_days_results_v1.json`](count_days_results_v1.json); v48's declared run values as the base, cells from the other
+development months):
+
+| month | RMSE change | paired-day 95% interval | rows changed | squared error by airport |
+|---|---:|---|---:|---|
+| January 2025 | −0.0008% | [−0.0027, +0.0000] | 32 | LTFM −0.17e6 |
+| July 2025 | −0.0057% | [−0.0181, +0.0015] | 99 | LTFM −1.48e6, LEMD +0.08e6, LEBL +0.02e6 |
+| November 2025 | −0.0218% | [−0.0473, −0.0042] | 96 | LTFM −1.88e6, LEMD −0.43e6, LIRF −0.07e6 |
+| December 2025 | −0.0449% | [−0.0968, −0.0091] | 66 | LIRF −3.45e6, LTFM −0.37e6, LEMD −0.28e6 |
+
+Calibration over 315 flagged candidates (posterior's day against the recorded off-block day): confidence ≥ 0.99 — 236 candidates, 99.6%
+right; 0.9–0.99 — 40, 95%; 0.7–0.9 — 20, 70%; 0.5–0.7 — 19, 84%; 2 candidates were on neither day. Crossings (the posterior puts a
+row on the other side of midnight from its value): 46, of which 41 right. **All four rule checks pass: accepted.** 2025 holds no big
+crossing (a row moved by hours across midnight): the type that carries the ranking stake is supported by the counts' exactness and the
+calibration of confident posteriors, not by a 2025 case of its own.
+
+**On v55 (label-free dry run, not built, not uploaded):** `runs/scout/count_days/dry_v55/vigorous-whistle_v56.parquet`, SHA-256
+`7be7f3e13a7624bc701aacdf3e05748d1bbfb88b4e47ae63bcd6bf25dc64517b`, record [`count_days_dry_v55.json`](count_days_dry_v55.json):
+173 rows differ from v55, sum of squared change 7.96e8 (about 4.7% of v55's squared error), max 24,148 s.
+
+| airport | rows | squared change | what the counts say |
+|---|---:|---:|---|
+| LTFM | 124 | 8.0e6 | snow nights 13–19 January: fewer departures left before midnight than the values imply; near-midnight rows 100–680 s lower |
+| LEBL / LEMD | 12 / 23 | 1.1e6 / 0.7e6 | near-midnight rows |
+
+What is at stake: if every move is right, about −5 s on v55; if every move were wrong, about +5 s. The 5 July call rests on the counts being exact (as on every 2025 day at LIRF) and on the delay total favouring the
+25,499 s row; if the other row were the one that left on the 5th, the layer would cost about 3.8 s and miss a larger gain.
+Order: the layer runs last on v55's file; re-solving v48's day with the moved rows would shift the other rows of those days by a few
+seconds (disclosed, not done). Build and upload only at the user's word (as the next unused version, after `tools/audit_export.py`).
