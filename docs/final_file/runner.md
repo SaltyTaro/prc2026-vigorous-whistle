@@ -376,4 +376,12 @@ run last, in this order, each with its own tool and declaration:
 4. `tools/scout_var_alloc.py` (variance re-allocation of the day shift, `configs/scout_var_alloc_v1.json`; models and k from the four
    development months) -> **v57 = 221.3289, the official best**.
 
+Commands on a new file (b668150: `tools/scout_var_alloc.py` takes the extreme-day step's own output instead of the uploaded v55; with
+v55 given explicitly it rebuilds v57 byte for byte, `31d909ff...`):
+
+    tools/final_predict.py ... --layers v55m                                  -> B (model part)
+    tools/export_daily_totals.py --base B --dry-run R
+    tools/scout_extreme_shift.py --base B --recon R --version N --dry-run X
+    tools/scout_var_alloc.py --base B --recon R --version N --previous X/vigorous-whistle_vN.parquet --previous-sha256 <its SHA-256> --dry-run Y
+
 The count-day layer (`configs/scout_count_days_v1.json`, v56 = 224.0957) is not part of the chain.
