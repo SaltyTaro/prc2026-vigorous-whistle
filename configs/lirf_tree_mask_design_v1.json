@@ -1,0 +1,182 @@
+{
+ "experiment_id": "prc2026-lirf-tree-mask-design-v1",
+ "declared_at_utc": "2026-10-02T03:24:47+00:00",
+ "audit_used": false,
+ "session": "lane M",
+ "purpose": "Design: does training-time masking of LIRF's ADS-B-matched rows make the LIRF tree ens_v22_lirf_q (1/4 LightGBM group, 3/4 CatBoost group) better on LIRF rows without ADS-B, the regime of July 2026 (15,515 dark LIRF non-population rows, where v54 gives the tree share 0.25 and v45's u600 gate leans to it)?",
+ "disclosed_motivation": {
+  "thinning_measurement": "Before this declaration (label-reading on the development month July 2025 only): on the 13,907 July 2025 LIRF non-population rows that are matched naturally and unmatched after thinning to July 2026's coverage (coverage-regime attempt a13, labels below 20,000 s), the seasonal-fold ens_v22_lirf_q goes 412.96 -> 440.70 s RMSE (worse than v9's 434.7 s), the shipped LIRF network ens_ctx_lirf 429.92 -> 435.70 s; the v34 unmatched blend at share 0.583 410.0 -> 422.9 s and at 0.75 415.9 -> 425.5 s.",
+  "match_shares": "LIRF ADS-B match share of departures (label-free): 2025-01..04 0.00, 05 0.10, 06 0.60, 07 0.94, 08 0.89, 09 0.42, 10 0.63, 11 0.66; ranking 2026-01 0.80, 2026-07 0.00. The trees' unmatched LIRF fitting rows are mostly January-April plus partial June / September.",
+  "neighbour_encoding": "Label-free, read before this declaration: LIRF rows in July 2026 (ranking) carry the three neighbour counts 0 (100%) and NaN in the other neighbour columns (99.3%); July 2025 thinned (a13) the same (counts 0, medians 89-96% NaN); January 2025 (no LIRF ground data at all) carries NaN in every neighbour column; naturally matched July 2025 rows carry counts of about 7-23. prc2026_tree_mask.augment's focal masking keeps neighbour columns, so its masked copies do not look like July 2026's LIRF rows; the 'dark' semantics below sets the neighbour columns to July 2026's encoding.",
+  "earlier_designs": "docs/tree_mask (1 October): focal masking of the committee's trees, LIRF left out of fitting, null on non-LIRF unmatched rows. docs/adsb_ctx3_lirf (1 October): masking the LIRF context network helped LIRF's unmatched rows in every month, most where LIRF is dark.",
+  "deviation_from_brief": "The brief asked for focal p 0.5 on all seven learners; the neighbour-encoding reading above (before any fit) moved the CatBoost group to the 'dark' semantics; focal is kept for the LightGBM group (p 0.25 and 0.5) so both semantics are read at equal footing there."
+ },
+ "fold": "seasonal (fit 2025-02..06, 08, 09; early stopping 2025-10; score 2025-01 + 2025-07), the original learners' own fold; identical kind, target, seed, parameters (thread count aside), round cap, patience, label cap, LIRF fill population excluded, matches data/external/adsblol/matches, timeline bundle ce42240e...",
+ "masking": {
+  "rows": "LIRF non-population fitting rows with adsb_matched = 1 (every other row and every early-stopping / score row untouched)",
+  "weights": "each masked row keeps weight 1 - p and gains a copy with weight p (static expectation of a per-step draw)",
+  "focal": "the 15 focal ADS-B columns of the learner contract NaN, adsb_matched 0 (what every unmatched row carries); neighbour columns unchanged",
+  "dark": "focal, plus nb_runway_10m_count / nb_airport_10m_count / nb_runway_30m_count = 0 and the other eight neighbour columns NaN (July 2026's LIRF encoding)"
+ },
+ "learners": {
+  "lgb_s31": {
+   "original": "runs/adsb_v21/lgb_lirf_s31"
+  },
+  "lgb_cap_s32": {
+   "original": "runs/adsb_v21/lgb_lirf_cap_s32"
+  },
+  "lgb_nm_s33": {
+   "original": "runs/adsb_v21/lgb_lirf_nm_s33"
+  },
+  "cat_ctr2_s34": {
+   "original": "runs/adsb_v22/cat_lirf_ctr2_s34"
+  },
+  "cat_ctr3_s35": {
+   "original": "runs/adsb_v22/cat_lirf_ctr3_s35"
+  },
+  "cat_ctr2_nm_s36": {
+   "original": "runs/adsb_v22/cat_lirf_ctr2_nm_s36"
+  },
+  "cat_ctr3_nm_s37": {
+   "original": "runs/adsb_v22/cat_lirf_ctr3_nm_s37"
+  }
+ },
+ "runs": {
+  "lgb_s31_focal25": {
+   "learner": "lgb_s31",
+   "mask_p": 0.25,
+   "semantics": "focal"
+  },
+  "lgb_s31_focal50": {
+   "learner": "lgb_s31",
+   "mask_p": 0.5,
+   "semantics": "focal"
+  },
+  "lgb_s31_dark50": {
+   "learner": "lgb_s31",
+   "mask_p": 0.5,
+   "semantics": "dark"
+  },
+  "lgb_cap_s32_focal25": {
+   "learner": "lgb_cap_s32",
+   "mask_p": 0.25,
+   "semantics": "focal"
+  },
+  "lgb_cap_s32_focal50": {
+   "learner": "lgb_cap_s32",
+   "mask_p": 0.5,
+   "semantics": "focal"
+  },
+  "lgb_cap_s32_dark50": {
+   "learner": "lgb_cap_s32",
+   "mask_p": 0.5,
+   "semantics": "dark"
+  },
+  "lgb_nm_s33_focal25": {
+   "learner": "lgb_nm_s33",
+   "mask_p": 0.25,
+   "semantics": "focal"
+  },
+  "lgb_nm_s33_focal50": {
+   "learner": "lgb_nm_s33",
+   "mask_p": 0.5,
+   "semantics": "focal"
+  },
+  "lgb_nm_s33_dark50": {
+   "learner": "lgb_nm_s33",
+   "mask_p": 0.5,
+   "semantics": "dark"
+  },
+  "cat_ctr2_s34_dark50": {
+   "learner": "cat_ctr2_s34",
+   "mask_p": 0.5,
+   "semantics": "dark"
+  },
+  "cat_ctr3_s35_dark50": {
+   "learner": "cat_ctr3_s35",
+   "mask_p": 0.5,
+   "semantics": "dark"
+  },
+  "cat_ctr2_nm_s36_dark50": {
+   "learner": "cat_ctr2_nm_s36",
+   "mask_p": 0.5,
+   "semantics": "dark"
+  },
+  "cat_ctr3_nm_s37_dark50": {
+   "learner": "cat_ctr3_nm_s37",
+   "mask_p": 0.5,
+   "semantics": "dark"
+  },
+  "lgb_s31_ctrl": {
+   "learner": "lgb_s31",
+   "mask_p": 0.0,
+   "semantics": "focal"
+  },
+  "cat_ctr2_s34_ctrl": {
+   "learner": "cat_ctr2_s34",
+   "mask_p": 0.0,
+   "semantics": "focal"
+  }
+ },
+ "threads": "8 per fit for every run, controls included (two lanes per worker); the originals used 16, so the controls measure refit noise including the thread count",
+ "hardware": "Azure arcw0-arcw3, two lanes per worker; each worker deallocated right after its hash-checked mirror. No GPU, no AWS.",
+ "candidates": {
+  "dark50_all": {
+   "replace": {
+    "lgb_s31": "lgb_s31_dark50",
+    "lgb_cap_s32": "lgb_cap_s32_dark50",
+    "lgb_nm_s33": "lgb_nm_s33_dark50",
+    "cat_ctr2_s34": "cat_ctr2_s34_dark50",
+    "cat_ctr3_s35": "cat_ctr3_s35_dark50",
+    "cat_ctr2_nm_s36": "cat_ctr2_nm_s36_dark50",
+    "cat_ctr3_nm_s37": "cat_ctr3_nm_s37_dark50"
+   },
+   "rule": "ens_v22_lirf_q's own leaf list (LightGBM leaves x4, CatBoost leaves x9, nan-mean) with each named learner replaced by its run"
+  },
+  "dark50_lgb": {
+   "replace": {
+    "lgb_s31": "lgb_s31_dark50",
+    "lgb_cap_s32": "lgb_cap_s32_dark50",
+    "lgb_nm_s33": "lgb_nm_s33_dark50"
+   },
+   "rule": "ens_v22_lirf_q's own leaf list (LightGBM leaves x4, CatBoost leaves x9, nan-mean) with each named learner replaced by its run"
+  },
+  "focal50_lgb": {
+   "replace": {
+    "lgb_s31": "lgb_s31_focal50",
+    "lgb_cap_s32": "lgb_cap_s32_focal50",
+    "lgb_nm_s33": "lgb_nm_s33_focal50"
+   },
+   "rule": "ens_v22_lirf_q's own leaf list (LightGBM leaves x4, CatBoost leaves x9, nan-mean) with each named learner replaced by its run"
+  },
+  "focal25_lgb": {
+   "replace": {
+    "lgb_s31": "lgb_s31_focal25",
+    "lgb_cap_s32": "lgb_cap_s32_focal25",
+    "lgb_nm_s33": "lgb_nm_s33_focal25"
+   },
+   "rule": "ens_v22_lirf_q's own leaf list (LightGBM leaves x4, CatBoost leaves x9, nan-mean) with each named learner replaced by its run"
+  }
+ },
+ "control_reading": {
+  "replace": {
+   "lgb_s31": "lgb_s31_ctrl",
+   "cat_ctr2_s34": "cat_ctr2_s34_ctrl"
+  },
+  "use": "refit noise: the same reading as a candidate, with the two unmasked refits in their slots"
+ },
+ "readings": {
+  "tree_prime": "tree' = the set's tree + (candidate ensemble - saved seasonal ens_v22_lirf_q), both predicted on the set's own inputs (natural seasonal predictions for January 2025 and natural July; the a13 thinned frame for thinned July, re-predicted with prc2026_december.scoring.learner_prediction on LIRF rows; the saved ensemble re-predicted the same way must reproduce runs/coverage_regime/measure/2025-07/predictions.parquet 'thinned:ens_v22_lirf_q' within 0.01 s RMS before any candidate is read).",
+  "sets": "tools/run_lirf_dark.build_sets(): thinned_july (July 2025 LIRF non-population rows unmatched after a13 thinning; tree = the seasonal-fold thinned ensemble) and natural:2025-01 (all LIRF non-population rows, unmatched; its tree is the leave-one-month-out ens_v22_lirf_q, so the seasonal-fold masking delta is added to it: a declared approximation); natural July descriptive only; November / December have no seasonal-fold prediction and are not read.",
+  "values": "v54's dark arithmetic (tools/run_lirf_dark.values): network' = 0.30 ens_ctx_lirf + 0.70 M (16 lm25_32 seeds), blend 0.75 network' + 0.25 tree', gate u600 (tree' - network' > 600 s: v9 0 / network' 0.2 / tree' 0.8), floor -12. Control = the same with the saved tree.",
+  "metric": "tools/run_lirf_dark.compare: primary = route rows with labels below 20,000 s, relative SSE change with a paired-day 95% interval (10,000 draws, seed 20261001); unfiltered reported.",
+  "descriptive": "standalone tree RMSE (saved vs candidate) on the route rows, natural and thinned; natural July matched LIRF rows (harm on matched rows); the least-squares tree share for each candidate on thinned July and January 2025."
+ },
+ "go_rule": "A candidate is GO when (1) thinned July's primary change is at most -0.5% with its interval below zero, (2) January 2025's primary change is at most 0, and (3) thinned July's change is below -2 x |the control reading's thinned July change|. GO leads to a separately declared development round (leave-one-month-out January and July, forward, refit, refit12 fits, read inside the stack); a design result never ships.",
+ "never_read": "No official score, ranking label or published aggregate. Ranking feature encodings (label-free) were read for the neighbour semantics.",
+ "outputs": "runs/lirf_tree_mask/design/<run>/seasonal/{model, predictions.parquet, run.json}; thinned predictions runs/lirf_tree_mask/thinned/<run>.parquet",
+ "runner": "tools/run_lirf_tree_mask.py",
+ "report_tool": "tools/lirf_tree_mask_report.py",
+ "report": "docs/lirf_tree_mask/design_report.json",
+ "automatic_submission": false
+}
