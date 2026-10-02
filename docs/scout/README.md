@@ -141,3 +141,15 @@ airport-days change: EDDF 29 January (−94 s day shift against v48's −1 s), E
 7 January (−72 against −1 s), and nine LTFM days (−51 … −70 s against v48's −30 … −52 s). Stake at v54's score: about −0.07 s if the
 moves are right as in 2025 (alignment 1), 0 at alignment 0.5, +0.07 s if they are noise. The file version is assigned when the user
 decides to build it (v55 if built on v54 alone, otherwise the number after the LIRF candidate).
+
+## 7. v55 built (user: "build v55"), not uploaded
+
+- **`runs/submissions/vigorous-whistle_v55.parquet`, SHA-256 `aa02ff597a619f223888370726cdcbf5c6d055720ef2f95b0c93818133fd1ece`**,
+  byte-identical to the combined dry run; record [`export_v55.json`](export_v55.json), receipt
+  [`vigorous-whistle_v55.receipt.json`](vigorous-whistle_v55.receipt.json).
+- Against the uploaded v54: 15,868 rows differ (LIRF 8,496 from the member step; LTFM 6,495 / EDDF 503 / EHAM 374 from this layer),
+  S 1.14e7, RMS 5.8 s, no row beyond 600 s. Audit [`../export_audit/v55_audit.json`](../export_audit/v55_audit.json) clean: integrity
+  checks pass, every flag (January airport-month means, daily outliers, disruption days) identical to v54's audit.
+- Expected against v54 (221.8686): about −0.10 s if both parts transfer as their 2025 readings, about +0.10 s if both are noise.
+- Upload only at the user's word:
+  `.venv\Scripts\python.exe -X utf8 -B tools\prc_submit.py upload --file runs/submissions/vigorous-whistle_v55.parquet --expected-sha256 aa02ff597a619f223888370726cdcbf5c6d055720ef2f95b0c93818133fd1ece --calendar-day`
