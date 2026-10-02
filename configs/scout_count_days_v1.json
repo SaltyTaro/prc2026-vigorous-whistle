@@ -1,0 +1,61 @@
+{
+ "experiment_id": "scout_count_days_v1",
+ "declared_at_utc": "2026-10-02T06:12:00Z",
+ "declared_by": "declaring and the governing run are research; building a file under runs/submissions and any upload stay the user's word",
+ "audit_used": false,
+ "status": "DECLARED before the governing run (tools/scout_count_days.py --score). No development score of this procedure has been computed. Seen before declaring: the label-free ranking dry runs on v55 and the 2025 count exactness (prior_exploration_disclosed).",
+ "what_is_different": "The published daily departure count is a hard constraint on how many departures left the stand on each day, not a classifier of label regimes. v10, v43 and v50 moved the LIRF fill population by patterns learned on 2025 and lost on the scored months; this layer moves a row only where the day's published count disagrees with the off-block days implied by the predictions, and only by the posterior given that count.",
+ "external_data": {
+  "name": "EUROCONTROL Performance Review Unit, All-causes pre-departure delay (airport, day): FLT_DEP_IFR_2 (IFR departures) and DLY_ALL_PRE_2 (minutes), as in v48",
+  "local_path": "data/external/eurocontrol_aiu/All_Pre-Departure_Delay.xlsx / .parquet (not in the repository)",
+  "sha256_xlsx": "9ab45cc5977e154452ea3c0f137737f496003acfcab25d830d3f5211e3a1b218",
+  "sha256_parquet": "24434d40306efa952471d38f17f6892456902245244686bb8c1cf74c3d0bbad0",
+  "terms": "as recorded in configs/daily_totals_v1.json; used on the user's decision"
+ },
+ "definition_found": {
+  "count": "FLT_DEP_IFR_2 equals the number of in-figure departures (every departure except non-IFR rows at EHAM, LSZH, LEBL) whose recorded off-block time, rounded to the nearest minute, falls on that UTC day",
+  "exactness_2025": "on every non-month-end day of 2025 at LIRF, EGLL and LEBL; all but 2 days at LEMD and 1 at LTFM (99.4% / 99.7%); EDDF 90.4%, EDDM 93.2%, EHAM 91.5%, LSZH 96.3%, LFPG 12.2% (docs/scout/count_exactness.json)",
+  "rounding": "the earlier unexplained -1/+1 day pairs at LIRF, LEBL and LEMD (1, 3 and 5 in 2025) are departures blocked at 23:59:5x, which the figure counts on the next day",
+  "month_end": "the last day of a month is not compared: departures blocked that day and taking off in the next month are not in the month's rows"
+ },
+ "procedure": {
+  "code": "src/prc2026_scout/count_days.py (count_exactness, row_days, solve_month), tools/scout_count_days.py",
+  "position": "a layer after the rest of the chain: on v55's file (model part -> v48's reconciliation -> extreme-day layer) for the ranking; on v48's declared run values (runs/daily_totals/daily_totals_v1) for the development months",
+  "airports": "count exactness >= 0.99 over 2025 non-month-end days (minute-rounded recorded off-block day): LIRF, EGLL, LEBL, LEMD, LTFM",
+  "row_model": "v48's: reconcile.scenarios over the cells of the fitting months (run_daily_totals.Cells, MIN_CELL 150, MAX_SAMPLES 1500, seed 20260929), prior weights matched to the row's value where the scenarios spread more than 300 s (matched_weights); each scenario's off-block day = round(takeoff - label, 1 min)",
+  "candidates": "rows whose scenarios put at least MASS_MIN = 1e-3 on each of two adjacent days (more days: the two with the most mass if adjacent, else the row keeps its value); heavy when the two days differ by more than 3,600 s in expected positive delay max(a - y, 0) (at most 4 heavy per midnight, the rest light); big when they differ by more than 3,600 s in mean label",
+  "likelihood": "per day of the month except the last: the published count against the rows certain on that day plus the candidates placed there, exact with probability 1 - eps and off by one with eps / 2 each, eps = (2025 days off + 1) / (2025 days + 2); per day with heavy candidates placed on it, the density of the published delay total under v48's day model (prepare_day over the day's other rows, the heavy rows' positive delay under their scenarios restricted to that day, the figure's noise sd and wide share and the day shift N(0, tau^2) from the fitting months, run_daily_totals.scales)",
+  "posterior": "exact forward-backward over the month's midnights; state = number of light candidates on the earlier day and the heavy candidates' days; light marginals by leave-one-out Poisson-binomial",
+  "flagged": "a midnight whose earlier or later day's published count differs from the count of the values' days; candidates of other midnights keep their values",
+  "update": "a flagged candidate's value + (P(earlier | counts, totals) - P(earlier)) x (mean label of its scenarios on the earlier day - mean on the later day): the change of its posterior mean, a posterior-weighted value and never a hard assignment; a big candidate moves only when the posterior puts it on the other side of midnight from its value's day (more than half), otherwise it keeps its value; floor -12 s; nearest integer in the export",
+  "constants": {
+   "EXACT_MIN_SHARE": 0.99,
+   "MASS_MIN": 0.001,
+   "HEAVY_POS_S": 3600.0,
+   "MAX_HEAVY": 4,
+   "FLOOR_S": -12.0
+  },
+  "fitting_side": "development month m: cells, noise and tau from the other three development months (the v46 stack's rows, runs/daily_totals/rows.parquet); ranking: from the four development months",
+  "order": "last; the rows of the affected days keep v48's day shift as computed with the values' days (a disclosed simplification: re-solving v48's day with a moved row would shift the other rows of that day by a few seconds)",
+  "free_parameters": "none fitted on scores or on the scored months"
+ },
+ "rule": {
+  "text": "accepted when (1) no development month is worse than v48's procedure by more than 0.005% of its RMSE (all rows); (2) the four development months' total squared error does not increase; (3) of the flagged candidates the posterior places on the other side of midnight from their value (crossings), at least two thirds are on that side by the recorded minute-rounded off-block day (with fewer than 5 crossings: all of them); (4) among flagged candidates with posterior confidence of at least 0.9 in their day (at least 10 of them), at least 85% are right. Months without a disagreeing day do not change, so no mean improvement is required: the stake is on the scored months, where the counts disagree on more days.",
+  "max_month_worsening_pct": 0.005,
+  "crossing_min_right_share": 0.6667,
+  "confident_min_right_share": 0.85,
+  "reported": "per month RMSE change and paired-day interval (by off-block day, seed 20260929), rows changed, squared change by airport; calibration by posterior confidence band, by airport; crossings and big crossings"
+ },
+ "prior_exploration_disclosed": {
+  "path": "screens closed first (per-runway monthly taxi-out ceiling, LFPG unmatched, LTFM queue proxies; docs/scout/README.md) -> the daily departure count as a +1/-1 signature of rows whose recorded off-block day differs from the predicted one (2025 twelve-month table) -> 2025 exactness after minute rounding (labels' recorded off-block days; this selects the airports) -> 2025 base rate: all 67 LIRF population rows with a schedule on an earlier day than takeoff had their recorded off-block on that earlier day",
+  "ranking_label_free": "on v55: LIRF counts disagree with the values' days on six day pairs (4-5 Jan, 17-18 Jan, 20-21 Jan, 1-2 Jul, 4-5 Jul, 9-10 Jul), each with candidate rows; the 4-5 July pair rests on two LIRF population rows predicted as fills from 17:50 the evening before (25,499 s and 47,705 s); EGLL none",
+  "design_changes_after_ranking_dry_runs": "three, all label-free: (a) only flagged midnights move (the first dry run moved about 70 LIRF population rows by 3,500-5,800 s on days where the counts agree, from the row model's split of a value into fill and one-day outcomes); (b) a big candidate moves only when the posterior crosses midnight (the same artefact at flagged midnights); (c) rows with mass on three days take the two heaviest adjacent days instead of being skipped",
+  "dry_run_v55": "runs/scout/count_days/rank_v55_dry: 173 rows changed, sum of squared change 7.96e8 (about 4.7% of v55's squared error at 221.69 s): LIRF 14 rows / 7.86e8, LTFM 124 rows / 8.0e6 (snow nights 13-19 January, near-midnight rows 100-680 s lower), LEBL 12, LEMD 23"
+ },
+ "export": {
+  "base": "v55's file (runs/submissions/vigorous-whistle_v55.parquet, SHA-256 aa02ff597a619f223888370726cdcbf5c6d055720ef2f95b0c93818133fd1ece)",
+  "changed_rows": "only flagged candidates the posterior moves; every other row equals the base",
+  "condition": "a dry run first; a file under runs/submissions and any upload only on the user's word"
+ },
+ "report": "docs/scout/count_days_results_v1.json"
+}
