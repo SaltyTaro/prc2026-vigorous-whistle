@@ -40,6 +40,7 @@ squared error; 69% of them are under-predictions.
 | 9 | plumbing audit of the shipped ranking path (key/unit/join/fallback bugs) | fork | closed (no bug worth 0.1 s; remaining gaps are archive coverage) | `plumbing.md` |
 | 11 | position-based intruders at EDDM/EHAM/LSZH/LEMD/LEBL (ADS-B parking fixes) | fork | closed (validity <= 14%; fails at the EDDF/EGLL control too: towing and coverage edges) | `position.md` |
 | 7b | MARS stand families alone (`configs/micro_bundle_v2.json`) | fork | not accepted (-0.0173% vs -0.02% bar) | `../micro_bundle/` |
+| 14 | v61 error census + five new hypotheses | fork | census done (v61 dev proxy pooled 237.59 vs v46 240.48); exact-identity bound and aircraft-level history closed; the rest expected below the bar | `census61.md` |
 | 13 | EUROCONTROL day series + aircraft-identity features on top of stack_resid_v2 | fork | closed (best -0.010%, January worse in every variant) | `stack_series.md` |
 | 12 | hex-based ground rematch (stale/blank ground callsigns) | fork | closed (the shipped matcher already uses every ground point of the identified aircraft; unmatched rows lack departure coverage) | `hexmatch.md` |
 | 10 | same-type intruders by ICAO identity (adsb.lol low airborne points) | fork | **accepted** (`configs/intruder_identity_v1.json`; dev -0.0945%) but only 5 ranking rows (S 4.06e6); rides with the next file | `identity.md` |
