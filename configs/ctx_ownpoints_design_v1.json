@@ -1,0 +1,265 @@
+{
+ "experiment_id": "prc2026-ctx-ownpoints-design-v1",
+ "declared_at_utc": "2026-10-03T17:41:04+00:00",
+ "audit_used": false,
+ "purpose": "Design batch: do the own-aircraft turnaround ADS-B features of dig tunnel 18 (docs/dig/pregap.md; 15 label-free columns built for every month and the ranking file by tools/build_ownpoints_features.py into data/external/adsblol/features_v19own) improve the shipped context-network member (configs/adsb_ctx3_combo_dev_v1.json: dl32 on ADS-B-matched rows, m25dl32 on the others) when they are network inputs? The same features already feed stack_resid_v3 (v63, built, not uploaded); this batch cannot measure overlap with that stacker (its components exist only for the four development months), so a GO here is necessary, not sufficient.",
+ "prior": "Moderate: the stacker gained -0.16% equal-footing from these features with no context of neighbours; the network already sees the matched segment's first point / motion (27 ADS-B + 11 v19 columns) but never the points before the matcher's last coverage gap. Part of any gain will overlap the stacker's.",
+ "exploration_disclosed": "Tunnels 15, 17, 18 (docs/dig/own_bounds.md, case_files.md, pregap.md) read these points against 2025 labels of the development months (January, July, November, December) through the shipped chain; no October label was read for them. The feature set is tunnel 18's 14 raw columns plus p_has_inb (its chain-relative columns are dropped: the network has no chain prediction). Nothing else was tried.",
+ "hardware": "Azure arcw0-arcw7 (Standard_D16ds_v7), CPU, tools/run_adsb_ctx3.py --device cpu --threads 8, two lanes per worker, as the combination batch; the controls (dl32, m25dl32, seeds 9-12) are refitted in the same batch on the same hardware and code; the 29 September fits of the same seeds are a reproduction check only.",
+ "protocol": {
+  "data": "tools/run_adsb_ctx3.py --fold design, unchanged: the seasonal fold's fit partition (2025-02..06, 08, 09, LIRF excluded), October monitored, October predictions only",
+  "inputs": "controls: --extra-features data/external/adsblol/features_v19 (11 v19 columns), exactly the shipped member's inputs; own variants: --extra-features data/external/adsblol/features_v19own (the same 11 v19 columns, byte-identical values, plus the 15 own columns). The own columns are not masked by the m25 variants (they are observed on ranking rows whatever the matcher does).",
+  "never_read": "No run of this declaration predicts, scores or reads a label of 2025-01, 2025-07, 2025-11, 2025-12 or of the ranking months. No official score enters. The published-aggregates sources are not read.",
+  "items": {
+   "control": "C = the dl32 seed mean on rows with adsb_matched = 1, the m25dl32 seed mean on the other rows (the shipped member's routing)",
+   "own_all": "X = the dl32own seed mean on rows with adsb_matched = 1, the m25dl32own seed mean on the other rows",
+   "own_matched": "dl32own on matched rows, m25dl32 (control) on the others (reported)",
+   "own_unmatched": "dl32 (control) on matched rows, m25dl32own on the others (reported)"
+  },
+  "readings": {
+   "pool": "P = 0.5 x mean(ctx seeds 101-116) + 0.5 x mean(ctx_e24 seeds 117-132), seasonal-fold October predictions (as the combination batch)",
+   "R1": "October non-LIRF RMSE of each item's four-seed mean; matched / unmatched; by airport; identified-with-inbound rows (p_has_inb = 1) separately",
+   "R2": "recipe proxy (tools/nn_design_report.RecipeProxy, all October rows) of table = 0.25 committee + 0.75 [(1 - b) P + b X], b in {0.25, 0.4, 0.5, 1.0}, as % RMSE against b = 0; share 0.85 reported beside it"
+  },
+  "decision": "own_all is GO when (a) its R2 at b = 0.4 (the shipped member weight) is at least 0.05 points below the control's, (b) its four-seed standalone October non-LIRF RMSE is below the control's, and (c) the paired-day 95% interval of the proxy RMSE difference between own_all's and the control's tables at b = 0.4 lies below zero. A GO goes to a separately declared development round (proposal only from this batch); without a GO the item is closed. The overlap with stack_resid_v3 stays unknown at this stage and is stated."
+ },
+ "defaults": {
+  "architecture": {
+   "cat_cap": 16,
+   "d_num": 8,
+   "depth": 3,
+   "dropout": 0.1,
+   "heads": 4,
+   "max_tokens": 128,
+   "n_aux": 0,
+   "sa_dropout": 0.0,
+   "sa_ff": 2,
+   "sa_heads": 4,
+   "sa_layers": 0,
+   "tok_dim": 96,
+   "width": 512
+  },
+  "aux": {
+   "targets": [],
+   "weight": 0.0
+  },
+  "context": {
+   "departures_only": false,
+   "use_adsb": true
+  },
+  "features": {
+   "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+   "extra_features": [
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed",
+    "sfc_ground_10m",
+    "sfc_moving_10m",
+    "sfc_moving_20m",
+    "sfc_rwy_queue_5m",
+    "sfc_rwy_queue_10m"
+   ]
+  },
+  "masking": {
+   "columns": [
+    "adsb_gate",
+    "adsb_first_point_s",
+    "adsb_motion_s",
+    "adsb_first_gs_kt",
+    "adsb_first_dist_stand_m",
+    "adsb_stop_seconds",
+    "adsb_taxi_path_m",
+    "adsb_taxi_stops",
+    "adsb_taxi_stopped_s",
+    "adsb_slow_start_s",
+    "adsb_gap_before_s",
+    "adsb_turnaround_s",
+    "adsb_anchor_dist_stand_m",
+    "adsb_last_ground_s",
+    "adsb_points",
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed"
+   ],
+   "matched": "adsb_matched",
+   "p": 0.0
+  },
+  "preprocess": {
+   "bins": 32,
+   "min_count": 10,
+   "target_clip": null
+  },
+  "rows": {
+   "exclude_airports": [
+    "LIRF"
+   ],
+   "exclude_population": false,
+   "max_label": null
+  },
+  "tokens_dir": "data/ctx/tokens_v1",
+  "training": {
+   "batch_size": 2048,
+   "epochs": 32,
+   "grad_clip": 5.0,
+   "lr": 0.001,
+   "min_lr_fraction": 0.02,
+   "warmup_epochs": 1.0,
+   "weight_decay": 0.0001
+  }
+ },
+ "variants": {
+  "dl32": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   }
+  },
+  "m25dl32": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "masking": {
+    "p": 0.25
+   }
+  },
+  "dl32own": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   }
+  },
+  "m25dl32own": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "masking": {
+    "p": 0.25
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   }
+  }
+ },
+ "own_columns": [
+  "p_has_inb",
+  "p_inb_rel",
+  "p_tow",
+  "p_n",
+  "p_first_any",
+  "p_first_mv",
+  "p_last_park",
+  "p_park10",
+  "p_park20",
+  "p_park40",
+  "p_pregap_n",
+  "p_pregap_last",
+  "p_pregap_maxdist",
+  "p_gap_len",
+  "p_seg_start"
+ ],
+ "runs": {
+  "dl32": [
+   9,
+   10,
+   11,
+   12
+  ],
+  "m25dl32": [
+   9,
+   10,
+   11,
+   12
+  ],
+  "dl32own": [
+   9,
+   10,
+   11,
+   12
+  ],
+  "m25dl32own": [
+   9,
+   10,
+   11,
+   12
+  ]
+ },
+ "paths": {
+  "runs": "runs/ctx_ownpoints/design/<variant>_s<seed>/design",
+  "report": "docs/dig/ctx_ownpoints_design_report.json",
+  "reproduction_reference": "runs/adsb_ctx3_combo/design/<variant>_s<seed>/design (29 September, same seeds)"
+ },
+ "report": "tools/ctx_ownpoints_report.py"
+}
