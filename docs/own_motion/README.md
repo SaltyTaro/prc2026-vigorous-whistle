@@ -96,3 +96,12 @@ refuses to overwrite and writes `runs/submissions/vigorous-whistle_v62.parquet`,
 `docs/own_motion/export_v62.json`.
 
 The final-file chain gains a step 9 (`docs/final_file/v61_chain.md`).
+
+## Official result (3 October 2026): **v62 = 218.4174, the official best, -0.1968 s against v61**
+
+Built and uploaded at the user's word ("Build + upload v62 now (Recommended)"): `tools/run_own_motion.py --build --version 62` reproduced
+the dry run byte for byte (`runs/submissions/vigorous-whistle_v62.parquet`, SHA-256
+`cba143f84debdca0d9aff345ff4669ff6a3f0f7f5c4e02d08bcd3e0d02c32d9d`; receipt [`export_v62.json`](export_v62.json); audit
+`docs/export_audit/v62_audit.json`, integrity clean). Processed 15:01:46 UTC on 3 October: **218.4174 on all 344,841 rows**
+([`official_result_v62.json`](official_result_v62.json)). Realised squared-error gain 2.97e7 = 0.73 x the layer's squared change
+(development 0.40-1.28, mean 0.88). Nothing is re-tuned from the score. Never re-upload v1-v62.
