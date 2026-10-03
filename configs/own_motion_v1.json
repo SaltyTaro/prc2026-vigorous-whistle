@@ -1,0 +1,75 @@
+{
+ "experiment_id": "own_motion_v1",
+ "declared_at_utc": "2026-10-03T14:45:00Z",
+ "declared_by": "declaring and the governing run are research; building a file under runs/submissions and any upload stay the user's word",
+ "audit_used": false,
+ "status": "DECLARED after the exploration disclosed below and BEFORE the governing run (tools/run_own_motion.py --score), which recomputes every number from scratch on the same 2025 development months and the same twelve-month table. The evidence that does not come from the exploration is the label-free ranking dry run.",
+ "mechanism": "A departure that the shipped ADS-B matcher does not trace from its gate (dark or unmatched) can still be seen moving: its own aircraft, identified by ICAO address (runs/intruder_identity/ids.parquet, built from the adsb.lol day files, ODbL), blocked in at the departure's own stand as an arrival and later shows ground points moving at >= 3 kt. The matcher's segment starts after the last coverage gap before take-off, so this earlier motion never reaches the features. The first ground motion after the inbound's in-block is not earlier than the off-block in almost every 2025 case with the inbound at the same stand and B <= 2,700 s: label >= B = take-off - that first motion (validity on the twelve 2025 months: EDDF 93.3-99.9%, EGLL 98.4-100%, LFPG 98.8-100% by band). Above 1 h or with a different stand the bound fails (tows, repositioning).",
+ "procedure": {
+  "position": "the last layer: v61's chain (runner v55m -> no-NM rematch -> v48's reconciliation -> extreme-day layer -> variance re-allocation -> guarded stacking residual -> intruder stand bound -> identity extension) -> this layer",
+  "airports": [
+   "EDDF",
+   "EGLL",
+   "LFPG"
+  ],
+  "trigger": {
+   "identity": "the departure's ICAO address is known in the identity table (PHASE DEP)",
+   "inbound": "the latest identified arrival of the same ICAO address at the same airport whose in-block precedes the take-off (merge_asof backward on take-off) blocked in 600 s to 64,800 s (10 min to 18 h) before take-off, at the departure's own stand (STAND_mvt equal, both present)",
+   "not_gate_traced": "adsb_gate != 1 (src/prc2026_adsb/features.departure_features on the month's matches2 file; dark or unmatched rows)",
+   "first_motion": "the first adsb.lol surface point of that ICAO address at that airport with ground = True and gs >= 3 kt strictly after in-block + 120 s (day files of the take-off day and the day before); B = take-off - its time",
+   "band": "60 < B <= 2,700 s",
+   "below": "the chain's prediction p < B"
+  },
+  "value": "p + w (B + o(airport) - p); o(airport) = mean of label - B over the fitting months' candidate rows of that airport, shrunk with weight 20 rows to the pooled mean of the three airports; nearest integer (numpy.rint) in the export; no clipping",
+  "fitting_side": "candidates of the fitting months from the twelve-month table (runs/daily_totals/rows12.parquet `stack`, the older predictor) after the accepted intruder stand bound and the identity extension, both applied month-blocked exactly as in their governing runs (tools/run_intruder_identity.py accepted_after / fit / values); development month m and twelve-month month m: every other 2025 month; ranking: all twelve 2025 months",
+  "free_parameters": "the offsets o only; the airports, 600 s / 64,800 s, 120 s, 3 kt, 60 / 2,700 s and w are fixed here"
+ },
+ "candidate": {
+  "name": "om_b2700_w100",
+  "B_max_s": 2700,
+  "w": 1.0
+ },
+ "sensitivity_reported_not_selectable": [
+  {
+   "name": "om_b2700_w50",
+   "B_max_s": 2700,
+   "w": 0.5
+  }
+ ],
+ "control": {
+  "development": "the v61 development proxy runs/dig/census61/dev_v61.parquet column `v61` (SHA-256 9739d9c5bfa6258affaf8f9a6db3c001a46c1e1e92308bebcdcd6920c51448de; built by runs/dig/census61/build.py: ctl_v55m `new` -> rematch -> stack_resid_v2 delta -> intruder bound -> identity extension, month-blocked); the governing run requires its month RMSEs to equal runs/dig/census61/steps.json / docs/dig/census61.md exactly",
+  "development_month_rmse_s": {
+   "2025-01": 321.01656591795944,
+   "2025-07": 252.4266617291699,
+   "2025-11": 183.21452377717506,
+   "2025-12": 165.12517551018345
+  },
+  "twelve": "rows12 `stack` after the accepted intruder bound and the identity extension (month-blocked)"
+ },
+ "rule": {
+  "text": "accepted when (1) no development month (January, July, November, December 2025) is worse than the control by more than 0.005% of its RMSE (all rows); (2) the mean change over the equal-footing months (January, July, December 2025) is at most -0.02%; (3) every equal-footing month's paired-day 95% interval lies below zero; (4) in the twelve-month check every month is better or unchanged",
+  "equal_footing": [
+   "2025-01",
+   "2025-07",
+   "2025-12"
+  ],
+  "max_month_worsening_pct": 0.005,
+  "min_mean_improvement_pct": 0.02,
+  "intervals": "paired-day bootstrap over UTC take-off days, 2,000 replicates, seed 20261003, relative RMSE change (as tools/run_intruder_bound.py)"
+ },
+ "exploration_disclosed": {
+  "what_was_seen": "dig tunnel 17 (docs/dig/case_files.md, scratch runs/dig/case_files/, 3 October 2026): hand-read case files of the 200 worst ordinary rows (labels read); ownmove.py on the case rows; scan_move.py = the trigger on all identified 2025 departures with labels (validity by airport x same stand x B band x matcher state, persistence); screen_move.py = month-blocked development and twelve-month readings of four B bands x persistence x w; rank_move.py = the ranking trigger count on v61 (read only)",
+  "cut_from_labels": "the 2,700 s upper end of B was read from the 2025 validity table (labels): validity by band for the same-stand form is 97.1-100% up to 1,800 s, 93.3-98.8% for 1,800-2,700 s and 73-89% for 2,700-3,600 s; the other thresholds (600 s / 18 h, 120 s, 3 kt, B > 60 s) were set while reading the case files, before any screen",
+  "variants_screened": "B in (60, 2700], (60, 3600], (600, 2700], (1200, 3600] x persistence (a second moving point within 120 s) on/off x w 0.5 / 1.0 (16 readings, runs/dig/case_files/screen_move.json); offsets there were fitted on rows12 `stack` without the intruder / identity layers and the twelve-month readings were on raw `stack`",
+  "readings_before_declaring": {
+   "om_b2700_w100 (screen form)": "development Jan -0.0383 [-0.131, -0.014] / Jul -0.1107 [-0.195, -0.047] / Nov -0.0820 [-0.194, +0.019] / Dec -0.1625% [-0.251, -0.085], equal-footing mean -0.1038%; twelve months 12/12 better, mean -0.0605%",
+   "om_b2700_w50 (screen form)": "development -0.0277 / -0.0774 / -0.0926 / -0.1274%, mean -0.0775%, every interval below zero; twelve months 12/12, mean -0.0469%",
+   "B <= 3,600 variants": "equal-footing -0.061 to -0.083%, November / December intervals include zero at w 1.0, twelve months 9-12/12 (not declared)",
+   "persistence": "lower gain in every month (not declared)",
+   "development gain per unit of squared change (w 1.0)": "0.88 overall; EDDF 0.70, EGLL 1.04, LFPG 1.45; dark rows 0.47, unmatched rows 1.30; validity on triggered development rows 96.6%",
+   "ranking sizing": "155 rows on v61 (EDDF 89, EGLL 50, LFPG 16; January 79, July 76), squared change 4.25e7 at w 1.0 (mean +411 s, max +2,269 s)"
+  },
+  "tunnel_15": "docs/dig/own_bounds.md (closed, c588b91): hard bounds from the departure's own MATCHED segment (block <= motion start on gate rows, block <= first point on dark rows, upper bounds) are either already respected by v61 or invalid where broken (dark first points far older than the off-block: tows, transponder on). This layer differs in source and scope: it uses points found by ICAO identity after the aircraft's own inbound at the same stand, on rows the matcher does not trace from the gate, with B capped at 2,700 s; the long-B rows where tunnel 15's dark bound failed are excluded by the cap and the same-stand inbound requirement."
+ },
+ "ranking": "label-free dry run on the uploaded v61 (runs/submissions/vigorous-whistle_v61.parquet, SHA-256 fe137f092fa68a3f838ed0cb5b3cc5d7e995707790accecef4fb3649dd6af4e8, read only) into runs/own_motion/dry_v62/; nothing under runs/submissions; build and upload only at the user's word"
+}
