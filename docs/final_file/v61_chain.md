@@ -81,6 +81,15 @@ new workbook, `O` = a scratch directory (never under `runs/submissions`). `N` is
    -> `O/final/vigorous-whistle_vN.parquet`: the v61-equivalent file. (It applies the accepted different-type bound itself and then the
    identity extension; `tools/run_intruder_bound.py --dry-run ... --raw F --out ...` alone gives the v60-equivalent.)
 
+9. **Own-motion bound** (`configs/own_motion_v1.json`, accepted 3 October; applied after step 8, last; not part of v61, the layer of
+   the v62 dry run `runs/own_motion/dry_v62/`, `cba143f8...`). It needs the step-7 identity table, the new file's `matches2_<YYYY-MM>.parquet`
+   (the runner's ADS-B matching; `adsb_gate`) and the surface day files of every take-off day and the day before:
+
+       tools/run_own_motion.py --dry-run --version N --base O/final/vigorous-whistle_vN.parquet --base-sha256 <its SHA> --raw F \
+           --ids O/ids.parquet --matches-dir <directory with the new months' matches2 files> --out O/own
+   -> `O/own/vigorous-whistle_vN.parquet`. Offsets stay those fitted on the twelve 2025 months. With no flag the tool reproduces the v62
+   dry run on v61 byte for byte.
+
 A submission build (`--build`) remains the user's word. For a new file run step 8 once more without `--out` (default directory
 `runs/intruder_identity/dry_v<N>`), then `--build --version N --user-decision "<words>"` with the same flags (`--raw F --ids ... --base D
 --base-sha256 D_SHA --no-v60-check --template T`). `tools/prc_submit.py` itself still checks the ranking file's template and organiser
@@ -97,6 +106,7 @@ ETags: an upload of a final file needs its own small change there (not made).
 | `tools/run_stack_resid.py` | runner `runs/final_dryrun/run`, repaired run `runs/final_lfpg_eobt/run`, the shipped v55 model part, inline ranking path, output dir | `--runner`, `--repaired` (or `none`), `--model-part-original`, `--model-part/--model-part-sha256`, `--chain-rows`, `--out`, `--raw`, `--published-table`, `--template` |
 | `tools/run_intruder_bound.py` | inline ranking path; `--out` accepted only absolute paths | `--raw`, `--template` (build); `--out` now resolves under the project root |
 | `tools/run_intruder_identity.py` | inline ranking path, identity table, key map, the v60 reproduction check, output dir | `--raw`, `--ids`, `--keymap`, `--no-v60-check`, `--out`, `--template` (build) |
+| `tools/run_own_motion.py` (step 9) | base = the uploaded v61 | `--raw`, `--ids`, `--matches-dir`, `--base/--base-sha256`, `--out`, `--template` (build) |
 
 Fixed inputs that stay as they are for any period: the 2025 development tables (cells, scales, models, offsets are all fitted on 2025),
 `data/external/adsblol/matches_v11/stands.parquet`, the declarations. The two guard rows exist only in the
