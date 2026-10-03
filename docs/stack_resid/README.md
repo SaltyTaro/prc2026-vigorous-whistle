@@ -37,3 +37,14 @@ Rule: no_month_worse = True; equal_footing_mean_at_most_-0.05pct = True; equal_f
 Transfer guard after the support guard (ranking prediction RMS over development out-of-month RMS, by airport): EDDF 1.26, EDDM 1.07, EGLL 0.75, EHAM 1.24, LEBL 1.11, LEMD 0.89, LFPG 1.02, LIRF 1.20, LSZH 1.30, LTFM 1.16.
 
 No twelve-month check exists. No official score is used.
+
+## v60 built and uploaded at the user's word ("Build + upload v60 now", 3 October 2026)
+
+v60 = v59's chain without the intruder bound (`runs/rematch_nonm/rank/Y`, c67f20d6...) -> this guarded residual layer
+(`runs/stack_resid/dry_v60`, cff778e0...) -> the intruder stand bound last (`tools/run_intruder_bound.py --build --version 60`; receipt
+`docs/intruder_bound/export_v60.json`, audit `docs/export_audit/v60_audit.json`, clean). SHA-256
+`30021455005a712c241fd57354c7a57c65ea8e81cd7a440e7175d0f27598b95f`; 296,843 rows differ from v59, RMS 9.1 s, squared change 2.84e7.
+
+**Official: 218.6404 on all 344,841 rows (processed 09:47:43 UTC 3 October 2026), -0.2079 s against v59 (218.8483); the official best.**
+Record [`official_result_v60.json`](official_result_v60.json). Squared-error gain 3.14e7 = 1.11 x the squared change. Nothing is re-tuned from
+the score. Never re-upload v1-v60.
