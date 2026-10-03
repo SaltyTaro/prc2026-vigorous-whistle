@@ -74,3 +74,9 @@ declaration: leakage review (July above 1%), the concentration of the change in 
   early share does not depend on it (LFPG 14.1% vs 14.9%). The signature exists at EDDM (82.5% modal rows; early 6% on modal rows vs
   53% on the others) and LTFM (40.5%), where the error is already small or the clock is known to be an estimate. Closed for the cells
   that matter.
+
+- **ADS-B anchor for long measured taxis** (after v59's transfer): on gate-traced matched rows the chain follows the measured taxi in every
+  band (bias -4 to +5 s up to 2,400 s; label and prediction sit the same ~45-60 s above the motion start). No extrapolation gap. Closed.
+- **Gap-cut ADS-B segments** (the segmenter starts a departure after the last coverage gap > 600 s): almost all such gaps exceed an hour
+  (ordinary parked periods); 600-1,800 s gaps are 6,600 dev rows with biases -5 to +45 s. 2026 state shares sit inside 2025's range
+  apart from EDDF's known coverage drop (gate-traced 0.04-0.08 vs 0.14-0.41). Closed.
