@@ -34,3 +34,12 @@ Why so few: identification and inbound sequences are as frequent in 2026 as in 2
 2026 against 133 / 168), but only 5 of them place the intruder within an hour before v60's predicted off-block, against 26 / 53 in the
 development months. In 2025 these rows cluster on large under-prediction events (EGLL 30-31 July departure stop: labels 3,355-5,763 s
 against 2,700-4,100 s predicted); the 2026 months have fewer of them and the current chain sits after fewer intruders. Not a defect.
+
+## v61 built and uploaded at the user's word ("Build + upload v61 now", 3 October 2026)
+
+v61 = v60 + this extension (`tools/run_intruder_identity.py --build --version 61`; receipt `export_v61.json`, audit
+`docs/export_audit/v61_audit.json`, clean). SHA-256 `fe137f092fa68a3f838ed0cb5b3cc5d7e995707790accecef4fb3649dd6af4e8`; 5 rows differ from v60
+(EGLL 1, LFPG 4; +848 to +1,297 s), squared change 4.06e6.
+
+**Official: 218.6142 on all 344,841 rows (processed 11:38:12 UTC 3 October 2026), -0.0262 s against v60 (218.6404); the official best.**
+Record [`official_result_v61.json`](official_result_v61.json). Gain 0.97 x the squared change. Nothing is re-tuned from the score. Never re-upload v1-v61.
