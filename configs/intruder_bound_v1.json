@@ -1,0 +1,43 @@
+{
+ "experiment_id": "intruder_bound_v1",
+ "declared_at_utc": "2026-10-03T12:40:00Z",
+ "declared_by": "declaring and the governing run are research; building a file under runs/submissions and any upload stay the user's word",
+ "audit_used": false,
+ "status": "DECLARED after the exploration disclosed below, on the same development months and the same twelve-month table. The governing run (tools/run_intruder_bound.py --score) recomputes both tables; the evidence that does not come from the exploration is the label-free ranking dry run and, later, nothing else. The 28 September closure of a pooled stand-occupancy clamp (+17% dev SSE; arrivals towed off within minutes at EHAM / LSZH / EDDM) is the reason for the airport rule and the inbound rule below.",
+ "mechanism": "A departure leaves its stand before another aircraft can block in there. If our own aircraft (an arrival of our aircraft type) blocked in at our stand, and then an arrival of a different aircraft type blocked in at the same stand before the off-block the prediction implies, the departure must have left before that second arrival: label > B = take-off - the intruder's in-block. In 2025 the bound holds for 96.7-100% of such rows at EDDF, EGLL, LFPG and LTFM in every month and fails at EDDM, EHAM, LEBL, LEMD, LSZH and LIRF (stand codes shared by several positions or towing). The supplied ranking arrivals carry block time, stand and aircraft type on every row; no departure's own block time enters.",
+ "procedure": {
+  "position": "the last layer: v57's chain (runner v55m -> v48's reconciliation -> extreme-day layer -> variance re-allocation) -> this layer",
+  "candidate_rows": "departure at airport A from stand S (both present); prediction p (the chain's value); predicted off-block = take-off - p; the last arrival at (A, S) whose in-block precedes the predicted off-block has an aircraft type different from the departure's, the arrival before it at (A, S) has the departure's aircraft type, and 0 < predicted off-block - that last in-block <= G",
+  "airports": "those with at least 30 candidate rows in the fitting months and at least 90% of them satisfying label >= B - 60 s (fitting months only)",
+  "value": "B + o(airport, gap band); gap bands (0,300], (300,600], (600,900], (900,1800], (1800,3600] s; o = mean of label - B over the fitting months' candidate rows of that airport and band, shrunk to the airport's mean with weight 20 rows; new value = p + w (B + o - p); floor -12 s; nearest integer in the export",
+  "fitting_side": "candidates and offsets of the fitting months come from the twelve-month table (runs/daily_totals/rows12.parquet, prediction `stack`, the older v23-recipe predictor); development month m and twelve-month month m: every other 2025 month; ranking: all twelve 2025 months",
+  "free_parameters": "the offsets o and the airport set, both fitted on the fitting months; G and w are fixed here"
+ },
+ "candidate": {
+  "name": "g3600_w100",
+  "G_s": 3600,
+  "w": 1.0
+ },
+ "sensitivity_reported_not_selectable": [
+  {
+   "name": "g1800_w50",
+   "G_s": 1800,
+   "w": 0.5
+  }
+ ],
+ "control": "development: runs/scout/refit/ctl_v55m.parquet column `new` (the shipped chain on the shipped model part, pooled 239.33 s); twelve months: rows12 `stack`",
+ "rule": {
+  "text": "accepted when (1) the equal-footing mean (January, July, December 2025) of the complete-month RMSE change is at most -0.05%, (2) each equal-footing month's paired-day 95% interval lies below zero, (3) no development month (November included) is worse, and (4) the twelve-month check improves at least 11 of 12 months",
+  "intervals": "paired-day bootstrap over UTC take-off days, 2,000 replicates, seed 20261003, relative RMSE change"
+ },
+ "exploration_disclosed": {
+  "what_was_seen": "runs/dig/micro/stand_bound*.py, intruder_screen.py, intruder_audit.py, intruder_ranking.py (3 October 2026): per-airport validity on the development and twelve-month tables; G in {900, 1800, 3600, 7200, 14400}; w in {0.25, 0.5, 1.0}; the offset structure (clamp to B was worse than B + o); development and twelve-month readings of g1800/g3600/g7200 x w 0.5/1.0; the ranking dry run on v57 (52 rows, squared change 7.10e7)",
+  "readings_before_declaring": {
+   "g3600_w100": "development Jan -0.169 / Jul -1.159 / Nov -0.229 / Dec -0.204%, equal-footing mean -0.511%, every interval below zero; twelve months mean -0.376%, 12/12 better, 11/12 intervals below zero",
+   "g1800_w50": "development -0.096 / -0.240 / -0.087 / -0.120%, mean -0.152%; twelve months -0.171%, 12/12 better, 12/12 intervals",
+   "g7200_w100": "development mean -0.527%; twelve months 11/12 better, 9/12 intervals (not declared: more of the long-gap candidates fail the bound)"
+  },
+  "audit": "intruders are arrivals from other airports (100%), taxi-in median 786 s; intruder in-block minus the true off-block: median 483 s, 5th percentile 174 s, no coincidences within 5 s; development gain per unit of squared change 1.68 / 1.16 / 0.94 / 0.67 (Jan / Jul / Nov / Dec); July's gain is spread over 63 rows (top three 28%)"
+ },
+ "ranking": "label-free dry run on the uploaded v57 (runs/submissions/vigorous-whistle_v57.parquet, read only) into runs/intruder_bound/dry_v58/; nothing under runs/submissions; build and upload only at the user's word"
+}
