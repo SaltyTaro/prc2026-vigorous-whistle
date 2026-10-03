@@ -206,9 +206,40 @@ def main() -> None:
     ap.add_argument("--base-sha256", default="31d909ff2e5d1937e65404c396893b9e5524d082c07422be9390c75aad4daed8")
     ap.add_argument("--version", type=int, default=58)
     ap.add_argument("--out", default=None)
+    ap.add_argument("--build", action="store_true", help="at the user's word: write runs/submissions/vigorous-whistle_v<version>.parquet; "
+                    "it must equal the dry run byte for byte and must not exist yet")
     a = ap.parse_args()
     if a.score:
         score()
+    if a.build:
+        dry = ROOT / f"runs/intruder_bound/dry_v{a.version}/vigorous-whistle_v{a.version}.parquet"
+        target = ROOT / f"runs/submissions/vigorous-whistle_v{a.version}.parquet"
+        if target.exists():
+            raise ValueError(f"{target.name} exists; never overwrite a submission file.")
+        if not dry.exists():
+            raise ValueError("Run the dry run first.")
+        tmp = ROOT / f"runs/intruder_bound/build_v{a.version}"
+        dry_run(ROOT / a.base, a.base_sha256, a.version, tmp)
+        built = tmp / f"vigorous-whistle_v{a.version}.parquet"
+        if sha256_file(built) != sha256_file(dry):
+            raise ValueError("The rebuilt file differs from the dry run.")
+        target.write_bytes(built.read_bytes())
+        from prc2026_submission.contract import validate_submission
+        sub = validate_submission(target, ROOT / "data/raw/submitting.parquet")
+        sub.update({"version": a.version, "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+                    "provenance": {"audit_used": False, "dry_run": False, "experiment_id": "intruder_bound_v1", "selected_candidate": "g3600_w100",
+                                   "selected_by": "the declared rule (accepted)", "official_scores_used": "none",
+                                   "user_decision": "Build + upload v58 now (3 October 2026, AskUserQuestion)",
+                                   "declaration": {"configs/intruder_bound_v1.json": sha256_file(CONFIG)},
+                                   "code": {"tools/run_intruder_bound.py": sha256_file(Path(__file__))},
+                                   "base": {"path": a.base, "sha256": a.base_sha256},
+                                   "recipe": "v57's chain, then the intruder stand bound last (EDDF / EGLL / LFPG / LTFM; value take-off - intruder in-block + offset fitted on the twelve 2025 months)"}})
+        write_json(target.with_suffix(".receipt.json"), sub)
+        receipt = read_json(tmp / f"vigorous-whistle_v{a.version}.receipt.json")
+        receipt.update({"kind": "submission build at the user's word", "file": str(target.relative_to(ROOT)), "sha256": sha256_file(target),
+                        "dry_run_sha256": sha256_file(dry)})
+        write_json(ROOT / f"docs/intruder_bound/export_v{a.version}.json", receipt)
+        print("built", target.name, receipt["sha256"])
     if a.dry_run:
         out = Path(a.out) if a.out else ROOT / f"runs/intruder_bound/dry_v{a.version}"
         if "runs/submissions" in str(out).replace("\\", "/"):
