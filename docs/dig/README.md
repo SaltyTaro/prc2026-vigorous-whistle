@@ -40,7 +40,7 @@ squared error; 69% of them are under-predictions.
 | 9 | plumbing audit of the shipped ranking path (key/unit/join/fallback bugs) | fork | closed (no bug worth 0.1 s; remaining gaps are archive coverage) | `plumbing.md` |
 | 11 | position-based intruders at EDDM/EHAM/LSZH/LEMD/LEBL (ADS-B parking fixes) | fork | closed (validity <= 14%; fails at the EDDF/EGLL control too: towing and coverage edges) | `position.md` |
 | 7b | MARS stand families alone (`configs/micro_bundle_v2.json`) | fork | not accepted (-0.0173% vs -0.02% bar) | `../micro_bundle/` |
-| 12 | hex-based ground rematch (stale/blank ground callsigns) | fork | running | `hexmatch.md` |
+| 12 | hex-based ground rematch (stale/blank ground callsigns) | fork | closed (the shipped matcher already uses every ground point of the identified aircraft; unmatched rows lack departure coverage) | `hexmatch.md` |
 | 10 | same-type intruders by ICAO identity (adsb.lol low airborne points) | fork | **accepted** (`configs/intruder_identity_v1.json`; dev -0.0945%) but only 5 ranking rows (S 4.06e6); rides with the next file | `identity.md` |
 | 3 | LTFM deep dive (runway configuration, queues, clock structure, banks) | fork | **closed, no GO** (shared temporal state: neighbouring take-offs' residuals correlate 0.25-0.27, but every label-free signal reads it at <= 0.076; new groups help the older twelve-month predictor -0.13% at w 0.5 but not the shipped chain, whose context networks hold them; stand x runway bias -0.010 / -0.013%, all months better, a tenth of the bar) | `ltfm.md` |
 | 4 | LFPG / EGLL unmatched deep dive | fork | **closed, no GO** (configuration, queues, stand x runway: +0.001 to +0.225% equal-footing; early class AUC +0.002 at most; no partial traces to recover) | `lfpg_egll.md` |
