@@ -1,0 +1,81 @@
+{
+ "experiment_id": "stack_resid_v3",
+ "declared_at_utc": "2026-10-03T15:10:00Z",
+ "declared_by": "declaring and the governing run are research. A build under runs/submissions follows only if this rule accepts and the dry-run checks pass (the user's standing word: \"if you get anything build and keep it ready, we will upload it when slots reset\"); the upload stays the user's.",
+ "audit_used": false,
+ "status": "DECLARED after the exploration disclosed below and BEFORE the governing run (tools/run_stack_resid_v3.py --score), which recomputes every number from scratch: stack_resid_v2's learner (to reproduce docs/stack_resid/results_v2.json), this learner, and the full chain on the development months against the v62 development proxy. The tunnel-18 screen read the same development months with the same labels; the evidence not from the exploration is the in-chain reading after the intruder / identity / own-motion layers and the label-free ranking checks.",
+ "mechanism": "stack_resid_v2's guarded LightGBM on the chain's residual, refitted with 19 more label-free inputs: the departure's own aircraft's adsb.lol points between its identified inbound's in-block and its take-off, including the points before the last > 600 s coverage gap that the shipped matcher drops (its departure segment starts after that gap). When the aircraft powers its transponder, starts moving, is still parked at its stand near the predicted off-block, or was towed, the chain's error shifts; v2's learner did not see any of it. Tunnel 15 showed these points are not HARD bounds (tows, early recording); here a learner weighs them, behind a per-airport support guard.",
+ "procedure": {
+  "position": "stack_resid_v2's place, on v62's chain: rematch chain file runs/rematch_nonm/rank/Y/vigorous-whistle_v58.parquet (c67f20d6..., runner v55m -> no-NM rematch -> v48 -> extreme-day -> variance re-allocation) -> THIS LAYER (replaces v2) -> intruder stand bound -> identity extension -> own-motion bound (each re-evaluated on the new predictions; their parameters and offsets unchanged)",
+  "learner": "stack_resid_v2's, unchanged except the inputs: v2's 46 columns (tools/run_stack_resid.features) + the 19 columns below = 65; target label - chain (`new`) clipped at +-3,600 s; LightGBM 31 leaves / min 400 / lr 0.03 / feature fraction 0.5 / bagging 0.7 / L2 50 / max_bin 127 / deterministic / 4 threads, at most 800 rounds, early stopping 60 on the fitting rows whose take-off day-of-month is a multiple of 5; bag of seeds 20261003, 11, 12; value = chain + 0.5 x bag, floor -12 s",
+  "own_point_features": {
+   "identity": "each movement at every airport (DEP and ARR) gets the ICAO address of the nearest adsb.lol surface-file point of the same callsign (CALLSIGN_flt, else the no-NM rematch key map runs/rematch_nonm/key_map.parquet on FLIGHT_mvt) at the same airport within 600 s of its take-off / landing time (the day file of that time); the same rule as tools/run_intruder_identity.build_ids, extended to all ten airports",
+   "inbound": "the latest identified arrival of the same ICAO address at the same airport whose in-block precedes take-off - 600 s (merge_asof backward), kept when it lies 600 s to 64,800 s before take-off",
+   "window": "the aircraft's surface-file points (day of take-off and the day before) at that airport strictly after in-block + 120 s and up to take-off + 120 s; 'before take-off' features use the points at least 60 s before take-off",
+   "columns": {
+    "p_inb_rel": "take-off - inbound in-block (s)",
+    "p_tow": "1 if the inbound's stand differs from the departure's stand (string compare), else 0",
+    "p_n": "number of points before take-off (0 when none)",
+    "p_first_any": "take-off - first point (any)",
+    "p_first_mv": "take-off - first ground point with gs >= 3 kt",
+    "p_last_park": "take-off - last ground point with gs < 1 kt",
+    "p_park10 / p_park20 / p_park40": "1 if a parked point (ground, gs < 1 kt) lies within 150 m of the park position in the last 10 / 20 / 40 minutes before take-off; park position = median of the parked points in the first 30 minutes of the window, else the first point",
+    "p_pregap_n": "points before the last coverage gap > 600 s within the window (0 when none)",
+    "p_pregap_last": "take-off - the last of those points",
+    "p_pregap_maxdist": "their largest distance from the park position (m)",
+    "p_gap_len": "length of that last gap (s)",
+    "p_seg_start": "take-off - the first point after that gap (the post-gap segment's start)",
+    "q_mv_vs_pred / q_any_vs_pred / q_park_vs_pred / q_pregap_vs_pred / q_seg_vs_pred": "p_first_mv / p_first_any / p_last_park / p_pregap_last / p_seg_start minus the chain's value `new`"
+   },
+   "missing": "rows without an identified inbound in the window: all 19 missing; rows with an inbound but no point in the window: p_inb_rel, p_tow, p_n = 0, the rest missing (LightGBM missing handling)"
+  },
+  "support_guard": {
+   "v2_part": "unchanged: per airport, the 0.1% / 99.9% quantiles of each of v2's seven TOP features over the fitting rows (LIRF population and guard rows excluded); a row with any of them finite and outside keeps the chain",
+   "new_part": "per airport, for each of the 19 new columns with at least 50 finite fitting values at that airport: the 0.1 / 99.9 percentiles of the finite fitting values; a row with any value outside keeps the chain (as in the tunnel-18 screen)",
+   "development": "month-blocked: ranges from the other three development months",
+   "ranking": "ranges from all four development months"
+  },
+  "lirf": "LIRF departures keep stack_resid_v2's layer value exactly (development: v2's month-blocked prediction; ranking: the v60 stack file runs/stack_resid/dry_v60/vigorous-whistle_v60.parquet, cff778e0..., which is v2 on c67f20d6). The new learner is fitted on the same rows as v2 (all ten airports, LIRF non-population rows included, as screened) and its prediction is applied at the other nine airports only. Reasons: LIRF is where the ranking regime differs most from 2025 (July 2026 dark: 16% of departures with an identified inbound, 0.1% with own motion seen; 2025 development months: January 0%, July 88%, November 42%, December 65% own motion), LIRF changes have repeatedly failed to transfer, and the tunnel-18 screen read LIRF slightly worse in January and July 2025 (disclosed below; this choice is made after seeing that).",
+  "fitting": "development month m: the bag fitted on the other three development months; ranking: the bag fitted on all four"
+ },
+ "candidate": {
+  "name": "pregap_replace_w50_nolirf",
+  "weight": 0.5,
+  "seeds": [
+   20261003,
+   11,
+   12
+  ],
+  "feature_set": "v2's 46 + 19 own-point columns",
+  "support_guard": "v2's + per-airport guard on the 19 new columns",
+  "lirf": "keeps v2"
+ },
+ "sensitivity_reported_not_selectable": [
+  {
+   "name": "pregap_replace_w50_withlirf",
+   "note": "the same learner applied at LIRF too (the screened form)"
+  }
+ ],
+ "control": {
+  "development": "the v62 development proxy: runs/dig/census61/dev_v61.parquet `v61` (SHA-256 9739d9c5...; ctl_v55m `new` -> no-NM rematch -> stack_resid_v2 delta -> intruder bound -> identity extension, month-blocked) -> the own-motion bound om_b2700_w100 month-blocked exactly as tools/run_own_motion.py --score (offsets from the twelve-month table, every other month). The governing run rebuilds v2's month-blocked prediction, requires it to reproduce docs/stack_resid/results_v2.json month RMSEs, rebuilds the v61 proxy from it and requires `v61` exactly, and requires the v62 proxy's month RMSEs to equal docs/own_motion/results_v1.json's development readings (control x (1 + pct / 100), to 1e-9 relative)",
+  "candidate_chain": "the same chain with stack_resid_v2's delta replaced by this layer's delta (stack v3 value - ctl `new`, added to the rematched model-part chain as v2's was), then the intruder bound, the identity extension and the own-motion bound re-evaluated month-blocked on the new predictions with their declared parameters"
+ },
+ "rule": {
+  "text": "stack_resid_v2's accepted rule, clauses unchanged, read in-chain against the v62 development proxy: accepted when (1) no development month (January, July, November, December 2025) is worse (complete-month RMSE change <= 0); (2) the equal-footing mean (January, July, December 2025) of the complete-month RMSE change is at most -0.05%; (3) each equal-footing month's paired-day 95% interval of the RMSE difference (seconds) lies below zero; (4) transfer guard, read after the support guard on both sides: for every airport where this learner applies (the nine airports other than LIRF), the RMS of the bag's prediction on the ranking rows (bag on all four months; guarded; LIRF population and guard rows at 0) lies within 0.5x to 2x of the RMS of the out-of-month guarded bag predictions on that airport's development rows in the governing run",
+  "intervals": "tools/run_stack_resid.paired: paired-day bootstrap over UTC take-off days, 2,000 replicates, seed 20261003",
+  "twelve_month_check": "none exists: stack_resid_v2's rule had no twelve-month clause (the component tables cover only the four development months); stated, not substituted"
+ },
+ "exploration_disclosed": {
+  "tunnel_18": "docs/dig/pregap.md (f321d91), scratch runs/dig/pregap/: the 19 features built (build.py) and screened on the four development months against the v61 development proxy (the stacking delta carried as v61 + (candidate - base2) on rows the later layers left alone), labels read",
+  "variants_screened": {
+   "stage-2 control (a second learner on v2's output, 46 inputs)": "Jan +0.016 / Jul +0.034 / Nov +0.022 / Dec -0.039%",
+   "stage-2 + own points, w 0.5": "-0.060 [-0.221, -0.021] / -0.011 [-0.057, +0.032] / -0.313 / -0.403%, equal-footing -0.158%",
+   "stage-2 + own points, w 1.0": "-0.016 / +0.241 / -0.345 / -0.433%, equal-footing -0.069%",
+   "replace (v2's learner refitted with 46 + own points), w 0.5, LIRF included": "-0.087 [-0.291, -0.038] / -0.078 [-0.122, -0.037] / -0.354 [-0.503, -0.244] / -0.394 [-0.512, -0.302]%, equal-footing -0.186%"
+  },
+  "decomposition_seen": "replace variant: identified rows with own motion carry most of the gain (gain / squared change 2.70), unidentified rows 0.41; about a third of the gain on rows inside the own-motion trigger; by airport every equal-footing cell gains except LIRF January -0.010 / July -0.046 points of the month and LEMD / LTFM January-July within +-0.02 (runs/dig/pregap/decomp.json)",
+  "ranking_seen": "feature coverage on the ranking only (runs/dig/pregap/rank_coverage.json; no ranking prediction or change computed before this declaration)"
+ },
+ "tool": "tools/run_stack_resid_v3.py (imports tools/run_stack_resid.py unchanged): --score -> docs/stack_resid/results_v3.json + README section; --dry-run --version 63 -> runs/stack_resid/dry_v63/ (stack step, then tools/run_intruder_identity.dry_run and tools/run_own_motion.dry_run in-process; the final file runs/stack_resid/dry_v63/vigorous-whistle_v63.parquet); --build --version 63 --user-decision ... reruns into runs/stack_resid/build_v63, requires byte identity, writes runs/submissions/vigorous-whistle_v63.parquet (never overwrite) + docs/stack_resid/export_v63.json",
+ "ranking": "label-free; nothing under runs/submissions unless accepted and the dry-run checks pass; never uploaded by this tool"
+}
