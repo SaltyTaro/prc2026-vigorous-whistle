@@ -33,9 +33,18 @@ squared error; 69% of them are under-predictions.
 |---|---|---|---|---|
 | 1 | 2026 ranking-file regime audit (label-free) | fork | **find**: no-NM rows at EDDF/EHAM/LSZH matched to ADS-B by flight number, not callsign; declared round `configs/rematch_nonm_v1.json` running | `regime_audit.md` |
 | 2 | residual ore test: everything label-free on the shipped chain's residual | fork | **find**: components + published day discrepancy, equal-footing -0.258% (3-seed bag, w 0.5); being prepared for a declared round (`stack_resid_v1`) | `residual_ore.md` |
-| 5 | cross-row hard constraints (turnaround minima, stand families, ordering) | fork | running | `constraints.md` |
+| 5 | cross-row hard constraints (turnaround minima, stand families, ordering) | fork | closed (only MARS stand families valid, -0.02%) | `constraints.md` |
+| 6 | published-gap regime hunt on v59 | fork | closed (nothing >= 0.1 s; small extreme-day count / day-boundary idea) | `published_gaps.md` |
+| 7 | micro-layer bundle (MARS families, count-aware extreme days, day-boundary pairs) as one declared round on v60 | fork | running | `../micro_bundle/` |
+| 8 | stronger stacking learner (seed spreads, finer splits, airport interactions) on top of stack_resid_v2 | fork | closed (best -0.020%, December only) | `stack3.md` |
+| 9 | plumbing audit of the shipped ranking path (key/unit/join/fallback bugs) | fork | running | `plumbing.md` |
 | 3 | LTFM deep dive (runway configuration, queues, clock structure, banks) | fork | **closed, no GO** (shared temporal state: neighbouring take-offs' residuals correlate 0.25-0.27, but every label-free signal reads it at <= 0.076; new groups help the older twelve-month predictor -0.13% at w 0.5 but not the shipped chain, whose context networks hold them; stand x runway bias -0.010 / -0.013%, all months better, a tenth of the bar) | `ltfm.md` |
 | 4 | LFPG / EGLL unmatched deep dive | fork | **closed, no GO** (configuration, queues, stand x runway: +0.001 to +0.225% equal-footing; early class AUC +0.002 at most; no partial traces to recover) | `lfpg_egll.md` |
+
+## Official results of the campaign
+
+v58 = 220.9212 (intruder bound), v59 = 218.8483 (+ no-NM rematch, user override), v60 = 218.6404 (+ guarded stacking residual):
+-2.69 s against v57 in one day.
 
 ## FIND -> v58 = 220.9212 official (-0.408 s vs v57): the intruder stand bound
 
