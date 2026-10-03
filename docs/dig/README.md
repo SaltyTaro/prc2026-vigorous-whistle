@@ -40,6 +40,7 @@ squared error; 69% of them are under-predictions.
 | 9 | plumbing audit of the shipped ranking path (key/unit/join/fallback bugs) | fork | closed (no bug worth 0.1 s; remaining gaps are archive coverage) | `plumbing.md` |
 | 11 | position-based intruders at EDDM/EHAM/LSZH/LEMD/LEBL (ADS-B parking fixes) | fork | closed (validity <= 14%; fails at the EDDF/EGLL control too: towing and coverage edges) | `position.md` |
 | 7b | MARS stand families alone (`configs/micro_bundle_v2.json`) | fork | not accepted (-0.0173% vs -0.02% bar) | `../micro_bundle/` |
+| 13 | EUROCONTROL day series + aircraft-identity features on top of stack_resid_v2 | fork | closed (best -0.010%, January worse in every variant) | `stack_series.md` |
 | 12 | hex-based ground rematch (stale/blank ground callsigns) | fork | closed (the shipped matcher already uses every ground point of the identified aircraft; unmatched rows lack departure coverage) | `hexmatch.md` |
 | 10 | same-type intruders by ICAO identity (adsb.lol low airborne points) | fork | **accepted** (`configs/intruder_identity_v1.json`; dev -0.0945%) but only 5 ranking rows (S 4.06e6); rides with the next file | `identity.md` |
 | 3 | LTFM deep dive (runway configuration, queues, clock structure, banks) | fork | **closed, no GO** (shared temporal state: neighbouring take-offs' residuals correlate 0.25-0.27, but every label-free signal reads it at <= 0.076; new groups help the older twelve-month predictor -0.13% at w 0.5 but not the shipped chain, whose context networks hold them; stand x runway bias -0.010 / -0.013%, all months better, a tenth of the bar) | `ltfm.md` |
@@ -47,8 +48,8 @@ squared error; 69% of them are under-predictions.
 
 ## Official results of the campaign
 
-v58 = 220.9212 (intruder bound), v59 = 218.8483 (+ no-NM rematch, user override), v60 = 218.6404 (+ guarded stacking residual):
--2.69 s against v57 in one day.
+v58 = 220.9212 (intruder bound), v59 = 218.8483 (+ no-NM rematch, user override), v60 = 218.6404 (+ guarded stacking residual),
+v61 = 218.6142 (+ same-type intruders by ICAO identity): -2.71 s against v57 in one day.
 
 ## FIND -> v58 = 220.9212 official (-0.408 s vs v57): the intruder stand bound
 
