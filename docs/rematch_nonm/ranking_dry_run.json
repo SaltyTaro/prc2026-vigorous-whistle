@@ -1,0 +1,142 @@
+{
+ "created_at_utc": "2026-10-03T08:25:00Z",
+ "dry_run_only": true,
+ "official_scores_used": "none",
+ "reproduction_on_unchanged_base": {
+  "base": "runs/lirf_combo/export_dry/vigorous-whistle_v55.parquet",
+  "base_sha256": "266b8c936f2625578e4980f1b11c3a26cc63594a13916510fa3fe86925ec800f",
+  "reconciled": "d1c390d41225e22862c4536b7ee1ff7be1b42e7e046d52e592429460327d438b",
+  "extreme_day": "aa02ff597a619f223888370726cdcbf5c6d055720ef2f95b0c93818133fd1ece",
+  "var_alloc": "31d909ff2e5d1937e65404c396893b9e5524d082c07422be9390c75aad4daed8",
+  "equals_uploaded_v57": true
+ },
+ "base_with_layer": {
+  "base": {
+   "path": "runs/lirf_combo/export_dry/vigorous-whistle_v55.parquet",
+   "sha256": "266b8c936f2625578e4980f1b11c3a26cc63594a13916510fa3fe86925ec800f"
+  },
+  "created_at_utc": "2026-10-03T08:16:49.482247+00:00",
+  "layer_rows": 343,
+  "offsets": {
+   "EDDF": 87.13499999046326,
+   "EHAM": 0.9550000429153442,
+   "LSZH": 48.21000003814697
+  },
+  "output": {
+   "path": "runs/rematch_nonm/base/vigorous-whistle_v55m_rematch.parquet",
+   "sha256": "75957f8280dc710f5734c703e8a0fc544850ca68319df5c664dd93a8be568695"
+  },
+  "rows_changed": 342,
+  "sum_squared_change": 121211672.0
+ },
+ "chain_on_base_with_layer": {
+  "reconciled": "ebb25a487e9aac36d6fd9ac2cf48f3f653a5d059b14738a07a55b06e957205be",
+  "extreme_day": "97f893e396601224d09d9c4ded6e8fcc77b2b7f2b39761f761d174b4e85c1787",
+  "final": {
+   "path": "runs/rematch_nonm/rank/Y/vigorous-whistle_v58.parquet",
+   "sha256": "c67f20d61f8a85770a68695268e9f49449cc0157970ffc2b9e83044c458201ca"
+  }
+ },
+ "against_v57": {
+  "rows_changed": 8982,
+  "layer_rows": 343,
+  "layer_rows_changed": 342,
+  "other_rows_changed": 8640,
+  "sum_squared_change": 123107470.0,
+  "sum_squared_change_layer_rows": 122580295.0,
+  "sum_squared_change_other_rows": 527175.0,
+  "max_abs_change_s": 2196.0,
+  "mean_change_layer_rows_s": 133.0932944606414,
+  "by_airport_month": {
+   "EDDF|1": {
+    "rows_changed": 443,
+    "layer_rows": 5,
+    "sum_squared_change": 681191.0
+   },
+   "EDDF|7": {
+    "rows_changed": 104,
+    "layer_rows": 3,
+    "sum_squared_change": 1606.0
+   },
+   "EHAM|1": {
+    "rows_changed": 4396,
+    "layer_rows": 246,
+    "sum_squared_change": 114699655.0
+   },
+   "EHAM|7": {
+    "rows_changed": 2098,
+    "layer_rows": 50,
+    "sum_squared_change": 2878301.0
+   },
+   "LSZH|1": {
+    "rows_changed": 1171,
+    "layer_rows": 28,
+    "sum_squared_change": 4658224.0
+   },
+   "LSZH|7": {
+    "rows_changed": 770,
+    "layer_rows": 11,
+    "sum_squared_change": 188493.0
+   }
+  },
+  "published_check": {
+   "airport_days_with_5_layer_rows": 11,
+   "abs_discrepancy_hours_v57": 52.89105555555563,
+   "abs_discrepancy_hours_new": 38.762166666666744,
+   "days_closer": 9,
+   "all_days_abs_discrepancy_hours_v57": 802.7068888888891,
+   "all_days_abs_discrepancy_hours_new": 788.5232777777779,
+   "days": {
+    "EHAM|2026-01-02": {
+     "v57_h": -6.511888888888967,
+     "new_h": -4.993555555555633
+    },
+    "EHAM|2026-01-03": {
+     "v57_h": 5.029888888888915,
+     "new_h": 4.008222222222248
+    },
+    "EHAM|2026-01-04": {
+     "v57_h": -3.8320555555555296,
+     "new_h": -0.6095555555555296
+    },
+    "EHAM|2026-01-05": {
+     "v57_h": -2.832388888888915,
+     "new_h": -1.5985000000000258
+    },
+    "EHAM|2026-01-06": {
+     "v57_h": -11.558555555555504,
+     "new_h": -9.82272222222217
+    },
+    "EHAM|2026-01-09": {
+     "v57_h": 2.4748333333333723,
+     "new_h": 2.2915000000000387
+    },
+    "EHAM|2026-01-25": {
+     "v57_h": 1.6322222222222222,
+     "new_h": 1.726388888888889
+    },
+    "EHAM|2026-01-29": {
+     "v57_h": -8.727722222222235,
+     "new_h": -5.194111111111124
+    },
+    "LSZH|2026-01-08": {
+     "v57_h": -3.904777777777765,
+     "new_h": -1.8886666666666538
+    },
+    "LSZH|2026-01-10": {
+     "v57_h": 5.684666666666647,
+     "new_h": 6.046333333333314
+    },
+    "LSZH|2026-01-22": {
+     "v57_h": 0.702055555555562,
+     "new_h": 0.5826111111111176
+    }
+   }
+  }
+ },
+ "commands": [
+  "tools/run_rematch_nonm.py --ranking-base",
+  "runs/rematch_nonm/repro/chain.sh runs/rematch_nonm/base/vigorous-whistle_v55m_rematch.parquet runs/rematch_nonm/rank 58",
+  "runs/rematch_nonm/rank_check.py runs/rematch_nonm/rank/Y/vigorous-whistle_v58.parquet"
+ ]
+}

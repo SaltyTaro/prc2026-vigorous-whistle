@@ -1,0 +1,57 @@
+{
+ "experiment_id": "rematch_nonm_v1",
+ "declared_at_utc": "2026-10-03T07:53:00Z",
+ "declared_by": "declaring and the governing run are research; building a file under runs/submissions and any upload stay the user's word",
+ "audit_used": false,
+ "status": "DECLARED after the exploration disclosed below (docs/dig/regime_audit.md), on the same four development months and the same twelve-month table, and BEFORE the governing run. The exploration applied the layer after the shipped chain; this declaration places it in the model part, before v48's reconciliation, so the governing development numbers (the chain rerun on the changed model part) have not been seen. The twelve-month form is the one already read in the exploration and is recomputed by the governing run. The evidence that does not come from the exploration is the governing chain rerun and the label-free ranking dry run.",
+ "mechanism": "A departure without a Network Manager record has no CALLSIGN_flt; the ADS-B matcher keys it on FLIGHT_mvt. At EDDF, EHAM and LSZH that field is the flight number, not the ATC callsign (it differs from CALLSIGN_flt on 97% / 98% / 73% of their NM-present departures; on 0-2% at the other seven airports), so these rows almost never match (ranking match rate 1-3% at EDDF / EHAM, 26-28% at LSZH, against 76-99% at EDDM / EGLL / LEBL / LEMD). v35's callsign fix maps the IATA prefix only and misses alphanumeric callsigns and leading zeros. The callsign a flight number flies under is visible on the same flight number's NM-present departures (label-free). In the ranking months the no-NM rows cluster on disruption days (EHAM 2-6 January 2026, LSZH 8, 10 and 22 January 2026), where the rematched ADS-B taxi shows de-icing queues the model part does not see.",
+ "external_data": {
+  "adsb": "adsb.lol globe_history surface positions (ODbL 1.0), the same archive and day files the shipped ADS-B features use (data/external/adsblol/surface); learned stand positions data/external/adsblol/matches_v11/stands.parquet",
+  "published_totals": "as configs/daily_totals_v1.json, configs/scout_extreme_shift_v1.json and configs/scout_var_alloc_v1.json (EUROCONTROL All-causes pre-departure delay; used on the user's decision); this layer itself reads no published figure"
+ },
+ "procedure": {
+  "position": "IN THE MODEL PART, before v48's reconciliation: model part (runner v55m) -> this layer -> v48's reconciliation (configs/daily_totals_v1.json) -> extreme-day layer (configs/scout_extreme_shift_v1.json) -> variance re-allocation (configs/scout_var_alloc_v1.json), every published-data step with its shipped parameters",
+  "key_map": "for each (airport, FLIGHT_mvt): the most frequent CALLSIGN_flt over every departure with both fields in the twelve 2025 training files and data/raw/ranking.parquet (label-free); ties broken by the alphabetically first callsign",
+  "rows": "departures without an NM record (ADEP_flt missing) at EDDF, EHAM and LSZH",
+  "track": "surface tracks of the take-off day and the day before whose callsign equals the learned key at the row's airport; a track is a candidate with at least three ground points in [take-off - 4 h, take-off + 30 s] and one airborne point in [take-off - 30 s, take-off + 900 s]; segment = the unchanged prc2026_adsb.features.segment with the row's learned stand position; among candidates the segment whose last ground point is nearest take-off (as tools/adsb_rematch_nonm.py)",
+  "qualifying": "the segment is a gate segment (gate = true) that starts at the row's known stand (at_known_stand = true), and neither the existing key (FLIGHT_mvt) nor v35's IATA-mapped key (tools/adsb_rematch_nonm.IATA) yields a gate segment for the row (those rows are already matched or already carry v35's callsign fix)",
+  "observed_taxi": "take-off - the segment's motion start",
+  "offset": "o_airport = median of (label - observed taxi) over the fitting months' learned-key gate segments at the known stand at that airport (whether or not another key also matched); development month m and twelve-month month m: the other eleven 2025 months; ranking: all twelve 2025 months",
+  "update": "v = p + w (observed taxi + o_airport - p) with w = 0.5, p = the model part's value (development: column v55m of runs/dev_model_part/rows.parquet; ranking: the runner's v55m file runs/lirf_combo/export_dry/vigorous-whistle_v55.parquet, nearest integer after the update); floor -12 s",
+  "development_chain": "as tools/scout_refit_run.py builds its control runs/scout/refit/ctl_v55m.parquet: for scored month m the rows table holds month m from the (changed) model part and the other months from the v46 stack; v48's run_month on month m with the declared settings, the shipped v48 run for the other months; then scout_var_alloc.layered (extreme-day layer and variance re-allocation fitted on the other months, i.e. the shipped parameters). The unchanged model part must reproduce ctl_v55m's `new` exactly before any candidate number is read",
+  "twelve_month_check": "runs/daily_totals/rows12.parquet `stack` (the older v23-recipe predictor), without the published chain: v = stack + w (observed taxi + o_airport - stack) on month m's qualifying rows, o from the other eleven months; control = stack",
+  "free_parameters": "the offsets o_airport (fitted on the fitting months); w, the airports, the filter and the key rule are fixed here"
+ },
+ "candidate": {
+  "name": "w50",
+  "w": 0.5
+ },
+ "control": "development: the unchanged v55m model part through the same chain (= runs/scout/refit/ctl_v55m.parquet `new`, pooled 239.33 s); twelve months: rows12 `stack`",
+ "rule": {
+  "text": "accepted when (1) no development month is worse than the control by more than 0.005% of its RMSE (all rows); (2) the mean change over the equal-footing months is at least 0.02% below zero; (3) every equal-footing month's paired-day 95% interval (by off-block day, seed 20260929) lies below zero; (4) in the twelve-month check no month is worse than its control by more than 0.005% and at least two thirds of the months are better. November is reported in (1).",
+  "equal_footing": [
+   "2025-01",
+   "2025-07",
+   "2025-12"
+  ],
+  "max_month_worsening_pct": 0.005,
+  "min_mean_improvement_pct": 0.02,
+  "twelve_min_better_share": 0.6667,
+  "intervals": "run_adsb_v11.paired_days(off-block day, label, candidate, control, 20260929), as scout_refit_run.score"
+ },
+ "exploration_disclosed": {
+  "record": "docs/dig/regime_audit.md; scratch runs/dig/regime/ (rematch.py, prep_rematch.py, eval2025.py, eval_months.py, eval12.py)",
+  "what_was_seen": "the layer applied AFTER the shipped chain on ctl_v55m `new`, offsets from the other development months; weights 0.25 / 0.5 / 0.75 / 1.0 and offsets 0 / +50 s on the pooled four months; the known-stand filter was added after seeing that gate segments off the stand are de-icing-pad stops (median 208 s short, 33% within 120 s, 39 rows); the twelve-month form above with offsets from the other eleven months",
+  "readings_before_declaring": {
+   "development_after_chain_w50": "January -0.050% [-0.445, -0.021 s] / July -0.021% [-0.101, -0.018] / November -0.011% [-0.039, -0.007] / December -0.021% [-0.074, +0.004]; equal-footing mean -0.031%; 73 / 241 / 39 / 77 rows; gain per unit squared change 2.69 / 0.62 / 1.89 / 1.22; all twelve airport-month cells better",
+   "development_after_chain_w75": "-0.061 / -0.006 / -0.013 / -0.019% (July gain per unit squared change 0.08): not declared",
+   "twelve_months_w50": "12 of 12 months better, 12 of 12 paired-day intervals below zero, mean -0.024%",
+   "ranking_arithmetic_on_v57": "343 qualifying rows (EHAM 246 January + 50 July, LSZH 28 + 11, EDDF 5 + 3), squared change 1.17e8 when applied after the chain; EHAM January 93%, top 30 rows 50%"
+  }
+ },
+ "disclosed_evidence_not_in_rule": {
+  "ranking_label_free_published_check": "on 9 of 11 ranking airport-days with at least five qualifying rows, the change the layer makes to the day's implied positive delay has the sign of the published-minus-implied discrepancy left after v57 (correlation 0.66); e.g. EHAM 4 January 2026 -3.49 h of a -3.83 h gap, 5 January -2.62 of -2.83 h. Read before declaring; recomputed after the governing run on the chain's own output."
+ },
+ "report": "docs/rematch_nonm/results_v1.json",
+ "code": "tools/run_rematch_nonm.py"
+}
