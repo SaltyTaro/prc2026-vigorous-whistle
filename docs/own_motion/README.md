@@ -105,3 +105,91 @@ the dry run byte for byte (`runs/submissions/vigorous-whistle_v62.parquet`, SHA-
 `docs/export_audit/v62_audit.json`, integrity clean). Processed 15:01:46 UTC on 3 October: **218.4174 on all 344,841 rows**
 ([`official_result_v62.json`](official_result_v62.json)). Realised squared-error gain 2.97e7 = 0.73 x the layer's squared change
 (development 0.40-1.28, mean 0.88). Nothing is re-tuned from the score. Never re-upload v1-v62.
+
+# Own-motion bound at five more airports (`configs/own_motion_v2.json`) — ACCEPTED by its rule (3 October 2026)
+
+Governing tool `tools/run_own_motion_v2.py` (b57a695; imports `tools/run_own_motion.py`
+unchanged); results [`results_v2.json`](results_v2.json). No official score, no leaderboard; nothing built; nothing uploaded.
+
+**Mechanism.** v1's bound carried to EHAM / EDDM / LSZH / LEMD / LEBL, plus a "no return" condition:
+- the departure is not traced from the gate;
+- its own aircraft (tunnel 11's identity tables `runs/dig/position/ids_<tag>.parquet`) blocked in at the same stand 10 min to 18 h before
+  take-off;
+- it shows a first ground point at >= 3 kt after in-block + 120 s, B seconds before take-off (60 < B <= 2,700 s);
+- it never comes back within 60 m of its parking fix (slow points) more than 300 s later.
+
+Where the chain is below B, the value is p + 0.5 (B + o(airport) - p), applied after v1. v1's rows (EDDF / EGLL / LFPG) and these rows
+are disjoint by airport.
+
+## Governing run (control: the v62 development proxy, rebuilt in-process; month RMSEs equal v1's readings to 1e-9)
+
+The trigger is recomputed from the raw files, identity tables and adsb.lol day files: 398,551 trigger rows in 2025 before the band and
+the prediction (EDDM 44,012 / EHAM 87,341 / LEBL 105,033 / LEMD 94,808 / LSZH 67,357). It reproduces the tunnel-19 scan exactly (February
+2025: every B and return flag equal).
+
+| month | control RMSE | `om5_b2700_w50` | paired-day 95% (%) | rows | gain / squared change | valid |
+|---|---:|---:|---|---:|---:|---:|
+| January 2025 | 320.8946 | −0.0370% | [−0.139, −0.012] | 1,123 | 1.44 | 93.6% |
+| July 2025 | 252.1483 | −0.0479% | [−0.091, −0.018] | 1,340 | 1.83 | 89.9% |
+| November 2025 | 183.0653 | −0.0877% | [−0.133, −0.052] | 1,031 | 1.78 | 90.6% |
+| December 2025 | 164.8560 | −0.0812% | [−0.128, −0.028] | 1,025 | 1.28 | 92.7% |
+
+Twelve months (rows12 → intruder bound → identity extension → v1, month-blocked): every month better, every interval below zero, mean
+−0.067% (October −0.171% the largest).
+
+**Rule, v57's four clauses:**
+
+| clause | requirement | result | pass |
+|---|---|---|---|
+| 1 | no development month worse by more than 0.005% | worst −0.037% | yes |
+| 2 | equal-footing mean <= −0.02% | **−0.0554%** | yes |
+| 3 | every equal-footing interval below zero | upper ends −0.012 / −0.018 / −0.028% | yes |
+| 4 | every twelve-month month better or unchanged | 12 of 12 better | yes |
+
+**Accepted.**
+
+Offsets on all twelve months: EDDM +50.7, EHAM −17.9, LEBL +152.3, LEMD +88.1, LSZH +46.4 s (pooled +0.2).
+
+Sensitivity `om4_noEHAM_b2700_w50` (reported, not selectable):
+- development −0.026 / −0.038 / −0.069 / −0.069%, equal-footing −0.0444%, every interval below zero;
+- twelve months 12/12 better, 11 intervals below zero (March's upper end +0.001).
+
+EHAM alone read −0.011% equal-footing with intervals touching zero in the screen (disclosed in the declaration).
+
+## Sequencing with stack_resid_v3
+
+`stack_resid_v3` was accepted at 15:25 UTC (14a3bdf, `docs/stack_resid/results_v3.json`) and is being built as v63 by another agent.
+As declared:
+- if v63 is built first, this rule is re-run on the v63 chain proxy before any build: `--score --control <the v63 development proxy>
+  --control-col <column> --control-tag v63`, written to `results_v2_v63.json`;
+- the build is then **v64 on v63**;
+- if v63 is not built, the build is v63 on v62.
+
+At this writing `runs/submissions/vigorous-whistle_v63.parquet` does not exist, and no v63 development proxy file is on disk (the v3 tool
+builds its chain in memory), so **nothing is built**.
+
+## Sizing dry run on v62 (label-free; not a build)
+
+`tools/run_own_motion_v2.py --dry-run --version 64 --out runs/own_motion/dry_v64_on_v62`, on the uploaded v62 (cba143f8..., read only):
+`runs/own_motion/dry_v64_on_v62/vigorous-whistle_v64.parquet`, **SHA-256 `be68454448bea5b7507e1099c2909914f45bb704b0781ae022ddb6b42bf00304`**.
+Audit: [`dry_v64_on_v62_audit.json`](dry_v64_on_v62_audit.json).
+
+- 2,523 candidates; **2,442 rows change** after rounding (EHAM 1,921, LSZH 258, EDDM 130, LEBL 74, LEMD 59; January 944, July 1,498).
+- **Squared change 2.14e7.** Moves −9 to +1,029 s, median +7, mean +35.
+- 934 EHAM rows move down by at most 9 s, because EHAM's offset is −17.9 s and the chain sits just below B. That is the declared formula;
+  no clipping.
+- No LIRF, population or guard row changes; nothing outside the five airports; every other row is identical to v62.
+- Expected −0.14 s at gain / squared change 1.0, about −0.18 to −0.25 s at the development ratios (1.3–1.8).
+
+**Identity for a new file.** `--build-ids ranking --ids-dir runs/own_motion/ids_check` rebuilds tunnel 11's ranking identity table byte for
+byte (SHA-256 `b8cf4ce0...`).
+
+**Build, once v63 resolves (the user's standing word):**
+
+```
+python tools/run_own_motion_v2.py --dry-run --base runs/submissions/vigorous-whistle_v63.parquet --base-sha256 <v63> --version 64
+python tools/run_own_motion_v2.py --build --base runs/submissions/vigorous-whistle_v63.parquet --base-sha256 <v63> --version 64 --user-decision "<words>"
+python tools/audit_export.py --version 64 --compare 63 --report docs/export_audit/v64_audit.json
+```
+
+Run the first only after `results_v2_v63.json` accepts. If v63 is not built, use `--base` v62 and `--version 63`.

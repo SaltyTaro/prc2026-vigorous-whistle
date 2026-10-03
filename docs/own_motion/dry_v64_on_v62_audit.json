@@ -1,0 +1,49 @@
+{
+ "B_changed_rows": {
+  "max": 2675.9,
+  "median": 887.05,
+  "min": 83.0
+ },
+ "base_v62_sha256": "cba143f84debdca0d9aff345ff4669ff6a3f0f7f5c4e02d08bcd3e0d02c32d9d",
+ "bytes": 2225976,
+ "changed_by_airport": {
+  "EDDM": 130,
+  "EHAM": 1921,
+  "LEBL": 74,
+  "LEMD": 59,
+  "LSZH": 258
+ },
+ "changed_by_month": {
+  "2026-01": 944,
+  "2026-07": 1498
+ },
+ "dtypes": {
+  "MVT_ID_mvt": "float64",
+  "TAXITIME_SEC_mvt": "int32"
+ },
+ "file": "runs/own_motion/dry_v64_on_v62/vigorous-whistle_v64.parquet",
+ "guard_rows_changed": 0,
+ "identity_rebuild_check": {
+  "equal_to_runs/dig/position/ids_ranking.parquet": true,
+  "tool": "tools/run_own_motion_v2.py --build-ids ranking --ids-dir runs/own_motion/ids_check"
+ },
+ "ids_and_order_equal_template": true,
+ "lirf_rows_changed": 0,
+ "min_value": -12,
+ "moves": {
+  "downward_rows": 934,
+  "max": 1029.0,
+  "mean": 35.37018837018837,
+  "median": 7.0,
+  "min": -9.0
+ },
+ "nan": 0,
+ "new_value_vs_B": {
+  "below_B_rows": 2228
+ },
+ "rows": 344841,
+ "rows_changed": 2442,
+ "rows_changed_vs_v62_outside_five_airports": 0,
+ "sha256": "be68454448bea5b7507e1099c2909914f45bb704b0781ae022ddb6b42bf00304",
+ "squared_change": 21439274.0
+}
