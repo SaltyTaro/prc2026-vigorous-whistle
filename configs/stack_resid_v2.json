@@ -1,0 +1,65 @@
+{
+ "experiment_id": "stack_resid_v2",
+ "declared_at_utc": "2026-10-03T09:04:00Z",
+ "declared_by": "dig tunnel 2, at the coordinator's request after stack_resid_v1 was not accepted (4e84b58); declaring and the governing run are research. Building a file under runs/submissions and any upload stay the user's word.",
+ "audit_used": false,
+ "status": "DECLARED before its governing run (tools/run_stack_resid.py --declaration configs/stack_resid_v2.json --score). The learner is stack_resid_v1's, unchanged. The support guard is new as part of the candidate, but it was SEEN as v1's reported sensitivity, on the v57 base: 13,725 ranking rows outside the support; ranking/development prediction RMS ratios EDDF 0.97, EDDM 0.79, EGLL 0.67, EHAM 1.12, LEBL 0.72, LEMD 0.77, LFPG 0.87, LIRF 1.06, LSZH 0.96, LTFM 0.81 (all within 0.67-1.12). The development side of the guard (month-blocked) has not been computed before this declaration. There is no twelve-month check: the component tables cover only January, July, November and December 2025.",
+ "mechanism": "As stack_resid_v1: a month-blocked LightGBM on the residual of the shipped chain from the stack's own components (member disagreements) and the published day total against the chain's implied positive delay. v1's development reading passed rules 1-3 (equal-footing -0.245%, every interval below zero) and failed only the transfer guard at EHAM (3.44x): the learner extrapolated on EHAM's January 2026 disruption rows, whose member spreads lie outside anything in 2025. The support guard leaves such rows at the chain.",
+ "procedure": {
+  "position": "after v57's variance re-allocation and before the intruder stand bound, on v59's chain: runner v55m -> no-NM rematch inside the model part (configs/rematch_nonm_v1.json) -> v48's reconciliation -> extreme-day layer -> v57 variance re-allocation -> THIS LAYER -> intruder bound (applied last by the coordinator)",
+  "learner": "identical to configs/stack_resid_v1.json: the 46 label-free features (components without the chain outputs + published day features), target label - chain clipped at +-3,600 s, LightGBM 31 leaves / min 400 / lr 0.03 / feature fraction 0.5 / bagging 0.7 / L2 50 / max_bin 127 / deterministic / 4 threads, at most 800 rounds with early stopping 60 on the fitting rows whose take-off day-of-month is a multiple of 5, bag of seeds 20261003, 11, 12; value = chain + 0.5 x bag, floor -12 s",
+  "support_guard": {
+   "features": [
+    "d_comp_std",
+    "d_lirf_net_lirf_tree",
+    "d_v55m_v46",
+    "d_nets_committee",
+    "d_stack_v9",
+    "p_disc_new_pr",
+    "p_own_share"
+   ],
+   "range": "per airport, the 0.1% and 99.9% quantiles of each feature over the fitting rows (LIRF population and guard rows excluded); a row with any of the seven features finite and outside its airport's range keeps the chain's value (prediction set to 0)",
+   "development": "month-blocked: for scored month m, the range comes from the other three development months",
+   "ranking": "the range comes from all four development months (as in v1's sensitivity)"
+  },
+  "fitting": "development month m: the bag fitted on the other three development months; ranking: the bag fitted on all four",
+  "ranking_inputs": "as v1 (final-file runner stage outputs, v30 / v33 at the lomo_dev definitions, LFPG July repair rows at the shipped 50/50 blend), except: the model part is the rematched v55m file (runs/rematch_nonm/base/vigorous-whistle_v55m_rematch.parquet, 342 rows differ from the v55m file); its difference to the v55m file is added to the runner's v55m float (so v55m, the stack and every v55m difference carry the rematch), the off-block day and v55m's day discrepancy come from the rematched file, and the chain value is the base file c67f20d6 (v59's chain without the intruder bound)"
+ },
+ "candidate": {
+  "name": "comp_pub_bag3_w50_support",
+  "weight": 0.5,
+  "seeds": [
+   20261003,
+   11,
+   12
+  ],
+  "feature_set": "components without the chain outputs + published day features (46 columns)",
+  "support_guard": true
+ },
+ "control": "development: runs/scout/refit/ctl_v55m.parquet column `new` (the shipped chain on the v55m model part; 322.0588 / 255.9946 / 184.0052 / 166.2473 s). The rematch moved 430 of 672,428 development model-part rows (Jan 73, Jul 241, Nov 39, Dec 77; runs/rematch_nonm/dev/model_part.parquet); the control is kept at the coordinator's instruction.",
+ "rule": {
+  "text": "unchanged from v1: accepted when (1) no development month (November included) is worse; (2) the equal-footing mean (January, July, December 2025) of the complete-month RMSE change is at most -0.05%; (3) each equal-footing month's paired-day 95% interval lies below zero; (4) transfer guard, read after the support guard on both sides: for every airport, the RMS of the bag's prediction on the ranking rows (bag on all four months; guarded, LIRF population and guard rows at 0) lies within 0.5x to 2x of the RMS of the out-of-month guarded bag predictions on that airport's development rows in the governing run",
+  "intervals": "paired-day bootstrap over UTC take-off days, 2,000 replicates, seed 20261003",
+  "twelve_month_check": "none exists; stated, not substituted"
+ },
+ "exploration_disclosed": {
+  "v1_governing_run": "docs/stack_resid/results_v1.json (no guard, v57 base): Jan -0.0542 / Jul -0.3127 / Nov -0.3058 / Dec -0.3670%, equal-footing mean -0.2446%, every interval below zero; transfer ratios EDDF 1.91, EDDM 0.96, EGLL 0.75, EHAM 3.44, LEBL 1.15, LEMD 0.92, LFPG 1.02, LIRF 1.34, LSZH 1.38, LTFM 1.01; not accepted",
+  "v1_sensitivity_seen": "the support guard on the v57 base, ranking side only: 13,725 rows held; ratios 0.67-1.12 (listed in status)",
+  "v1_dry_run": "runs/stack_resid/dry_v59/ on v57 without the guard: 310,293 rows changed, squared change 6.03e7, max 226 s; LIRF July 2026 28.9% and EHAM January 2026 25.6% of the squared change",
+  "earlier_exploration": "docs/dig/residual_ore.md and configs/stack_resid_v1.json exploration_disclosed"
+ },
+ "tool": {
+  "support_guard": true,
+  "base": [
+   "runs/rematch_nonm/rank/Y/vigorous-whistle_v58.parquet",
+   "c67f20d61f8a85770a68695268e9f49449cc0157970ffc2b9e83044c458201ca"
+  ],
+  "model_part": "runs/rematch_nonm/base/vigorous-whistle_v55m_rematch.parquet",
+  "model_part_sha256": "75957f8280dc710f5734c703e8a0fc544850ca68319df5c664dd93a8be568695",
+  "chain_rows": "runs/rematch_nonm/rank/Y/rows.parquet",
+  "results": "docs/stack_resid/results_v2.json",
+  "readme_section": "v2: support-guarded form (configs/stack_resid_v2.json)"
+ },
+ "report": "docs/stack_resid/results_v2.json",
+ "ranking": "label-free dry run on c67f20d6 (v59's chain without the intruder bound, read only) into runs/stack_resid/dry_v60/; nothing under runs/submissions; the intruder bound is applied last by the coordinator; build and upload only at the user's word"
+}

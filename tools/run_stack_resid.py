@@ -1,4 +1,4 @@
-"""Stack residual learner (configs/stack_resid_v1.json): a month-blocked LightGBM on the shipped chain's residual from the stack's
+"""Stack residual learner (configs/stack_resid_v1.json, v2 with --declaration configs/stack_resid_v2.json): a month-blocked LightGBM on the shipped chain's residual from the stack's
 own components and the published day discrepancy, added at a fixed weight after v57's variance re-allocation.
 
   --check                      label-free: the ranking components (final-file runner stages) and their reproduction checks, the
@@ -6,7 +6,7 @@ own components and the published day discrepancy, added at a fixed weight after 
                                of the all-four-month bag on the ranking against development) -> docs/stack_resid/transfer_check.json
   --score                      the governing run on the four development months (bag fitted without the scored month) and the
                                declared rule -> docs/stack_resid/results_v1.json + README.md
-  --dry-run --version N [--base FILE --base-sha256 SHA]
+  --dry-run --version N [--base FILE --base-sha256 SHA] [--declaration configs/stack_resid_vK.json]
                                the bag fitted on all four development months, applied to the base file (default the uploaded v57)
                                -> runs/stack_resid/dry_v<N>/ (never runs/submissions)
 
@@ -139,7 +139,10 @@ def ranking_components(root: Path) -> tuple[pd.DataFrame, pd.DataFrame]:
     return g, rec
 
 
-def ranking_table(base: tuple[str, str], checks: dict | None = None) -> pd.DataFrame:
+def ranking_table(base: tuple[str, str], checks: dict | None = None, model_part: str = MODEL_PART[0],
+                  chain_rows: str = "runs/scout/var_alloc_export_v57/rows.parquet") -> pd.DataFrame:
+    """model_part: the model-part file of the base's chain (off-block day, v55m's day discrepancy); when it is not the v55m file, its
+    difference to the v55m file (a layer inside the model part, e.g. the no-NM rematch) is added to the runner's v55m."""
     from export_daily_totals import SCOPES
     from run_fair_weights import build
     from run_lomo_rows import V30, configs
@@ -165,11 +168,14 @@ def ranking_table(base: tuple[str, str], checks: dict | None = None) -> pd.DataF
     g["v33"] = build(g, v33["outer"], v33["lirf"])
     for c in ["v46", "v51m", "v52m", "v53m", "v54m", "v55m"]:
         g[c] = st[c].to_numpy(dtype=float)
+    original = pd.read_parquet(ROOT / MODEL_PART[0]).set_index(ID)[TARGET].reindex(g[ID]).to_numpy(dtype=float)
+    layer = pd.read_parquet(ROOT / model_part).set_index(ID)[TARGET].reindex(g[ID]).to_numpy(dtype=float) - original
+    g["v55m"] = g["v55m"].to_numpy(dtype=float) + layer
     g["stack"] = g["v55m"]
     raw = takeoff(g[ID].to_numpy(), [ROOT / "data/raw/ranking.parquet"])
     tk = pd.to_datetime(raw["MVT_TIME_UTC_mvt"], utc=True).reset_index(drop=True)
     g["a"] = (tk - pd.to_datetime(raw["SCHED_TIME_UTC_mvt"], utc=True).reset_index(drop=True)).dt.total_seconds().to_numpy()
-    part = pd.read_parquet(ROOT / MODEL_PART[0]).set_index(ID)[TARGET].reindex(g[ID]).to_numpy(dtype=float)
+    part = original + layer
     g["v55m_day"] = part
     g["bday"] = (tk - pd.to_timedelta(part, unit="s")).dt.strftime("%Y-%m-%d").to_numpy()
     chain = pd.read_parquet(ROOT / base[0]).set_index(ID)[TARGET].reindex(g[ID])
@@ -181,11 +187,16 @@ def ranking_table(base: tuple[str, str], checks: dict | None = None) -> pd.DataF
     g["complete"] = (g["pub"].notna() & (g.groupby(["airport", "bday"])["a"].transform("size") >= 0.9 * g["n_pub"])).to_numpy()
     g["takeoff_day"] = tk.dt.strftime("%Y-%m-%d").to_numpy()
     if checks is not None:
-        checks["model_part_file"] = {"path": MODEL_PART[0], "sha256": sha256_file(ROOT / MODEL_PART[0])}
+        checks["model_part_file"] = {"path": model_part, "sha256": sha256_file(ROOT / model_part)}
+        if model_part != MODEL_PART[0]:
+            checks["model_part_layer_rows"] = int((layer != 0).sum())
         diff = np.rint(g["v55m"].to_numpy()) - part
         checks["runner_v55m_rounded_vs_model_part_file"] = {"rows_differ": int((diff != 0).sum()), "max_abs_s": float(np.abs(diff).max())}
-        va = pd.read_parquet(ROOT / "runs/scout/var_alloc_export_v57/rows.parquet").set_index(ID).reindex(g[ID])
-        checks["off_block_day_equals_v57_chain"] = bool((va["bday"].to_numpy() == g["bday"].to_numpy()).all())
+        va = pd.read_parquet(ROOT / chain_rows).set_index(ID).reindex(g[ID])
+        key = "off_block_day_equals_v57_chain" if chain_rows == "runs/scout/var_alloc_export_v57/rows.parquet" else "off_block_day_equals_chain_rows"
+        checks[key] = bool((va["bday"].to_numpy() == g["bday"].to_numpy()).all())
+        if key != "off_block_day_equals_v57_chain":
+            checks["chain_rows"] = chain_rows
         checks["repair_edited_rows_blended_50_50"] = int(edited.sum())
     return g
 
@@ -273,21 +284,56 @@ def check() -> None:
         print(c, {a: (round(v["sd_ratio"], 2) if v["sd_ratio"] else None) for a, v in spread[c].items()})
 
 
-def score() -> None:
-    decl = read_json(ROOT / DECL)
+def spec_of(path: str) -> dict:
+    """The declaration and its optional `tool` block (absent in v1: v1's defaults, no guard, base v57, the v55m model part)."""
+    decl = read_json(ROOT / path)
+    tool = decl.get("tool", {})
+    return {"path": path, "decl": decl, "id": decl["experiment_id"], "guard": bool(tool.get("support_guard", False)),
+            "base": tuple(tool.get("base", V57)), "model_part": tool.get("model_part", MODEL_PART[0]), "model_part_sha256": tool.get("model_part_sha256"),
+            "chain_rows": tool.get("chain_rows", "runs/scout/var_alloc_export_v57/rows.parquet"),
+            "results": tool.get("results", "docs/stack_resid/results_v1.json"), "readme_section": tool.get("readme_section")}
+
+
+def spec_ranking(spec: dict, base: tuple[str, str], checks: dict | None = None) -> pd.DataFrame:
+    if spec["model_part_sha256"] and sha256_file(ROOT / spec["model_part"]) != spec["model_part_sha256"]:
+        raise ValueError("The model-part file does not have the declared SHA-256.")
+    return ranking_table(base, checks, spec["model_part"], spec["chain_rows"])
+
+
+def outside_support(X_fit: pd.DataFrame, air_fit: np.ndarray, X_target: pd.DataFrame, air_target: np.ndarray) -> np.ndarray:
+    """Target rows whose value of any TOP feature lies outside its airport's [0.1%, 99.9%] range on the fitting rows."""
+    out = np.zeros(len(X_target), dtype=bool)
+    for a in np.unique(air_target):
+        fm, tm = air_fit == a, air_target == a
+        idx = np.flatnonzero(tm)
+        for c in TOP:
+            lo, hi = X_fit.loc[fm, c].quantile([0.001, 0.999])
+            v = X_target.loc[tm, c].to_numpy()
+            out[idx] |= np.isfinite(v) & ((v < lo) | (v > hi))
+    return out
+
+
+def score(spec: dict) -> None:
+    decl = spec["decl"]
     dev = dev_table()
     X, res = dev_matrix(dev)
     Xa = X.to_numpy()
     fx = fixed_rows(dev)
     month, y, new = dev["month"].to_numpy(), dev["label"].to_numpy(dtype=float), dev["new"].to_numpy(dtype=float)
+    air = dev["airport"].to_numpy()
     pred = np.zeros(len(dev))
-    out = {"created_at_utc": utc_now(), "declaration": DECL, "declaration_sha256": object_hash(decl), "code": {c: sha256_file(ROOT / c) for c in CODE},
-           "control": "runs/scout/refit/ctl_v55m.parquet `new`", "months": {}, "trees": {}}
+    out = {"created_at_utc": utc_now(), "declaration": spec["path"], "declaration_sha256": object_hash(decl), "code": {c: sha256_file(ROOT / c) for c in CODE},
+           "control": "runs/scout/refit/ctl_v55m.parquet `new`", "support_guard": spec["guard"], "months": {}, "trees": {}}
     for m in MONTHS:
-        models = fit_bag(Xa, res, (month != m) & ~fx, dev["dom"].to_numpy())
+        fit = (month != m) & ~fx
+        models = fit_bag(Xa, res, fit, dev["dom"].to_numpy())
         ev = month == m
         p = predict_bag(models, Xa[ev])
         p[fx[ev]] = 0.0
+        held = np.zeros(int(ev.sum()), dtype=bool)
+        if spec["guard"]:  # month-blocked: the range comes from the fitting months
+            held = outside_support(X[fit], air[fit], X[ev].reset_index(drop=True), air[ev]) & ~fx[ev]
+            p[held] = 0.0
         pred[ev] = p
         cand = apply(new[ev], p, fx[ev])
         ctl = float(np.sqrt(np.mean((y[ev] - new[ev]) ** 2)))
@@ -295,8 +341,8 @@ def score() -> None:
         out["trees"][m] = [int(b.best_iteration) for b in models]
         out["months"][m] = {"control_rmse": ctl, "rmse": r, "change_pct": 100 * (r / ctl - 1), **paired(dev["takeoff_day"].to_numpy()[ev], y[ev], cand, new[ev]),
                             "rows_moved": int((np.abs(cand - new[ev]) > 1e-9).sum()), "rms_move_s": float(np.sqrt(np.mean((cand - new[ev]) ** 2))),
-                            "max_abs_move_s": float(np.abs(cand - new[ev]).max())}
-        print(m, {k: out["months"][m][k] for k in ["control_rmse", "rmse", "change_pct", "interval_pct"]}, flush=True)
+                            "max_abs_move_s": float(np.abs(cand - new[ev]).max()), "rows_held_by_guard": int(held.sum())}
+        print(m, {k: out["months"][m][k] for k in ["control_rmse", "rmse", "change_pct", "interval_pct", "rows_held_by_guard"]}, flush=True)
     eq = float(np.mean([out["months"][m]["change_pct"] for m in EQUAL]))
     out["equal_footing_mean_pct"] = eq
     out["dev_oof_prediction_by_airport"] = by_airport_rms(dev, pred, fx)
@@ -304,29 +350,27 @@ def score() -> None:
     by = pd.DataFrame({"airport": dev["airport"], "month": month, "c": (new - y) ** 2, "n": (cand_all - y) ** 2}).groupby(["airport", "month"]).sum()
     out["airport_month_change_pct"] = {f"{a} {m}": float(100 * (np.sqrt(r["n"]) / np.sqrt(r["c"]) - 1)) for (a, m), r in by.iterrows()}
     # rule (4) needs the ranking side: the bag on all four months applied to the ranking (label-free)
-    rk = ranking_table(V57)
+    rk = spec_ranking(spec, spec["base"])
     models = fit_bag(Xa, res, ~fx, dev["dom"].to_numpy())
-    pr = predict_bag(models, features(rk).to_numpy())
+    Xr = features(rk)
+    pr = predict_bag(models, Xr.to_numpy())
     fxr = fixed_rows(rk)
     pr[fxr] = 0.0
+    outside = outside_support(X[~fx], air[~fx], Xr, rk["airport"].to_numpy()) & ~fxr
+    if spec["guard"]:
+        pr[outside] = 0.0
+        out["ranking_rows_held_by_guard"] = int(outside.sum())
+        out["ranking_rows_held_by_airport"] = {a: int(n) for a, n in pd.Series(rk["airport"].to_numpy()[outside]).value_counts().items()}
     out["ranking_prediction_by_airport"] = by_airport_rms(rk, pr, fxr)
     ratios = {a: out["ranking_prediction_by_airport"][a]["rms_s"] / out["dev_oof_prediction_by_airport"][a]["rms_s"] for a in out["ranking_prediction_by_airport"]}
     out["ranking_over_dev_rms"] = ratios
-    # sensitivity, reported and never selectable: ranking rows outside the development support of the top features keep the chain
-    Xr = features(rk)
-    outside = np.zeros(len(rk), dtype=bool)
-    for a in sorted(dev["airport"].unique()):
-        dm, rm = (dev["airport"].eq(a).to_numpy() & ~fx), rk["airport"].eq(a).to_numpy()
-        for c in TOP:
-            lo, hi = X.loc[dm, c].quantile([0.001, 0.999])
-            v = Xr.loc[rm, c].to_numpy()
-            outside[np.flatnonzero(rm)] |= np.isfinite(v) & ((v < lo) | (v > hi))
-    ps = np.where(outside, 0.0, pr)
-    sup = by_airport_rms(rk, ps, fxr)
-    out["sensitivity_support_guard"] = {"rows_outside_support": int((outside & ~fxr).sum()),
-                                        "rows_outside_by_airport": {a: int(n) for a, n in pd.Series(rk["airport"].to_numpy()[outside & ~fxr]).value_counts().items()},
-                                        "ranking_over_dev_rms": {a: sup[a]["rms_s"] / out["dev_oof_prediction_by_airport"][a]["rms_s"] for a in sup},
-                                        "selectable": False}
+    if not spec["guard"]:  # v1's sensitivity, reported and never selectable
+        ps = np.where(outside, 0.0, pr)
+        sup = by_airport_rms(rk, ps, fxr)
+        out["sensitivity_support_guard"] = {"rows_outside_support": int(outside.sum()),
+                                            "rows_outside_by_airport": {a: int(n) for a, n in pd.Series(rk["airport"].to_numpy()[outside]).value_counts().items()},
+                                            "ranking_over_dev_rms": {a: sup[a]["rms_s"] / out["dev_oof_prediction_by_airport"][a]["rms_s"] for a in sup},
+                                            "selectable": False}
     rule = {"no_month_worse": all(out["months"][m]["change_pct"] <= 0 for m in MONTHS),
             "equal_footing_mean_at_most_-0.05pct": eq <= -0.05,
             "equal_footing_intervals_below_zero": all(out["months"][m]["interval_s"][1] < 0 for m in EQUAL),
@@ -335,9 +379,12 @@ def score() -> None:
     out["accepted"] = all(rule.values())
     out["twelve_month_check"] = "none exists: the component tables cover only the four development months"
     out["official_scores_used"] = "none"
-    write_json(OUT_DOCS / "results_v1.json", out)
-    write_readme(out)
-    print("equal-footing mean", eq, "rule", rule, "accepted", out["accepted"])
+    write_json(ROOT / spec["results"], out)
+    if spec["readme_section"]:
+        append_readme(out, spec)
+    else:
+        write_readme(out)
+    print("equal-footing mean", eq, "rule", rule, "accepted", out["accepted"], "ratios", {a: round(v, 2) for a, v in ratios.items()})
 
 
 def write_readme(out: dict) -> None:
@@ -360,14 +407,38 @@ def write_readme(out: dict) -> None:
     (OUT_DOCS / "README.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
-def dry_run(args) -> None:
+def append_readme(out: dict, spec: dict) -> None:
+    path = OUT_DOCS / "README.md"
+    text = path.read_text(encoding="utf-8") if path.exists() else ""
+    marker = f"## {spec['readme_section']}"
+    if marker in text:
+        raise ValueError("The README already has this section; preserve it.")
+    held = out.get("ranking_rows_held_by_guard", 0)
+    lines = ["", marker, "", f"Declaration [`{spec['path']}`](../../{spec['path']}); results [`{Path(spec['results']).name}`]({Path(spec['results']).name}). "
+             f"Accepted by the declared rule: **{out['accepted']}**. The support guard is part of the candidate (development: range from the fitting "
+             f"months; ranking: range from all four months; {held:,} ranking rows held at the chain).", "",
+             "| Month | Control RMSE | Candidate | Change | Paired-day 95% (s) | Rows moved | Held by guard | RMS move (s) | Max move (s) |",
+             "|---|---|---|---|---|---|---|---|---|"]
+    for m in MONTHS:
+        r = out["months"][m]
+        lines.append(f"| {m} | {r['control_rmse']:.4f} | {r['rmse']:.4f} | {r['change_pct']:+.4f}% | [{r['interval_s'][0]:+.3f}, {r['interval_s'][1]:+.3f}] | "
+                     f"{r['rows_moved']:,} | {r['rows_held_by_guard']:,} | {r['rms_move_s']:.1f} | {r['max_abs_move_s']:.0f} |")
+    lines += ["", f"Equal-footing mean (January, July, December): **{out['equal_footing_mean_pct']:+.4f}%**.", "",
+              "Rule: " + "; ".join(f"{k} = {v}" for k, v in out["rule"].items()) + ".", "",
+              "Transfer guard after the support guard (ranking prediction RMS over development out-of-month RMS, by airport): " +
+              ", ".join(f"{a} {v:.2f}" for a, v in sorted(out["ranking_over_dev_rms"].items())) + ".", "",
+              "No twelve-month check exists. No official score is used."]
+    path.write_text(text + "\n".join(lines) + "\n", encoding="utf-8")
+
+
+def dry_run(spec: dict, args) -> None:
     out_dir = ROOT / "runs/stack_resid" / f"dry_v{args.version}"
     if (ROOT / "runs/submissions").resolve() in [out_dir.resolve(), *out_dir.resolve().parents]:
         raise ValueError("A dry run never writes under runs/submissions.")
     output = out_dir / f"vigorous-whistle_v{args.version}.parquet"
     if output.exists():
         raise ValueError(f"{output} exists; never overwrite.")
-    base = (args.base, args.base_sha256)
+    base = (args.base, args.base_sha256) if args.base else spec["base"]
     if sha256_file(ROOT / base[0]) != base[1]:
         raise ValueError("The base file does not have the expected SHA-256.")
     dev = dev_table()
@@ -375,23 +446,32 @@ def dry_run(args) -> None:
     fx = fixed_rows(dev)
     models = fit_bag(X.to_numpy(), res, ~fx, dev["dom"].to_numpy())
     checks: dict = {}
-    rk = ranking_table(base, checks)
-    pr = predict_bag(models, features(rk).to_numpy())
+    rk = spec_ranking(spec, base, checks)
+    Xr = features(rk)
+    pr = predict_bag(models, Xr.to_numpy())
     fxr = fixed_rows(rk)
     pr[fxr] = 0.0
+    held = np.zeros(len(rk), dtype=bool)
+    if spec["guard"]:
+        held = outside_support(X[~fx], dev["airport"].to_numpy()[~fx], Xr, rk["airport"].to_numpy()) & ~fxr
+        pr[held] = 0.0
     b = rk["new"].to_numpy(dtype=float)
     values = apply(b, pr, fxr)
-    provenance = {"experiment_id": "stack_resid_v1", "dry_run": True, "base": {"path": base[0], "sha256": base[1]}, "declaration": {DECL: sha256_file(ROOT / DECL)},
-                  "code": {c: sha256_file(ROOT / c) for c in CODE}, "official_scores_used": "none", "audit_used": False,
-                  "recipe": "base + 0.5 x (3-seed LightGBM bag on the chain's development residual from the stack's components and the published day discrepancy); LIRF population and the two guard rows unchanged; floor -12 s"}
+    recipe = ("base + 0.5 x (3-seed LightGBM bag on the chain's development residual from the stack's components and the published day discrepancy); "
+              "LIRF population and the two guard rows unchanged; floor -12 s")
+    if spec["guard"]:
+        recipe += "; rows outside the development support of the top features keep the base"
+    provenance = {"experiment_id": spec["id"], "dry_run": True, "base": {"path": base[0], "sha256": base[1]}, "declaration": {spec["path"]: sha256_file(ROOT / spec["path"])},
+                  "code": {c: sha256_file(ROOT / c) for c in CODE}, "official_scores_used": "none", "audit_used": False, "recipe": recipe}
     receipt = export_submission(pd.DataFrame({ID: rk[ID].to_numpy(), "prediction": values}), ROOT / "data/raw/submitting.parquet", output, provenance)
     exported = pd.read_parquet(output).set_index(ID)[TARGET].reindex(rk[ID]).to_numpy().astype(np.int64)
     change = exported - b.astype(np.int64)
-    if (change[fxr] != 0).any():
-        raise ValueError("A fixed row changed.")
+    if (change[fxr | held] != 0).any():
+        raise ValueError("A fixed or guarded row changed.")
     by = pd.DataFrame({"airport": rk["airport"], "month": rk["month"], "ch": change.astype(float)})
     rep = {"created_at_utc": utc_now(), "version": args.version, "output": output.relative_to(ROOT).as_posix(), "sha256": sha256_file(output), "receipt": receipt,
            "checks": checks, "trees": [int(m.best_iteration) for m in models], "rows_changed": int((change != 0).sum()),
+           "rows_held_by_guard": int(held.sum()), "rows_held_by_airport": {a: int(n) for a, n in pd.Series(rk["airport"].to_numpy()[held]).value_counts().items()},
            "sum_squared_change": float((change.astype(float) ** 2).sum()), "rms_change_s": float(np.sqrt((change.astype(float) ** 2).mean())),
            "max_abs_change_s": float(np.abs(change).max()), "mean_change_s": float(change.mean()),
            "by_airport_month": {f"{a} {m}": {"rows_changed": int((g["ch"] != 0).sum()), "sum_squared_change": float((g["ch"] ** 2).sum()),
@@ -399,27 +479,32 @@ def dry_run(args) -> None:
                                 for (a, m), g in by.groupby(["airport", "month"])},
            "ranking_prediction_by_airport": by_airport_rms(rk, pr, fxr)}
     write_json(out_dir / f"export_v{args.version}.json", rep)
-    pd.DataFrame({ID: rk[ID].to_numpy(), "airport": rk["airport"].to_numpy(), "base": b, "pred": pr, "value": exported}).to_parquet(out_dir / "rows.parquet", index=False)
-    print({k: rep[k] for k in ["sha256", "rows_changed", "sum_squared_change", "rms_change_s", "max_abs_change_s", "mean_change_s", "trees"]})
+    pd.DataFrame({ID: rk[ID].to_numpy(), "airport": rk["airport"].to_numpy(), "base": b, "pred": pr, "held": held, "value": exported}).to_parquet(out_dir / "rows.parquet", index=False)
+    print({k: rep[k] for k in ["sha256", "rows_changed", "rows_held_by_guard", "sum_squared_change", "rms_change_s", "max_abs_change_s", "mean_change_s", "trees"]})
+    print("checks", checks)
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--declaration", default=DECL)
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--score", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--version", type=int)
-    parser.add_argument("--base", default=V57[0])
-    parser.add_argument("--base-sha256", default=V57[1])
+    parser.add_argument("--base", help="base file (default: the declaration's base; v1: the uploaded v57)")
+    parser.add_argument("--base-sha256")
     args = parser.parse_args()
+    if args.base and not args.base_sha256:
+        raise ValueError("--base needs --base-sha256.")
+    spec = spec_of(args.declaration)
     if args.check:
         check()
     if args.score:
-        score()
+        score(spec)
     if args.dry_run:
         if args.version is None:
             raise ValueError("--dry-run needs --version.")
-        dry_run(args)
+        dry_run(spec, args)
 
 
 if __name__ == "__main__":
