@@ -1,0 +1,34 @@
+{
+ "experiment_id": "intruder_identity_v1",
+ "declared_at_utc": "2026-10-03T11:40:00Z",
+ "declared_by": "declaring and the governing run are research; building a file under runs/submissions and any upload stay the user's word",
+ "audit_used": false,
+ "status": "DECLARED after the exploration disclosed below and BEFORE the governing run (tools/run_intruder_identity.py --score), which recomputes every number from scratch. The rule is the GO bar the coordinator set in the tunnel's brief before any number of this extension was read.",
+ "mechanism": "The accepted intruder bound (configs/intruder_bound_v1.json) only uses intruders of a different aircraft type, because a same-type arrival cannot be told from our own inbound by its type. The aircraft's ICAO 24-bit address from adsb.lol identifies it: an arrival or departure is identified by the nearest point of the track with the same callsign at the same airport within 600 s of the supplied landing / take-off time (data/external/adsblol/surface/surface_YYYYMMDD.parquet, ODbL; callsign from CALLSIGN_flt, else the learned flight-number map of runs/rematch_nonm/key_map.parquet). If our own aircraft X blocked in at our stand and then a different aircraft Y != X blocked in there before our predicted off-block, we left before Y: label > B = take-off - Y's in-block. Identification coverage: EDDF and EGLL 95-100% of arrivals and departures in most months, LFPG 37-89% (rising through 2025, 77-84% in 2026), LTFM departures ~0 (excluded).",
+ "procedure": {
+  "position": "after the accepted different-type intruder layer, last in the chain; on v60's chain for the ranking (pre-intruder file runs/stack_resid/dry_v60/vigorous-whistle_v60.parquet -> accepted layer -> this extension)",
+  "candidate_rows": "departure at EDDF / EGLL / LFPG from stand S, identity X known; prediction p after the accepted layer; the last arrival at (airport, S) whose in-block precedes take-off - p has identity Y known and Y != X; the arrival before it at (airport, S) has identity X (our inbound, strict form); 0 < predicted off-block - Y's in-block <= 3,600 s; rows the accepted rule moves are excluded (Y of a different type with the previous arrival of our type)",
+  "airports": "the accepted layer's airport set of the fitting months (EDDF, EGLL, LFPG, LTFM in every 2025 fit) intersected with EDDF / EGLL / LFPG",
+  "value": "max(p, B + o); o = mean of label - B over the fitting months' identity candidates by airport and gap band (bands as the accepted layer), shrunk with weight 20 to the airport mean, itself shrunk with weight 20 to the pooled mean",
+  "fitting_side": "candidates of the fitting months from the twelve-month table (rows12 `stack` after the accepted layer, month-blocked); development month m and twelve-month month m: every other 2025 month; ranking: all twelve",
+  "free_parameters": "the offsets only; G 3,600 s, the strict inbound form and the 600 s identification tolerance are fixed here"
+ },
+ "candidate": {
+  "name": "id_strict_g3600",
+  "G_s": 3600,
+  "inbound": "strict"
+ },
+ "control": "development: runs/scout/refit/ctl_v55m.parquet `new` with the accepted intruder layer applied month-blocked (as tools/run_intruder_bound.py --score); twelve months: rows12 `stack` with the accepted layer",
+ "rule": {
+  "text": "accepted when (1) the equal-footing mean (January, July, December 2025) of the complete-month RMSE change is at most -0.05%, (2) no development month is worse, (3) at least two equal-footing paired-day 95% intervals lie below zero, and (4) the twelve-month check improves at least 10 of 12 months",
+  "intervals": "paired-day bootstrap over UTC take-off days, 2,000 replicates, seed 20261003, relative RMSE change"
+ },
+ "exploration_disclosed": {
+  "what_was_seen": "runs/dig/identity/build_ids.py (identification coverage), validity.py, screen.py (3 October 2026): validity of strict / loose / no-inbound forms at G 1,800 and 3,600 on the twelve months (strict: EDDF 13 rows 92%, EGLL 112 rows 94%, LFPG 27 rows 100%); the screen below",
+  "readings_before_declaring": {
+   "id_strict_g3600": "development Jan -0.0601 [-0.284, -0.010] / Jul -0.0907 [-0.207, +0.002] / Nov -0.0086 / Dec -0.1326% [-0.284, -0.012], equal-footing mean -0.0945%; twelve months mean -0.0481%, 12/12 better, 11/12 intervals below zero",
+   "loose": "development equal-footing -0.0930%; twelve months -0.0481%, 12/12, 10/12 intervals (not declared)"
+  }
+ },
+ "ranking": "label-free dry run into runs/intruder_identity/dry_v61/ (never runs/submissions); the base plus the accepted layer must reproduce v60 (30021455...) byte for byte first; build and upload only at the user's word"
+}
