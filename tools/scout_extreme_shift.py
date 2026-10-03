@@ -30,6 +30,7 @@ from run_adsb_v11 import paired_days, rmse  # noqa: E402
 
 SEED = 20260929
 RULES = ROOT / "runs/scout/daily_ifr/rules.parquet"
+RANKING = "data/raw/ranking.parquet"   # tools/final_chain_overrides.py --raw
 TABLES = {"stack": (ROOT / "runs/daily_totals/rows.parquet", ROOT / "runs/daily_totals/daily_totals_v1"),
           "twelve": (ROOT / "runs/daily_totals/rows12.parquet", ROOT / "runs/scout/daily_ifr/v48_twelve")}
 CODE = ["tools/scout_extreme_shift.py", "src/prc2026_scout/extreme_shift.py", "src/prc2026_scout/published_figure.py", "tools/scout_daily_ifr.py",
@@ -126,7 +127,7 @@ def govern(path: str) -> None:
 def ranking_rows(base: str, recon: Path) -> pd.DataFrame:
     from export_daily_totals import ranking_table
     t = ranking_table((base, sha256_file(ROOT / base)))
-    raw = pd.read_parquet(ROOT / "data/raw/ranking.parquet", columns=[ID, "PHASE_mvt", "FLIGHT_RULE_mvt"])
+    raw = pd.read_parquet(ROOT / RANKING, columns=[ID, "PHASE_mvt", "FLIGHT_RULE_mvt"])
     rule = raw[raw["PHASE_mvt"].eq("DEP")].drop_duplicates(ID).set_index(ID)["FLIGHT_RULE_mvt"].reindex(t[ID])
     t["in_figure"] = published_figure.in_figure(t["airport"].to_numpy(), (rule.isna() | rule.eq("I")).to_numpy())
     vals = pd.read_parquet(recon / "values.parquet").set_index(ID).reindex(t[ID])
@@ -198,7 +199,10 @@ def main() -> None:
     parser.add_argument("--version", type=int)
     parser.add_argument("--dry-run", type=Path)
     parser.add_argument("--user-override")
+    import final_chain_overrides
+    final_chain_overrides.add_arguments(parser)
     args = parser.parse_args()
+    final_chain_overrides.apply(args)
     if args.score:
         govern(args.declaration)
     else:

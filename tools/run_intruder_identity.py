@@ -36,6 +36,8 @@ AIRPORTS = ["EDDF", "EGLL", "LFPG"]
 TOL = 600
 SHRINK = 20.0
 V60 = ("runs/submissions/vigorous-whistle_v60.parquet", "30021455005a712c241fd57354c7a57c65ea8e81cd7a440e7175d0f27598b95f")
+RANKING = "data/raw/ranking.parquet"   # tools/final_chain_overrides.py --raw
+DEFAULT_IDS = IDS
 
 
 def training_files() -> list[Path]:
@@ -44,7 +46,9 @@ def training_files() -> list[Path]:
 
 def build_ids() -> None:
     cols = ["MVT_ID_mvt", "PHASE_mvt", "ADEP_mvt", "ADES_mvt", "MVT_TIME_UTC_mvt", "CALLSIGN_flt", "FLIGHT_mvt"]
-    mv = pd.concat([pd.read_parquet(f, columns=cols) for f in training_files() + [ROOT / "data/raw/ranking.parquet"]])
+    new_file = IDS != DEFAULT_IDS   # final file: identify only the new file's movements, keep the 2025 rows of the shipped table
+    sources = [ROOT / RANKING] if new_file else training_files() + [ROOT / "data/raw/ranking.parquet"]
+    mv = pd.concat([pd.read_parquet(f, columns=cols) for f in sources])
     mv["airport"] = np.where(mv["PHASE_mvt"].eq("ARR"), mv["ADES_mvt"], mv["ADEP_mvt"])
     mv = mv[mv["airport"].isin(ID_AIRPORTS)]
     km = pd.read_parquet(KEYMAP)[["ADEP_mvt", "FLIGHT_mvt", "key"]].rename(columns={"ADEP_mvt": "airport"})
@@ -66,7 +70,11 @@ def build_ids() -> None:
                           left_on="t", right_on="time", by=["airport", "cs"], direction="nearest", tolerance=TOL)
         out.append(m[["MVT_ID_mvt", "PHASE_mvt", "airport", "icao", "registration", "type"]].assign(dt=m["time"] - m["t"]))
     IDS.parent.mkdir(parents=True, exist_ok=True)
-    pd.concat(out).to_parquet(IDS, index=False)
+    table = pd.concat(out)
+    if new_file:
+        old = pd.read_parquet(DEFAULT_IDS)
+        table = pd.concat([old[~old["MVT_ID_mvt"].isin(set(table["MVT_ID_mvt"]))], table], ignore_index=True)
+    table.to_parquet(IDS, index=False)
     write_json(IDS.with_suffix(".receipt.json"), {"written_at_utc": utc_now(), "sha256": sha256_file(IDS), "tolerance_s": TOL,
                                                   "keymap_sha256": sha256_file(KEYMAP), "surface_files": used})
     print("ids", sha256_file(IDS))
@@ -190,7 +198,7 @@ def dry_run(base: Path, base_sha: str, version: int, out_dir: Path) -> None:
     acc_model = R.fit(c12acc)
     after12 = pd.concat([accepted_after(twelve, p12, rdep, rarr, c12acc, m, acc)[0] for m in sorted(twelve["month"].unique())])
     model = fit(candidates(after12, "after", dep, arr, cfg["candidate"]["G_s"]), acc_model["airports"])
-    rk_path = ROOT / "data/raw/ranking.parquet"
+    rk_path = ROOT / RANKING
     rkdep, rkarr = R.movements([rk_path])
     idep, iarr = movements([rk_path])
     rk = pd.read_parquet(rk_path, columns=["MVT_ID_mvt", "PHASE_mvt", "ADEP_mvt", "ADEP_flt", "AIRCRAFT_TYPE_mvt"])
@@ -205,9 +213,12 @@ def dry_run(base: Path, base_sha: str, version: int, out_dir: Path) -> None:
     moved = pd.Series(np.rint(ca["value"].to_numpy()), index=ca["MVT_ID_mvt"].to_numpy())
     idx = after["MVT_ID_mvt"].map(moved)
     after["TAXITIME_SEC_mvt"] = np.where(idx.notna(), idx, after["TAXITIME_SEC_mvt"]).astype(b["TAXITIME_SEC_mvt"].dtype)
-    v60 = pd.read_parquet(ROOT / V60[0])
-    if sha256_file(ROOT / V60[0]) != V60[1] or not after["TAXITIME_SEC_mvt"].equals(v60["TAXITIME_SEC_mvt"]) or not after["MVT_ID_mvt"].equals(v60["MVT_ID_mvt"]):
-        raise ValueError("The base plus the accepted layer does not reproduce v60.")
+    if V60 is None:   # final file (--no-v60-check): the accepted layer's output stands in for v60
+        v60 = after.copy()
+    else:
+        v60 = pd.read_parquet(ROOT / V60[0])
+        if sha256_file(ROOT / V60[0]) != V60[1] or not after["TAXITIME_SEC_mvt"].equals(v60["TAXITIME_SEC_mvt"]) or not after["MVT_ID_mvt"].equals(v60["MVT_ID_mvt"]):
+            raise ValueError("The base plus the accepted layer does not reproduce v60.")
     tab2 = tab.drop(columns=["base"]).assign(after=after["TAXITIME_SEC_mvt"].astype(float).to_numpy())
     ci = values(candidates(tab2, "after", idep, iarr, cfg["candidate"]["G_s"]), "after", model)
     out = after.copy()
@@ -222,7 +233,7 @@ def dry_run(base: Path, base_sha: str, version: int, out_dir: Path) -> None:
     diff = out["TAXITIME_SEC_mvt"].astype(float) - v60["TAXITIME_SEC_mvt"].astype(float)
     rows = ci.assign(new=np.rint(ci["value"]), move=np.rint(ci["value"]) - ci["after"])
     receipt = {"experiment_id": cfg["experiment_id"], "config_sha256": sha256_file(CONFIG), "written_at_utc": utc_now(), "kind": "dry run, not a submission",
-               "base": str(base.relative_to(ROOT)), "base_sha256": base_sha, "reproduces_v60_before_extension": True, "ids_sha256": sha256_file(IDS),
+               "base": str(base.relative_to(ROOT)), "base_sha256": base_sha, "reproduces_v60_before_extension": V60 is not None, "ids_sha256": sha256_file(IDS),
                "file": str(path.relative_to(ROOT)), "sha256": sha256_file(path), "rows_changed_vs_v60": int((diff != 0).sum()),
                "squared_change_vs_v60": float((diff ** 2).sum()), "max_move_s": float(diff.max()), "model": model,
                "by_airport": rows.groupby("airport")["move"].agg(["size", "mean", "max"]).round(1).to_dict(orient="index"),
@@ -242,7 +253,21 @@ def main() -> None:
     ap.add_argument("--build", action="store_true", help="at the user's word: write runs/submissions/vigorous-whistle_v<version>.parquet; "
                     "it must equal the dry run byte for byte and must not exist yet")
     ap.add_argument("--user-decision", default=None)
+    ap.add_argument("--ids", default=None, help="final file: the identity table to write (--build-ids) / read (default runs/intruder_identity/ids.parquet)")
+    ap.add_argument("--keymap", default=None, help="final file: the rematch step's key_map.parquet (default runs/rematch_nonm/key_map.parquet)")
+    ap.add_argument("--out", default=None, help="final file: the dry run's directory (default runs/intruder_identity/dry_v<N>)")
+    ap.add_argument("--no-v60-check", action="store_true", help="final file: the base plus the accepted layer cannot be checked against v60")
+    import final_chain_overrides
+    final_chain_overrides.add_arguments(ap)
     a = ap.parse_args()
+    final_chain_overrides.apply(a)
+    global IDS, KEYMAP, V60
+    if a.ids:
+        IDS = ROOT / final_chain_overrides._rel(a.ids)
+    if a.keymap:
+        KEYMAP = ROOT / final_chain_overrides._rel(a.keymap)
+    if a.no_v60_check:
+        V60 = None
     if a.build_ids:
         build_ids()
     if a.score:
@@ -261,7 +286,7 @@ def main() -> None:
             raise ValueError("The rebuilt file differs from the dry run.")
         target.write_bytes(built.read_bytes())
         from prc2026_submission.contract import validate_submission
-        sub = validate_submission(target, ROOT / "data/raw/submitting.parquet")
+        sub = validate_submission(target, ROOT / (final_chain_overrides._rel(a.template) if a.template else "data/raw/submitting.parquet"))
         sub.update({"version": a.version, "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
                     "provenance": {"audit_used": False, "dry_run": False, "experiment_id": "intruder_identity_v1", "selected_candidate": "identity extension",
                                    "selected_by": "the declared rule (accepted)", "official_scores_used": "none", "user_decision": a.user_decision,
@@ -275,7 +300,9 @@ def main() -> None:
         write_json(ROOT / f"docs/intruder_identity/export_v{a.version}.json", receipt)
         print("built", target.name, sub["sha256"])
     if a.dry_run:
-        out = ROOT / f"runs/intruder_identity/dry_v{a.version}"
+        out = ROOT / f"runs/intruder_identity/dry_v{a.version}" if not a.out else ROOT / final_chain_overrides._rel(a.out)
+        if (ROOT / "runs/submissions").resolve() in [out.resolve(), *out.resolve().parents]:
+            raise ValueError("A dry run never writes under runs/submissions.")
         dry_run(ROOT / a.base, a.base_sha256, a.version, out)
 
 

@@ -32,6 +32,7 @@ sys.path.insert(0, str(ROOT / "tools"))
 from prc2026.artifacts import object_hash, read_json, sha256_file, utc_now, write_json  # noqa: E402
 from prc2026.features import ID, TARGET  # noqa: E402
 from prc2026_submission.contract import export_submission  # noqa: E402
+import final_chain_overrides  # noqa: E402
 
 DECL = "configs/stack_resid_v1.json"
 OUT_DOCS = ROOT / "docs/stack_resid"
@@ -48,7 +49,8 @@ PARAMS = dict(objective="regression", learning_rate=0.03, num_leaves=31, min_dat
               force_col_wise=True)
 ROUNDS, PATIENCE = 800, 60
 RUNNER = ROOT / "runs/final_dryrun/run"
-REPAIRED = ROOT / "runs/final_lfpg_eobt/run"
+REPAIRED = ROOT / "runs/final_lfpg_eobt/run"   # None (--repaired none): a period without the LFPG EOBT_1 repair
+RANKING = "data/raw/ranking.parquet"           # tools/final_chain_overrides.py --raw
 MODEL_PART = ("runs/lirf_combo/export_dry/vigorous-whistle_v55.parquet", None)  # sha recorded at run time
 V57 = ("runs/submissions/vigorous-whistle_v57.parquet", "31d909ff2e5d1937e65404c396893b9e5524d082c07422be9390c75aad4daed8")
 COMPONENTS = ["v9", "residual", "base", "mix", "lirf_tree", "lirf_net", "committee", "nets", "v30", "v33", "v46", "v51m", "v52m", "v53m", "v54m", "v55m"]
@@ -149,8 +151,8 @@ def ranking_table(base: tuple[str, str], checks: dict | None = None, model_part:
     from screen_daily_totals import published
     _, _, _, v33 = configs()
     g, rec = ranking_components(RUNNER)
-    g_rep, _ = ranking_components(REPAIRED)
-    if not np.array_equal(g[ID].to_numpy(), g_rep[ID].to_numpy()):
+    g_rep = ranking_components(REPAIRED)[0] if REPAIRED is not None else None
+    if g_rep is not None and not np.array_equal(g[ID].to_numpy(), g_rep[ID].to_numpy()):
         raise ValueError("The repaired run's rows differ.")
     st = pd.read_parquet(RUNNER / "stack/detail.parquet").set_index(ID).reindex(g[ID])
     g["matched"] = g["scope"].map(SCOPES).astype(bool)
@@ -161,9 +163,11 @@ def ranking_table(base: tuple[str, str], checks: dict | None = None, model_part:
     if checks is not None:
         checks["v30_rebuilt_vs_runner_max_abs_s"] = float(np.abs(v30_unrepaired - st["v30"].to_numpy(dtype=float)).max())
         checks["committee_mix_vs_recipe_max_abs_s"] = float(np.abs(g["mix"].to_numpy() - rec["committee_mix"].to_numpy(dtype=float)).max())
-    edited = g[ID].isin(set(pd.read_parquet(RUNNER / "repair/edited_ids.parquet")[ID])).to_numpy()
+    edited = (g[ID].isin(set(pd.read_parquet(RUNNER / "repair/edited_ids.parquet")[ID])).to_numpy() if g_rep is not None
+              else np.zeros(len(g), dtype=bool))
     for c in ["v9", "residual", "base", "committee", "nets", "mix", "lirf_tree", "lirf_net"]:
-        g.loc[edited, c] = 0.5 * g.loc[edited, c].to_numpy(dtype=float) + 0.5 * g_rep.loc[edited, c].to_numpy(dtype=float)
+        if g_rep is not None:
+            g.loc[edited, c] = 0.5 * g.loc[edited, c].to_numpy(dtype=float) + 0.5 * g_rep.loc[edited, c].to_numpy(dtype=float)
     g["v30"] = build(g, *V30)
     g["v33"] = build(g, v33["outer"], v33["lirf"])
     for c in ["v46", "v51m", "v52m", "v53m", "v54m", "v55m"]:
@@ -172,7 +176,7 @@ def ranking_table(base: tuple[str, str], checks: dict | None = None, model_part:
     layer = pd.read_parquet(ROOT / model_part).set_index(ID)[TARGET].reindex(g[ID]).to_numpy(dtype=float) - original
     g["v55m"] = g["v55m"].to_numpy(dtype=float) + layer
     g["stack"] = g["v55m"]
-    raw = takeoff(g[ID].to_numpy(), [ROOT / "data/raw/ranking.parquet"])
+    raw = takeoff(g[ID].to_numpy(), [ROOT / RANKING])
     tk = pd.to_datetime(raw["MVT_TIME_UTC_mvt"], utc=True).reset_index(drop=True)
     g["a"] = (tk - pd.to_datetime(raw["SCHED_TIME_UTC_mvt"], utc=True).reset_index(drop=True)).dt.total_seconds().to_numpy()
     part = original + layer
@@ -432,7 +436,7 @@ def append_readme(out: dict, spec: dict) -> None:
 
 
 def dry_run(spec: dict, args) -> None:
-    out_dir = ROOT / "runs/stack_resid" / f"dry_v{args.version}"
+    out_dir = ROOT / "runs/stack_resid" / f"dry_v{args.version}" if not args.out else ROOT / final_chain_overrides._rel(args.out)
     if (ROOT / "runs/submissions").resolve() in [out_dir.resolve(), *out_dir.resolve().parents]:
         raise ValueError("A dry run never writes under runs/submissions.")
     output = out_dir / f"vigorous-whistle_v{args.version}.parquet"
@@ -493,10 +497,31 @@ def main() -> None:
     parser.add_argument("--version", type=int)
     parser.add_argument("--base", help="base file (default: the declaration's base; v1: the uploaded v57)")
     parser.add_argument("--base-sha256")
+    parser.add_argument("--out", default=None, help="final file: the dry run's directory (default runs/stack_resid/dry_v<N>)")
+    parser.add_argument("--runner", default=None, help="final file: the runner's run directory (default runs/final_dryrun/run)")
+    parser.add_argument("--repaired", default=None, help="final file: the runner's repaired run (<root>/repair/run) or 'none' (default runs/final_lfpg_eobt/run)")
+    parser.add_argument("--model-part-original", default=None, help="final file: the runner's v55m model-part file before any model-part layer "
+                        "(default the shipped runs/lirf_combo/export_dry/vigorous-whistle_v55.parquet)")
+    parser.add_argument("--model-part", default=None, help="final file: the model-part file of the base's chain (overrides the declaration's tool block)")
+    parser.add_argument("--model-part-sha256", default=None)
+    parser.add_argument("--chain-rows", default=None, help="final file: the var-alloc step's rows.parquet of the base's chain (overrides the declaration's)")
+    final_chain_overrides.add_arguments(parser)
     args = parser.parse_args()
+    final_chain_overrides.apply(args)
+    global RUNNER, REPAIRED, MODEL_PART
+    if args.runner:
+        RUNNER = ROOT / final_chain_overrides._rel(args.runner)
+    if args.repaired:
+        REPAIRED = None if args.repaired == "none" else ROOT / final_chain_overrides._rel(args.repaired)
+    if args.model_part_original:
+        MODEL_PART = (final_chain_overrides._rel(args.model_part_original), None)
     if args.base and not args.base_sha256:
         raise ValueError("--base needs --base-sha256.")
     spec = spec_of(args.declaration)
+    if args.model_part:
+        spec["model_part"], spec["model_part_sha256"] = final_chain_overrides._rel(args.model_part), args.model_part_sha256
+    if args.chain_rows:
+        spec["chain_rows"] = final_chain_overrides._rel(args.chain_rows)
     if args.check:
         check()
     if args.score:

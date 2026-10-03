@@ -41,6 +41,7 @@ import export_v33  # noqa: E402
 from export_share_gate import uploaded  # noqa: E402
 from run_daily_totals import Cells, add_keys, nm_clock, rows_table, scales, settings_from  # noqa: E402
 from screen_daily_totals import BANDS, published  # noqa: E402
+import final_chain_overrides  # noqa: E402
 
 DECLARATION = "configs/daily_totals_v1.json"
 V46 = ("runs/submissions/vigorous-whistle_v46.parquet", "8abdd87ad5098d7753927f407ffd7e8cd342aa84a2864392e1b64c0dde015af9", 223.9339)
@@ -106,7 +107,12 @@ def main() -> None:
     parser.add_argument("--declaration", default=DECLARATION)
     parser.add_argument("--candidate")
     parser.add_argument("--base", help="another file of the clean line as the base instead of the uploaded v46 (path under the project root)")
+    parser.add_argument("--workbook", default=None, help="final file: a newer All_Pre-Departure_Delay.xlsx covering the new period (with --workbook-sha256)")
+    parser.add_argument("--workbook-sha256", default=None, help="the newer workbook's SHA-256, stated explicitly in place of the declaration's")
+    parser.add_argument("--no-incumbent-report", action="store_true", help="final file: skip the comparison with the uploaded v48 (it covers only the ranking rows)")
+    final_chain_overrides.add_arguments(parser)
     args = parser.parse_args()
+    overrides = final_chain_overrides.apply(args)
     base = (V46[0], V46[1]) if args.base is None else (Path(args.base).as_posix(), sha256_file(ROOT / args.base))
     on_v46 = base[1] == V46[1]
     declaration = args.declaration
@@ -123,8 +129,10 @@ def main() -> None:
             raise ValueError("The governing run did not select this candidate; shipping it needs --user-override with the user's words.")
     elif not results.get("accepted") and not args.user_override:
         raise ValueError("The governing run did not accept the procedure; shipping it needs --user-override with the user's words.")
-    if sha256_file(ROOT / WORKBOOK) != decl["external_data"]["sha256"]:
-        raise ValueError("The workbook changed.")
+    workbook = WORKBOOK if args.workbook is None else final_chain_overrides._rel(args.workbook)
+    expected = decl["external_data"]["sha256"] if args.workbook is None else args.workbook_sha256
+    if sha256_file(ROOT / workbook) != expected:
+        raise ValueError("The workbook changed." if args.workbook is None else "The named workbook does not have the stated SHA-256.")
     if args.dry_run is None:
         output, report_path = ROOT / f"runs/submissions/vigorous-whistle_v{args.version}.parquet", ROOT / f"docs/daily_totals/export_v{args.version}.json"
         detail_path = ROOT / f"runs/daily_totals/export_v{args.version}"
@@ -177,6 +185,8 @@ def main() -> None:
                   "inputs": {p: sha256_file(ROOT / p) for p in [export_v33.DRY, V46[0], base[0], RANKING, "runs/daily_totals/rows.parquet"]},
                   "external_data": {"adsb": "adsb.lol globe_history (ODbL) surface positions, as in v46", "published_totals": decl["external_data"]},
                   "user_decision": decl["user_decision"], "audit_used": False, "floor_seconds": FLOOR, "official_scores_used": "none"}
+    if overrides or args.workbook:
+        provenance["final_file_inputs"] = {**overrides, **({"workbook": workbook, "workbook_sha256": args.workbook_sha256} if args.workbook else {})}
     receipt = export_submission(pd.DataFrame({ID: ids, "prediction": values}), ROOT / "data/raw/submitting.parquet", output, provenance)
     exported = pd.read_parquet(output).set_index(ID)[TARGET].reindex(ids).to_numpy().astype(np.int64)
     change = exported.astype(float) - v46.astype(float)
@@ -210,7 +220,7 @@ def main() -> None:
               "rmse_if_every_changed_label_equals_the_new_value": float(np.sqrt(max(n * score_base ** 2 - (change ** 2).sum(), 0.0) / n)) if score_base else None,
               "rmse_if_the_changes_are_noise": float(np.sqrt((n * score_base ** 2 + (change ** 2).sum()) / n)) if score_base else None,
               "rmse_at_the_development_alignment": {f"{b}": float(np.sqrt(max(n * score_base ** 2 - (2 * b - 1) * (change ** 2).sum(), 0.0) / n)) for b in (0.78, 0.84, 1.0, 1.17)} if score_base else None}
-    if settings.heavy_updates or not on_v46:   # the file against the uploaded v48 (the incumbent): the heavy rows' part, or another base's part
+    if (settings.heavy_updates or not on_v46) and not args.no_incumbent_report:   # the file against the uploaded v48 (the incumbent): the heavy rows' part, or another base's part
         v48 = uploaded(V48[0], V48[1], ids).astype(float)
         d = exported.astype(float) - v48
         report["against_v48"] = {"base": {"submission": Path(V48[0]).name, "official_rmse_seconds": V48[2], "sha256": V48[1]}, "rows_that_differ": int((d != 0).sum()),

@@ -31,6 +31,7 @@ from adsb_rematch_nonm import IATA  # noqa: E402
 
 DECLARATION = "configs/rematch_nonm_v1.json"
 OUT = ROOT / "runs/rematch_nonm"
+DEFAULT_OUT = OUT   # the 2025 matches and offsets always come from here; --out moves only the new file's matches and base
 AIRPORTS = ["EDDF", "EHAM", "LSZH"]
 MONTHS = ["2025-01", "2025-07", "2025-11", "2025-12"]
 EQUAL = ["2025-01", "2025-07", "2025-12"]
@@ -128,6 +129,8 @@ def step_matches() -> None:
     rank = rows[rows[ID].isin(ranking_ids)]
     train = rows[~rows[ID].isin(ranking_ids)]
     for name, part in [("rank", rank), ("2025", train)]:
+        if name == "2025" and OUT != DEFAULT_OUT:   # final file: the shipped 2025 matches stay in runs/rematch_nonm
+            continue
         if (OUT / f"matches_{name}.parquet").exists():
             print("keep", name)
             continue
@@ -304,7 +307,7 @@ def step_ranking_base() -> None:
     b = pd.read_parquet(ROOT / BASE[0])
     ids = b[ID].to_numpy()
     mr = pd.read_parquet(OUT / "matches_rank.parquet")
-    off = offsets(pd.read_parquet(OUT / "matches_2025.parquet"), labels_2025(), None)
+    off = offsets(pd.read_parquet(DEFAULT_OUT / "matches_2025.parquet"), labels_2025(), None)
     new, changed = apply(b[TARGET].to_numpy(dtype=float), ids, mr, off)
     out = b.copy()
     out[TARGET] = np.where(changed, np.rint(new), b[TARGET].to_numpy()).astype(b[TARGET].dtype)
@@ -325,7 +328,22 @@ def main() -> None:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     for f in ["matches", "dev", "score", "ranking-base"]:
         p.add_argument(f"--{f}", action="store_true")
+    p.add_argument("--out", default=None, help="final file: directory for the new file's key map, matches and rematched base (default runs/rematch_nonm)")
+    p.add_argument("--base", default=None, help="final file: the runner's v55m model-part file (default the shipped v55 model part)")
+    p.add_argument("--base-sha256", default=None)
+    import final_chain_overrides
+    final_chain_overrides.add_arguments(p)
     a = p.parse_args()
+    final_chain_overrides.apply(a)
+    global OUT, BASE
+    if a.out:
+        OUT = ROOT / final_chain_overrides._rel(a.out)
+    if a.base:
+        if not a.base_sha256:
+            raise ValueError("--base needs --base-sha256.")
+        BASE = (final_chain_overrides._rel(a.base), a.base_sha256)
+    if (a.dev or a.score) and OUT != DEFAULT_OUT:
+        raise ValueError("--dev / --score are the governing run on 2025; they never take --out.")
     if a.matches:
         step_matches()
     if a.dev:

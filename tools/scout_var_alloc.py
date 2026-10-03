@@ -33,6 +33,7 @@ from run_adsb_v11 import paired_days, rmse  # noqa: E402
 from scout_extreme_shift import KEYS, SEED, TABLES, dev_rows, ranking_rows  # noqa: E402
 from scout_extreme_shift import CODE as EXTREME_CODE  # noqa: E402
 
+RANKING = "data/raw/ranking.parquet"   # tools/final_chain_overrides.py --raw
 V55 = ROOT / "runs/submissions/vigorous-whistle_v55.parquet"
 V55_SHA = "aa02ff597a619f223888370726cdcbf5c6d055720ef2f95b0c93818133fd1ece"
 GUARD = (213142471.0, 213142469.0)
@@ -181,7 +182,7 @@ def export(args) -> None:
     t["month"] = t["bday"].str[:7]
     I = implied(t, days, params["c0"], ["airport", "bday"])
     elig = var_alloc.eligible(t, GUARD)
-    f = var_alloc.features(t, departures([str(ROOT / "data/raw/ranking.parquet")]), KEYS)
+    f = var_alloc.features(t, departures([str(ROOT / RANKING)]), KEYS)
     w = var_alloc.weights(models, f, elig)
     base = var_alloc.basis(t, w, I, KEYS)
     new = var_alloc.update(ext, k, base, elig)
@@ -224,7 +225,10 @@ def main() -> None:
     parser.add_argument("--user-override")
     parser.add_argument("--previous", help="the extreme-day step's file on the same base (default: the uploaded v55)")
     parser.add_argument("--previous-sha256")
+    import final_chain_overrides
+    final_chain_overrides.add_arguments(parser)
     args = parser.parse_args()
+    final_chain_overrides.apply(args)
     if args.score:
         govern(args.declaration)
     else:

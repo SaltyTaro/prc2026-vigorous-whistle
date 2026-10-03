@@ -28,6 +28,7 @@ CONFIG = ROOT / "configs/intruder_bound_v1.json"
 DEV = ROOT / "runs/scout/refit/ctl_v55m.parquet"
 DEV_CLS = ROOT / "runs/daily_totals/rows.parquet"
 TWELVE = ROOT / "runs/daily_totals/rows12.parquet"
+RANKING = "data/raw/ranking.parquet"   # tools/final_chain_overrides.py --raw
 BANDS = [0, 300, 600, 900, 1800, 3600]
 GUARD = [213142471, 213142469]
 EQUAL = ["2025-01", "2025-07", "2025-12"]
@@ -163,7 +164,7 @@ def dry_run(base: Path, base_sha: str, version: int, out_dir: Path) -> None:
     dep, arr = movements([Path(f) for f in files])
     twelve, p12 = read_table("twelve", dep)
     model = fit(candidates(twelve, p12, dep, arr, spec["G_s"]))
-    rk_path = ROOT / "data/raw/ranking.parquet"
+    rk_path = ROOT / RANKING
     rdep, rarr = movements([rk_path])
     rk = pd.read_parquet(rk_path, columns=["MVT_ID_mvt", "PHASE_mvt", "ADEP_mvt", "ADEP_flt", "AIRCRAFT_TYPE_mvt"])
     rk = rk[rk["PHASE_mvt"].eq("DEP")]
@@ -210,7 +211,10 @@ def main() -> None:
     ap.add_argument("--extra-provenance", default=None, help="JSON object merged into the receipt's provenance (e.g. an earlier layer in the base)")
     ap.add_argument("--build", action="store_true", help="at the user's word: write runs/submissions/vigorous-whistle_v<version>.parquet; "
                     "it must equal the dry run byte for byte and must not exist yet")
+    import final_chain_overrides
+    final_chain_overrides.add_arguments(ap)
     a = ap.parse_args()
+    final_chain_overrides.apply(a)
     if a.score:
         score()
     if a.build:
@@ -227,7 +231,7 @@ def main() -> None:
             raise ValueError("The rebuilt file differs from the dry run.")
         target.write_bytes(built.read_bytes())
         from prc2026_submission.contract import validate_submission
-        sub = validate_submission(target, ROOT / "data/raw/submitting.parquet")
+        sub = validate_submission(target, ROOT / (final_chain_overrides._rel(a.template) if a.template else "data/raw/submitting.parquet"))
         sub.update({"version": a.version, "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
                     "provenance": {"audit_used": False, "dry_run": False, "experiment_id": "intruder_bound_v1", "selected_candidate": "g3600_w100",
                                    "selected_by": "the declared rule (accepted)", "official_scores_used": "none",
@@ -246,7 +250,7 @@ def main() -> None:
         write_json(ROOT / f"docs/intruder_bound/export_v{a.version}.json", receipt)
         print("built", target.name, receipt["sha256"])
     if a.dry_run:
-        out = Path(a.out) if a.out else ROOT / f"runs/intruder_bound/dry_v{a.version}"
+        out = ROOT / final_chain_overrides._rel(a.out) if a.out else ROOT / f"runs/intruder_bound/dry_v{a.version}"
         if "runs/submissions" in str(out).replace("\\", "/"):
             raise ValueError("The dry run never writes under runs/submissions.")
         dry_run(ROOT / a.base, a.base_sha256, a.version, out)
