@@ -206,6 +206,8 @@ def main() -> None:
     ap.add_argument("--base-sha256", default="31d909ff2e5d1937e65404c396893b9e5524d082c07422be9390c75aad4daed8")
     ap.add_argument("--version", type=int, default=58)
     ap.add_argument("--out", default=None)
+    ap.add_argument("--user-decision", default="Build + upload v58 now (3 October 2026, AskUserQuestion)")
+    ap.add_argument("--extra-provenance", default=None, help="JSON object merged into the receipt's provenance (e.g. an earlier layer in the base)")
     ap.add_argument("--build", action="store_true", help="at the user's word: write runs/submissions/vigorous-whistle_v<version>.parquet; "
                     "it must equal the dry run byte for byte and must not exist yet")
     a = ap.parse_args()
@@ -229,11 +231,14 @@ def main() -> None:
         sub.update({"version": a.version, "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
                     "provenance": {"audit_used": False, "dry_run": False, "experiment_id": "intruder_bound_v1", "selected_candidate": "g3600_w100",
                                    "selected_by": "the declared rule (accepted)", "official_scores_used": "none",
-                                   "user_decision": "Build + upload v58 now (3 October 2026, AskUserQuestion)",
+                                   "user_decision": a.user_decision,
                                    "declaration": {"configs/intruder_bound_v1.json": sha256_file(CONFIG)},
                                    "code": {"tools/run_intruder_bound.py": sha256_file(Path(__file__))},
                                    "base": {"path": a.base, "sha256": a.base_sha256},
                                    "recipe": "v57's chain, then the intruder stand bound last (EDDF / EGLL / LFPG / LTFM; value take-off - intruder in-block + offset fitted on the twelve 2025 months)"}})
+        if a.extra_provenance:
+            import json
+            sub["provenance"].update(json.loads(a.extra_provenance))
         write_json(target.with_suffix(".receipt.json"), sub)
         receipt = read_json(tmp / f"vigorous-whistle_v{a.version}.receipt.json")
         receipt.update({"kind": "submission build at the user's word", "file": str(target.relative_to(ROOT)), "sha256": sha256_file(target),
