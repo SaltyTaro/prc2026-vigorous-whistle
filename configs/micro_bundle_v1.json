@@ -1,0 +1,45 @@
+{
+ "experiment_id": "micro_bundle_v1",
+ "declared_at_utc": "2026-10-03T09:55:00Z",
+ "declared_by": "declaring and the governing run are research; building a file under runs/submissions and any upload stay the user's word",
+ "audit_used": false,
+ "status": "DECLARED before the governing run (tools/run_micro_bundle.py --score). All three pieces were seen in exploration (disclosed below); the governing run recomputes the development and twelve-month tables with this exact procedure. The detection thresholds of C and the exclusions of B were fixed after a label-free look at the ranking days tunnel 6 named.",
+ "candidate": "A + B + C together (single candidate)",
+ "pieces": {
+  "C_day_boundary_pair_repair": {
+   "where": "inside the published chain, after v48's reconciliation and before the extreme-day layer; the value bound after the variance re-allocation",
+   "detection": "on the extreme-day layer's day frame (model-part prediction `stack`; in-figure rows; implied = sum of max(a - stack, 0) by predicted off-block day; c0 from the fitting side): airport days d and d+1 (consecutive dates) with dn_d = -dn_{d+1} = +-1, published discrepancies D = published - c0 - implied of opposite sign and |D| >= 7,200 s on both; the over-implied day (D < 0) is the one with dn = -1; accepted when |D_neg + p| <= 0.25 p and |D_pos - p| <= 0.25 p",
+   "repair": "the row's predicted off-block day becomes the other day in the extreme-day layer's and the variance re-allocation's day aggregations; after the variance re-allocation its value is bounded to put its off-block just across that midnight: moved to the earlier day -> value = max(value, take-off - midnight + 60 s); moved to the later day -> value = min(value, take-off - midnight - 60 s)",
+   "exploration": "ranking (label-free): LEBL 1/2 July 2026 qualifies; LEBL 20/21 July (D +42,161 / +2,817) and LIRF 1/2 July (no single row matches) do not"
+  },
+  "B_count_aware_extreme_days": {
+   "where": "the extreme-day layer (src/prc2026_scout/extreme_shift.py), after C",
+   "rule": "a day the layer skips only because of its count-sign rule (dn != 0 and not sign-safe) qualifies when: calibrated airport (the layer's beta), n_eff >= 100, a published total, not the first or last day of a month, no neighbouring day (d - 1 or d + 1) with dn = -dn_d while |dn_d| = 1, and |I'| >= 80 s with I' = -(published - c0 - mu_{a, sign(dn)} |dn| - implied) / n_eff; its shift is beta_a x I' (as the layer's other days)",
+   "mu": "src/prc2026_scout/published_figure.fit on the fitting side's days (published_figure.fitting_days on in-figure rows with labels)",
+   "exploration": "ranking (label-free, rematch model part): qualifying days EHAM 6 Jan (I' +113 s), LTFM 15 Jan (-83 s), LTFM 19 Jan (-199 s); excluded: LTFM 31 Jan (month end), LTFM 28 Jan and LEBL 1/2/20 Jul (+-1 neighbour pattern). 2025 analogs read by tunnel 6 (docs/dig/published_gaps.md): LTFM 26 Jul and 7 Dec agree in sign and size, EDDM 1 Jan (a month edge, excluded here) does not"
+  },
+  "A_mars_stand_families": {
+   "where": "the intruder stand bound (configs/intruder_bound_v1.json), last, incremental: only rows the accepted intruder rule does not move",
+   "rule": "sibling stands of a MARS family (code X with a trailing digit and X+L / X+R present in the data, either direction, tunnel 5's c5_mars.py); the last sibling arrival whose in-block precedes the predicted off-block, of a different aircraft type, 0 < gap <= 3,600 s; airports with >= 10 candidates and >= 90% of them satisfying label >= B - 60 s in the fitting months (twelve-month table); value = max(B + the accepted intruder model's offset for the airport and gap band, prediction)",
+   "exploration": "tunnel 5 (docs/dig/constraints.md): EGLL 21/21 and LTFM 45/45 valid; twelve months -0.0213%, 12/12 better, 66 rows; development -0.0127%, 3/4 better"
+  }
+ },
+ "control": {
+  "development": "runs/scout/refit/ctl_v55m.parquet `new` (the shipped chain on the v55m model part, rebuilt month by month exactly as tools/scout_refit_run.py, checked to reproduce) + the accepted intruder layer; the guarded stacking layer (stack_resid_v2) is omitted from both control and candidate on development (its development values are a residual fit on the unmodified chain)",
+  "twelve": "runs/daily_totals/rows12.parquet through v48 (runs/scout/daily_ifr/v48_twelve), the extreme-day layer and the variance re-allocation (tools/scout_var_alloc.py layered('twelve')) + the accepted intruder layer"
+ },
+ "rule": {
+  "text": "accepted when (1) no development month is worse than the control by more than 0.005% of its RMSE; (2) the equal-footing mean (January, July, December 2025) is at most -0.02%; (3) every equal-footing month's paired-day 95% interval lies below zero; (4) in the twelve-month check no month is worse than its control by more than 0.005% and at least two thirds of the months are better",
+  "equal_footing": [
+   "2025-01",
+   "2025-07",
+   "2025-12"
+  ],
+  "max_month_worsening_pct": 0.005,
+  "min_mean_improvement_pct": 0.02,
+  "twelve_min_better_share": 0.6667,
+  "intervals": "paired-day bootstrap over UTC take-off days, 2,000 replicates, seed 20261003"
+ },
+ "ranking": "label-free dry run into runs/micro_bundle/dry_v61/: model part runs/rematch_nonm/base/vigorous-whistle_v55m_rematch.parquet -> v48 (runs/rematch_nonm/rank/R) -> C -> extreme-day + B -> variance re-allocation -> C's bound -> stack_resid_v2 (tools/run_stack_resid.py --declaration configs/stack_resid_v2.json --base <that file>) -> intruder bound + A; first the same chain without the pieces must reproduce v60 (30021455...) byte for byte; nothing under runs/submissions",
+ "report": "docs/micro_bundle/results_v1.json"
+}
