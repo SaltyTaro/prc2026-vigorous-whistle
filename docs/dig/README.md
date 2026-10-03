@@ -1,0 +1,72 @@
+# Dig campaign (3 October 2026)
+
+The user, 3 October 2026: "now we need to play this like minecraft, where we dig and dig for hours and hope to find diamond, in this
+case reduce our RMSE, because at this rate we will be out of top 5 by the end of comp close". Official best v57 = 221.3289 (2 Oct).
+
+Every tunnel validates on 2025 only (month-blocked; January / July / December equal footing, November supplementary; complete months
+including extreme labels; paired-day bootstrap intervals). No official score, no leaderboard, no upload; LIRF population rows and the
+two guard rows stay untouched. Control for post-processing ideas: the shipped chain on the shipped model
+part, `runs/scout/refit/ctl_v55m.parquet` column `new` (pooled dev RMSE 239.33 s).
+
+GO bar for a screen (before any declared round): equal-footing mean <= -0.05%, no equal-footing month worse than +0.01%, at least
+two intervals below zero; or, for a label-free ranking anomaly, a sized potential of at least 0.1 s.
+
+## Census of the shipped chain (development proxy, share of all squared error)
+
+| cell | rows | RMSE (s) | share |
+|---|---:|---:|---:|
+| LFPG unmatched, incl. two unidentifiable January 2025 tails | 64,897 | | 36.0% |
+| LIRF population (guarded) | 562 | | 16.6% |
+| LTFM (all unmatched) | 91,338 | 205.8 | 10.0% |
+| LIRF matched | 30,899 | 334.4 | 9.0% |
+| EGLL unmatched / matched | 33,085 / 46,548 | 230.9 / 177.6 | 4.6% / 4.0% |
+| LIRF unmatched | 18,463 | 286.8 | 3.9% |
+| LEBL matched | 53,542 | 149.1 | 3.1% |
+
+LIRF clock-present rows hold 12.9% (fill rows with an NM delay above 600 s about 4.4%; the class is unobservable, closed by
+`docs/clean_line_screens/lirf_mechanism.md`). Rows with |error| > 600 s are 1.1% of ordinary non-population rows and hold 46% of their
+squared error; 69% of them are under-predictions.
+
+## Tunnels
+
+| # | tunnel | owner | state | record |
+|---|---|---|---|---|
+| 1 | 2026 ranking-file regime audit (label-free) | fork | running | `regime_audit.md` |
+| 2 | residual ore test: everything label-free on the shipped chain's residual | fork | running | `residual_ore.md` |
+| 3 | LTFM deep dive (runway configuration, queues, clock structure, banks) | fork | **closed, no GO** (shared temporal state: neighbouring take-offs' residuals correlate 0.25-0.27, but every label-free signal reads it at <= 0.076; new groups help the older twelve-month predictor -0.13% at w 0.5 but not the shipped chain, whose context networks hold them; stand x runway bias -0.010 / -0.013%, all months better, a tenth of the bar) | `ltfm.md` |
+| 4 | LFPG / EGLL unmatched deep dive | fork | **closed, no GO** (configuration, queues, stand x runway: +0.001 to +0.225% equal-footing; early class AUC +0.002 at most; no partial traces to recover) | `lfpg_egll.md` |
+
+## FIND (paused at the user's word, nothing declared or built): the intruder stand bound
+
+If our inbound aircraft (same type) blocks in at our stand, then a different-type aircraft blocks in at that stand before our
+predicted off-block (gap <= G), we must have left before the intruder: label > B = take-off - intruder in-block. Valid in 2025 at
+EDDF 100%, EGLL 97%, LFPG 97%, LTFM 99.7% of candidates (all twelve months); invalid elsewhere (shared stand codes). Value B + o(airport,
+gap band), o fitted on the other months (about 400-1,250 s). Scratch `runs/dig/micro/intruder_screen.py` (results
+`intruder_screen.json`), `intruder_ranking.py`.
+
+| variant | twelve months (older predictor) | shipped chain dev Jan / Jul / Nov / Dec | equal-footing mean |
+|---|---|---|---|
+| G 1,800 s, w 0.5 | -0.171%, 12/12 better, 12/12 intervals < 0 | -0.096 / -0.240 / -0.087 / -0.120% | -0.152% |
+| G 3,600 s, w 1.0 | -0.376%, 12/12 better, 11/12 intervals < 0 | -0.169 / -1.159 / -0.229 / -0.204% | -0.511% |
+
+Ranking dry run on v57 (read only): G 3,600 w 1.0 moves 52 rows (EDDF 9, EGLL 12, LFPG 17, LTFM 14), squared change 7.1e7, largest
+move +3,050 s; G 1,800 w 0.5 moves 50 rows, 1.4e7. Arrival block, stand and type are supplied for every ranking arrival. Open before a
+declaration: leakage review (July above 1%), the concentration of the change in ~50 rows, the order against the published-data layers.
+
+## Small tunnels closed on the way (this session)
+
+- **Long schedule intervals outside LIRF** (take-off more than 3 h after schedule): 2025 has 10,692 / 1,716 / 595 non-LIRF rows with
+  intervals of 3-6 h / 6-12 h / above 12 h and only 8 / 0 / 0 labels above 3 h (median labels 1,017 / 964 / 1,064 s). No one-day
+  mechanism outside LIRF; nothing to hedge.
+- **The reconciliation's heavy-row cap** (64 per airport-day): reached on 2 of 619 ranking airport-days (LIRF July 2026), never in the
+  development months. Negligible.
+- **Daily fill share at LIRF** (clock-present rows, block = schedule within 5 s): 16.8% +- 3.0% per day; among rows with an NM delay
+  above 600 s 7.9% +- 2.7%, about binomial. No day-level fill regime for the published total to reveal beyond one degree of freedom
+  per day; a fill-aware posterior has the same ceiling as v48 / v57.
+- **NM clocks after take-off** (proxy <= 0): 396 development rows, 0.35% of all squared error, bias -18 / +61 s. Even a perfect fix is
+  under 0.2% of RMSE; the pipeline already treats them without bias. Closed.
+- **Estimated NM clocks as the source of the "early" class** (block more than 300 s before AOBT_3): an estimated clock repeats one
+  take-off-minus-clock minute per stand x runway pair. At LFPG and EGLL almost no row sits on such a modal value (4.9% / 0.0%) and the
+  early share does not depend on it (LFPG 14.1% vs 14.9%). The signature exists at EDDM (82.5% modal rows; early 6% on modal rows vs
+  53% on the others) and LTFM (40.5%), where the error is already small or the clock is known to be an estimate. Closed for the cells
+  that matter.
