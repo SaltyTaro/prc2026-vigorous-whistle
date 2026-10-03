@@ -1,0 +1,80 @@
+{
+  "B_changed_rows": {
+    "max": 2699.0,
+    "median": 1356.6,
+    "min": 336.7
+  },
+  "all_moves_upward": true,
+  "base_v61_sha256": "fe137f092fa68a3f838ed0cb5b3cc5d7e995707790accecef4fb3649dd6af4e8",
+  "bytes": 2225978,
+  "changed_by_airport": {
+    "EDDF": 89,
+    "EGLL": 50,
+    "LFPG": 16
+  },
+  "changed_by_month": {
+    "2026-01": 79,
+    "2026-07": 76
+  },
+  "dtypes": {
+    "MVT_ID_mvt": "float64",
+    "TAXITIME_SEC_mvt": "int32"
+  },
+  "file": "runs/own_motion/dry_v62/vigorous-whistle_v62.parquet",
+  "guard_rows_changed": 0,
+  "guard_values": [
+    47705,
+    25499
+  ],
+  "guard_values_v61": [
+    47705,
+    25499
+  ],
+  "ids_and_order_identical": true,
+  "lirf_rows_changed": 0,
+  "max_move_s": 2270,
+  "min_move_on_changed_s": 142,
+  "new_minus_B_changed_rows": {
+    "max": 471.0,
+    "median": 142.5,
+    "min": 141.69999999999982
+  },
+  "new_values_changed_rows": {
+    "max": 2912,
+    "median": 1624.0,
+    "min": 479
+  },
+  "population_rows_changed": 0,
+  "rows_changed": 155,
+  "rows_per_airport_day_max": 6,
+  "sha256": "cba143f84debdca0d9aff345ff4669ff6a3f0f7f5c4e02d08bcd3e0d02c32d9d",
+  "squared_change": 40803680.0,
+  "unchanged_rows_identical": true,
+  "v61_values_changed_rows": {
+    "max": 2515,
+    "median": 1247.0,
+    "min": 256
+  },
+  "validate_submission": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_v62.parquet",
+    "ids_sha256": "e9fdd808dda65d109f9cee24f2364b715c5a5cfb596efbc623b32acda154febf",
+    "maximum_prediction_seconds": 111654,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 17,
+    "rows": 344841,
+    "sha256": "cba143f84debdca0d9aff345ff4669ff6a3f0f7f5c4e02d08bcd3e0d02c32d9d",
+    "size_bytes": 2225978,
+    "template_sha256": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-10-03T14:54:09.002821+00:00",
+    "version": 62
+  }
+}
