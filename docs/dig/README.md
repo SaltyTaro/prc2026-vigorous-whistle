@@ -49,6 +49,8 @@ squared error; 69% of them are under-predictions.
 | 15 | own-aircraft ADS-B hard bounds (first seen moving -> label lower bound; last seen parked -> upper bound) on partially traced rows | fork | **closed, no GO** (the matcher already feeds first point and motion start to the models; where a bound holds v61 respects it, where v61 breaks one the bound is wrong: dark-row first point valid 58-90%, upper bounds fail everywhere (early class); gate-row motion floor at EHAM mixed, best +0.005 / -0.015 / +0.046 / -0.084%) | `own_bounds.md` |
 | 16 | adsb.lol replica union (prod-0 + staging-0 of the same day) for surface coverage | fork | running (arcw0 only) | `replica_union.md` |
 | 17 | case files: the worst v61 development rows read by hand for a new label-free mechanism | fork | **find**: own-motion bound at EDDF / EGLL / LFPG (own aircraft seen moving at >= 3 kt after its inbound blocked in at the same stand, B <= 2,700 s, not gate-traced; valid 93-100%; dev w 1.0 -0.038 / -0.111 / -0.082 / -0.163%, twelve 12/12; ranking 155 rows, S 4.25e7); declared round `configs/own_motion_v1.json` running | `case_files.md` |
+| 18 | pre-gap own-aircraft ADS-B points (dropped by the matcher) as soft features in the guarded stacker | fork | running | `pregap.md` |
+| 19 | case files round two (next ~200 worst rows outside known mechanisms, ADS-B airports) | fork | running | `case_files2.md` |
 
 ## Official results of the campaign
 
