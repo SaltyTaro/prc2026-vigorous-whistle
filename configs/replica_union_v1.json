@@ -1,0 +1,116 @@
+{
+ "experiment_id": "replica_union_v1",
+ "declared_at_utc": "2026-10-03T15:40:00Z",
+ "declared_by": "Declaring and the governing run are research. A build under runs/submissions follows only if this rule accepts, the sequencing below allows it and the dry-run checks pass (the user's standing word, relayed by the coordinator: \"if you get anything build and keep it ready, we will upload it when slots reset\"). The upload stays the user's and this tool never makes it.",
+ "audit_used": false,
+ "status": "DECLARED before the governing run (tools/run_replica_union.py --matches then --score). The run recomputes every number from scratch: union day files, union matches for every 2025 day and every ranking day with a staging-0 replica, offsets, the v62 development proxy and the twelve-month table, and the readings. No 2025 label was read in tunnel 16's exploration (see exploration_disclosed).",
+ "mechanism": "adsb.lol publishes each day of globe_history twice: -prod-0 and -staging-0. They are two independently sampled replicas of the same feed, with interleaved timestamps. The shipped extractor (tools/adsb_extract_day.py) reads only -prod-0. The de-duplicated union of the two replicas has about 7% more in-box points on an ordinary day, and fills prod-0 outages. On the ranking file (52 days with a staging replica), the shipped base matcher (src/prc2026_adsb/features.match_departures with the learned stands) on the union gate-traces 412 departures that prod-0 leaves unmatched and upgrades 50 dark matches to gate; no match is lost. A gate segment's motion start is the off-block evidence that the chain's other ADS-B layers use (the v59 rematch form).",
+ "procedure": {
+  "position": "the last layer: v62's chain (runner v55m -> no-NM rematch -> v48's reconciliation -> extreme-day layer -> variance re-allocation -> guarded stacking residual -> intruder stand bound -> identity extension -> own-motion bound v1), then own_motion_v2 if it is built first (see sequencing), then THIS LAYER",
+  "union_day_file": "for each UTC day: the shipped prod-0 day file data/external/adsblol/surface/surface_YYYYMMDD.parquet plus the staging-0 day file extracted with the shipped decode / boxes / altitude filter (runs/dig/replica/extract_replica.py = tools/adsb_extract_day.py with the release tag as a parameter) into data/external/adsblol/surface_staging/surface_YYYYMMDD_staging-0.parquet. Concatenated, then de-duplicated on (icao, airport, time, lat, lon) and sorted as the extractor sorts. Days without a staging-0 replica (2025: 05-28..06-10 have no -0 release of either kind, and 10-05; 2026: 13-22 January) keep prod-0 alone. A truncated staging archive (2026-01-23: one 2.0 GB part, 'unexpected end of data') is used as far as it reads.",
+  "union_matches": "match_departures(departures of the take-off day, union day file of that day, data/external/adsblol/matches/stands.parquet), exactly as tools/build_adsb_features.py --stands builds matches2 from prod-0 (re-running it on prod-0 reproduces matches2_2026-01 for 2026-01-08 exactly: same rows, gate, at_known_stand and motion_start)",
+  "rows": {
+   "union_gate": "the union match is a gate segment that starts at the known stand: gate = True and at_known_stand = True (the v59 rematch's filter: gate segments off the stand are de-icing-pad stops)",
+   "not_gate_in_prod0": "the row is not gate-traced in the shipped prod-0 matches (data/external/adsblol/matches/matches2_<YYYY-MM>.parquet gate != True): unmatched rows (new) and dark matched rows (upgraded) both qualify in the candidate",
+   "not_already_adsb_valued": "the row has no gate segment through the v35 IATA key or the v59 learned key (runs/rematch_nonm/matches_2025.parquet / matches_rank.parquet: iata_gate or learned_gate True are excluded)",
+   "airports": "EDDF, EDDM, EGLL, EHAM, LEBL, LEMD, LFPG, LSZH (LIRF excluded: every LIRF row keeps its value; LTFM has no surface coverage)"
+  },
+  "value": "p + w (T + o(airport) - p), w = 0.5, T = take-off - union motion start (seconds), p = the chain's prediction; nearest integer (numpy.rint) in the export; no clipping",
+  "offsets": "o(airport) = median of (label - T) over the fitting months' union gate-at-known-stand departures of that airport (all such rows: ordinary, new and upgraded alike; LIRF_pop and the guard rows excluded); development month m and twelve-month month m: the other eleven 2025 months; ranking: all twelve 2025 months",
+  "free_parameters": "the offsets o only; w, the at-known-stand filter, the airports and the exclusions are fixed here"
+ },
+ "candidate": {
+  "name": "ru8_w50",
+  "airports": [
+   "EDDF",
+   "EDDM",
+   "EGLL",
+   "EHAM",
+   "LEBL",
+   "LEMD",
+   "LFPG",
+   "LSZH"
+  ],
+  "w": 0.5,
+  "include_upgraded": true
+ },
+ "sensitivity_reported_not_selectable": [
+  {
+   "name": "ru8_w50_new_only",
+   "airports": [
+    "EDDF",
+    "EDDM",
+    "EGLL",
+    "EHAM",
+    "LEBL",
+    "LEMD",
+    "LFPG",
+    "LSZH"
+   ],
+   "w": 0.5,
+   "include_upgraded": false
+  },
+  {
+   "name": "ru9_w50_with_lirf",
+   "airports": [
+    "EDDF",
+    "EDDM",
+    "EGLL",
+    "EHAM",
+    "LEBL",
+    "LEMD",
+    "LFPG",
+    "LSZH",
+    "LIRF"
+   ],
+   "w": 0.5,
+   "include_upgraded": true
+  },
+  {
+   "name": "ru8_w100",
+   "airports": [
+    "EDDF",
+    "EDDM",
+    "EGLL",
+    "EHAM",
+    "LEBL",
+    "LEMD",
+    "LFPG",
+    "LSZH"
+   ],
+   "w": 1.0,
+   "include_upgraded": true
+  }
+ ],
+ "control": {
+  "development": "the v62 development proxy: runs/dig/census61/dev_v61.parquet `v61` -> own_motion_v1 om_b2700_w100, month-blocked, rebuilt in-process by tools/run_own_motion_v2.v62_tables(), which checks it against docs/own_motion/results_v1.json to 1e-9 relative (expected month RMSE about 320.8946 / 252.1483 / 183.0653 / 164.8560 s)",
+  "alternative_control": "--control PATH --control-col NAME --control-sha256 HASH: any chain proxy of the four development months with the same rows (the v63 / v64 chain proxy, see sequencing)",
+  "twelve": "runs/daily_totals/rows12.parquet `stack` -> accepted intruder bound -> identity extension -> own_motion_v1, each month-blocked (tools/run_own_motion_v2.v62_tables() column after3). The twelve-month table stays this one under an alternative development control."
+ },
+ "rule": {
+  "text": "v57's rule: accepted when (1) no development month (January, July, November, December 2025) is worse than the control by more than 0.005% of its RMSE (all rows); (2) the mean change over the equal-footing months (January, July, December 2025) is at most -0.02%; (3) every equal-footing month's paired-day 95% interval lies below zero; (4) in the twelve-month check every month is better or unchanged",
+  "equal_footing": [
+   "2025-01",
+   "2025-07",
+   "2025-12"
+  ],
+  "max_month_worsening_pct": 0.005,
+  "min_mean_improvement_pct": 0.02,
+  "intervals": "paired-day bootstrap over UTC take-off days, 2,000 replicates, seed 20261003, relative RMSE change (tools/run_intruder_bound.interval)",
+  "twelve_month_clause": "applies: staging-0 is extracted for every 2025 day that has it (349 of the 351 days with a prod-0 file, plus 2025-12-31 from globe_history_2026). If an extraction fails for a day, that day keeps prod-0 alone and the governing run lists it."
+ },
+ "sequencing": "stack_resid_v3 (configs/stack_resid_v3.json, v63 if accepted) and own_motion_v2 (configs/own_motion_v2.json, v64 if accepted) are declared by other agents and change the chain under this layer. If either is accepted AND built before this layer is built, this rule is re-run on the newest built chain's development proxy (tools/run_replica_union.py --score --control <that proxy>) and must pass again there before any build. The build then goes on top of the newest built file as the next free version. While either is unresolved, this layer writes only a dry run on the newest existing file for sizing and builds nothing.",
+ "exploration_disclosed": {
+  "what_was_seen": "dig tunnel 16 (docs/dig/replica_union.md, scratch runs/dig/replica/, 3 October 2026), all label-free. (a) The release tags for 2026 and 2025. (b) The staging-0 replica of 2026-01-08 / 01-23 / 07-10 / 07-22 and 2025-07-15, then of every ranking day with one, extracted on arcw0. (c) Point counts and the shipped base matcher on prod-0 against the union: matched / gate counts per airport-day. (d) Sizing on the uploaded v61's predictions for the 378 newly gate-traced rows at their known stand, in the v59 form (0.5 x v61 + 0.5 x (ADS-B taxi + 0 or +50 s)): squared change 9.8e6 / 8.6e6. No 2025 label and no development score was read.",
+  "concentration": "on the ranking file the union adds 2,021 matched departures (0.68% of the 52 days), 412 of them gate-traced, plus 50 dark-to-gate upgrades. Two prod-0 outage days hold most of the rich new tracks: 2026-01-23 (354 new matched, 130 gate; 125 of the 378 new gate rows at the known stand) and 2026-07-11 (185 new, 58 gate, 27 upgraded; 52 of the 378). On ordinary days the union adds 10-50 rows. At EDDF and LFPG the new rows are mostly tracks lifted over the matcher's 3-point minimum (median 3 points), and only 1-4 of them are gate-traced at each airport per month. 2025-07-15: 51 new matched of 6,120, 7 gate. The development months' new gate rows depend on 2025 outages, which the governing run counts first.",
+  "choices_from_earlier_rounds": "w 0.5 and the at-known-stand filter are the v59 rematch's (configs/rematch_nonm_v1.json, whose exploration read labels); LIRF is excluded following the own-motion layers (every LIRF row fixed); the offset form (per-airport median of label - taxi on gate-at-stand rows, other months) is the rematch's, here on all union gate-at-stand rows rather than only the qualifying ones, because new rows are few per month"
+ },
+ "outputs": {
+  "matches": "runs/replica_union/union_matches_2025.parquet, union_matches_rank.parquet (+ receipt with staging file hashes)",
+  "report": "docs/replica_union/results_v1.json (results_v1_<tag>.json under an alternative control) and docs/replica_union/README.md",
+  "dry_run": "runs/replica_union/dry_v<N>/ (never under runs/submissions)",
+  "build": "runs/replica_union/build_v<N>/ must equal the dry run byte for byte; runs/submissions/vigorous-whistle_v<N>.parquet is never overwritten; docs/replica_union/export_v<N>.json"
+ },
+ "tool": "tools/run_replica_union.py: --matches; --score [--control PATH --control-col NAME --control-sha256 HASH --control-tag TAG]; --dry-run --base --base-sha256 --version --out; --build --version N --user-decision TEXT [--dry-dir]",
+ "ranking": "label-free; nothing under runs/submissions unless accepted, sequenced as above and the dry-run checks pass; never uploaded by this tool"
+}
