@@ -69,3 +69,26 @@ Transfer guard after both support guards (ranking prediction RMS over developmen
 Sensitivity, reported and not selectable (the same learner applied at LIRF too): -0.0666% / -0.0575% / -0.2865% / -0.3448%, equal-footing -0.1563%.
 
 No twelve-month check exists (as for v2). No official score is used.
+
+### v3 ranking dry run and build (3 October 2026)
+
+`tools/run_stack_resid_v3.py --dry-run --version 63`: rematch chain file (c67f20d6) -> stack v3 (LIRF rows from the v60 stack file) -> intruder
+bound + identity extension (`tools/run_intruder_identity.dry_run`, no v60 check) -> own-motion bound (`tools/run_own_motion.dry_run`). The same
+chain from v2's stack file (cff778e0) reproduces v61 `fe137f09...` and the uploaded v62 `cba143f8...` byte for byte first.
+
+- `runs/stack_resid/dry_v63/vigorous-whistle_v63.parquet`, **SHA-256 `4cff09459d044e9830f9a2a1b3a0be11d3c11bbe5c5926dbb131e7f05449846f`**
+  (2,225,997 bytes); steps: stack `e2bd8bba...`, identity `543310e2...` (5 identity rows), own-motion 96 rows (v62: 155; the stack
+  already lifts some).
+- Against the uploaded v62: 233,886 rows differ, squared change 2.27e7, RMS 8.1 s, max +341 / -458 s, mean -0.14 s. No LIRF row, no LIRF
+  population row and neither guard row changes. By airport (rows / squared change): EGLL 33,077 / 6.76e6, LFPG 34,893 / 4.33e6, LSZH 17,854 /
+  2.53e6, EDDF 22,108 / 1.95e6, LEMD 24,333 / 1.79e6, EHAM 26,680 / 1.76e6, EDDM 18,656 / 1.64e6, LTFM 33,888 / 1.11e6, LEBL 22,397 / 0.86e6.
+- Guards on the ranking: 16,785 rows held (14,637 outside LIRF). Coverage shift (`results_v3.json` `coverage_shift`): EDDF own-motion share
+  0.87 (dev) -> 0.66 (ranking), guard share 26% dev out-of-month -> 11% (January 20%, July 5%); EGLL 0.51 -> 0.86, guard 3.5% -> 2.2%.
+  The transfer guard reads EDDF 1.18, EGLL 0.83.
+- **Built at the user's word** ("if you get anything build and keep it ready, we will upload it when slots reset"): `--build --version 63`
+  reran the dry run into `runs/stack_resid/build_v63/`, byte-identical, and wrote `runs/submissions/vigorous-whistle_v63.parquet`
+  (`4cff0945...`); export record [`export_v63.json`](export_v63.json); audit [`../export_audit/v63_audit.json`](../export_audit/v63_audit.json)
+  (integrity clean: 344,841 unique ids matching the ranking departures, no NaN, none below -12 s). **Not uploaded.**
+- Development chain proxy for later layers: `runs/stack_resid/dev_v63_proxy.parquet` (`1628a1d6...`, `tools/write_v63_dev_proxy.py`; columns
+  `v62`, `v63`; reproduces this run's month RMSEs exactly). own_motion_v2 re-read on it (`docs/own_motion/results_v2_v63.json`): **not accepted
+  on the v63 chain** (December's interval upper end +0.014%).
