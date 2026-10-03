@@ -1,0 +1,277 @@
+{
+  "accepted": false,
+  "audit_used": false,
+  "checks": {
+    "equal_footing_intervals_below_zero": false,
+    "equal_footing_mean": false,
+    "no_development_month_worse": true,
+    "twelve_better_share": true,
+    "twelve_no_month_worse": true
+  },
+  "code": {
+    "tools/run_intruder_bound.py": "24f3bc96716788c69824171b70ef8ad56233fc98d123e0c76d0cdfffc390a48a",
+    "tools/run_micro_bundle.py": "29ad0fa098dffddefc93d09ecd950faaab22116ee3e96deb9fef79fefeb5f152"
+  },
+  "created_at_utc": "2026-10-03T10:34:04.145182+00:00",
+  "declaration": "configs/micro_bundle_v2.json",
+  "declaration_sha256": "b14cbdd7d8eefaeb298426492ad7e4e58f1c58c1183590558f65e94bedafec0f",
+  "development": {
+    "2025-01": {
+      "change_pct": -0.007488475787553739,
+      "control_rmse": 321.51330735292487,
+      "interval_pct": [
+        -0.02682487850817733,
+        0.0
+      ],
+      "mars_rows": 3,
+      "mars_rows_by_airport": {
+        "LTFM": 3
+      },
+      "rmse": 321.48923090675,
+      "rows_changed": 3,
+      "squared_change": 1674976.9218913494
+    },
+    "2025-07": {
+      "change_pct": -0.03790736429397645,
+      "control_rmse": 253.02735017588822,
+      "interval_pct": [
+        -0.07600317006519447,
+        -0.007180838229124427
+      ],
+      "mars_rows": 13,
+      "mars_rows_by_airport": {
+        "EGLL": 4,
+        "LTFM": 9
+      },
+      "rmse": 252.93143417649364,
+      "rows_changed": 13,
+      "squared_change": 10136556.820601229
+    },
+    "2025-11": {
+      "change_pct": 0.0009253431863198713,
+      "control_rmse": 183.58363704968684,
+      "interval_pct": [
+        0.0,
+        0.0033664392066184976
+      ],
+      "mars_rows": 1,
+      "mars_rows_by_airport": {
+        "LTFM": 1
+      },
+      "rmse": 183.58533582836347,
+      "rows_changed": 1,
+      "squared_change": 318568.27455204324
+    },
+    "2025-12": {
+      "change_pct": -0.006356357141812374,
+      "control_rmse": 165.90878944823547,
+      "interval_pct": [
+        -0.020223063036347577,
+        0.0
+      ],
+      "mars_rows": 1,
+      "mars_rows_by_airport": {
+        "EGLL": 1
+      },
+      "rmse": 165.89824369304847,
+      "rows_changed": 1,
+      "squared_change": 363899.49414608994
+    }
+  },
+  "equal_footing_mean_pct": -0.017250732407780855,
+  "official_scores_used": "none",
+  "twelve": {
+    "2025-01": {
+      "change_pct": -0.010363213659991821,
+      "control_rmse": 327.6010332099959,
+      "interval_pct": [
+        -0.03614967795474988,
+        -0.0011631339736462042
+      ],
+      "mars_rows": 4,
+      "mars_rows_by_airport": {
+        "EGLL": 1,
+        "LTFM": 3
+      },
+      "rmse": 327.567083214972,
+      "rows_changed": 4,
+      "squared_change": 3216701.876950281
+    },
+    "2025-02": {
+      "change_pct": -0.07531068597446122,
+      "control_rmse": 195.8036439111775,
+      "interval_pct": [
+        -0.18042036989493138,
+        -0.003428846150866365
+      ],
+      "mars_rows": 6,
+      "mars_rows_by_airport": {
+        "EGLL": 1,
+        "LTFM": 5
+      },
+      "rmse": 195.656182843785,
+      "rows_changed": 6,
+      "squared_change": 2606406.979016131
+    },
+    "2025-03": {
+      "change_pct": -0.005919421510880429,
+      "control_rmse": 164.0741301552617,
+      "interval_pct": [
+        -0.018829700145911177,
+        0.0
+      ],
+      "mars_rows": 1,
+      "mars_rows_by_airport": {
+        "EGLL": 1
+      },
+      "rmse": 164.0644179159075,
+      "rows_changed": 1,
+      "squared_change": 542990.7028060231
+    },
+    "2025-04": {
+      "change_pct": -0.009455427302695885,
+      "control_rmse": 166.98174240690182,
+      "interval_pct": [
+        -0.021852093377495996,
+        0.0
+      ],
+      "mars_rows": 4,
+      "mars_rows_by_airport": {
+        "EGLL": 1,
+        "LTFM": 3
+      },
+      "rmse": 166.96595356963977,
+      "rows_changed": 4,
+      "squared_change": 3145728.0585104013
+    },
+    "2025-05": {
+      "change_pct": -0.0019216181633918694,
+      "control_rmse": 171.39877690072808,
+      "interval_pct": [
+        -0.006720999494112534,
+        0.00200286265580607
+      ],
+      "mars_rows": 4,
+      "mars_rows_by_airport": {
+        "EGLL": 1,
+        "LTFM": 3
+      },
+      "rmse": 171.39548327069932,
+      "rows_changed": 4,
+      "squared_change": 1330919.486866447
+    },
+    "2025-06": {
+      "change_pct": -0.2063755827336866,
+      "control_rmse": 197.62891150429022,
+      "interval_pct": [
+        -0.5649539156034546,
+        -0.004950876279044837
+      ],
+      "mars_rows": 8,
+      "mars_rows_by_airport": {
+        "EGLL": 6,
+        "LTFM": 2
+      },
+      "rmse": 197.221053686523,
+      "rows_changed": 8,
+      "squared_change": 22934267.247319162
+    },
+    "2025-07": {
+      "change_pct": -0.046363268755056364,
+      "control_rmse": 266.23069127512827,
+      "interval_pct": [
+        -0.07642069700868115,
+        -0.019952597430802365
+      ],
+      "mars_rows": 16,
+      "mars_rows_by_airport": {
+        "EGLL": 4,
+        "LTFM": 12
+      },
+      "rmse": 266.10725802422394,
+      "rows_changed": 16,
+      "squared_change": 18465215.782964204
+    },
+    "2025-08": {
+      "change_pct": -0.061408597373735496,
+      "control_rmse": 193.75311770985172,
+      "interval_pct": [
+        -0.15141715411443352,
+        -0.006107989190227428
+      ],
+      "mars_rows": 8,
+      "mars_rows_by_airport": {
+        "EGLL": 3,
+        "LTFM": 5
+      },
+      "rmse": 193.63413663789822,
+      "rows_changed": 8,
+      "squared_change": 9050860.224389799
+    },
+    "2025-09": {
+      "change_pct": -0.010220403608540707,
+      "control_rmse": 182.2743871086001,
+      "interval_pct": [
+        -0.029500175422444153,
+        0.0
+      ],
+      "mars_rows": 2,
+      "mars_rows_by_airport": {
+        "EGLL": 1,
+        "LTFM": 1
+      },
+      "rmse": 182.25575793056262,
+      "rows_changed": 2,
+      "squared_change": 734786.1458205408
+    },
+    "2025-10": {
+      "change_pct": -0.023320457723030596,
+      "control_rmse": 179.06896528877513,
+      "interval_pct": [
+        -0.05429123169192279,
+        -0.0019601033009744584
+      ],
+      "mars_rows": 5,
+      "mars_rows_by_airport": {
+        "EGLL": 1,
+        "LTFM": 4
+      },
+      "rmse": 179.0272055864299,
+      "rows_changed": 5,
+      "squared_change": 3492370.105474957
+    },
+    "2025-11": {
+      "change_pct": -0.01822806900690921,
+      "control_rmse": 188.98786355781766,
+      "interval_pct": [
+        -0.0545048651593702,
+        0.0017332822237842156
+      ],
+      "mars_rows": 3,
+      "mars_rows_by_airport": {
+        "EGLL": 1,
+        "LTFM": 2
+      },
+      "rmse": 188.95341471963366,
+      "rows_changed": 3,
+      "squared_change": 2599567.31730425
+    },
+    "2025-12": {
+      "change_pct": -0.01849113051137774,
+      "control_rmse": 178.36025763443553,
+      "interval_pct": [
+        -0.05833802565441221,
+        0.0
+      ],
+      "mars_rows": 2,
+      "mars_rows_by_airport": {
+        "EGLL": 2
+      },
+      "rmse": 178.3272768064159,
+      "rows_changed": 2,
+      "squared_change": 893716.1851734193
+    }
+  },
+  "twelve_better": 12,
+  "twelve_mean_pct": -0.04061482302697983
+}

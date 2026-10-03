@@ -1,0 +1,35 @@
+{
+ "experiment_id": "micro_bundle_v2",
+ "declared_at_utc": "2026-10-03T10:34:00Z",
+ "declared_by": "declaring and the governing run are research; building a file under runs/submissions and any upload stay the user's word",
+ "audit_used": false,
+ "status": "DECLARED before its governing run (tools/run_micro_bundle.py --score --declaration configs/micro_bundle_v2.json). Piece A alone. Its readings were seen twice before declaring: tunnel 5's exploration and micro_bundle_v1's governing run (disclosed below); the governing run recomputes every number.",
+ "candidate": "A alone: MARS stand families in the intruder stand bound, incremental over the accepted different-type layer (configs/intruder_bound_v1.json)",
+ "piece_A": {
+  "rule": "sibling stands of a MARS family (a code ending in a digit X, and X+L / X+R present in the data, in either direction; tunnel 5's c5_mars.py); for a departure the accepted rule does not move, the last sibling arrival whose in-block precedes the predicted off-block (take-off - prediction after the accepted layer), of a different aircraft type than the departure, with 0 < gap <= 3,600 s; we left before it: label > B = take-off - its in-block",
+  "airports": "those with >= 10 candidate rows and >= 90% of them satisfying label >= B - 60 s in the fitting months (twelve-month table, after the accepted layer), intersected with the accepted layer's airport set of the fitting months",
+  "value": "max(prediction, B + the accepted intruder model's offset for the airport and gap band, fitted on the fitting months); floor -12 s; nearest integer in an export"
+ },
+ "control": {
+  "development": "runs/scout/refit/ctl_v55m.parquet `new` (rebuilt month by month and checked, as in v1) + the accepted different-type intruder layer, month-blocked",
+  "twelve": "runs/daily_totals/rows12.parquet through v48, the extreme-day layer and the variance re-allocation (tools/scout_var_alloc.py layered('twelve')) + the accepted intruder layer"
+ },
+ "disclosed_before_declaring": {
+  "tunnel_5": "docs/dig/constraints.md: EGLL 21/21 and LTFM 45/45 valid; twelve months -0.0213%, 12/12 better, 66 rows; development -0.0127%, 3 of 4 months better (November +0.0009%, one row)",
+  "micro_bundle_v1": "docs/micro_bundle/results_v1.json (A + B + C, not accepted because of piece C): A's own rows' squared-error change January -2.38e6, July -9.26e6, November +0.10e6, December -0.58e6 (13 + 3 + 1 + 1 rows); on the ranking v1's dry run moved 15 rows by A at EGLL / LTFM"
+ },
+ "rule": {
+  "text": "accepted when (1) no development month is worse than the control by more than 0.005% of its RMSE; (2) the equal-footing mean (January, July, December 2025) is at most -0.02%; (3) every equal-footing month's paired-day 95% interval lies below zero; (4) in the twelve-month check no month is worse than its control by more than 0.005% and at least two thirds of the months are better",
+  "equal_footing": [
+   "2025-01",
+   "2025-07",
+   "2025-12"
+  ],
+  "max_month_worsening_pct": 0.005,
+  "min_mean_improvement_pct": 0.02,
+  "twelve_min_better_share": 0.6667,
+  "intervals": "paired-day bootstrap over UTC take-off days, 2,000 replicates, seed 20261003"
+ },
+ "ranking": "label-free dry run into runs/micro_bundle/dry_v61b/ on v60's pre-intruder file runs/stack_resid/dry_v60/vigorous-whistle_v60.parquet (cff778e0...): the accepted different-type layer, the accepted identity layer (configs/intruder_identity_v1.json; tools/run_intruder_identity.py), then A only if accepted, on rows neither layer moved; without A the file must equal fe137f092fa68a3f838ed0cb5b3cc5d7e995707790accecef4fb3649dd6af4e8 byte for byte; nothing under runs/submissions",
+ "report": "docs/micro_bundle/results_v2.json"
+}

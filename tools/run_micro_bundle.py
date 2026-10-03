@@ -420,6 +420,58 @@ def score() -> None:
     print({"accepted": out["accepted"], "equal_footing_mean_pct": eq_mean, **checks})
 
 
+def score_a(path: str) -> None:
+    """micro_bundle_v2: piece A alone, incremental over the accepted intruder layer (control = ctl_v55m `new` + that layer)."""
+    decl = read_json(ROOT / path)
+    target = ROOT / decl["report"]
+    if target.exists():
+        raise ValueError("Preserve the original result.")
+    rng = np.random.default_rng(SEED)
+    tk = takeoffs(TRAIN_FILES)
+    rdep, rarr = R.movements([Path(f) for f in TRAIN_FILES])
+    dep, arr, codes = mars_inputs(TRAIN_FILES)
+    c12, m12 = twelve_fitting(rdep, rarr, dep, arr, codes)
+    out = {"created_at_utc": utc_now(), "declaration": path, "declaration_sha256": object_hash(decl), "official_scores_used": "none", "audit_used": False,
+           "code": {c: sha256_file(ROOT / c) for c in ["tools/run_micro_bundle.py", "tools/run_intruder_bound.py"]}, "development": {}, "twelve": {}}
+    ctl = pd.read_parquet(REF / "ctl_v55m.parquet")
+    for name, tab_all, months in [("development", ctl, MONTHS), ("twelve", None, None)]:
+        if name == "twelve":
+            c = chain("twelve", False, tk)
+            c = c[~c["extra"].to_numpy(dtype=bool)]
+            tab_all = c[[ID, "month", "airport", "label", "cls", "new"]].reset_index(drop=True)
+            months = sorted(tab_all["month"].unique())
+        else:
+            cls = pd.read_parquet(ROOT / "runs/daily_totals/rows.parquet", columns=[ID, "cls"])
+            tab_all = tab_all[[ID, "month", "airport", "label", "new"]].merge(cls, on=ID)
+        tab_all = tab_all.reset_index(drop=True)
+        tab_all["day"] = pd.to_datetime(tk.reindex(tab_all[ID]).to_numpy(), utc=True).strftime("%Y-%m-%d")
+        vc, hit = intruder_step(tab_all, "new", c12, rdep, rarr, months)
+        ids: list = []
+        va, na = mars_step(tab_all, vc, hit, m12, c12, dep, arr, codes, months, ids)
+        moved = tab_all[ID].isin(ids).to_numpy()
+        for m in months:
+            k = tab_all["month"].eq(m).to_numpy()
+            r = month_reading(tab_all[k].reset_index(drop=True), vc[k], va[k], rng)
+            r["mars_rows"] = int((moved & k).sum())
+            r["mars_rows_by_airport"] = tab_all.loc[moved & k, "airport"].value_counts().to_dict()
+            out[name][m] = r
+            print(name, m, round(r["change_pct"], 4), [round(x, 4) for x in r["interval_pct"]], "rows", r["mars_rows"], flush=True)
+    rule = decl["rule"]
+    dv, tw = out["development"], out["twelve"]
+    eq_mean = float(np.mean([dv[m]["change_pct"] for m in EQUAL]))
+    checks = {"no_development_month_worse": max(dv[m]["change_pct"] for m in MONTHS) <= rule["max_month_worsening_pct"],
+              "equal_footing_mean": eq_mean <= -rule["min_mean_improvement_pct"],
+              "equal_footing_intervals_below_zero": all(dv[m]["interval_pct"][1] < 0 for m in EQUAL),
+              "twelve_no_month_worse": max(v["change_pct"] for v in tw.values()) <= rule["max_month_worsening_pct"],
+              "twelve_better_share": float(np.mean([v["change_pct"] < 0 for v in tw.values()])) >= rule["twelve_min_better_share"]}
+    checks = {k: bool(v) for k, v in checks.items()}
+    out.update({"equal_footing_mean_pct": eq_mean, "twelve_mean_pct": float(np.mean([v["change_pct"] for v in tw.values()])),
+                "twelve_better": int(sum(v["change_pct"] < 0 for v in tw.values())), "checks": checks, "accepted": bool(all(checks.values()))})
+    target.parent.mkdir(parents=True, exist_ok=True)
+    write_json(target, py(out))
+    print({"accepted": out["accepted"], "equal_footing_mean_pct": eq_mean, **checks})
+
+
 # ---------------------------------------------------------------- ranking
 
 def ranking_chain(pieces: bool, out_name: str, version: int) -> None:
@@ -531,6 +583,7 @@ def finish(intruder_file: str, intruder_sha: str, version: int) -> None:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--score", action="store_true")
+    ap.add_argument("--declaration", default=DECL)
     ap.add_argument("--chain", action="store_true")
     ap.add_argument("--no-pieces", action="store_true")
     ap.add_argument("--out", default="chain_v61")
@@ -540,7 +593,10 @@ def main() -> None:
     ap.add_argument("--intruder-sha256")
     a = ap.parse_args()
     if a.score:
-        score()
+        if read_json(ROOT / a.declaration)["experiment_id"] == "micro_bundle_v2":
+            score_a(a.declaration)
+        else:
+            score()
     if a.chain:
         ranking_chain(not a.no_pieces, a.out, a.version)
     if a.finish:
