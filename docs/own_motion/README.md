@@ -193,3 +193,12 @@ python tools/audit_export.py --version 64 --compare 63 --report docs/export_audi
 ```
 
 Run the first only after `results_v2_v63.json` accepts. If v63 is not built, use `--base` v62 and `--version 63`.
+
+### Override option on v63 (parent, 3 October): dry run only, not accepted, not built
+
+own_motion_v2 failed its declared re-check on the v63 chain (clause 3: December's interval upper end +0.014%; equal-footing -0.0325%,
+twelve months 12 of 12 better). It is therefore not built. For the user's decision only, a dry run on the built v63 (`4cff0945...`):
+`runs/own_motion/dry_v64_on_v63_override/vigorous-whistle_v64.parquet`, SHA-256
+`319b63408b60ca1ccc9332397231a210ff864d6a4717378d3ae5e7bd2060d547`, 2,399 rows (EHAM 2,058 with mean +10.5 s, LSZH 210, EDDM 116,
+LEBL 63, LEMD 40), squared change 1.76e7, max move +1,032 s, no LIRF / population / guard row, every other row identical to v63. It
+would need a version number of its own at build time (the next free one) and the user's override.
