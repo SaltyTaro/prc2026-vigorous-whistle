@@ -48,3 +48,24 @@ v60 = v59's chain without the intruder bound (`runs/rematch_nonm/rank/Y`, c67f20
 **Official: 218.6404 on all 344,841 rows (processed 09:47:43 UTC 3 October 2026), -0.2079 s against v59 (218.8483); the official best.**
 Record [`official_result_v60.json`](official_result_v60.json). Squared-error gain 3.14e7 = 1.11 x the squared change. Nothing is re-tuned from
 the score. Never re-upload v1-v60.
+
+## v3: own-aircraft turnaround / pre-gap features (configs/stack_resid_v3.json)
+
+Declaration [`configs/stack_resid_v3.json`](../../configs/stack_resid_v3.json); results [`results_v3.json`](results_v3.json); exploration [`docs/dig/pregap.md`](../dig/pregap.md). **Accepted by the declared rule: True.** In-chain against the v62 development proxy (the stacking layer replaced, then the intruder bound, identity extension and own-motion bound re-evaluated month-blocked); LIRF keeps v2's value; the control chain reproduces the v61 proxy and the own-motion results exactly.
+
+| Month | Control (v62 proxy) | Candidate | Change | Paired-day 95% (s) | Days better | Rows moved | Held by guard | RMS move (s) | Max move (s) |
+|---|---|---|---|---|---|---|---|---|---|
+| 2025-01 | 320.8946 | 320.6647 | -0.0717% | [-0.443, -0.142] | 31/31 | 137,836 | 6,158 | 7.8 | 237 |
+| 2025-07 | 252.1483 | 251.9446 | -0.0808% | [-0.274, -0.143] | 29/31 | 146,563 | 33,946 | 7.5 | 463 |
+| 2025-11 | 183.0653 | 182.6074 | -0.2501% | [-0.612, -0.340] | 30/30 | 149,033 | 3,138 | 7.6 | 485 |
+| 2025-12 | 164.8560 | 164.3171 | -0.3269% | [-0.729, -0.398] | 31/31 | 134,375 | 20,293 | 7.8 | 560 |
+
+Equal-footing mean (January, July, December): **-0.1598%**.
+
+Rule: 1_no_month_worse = True; 2_equal_footing_mean_at_most_-0.05pct = True; 3_equal_footing_intervals_below_zero = True; 4_transfer_guard_0.5x_2x = True.
+
+Transfer guard after both support guards (ranking prediction RMS over development out-of-month RMS; the nine airports where the learner applies): EDDF 1.18, EDDM 0.98, EGLL 0.83, EHAM 1.13, LEBL 1.12, LEMD 1.08, LFPG 1.05, LSZH 1.20, LTFM 1.22; 14,637 ranking rows held.
+
+Sensitivity, reported and not selectable (the same learner applied at LIRF too): -0.0666% / -0.0575% / -0.2865% / -0.3448%, equal-footing -0.1563%.
+
+No twelve-month check exists (as for v2). No official score is used.
