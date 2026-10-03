@@ -1,0 +1,151 @@
+{
+  "by_airport_month": {
+    "EDDF 2026-01": {
+      "max_abs_s": 243.0,
+      "rows_changed": 8731,
+      "squared_change": 1391062.0
+    },
+    "EDDF 2026-07": {
+      "max_abs_s": 159.0,
+      "rows_changed": 13377,
+      "squared_change": 554993.0
+    },
+    "EDDM 2026-01": {
+      "max_abs_s": 258.0,
+      "rows_changed": 8126,
+      "squared_change": 1172179.0
+    },
+    "EDDM 2026-07": {
+      "max_abs_s": 222.0,
+      "rows_changed": 10530,
+      "squared_change": 472598.0
+    },
+    "EGLL 2026-01": {
+      "max_abs_s": 341.0,
+      "rows_changed": 15171,
+      "squared_change": 4156435.0
+    },
+    "EGLL 2026-07": {
+      "max_abs_s": 433.0,
+      "rows_changed": 17906,
+      "squared_change": 2604348.0
+    },
+    "EHAM 2026-01": {
+      "max_abs_s": 225.0,
+      "rows_changed": 10257,
+      "squared_change": 971568.0
+    },
+    "EHAM 2026-07": {
+      "max_abs_s": 204.0,
+      "rows_changed": 16423,
+      "squared_change": 791995.0
+    },
+    "LEBL 2026-01": {
+      "max_abs_s": 176.0,
+      "rows_changed": 9457,
+      "squared_change": 231955.0
+    },
+    "LEBL 2026-07": {
+      "max_abs_s": 217.0,
+      "rows_changed": 12940,
+      "squared_change": 629991.0
+    },
+    "LEMD 2026-01": {
+      "max_abs_s": 197.0,
+      "rows_changed": 9778,
+      "squared_change": 326477.0
+    },
+    "LEMD 2026-07": {
+      "max_abs_s": 285.0,
+      "rows_changed": 14555,
+      "squared_change": 1465520.0
+    },
+    "LFPG 2026-01": {
+      "max_abs_s": 458.0,
+      "rows_changed": 15833,
+      "squared_change": 3198168.0
+    },
+    "LFPG 2026-07": {
+      "max_abs_s": 418.0,
+      "rows_changed": 19060,
+      "squared_change": 1131565.0
+    },
+    "LIRF 2026-01": {
+      "max_abs_s": 0.0,
+      "rows_changed": 0,
+      "squared_change": 0.0
+    },
+    "LIRF 2026-07": {
+      "max_abs_s": 0.0,
+      "rows_changed": 0,
+      "squared_change": 0.0
+    },
+    "LSZH 2026-01": {
+      "max_abs_s": 208.0,
+      "rows_changed": 7675,
+      "squared_change": 1532688.0
+    },
+    "LSZH 2026-07": {
+      "max_abs_s": 226.0,
+      "rows_changed": 10179,
+      "squared_change": 998254.0
+    },
+    "LTFM 2026-01": {
+      "max_abs_s": 89.0,
+      "rows_changed": 16618,
+      "squared_change": 786195.0
+    },
+    "LTFM 2026-07": {
+      "max_abs_s": 62.0,
+      "rows_changed": 17270,
+      "squared_change": 322586.0
+    }
+  },
+  "bytes": 2225997,
+  "control_chain_from_v60_stack_reproduces_v62": true,
+  "created_at_utc": "2026-10-03T15:45:41.025267+00:00",
+  "dry_run_sha256": "4cff09459d044e9830f9a2a1b3a0be11d3c11bbe5c5926dbb131e7f05449846f",
+  "file": "runs/submissions/vigorous-whistle_v63.parquet",
+  "guard_rows_changed": 0,
+  "kind": "submission build at the user's word",
+  "lirf_population_rows_changed": 0,
+  "lirf_rows_changed": 0,
+  "ranking_rows_held_by_guard": 16785,
+  "ranking_table_checks": {
+    "chain_rows": "runs/rematch_nonm/rank/Y/rows.parquet",
+    "committee_mix_vs_recipe_max_abs_s": 0.0,
+    "model_part_file": {
+      "path": "runs/rematch_nonm/base/vigorous-whistle_v55m_rematch.parquet",
+      "sha256": "75957f8280dc710f5734c703e8a0fc544850ca68319df5c664dd93a8be568695"
+    },
+    "model_part_layer_rows": 342,
+    "off_block_day_equals_chain_rows": true,
+    "repair_edited_rows_blended_50_50": 7510,
+    "runner_v55m_rounded_vs_model_part_file": {
+      "max_abs_s": 101.0,
+      "rows_differ": 9777
+    },
+    "v30_rebuilt_vs_runner_max_abs_s": 9.094947017729282e-13
+  },
+  "sha256": "4cff09459d044e9830f9a2a1b3a0be11d3c11bbe5c5926dbb131e7f05449846f",
+  "steps": {
+    "identity": "543310e2159a0b355c6aef640d1e90e644d531b8698cbb7cfa47df6cf1256a6a",
+    "own": "4cff09459d044e9830f9a2a1b3a0be11d3c11bbe5c5926dbb131e7f05449846f",
+    "stack": "e2bd8bbab9e8651fc88becc2ed11e498e57d7af75e2259b3a53e9b63b47c187f"
+  },
+  "trees": [
+    766,
+    765,
+    557
+  ],
+  "version": 63,
+  "vs_v62": {
+    "max_down_s": -458.0,
+    "max_up_s": 341.0,
+    "mean_change_s": -0.13763734590724422,
+    "rms_change_s": 8.120302227190109,
+    "rows_changed": 233886,
+    "sha256": "cba143f84debdca0d9aff345ff4669ff6a3f0f7f5c4e02d08bcd3e0d02c32d9d",
+    "squared_change": 22738577.0
+  }
+}
