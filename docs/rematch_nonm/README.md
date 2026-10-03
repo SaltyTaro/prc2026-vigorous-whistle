@@ -45,3 +45,16 @@ byte (`d1c390d4...` -> `aa02ff59...` -> `31d909ff...`). On the base with the lay
   the moves carried no information at all (gain per unit −1, never seen in any 2025 month or airport-month cell, lowest 0.46).
 
 The intruder layer is not applied here.
+
+## v59: user override, built and uploaded ("Override: build + upload v59", 3 October 2026)
+
+The declared rule was not met (December's paired-day interval [-0.073, +0.003] s); the user overrode it after seeing the label-free
+published-total check (gap on the 11 most affected airport-days 52.9 h -> 38.8 h, 9 of 11 closer) and the precedent of v35's callsign fix.
+v59 = v55m model part + this rematch -> v48 -> extreme-day layer -> variance re-allocation (`runs/rematch_nonm/rank/Y`, c67f20d6...) ->
+the intruder stand bound last (`tools/run_intruder_bound.py --build --version 59 --base ...`; receipt `docs/intruder_bound/export_v59.json`,
+audit `docs/export_audit/v59_audit.json`, clean). SHA-256 `2a84b71361f8244faa251e3f3606d61f2f21d28ea84c660851be936652fa570e`;
+8,980 rows differ from v58 (EHAM 6,494, LSZH 1,941, EDDF 545), squared change 1.231e8.
+
+**Official: 218.8483 on all 344,841 rows (processed 08:58:43 UTC 3 October 2026), -2.0729 s against v58 (220.9212); the official best.**
+Record [`official_result_v59.json`](official_result_v59.json). Squared-error gain 3.14e8 = 2.55 x the squared change, inside the 2025
+range quoted before the upload (0.74-2.95). Nothing is re-tuned from the score. Never re-upload v1-v59.
