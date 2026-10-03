@@ -239,11 +239,41 @@ def main() -> None:
     ap.add_argument("--base", default="runs/stack_resid/dry_v60/vigorous-whistle_v60.parquet")
     ap.add_argument("--base-sha256", default="cff778e06fa7e402ee4170c64b6404e9c6bf394e11570ca79e128d18a3f45b1f")
     ap.add_argument("--version", type=int, default=61)
+    ap.add_argument("--build", action="store_true", help="at the user's word: write runs/submissions/vigorous-whistle_v<version>.parquet; "
+                    "it must equal the dry run byte for byte and must not exist yet")
+    ap.add_argument("--user-decision", default=None)
     a = ap.parse_args()
     if a.build_ids:
         build_ids()
     if a.score:
         score()
+    if a.build:
+        dry = ROOT / f"runs/intruder_identity/dry_v{a.version}/vigorous-whistle_v{a.version}.parquet"
+        target = ROOT / f"runs/submissions/vigorous-whistle_v{a.version}.parquet"
+        if target.exists():
+            raise ValueError(f"{target.name} exists; never overwrite a submission file.")
+        if not dry.exists() or not a.user_decision:
+            raise ValueError("Run the dry run first and record the user's decision.")
+        tmp = ROOT / f"runs/intruder_identity/build_v{a.version}"
+        dry_run(ROOT / a.base, a.base_sha256, a.version, tmp)
+        built = tmp / f"vigorous-whistle_v{a.version}.parquet"
+        if sha256_file(built) != sha256_file(dry):
+            raise ValueError("The rebuilt file differs from the dry run.")
+        target.write_bytes(built.read_bytes())
+        from prc2026_submission.contract import validate_submission
+        sub = validate_submission(target, ROOT / "data/raw/submitting.parquet")
+        sub.update({"version": a.version, "rounding": "numpy.rint, nearest integer with ties to even; no clipping",
+                    "provenance": {"audit_used": False, "dry_run": False, "experiment_id": "intruder_identity_v1", "selected_candidate": "identity extension",
+                                   "selected_by": "the declared rule (accepted)", "official_scores_used": "none", "user_decision": a.user_decision,
+                                   "declaration": {"configs/intruder_identity_v1.json": sha256_file(CONFIG)},
+                                   "code": {"tools/run_intruder_identity.py": sha256_file(Path(__file__)), "tools/run_intruder_bound.py": sha256_file(ROOT / "tools/run_intruder_bound.py")},
+                                   "base": {"path": a.base, "sha256": a.base_sha256}, "ids_sha256": sha256_file(IDS),
+                                   "recipe": "v60's chain before the intruder bound -> the accepted different-type intruder bound (reproduces v60) -> the same-type identity extension"}})
+        write_json(target.with_suffix(".receipt.json"), sub)
+        receipt = read_json(tmp / f"vigorous-whistle_v{a.version}.receipt.json")
+        receipt.update({"kind": "submission build at the user's word", "file": str(target.relative_to(ROOT)), "sha256": sha256_file(target)})
+        write_json(ROOT / f"docs/intruder_identity/export_v{a.version}.json", receipt)
+        print("built", target.name, sub["sha256"])
     if a.dry_run:
         out = ROOT / f"runs/intruder_identity/dry_v{a.version}"
         dry_run(ROOT / a.base, a.base_sha256, a.version, out)
