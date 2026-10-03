@@ -1,0 +1,111 @@
+{
+ "experiment_id": "own_motion_v2",
+ "declared_at_utc": "2026-10-03T15:20:00Z",
+ "declared_by": "declaring and the governing run are research. A build under runs/submissions follows only if this rule accepts and the dry-run checks pass (the user's standing word, relayed by the coordinator: \"if you get anything build and keep it ready, we will upload it when slots reset\"); the upload stays the user's and is never made by this tool.",
+ "audit_used": false,
+ "status": "DECLARED after the exploration disclosed below and BEFORE the governing run (tools/run_own_motion_v2.py --score), which recomputes every number from scratch: the v62 development proxy (v61 proxy -> own_motion_v1's om_b2700_w100, month-blocked, exactly as tools/run_own_motion.py --score), the twelve-month table after own_motion_v1, the triggers at the five airports from the raw files, identity tables and adsb.lol day files, and the readings. The tunnel-19 screen read the same development months with the same labels; the evidence not from the exploration is the label-free ranking dry run.",
+ "mechanism": "own_motion_v1's mechanism carried to the five other airports with adsb.lol surface coverage (EHAM, EDDM, LSZH, LEMD, LEBL). A departure the shipped matcher does not trace from its gate can still be seen moving: its own aircraft (ICAO address) blocked in at the departure's own stand as an arrival and later shows ground points at >= 3 kt; the off-block is not earlier than that first motion, label >= B. At these airports aircraft are often repositioned and come back, so one condition is added: the aircraft does not return to its parking fix after the motion ('no return'). Validity on all twelve 2025 months (label >= B - 60 s, rows not traced from the gate, same stand, no return, 60 < B <= 2,700 s): at least 95.0% in every month at every one of the five airports (EHAM 95.0-98.7%, EDDM 99.4-99.8%, LSZH 99.7-99.9%, LEMD 99.9%, LEBL 98.6-99.9%; runs/dig/case_files2/validity.txt).",
+ "procedure": {
+  "position": "the last layer, after own_motion_v1: v62's chain (runner v55m -> no-NM rematch -> v48's reconciliation -> extreme-day layer -> variance re-allocation -> guarded stacking residual -> intruder stand bound -> identity extension -> own-motion bound v1) -> THIS LAYER. v1's rows (EDDF / EGLL / LFPG) and this layer's rows (the five airports) are disjoint by airport.",
+  "airports": [
+   "EHAM",
+   "EDDM",
+   "LSZH",
+   "LEMD",
+   "LEBL"
+  ],
+  "identity": "tunnel 11's identity tables runs/dig/position/ids_<2025-MM | ranking>.parquet (built by runs/dig/position/build_pos.py, re-implemented as tools/run_own_motion_v2.py --build-ids for a new file): each movement at the eight ADS-B airports gets the ICAO address of the nearest adsb.lol surface-file point of the same callsign (CALLSIGN_flt, else the no-NM rematch key map runs/rematch_nonm/key_map.parquet on FLIGHT_mvt) at the same airport within 600 s of its take-off / landing time (day files of that day and the next). No departure label or departure block time is read.",
+  "trigger": {
+   "not_gate_traced": "adsb_gate != 1 (src/prc2026_adsb/features.departure_features on the take-off month's matches2 file; dark or unmatched rows)",
+   "inbound": "the latest identified arrival of the same ICAO address at the same airport whose in-block precedes the take-off (merge_asof backward on take-off; the take-off month's file and, for 2025, the previous month's file), 600 s to 64,800 s before take-off, at the departure's own stand (STAND_mvt equal, both present)",
+   "first_motion": "the aircraft's adsb.lol surface points at that airport with ground = True, take-off day and the day before, strictly after the inbound's in-block and not after take-off; the first with gs >= 3 kt strictly after in-block + 120 s; B = take-off - its time",
+   "no_return": "parking fix = median lat / lon of the ground points with gs <= 1.5 kt strictly after in-block + 120 s and before the first motion; the trigger fails if any ground point after the first motion with gs <= 1.5 kt, more than 300 s after it, lies within 60 m of that fix (no fix: no return)",
+   "band": "60 < B <= 2,700 s",
+   "below": "the chain's prediction p < B",
+   "never": "checked)"
+  },
+  "value": "p + w (B + o(airport) - p), w = 0.5; o(airport) = mean of label - B over the fitting months' candidate rows of that airport, shrunk with weight 20 rows to the pooled mean of the candidate airports; nearest integer (numpy.rint) in the export; no clipping",
+  "fitting_side": "candidates of the fitting months from the twelve-month table after own_motion_v1 (runs/daily_totals/rows12.parquet `stack` -> accepted intruder bound -> identity extension -> own_motion_v1 om_b2700_w100, each month-blocked exactly as in their governing runs; column after3); development month m and twelve-month month m: every other 2025 month; ranking: all twelve 2025 months. On all twelve months (screen): EDDM +50.7, EHAM -17.9, LEBL +152.3, LEMD +88.1, LSZH +46.4 s",
+  "free_parameters": "the offsets o only; the airports, 600 s / 64,800 s, 120 s, 3 kt, 1.5 kt / 60 m / 300 s (no return), 60 / 2,700 s and w are fixed here"
+ },
+ "candidate": {
+  "name": "om5_b2700_w50",
+  "airports": [
+   "EHAM",
+   "EDDM",
+   "LSZH",
+   "LEMD",
+   "LEBL"
+  ],
+  "B_max_s": 2700,
+  "w": 0.5
+ },
+ "sensitivity_reported_not_selectable": [
+  {
+   "name": "om4_noEHAM_b2700_w50",
+   "airports": [
+    "EDDM",
+    "LSZH",
+    "LEMD",
+    "LEBL"
+   ],
+   "B_max_s": 2700,
+   "w": 0.5
+  }
+ ],
+ "control": {
+  "development": "the v62 development proxy: runs/dig/census61/dev_v61.parquet `v61` (SHA-256 9739d9c5bfa6258affaf8f9a6db3c001a46c1e1e92308bebcdcd6920c51448de) -> own_motion_v1 om_b2700_w100 month-blocked, rebuilt in-process with tools/run_own_motion.py's functions (triggers, twelve_after, dev_table, candidates, fit, values); the governing run requires its month RMSEs to equal docs/own_motion/results_v1.json's control x (1 + pct / 100) to 1e-9 relative",
+  "development_month_rmse_s_expected": {
+   "2025-01": 320.8946,
+   "2025-07": 252.1483,
+   "2025-11": 183.0653,
+   "2025-12": 164.856
+  },
+  "alternative_control": "--control PATH --control-col NAME --control-sha256 HASH: any chain proxy of the four development months with the same rows (the v63 chain proxy if stack_resid_v3 is accepted first; see 'sequencing')",
+  "twelve": "rows12 `stack` after the accepted intruder bound, the identity extension and own_motion_v1 (month-blocked; column after3)"
+ },
+ "rule": {
+  "text": "v57's rule, as own_motion_v1: accepted when (1) no development month (January, July, November, December 2025) is worse than the control by more than 0.005% of its RMSE (all rows); (2) the mean change over the equal-footing months (January, July, December 2025) is at most -0.02%; (3) every equal-footing month's paired-day 95% interval lies below zero; (4) in the twelve-month check every month is better or unchanged",
+  "equal_footing": [
+   "2025-01",
+   "2025-07",
+   "2025-12"
+  ],
+  "max_month_worsening_pct": 0.005,
+  "min_mean_improvement_pct": 0.02,
+  "intervals": "paired-day bootstrap over UTC take-off days, 2,000 replicates, seed 20261003, relative RMSE change (tools/run_intruder_bound.interval)"
+ },
+ "sequencing": "stack_resid_v3 (configs/stack_resid_v3.json, another agent; built as v63 if accepted) changes the chain under this layer. If stack_resid_v3 is accepted and built before this layer is built, this rule is re-run on the v63 chain proxy (tools/run_own_motion_v2.py --score --control <the v63 development proxy>) and must pass again there before any build; the build is then v64 on v63. If stack_resid_v3 is not accepted, the build is v63 on v62. Nothing is built while v63 is unresolved.",
+ "exploration_disclosed": {
+  "what_was_seen": "dig tunnel 19 (docs/dig/case_files2.md bb1c9d2, scratch runs/dig/case_files2/, 3 October 2026): hand-read case files of 200 worst ordinary rows at the eight ADS-B airports (labels read); scan8.py = the trigger (with parking fix, return, hold, gap discriminators) on every 2025 departure not traced from the gate at the eight airports, with labels; validity.py = validity by airport x same stand x return x B band and by airport-month (labels); screen.py (control: tunnel 17's reconstruction of v1 on v61) and screen62.py (control: the v62 proxy built as tools/run_own_motion.py --score) = month-blocked development and twelve-month readings; rank_new5.py = ranking trigger count on v61 / v62 (read only)",
+  "cuts_from_labels": "the band and thresholds are own_motion_v1's (2,700 s was read from the 2025 validity table in tunnel 17); the no-return condition (1.5 kt, 60 m, 300 s) was added while reading the case files, before any screen; B > 2,700 s was closed on the validity table (45-60 min 77% same stand, above 60 min 0-15%) and the different-stand form on the screen",
+  "variants_screened": "all on top of v1, B in (60, 2700], no return: (a) the five airports, same stand, w 0.5 and w 1.0; (b) all eight airports, different stand, w 0.5 / 1.0; (c) (a) plus (b), w 0.5 / 1.0; (d) the four airports without EHAM, same stand, w 0.5 / 1.0; (e) EHAM alone, same stand, w 0.5 / 1.0; 12 readings (runs/dig/case_files2/screen.json and screen62.json; the development numbers of (a) and (d) are identical under both controls)",
+  "readings_before_declaring": {
+   "om5_b2700_w50 (screen form, v62 proxy)": "development Jan -0.0370% [-0.139, -0.012] / Jul -0.0479% [-0.091, -0.018] / Nov -0.0877% [-0.133, -0.052] / Dec -0.0812% [-0.128, -0.028], equal-footing mean -0.0554%; twelve months 12/12 better, mean -0.067%, every interval below zero; gain / squared change 1.44 / 1.83 / 1.78 / 1.28 (by airport EDDM 2.76, LSZH 2.78, LEBL 1.59, EHAM 0.88, LEMD 0.38)",
+   "om5_b2700_w100": "-0.023 / -0.043 / -0.077 / -0.035%, equal-footing -0.034%, January / July / December intervals include zero (gain / squared change 0.14-0.41; not declared)",
+   "om4_noEHAM_b2700_w50": "-0.026 / -0.038 / -0.069 / -0.069%, equal-footing -0.044%, every interval below zero, twelve 12/12",
+   "EHAM alone, w 0.5": "-0.011 / -0.010 / -0.019 / -0.012%, equal-footing -0.011%, January / July / December intervals touch or include zero (upper ends +0.008 / +0.001 / +0.008); twelve 12/12. EHAM holds 79% of the ranking rows and 30% of the ranking squared change: its own evidence is thin",
+   "different stand (b)": "worse in every month (w 0.5: +0.008 / +0.025 / +0.054 / +0.042%; 0/12 twelve); closed",
+   "(a) + (b)": "w 0.5 equal-footing -0.025% with intervals including zero; w 1.0 worse; not declared",
+   "ranking sizing": "om5 w 0.5 on v62 (equal to v61 on every trigger row): 2,523 rows (EHAM 2,002, LSZH 258, EDDM 130, LEBL 74, LEMD 59; January 972, July 1,551), squared change 2.14e7, mean +34 s, max +1,029 s; about -0.14 s at gain / squared change 1.0, -0.18 to -0.25 s at the development ratios; om4: 521 rows, 1.50e7"
+  }
+ },
+ "inputs_sha256": {
+  "runs/dig/position/ids_2025-01.parquet": "84296afa281800ae47f6dd883fe4fc161bf66347f8ec86cecc2a1d7a59308ea1",
+  "runs/dig/position/ids_2025-02.parquet": "49f39557bba88aad9fec60ad9cf5c086bad096033d13d575638dec0b0f10abed",
+  "runs/dig/position/ids_2025-03.parquet": "ce51177907a1dc332d5c1b30a792088b52f6945854d275dc5e4123ade967440e",
+  "runs/dig/position/ids_2025-04.parquet": "2666b09165c733ab975e0a86033e7ecc748343b5740451c97574ecd31d0767d7",
+  "runs/dig/position/ids_2025-05.parquet": "571f6a9563ce5d2ded688afe2b11e2438a7addb2d5ce56fd102b03470f415536",
+  "runs/dig/position/ids_2025-06.parquet": "9cef1cb8375bc598eae716ceffef1b5a8d57ae301703d4cd8baeac4c3c4e125d",
+  "runs/dig/position/ids_2025-07.parquet": "2770cd7fabbef3edc8a4fb5162391736840116c1fc7cccaaedc4cf1936632c45",
+  "runs/dig/position/ids_2025-08.parquet": "d6ee9cf66dec41febfc62590987e80491065671af7e27c41868242a789e552b2",
+  "runs/dig/position/ids_2025-09.parquet": "686f90d175ba5cf0e9295c0bff4939fa80f4b1af4bf38e564cf0cdd337703b89",
+  "runs/dig/position/ids_2025-10.parquet": "fd9158031bccfe079de1d24c7dd1f6012cb33d772292f6d7a77d496aa788f59e",
+  "runs/dig/position/ids_2025-11.parquet": "7d5b31c2f4c68beb4f7f51912c0dead01efd3fbd462e7c57573fcdc5d453f4ec",
+  "runs/dig/position/ids_2025-12.parquet": "163db9ec21d715f847cfa40dd16abe8f4ce532a45145acf673e7b0ec542c0601",
+  "runs/dig/position/ids_ranking.parquet": "b8cf4ce0619d9b46f78c1521dd0830a0fbbbdfcc34de2c74b1ecc3ad7708d2cd",
+  "runs/rematch_nonm/key_map.parquet": "79276c48511e587ccd476c5c9ec85a7ced55503924d5701ba126b98cbacac02c"
+ },
+ "tool": "tools/run_own_motion_v2.py (imports tools/run_own_motion.py unchanged): --score [--control ...] -> docs/own_motion/results_v2.json (or results_v2_<tag>.json for another control) + README section; --dry-run --base --base-sha256 --version --out -> a dry-run directory (never under runs/submissions); --build --version N --user-decision ... [--dry-dir] reruns into runs/own_motion/build_v<N>, requires byte identity with the dry run, writes runs/submissions/vigorous-whistle_v<N>.parquet (never overwrite) + docs/own_motion/export_v<N>.json; --build-ids TAG rebuilds an identity table (final file)",
+ "ranking": "label-free; nothing under runs/submissions unless accepted, sequenced as above and the dry-run checks pass; never uploaded by this tool"
+}
