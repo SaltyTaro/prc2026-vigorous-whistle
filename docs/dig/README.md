@@ -31,12 +31,16 @@ squared error; 69% of them are under-predictions.
 
 | # | tunnel | owner | state | record |
 |---|---|---|---|---|
-| 1 | 2026 ranking-file regime audit (label-free) | fork | running | `regime_audit.md` |
-| 2 | residual ore test: everything label-free on the shipped chain's residual | fork | running | `residual_ore.md` |
+| 1 | 2026 ranking-file regime audit (label-free) | fork | **find**: no-NM rows at EDDF/EHAM/LSZH matched to ADS-B by flight number, not callsign; declared round `configs/rematch_nonm_v1.json` running | `regime_audit.md` |
+| 2 | residual ore test: everything label-free on the shipped chain's residual | fork | **find**: components + published day discrepancy, equal-footing -0.258% (3-seed bag, w 0.5); being prepared for a declared round (`stack_resid_v1`) | `residual_ore.md` |
+| 5 | cross-row hard constraints (turnaround minima, stand families, ordering) | fork | running | `constraints.md` |
 | 3 | LTFM deep dive (runway configuration, queues, clock structure, banks) | fork | **closed, no GO** (shared temporal state: neighbouring take-offs' residuals correlate 0.25-0.27, but every label-free signal reads it at <= 0.076; new groups help the older twelve-month predictor -0.13% at w 0.5 but not the shipped chain, whose context networks hold them; stand x runway bias -0.010 / -0.013%, all months better, a tenth of the bar) | `ltfm.md` |
 | 4 | LFPG / EGLL unmatched deep dive | fork | **closed, no GO** (configuration, queues, stand x runway: +0.001 to +0.225% equal-footing; early class AUC +0.002 at most; no partial traces to recover) | `lfpg_egll.md` |
 
-## FIND (paused at the user's word, nothing declared or built): the intruder stand bound
+## FIND -> v58 = 220.9212 official (-0.408 s vs v57): the intruder stand bound
+
+Declared and accepted (`docs/intruder_bound/README.md`); built and uploaded at the user's word. Extensions closed: per-stand validity at
+the other airports (no stand reaches 90% with >= 10 candidates), gaps 1-2 h (below the validity bar), no inbound rule (-0.006%).
 
 If our inbound aircraft (same type) blocks in at our stand, then a different-type aircraft blocks in at that stand before our
 predicted off-block (gap <= G), we must have left before the intruder: label > B = take-off - intruder in-block. Valid in 2025 at
