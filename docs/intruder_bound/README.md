@@ -40,3 +40,12 @@ unit of squared change: 1.68 / 1.16 / 0.94 / 0.67 (January / July / November / D
 52 rows move, all upward (EDDF 9, EGLL 12, LFPG 17, LTFM 14; January 33, July 19, spread over many days), squared change 7.10e7, largest
 move +3,050 s; guard rows and the LIRF population untouched. At the 2025 gain ratios (0.67–1.68 × the squared change) the expected effect
 is about −0.3 to −0.8 s. Building it under runs/submissions and uploading are the user's word.
+
+## v58 built and uploaded at the user's word ("Build + upload v58 now", 3 October 2026)
+
+`runs/submissions/vigorous-whistle_v58.parquet`, SHA-256 `eabd3bd6cfccfb70de3ecdc12ad32872d20e5316619b9a87fd44f121be46c247`,
+byte-identical to the dry run (`tools/run_intruder_bound.py --build --version 58`; receipt [`export_v58.json`](export_v58.json); audit
+`docs/export_audit/v58_audit.json`, clean, flags as v57). Uploaded with `tools/prc_submit.py upload --calendar-day`; processed at
+08:16:30 UTC on 3 October 2026: **220.9212 official on all 344,841 rows, -0.4077 s against v57 (221.3289); the official best.**
+Record [`official_result_v58.json`](official_result_v58.json). The squared-error gain 6.22e7 is 0.88 x the layer's squared change,
+inside the 2025 range (0.67-1.68). Nothing is re-tuned from the score. Never re-upload v1-v58.
