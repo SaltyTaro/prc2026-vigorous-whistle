@@ -8,6 +8,7 @@
 #   status   one line per node: jobs done / failed / running
 #   mirror   copy runs/adsb_ctx3_combo/nets and the node logs back from every node
 # ROUND (default runs/adsb_ctx3_combo) names another round's directory (jobs, nets, logs), e.g. ROUND=runs/adsb_ctx3_mask.
+# EXTRA (optional) is handed to combo_queue.sh (--extra-features directory on the node).
 # Usage: [ROUND=runs/...] NODES="prc-ctx3a prc-ctx3c" tools/combo_nodes.sh fanout|sync|launch|status|mirror
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -44,7 +45,7 @@ case "${1:-}" in
     for i in "${!nodes[@]}"; do
       n=${nodes[$i]}
       if ssh "$n" "pgrep -f '[c]ombo_queue.sh' > /dev/null"; then echo "$n: queue already running"; continue; fi
-      sky exec "$n" --gpus L40S:1 -d --name "combo-queue-$i" "cd ~/prc && ROUND=$R bash tools/combo_queue.sh $i 2" 2>&1 \
+      sky exec "$n" --gpus L40S:1 -d --name "combo-queue-$i" "cd ~/prc && ROUND=$R EXTRA=${EXTRA:-} bash tools/combo_queue.sh $i 2" 2>&1 \
         | sed 's/\x1b\[[0-9;]*m//g' | grep -E 'Job (ID|submitted)|Error' | sed "s/^/$n: /"
     done ;;
   status)
