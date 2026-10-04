@@ -1,0 +1,481 @@
+{
+  "audit_used": false,
+  "b_decision": 0.4,
+  "bar_points": 0.05,
+  "base_proxy_rmse": 176.26167383161464,
+  "created_at_utc": "2026-10-04T01:13:39.840888+00:00",
+  "decision": "own_all is GO when (a) its R2 at b = 0.4 (the shipped member weight) is at least 0.05 points below the control's, (b) its four-seed standalone October non-LIRF RMSE is below the control's, and (c) the paired-day 95% interval of the proxy RMSE difference between own_all's and the control's tables at b = 0.4 lies below zero. A GO goes to a separately declared development round (proposal only from this batch); without a GO the item is closed. The overlap with stack_resid_v3 stays unknown at this stage and is stated.",
+  "declaration_sha256": "91ad37daea45fd1396af22e15a00eb6b2a29c456b4eda10376e4295c42ac90e0",
+  "go": true,
+  "items": {
+    "control": {
+      "r2_pct": {
+        "0.25": -0.06985048092841284,
+        "0.4": -0.07314195782935906,
+        "0.5": -0.059239451546821975,
+        "1.0": 0.2030710646510503
+      },
+      "r2_pct_share_085": {
+        "0.25": -0.08244729617369329,
+        "0.4": -0.08225553941116903,
+        "0.5": -0.06142968505696844,
+        "1.0": 0.2904198465317309
+      },
+      "rmse_by_airport": {
+        "EDDF": 95.04626033685135,
+        "EDDM": 71.17334710263049,
+        "EGLL": 203.93633708479308,
+        "EHAM": 97.19604403878328,
+        "LEBL": 140.1858392689681,
+        "LEMD": 134.53428281663346,
+        "LFPG": 218.47246379851404,
+        "LSZH": 97.18231371624098,
+        "LTFM": 212.91703914069572
+      },
+      "rmse_inbound_identified": 136.91108172396304,
+      "rmse_matched": 118.33804826758427,
+      "rmse_non_lirf": 156.38279492630886,
+      "rmse_own_motion_seen": 114.8331670528786,
+      "rmse_unmatched": 210.5514139949513
+    },
+    "networks": {
+      "dl32": {
+        "mean_rmse_matched": 118.33804826758427,
+        "mean_rmse_non_lirf": 157.22000165979472,
+        "mean_rmse_unmatched": 212.35288825631343,
+        "per_seed_rmse_non_lirf": {
+          "10": 166.8579770073965,
+          "11": 167.28200625473917,
+          "12": 164.55582692085665,
+          "9": 166.6475363441896
+        }
+      },
+      "dl32own": {
+        "mean_rmse_matched": 116.40701120243209,
+        "mean_rmse_non_lirf": 155.9973632885759,
+        "mean_rmse_unmatched": 211.76539904690793,
+        "per_seed_rmse_non_lirf": {
+          "10": 164.97879248079346,
+          "11": 164.22203291017334,
+          "12": 165.96069735438812,
+          "9": 164.19485010894567
+        }
+      },
+      "m25dl32": {
+        "mean_rmse_matched": 118.73663244027101,
+        "mean_rmse_non_lirf": 156.58067574956027,
+        "mean_rmse_unmatched": 210.5514139949513,
+        "per_seed_rmse_non_lirf": {
+          "10": 164.90258819170805,
+          "11": 165.21876653298463,
+          "12": 163.5792785960965,
+          "9": 165.0042944999204
+        }
+      },
+      "m25dl32own": {
+        "mean_rmse_matched": 117.47895383130988,
+        "mean_rmse_non_lirf": 156.0520381979333,
+        "mean_rmse_unmatched": 210.75413032469098,
+        "per_seed_rmse_non_lirf": {
+          "10": 164.33555195170516,
+          "11": 163.34537899934986,
+          "12": 163.9235680541442,
+          "9": 164.51621199713531
+        }
+      }
+    },
+    "own_all": {
+      "by_airport_vs_control_pct": {
+        "EDDF": -2.388868179068526,
+        "EDDM": -0.38365281952217334,
+        "EGLL": -0.8265334125501345,
+        "EHAM": -3.0204218862354804,
+        "LEBL": -1.344669800774645,
+        "LEMD": -0.22622611822536998,
+        "LFPG": -0.2980127306971503,
+        "LSZH": -2.5013400849952516,
+        "LTFM": 0.545540429310698
+      },
+      "gain_points_vs_control": {
+        "0.25": 0.11286461066019049,
+        "0.4": 0.17108801693440645,
+        "0.5": 0.20590561239288707,
+        "1.0": 0.33152955854365285
+      },
+      "inbound_identified_vs_control_pct": -1.5613207907569149,
+      "interval_vs_control_b0.4_s": [
+        -0.46021520103838826,
+        -0.15612004424639922
+      ],
+      "own_motion_seen_vs_control_pct": -3.061552015258129,
+      "proxy_change_vs_control_b0.4_pct": -0.1712132456543447,
+      "r2_pct": {
+        "0.25": -0.18271509158860333,
+        "0.4": -0.2442299747637655,
+        "0.5": -0.26514506393970905,
+        "1.0": -0.12845849389260255
+      },
+      "r2_pct_share_085": {
+        "0.25": -0.2089014256344668,
+        "0.4": -0.27235964977897487,
+        "0.5": -0.2888160022842201,
+        "1.0": -0.06094633263685756
+      },
+      "rmse_by_airport": {
+        "EDDF": 92.77573046826967,
+        "EDDM": 70.90028854972294,
+        "EGLL": 202.2507351184564,
+        "EHAM": 94.2603134520808,
+        "LEBL": 138.3008026233558,
+        "LEMD": 134.22993113093506,
+        "LFPG": 217.82138804332675,
+        "LSZH": 94.7514535477308,
+        "LTFM": 214.0785876700995
+      },
+      "rmse_inbound_identified": 134.7734605401566,
+      "rmse_matched": 116.40701120243209,
+      "rmse_non_lirf": 155.5246834815587,
+      "rmse_own_motion_seen": 111.31748991278646,
+      "rmse_unmatched": 210.75413032469098,
+      "standalone_below_control": true,
+      "standalone_vs_control_pct": -0.5487249701314867
+    },
+    "own_matched": {
+      "by_airport_vs_control_pct": {
+        "EDDF": -2.087575484997195,
+        "EDDM": -0.5728509108064439,
+        "EGLL": -0.45925903801926626,
+        "EHAM": -3.2847744459175265,
+        "LEBL": -1.23771167026695,
+        "LEMD": -0.5545732793864722,
+        "LFPG": -0.16032392758812408,
+        "LSZH": -2.680743074872416,
+        "LTFM": 0.0
+      },
+      "gain_points_vs_control": {
+        "0.25": 0.08729123156343555,
+        "0.4": 0.13452614165828658,
+        "0.5": 0.16384436488250387,
+        "1.0": 0.28396773368503103
+      },
+      "inbound_identified_vs_control_pct": -1.2809432471336701,
+      "interval_vs_control_b0.4_s": [
+        -0.29769649242287455,
+        -0.1784844184933768
+      ],
+      "own_motion_seen_vs_control_pct": -2.20851834541006,
+      "proxy_change_vs_control_b0.4_pct": -0.13462460873283622,
+      "r2_pct": {
+        "0.25": -0.15714171249184838,
+        "0.4": -0.20766809948764564,
+        "0.5": -0.22308381642932584,
+        "1.0": -0.08089666903398074
+      },
+      "r2_pct_share_085": {
+        "0.25": -0.1813308045567008,
+        "0.4": -0.23385234686291723,
+        "0.5": -0.24536856219854464,
+        "1.0": -0.0210762202605963
+      },
+      "rmse_by_airport": {
+        "EDDF": 93.06209790665262,
+        "EDDM": 70.76562993550164,
+        "EGLL": 202.99974102492573,
+        "EHAM": 94.00337322175459,
+        "LEBL": 138.4507427762744,
+        "LEMD": 133.7881916325182,
+        "LFPG": 218.12220016385373,
+        "LSZH": 94.57710557129207,
+        "LTFM": 212.91703914069572
+      },
+      "rmse_inbound_identified": 135.15732846804227,
+      "rmse_matched": 116.40701120243209,
+      "rmse_non_lirf": 155.4300311671268,
+      "rmse_own_motion_seen": 112.2970554919004,
+      "rmse_unmatched": 210.5514139949513,
+      "standalone_below_control": true,
+      "standalone_vs_control_pct": -0.6092510110405902
+    },
+    "own_unmatched": {
+      "by_airport_vs_control_pct": {
+        "EDDF": -0.2949841735274794,
+        "EDDM": 0.18811630915500643,
+        "EGLL": -0.3655814303516469,
+        "EHAM": 0.25569169452026586,
+        "LEBL": -0.1056328885714386,
+        "LEMD": 0.32653217851488225,
+        "LFPG": -0.1374677508922173,
+        "LSZH": 0.17460215425244563,
+        "LTFM": 0.545540429310698
+      },
+      "gain_points_vs_control": {
+        "0.25": 0.02555103445954776,
+        "0.4": 0.036512635990726405,
+        "0.5": 0.04199226266822231,
+        "1.0": 0.04742697441828536
+      },
+      "inbound_identified_vs_control_pct": -0.2767760334403402,
+      "interval_vs_control_b0.4_s": [
+        -0.1900497340547375,
+        0.052500932823854624
+      ],
+      "own_motion_seen_vs_control_pct": -0.8340339960805743,
+      "proxy_change_vs_control_b0.4_pct": -0.03653936159517812,
+      "r2_pct": {
+        "0.25": -0.0954015153879606,
+        "0.4": -0.10965459382008547,
+        "0.5": -0.10123171421504429,
+        "1.0": 0.15564409023276493
+      },
+      "r2_pct_share_085": {
+        "0.25": -0.1099906244307669,
+        "0.4": -0.12070439592090088,
+        "0.5": -0.10479712453888013,
+        "1.0": 0.2506736175211577
+      },
+      "rmse_by_airport": {
+        "EDDF": 94.7658889113279,
+        "EDDM": 71.30723577630204,
+        "EGLL": 203.19078370667174,
+        "EHAM": 97.44456625079272,
+        "LEBL": 140.03775691758017,
+        "LEMD": 134.97358054116398,
+        "LFPG": 218.17213461621142,
+        "LSZH": 97.3519961295419,
+        "LTFM": 214.0785876700995
+      },
+      "rmse_inbound_identified": 136.5321446626272,
+      "rmse_matched": 118.33804826758427,
+      "rmse_non_lirf": 156.47687091832125,
+      "rmse_own_motion_seen": 113.87541940088158,
+      "rmse_unmatched": 210.75413032469098,
+      "standalone_below_control": false,
+      "standalone_vs_control_pct": 0.06015750777232931
+    }
+  },
+  "note": "October only; no scoring month, ranking row or official score read. Overlap with stack_resid_v3 is not measurable on October.",
+  "october_inbound_identified_share": 0.7566458606559607,
+  "october_own_motion_share": 0.5915836330886314,
+  "october_rows": 183761,
+  "pool_rmse_non_lirf": 154.01647144993638,
+  "reproduction_of_29_september_controls": {
+    "dl32_s10": {
+      "max_abs_diff_s": 0.0,
+      "rmse_new": 166.8579770073965,
+      "rmse_old": 166.8579770073965
+    },
+    "dl32_s11": {
+      "max_abs_diff_s": 0.0,
+      "rmse_new": 167.28200625473917,
+      "rmse_old": 167.28200625473917
+    },
+    "dl32_s12": {
+      "max_abs_diff_s": 0.0,
+      "rmse_new": 164.55582692085665,
+      "rmse_old": 164.55582692085665
+    },
+    "dl32_s9": {
+      "max_abs_diff_s": 0.0,
+      "rmse_new": 166.6475363441896,
+      "rmse_old": 166.6475363441896
+    },
+    "m25dl32_s10": {
+      "max_abs_diff_s": 0.0,
+      "rmse_new": 164.90258819170805,
+      "rmse_old": 164.90258819170805
+    },
+    "m25dl32_s11": {
+      "max_abs_diff_s": 0.0,
+      "rmse_new": 165.21876653298463,
+      "rmse_old": 165.21876653298463
+    },
+    "m25dl32_s12": {
+      "max_abs_diff_s": 0.0,
+      "rmse_new": 163.5792785960965,
+      "rmse_old": 163.5792785960965
+    },
+    "m25dl32_s9": {
+      "max_abs_diff_s": 0.0,
+      "rmse_new": 165.0042944999204,
+      "rmse_old": 165.0042944999204
+    }
+  },
+  "runs": {
+    "dl32": {
+      "10": {
+        "curve_last": [
+          170.731,
+          170.546,
+          170.7
+        ],
+        "extra_features_used": 11,
+        "fit_seconds": 13107.7,
+        "predictions_sha256": "9f71f0d74dd48649daa5cef30dfac2c2ad470833e4cac399d174b56da4fe221b"
+      },
+      "11": {
+        "curve_last": [
+          170.943,
+          171.161,
+          171.196
+        ],
+        "extra_features_used": 11,
+        "fit_seconds": 12613.8,
+        "predictions_sha256": "3098f13a94b51b0aea46322072c37824f0eda32bd4ca7fe5b134dbbe6acc13df"
+      },
+      "12": {
+        "curve_last": [
+          168.467,
+          168.267,
+          168.457
+        ],
+        "extra_features_used": 11,
+        "fit_seconds": 12766.4,
+        "predictions_sha256": "a0ce70a13e31fcfd1c6411c570ece5b4c22bfc0b9b2227203eafb861c0a8d205"
+      },
+      "9": {
+        "curve_last": [
+          170.177,
+          170.476,
+          170.488
+        ],
+        "extra_features_used": 11,
+        "fit_seconds": 13220.1,
+        "predictions_sha256": "c9576f48048c6ee43436af42dee5403c4c644b177568eb369e4e090c25742d4a"
+      }
+    },
+    "dl32own": {
+      "10": {
+        "curve_last": [
+          168.982,
+          168.645,
+          168.705
+        ],
+        "extra_features_used": 26,
+        "fit_seconds": 13719.6,
+        "predictions_sha256": "62f0d9e88ee82a56cb1f2c824beab56f7b16b4aaf19b476da64dbcb54e5717fa"
+      },
+      "11": {
+        "curve_last": [
+          167.955,
+          168.006,
+          168.063
+        ],
+        "extra_features_used": 26,
+        "fit_seconds": 12765.3,
+        "predictions_sha256": "e22916ce04be08418bf53c7cf2a855b795d220241c3d2aabdb6282e3a73e9b61"
+      },
+      "12": {
+        "curve_last": [
+          169.453,
+          169.612,
+          169.763
+        ],
+        "extra_features_used": 26,
+        "fit_seconds": 12128.0,
+        "predictions_sha256": "601b7288a8fe0845a32135f06675ad13dfa748949daed540e3caa8edef420465"
+      },
+      "9": {
+        "curve_last": [
+          167.75,
+          168.083,
+          167.983
+        ],
+        "extra_features_used": 26,
+        "fit_seconds": 13334.2,
+        "predictions_sha256": "069f0d4765cfdf59aba31a1874c7bc396cb958083a2457c0e0af6192a45c9204"
+      }
+    },
+    "m25dl32": {
+      "10": {
+        "curve_last": [
+          169.264,
+          168.807,
+          168.889
+        ],
+        "extra_features_used": 11,
+        "fit_seconds": 12297.5,
+        "predictions_sha256": "aac82a949a7435145bcfbf134389e78320a16a1c01ba0c90811f2bda231e5a33"
+      },
+      "11": {
+        "curve_last": [
+          168.608,
+          168.799,
+          168.856
+        ],
+        "extra_features_used": 11,
+        "fit_seconds": 11251.3,
+        "predictions_sha256": "19db6e8b19799a9ae9596404e8cbef056c913ed6a31025c79188c03de8d230d1"
+      },
+      "12": {
+        "curve_last": [
+          167.09,
+          167.081,
+          167.387
+        ],
+        "extra_features_used": 11,
+        "fit_seconds": 12740.6,
+        "predictions_sha256": "c70a50acf51303a0ece52b70cb1c8809d8e44322f2f479de3b4001e1839133d8"
+      },
+      "9": {
+        "curve_last": [
+          168.241,
+          168.732,
+          168.743
+        ],
+        "extra_features_used": 11,
+        "fit_seconds": 13396.5,
+        "predictions_sha256": "8ba528f7268f61d6931ebf127450221cdce862938415e3e9c0072ca5088a9c14"
+      }
+    },
+    "m25dl32own": {
+      "10": {
+        "curve_last": [
+          168.185,
+          167.708,
+          167.925
+        ],
+        "extra_features_used": 26,
+        "fit_seconds": 13140.0,
+        "predictions_sha256": "aa24a50e26a7aad8f0cd92df94f84645ada377fdbbab12615fed4ccdc0186e81"
+      },
+      "11": {
+        "curve_last": [
+          166.948,
+          167.047,
+          167.005
+        ],
+        "extra_features_used": 26,
+        "fit_seconds": 12815.6,
+        "predictions_sha256": "73f765cebd5631812a56a472e73723c89440a32bb4d2663fad19078ac850d8cb"
+      },
+      "12": {
+        "curve_last": [
+          167.507,
+          167.556,
+          167.617
+        ],
+        "extra_features_used": 26,
+        "fit_seconds": 13177.1,
+        "predictions_sha256": "9d000ab0388d976de0e64bf0bee8ffe3b50506fa551ec1fbb923c2c7b2f6809e"
+      },
+      "9": {
+        "curve_last": [
+          168.32,
+          168.585,
+          168.34
+        ],
+        "extra_features_used": 26,
+        "fit_seconds": 13419.7,
+        "predictions_sha256": "7679470d7bd559efd048a2a3edc4674fd14457c3c5ef74f183f5a1ca71b89816"
+      }
+    }
+  },
+  "seeds": [
+    9,
+    10,
+    11,
+    12
+  ],
+  "share": 0.75,
+  "tool_sha256": "266a53d7f9fe79b6b9c3a2db07cd1a0f3954bacfd1d7e98b4b9d7a8ff075e880"
+}
