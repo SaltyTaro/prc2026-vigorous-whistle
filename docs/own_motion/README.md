@@ -202,3 +202,13 @@ twelve months 12 of 12 better). It is therefore not built. For the user's decisi
 `319b63408b60ca1ccc9332397231a210ff864d6a4717378d3ae5e7bd2060d547`, 2,399 rows (EHAM 2,058 with mean +10.5 s, LSZH 210, EDDM 116,
 LEBL 63, LEMD 40), squared change 1.76e7, max move +1,032 s, no LIRF / population / guard row, every other row identical to v63. It
 would need a version number of its own at build time (the next free one) and the user's override.
+
+## v64 = v63 + own_motion_v2 by user override: **217.8569 official, -0.0844 s against v63, the official best** (4 October 2026)
+
+own_motion_v2 failed its declared re-check on the v63 chain on clause 3 only (December interval upper end +0.014%; all four development
+months and twelve of twelve months better). The user overrode it ("Override: build + upload v64 (Recommended)"): `tools/run_own_motion_v2.py
+--build --version 64 --base runs/submissions/vigorous-whistle_v63.parquet` reproduced the override dry run byte for byte
+(`runs/submissions/vigorous-whistle_v64.parquet`, SHA-256 `319b63408b60ca1ccc9332397231a210ff864d6a4717378d3ae5e7bd2060d547`; the
+receipts [`export_v64.json`](export_v64.json) record the override in `selected_by`; audit `docs/export_audit/v64_audit.json`, integrity
+clean). Processed 01:25:14 UTC: **217.8569 on all 344,841 rows** ([`official_result_v64.json`](official_result_v64.json)); gain 1.27e7 =
+0.72 x the squared change (1.76e7). Nothing is re-tuned from the score. Never re-upload v1-v64.

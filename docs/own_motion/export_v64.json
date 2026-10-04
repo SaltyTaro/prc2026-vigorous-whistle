@@ -1,0 +1,95 @@
+{
+ "base": "runs\\submissions\\vigorous-whistle_v63.parquet",
+ "base_sha256": "4cff09459d044e9830f9a2a1b3a0be11d3c11bbe5c5926dbb131e7f05449846f",
+ "by_airport": {
+  "EDDM": {
+   "max": 1032.0,
+   "mean": 93.4,
+   "size": 116
+  },
+  "EHAM": {
+   "max": 997.0,
+   "mean": 10.5,
+   "size": 2058
+  },
+  "LEBL": {
+   "max": 748.0,
+   "mean": 163.9,
+   "size": 63
+  },
+  "LEMD": {
+   "max": 875.0,
+   "mean": 141.3,
+   "size": 40
+  },
+  "LSZH": {
+   "max": 1008.0,
+   "mean": 80.6,
+   "size": 210
+  }
+ },
+ "bytes": 2225973,
+ "code_sha256": "1fa8f880cd107b06e2cc00aa8d89602c9d3bc6afd35be7567f7a68c5e276d2b7",
+ "config_sha256": "f8d855b2490fe41a0d95518b12eddc5be296b4dfa946e0f4714d91986df733e3",
+ "dry_run_sha256": "319b63408b60ca1ccc9332397231a210ff864d6a4717378d3ae5e7bd2060d547",
+ "experiment_id": "own_motion_v2",
+ "file": "runs\\submissions\\vigorous-whistle_v64.parquet",
+ "ids_ranking_sha256": "b8cf4ce0619d9b46f78c1521dd0830a0fbbbdfcc34de2c74b1ecc3ad7708d2cd",
+ "kind": "submission build at the user's word",
+ "lirf_population_guard_rows_changed": 0,
+ "max_move_s": 1032.0,
+ "mean_move_s": 27.259691538140892,
+ "min_move_s": -9.0,
+ "model": {
+  "offsets": {
+   "EDDM": 50.72641195290262,
+   "EHAM": -17.920572750599273,
+   "LEBL": 152.33606851810427,
+   "LEMD": 88.11545637528198,
+   "LSZH": 46.4415859242576
+  },
+  "pooled": 0.19006782024019803,
+  "rows": {
+   "EDDM": 629,
+   "EHAM": 11274,
+   "LEBL": 496,
+   "LEMD": 224,
+   "LSZH": 1532
+  },
+  "validity": {
+   "EDDM": 0.9602543720190779,
+   "EHAM": 0.9092602448110697,
+   "LEBL": 0.9556451612903226,
+   "LEMD": 0.9107142857142857,
+   "LSZH": 0.9823759791122716
+  }
+ },
+ "other_rows_identical_to_base": true,
+ "ranking_trigger_rows": 69104,
+ "ranking_trigger_rows_no_return_band": 68038,
+ "rows": [],
+ "rows_changed": 2399,
+ "selected_by": "USER OVERRIDE: the declared rule accepted own_motion_v2 on the v62 chain (docs/own_motion/results_v2.json) but its re-check on the v63 chain failed clause 3 only (December interval upper end +0.014%; docs/own_motion/results_v2_v63.json); built on v63 at the user's word",
+ "sha256": "319b63408b60ca1ccc9332397231a210ff864d6a4717378d3ae5e7bd2060d547",
+ "squared_change": 17624298.0,
+ "triggers_2025": {
+  "cache": "used",
+  "code_sha256": "1fa8f880cd107b06e2cc00aa8d89602c9d3bc6afd35be7567f7a68c5e276d2b7",
+  "config_sha256": "f8d855b2490fe41a0d95518b12eddc5be296b4dfa946e0f4714d91986df733e3",
+  "ids_sha256": {
+   "ids_2025-01.parquet": "84296afa281800ae47f6dd883fe4fc161bf66347f8ec86cecc2a1d7a59308ea1",
+   "ids_2025-02.parquet": "49f39557bba88aad9fec60ad9cf5c086bad096033d13d575638dec0b0f10abed",
+   "ids_2025-03.parquet": "ce51177907a1dc332d5c1b30a792088b52f6945854d275dc5e4123ade967440e",
+   "ids_2025-04.parquet": "2666b09165c733ab975e0a86033e7ecc748343b5740451c97574ecd31d0767d7",
+   "ids_2025-05.parquet": "571f6a9563ce5d2ded688afe2b11e2438a7addb2d5ce56fd102b03470f415536",
+   "ids_2025-06.parquet": "9cef1cb8375bc598eae716ceffef1b5a8d57ae301703d4cd8baeac4c3c4e125d",
+   "ids_2025-07.parquet": "2770cd7fabbef3edc8a4fb5162391736840116c1fc7cccaaedc4cf1936632c45",
+   "ids_2025-08.parquet": "d6ee9cf66dec41febfc62590987e80491065671af7e27c41868242a789e552b2",
+   "ids_2025-09.parquet": "686f90d175ba5cf0e9295c0bff4939fa80f4b1af4bf38e564cf0cdd337703b89",
+   "ids_2025-10.parquet": "fd9158031bccfe079de1d24c7dd1f6012cb33d772292f6d7a77d496aa788f59e",
+   "ids_2025-11.parquet": "7d5b31c2f4c68beb4f7f51912c0dead01efd3fbd462e7c57573fcdc5d453f4ec",
+   "ids_2025-12.parquet": "163db9ec21d715f847cfa40dd16abe8f4ce532a45145acf673e7b0ec542c0601"
+  }
+ },
+ "written_at_utc": "2026-10-04T01:24:02.704854+00:00"
+}

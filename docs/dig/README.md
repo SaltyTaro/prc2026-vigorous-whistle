@@ -57,7 +57,7 @@ squared error; 69% of them are under-predictions.
 ## Official results of the campaign
 
 v58 = 220.9212 (intruder bound), v59 = 218.8483 (+ no-NM rematch, user override), v60 = 218.6404 (+ guarded stacking residual),
-v61 = 218.6142 (+ same-type intruders by ICAO identity), v62 = 218.4174 (+ own-motion bound, tunnel 17): -2.91 s against v57 in one day; v63 = 217.9413 (4 October, stacker with own-aircraft turnaround features, tunnel 18), -0.476 s against v62.
+v61 = 218.6142 (+ same-type intruders by ICAO identity), v62 = 218.4174 (+ own-motion bound, tunnel 17): -2.91 s against v57 in one day; v63 = 217.9413 (4 October, stacker with own-aircraft turnaround features, tunnel 18), -0.476 s against v62; v64 = 217.8569 (own-motion bound at five more airports, tunnel 19, user override), -0.084 s.
 
 ## FIND -> v58 = 220.9212 official (-0.408 s vs v57): the intruder stand bound
 
