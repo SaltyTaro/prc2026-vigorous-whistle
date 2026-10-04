@@ -85,3 +85,10 @@ step 5 `c67f20d6...`, v63's stack step). Ranking member tables: the 16 twelve-mo
 
 GPU: four g6e.2xlarge from about 01:30 to 08:01-08:04 UTC; every mirrored file (4 x 256) SHA-256-equal
 to its node; all four clusters torn down; the jobs controller untouched (stopped).
+
+## Official result (4 October 2026): **v65 = 216.8814, the official best, -0.9755 s against v64**
+
+Uploaded at the user's word ("Upload v65 now (Recommended)"); processed 08:33:12 UTC on 4 October: **216.8814 on all 344,841 rows**
+([`official_result_v65.json`](official_result_v65.json)). Realised squared-error gain 1.46e8 = 2.74 x the file's squared change against
+v64 (5.34e7). Nothing is re-tuned from the score. Never re-upload v1-v65. This was the last round of
+the dig campaign (user: "WE WILL STOP AFTER THIS ROUND").
