@@ -1,0 +1,114 @@
+{
+  "candidate": "own_all_w40",
+  "checks": {
+    "1_no_month_worse_than_0.005pct": true,
+    "2_equal_footing_mean_pct": -0.14787603024792872,
+    "2_mean_ok": true,
+    "3_every_equal_interval_below_zero": true,
+    "accepted": true
+  },
+  "code": {
+    "tools/run_ctx_ownpoints_chain.py": "4fa1a5244fe0520fa9701e352d29c3b1c97ebfe23cc34ee6f0120082a13d5a7d",
+    "tools/run_own_motion_v2.py": "1fa8f880cd107b06e2cc00aa8d89602c9d3bc6afd35be7567f7a68c5e276d2b7",
+    "tools/run_stack_resid_v3.py": "d3c5f995d39633c7383916e1f80d7553f2bbbecc5461f2c579e816281c071f52"
+  },
+  "control": "v64 development proxy (own_motion_v2 on the v63 proxy)",
+  "created_at_utc": "2026-10-04T07:07:01.953086+00:00",
+  "declaration": "configs/ctx_ownpoints_dev_v1.json",
+  "declaration_sha256": "175a0e3dec69cf4bfca0200adbe84ac1e84a7311374b1f7719ae481b24d63441",
+  "inputs": {
+    "cand.parquet": "9c066172a4589b9628d87ec80213a1ca3a5410c491d0a1e9e2725417e932ea88",
+    "ctl.parquet": "ddefe7f7629f22fc9494bb870b56b097eca0cb8f422c84cd7ba012dd7d5584a4",
+    "dmp.parquet": "d3da6b01034ccf0a2a7f08c2456194ecd034c3e3bced8ddfc268011b77aabef4",
+    "rows_all.parquet": "c98a1a58c845f8ff6cda8b89c7a32ce986b9c6e28d52b64189ff1222c3c98487"
+  },
+  "months": {
+    "2025-01": {
+      "control_rmse": 320.58236373584674,
+      "hi": -0.024800823002600905,
+      "lo": -0.2832492349578855,
+      "pct": -0.07512898512533894,
+      "rmse": 320.3415134594812,
+      "rows_changed": 153564,
+      "squared_change": 17566675.245899253
+    },
+    "2025-07": {
+      "control_rmse": 251.8561093523344,
+      "hi": -0.10265232871797678,
+      "lo": -0.1958558760693735,
+      "pct": -0.1459316682423717,
+      "rmse": 251.48857153038622,
+      "rows_changed": 190207,
+      "squared_change": 18230922.53031572
+    },
+    "2025-11": {
+      "control_rmse": 182.51654874769457,
+      "hi": -0.12874316941897818,
+      "lo": -0.30921035508850364,
+      "pct": -0.20678049022149203,
+      "rmse": 182.13914013345874,
+      "rows_changed": 162200,
+      "squared_change": 18217822.34388735
+    },
+    "2025-12": {
+      "control_rmse": 164.2565590379443,
+      "hi": -0.1665327917037402,
+      "lo": -0.2816442645845488,
+      "pct": -0.22256743737607554,
+      "rmse": 163.89097742377143,
+      "rows_changed": 165498,
+      "squared_change": 14956731.813771298
+    }
+  },
+  "proxy": {
+    "path": "runs\\ctx_ownpoints_dev\\chain\\own_all_w40\\dev_v65_proxy.parquet",
+    "sha256": "32c9458d3a52677484da9a51366baa65024dd6a279d02e5fecae89300b09bc94"
+  },
+  "rule": "v57's clauses 1-3 (configs/own_motion_v2.json rule values); clause 4 not applicable (declared)",
+  "stacker_trees": {
+    "v2 2025-01": [
+      204,
+      302,
+      308
+    ],
+    "v2 2025-07": [
+      320,
+      482,
+      613
+    ],
+    "v2 2025-11": [
+      286,
+      292,
+      223
+    ],
+    "v2 2025-12": [
+      428,
+      367,
+      306
+    ],
+    "v3 2025-01": [
+      551,
+      404,
+      540
+    ],
+    "v3 2025-07": [
+      772,
+      736,
+      800
+    ],
+    "v3 2025-11": [
+      563,
+      674,
+      510
+    ],
+    "v3 2025-12": [
+      537,
+      465,
+      587
+    ]
+  },
+  "v63_proxy": [
+    "runs/stack_resid/dev_v63_proxy.parquet",
+    "1628a1d64d06d4988b0445eb0f2768f8503fabcde529501b084d233117d575c2"
+  ]
+}
