@@ -1,0 +1,1186 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "own_all_w15": {
+      "eligible": false,
+      "intervals_below_zero": [
+        "2025-07",
+        "2025-12"
+      ],
+      "mean_ratio_equal_footing": 0.9992505035474428,
+      "member": "own_all",
+      "member_weight": 0.15,
+      "months": {
+        "2025-01": {
+          "alignment": 1.0146798702960644,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.3275486462331001,
+            "unmatched_non_lirf": -0.006335809017621319
+          },
+          "change_pct": -0.02665468755086442,
+          "gate_rows": 15,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 16,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.2849996730189751,
+              0.04836733205399067
+            ]
+          },
+          "ratio_to_control": 0.9997334531244914,
+          "rmse": 322.55901779313615,
+          "rows_changed": 142370,
+          "sum_squared_change": 8285510.58914754
+        },
+        "2025-07": {
+          "alignment": 1.4150491102716554,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.3126946430166422,
+            "unmatched_non_lirf": -0.07447633054691316
+          },
+          "change_pct": -0.07711196524065045,
+          "gate_rows": 42,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 21,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.34022203144391766,
+              -0.0652410206783928
+            ]
+          },
+          "ratio_to_control": 0.9992288803475935,
+          "rmse": 257.3369666195615,
+          "rows_changed": 175486,
+          "sum_squared_change": 10655273.130242646
+        },
+        "2025-11": {
+          "alignment": 1.6760732737758903,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.2393720690085699,
+            "unmatched_non_lirf": -0.20748024415193633
+          },
+          "change_pct": -0.1320074870589827,
+          "gate_rows": 30,
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 21,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.4947916531927653,
+              -0.05579006947679527
+            ]
+          },
+          "ratio_to_control": 0.9986799251294102,
+          "rmse": 184.57916452943672,
+          "rows_changed": 151001,
+          "sum_squared_change": 6220055.915468197
+        },
+        "2025-12": {
+          "alignment": 1.3134994204793398,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.21125121422018722,
+            "unmatched_non_lirf": -0.15052300491404935
+          },
+          "change_pct": -0.1210822829756486,
+          "gate_rows": 21,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 22,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.3197713147143169,
+              -0.08853569834817991
+            ]
+          },
+          "ratio_to_control": 0.9987891771702435,
+          "rmse": 167.11106647513057,
+          "rows_changed": 153603,
+          "sum_squared_change": 6898987.128666954
+        }
+      },
+      "months_worse": []
+    },
+    "own_all_w25": {
+      "eligible": true,
+      "intervals_below_zero": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ],
+      "mean_ratio_equal_footing": 0.9982828517183676,
+      "member": "own_all",
+      "member_weight": 0.25,
+      "months": {
+        "2025-01": {
+          "alignment": 1.9117493325962533,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.5927841531013001,
+            "unmatched_non_lirf": -0.05724171867603767
+          },
+          "change_pct": -0.08580433572765722,
+          "gate_rows": 16,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 26,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.6160919143621839,
+              -0.10129061728427623
+            ]
+          },
+          "ratio_to_control": 0.9991419566427234,
+          "rmse": 322.3681744002389,
+          "rows_changed": 142370,
+          "sum_squared_change": 9720889.981348816
+        },
+        "2025-07": {
+          "alignment": 2.310766678836923,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.48813344965366046,
+            "unmatched_non_lirf": -0.25970566661668304
+          },
+          "change_pct": -0.17340973748849464,
+          "gate_rows": 43,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 27,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.6070615533802751,
+              -0.2970452071094529
+            ]
+          },
+          "ratio_to_control": 0.998265902625115,
+          "rmse": 257.08896561508834,
+          "rows_changed": 175486,
+          "sum_squared_change": 12102886.64791273
+        },
+        "2025-11": {
+          "alignment": 2.382665170325439,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.3864936172618516,
+            "unmatched_non_lirf": -0.39179228149864853
+          },
+          "change_pct": -0.23209868598297323,
+          "gate_rows": 29,
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 27,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.7158272094367689,
+              -0.21298643164092632
+            ]
+          },
+          "ratio_to_control": 0.9976790131401703,
+          "rmse": 184.39417282779874,
+          "rows_changed": 151001,
+          "sum_squared_change": 6828293.122748904
+        },
+        "2025-12": {
+          "alignment": 2.141859401710447,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.4310039472350091,
+            "unmatched_non_lirf": -0.3286275199330002
+          },
+          "change_pct": -0.25593041127355276,
+          "gate_rows": 21,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 30,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.5740689833188668,
+              -0.3005412310205098
+            ]
+          },
+          "ratio_to_control": 0.9974406958872645,
+          "rmse": 166.88544714477416,
+          "rows_changed": 153603,
+          "sum_squared_change": 7220292.920471182
+        }
+      },
+      "months_worse": []
+    },
+    "own_all_w40": {
+      "eligible": true,
+      "intervals_below_zero": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ],
+      "mean_ratio_equal_footing": 0.9971115752517874,
+      "member": "own_all",
+      "member_weight": 0.4,
+      "months": {
+        "2025-01": {
+          "alignment": 2.0726898670942737,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.9336487480263611,
+            "unmatched_non_lirf": -0.1220634626257655
+          },
+          "change_pct": -0.16127959038761963,
+          "gate_rows": 15,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 27,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.0812851168866828,
+              -0.25936228313694176
+            ]
+          },
+          "ratio_to_control": 0.9983872040961238,
+          "rmse": 322.1246572513957,
+          "rows_changed": 142370,
+          "sum_squared_change": 16395577.369843313
+        },
+        "2025-07": {
+          "alignment": 2.3764355197819134,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.7344858326387871,
+            "unmatched_non_lirf": -0.44760456642658486
+          },
+          "change_pct": -0.28181080933588065,
+          "gate_rows": 44,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 29,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.9463772895306775,
+              -0.521063260066898
+            ]
+          },
+          "ratio_to_control": 0.9971818919066412,
+          "rmse": 256.80979431053385,
+          "rows_changed": 175486,
+          "sum_squared_change": 18969955.97413951
+        },
+        "2025-11": {
+          "alignment": 2.2774002855737288,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.5715416935612172,
+            "unmatched_non_lirf": -0.6235256851368942
+          },
+          "change_pct": -0.35786140569478153,
+          "gate_rows": 30,
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 29,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -1.0089942573647093,
+              -0.3961182817763707
+            ]
+          },
+          "ratio_to_control": 0.9964213859430522,
+          "rmse": 184.16173421409226,
+          "rows_changed": 151001,
+          "sum_squared_change": 11144707.811710924
+        },
+        "2025-12": {
+          "alignment": 2.2372097700186173,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.7210616721329166,
+            "unmatched_non_lirf": -0.5388494725092507
+          },
+          "change_pct": -0.4234370247402808,
+          "gate_rows": 21,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 31,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.8970617889679033,
+              -0.5338955651394237
+            ]
+          },
+          "ratio_to_control": 0.9957656297525972,
+          "rmse": 166.6051857096496,
+          "rows_changed": 153604,
+          "sum_squared_change": 11280831.126473265
+        }
+      },
+      "months_worse": []
+    },
+    "own_matched_w15": {
+      "eligible": false,
+      "intervals_below_zero": [],
+      "mean_ratio_equal_footing": 0.9998756494531991,
+      "member": "own_matched",
+      "member_weight": 0.15,
+      "months": {
+        "2025-01": {
+          "alignment": 0.34184054308696593,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.3275486462331001,
+            "unmatched_non_lirf": 0.03185959544065309
+          },
+          "change_pct": 0.004726601913329631,
+          "gate_rows": 16,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 13,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.09123254476289944,
+              0.10499092737380875
+            ]
+          },
+          "ratio_to_control": 1.0000472660191333,
+          "rmse": 322.66026796011835,
+          "rows_changed": 142370,
+          "sum_squared_change": 4781948.253783974
+        },
+        "2025-07": {
+          "alignment": 0.8128608153757153,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.3126946430166422,
+            "unmatched_non_lirf": 0.0908904266861299
+          },
+          "change_pct": -0.015855595512248577,
+          "gate_rows": 42,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 17,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.15708032927686305,
+              0.0710437711650683
+            ]
+          },
+          "ratio_to_control": 0.9998414440448775,
+          "rmse": 257.4947235527533,
+          "rows_changed": 175486,
+          "sum_squared_change": 6409905.85538003
+        },
+        "2025-11": {
+          "alignment": 1.1439886949302323,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.2393720690085699,
+            "unmatched_non_lirf": 0.03763820909175042
+          },
+          "change_pct": -0.049807344590935276,
+          "gate_rows": 30,
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 18,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.2192674545273583,
+              0.017592505506562574
+            ]
+          },
+          "ratio_to_control": 0.9995019265540906,
+          "rmse": 184.7310894178737,
+          "rows_changed": 151001,
+          "sum_squared_change": 4287694.433520924
+        },
+        "2025-12": {
+          "alignment": 0.7680708856015267,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.21125121422018722,
+            "unmatched_non_lirf": 0.07700506475325497
+          },
+          "change_pct": -0.026176170441383206,
+          "gate_rows": 21,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 18,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.1100247060894624,
+              0.03276910677148661
+            ]
+          },
+          "ratio_to_control": 0.9997382382955862,
+          "rmse": 167.2698573595647,
+          "rows_changed": 153603,
+          "sum_squared_change": 4528189.614988263
+        }
+      },
+      "months_worse": [
+        "2025-01"
+      ]
+    },
+    "own_matched_w25": {
+      "eligible": true,
+      "intervals_below_zero": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ],
+      "mean_ratio_equal_footing": 0.9993359318758009,
+      "member": "own_matched",
+      "member_weight": 0.25,
+      "months": {
+        "2025-01": {
+          "alignment": 2.007599923683107,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.5927841531013001,
+            "unmatched_non_lirf": 0.011421336486971967
+          },
+          "change_pct": -0.029384677846922003,
+          "gate_rows": 17,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 20,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.23531491276426664,
+              -0.01708007417692704
+            ]
+          },
+          "ratio_to_control": 0.9997061532215308,
+          "rmse": 322.5502096154591,
+          "rows_changed": 142370,
+          "sum_squared_change": 3118255.963213578
+        },
+        "2025-07": {
+          "alignment": 2.8013236101749768,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.48813344965366046,
+            "unmatched_non_lirf": 0.032682599014233205
+          },
+          "change_pct": -0.06515410310665715,
+          "gate_rows": 41,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 20,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.29161534855387855,
+              -0.06142841525372379
+            ]
+          },
+          "ratio_to_control": 0.9993484589689334,
+          "rmse": 257.36776236645534,
+          "rows_changed": 175486,
+          "sum_squared_change": 3579952.557543414
+        },
+        "2025-11": {
+          "alignment": 2.2880536304853956,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.3864936172618516,
+            "unmatched_non_lirf": 0.0018090524882552472
+          },
+          "change_pct": -0.10015108161758324,
+          "gate_rows": 29,
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 26,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.2755075827072943,
+              -0.10382093565135124
+            ]
+          },
+          "ratio_to_control": 0.9989984891838242,
+          "rmse": 184.63804253983153,
+          "rows_changed": 151001,
+          "sum_squared_change": 3104376.7666375027
+        },
+        "2025-12": {
+          "alignment": 2.1667763192292115,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.4310039472350091,
+            "unmatched_non_lirf": 0.03399044987801858
+          },
+          "change_pct": -0.10468165630611592,
+          "gate_rows": 21,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 28,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.23167493284663365,
+              -0.11760023958951045
+            ]
+          },
+          "ratio_to_control": 0.9989531834369388,
+          "rmse": 167.1385069628356,
+          "rows_changed": 153603,
+          "sum_squared_change": 2911326.2707727407
+        }
+      },
+      "months_worse": []
+    },
+    "own_matched_w40": {
+      "eligible": true,
+      "intervals_below_zero": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ],
+      "mean_ratio_equal_footing": 0.9987470793304594,
+      "member": "own_matched",
+      "member_weight": 0.4,
+      "months": {
+        "2025-01": {
+          "alignment": 3.2423099285989516,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.9336487480263611,
+            "unmatched_non_lirf": -0.00013428930801806516
+          },
+          "change_pct": -0.061076309953322916,
+          "gate_rows": 15,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 31,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.3875635453983385,
+              -0.11421132971096601
+            ]
+          },
+          "ratio_to_control": 0.9993892369004668,
+          "rmse": 322.4479581434037,
+          "rows_changed": 78431,
+          "sum_squared_change": 3562577.7882467303
+        },
+        "2025-07": {
+          "alignment": 5.206192610915256,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.7344858326387871,
+            "unmatched_non_lirf": 0.0
+          },
+          "change_pct": -0.11613773402743277,
+          "gate_rows": 43,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 29,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.4502775206363907,
+              -0.17511007417714886
+            ]
+          },
+          "ratio_to_control": 0.9988386226597257,
+          "rmse": 257.2364613884067,
+          "rows_changed": 87440,
+          "sum_squared_change": 3119651.523547304
+        },
+        "2025-11": {
+          "alignment": 2.5520563670142797,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.5715416935612172,
+            "unmatched_non_lirf": 0.0
+          },
+          "change_pct": -0.1488978180739342,
+          "gate_rows": 30,
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 29,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.3557633356826102,
+              -0.20215304750898042
+            ]
+          },
+          "ratio_to_control": 0.9985110218192607,
+          "rmse": 184.54794728846775,
+          "rows_changed": 107462,
+          "sum_squared_change": 4020614.6505519683
+        },
+        "2025-12": {
+          "alignment": 3.3494034139064697,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.7210616721329166,
+            "unmatched_non_lirf": 0.0
+          },
+          "change_pct": -0.19866215688140176,
+          "gate_rows": 21,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 31,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.40255995598369054,
+              -0.26465357238556
+            ]
+          },
+          "ratio_to_control": 0.998013378431186,
+          "rmse": 166.98126475358882,
+          "rows_changed": 107155,
+          "sum_squared_change": 3230387.2715867087
+        }
+      },
+      "months_worse": []
+    }
+  },
+  "control": {
+    "combination": "configs/adsb_ctx3_combo_dev_v1.json",
+    "combination_results": "docs/adsb_ctx3_combo/results_v1.json",
+    "combination_tables": {
+      "runs/adsb_ctx3_combo/member/s601/2025-01.parquet": "51f7f54388e1dd9eb769c998aced36f0d3c04a984228885eed1b3600ac24a399",
+      "runs/adsb_ctx3_combo/member/s601/2025-07.parquet": "e58a84b2124ab56afea0b7d91070107b7c3751b63426c672f0ddbf3e0394a3f6",
+      "runs/adsb_ctx3_combo/member/s601/2025-11.parquet": "2af7343b533c2b3787b9b588df98e0a4bad834ede3cee99ebab5f587a021c4d2",
+      "runs/adsb_ctx3_combo/member/s601/2025-12.parquet": "dc94f4ab4ac4044a6883dc99d6ac062575b2287da2b16efc5461c1842b648c75",
+      "runs/adsb_ctx3_combo/member/s602/2025-01.parquet": "1767d5fa11902111e6c21eb724d5f867e7db6ab5c614849e4f02c2529a3fb03c",
+      "runs/adsb_ctx3_combo/member/s602/2025-07.parquet": "919e00a456b57fb17113999059019a32c94434e32edf449a541690031df41531",
+      "runs/adsb_ctx3_combo/member/s602/2025-11.parquet": "03b0c83d514ebb472a2061d8a761f494b94ee87a3c1486f4e3eb80aec2f3405e",
+      "runs/adsb_ctx3_combo/member/s602/2025-12.parquet": "570ce97f024e1d72d1d9941a2cb397bc010f773559cc3983e27bf956a189ae47",
+      "runs/adsb_ctx3_combo/member/s603/2025-01.parquet": "ff520c9fc3ca57cb68ea094dbb730fec0cfea4a8d928789319621a2708344ada",
+      "runs/adsb_ctx3_combo/member/s603/2025-07.parquet": "be69559b67044c3632a10f85bd3e565961472c513b308520700db6ac8bede6d8",
+      "runs/adsb_ctx3_combo/member/s603/2025-11.parquet": "ac9e4cbb6dfe083c2a4bd108b9bec13513b2bf54cb4506b374965fbaa02fd0ff",
+      "runs/adsb_ctx3_combo/member/s603/2025-12.parquet": "e1828dd810a6da1a497a1812ab30858f661c31b5b60f6763352544b239bae0b1",
+      "runs/adsb_ctx3_combo/member/s604/2025-01.parquet": "14d8847dc7c201ff104cd9bc37e45a3c49b643d21cbb0be833f39915dec034ac",
+      "runs/adsb_ctx3_combo/member/s604/2025-07.parquet": "f4e23ff39cd8c068d160b3eb87a0b67ab049dc65131fdff3dc4d468ea9122b34",
+      "runs/adsb_ctx3_combo/member/s604/2025-11.parquet": "b0c779608315d99edbd1bf2dd0d3848e2b4f27915b58af6707c7fd37614cc050",
+      "runs/adsb_ctx3_combo/member/s604/2025-12.parquet": "13342ac545d2e38e386fd8051d82c804e242b41c0a6e198d1ad9f8e34040020d",
+      "runs/adsb_ctx3_combo/member/s605/2025-01.parquet": "e762e8de89983ab1a9d15b85abb21ee1e24ffe887e2a2254ca9addadc3084072",
+      "runs/adsb_ctx3_combo/member/s605/2025-07.parquet": "107d11538964c045bfeebc754e09a2c9b8881c91d7e6f6e4ee72775004adbb4f",
+      "runs/adsb_ctx3_combo/member/s605/2025-11.parquet": "90eb845b0303e6fd6a39c6b05cd4e442b02e74336c96cd7c42f8d1833afaabf8",
+      "runs/adsb_ctx3_combo/member/s605/2025-12.parquet": "78d5adf33e733881ae7e6396aa89b82f883e77f3ac6a448a1dd72fbb6cb7c955",
+      "runs/adsb_ctx3_combo/member/s606/2025-01.parquet": "81966673cd2ce50343ac37f5bee28a81df84c93f0a89e79328145a66d72f2978",
+      "runs/adsb_ctx3_combo/member/s606/2025-07.parquet": "0c791a2f5f050fe9119c02c9afbe42d812daf8e1224ec9cc479cec4aefac3fc8",
+      "runs/adsb_ctx3_combo/member/s606/2025-11.parquet": "a804009280b28b5df04d001c8ae74d7f57c6d32f67cfe99d9cf3ab2e55a15c77",
+      "runs/adsb_ctx3_combo/member/s606/2025-12.parquet": "8d70d563aa248c11a1df70295cc00e7c72ab0f9345f142bcb92d65777769dfc0",
+      "runs/adsb_ctx3_combo/member/s607/2025-01.parquet": "4cb6438fa5052cfdb092aaa53da4b322dae6987daa4cf930d7f8422d675c55a1",
+      "runs/adsb_ctx3_combo/member/s607/2025-07.parquet": "d9299740aa3c324472f3b8d424f404d66541b35309df522cf3c2eddbb23743f1",
+      "runs/adsb_ctx3_combo/member/s607/2025-11.parquet": "dd5eaf95a7cf53bbd92eec682f10078f0c00d4faa4d88098aabf40f39bdfd6d8",
+      "runs/adsb_ctx3_combo/member/s607/2025-12.parquet": "77fce5c06e22c4c0baceda4fdb2cf9ca43eee6decf04d2d1908864214a37247c",
+      "runs/adsb_ctx3_combo/member/s608/2025-01.parquet": "3c845e0189180ec4a6e94dab54f3445b341efac31958af45cd0ba4e2e823e2ca",
+      "runs/adsb_ctx3_combo/member/s608/2025-07.parquet": "872aca7714fd369c689c3ed7b3ab0d377dd07b0d26924bfe28089e2554ad414c",
+      "runs/adsb_ctx3_combo/member/s608/2025-11.parquet": "a9f3f3f2173e5b29996ce248f400e62baa1d5d84df45b3afaaccc6292e78f8a5",
+      "runs/adsb_ctx3_combo/member/s608/2025-12.parquet": "d7e5140876e562dc503c37b821ca6dfb25726ef05faeee71d908396afcdab6ec",
+      "runs/adsb_ctx3_combo/member/s609/2025-01.parquet": "fc1dbdcda41685c30fd4a72a38d3d95afb82fa27008ff86121b5e2ca5b1e243f",
+      "runs/adsb_ctx3_combo/member/s609/2025-07.parquet": "6f373178e103f97b61804536d9c2cc30f58675a619ba9f71dbdc71300f8bd55b",
+      "runs/adsb_ctx3_combo/member/s609/2025-11.parquet": "3f9b2d0c830491e34dbb9fd5be07009c74c7d29d503ff73bbcf2bb08a0e3c253",
+      "runs/adsb_ctx3_combo/member/s609/2025-12.parquet": "94e26e33281aed0a2f73817a3bd0b0ac4f938b05e472d356b3f4fb95c35da8d3",
+      "runs/adsb_ctx3_combo/member/s610/2025-01.parquet": "7a1f9adf2762344c3e036ad2e42bc62e2642dd0593abc1490d211906cf58591c",
+      "runs/adsb_ctx3_combo/member/s610/2025-07.parquet": "47541d9156c289a8df34c5b663d541cc66e823a38dc60abea6977bf22cbda57d",
+      "runs/adsb_ctx3_combo/member/s610/2025-11.parquet": "c9933fa6b3aba52d9c529e9b711caa9ea39a36ea5182dc58c60dc91db9484b60",
+      "runs/adsb_ctx3_combo/member/s610/2025-12.parquet": "c755e8f403a6096f40e054d9c49d69ead0f53d7a7bc1a893d248b8018818ce1e",
+      "runs/adsb_ctx3_combo/member/s611/2025-01.parquet": "005208346b4f37b4b3d9f39d27d1f09bbaeba337a6066cf910b3eddef6f9aa3c",
+      "runs/adsb_ctx3_combo/member/s611/2025-07.parquet": "2ab14c34c640b86b27fb983d24ff165db234d71634a73bca37b5ac0f7770b083",
+      "runs/adsb_ctx3_combo/member/s611/2025-11.parquet": "61cdf7802bc0498f28355b091b92728d3645b708cf32e5b6d765da05a4c077d8",
+      "runs/adsb_ctx3_combo/member/s611/2025-12.parquet": "0397387da806534e757469d378a6944cf4dcf3e2cbec18e9e85f50384f9009d4",
+      "runs/adsb_ctx3_combo/member/s612/2025-01.parquet": "65d9ecc5d7b4d97fc732f7b9df17c308deaa142fae91e4bebfc3643ca16b69ba",
+      "runs/adsb_ctx3_combo/member/s612/2025-07.parquet": "28571fc461c8ed13120e66dc46d47a807e8577a633b26909de54d399aec3e452",
+      "runs/adsb_ctx3_combo/member/s612/2025-11.parquet": "41647396bd8cc65d8985a892afb5414ed4b5094794f339b0852c203a80c97472",
+      "runs/adsb_ctx3_combo/member/s612/2025-12.parquet": "654d8b9187791dfd6f16d7ee50f725f945414095e11e2361612d7bfb93b6ec5b",
+      "runs/adsb_ctx3_combo/member/s613/2025-01.parquet": "4c3a6b65c082ca9510f7e389b5ee8867af7cf53c5b8fb194bfd125c50cb92bdc",
+      "runs/adsb_ctx3_combo/member/s613/2025-07.parquet": "2b0bbbc5f5d7a37d77ee88372e1fed1e2d2dbb89cea843e7f18b3679c49fd76b",
+      "runs/adsb_ctx3_combo/member/s613/2025-11.parquet": "4bd1429a4074b901fa32cd6a18f7c560b7153817a5f93f351028cbf2829a1c54",
+      "runs/adsb_ctx3_combo/member/s613/2025-12.parquet": "4e2169711edfa51b655a4a135088346f994ff308dd4fc276a67fee393f50361c",
+      "runs/adsb_ctx3_combo/member/s614/2025-01.parquet": "98e199073ab388b41d9368e776631f4730accf7d89644a8e14cb927775f584d5",
+      "runs/adsb_ctx3_combo/member/s614/2025-07.parquet": "7502d802abe538c763a9bec82896d6a6f86726550c47d49e8b2cd507a665e29f",
+      "runs/adsb_ctx3_combo/member/s614/2025-11.parquet": "c2a0ebb6c121130af0014dbab497150f8a943add4be8513f15a0351a4f7ad704",
+      "runs/adsb_ctx3_combo/member/s614/2025-12.parquet": "a80d59d784c75d3eb4cfce1e3a47c161e9abd83734724687958a2c1f0d3f8133",
+      "runs/adsb_ctx3_combo/member/s615/2025-01.parquet": "2013bba3c6b9a47552ba942194701a2ed7eedf882952b16b7ebd74a7fc793069",
+      "runs/adsb_ctx3_combo/member/s615/2025-07.parquet": "450eb510c29dcbf639e76a37a39a646f800d5155f7a539cc9ca28ac8b8ed598d",
+      "runs/adsb_ctx3_combo/member/s615/2025-11.parquet": "dfda3de1cc18b8058025194751f61c075882709be55d211210a0793d978221f0",
+      "runs/adsb_ctx3_combo/member/s615/2025-12.parquet": "201c288aec72827a5e9dcb2a053bdce6328b3010e5a23b9bcd5896d88e9c95a0",
+      "runs/adsb_ctx3_combo/member/s616/2025-01.parquet": "d565b362051cb5e41d295934e8e000e6f8fe926b61a991dda05a03da8ee6dfbc",
+      "runs/adsb_ctx3_combo/member/s616/2025-07.parquet": "a79ed510dc298717c3ec09e1e4e20b4b0661cfc8c605f0518464c6b6db6d747c",
+      "runs/adsb_ctx3_combo/member/s616/2025-11.parquet": "a2272a2b311a921e235f181bc40028bd95cb6c0b0d9522d227663d8308f3e477",
+      "runs/adsb_ctx3_combo/member/s616/2025-12.parquet": "5bb472ec68525b4407731bcb4d330a150cc3beeb8b9da3d82ac1bb9f96702c2a"
+    },
+    "month_rmse": {
+      "2025-01": 322.64501781453305,
+      "2025-07": 257.5355573490268,
+      "2025-11": 184.8231449185471,
+      "2025-12": 167.3136536667202
+    },
+    "name": "v46 development stack with the combination member at w 0.40 (v51's model part)"
+  },
+  "created_at_utc": "2026-10-04T06:47:41.530149+00:00",
+  "declaration": {
+    "audit_used": false,
+    "automatic_submission": false,
+    "candidates": {
+      "own_all_w15": {
+        "member": "own_all",
+        "member_weight": 0.15
+      },
+      "own_all_w25": {
+        "member": "own_all",
+        "member_weight": 0.25
+      },
+      "own_all_w40": {
+        "member": "own_all",
+        "member_weight": 0.4
+      },
+      "own_matched_w15": {
+        "member": "own_matched",
+        "member_weight": 0.15
+      },
+      "own_matched_w25": {
+        "member": "own_matched",
+        "member_weight": 0.25
+      },
+      "own_matched_w40": {
+        "member": "own_matched",
+        "member_weight": 0.4
+      }
+    },
+    "cost_estimate": "about 15 min per fit, two lanes per GPU: about 20 node-hours of fitting plus set-up",
+    "declared_at_utc": "2026-10-04T01:23:05+00:00",
+    "disclosed": "Known before this declaration: (1) the October design batch (configs/ctx_ownpoints_design_v1.json, docs/dig/ctx_ownpoints.md, docs/dig/ctx_ownpoints_design_report.json sha256 d23ab9b3...): recipe proxy at b = 0.4 own columns in both networks -0.2442% vs control -0.0731% (interval [-0.46, -0.16] s), matched network only -0.2077%, unmatched only -0.1097%; (2) dig tunnels 15/17/18 read the same own points against 2025 labels of January, July, November and December through the shipped chain (own-motion bounds; stack_resid_v3, built and uploaded as v63); stack_resid_v3 already carries this information, so the overlap is tested in stage 2; (3) the official scores of v51-v64 exist; nothing here is derived from them. The candidates (both routings of the design batch), the weight grid (the combination round's 0.15 / 0.25 / 0.40) and the rules are fixed by those earlier records.",
+    "equal_footing_months": [
+      "2025-01",
+      "2025-07",
+      "2025-12"
+    ],
+    "experiment_id": "prc2026-ctx-ownpoints-dev-v1",
+    "export_report_dir": "docs/ctx_ownpoints_dev",
+    "fits": {
+      "count": 160,
+      "extra_features": "data/external/adsblol/features_v19own (manifest sha256 0e8811e6..., docs/dig/ctx_ownpoints_features_manifest.json; 14 tables hash-checked on 4 October before this declaration): the 11 v19 columns byte-identical to features_v19 plus the 15 own columns",
+      "folds": {
+        "2025-01": {
+          "file": "predictions.parquet",
+          "fold": "lomo_2025-01"
+        },
+        "2025-07": {
+          "file": "predictions.parquet",
+          "fold": "lomo_2025-07"
+        },
+        "2025-11": {
+          "file": "predictions.parquet",
+          "fold": "forward"
+        },
+        "2025-12": {
+          "file": "december_predictions.parquet",
+          "fold": "refit"
+        },
+        "ranking": {
+          "file": "ranking_predictions.parquet",
+          "fold": "refit12"
+        }
+      },
+      "footing": "as the combination round: January and July 2025 leave-one-month-out on the other eleven months; November the forward fold (reported only); December the January-November refit; ranking the twelve-month refit",
+      "network_config": "configs/ctx_ownpoints_network_v1.json",
+      "network_config_sha256": "8013ddae2a05522d5944aa958336d6b094eca8e676dd65afd58414fc84a50be2",
+      "outputs": "runs/ctx_ownpoints_dev/nets/<variant>_s<seed>/<fold>/",
+      "runner": "tools/run_adsb_ctx_lomo.py, unchanged; jobs tools/combo_jobs.py --declaration; queue tools/combo_queue.sh with EXTRA=data/external/adsblol/features_v19own (the queue's EXTRA option added for this round, default behaviour unchanged)",
+      "seeds": [
+        601,
+        602,
+        603,
+        604,
+        605,
+        606,
+        607,
+        608,
+        609,
+        610,
+        611,
+        612,
+        613,
+        614,
+        615,
+        616
+      ],
+      "variants": [
+        "dl32own",
+        "m25dl32own"
+      ]
+    },
+    "hardware": "up to four AWS g6e.2xlarge (one L40S each) via SkyPilot (infra/aws/gpu_authorization_20261004.json), --device cuda, float32 with TF32, two lanes per GPU, as the combination round. If AWS supplies fewer nodes the same fits run on fewer nodes of the same type.",
+    "member": {
+      "column": "adsb_full",
+      "external_data": "adsb.lol globe_history (ODbL), as every network of the table; the own columns come from the same archive (tools/build_ownpoints_features.py)",
+      "name": "own_all",
+      "route": {
+        "matched": "dl32own",
+        "unmatched": "m25dl32own"
+      },
+      "tables": {
+        "2025-01": [
+          "runs/ctx_ownpoints_dev/member/s601/2025-01.parquet",
+          "runs/ctx_ownpoints_dev/member/s602/2025-01.parquet",
+          "runs/ctx_ownpoints_dev/member/s603/2025-01.parquet",
+          "runs/ctx_ownpoints_dev/member/s604/2025-01.parquet",
+          "runs/ctx_ownpoints_dev/member/s605/2025-01.parquet",
+          "runs/ctx_ownpoints_dev/member/s606/2025-01.parquet",
+          "runs/ctx_ownpoints_dev/member/s607/2025-01.parquet",
+          "runs/ctx_ownpoints_dev/member/s608/2025-01.parquet",
+          "runs/ctx_ownpoints_dev/member/s609/2025-01.parquet",
+          "runs/ctx_ownpoints_dev/member/s610/2025-01.parquet",
+          "runs/ctx_ownpoints_dev/member/s611/2025-01.parquet",
+          "runs/ctx_ownpoints_dev/member/s612/2025-01.parquet",
+          "runs/ctx_ownpoints_dev/member/s613/2025-01.parquet",
+          "runs/ctx_ownpoints_dev/member/s614/2025-01.parquet",
+          "runs/ctx_ownpoints_dev/member/s615/2025-01.parquet",
+          "runs/ctx_ownpoints_dev/member/s616/2025-01.parquet"
+        ],
+        "2025-07": [
+          "runs/ctx_ownpoints_dev/member/s601/2025-07.parquet",
+          "runs/ctx_ownpoints_dev/member/s602/2025-07.parquet",
+          "runs/ctx_ownpoints_dev/member/s603/2025-07.parquet",
+          "runs/ctx_ownpoints_dev/member/s604/2025-07.parquet",
+          "runs/ctx_ownpoints_dev/member/s605/2025-07.parquet",
+          "runs/ctx_ownpoints_dev/member/s606/2025-07.parquet",
+          "runs/ctx_ownpoints_dev/member/s607/2025-07.parquet",
+          "runs/ctx_ownpoints_dev/member/s608/2025-07.parquet",
+          "runs/ctx_ownpoints_dev/member/s609/2025-07.parquet",
+          "runs/ctx_ownpoints_dev/member/s610/2025-07.parquet",
+          "runs/ctx_ownpoints_dev/member/s611/2025-07.parquet",
+          "runs/ctx_ownpoints_dev/member/s612/2025-07.parquet",
+          "runs/ctx_ownpoints_dev/member/s613/2025-07.parquet",
+          "runs/ctx_ownpoints_dev/member/s614/2025-07.parquet",
+          "runs/ctx_ownpoints_dev/member/s615/2025-07.parquet",
+          "runs/ctx_ownpoints_dev/member/s616/2025-07.parquet"
+        ],
+        "2025-11": [
+          "runs/ctx_ownpoints_dev/member/s601/2025-11.parquet",
+          "runs/ctx_ownpoints_dev/member/s602/2025-11.parquet",
+          "runs/ctx_ownpoints_dev/member/s603/2025-11.parquet",
+          "runs/ctx_ownpoints_dev/member/s604/2025-11.parquet",
+          "runs/ctx_ownpoints_dev/member/s605/2025-11.parquet",
+          "runs/ctx_ownpoints_dev/member/s606/2025-11.parquet",
+          "runs/ctx_ownpoints_dev/member/s607/2025-11.parquet",
+          "runs/ctx_ownpoints_dev/member/s608/2025-11.parquet",
+          "runs/ctx_ownpoints_dev/member/s609/2025-11.parquet",
+          "runs/ctx_ownpoints_dev/member/s610/2025-11.parquet",
+          "runs/ctx_ownpoints_dev/member/s611/2025-11.parquet",
+          "runs/ctx_ownpoints_dev/member/s612/2025-11.parquet",
+          "runs/ctx_ownpoints_dev/member/s613/2025-11.parquet",
+          "runs/ctx_ownpoints_dev/member/s614/2025-11.parquet",
+          "runs/ctx_ownpoints_dev/member/s615/2025-11.parquet",
+          "runs/ctx_ownpoints_dev/member/s616/2025-11.parquet"
+        ],
+        "2025-12": [
+          "runs/ctx_ownpoints_dev/member/s601/2025-12.parquet",
+          "runs/ctx_ownpoints_dev/member/s602/2025-12.parquet",
+          "runs/ctx_ownpoints_dev/member/s603/2025-12.parquet",
+          "runs/ctx_ownpoints_dev/member/s604/2025-12.parquet",
+          "runs/ctx_ownpoints_dev/member/s605/2025-12.parquet",
+          "runs/ctx_ownpoints_dev/member/s606/2025-12.parquet",
+          "runs/ctx_ownpoints_dev/member/s607/2025-12.parquet",
+          "runs/ctx_ownpoints_dev/member/s608/2025-12.parquet",
+          "runs/ctx_ownpoints_dev/member/s609/2025-12.parquet",
+          "runs/ctx_ownpoints_dev/member/s610/2025-12.parquet",
+          "runs/ctx_ownpoints_dev/member/s611/2025-12.parquet",
+          "runs/ctx_ownpoints_dev/member/s612/2025-12.parquet",
+          "runs/ctx_ownpoints_dev/member/s613/2025-12.parquet",
+          "runs/ctx_ownpoints_dev/member/s614/2025-12.parquet",
+          "runs/ctx_ownpoints_dev/member/s615/2025-12.parquet",
+          "runs/ctx_ownpoints_dev/member/s616/2025-12.parquet"
+        ],
+        "ranking": [
+          "runs/ctx_ownpoints_dev/member/s601/ranking.parquet",
+          "runs/ctx_ownpoints_dev/member/s602/ranking.parquet",
+          "runs/ctx_ownpoints_dev/member/s603/ranking.parquet",
+          "runs/ctx_ownpoints_dev/member/s604/ranking.parquet",
+          "runs/ctx_ownpoints_dev/member/s605/ranking.parquet",
+          "runs/ctx_ownpoints_dev/member/s606/ranking.parquet",
+          "runs/ctx_ownpoints_dev/member/s607/ranking.parquet",
+          "runs/ctx_ownpoints_dev/member/s608/ranking.parquet",
+          "runs/ctx_ownpoints_dev/member/s609/ranking.parquet",
+          "runs/ctx_ownpoints_dev/member/s610/ranking.parquet",
+          "runs/ctx_ownpoints_dev/member/s611/ranking.parquet",
+          "runs/ctx_ownpoints_dev/member/s612/ranking.parquet",
+          "runs/ctx_ownpoints_dev/member/s613/ranking.parquet",
+          "runs/ctx_ownpoints_dev/member/s614/ranking.parquet",
+          "runs/ctx_ownpoints_dev/member/s615/ranking.parquet",
+          "runs/ctx_ownpoints_dev/member/s616/ranking.parquet"
+        ]
+      }
+    },
+    "members_derived": {
+      "own_matched": "per seed and leaf: own_all's table on rows with adsb_matched = 1 (dl32own), the shipped combination member's table (runs/adsb_ctx3_combo/member/s<seed>/<leaf>.parquet, m25dl32) on the other rows; same seeds 601-616; built by tools/run_ctx_ownpoints_dev.py into runs/ctx_ownpoints_dev/member_matched/ and hash-recorded"
+    },
+    "minimum_mean_improvement_fraction": 0.0002,
+    "never_read": "No official score enters. The published-aggregates sources enter only through the shipped chain's layers with their shipped parameters in stage 2.",
+    "purpose": "Development round of the context-network member with the 15 own-aircraft turnaround columns (dig tunnel 21, docs/dig/ctx_ownpoints.md). The member REPLACES the shipped combination member (configs/adsb_ctx3_combo_dev_v1.json, w40, in v51 onwards) inside the committee's network table. Declared before any fit of these networks and before any development score; modelled on configs/adsb_ctx3_combo_dev_v1.json (same seeds count, folds, months, scorer arithmetic and rule).",
+    "report": "docs/ctx_ownpoints_dev/results_v1.json",
+    "rule": "stage 1: the clean line's unchanged rule against that control: eligible when no equal-footing month (January, July, December) is worse on all rows, the mean ratio is at least 0.02% below 1 and every equal-footing month's paired-day 95% interval lies below zero; the lowest mean ratio among the eligible is selected; otherwise nothing.",
+    "selection": "runs/ctx_ownpoints_dev/dev/selection.json",
+    "semantics": "Stage 1 (member level, tools/run_ctx_ownpoints_dev.py, arithmetic of tools/run_network_member.py): control = the v46 development stack with the shipped combination member at w 0.40 in the network table (v51's model part; its month RMSEs must equal docs/adsb_ctx3_combo/results_v1.json w40 before any candidate is read). Candidate = the same stack with the combination member REMOVED and the candidate member in its place: table' = (1 - w) nets + w member seed mean on non-LIRF rows where both are finite; v46's mix (network share 0.85, share 0.5 where the committee sits more than 1,200 s above table'); then the whole v46 development stack.",
+    "stage_2_in_chain": {
+      "build": "if both stages pass: the ranking file through the same chain (ranking member tables from the twelve-month refit), built as the next free version on runs/submissions at the user's standing word ('if you get anything build and keep it ready, we will upload it when slots reset'; 'Start it on the GPU'), audited against the latest built file; never uploaded by this round",
+      "candidate": "the development model part rebuilt with the selected member in place of the combination member (tools/build_dev_model_part.py arithmetic: v51m step with the selected member and weight; v52m-v55m layers unchanged), then the shipped chain with its shipped parameters: no-NM rematch, v48 reconciliation, extreme-day layer, variance re-allocation, stack_resid_v3 refitted on the rebuilt components with its declared settings (configs/stack_resid_v3.json), intruder bound, identity extension, own-motion v1, own-motion v2 (each month-blocked as its tool does)",
+      "control": "the v64 development proxy: the v63 development proxy (runs/stack_resid/dev_v63_proxy.parquet, column v63, sha256 1628a1d6...) with own_motion_v2 (configs/own_motion_v2.json) applied last by tools/run_own_motion_v2.py's arithmetic",
+      "rule": "v57's clauses 1-3: no development month worse by more than 0.005%; equal-footing mean at most -0.02%; every equal-footing paired-day 95% interval below zero. Clause 4 (twelve months) does not apply: the stacker's components exist only for the four development months (as stack_resid_v2 / v3).",
+      "when": "only if stage 1 selects a candidate"
+    }
+  },
+  "declaration_sha256": "028fbc4da34c31f2fbfd60a1a0852161492edc4eb4ecc736323e076cdd62aaf4",
+  "eligible": [
+    "own_all_w25",
+    "own_all_w40",
+    "own_matched_w25",
+    "own_matched_w40"
+  ],
+  "environment": {
+    "disk_available_bytes": 12728262656,
+    "logical_cpus": 32,
+    "memory_total_bytes": 16858472448,
+    "packages": {
+      "numpy": "2.4.2",
+      "pandas": "3.0.0",
+      "psutil": "7.2.2",
+      "pyarrow": "23.0.1",
+      "tzdata": "2025.3"
+    },
+    "physical_cpus_reported": 24,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.2"
+  },
+  "equal_footing_months": [
+    "2025-01",
+    "2025-07",
+    "2025-12"
+  ],
+  "member_sources": {
+    "runs/ctx_ownpoints_dev/member/s601/2025-01.parquet": "e88426dfba0b81c75a1a21a714b6a3a9fd36877a6e07d9a289f7ece59a716e6e",
+    "runs/ctx_ownpoints_dev/member/s601/2025-07.parquet": "b212bdcec292a7eca1ac10012428a3a0f4f90128f1e8d68a122f6db9d5b605f3",
+    "runs/ctx_ownpoints_dev/member/s601/2025-11.parquet": "b3d429025dfb0785ce7a036d6955a8e28786289270d07e601aad3d09e8a847c8",
+    "runs/ctx_ownpoints_dev/member/s601/2025-12.parquet": "2ece2fa6e1f42d9b75a5bbebb56c7656cb651f9751f5eb26751406f550e2cf48",
+    "runs/ctx_ownpoints_dev/member/s602/2025-01.parquet": "8e6d5d37df1c9ffd539d49393c242ca9747dc2ee98a6c347c02ed5015b49faeb",
+    "runs/ctx_ownpoints_dev/member/s602/2025-07.parquet": "d6b83d461473b5c080c2f384db24386f14b1c51f1dd7ac46b001fa5e18fe93a8",
+    "runs/ctx_ownpoints_dev/member/s602/2025-11.parquet": "ae1a9a240a35516ba71b275638e6eff1032fc362404516560218c5d03fd39661",
+    "runs/ctx_ownpoints_dev/member/s602/2025-12.parquet": "82b2c8f7966abd6a87c4ef034ddffb624d222d912a69c286dee92d3f70a2cddc",
+    "runs/ctx_ownpoints_dev/member/s603/2025-01.parquet": "70045a5a14c7aa640e06cd31267b59cbef950ef3b09f07a8377d3518b91a00f9",
+    "runs/ctx_ownpoints_dev/member/s603/2025-07.parquet": "757729d6b5e60ec4a5097eb787ab6d6d4723a2bef098cb553368440905e11206",
+    "runs/ctx_ownpoints_dev/member/s603/2025-11.parquet": "366901d96bc0b789f04430fce2d072bc8ea578232faaa19e4c60922ebc788aba",
+    "runs/ctx_ownpoints_dev/member/s603/2025-12.parquet": "fbdbaa38da079d6dd99d1e0977d07d6e81b72a8d631cd5bbfb0b50c65ce2ded6",
+    "runs/ctx_ownpoints_dev/member/s604/2025-01.parquet": "1ed1ae2e6813d0bccbc2ebdc522aa8a0a92598b6c9cab763a160396321b177d7",
+    "runs/ctx_ownpoints_dev/member/s604/2025-07.parquet": "fd8eded8c4d80969b28f0a65302ebbaf3c1587c080f686df467cbe3b500720c1",
+    "runs/ctx_ownpoints_dev/member/s604/2025-11.parquet": "ca3e72c7a9de7b4f3f2d0144b358b1b6945c6dd15f2c9349d76958898b6d074c",
+    "runs/ctx_ownpoints_dev/member/s604/2025-12.parquet": "644f2d5ed6a6246d0e5df44a17e6797ca4ff5d0ca3c2bfd140f37fa849e8f3a4",
+    "runs/ctx_ownpoints_dev/member/s605/2025-01.parquet": "79b4d7777a13691cae9aa99c6d8f4c5e9fe4ef7cd346d9a5ef702724a0d50b84",
+    "runs/ctx_ownpoints_dev/member/s605/2025-07.parquet": "1603bf9d38771390dcfaf957a6c0a747eb48d1b9baeaae0f5ca4087f6ff17b8c",
+    "runs/ctx_ownpoints_dev/member/s605/2025-11.parquet": "a6061768febed6735dc416e3e5d57d5c99e26006362264321261bc9345cad7a8",
+    "runs/ctx_ownpoints_dev/member/s605/2025-12.parquet": "cf50747a6513318eb21bd564703c270572aeee2f7018a3baa529b95868bfe03a",
+    "runs/ctx_ownpoints_dev/member/s606/2025-01.parquet": "8835318348b4b1958aa63d66e955a4f62079701dd2efa2b71b607eb589c4463d",
+    "runs/ctx_ownpoints_dev/member/s606/2025-07.parquet": "23613a85d13be8a9d697c068fc52bfa55af85bbac1aa8aa4ae4121dafa73356b",
+    "runs/ctx_ownpoints_dev/member/s606/2025-11.parquet": "8dcf7a4d4448d97f8332563ac5e80056e87d974c82dc192af7e9a1013dae8a7e",
+    "runs/ctx_ownpoints_dev/member/s606/2025-12.parquet": "6b37a272e329da20d7686ce14f9864d19a59a68d2f61de7259c21a8141d953b9",
+    "runs/ctx_ownpoints_dev/member/s607/2025-01.parquet": "c7c3b0726122e4cdd68f31b2a145ce1bd41456d97f9293593ea14c3ee2349ac6",
+    "runs/ctx_ownpoints_dev/member/s607/2025-07.parquet": "d6125b629d506f4201cb1bbe5aa54f26da4cccf5bff237e0741f5b47486ecaf3",
+    "runs/ctx_ownpoints_dev/member/s607/2025-11.parquet": "055256334fffd266109c4c9e65696fdb70cad93ffdc8ebfc5236bdf4f736ddaf",
+    "runs/ctx_ownpoints_dev/member/s607/2025-12.parquet": "24f0535a3ad73ee8a82f6fee542ed229c383ee8a1d784671f1372c2a1ded43a0",
+    "runs/ctx_ownpoints_dev/member/s608/2025-01.parquet": "71715a5c1ce10cf42f6183ff2e4bf9ab102ff56a0395c373503b45dcd9d733c8",
+    "runs/ctx_ownpoints_dev/member/s608/2025-07.parquet": "888ceeb09959c3702c6fd3a3c19a44c9f561931a7f4c6d04a4ec843154d8e647",
+    "runs/ctx_ownpoints_dev/member/s608/2025-11.parquet": "494334105af9d94bc5910aaad516c8f3971288500a3b3b47e8270a64f4d61a54",
+    "runs/ctx_ownpoints_dev/member/s608/2025-12.parquet": "76310c281d4df71424966cd38df90da70dbec35a0f4985012cd2065cebe22ba6",
+    "runs/ctx_ownpoints_dev/member/s609/2025-01.parquet": "b680f6c4479253176c5962ee6c74975676cfe95615ed233afc792a7aba5aac91",
+    "runs/ctx_ownpoints_dev/member/s609/2025-07.parquet": "c0e580daeae18df0ddb18a5ebba371fdae9cd75e9c2968efa02bca555aabc736",
+    "runs/ctx_ownpoints_dev/member/s609/2025-11.parquet": "1d0b95d7d80f46ba44b12731b9883f8a6d31d71b51ba7ef8e4a4dfbd653c124e",
+    "runs/ctx_ownpoints_dev/member/s609/2025-12.parquet": "1103f3377fb53536bf3e02c4a83775e5880e012c4d763c8ea3d0c4ecb30e15a8",
+    "runs/ctx_ownpoints_dev/member/s610/2025-01.parquet": "cd1716530e7dfa795cd1a71e669114c275b4f28ed990362e488ad356e2a6da39",
+    "runs/ctx_ownpoints_dev/member/s610/2025-07.parquet": "6c5ed2062c2b66e213ad331e8d0ac3c69d542d35162d1ace9738e18f2aa3cda2",
+    "runs/ctx_ownpoints_dev/member/s610/2025-11.parquet": "5b585792aa404e6909d32de931fb12ccba31a89b5587b6ba5b482377f0536f45",
+    "runs/ctx_ownpoints_dev/member/s610/2025-12.parquet": "9bed8558b3eaebd43c1e7ea928d024e09c454928e67d9021599d14d762220d1f",
+    "runs/ctx_ownpoints_dev/member/s611/2025-01.parquet": "b6254f2d66988c593e1406a2470d8f281781b21ca7b7cc927f6fae878043110c",
+    "runs/ctx_ownpoints_dev/member/s611/2025-07.parquet": "3c46018f361ff0123f205bb5fa5d26391ddf3ad00dea6ae296c02b601cfb43e5",
+    "runs/ctx_ownpoints_dev/member/s611/2025-11.parquet": "dca51ab43c2c6982a5e91c790c62008dc21ad5f43239f13267ea5ca36de346e2",
+    "runs/ctx_ownpoints_dev/member/s611/2025-12.parquet": "718095e7cf7b2ed3227291952f4cfbab8d31af228c8231df08fcb7e7c507e901",
+    "runs/ctx_ownpoints_dev/member/s612/2025-01.parquet": "f67047114b7a55023cf4bf20465534f147a6881c76535d046d60c174429002d6",
+    "runs/ctx_ownpoints_dev/member/s612/2025-07.parquet": "95a31250378efe3390dbfc80b75ae633bf4934be15dcafc73d2a3b29f39af809",
+    "runs/ctx_ownpoints_dev/member/s612/2025-11.parquet": "e0ff35b20a57090bf4500109db8fc19ae99cbd4aa5fc5fee90f875c200224c3d",
+    "runs/ctx_ownpoints_dev/member/s612/2025-12.parquet": "ea1022afff6f5f03c4f70417f529e25aeaf812c5cb319bf6ebbc89ed34f345b8",
+    "runs/ctx_ownpoints_dev/member/s613/2025-01.parquet": "c011aaa836ad024ba5f90d9e991594452a1f684432fd5f22fe3e154bed733dea",
+    "runs/ctx_ownpoints_dev/member/s613/2025-07.parquet": "ed1b7eeda9ce8285706e20df01057750dd873e841a71bea555b87f7803f5a7cf",
+    "runs/ctx_ownpoints_dev/member/s613/2025-11.parquet": "2cf088d1c7ccf36e4f90598326154242a66b1a83cd2e057b8f7691300f5f8d57",
+    "runs/ctx_ownpoints_dev/member/s613/2025-12.parquet": "227323e05fb4d6b0e23045beb50add09f79026bb6a62fe48452d3b0c6a4e9b44",
+    "runs/ctx_ownpoints_dev/member/s614/2025-01.parquet": "3d521a6032b4fd9f920237bd550a7eaeeae2f89701f4188aef19a0b0952457b8",
+    "runs/ctx_ownpoints_dev/member/s614/2025-07.parquet": "a6e250a552e0dbd0e50684c1673a65589a8dd9d3d96713f4fcba1679095c180d",
+    "runs/ctx_ownpoints_dev/member/s614/2025-11.parquet": "afe30d939685882902a7c273516df9792543212ed834a605db6e06389e8a546d",
+    "runs/ctx_ownpoints_dev/member/s614/2025-12.parquet": "878e500379f49da472f4af1e8ab8690e3f481bfc9bb1d9e5a0e42efbf98ec47e",
+    "runs/ctx_ownpoints_dev/member/s615/2025-01.parquet": "8e0eb37a91b99fffd6db56d12b96e376e5a0843be73f06ef901696764845df81",
+    "runs/ctx_ownpoints_dev/member/s615/2025-07.parquet": "16984894e7d2362f1b1d941d877e6561aed1cb951095caeabc3b80249711d203",
+    "runs/ctx_ownpoints_dev/member/s615/2025-11.parquet": "fa9ff8d67518dfd42952602e94693738447c846bc724c75a0273f2d953a4357e",
+    "runs/ctx_ownpoints_dev/member/s615/2025-12.parquet": "55987b3dd0cd7bf5d31f2a7bb4f2e30eda3ed6e71d12ff23ac519e1fc3105f58",
+    "runs/ctx_ownpoints_dev/member/s616/2025-01.parquet": "eaf2612ae04a6669c9270df76cbc99e23a0f74b6c4ef43a4b453abd73a52df42",
+    "runs/ctx_ownpoints_dev/member/s616/2025-07.parquet": "9ccdbc52b6c375dab6e93ab0325cfdd3f8da684ec23c2b607c63394b061de92a",
+    "runs/ctx_ownpoints_dev/member/s616/2025-11.parquet": "be3fc2af6c4138611f8884f857d6b7d449bc082a9693b66268abd7e4c268de92",
+    "runs/ctx_ownpoints_dev/member/s616/2025-12.parquet": "40881e8ab5e96191ebb048139c0671f67a36b56e00a4b95f594ace96ddf2bc3c",
+    "runs/ctx_ownpoints_dev/member_matched/s601/2025-01.parquet": "cd5916ea02bccccf43dfea48e48f21a3d3cc8a453b42d952d2902f47281c5d8a",
+    "runs/ctx_ownpoints_dev/member_matched/s601/2025-07.parquet": "bab05bdebd52b89d1ca49675b9e8248d634510379e259e2f0008258942341e7d",
+    "runs/ctx_ownpoints_dev/member_matched/s601/2025-11.parquet": "07909b35277708db51b814f80f4c70fded02bf0cc90be9fe3f8e7c7b822c3e6f",
+    "runs/ctx_ownpoints_dev/member_matched/s601/2025-12.parquet": "fecab16ce2b933df6006efbdafb833aa7289e1e1f78b1d4d8eae7046cfc1bd3f",
+    "runs/ctx_ownpoints_dev/member_matched/s602/2025-01.parquet": "d1af47d121b6373450fc83adf94fe422b9dfe1243c9e23ebff629ca378c32d11",
+    "runs/ctx_ownpoints_dev/member_matched/s602/2025-07.parquet": "9c89ba672a5773b70a7ad916f2cba4be4831d0d9262ee7d84f1eacccebc766f5",
+    "runs/ctx_ownpoints_dev/member_matched/s602/2025-11.parquet": "2f2c3678c48c04bf924e677d07646baee7bac0cbbeb80b893641e5b59a6ab8a4",
+    "runs/ctx_ownpoints_dev/member_matched/s602/2025-12.parquet": "9bd477a58b75e4fca3311fe145a10af9151d3970868c566709ee46429737fc4e",
+    "runs/ctx_ownpoints_dev/member_matched/s603/2025-01.parquet": "73c99af8b0c212975807ea1266eab69b1da1e7b0263371de92de7796fdc53315",
+    "runs/ctx_ownpoints_dev/member_matched/s603/2025-07.parquet": "7f83d342558f62532f39b0848b94ef63da44d1105951c3ff0256f0ced42b6f41",
+    "runs/ctx_ownpoints_dev/member_matched/s603/2025-11.parquet": "37a7af4e1642dbc2fbc3afeff3c07fdc39e608a28de2e891f993d191795160a6",
+    "runs/ctx_ownpoints_dev/member_matched/s603/2025-12.parquet": "6a618b15252e7de4790749e27ca8128dbbaf0e7aa4c881537504b68bb2976560",
+    "runs/ctx_ownpoints_dev/member_matched/s604/2025-01.parquet": "ad03f0aca6f00cce231aa2724145eaef1c155a3251d82b73cb1c9325e3f32d86",
+    "runs/ctx_ownpoints_dev/member_matched/s604/2025-07.parquet": "853cb600b3286ec716fdec4276938fa7ab32664cb614981f7982960e3616c7b8",
+    "runs/ctx_ownpoints_dev/member_matched/s604/2025-11.parquet": "9dbfdea2d44ffb2e9a54eef989a19ac69f520cd9b0063d9422e0bc1c62fe851b",
+    "runs/ctx_ownpoints_dev/member_matched/s604/2025-12.parquet": "18204ff8ecbd3126b5e205984b4d481e13ad4d54231c3ec4005da18bcdf3f395",
+    "runs/ctx_ownpoints_dev/member_matched/s605/2025-01.parquet": "abb955265f68138b1ff82bd7d0892e9f90906c3a1765e93beef005f983211022",
+    "runs/ctx_ownpoints_dev/member_matched/s605/2025-07.parquet": "3859bcfdb483e5e68f18dc1d59fd11e49fd1e651059145e79cb947224bed5bee",
+    "runs/ctx_ownpoints_dev/member_matched/s605/2025-11.parquet": "792e416b9be56b8469c9dd4688eb5c3a961787e7eb05a390b18c6ebabc79db82",
+    "runs/ctx_ownpoints_dev/member_matched/s605/2025-12.parquet": "78c7d538dea7a8dd615b0ca16a0288c0216f60f0412cd6ddcfa0a91d19b19dfa",
+    "runs/ctx_ownpoints_dev/member_matched/s606/2025-01.parquet": "18132c252e1da0c56b87c7f07dc7f5e02cc05795194cbd78ceb6828c83923e3d",
+    "runs/ctx_ownpoints_dev/member_matched/s606/2025-07.parquet": "f48f565521c6ba023f7670bae22512e83ce0f27a87e36148951696d6cf0ec7e9",
+    "runs/ctx_ownpoints_dev/member_matched/s606/2025-11.parquet": "5d74e5357f47bbf115bed94de2c07acbe6f811414cbeeaac726e8ee3f54070f6",
+    "runs/ctx_ownpoints_dev/member_matched/s606/2025-12.parquet": "d4f481d10eed87754c1f8ef79b0bfe5eca810159920ddb227537220b7d0b36bd",
+    "runs/ctx_ownpoints_dev/member_matched/s607/2025-01.parquet": "e4afe828f3b315c261c0ffbdce8e82a11456e901163d07f5b0bdc52e6514adf6",
+    "runs/ctx_ownpoints_dev/member_matched/s607/2025-07.parquet": "2b35c04c45b589a931239d1c304ad025c224686f0e530518c9b134f9b0e34b4e",
+    "runs/ctx_ownpoints_dev/member_matched/s607/2025-11.parquet": "82861e8ffd613fb7287deb2fd5725d580957eb6bd97d80884631f05bedce9960",
+    "runs/ctx_ownpoints_dev/member_matched/s607/2025-12.parquet": "58f5eec05ff847e27f08ef750c89bb79175a2e5148ee85bfcd41a73c1845c525",
+    "runs/ctx_ownpoints_dev/member_matched/s608/2025-01.parquet": "30a5b9f51f98343421bca10033d959a6475d1cd6e12751bf2f3086a99484583e",
+    "runs/ctx_ownpoints_dev/member_matched/s608/2025-07.parquet": "285f34e1eb87287bda504a058ab19aee87e176d8f318169792ab31535b67f70d",
+    "runs/ctx_ownpoints_dev/member_matched/s608/2025-11.parquet": "e4ab02fed660d12cde7eccb4d3b77ae73aeb375ce062315158e201ef20366d20",
+    "runs/ctx_ownpoints_dev/member_matched/s608/2025-12.parquet": "f1b91ec49ed5a1eddc85ef7610c8abcb87c92aa19199657920a8020095c02844",
+    "runs/ctx_ownpoints_dev/member_matched/s609/2025-01.parquet": "9b0231db0a9113ea76250b914016278372f2e3f557ceca05ce9dee06ae96dbdc",
+    "runs/ctx_ownpoints_dev/member_matched/s609/2025-07.parquet": "2f843a86ee4604f01982675e606b0ef4416f27c183543bf75997029d617d6d35",
+    "runs/ctx_ownpoints_dev/member_matched/s609/2025-11.parquet": "8e19796e170cd26a211b830dbc50193a9f89008cd780d541157eb69ccd236b1b",
+    "runs/ctx_ownpoints_dev/member_matched/s609/2025-12.parquet": "9d035a71672d643dce2b57d4b657230c0558336195867b0e70cb45faad7871e5",
+    "runs/ctx_ownpoints_dev/member_matched/s610/2025-01.parquet": "f89b4ddd24cadd839cd2a7dbae308f91d000da7b43454a95f482d980db2d7a34",
+    "runs/ctx_ownpoints_dev/member_matched/s610/2025-07.parquet": "29d0e7643e04861256aa6fe8df900bc09820dac6adf9c01afea15e517463c52e",
+    "runs/ctx_ownpoints_dev/member_matched/s610/2025-11.parquet": "562621245dc61007380a9a1668ce2c441e5c590f44265212bcdc4c55cb9c46a2",
+    "runs/ctx_ownpoints_dev/member_matched/s610/2025-12.parquet": "619b90120983bb4cd13cfda4cace6be59cc7f7e34b45505ad2783006933a158e",
+    "runs/ctx_ownpoints_dev/member_matched/s611/2025-01.parquet": "26fa3a52f5c85f3e2ca963e2cbf69deef3dcb0d9a1bffdc7997d9fab27988184",
+    "runs/ctx_ownpoints_dev/member_matched/s611/2025-07.parquet": "d4100010061b3dc9a306a298bf9ae65ac3f5f34221a51aafce2d5574e9a3565e",
+    "runs/ctx_ownpoints_dev/member_matched/s611/2025-11.parquet": "9b8347b81b910bfc50cd70cabe13caf737f3d03b20bd4ef21f4bdf44b52487c5",
+    "runs/ctx_ownpoints_dev/member_matched/s611/2025-12.parquet": "75942488272668a8d23f20426dd47808e04b83b94151ca2f7ec811eccf8324ff",
+    "runs/ctx_ownpoints_dev/member_matched/s612/2025-01.parquet": "2a76fe33fb0b5c2e6badfaeba027680065ce9a2af742af6f0e554e7b353a81d6",
+    "runs/ctx_ownpoints_dev/member_matched/s612/2025-07.parquet": "74a8642dc4677f68f3d100d94368e43a090cc4de069d45ce1a50c5e6bd86885c",
+    "runs/ctx_ownpoints_dev/member_matched/s612/2025-11.parquet": "3357705408de9d452105439c93ae5d8de86c0e5bef60a5fe85542cb523329035",
+    "runs/ctx_ownpoints_dev/member_matched/s612/2025-12.parquet": "965ad5b2c6ea8d122332ac6a8848daab7824e4ae6691954a8d34969acaa52c3b",
+    "runs/ctx_ownpoints_dev/member_matched/s613/2025-01.parquet": "72c9f2ebe63725163b89f21028e13b78ef236410bfb9299d44212ee854d8afb3",
+    "runs/ctx_ownpoints_dev/member_matched/s613/2025-07.parquet": "f55ce2b283aa66dac38d3c5ad4e2c31e76e00f67642c138737bbf6105cd9cf93",
+    "runs/ctx_ownpoints_dev/member_matched/s613/2025-11.parquet": "66de3b5365371359b575ca2e7d1c19e13eda5f82ffc16d6ba7833dded2202874",
+    "runs/ctx_ownpoints_dev/member_matched/s613/2025-12.parquet": "5df4f3a18ab609c60afd74700344fa00086b4da04d274958bf67091979363680",
+    "runs/ctx_ownpoints_dev/member_matched/s614/2025-01.parquet": "527f2b3ba2055a26e7ce8804a029d52a0e6376188e9edcd0af6f2751757ab2a2",
+    "runs/ctx_ownpoints_dev/member_matched/s614/2025-07.parquet": "d852dc2dc270f2b1ff9e143db25ee73120f0bb3ba53b7fde2c5f7d21ff0edb45",
+    "runs/ctx_ownpoints_dev/member_matched/s614/2025-11.parquet": "1c7f747d79e22c1339841574beb86c1287dda8262459c50e9052ffd8645982fb",
+    "runs/ctx_ownpoints_dev/member_matched/s614/2025-12.parquet": "91e1876a3833699fa24b563cd59da68ed80f6458064f3d49ccd04214b0e9dc44",
+    "runs/ctx_ownpoints_dev/member_matched/s615/2025-01.parquet": "fdeb74310da8851a068e5e18b84eeadbf096c6fa44ea3c8c7b63d36b5be9b8a5",
+    "runs/ctx_ownpoints_dev/member_matched/s615/2025-07.parquet": "75bebecbcdc55d141cd5af2d83246424b6ba17af9cae287a747ecca315cd783c",
+    "runs/ctx_ownpoints_dev/member_matched/s615/2025-11.parquet": "48445019e402a94431b101fc8c889536ecad13a41052a26d0c797f29b03afebe",
+    "runs/ctx_ownpoints_dev/member_matched/s615/2025-12.parquet": "4118ed19c590c6fde4bdb6470ed4dd29301015d53ef52d040cb1804225ed70d1",
+    "runs/ctx_ownpoints_dev/member_matched/s616/2025-01.parquet": "b2668eccdfc364745939d4b492e6d9c6008f63bab2cd64fc6b60adeca9993f6f",
+    "runs/ctx_ownpoints_dev/member_matched/s616/2025-07.parquet": "b928537ad88f37b96d5e610122cda19e79b5d438fd9008cd4f2b6acb2454c936",
+    "runs/ctx_ownpoints_dev/member_matched/s616/2025-11.parquet": "f5b00b960793228819634127d26c353cc08d373eb2803b76ffd8e6ae36eda122",
+    "runs/ctx_ownpoints_dev/member_matched/s616/2025-12.parquet": "df70f027b6976261a655177a52fa3c756556d37f9532d16ae3e7806ee9ad340c"
+  },
+  "minimum_mean_improvement_fraction": 0.0002,
+  "model_code": {
+    "src/prc2026_final/network_member.py": "d2ce137c38e3ab39aaad6b2d3f0152c859fc05918253d518a7a0cd10460f6126",
+    "src/prc2026_final/share_gate.py": "015df26644d701497bc06874b9e3319013f8d56dbb282f96d12f5f9f52fefdbe",
+    "tools/build_combo_member.py": "d0d45bd731ca4a35a56a541b197bdcdd9245b7fda4597bffbe402940fe8b0836",
+    "tools/run_ctx_ownpoints_dev.py": "07e52572002fae6acfbab8962639875a9bc87892daf98dc7152049a7123ec1fa",
+    "tools/run_network_member.py": "a76f39a29a492c32badad26bf3964adc01bc8a2125440fddea74d1d3bb0e5ca4",
+    "tools/run_share_gate_reread.py": "5cc04bdd9b772f543119a9338116901614b8507b6e7f18b36f981ec0d3ffa286"
+  },
+  "months": {
+    "2025-01": {
+      "control_rmse": 322.64501781453305,
+      "own_all_rows": 142389,
+      "own_all_standalone": {
+        "matched_non_lirf:member": 122.44912610102679,
+        "matched_non_lirf:network_table": 121.83394417662376,
+        "member": 317.40552616942244,
+        "network_table": 317.8802969794293,
+        "unmatched_non_lirf:member": 446.6597561033486,
+        "unmatched_non_lirf:network_table": 447.57902753106936
+      },
+      "own_matched_rows": 142389,
+      "own_matched_standalone": {
+        "matched_non_lirf:member": 122.44912610102679,
+        "matched_non_lirf:network_table": 121.83394417662376,
+        "member": 318.0093745994552,
+        "network_table": 317.8802969794293,
+        "unmatched_non_lirf:member": 447.58297746328765,
+        "unmatched_non_lirf:network_table": 447.57902753106936
+      },
+      "rows": 153706
+    },
+    "2025-07": {
+      "control_rmse": 257.5355573490268,
+      "own_all_rows": 175502,
+      "own_all_standalone": {
+        "matched_non_lirf:member": 154.81397265369003,
+        "matched_non_lirf:network_table": 156.8384992160323,
+        "member": 199.3383874156952,
+        "network_table": 200.8429718566095,
+        "unmatched_non_lirf:member": 235.35684317518096,
+        "unmatched_non_lirf:network_table": 236.57200158234832
+      },
+      "own_matched_rows": 175502,
+      "own_matched_standalone": {
+        "matched_non_lirf:member": 154.81397265369003,
+        "matched_non_lirf:network_table": 156.8384992160323,
+        "member": 200.39010523738543,
+        "network_table": 200.8429718566095,
+        "unmatched_non_lirf:member": 237.13008540835153,
+        "unmatched_non_lirf:network_table": 236.57200158234832
+      },
+      "rows": 190713
+    },
+    "2025-11": {
+      "control_rmse": 184.8231449185471,
+      "own_all_rows": 151004,
+      "own_all_standalone": {
+        "matched_non_lirf:member": 123.92383224105193,
+        "matched_non_lirf:network_table": 122.4938223301207,
+        "member": 153.9309913448792,
+        "network_table": 153.2370823896306,
+        "unmatched_non_lirf:member": 210.40935442658164,
+        "unmatched_non_lirf:network_table": 210.71919211253302
+      },
+      "own_matched_rows": 151004,
+      "own_matched_standalone": {
+        "matched_non_lirf:member": 123.92383224105193,
+        "matched_non_lirf:network_table": 122.4938223301207,
+        "member": 154.82459981689757,
+        "network_table": 153.2370823896306,
+        "unmatched_non_lirf:member": 212.6709729618999,
+        "unmatched_non_lirf:network_table": 210.71919211253302
+      },
+      "rows": 162332
+    },
+    "2025-12": {
+      "control_rmse": 167.3136536667202,
+      "own_all_rows": 153609,
+      "own_all_standalone": {
+        "matched_non_lirf:member": 112.15793634043466,
+        "matched_non_lirf:network_table": 112.62151265342995,
+        "member": 146.678495354806,
+        "network_table": 147.0423669763764,
+        "unmatched_non_lirf:member": 205.2444197580738,
+        "unmatched_non_lirf:network_table": 205.51962732157125
+      },
+      "own_matched_rows": 153609,
+      "own_matched_standalone": {
+        "matched_non_lirf:member": 112.15793634043466,
+        "matched_non_lirf:network_table": 112.62151265342995,
+        "member": 147.5189641501991,
+        "network_table": 147.0423669763764,
+        "unmatched_non_lirf:member": 207.22667937816,
+        "unmatched_non_lirf:network_table": 205.51962732157125
+      },
+      "rows": 165677
+    }
+  },
+  "rows_sha256": "9072bc730f2cac40b8d85633cc19d41967d88b19c6c97bd12cbb22b15d9c5ed5",
+  "selected_candidate": "own_all_w40"
+}
