@@ -92,3 +92,11 @@ chain from v2's stack file (cff778e0) reproduces v61 `fe137f09...` and the uploa
 - Development chain proxy for later layers: `runs/stack_resid/dev_v63_proxy.parquet` (`1628a1d6...`, `tools/write_v63_dev_proxy.py`; columns
   `v62`, `v63`; reproduces this run's month RMSEs exactly). own_motion_v2 re-read on it (`docs/own_motion/results_v2_v63.json`): **not accepted
   on the v63 chain** (December's interval upper end +0.014%).
+
+## Official result of v63 (4 October 2026): **217.9413, the official best, -0.4761 s against v62**
+
+v63 (stack_resid_v3, built 3 October at the user's word "if you get anything build and keep it ready, we will upload it when slots reset",
+`runs/submissions/vigorous-whistle_v63.parquet`, SHA-256 `4cff09459d044e9830f9a2a1b3a0be11d3c11bbe5c5926dbb131e7f05449846f`) was
+uploaded at the user's word ("Upload v63 now (Recommended)") after the 00:00 UTC reset and processed at 01:16:20 UTC on 4 October:
+**217.9413 on all 344,841 rows** ([`official_result_v63.json`](official_result_v63.json)). Realised squared-error gain 7.16e7 = 3.15 x
+the layer's squared change (2.27e7). Nothing is re-tuned from the score. Never re-upload v1-v63.
