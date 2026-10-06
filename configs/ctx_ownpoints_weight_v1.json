@@ -1,0 +1,161 @@
+{
+ "experiment_id": "prc2026-ctx-ownpoints-weight-v1",
+ "declared_at_utc": "2026-10-06T05:16:47+00:00",
+ "audit_used": false,
+ "session": "final-week campaign 6 October 2026, lever 1 (fork A); the user approved the plan ('yes start on them now')",
+ "purpose": "Weight round for v65's own-points context-network member (own_all: dl32own on ADS-B-matched rows, m25dl32own on the others), which REPLACES the combination member in the committee's network table at weight 0.40 in v65. Same 16 seeds (601-616), same fold tables, no new fit. Candidates raise the member weight above 0.40; the incumbent is own_all_w40 (v65).",
+ "disclosed": "Known before this declaration: (1) docs/ctx_ownpoints_dev/results_v1.json (written before the v65 upload): own_all at 0.15 / 0.25 / 0.40 against v51's model part, equal-footing changes -0.075 / -0.172 / -0.289% mean, with the selected change's alignment (gain / squared change) 2.07 / 2.38 / 2.24 on January / July / December and 2.28 on November, recorded with the note that no weight above 0.40 was read; an alignment above 1 means the development months still gain from more weight. This is the sole motivation of the round. (2) docs/ctx_ownpoints_dev/results_chain_v1.json: own_all_w40 in v64's chain -0.075 / -0.146 / -0.207 / -0.223%. (3) The official v65 score (216.8814) and its realised gain ratio exist; they are NOT used for the motivation, the grid, the rule or the selection. No weight above 0.40 has been scored on any month before this declaration.",
+ "member": {
+  "name": "own_all",
+  "column": "adsb_full",
+  "route": {
+   "matched": "dl32own",
+   "unmatched": "m25dl32own"
+  },
+  "tables": {
+   "2025-01": [
+    "runs/ctx_ownpoints_dev/member/s601/2025-01.parquet",
+    "runs/ctx_ownpoints_dev/member/s602/2025-01.parquet",
+    "runs/ctx_ownpoints_dev/member/s603/2025-01.parquet",
+    "runs/ctx_ownpoints_dev/member/s604/2025-01.parquet",
+    "runs/ctx_ownpoints_dev/member/s605/2025-01.parquet",
+    "runs/ctx_ownpoints_dev/member/s606/2025-01.parquet",
+    "runs/ctx_ownpoints_dev/member/s607/2025-01.parquet",
+    "runs/ctx_ownpoints_dev/member/s608/2025-01.parquet",
+    "runs/ctx_ownpoints_dev/member/s609/2025-01.parquet",
+    "runs/ctx_ownpoints_dev/member/s610/2025-01.parquet",
+    "runs/ctx_ownpoints_dev/member/s611/2025-01.parquet",
+    "runs/ctx_ownpoints_dev/member/s612/2025-01.parquet",
+    "runs/ctx_ownpoints_dev/member/s613/2025-01.parquet",
+    "runs/ctx_ownpoints_dev/member/s614/2025-01.parquet",
+    "runs/ctx_ownpoints_dev/member/s615/2025-01.parquet",
+    "runs/ctx_ownpoints_dev/member/s616/2025-01.parquet"
+   ],
+   "2025-07": [
+    "runs/ctx_ownpoints_dev/member/s601/2025-07.parquet",
+    "runs/ctx_ownpoints_dev/member/s602/2025-07.parquet",
+    "runs/ctx_ownpoints_dev/member/s603/2025-07.parquet",
+    "runs/ctx_ownpoints_dev/member/s604/2025-07.parquet",
+    "runs/ctx_ownpoints_dev/member/s605/2025-07.parquet",
+    "runs/ctx_ownpoints_dev/member/s606/2025-07.parquet",
+    "runs/ctx_ownpoints_dev/member/s607/2025-07.parquet",
+    "runs/ctx_ownpoints_dev/member/s608/2025-07.parquet",
+    "runs/ctx_ownpoints_dev/member/s609/2025-07.parquet",
+    "runs/ctx_ownpoints_dev/member/s610/2025-07.parquet",
+    "runs/ctx_ownpoints_dev/member/s611/2025-07.parquet",
+    "runs/ctx_ownpoints_dev/member/s612/2025-07.parquet",
+    "runs/ctx_ownpoints_dev/member/s613/2025-07.parquet",
+    "runs/ctx_ownpoints_dev/member/s614/2025-07.parquet",
+    "runs/ctx_ownpoints_dev/member/s615/2025-07.parquet",
+    "runs/ctx_ownpoints_dev/member/s616/2025-07.parquet"
+   ],
+   "2025-11": [
+    "runs/ctx_ownpoints_dev/member/s601/2025-11.parquet",
+    "runs/ctx_ownpoints_dev/member/s602/2025-11.parquet",
+    "runs/ctx_ownpoints_dev/member/s603/2025-11.parquet",
+    "runs/ctx_ownpoints_dev/member/s604/2025-11.parquet",
+    "runs/ctx_ownpoints_dev/member/s605/2025-11.parquet",
+    "runs/ctx_ownpoints_dev/member/s606/2025-11.parquet",
+    "runs/ctx_ownpoints_dev/member/s607/2025-11.parquet",
+    "runs/ctx_ownpoints_dev/member/s608/2025-11.parquet",
+    "runs/ctx_ownpoints_dev/member/s609/2025-11.parquet",
+    "runs/ctx_ownpoints_dev/member/s610/2025-11.parquet",
+    "runs/ctx_ownpoints_dev/member/s611/2025-11.parquet",
+    "runs/ctx_ownpoints_dev/member/s612/2025-11.parquet",
+    "runs/ctx_ownpoints_dev/member/s613/2025-11.parquet",
+    "runs/ctx_ownpoints_dev/member/s614/2025-11.parquet",
+    "runs/ctx_ownpoints_dev/member/s615/2025-11.parquet",
+    "runs/ctx_ownpoints_dev/member/s616/2025-11.parquet"
+   ],
+   "2025-12": [
+    "runs/ctx_ownpoints_dev/member/s601/2025-12.parquet",
+    "runs/ctx_ownpoints_dev/member/s602/2025-12.parquet",
+    "runs/ctx_ownpoints_dev/member/s603/2025-12.parquet",
+    "runs/ctx_ownpoints_dev/member/s604/2025-12.parquet",
+    "runs/ctx_ownpoints_dev/member/s605/2025-12.parquet",
+    "runs/ctx_ownpoints_dev/member/s606/2025-12.parquet",
+    "runs/ctx_ownpoints_dev/member/s607/2025-12.parquet",
+    "runs/ctx_ownpoints_dev/member/s608/2025-12.parquet",
+    "runs/ctx_ownpoints_dev/member/s609/2025-12.parquet",
+    "runs/ctx_ownpoints_dev/member/s610/2025-12.parquet",
+    "runs/ctx_ownpoints_dev/member/s611/2025-12.parquet",
+    "runs/ctx_ownpoints_dev/member/s612/2025-12.parquet",
+    "runs/ctx_ownpoints_dev/member/s613/2025-12.parquet",
+    "runs/ctx_ownpoints_dev/member/s614/2025-12.parquet",
+    "runs/ctx_ownpoints_dev/member/s615/2025-12.parquet",
+    "runs/ctx_ownpoints_dev/member/s616/2025-12.parquet"
+   ],
+   "ranking": [
+    "runs/ctx_ownpoints_dev/member/s601/ranking.parquet",
+    "runs/ctx_ownpoints_dev/member/s602/ranking.parquet",
+    "runs/ctx_ownpoints_dev/member/s603/ranking.parquet",
+    "runs/ctx_ownpoints_dev/member/s604/ranking.parquet",
+    "runs/ctx_ownpoints_dev/member/s605/ranking.parquet",
+    "runs/ctx_ownpoints_dev/member/s606/ranking.parquet",
+    "runs/ctx_ownpoints_dev/member/s607/ranking.parquet",
+    "runs/ctx_ownpoints_dev/member/s608/ranking.parquet",
+    "runs/ctx_ownpoints_dev/member/s609/ranking.parquet",
+    "runs/ctx_ownpoints_dev/member/s610/ranking.parquet",
+    "runs/ctx_ownpoints_dev/member/s611/ranking.parquet",
+    "runs/ctx_ownpoints_dev/member/s612/ranking.parquet",
+    "runs/ctx_ownpoints_dev/member/s613/ranking.parquet",
+    "runs/ctx_ownpoints_dev/member/s614/ranking.parquet",
+    "runs/ctx_ownpoints_dev/member/s615/ranking.parquet",
+    "runs/ctx_ownpoints_dev/member/s616/ranking.parquet"
+   ]
+  },
+  "external_data": "adsb.lol globe_history (ODbL), as every network of the table; the own columns come from the same archive (tools/build_ownpoints_features.py)"
+ },
+ "member_source_declaration": "configs/ctx_ownpoints_dev_v1.json (member tables unchanged; hash-recorded by the stage-1 report)",
+ "candidates": {
+  "own_all_w55": {
+   "member": "own_all",
+   "member_weight": 0.55
+  },
+  "own_all_w70": {
+   "member": "own_all",
+   "member_weight": 0.7
+  },
+  "own_all_w85": {
+   "member": "own_all",
+   "member_weight": 0.85
+  },
+  "own_all_w100": {
+   "member": "own_all",
+   "member_weight": 1.0
+  }
+ },
+ "incumbent": {
+  "name": "own_all_w40",
+  "member": "own_all",
+  "member_weight": 0.4
+ },
+ "stage_1": {
+  "tool": "tools/run_ownpoints_weight.py --stage1",
+  "arithmetic": "tools/run_ctx_ownpoints_dev.py unchanged (imported): table' = (1 - w) nets + w own_all seed mean on non-LIRF rows where both are finite; v46's mix (network share 0.85, share 0.5 where the committee sits more than 1,200 s above table'); then the whole v46 development stack. LIRF rows never change.",
+  "control": "own_all_w40 through the same arithmetic. Before any candidate is read: (a) the v46 + combination w40 control reproduces docs/adsb_ctx3_combo/results_v1.json (as run_ctx_ownpoints_dev.py checks) and (b) own_all_w40 reproduces docs/ctx_ownpoints_dev/results_v1.json own_all_w40 month RMSEs to 1e-9 s.",
+  "rule": "the clean line's unchanged rule (tools/run_network_member.select) against own_all_w40: eligible when no equal-footing month (January, July, December 2025) is worse on all rows, the mean ratio over those months is at least 0.02% below 1 and every equal-footing paired-day 95% interval (tools/run_network_member.paired_days, seed 20260929) lies below zero; November reported only. Eligible candidates are ranked by mean ratio (lowest first).",
+  "equal_footing_months": [
+   "2025-01",
+   "2025-07",
+   "2025-12"
+  ],
+  "minimum_mean_improvement_fraction": 0.0002
+ },
+ "stage_2": {
+  "tool": "tools/run_ownpoints_weight.py --stage2",
+  "control": "the v65 development proxy: runs/ctx_ownpoints_dev/chain/own_all_w40/dev_v65_proxy.parquet column v65. Before any candidate is read, the stage-2 scorer applied to the own_all_w40 chain files must reproduce that column exactly (max |diff| 0.0), and the model-part step at w 0.40 must reproduce runs/ctx_ownpoints_dev/chain/own_all_w40/dmp.parquet exactly.",
+  "candidate": "tools/run_ctx_ownpoints_chain.py arithmetic unchanged (imported): the development model part rebuilt with own_all at the candidate weight (v52m-v55m layers unchanged), then no-NM rematch, v48 reconciliation, extreme-day layer, variance re-allocation with their shipped parameters, stack_resid_v3 refitted on the rebuilt components (LIRF keeps the refitted v2), intruder bound, identity extension, own-motion v1, own_motion_v2 last (month-blocked as the tools do).",
+  "rule": "v57's clauses 1-3 with configs/own_motion_v2.json's rule values: (1) no development month (January, July, November, December 2025) worse than the control by more than 0.005%; (2) equal-footing mean change at most -0.02%; (3) every equal-footing paired-day 95% interval below zero (tools/run_intruder_bound.interval, seed 20261004 as the previous stage 2). Clause 4 (twelve months) does not apply: the stacker's components exist only for the four development months.",
+  "order": "Stage 2 runs on the stage-1 eligible candidates in order of their stage-1 mean ratio (lowest first); the first that passes stage 2 is selected and no further candidate is scored in stage 2. If none passes, nothing is selected and v65 stays."
+ },
+ "build": "If a candidate is selected: (1) the export chain (tools/export_ctx_ownpoints.py arithmetic, imported) with own_all_w40 and the original chain tables must reproduce runs/submissions/vigorous-whistle_v65.parquet byte for byte (45160819...); (2) dry run of the selected weight with its own rebuilt development tables for the stacker refit; (3) rebuild into a separate directory, byte identity with the dry run, then runs/submissions/vigorous-whistle_v66.parquet (never overwritten), audit docs/export_audit/v66_audit.json. User's word: the final-week plan ('yes start on them now', 6 October 2026: 'If #1 is accepted, build v66'). Never uploaded by this round; the upload is the user's.",
+ "guards": "No LIRF row changes in stage 1; no LIRF population row and neither guard row changes in any file; rows outside the member's support keep their values.",
+ "never_read": "No official score, no leaderboard. The published-aggregates sources enter only through the shipped chain's layers with their shipped parameters.",
+ "outputs": {
+  "stage_1": "runs/ctx_ownpoints_weight/stage1.json and docs/ctx_ownpoints_weight/results_stage1.json",
+  "stage_2": "runs/ctx_ownpoints_weight/chain/<candidate>/ and docs/ctx_ownpoints_weight/results_stage2.json",
+  "report": "docs/ctx_ownpoints_weight/README.md"
+ },
+ "automatic_submission": false
+}
