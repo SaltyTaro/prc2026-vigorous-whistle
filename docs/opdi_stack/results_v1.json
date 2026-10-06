@@ -1,0 +1,189 @@
+{
+  "accepted": false,
+  "candidate": "opdi",
+  "checks_1_to_3": {
+    "1_no_month_worse_than_0.005pct": true,
+    "2_equal_footing_mean_pct": -0.08257065696564887,
+    "2_mean_ok": true,
+    "3_every_equal_interval_below_zero": true
+  },
+  "clause_4_transfer_guard": {
+    "ok": false,
+    "ratios": {
+      "EDDF": {
+        "dev_rms_s": 4.133551127010019,
+        "dev_rows": 46962,
+        "rank_rms_s": 11.371011560188132,
+        "rank_rows": 26843,
+        "ratio": 2.7509062331142107
+      },
+      "EDDM": {
+        "dev_rms_s": 4.362263638300874,
+        "dev_rows": 23685,
+        "rank_rms_s": 1.8146425657779564,
+        "rank_rows": 13730,
+        "ratio": 0.415986450210233
+      },
+      "EGLL": {
+        "dev_rms_s": 3.8000294540890023,
+        "dev_rows": 49036,
+        "rank_rms_s": 2.8099745140033106,
+        "rank_rows": 21977,
+        "ratio": 0.739461245748938
+      },
+      "EHAM": {
+        "dev_rms_s": 2.5416298068095085,
+        "dev_rows": 68141,
+        "rank_rms_s": 2.250818608694732,
+        "rank_rows": 27631,
+        "ratio": 0.8855808200959723
+      },
+      "LEBL": {
+        "dev_rms_s": 2.394146342273329,
+        "dev_rows": 25643,
+        "rank_rms_s": 4.895892594686951,
+        "rank_rows": 19429,
+        "ratio": 2.0449429127369565
+      },
+      "LEMD": {
+        "dev_rms_s": 5.8494268680523716,
+        "dev_rows": 13857,
+        "rank_rms_s": 2.087131777272813,
+        "rank_rows": 6217,
+        "ratio": 0.35680961987439047
+      },
+      "LFPG": {
+        "dev_rms_s": 4.754844037619929,
+        "dev_rows": 16834,
+        "rank_rms_s": 4.407899646722781,
+        "rank_rows": 9464,
+        "ratio": 0.9270334866607289
+      },
+      "LSZH": {
+        "dev_rms_s": 18.36057063046517,
+        "dev_rows": 38829,
+        "rank_rms_s": 19.3232993993946,
+        "rank_rows": 18308,
+        "ratio": 1.0524345777865969
+      }
+    }
+  },
+  "code": {
+    "tools/export_ctx_ownpoints.py": "03e6bda44a26d6a2563dc255bcb7cc5679cf42c87eca18f0b0e54b7a3b2a0dc1",
+    "tools/run_ctx_ownpoints_chain.py": "4fa1a5244fe0520fa9701e352d29c3b1c97ebfe23cc34ee6f0120082a13d5a7d",
+    "tools/run_intruder_bound.py": "b0ae6ad5bce149005ca3dba0cdc4d40f3776c29e643eeaa88790c3ae92668c56",
+    "tools/run_intruder_identity.py": "d070b37f9781b512034a4e2cb4bf1a312044c1f0b82e167437b939ba5468a882",
+    "tools/run_opdi_stack.py": "4165849e9016b06bbd45c022ac64993eaf44535e3d13d1445a3f3555aef4c6fd",
+    "tools/run_opdi_stack_decl.py": "ddb16f9b554fafd2db11da17eecae71729c58765c747be4c4594e187eb39754a",
+    "tools/run_own_motion.py": "10585ae33764629cc408bde67793c87cc37cd5fd6cff2ef69415f4e10d7637ff",
+    "tools/run_own_motion_v2.py": "1fa8f880cd107b06e2cc00aa8d89602c9d3bc6afd35be7567f7a68c5e276d2b7",
+    "tools/run_ownpoints_weight.py": "5260ed72b57dd76ad5d4ed2e4d31673c03503a8cdff7dbc8df3eac93f24d53c6",
+    "tools/run_stack_resid.py": "84e9e5034918b3da19bfdf91b7dd8c5123eb0c8bcc3661f0fbdaeb654926e71e",
+    "tools/run_stack_resid_v3.py": "d3c5f995d39633c7383916e1f80d7553f2bbbecc5461f2c579e816281c071f52"
+  },
+  "control": "pinned v66 development proxy",
+  "created_at_utc": "2026-10-06T19:09:44.894399+00:00",
+  "declaration": "configs/opdi_stack_v1.json",
+  "declaration_sha256": "56b36dac2a25b94d8e423b16454a83e222269819e10cf04cf3881cc8188526e3",
+  "dev_opdi_change_by_airport": {
+    "EDDF": {
+      "rms_s": 4.133551127010019,
+      "rows": 46962
+    },
+    "EDDM": {
+      "rms_s": 4.362263638300874,
+      "rows": 23685
+    },
+    "EGLL": {
+      "rms_s": 3.8000294540890023,
+      "rows": 49036
+    },
+    "EHAM": {
+      "rms_s": 2.5416298068095085,
+      "rows": 68141
+    },
+    "LEBL": {
+      "rms_s": 2.394146342273329,
+      "rows": 25643
+    },
+    "LEMD": {
+      "rms_s": 5.8494268680523716,
+      "rows": 13857
+    },
+    "LFPG": {
+      "rms_s": 4.754844037619929,
+      "rows": 16834
+    },
+    "LSZH": {
+      "rms_s": 18.36057063046517,
+      "rows": 38829
+    },
+    "LTFM": {
+      "rms_s": 3.440686480328323,
+      "rows": 16
+    }
+  },
+  "governing_proxy_equals_screen": true,
+  "months": {
+    "2025-01": {
+      "control_rmse": 320.12578633962187,
+      "hi": -0.015356752239140127,
+      "lo": -0.10414035878923311,
+      "opdi_rows_used": 66482,
+      "pct": -0.032239573808634514,
+      "rmse": 320.0225791504544,
+      "rows_changed": 66456,
+      "squared_change": 2985627.7664851258
+    },
+    "2025-07": {
+      "control_rmse": 251.07310406865693,
+      "hi": -0.07616864219377156,
+      "lo": -0.11105205208568836,
+      "opdi_rows_used": 74219,
+      "pct": -0.09247192477113142,
+      "rmse": 250.840931936742,
+      "rows_changed": 74199,
+      "squared_change": 5998550.787601862
+    },
+    "2025-11": {
+      "control_rmse": 182.1761564097935,
+      "hi": -0.07861003008475338,
+      "lo": -0.1667828868012472,
+      "opdi_rows_used": 81905,
+      "pct": -0.11595763916729673,
+      "rmse": 181.96490923969498,
+      "rows_changed": 81866,
+      "squared_change": 4315649.238753375
+    },
+    "2025-12": {
+      "control_rmse": 163.7130907444459,
+      "hi": -0.10043841996464271,
+      "lo": -0.1476417421800666,
+      "opdi_rows_used": 60397,
+      "pct": -0.1230004723171807,
+      "rmse": 163.51172286958518,
+      "rows_changed": 60389,
+      "squared_change": 3193119.7187924515
+    }
+  },
+  "official_scores_used": "none",
+  "ranking_dry_run": {
+    "file": "runs/opdi_stack/rank/dry_v67/vigorous-whistle_v67.parquet",
+    "guard_rows_changed": 0,
+    "identity_reproduces_v66": true,
+    "lirf_population_rows_changed": 0,
+    "lirf_rows_changed": 0,
+    "opdi_rows_used_ranking": 143599,
+    "sha256": "7699b454aaf503d1cafed65c3af354ccac8469d17e42fbe37c04f79840bd27ff",
+    "vs_v66": {
+      "max_down_s": -130.0,
+      "max_up_s": 368.0,
+      "mean_change_s": 0.31567302031950956,
+      "rms_change_s": 5.764383967609525,
+      "rows_changed": 102117,
+      "squared_change": 11458419.0
+    }
+  },
+  "selected": null,
+  "twelve_month_check": "none exists: the stacking components cover only the four development months (as stack_resid_v3); stated, not substituted"
+}
