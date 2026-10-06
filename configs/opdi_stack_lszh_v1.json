@@ -1,0 +1,16 @@
+{
+  "experiment_id": "opdi_stack_lszh_v1",
+  "declared_at_utc": "2026-10-06T23:45:00+00:00",
+  "user_decision": "6 October 2026: after configs/opdi_stack_v1.json failed its transfer guard, the user was offered an LSZH-only variant and answered 'run it here itself'.",
+  "official_scores_used": "none (v67's official score is not used; nothing in this file depends on any leaderboard figure)",
+  "exploration_disclosed": "Chosen AFTER seeing docs/opdi_stack/results_v1.json: the full layer passed clauses 1-3 (eq mean -0.083%, every equal-footing interval below zero) but failed the transfer guard at EDDF 2.75 / LEBL 2.04 / EDDM 0.42 / LEMD 0.36; LSZH read 1.05 and carries 59% of the ranking file's squared change. Restricting to LSZH is a post-hoc choice motivated by the guard's per-airport ratios, not by any LSZH-only score; it is recorded as such.",
+  "candidate": {
+    "name": "opdi_lszh",
+    "airports": [
+      "LSZH"
+    ],
+    "definition": "the governing opdi candidate of configs/opdi_stack_v1.json (runs/opdi_stack/govern/chain/opdi/proxy.parquet; ranking: tools/run_opdi_stack_decl.step_stack_opdi) with its change applied only on LSZH rows where OPDI is used; every other row keeps the pinned v66 control. The downstream layers (intruder bound, identity extension, own-motion v1 / v2) are row-local, so the development splice equals running the chain with the change restricted to LSZH."
+  },
+  "control": "the pinned v66 development proxy runs/pubrefit/chain/ship/proxy.parquet (SHA-256 cf5a4e8e1cc6733e7e8a95fd6dcebb21764fc0b6f1e573a6ad1c38a1cc7dcea3)",
+  "rule": "configs/opdi_stack_v1.json's clauses unchanged: (1) no development month worse than the control by more than 0.005%; (2) equal-footing (Jan / Jul / Dec 2025) mean change at most -0.02%; (3) every equal-footing paired-day 95% interval (tools/run_intruder_bound.interval, seed 20261004) below zero; (4) transfer guard [0.5, 2.0] at LSZH (the only airport changed). If accepted: ranking dry run on v66 through step_stack_opdi with airports ['LSZH'] and the v66 chain, identity reproducing v66 byte for byte first; a build only at the user's word."
+}
