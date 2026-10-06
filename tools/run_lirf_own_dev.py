@@ -401,7 +401,7 @@ def main() -> None:
     ap.add_argument("--scorer-identity", action="store_true")
     a = ap.parse_args()
     decl = read_json(ROOT / DECL) if (ROOT / DECL).exists() else None
-    if not a.identity and (decl is None or not decl.get("declared_at_utc")):
+    if not (a.identity or a.scorer_identity) and (decl is None or not decl.get("declared_at_utc")):
         raise ValueError("The declaration is not recorded.")
     if decl is not None and read_json(ROOT / decl["shipped_member"]["declaration"]) != read_json(ROOT / SHIPPED_MEMBER):
         raise ValueError("The shipped member's declaration differs.")
