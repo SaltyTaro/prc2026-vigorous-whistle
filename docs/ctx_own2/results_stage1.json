@@ -1,0 +1,326 @@
+{
+  "audit_used": false,
+  "candidates": {
+    "mix_own_w100": {
+      "eligible": true,
+      "intervals_below_zero": [
+        "2025-01",
+        "2025-07",
+        "2025-12"
+      ],
+      "mean_ratio_equal_footing": 0.9986782694260644,
+      "member": "mix_own",
+      "member_weight": 1.0,
+      "months": {
+        "2025-01": {
+          "alignment": 1.049196723541881,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.32726741217887767,
+            "unmatched_non_lirf": -0.04287796958789558
+          },
+          "change_pct": -0.056163944058340576,
+          "gate_rows": 15,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 24,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.4485243983553005,
+              -0.025418572425753898
+            ]
+          },
+          "ratio_to_control": 0.9994383605594166,
+          "rmse": 321.57902366879455,
+          "rows_changed": 142376,
+          "sum_squared_change": 16269039.035788834
+        },
+        "2025-07": {
+          "alignment": 1.1713779653888212,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.15788000319759687,
+            "unmatched_non_lirf": -0.22529727247011522
+          },
+          "change_pct": -0.10746556662115658,
+          "gate_rows": 48,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 23,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.44949359992781623,
+              -0.09736735067376408
+            ]
+          },
+          "ratio_to_control": 0.9989253443337884,
+          "rmse": 255.90852730107525,
+          "rows_changed": 175494,
+          "sum_squared_change": 20024080.242920063
+        },
+        "2025-11": {
+          "alignment": 1.207872387400595,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.21028821314883483,
+            "unmatched_non_lirf": -0.3313665592293291
+          },
+          "change_pct": -0.16481356372826106,
+          "gate_rows": 32,
+          "paired_days_vs_control": {
+            "days": 30,
+            "days_with_lower_squared_error": 25,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.49127851118937826,
+              -0.1453051170449577
+            ]
+          },
+          "ratio_to_control": 0.9983518643627174,
+          "rmse": 183.6371871247115,
+          "rows_changed": 151002,
+          "sum_squared_change": 12777270.207964607
+        },
+        "2025-12": {
+          "alignment": 1.2811827561475844,
+          "by_scope_change_pct": {
+            "matched_non_lirf": -0.15224800088797785,
+            "unmatched_non_lirf": -0.45971492137842906
+          },
+          "change_pct": -0.23288966150120105,
+          "gate_rows": 24,
+          "paired_days_vs_control": {
+            "days": 31,
+            "days_with_lower_squared_error": 24,
+            "interpretation": "descriptive on reused development data",
+            "replicates": 2000,
+            "rmse_difference_95pct_interval_seconds": [
+              -0.6601690226322191,
+              -0.16992008808114392
+            ]
+          },
+          "ratio_to_control": 0.997671103384988,
+          "rmse": 165.83390577807754,
+          "rows_changed": 153606,
+          "sum_squared_change": 13630935.019746378
+        }
+      },
+      "months_worse": []
+    }
+  },
+  "code": {
+    "src/prc2026_final/network_member.py": "d2ce137c38e3ab39aaad6b2d3f0152c859fc05918253d518a7a0cd10460f6126",
+    "src/prc2026_final/share_gate.py": "015df26644d701497bc06874b9e3319013f8d56dbb282f96d12f5f9f52fefdbe",
+    "src/prc2026_scout/var_alloc.py": "91d1788d597f23550ccfa1d68d8b08fea12fe496ba94e69b19ff99f7e81989c0",
+    "tools/export_ctx_ownpoints.py": "03e6bda44a26d6a2563dc255bcb7cc5679cf42c87eca18f0b0e54b7a3b2a0dc1",
+    "tools/run_ctx_own2_dev.py": "d32f27620485a7f338a158e79ed4aa3ee4894fb0816ec02f3103c2d074266e3f",
+    "tools/run_ctx_ownpoints_chain.py": "4fa1a5244fe0520fa9701e352d29c3b1c97ebfe23cc34ee6f0120082a13d5a7d",
+    "tools/run_ctx_ownpoints_dev.py": "07e52572002fae6acfbab8962639875a9bc87892daf98dc7152049a7123ec1fa",
+    "tools/run_network_member.py": "a76f39a29a492c32badad26bf3964adc01bc8a2125440fddea74d1d3bb0e5ca4",
+    "tools/run_own_motion_v2.py": "1fa8f880cd107b06e2cc00aa8d89602c9d3bc6afd35be7567f7a68c5e276d2b7",
+    "tools/run_ownpoints_weight.py": "5260ed72b57dd76ad5d4ed2e4d31673c03503a8cdff7dbc8df3eac93f24d53c6",
+    "tools/run_stack_resid_v3.py": "d3c5f995d39633c7383916e1f80d7553f2bbbecc5461f2c579e816281c071f52"
+  },
+  "control": "own_all at 1.00 (v66's member weight)",
+  "created_at_utc": "2026-10-06T17:14:34.009917+00:00",
+  "declaration": "configs/ctx_own2_dev_v1.json",
+  "declaration_object_hash": "b0200c07d8c1f037cfb23aec590ed3b6a4dba209bbcda96eccf2633c81c9903a",
+  "declaration_sha256": "8ddc8c9fb7c6c4c72235abe2c92570ab95cc4c10e541733011efae8bc52a8446",
+  "eligible": [
+    "mix_own_w100"
+  ],
+  "environment": {
+    "disk_available_bytes": 32584679424,
+    "logical_cpus": 32,
+    "memory_total_bytes": 16858472448,
+    "packages": {
+      "numpy": "2.4.2",
+      "pandas": "3.0.0",
+      "psutil": "7.2.2",
+      "pyarrow": "23.0.1",
+      "tzdata": "2025.3"
+    },
+    "physical_cpus_reported": 24,
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.2"
+  },
+  "equal_footing_months": [
+    "2025-01",
+    "2025-07",
+    "2025-12"
+  ],
+  "member_sources": {
+    "runs/ctx_own2/member_mix/s621/2025-01.parquet": "b49dfe0b110b55f0ec727dfb5d394e2b60d7a877ec8dee90aab63eb6e9c9266a",
+    "runs/ctx_own2/member_mix/s621/2025-07.parquet": "873906c55792e60a39307ae8595917226b0d05d57b2ec9569dfdd8a071576352",
+    "runs/ctx_own2/member_mix/s621/2025-11.parquet": "b9c38e3d2395080f68d092d679b1f4f50143cab632a1e45e1903cc00221d70f3",
+    "runs/ctx_own2/member_mix/s621/2025-12.parquet": "5c8408f69ff0f41bf91148ab3aa611d0ed23ba7eb88b9a2801169a749fb0231c",
+    "runs/ctx_own2/member_mix/s622/2025-01.parquet": "6f9415ca889b811edb55db8f7c2183d57184c748dd37675675af9d7fa41f53f2",
+    "runs/ctx_own2/member_mix/s622/2025-07.parquet": "81629d4b57cd37c4807e4dd1284b8534a8e5603f3175f63dcb9bc6d4772fa97a",
+    "runs/ctx_own2/member_mix/s622/2025-11.parquet": "e008cccc049ce9c595bdd70e10d54d22b353df3debb9c32b0b5b2f5edf1f1fe4",
+    "runs/ctx_own2/member_mix/s622/2025-12.parquet": "db140e5f3da798c8876bd845a7636f73d999b9f9ffaab2bec469e353509460f7",
+    "runs/ctx_own2/member_mix/s623/2025-01.parquet": "56eefe0298d137852934f8f6560acdd16c851bebf79383fbac72f5bb59ee1803",
+    "runs/ctx_own2/member_mix/s623/2025-07.parquet": "3ba13ffda26baba6410ed3e3dc8a48a226f98a2afc24569e19ae46fb63bbfb69",
+    "runs/ctx_own2/member_mix/s623/2025-11.parquet": "4efa02486d8663844224e061cdf90de23a3a6efab180328812ecffe8ed76de51",
+    "runs/ctx_own2/member_mix/s623/2025-12.parquet": "0f74010910bec9459789da2ff97a21b42fe4e9e1bf022bf86320e6472f9b9997",
+    "runs/ctx_own2/member_mix/s624/2025-01.parquet": "9c71d59d9ed42178e054697d9e7470dc260416a6c654d7af5e440d85b4eecc76",
+    "runs/ctx_own2/member_mix/s624/2025-07.parquet": "98449ea724fc548097350ae1cba509f5b0e52641444679d77019a27b626ed32e",
+    "runs/ctx_own2/member_mix/s624/2025-11.parquet": "2632e3017e9002b40ba3a4caf023a414bccfcbd5ba70405d682fd9fbd317bc53",
+    "runs/ctx_own2/member_mix/s624/2025-12.parquet": "c2c86c3736364ca6e2342cf5ea5d1e25d6768d19538aad413d79cea0d8450816",
+    "runs/ctx_own2/member_mix/s625/2025-01.parquet": "ff3c17941f59838d4883bc50f36799c5d7adce94371e34311217cbc37b3693c3",
+    "runs/ctx_own2/member_mix/s625/2025-07.parquet": "5fe6b682a92e8c98bbbd3630964230f79fa97fa164ad056b72d74c21b3901413",
+    "runs/ctx_own2/member_mix/s625/2025-11.parquet": "53f493e533ef2e5905009c9f631ed700d2c8a961883bd26608aed5f9cb5e4c78",
+    "runs/ctx_own2/member_mix/s625/2025-12.parquet": "daa3fcc33f93779e44d5eda5d6a94baae7e4169c4780e9291817c07d3c738e77",
+    "runs/ctx_own2/member_mix/s626/2025-01.parquet": "98ab1d372a11d973f1aae7889226675743800862bef96c1f5530f23b7d13a757",
+    "runs/ctx_own2/member_mix/s626/2025-07.parquet": "6dcb408658e88e4faa59fa31cdda5e2b18fa55ce4abe96266a6eb27bcab3eae8",
+    "runs/ctx_own2/member_mix/s626/2025-11.parquet": "6154322a946eb4e52ad1081dd4e211d5ce1ecda79f33a164dd6a8cd6c96500f9",
+    "runs/ctx_own2/member_mix/s626/2025-12.parquet": "b67c9f392895a111ed711202d125315a3f81ae45998043de53186775cce8b06e",
+    "runs/ctx_own2/member_mix/s627/2025-01.parquet": "a3a69450c5cfe49ca10e4e69d306ad592448bd1342377a9e67884d12faa43066",
+    "runs/ctx_own2/member_mix/s627/2025-07.parquet": "b15ab193017aac85b05c1d45dc27b5df48077cc840ee810c86c0ccfcda59022e",
+    "runs/ctx_own2/member_mix/s627/2025-11.parquet": "56bbb64dcfe4524b024321dbc33375c28d2bd481f1c8a08eaa5c1436b6c2f3a8",
+    "runs/ctx_own2/member_mix/s627/2025-12.parquet": "9edf34ebc363159309a5daf6aa606553506306e6f74a350a57c7fa6466737fab",
+    "runs/ctx_own2/member_mix/s628/2025-01.parquet": "5326c5d8ee4f34c16e43965b330792ebe873912e42d1e8dccfce2f170ccce325",
+    "runs/ctx_own2/member_mix/s628/2025-07.parquet": "11dfc5b462d49835611f45ffe83eadcbcf449a1129c5dfec6f6428424c68234f",
+    "runs/ctx_own2/member_mix/s628/2025-11.parquet": "f80d8e2eb51c59bc1b97eb91f72f2dccd31f35d86a2c7111d66d5dfc6d54d32e",
+    "runs/ctx_own2/member_mix/s628/2025-12.parquet": "41ed81dd716700075cc20c88afdca424c163c323a35f2bf4bdb8abf2661c39ed",
+    "runs/ctx_own2/member_mix/s629/2025-01.parquet": "fd241874c4f03056d8d4474128584ef5b4a3b3669466930c521e5952578dcf53",
+    "runs/ctx_own2/member_mix/s629/2025-07.parquet": "9786454d123c9db31a1e6fbc4d36c1a4f7b95adb7924863f06e70c690428d489",
+    "runs/ctx_own2/member_mix/s629/2025-11.parquet": "79cdfc57d2fe4188c2485d609e475ae5ef21838068f8259bdcbc69f6e4c2ef4a",
+    "runs/ctx_own2/member_mix/s629/2025-12.parquet": "18409077ee3e0792149f40755ca1fa65946c9a6937c9b7d547ff746c58316633",
+    "runs/ctx_own2/member_mix/s630/2025-01.parquet": "060858e9e70958349db1ee895baa933545b6bbb8d69bb08b1c07b76f6ad10c13",
+    "runs/ctx_own2/member_mix/s630/2025-07.parquet": "080db83abb4340b8595aa4c0c6d894ce1571ad08f6ea5cb00c3b8dbaa0cea39e",
+    "runs/ctx_own2/member_mix/s630/2025-11.parquet": "663484e040ac8f13d9d5cd4436ea01ee71ae8b69f495bae773c9960ae5ed67a3",
+    "runs/ctx_own2/member_mix/s630/2025-12.parquet": "cce8179f4cd8302a8c9befd7bdeda33cee61806375312fa2e547b2e43d721c21",
+    "runs/ctx_own2/member_mix/s631/2025-01.parquet": "efdfcd07440b6d5672c8125ba4bcc0ac301a3dee035b29634c51103e3be1dfbf",
+    "runs/ctx_own2/member_mix/s631/2025-07.parquet": "ef3fea5eb652e243b815b478c56a9776908596529e58a0216a6569cfa55c5484",
+    "runs/ctx_own2/member_mix/s631/2025-11.parquet": "eb2870a19e1d131e27a44880789c4f3a8f2ae77a484a9edc570502f290ccced6",
+    "runs/ctx_own2/member_mix/s631/2025-12.parquet": "2f7c11e7217b8466ecdb0f7101b01e8d8207ec36088f0149cbe6ca80f81ecd29",
+    "runs/ctx_own2/member_mix/s632/2025-01.parquet": "4ad5e969aba541cccc97fae249b2e4a1ff41a936281ceb4df0d04d1ce2c5a06f",
+    "runs/ctx_own2/member_mix/s632/2025-07.parquet": "2109fa099142977010074ad9650091cfca8da46c3b1cd3293efdd75a185a0e69",
+    "runs/ctx_own2/member_mix/s632/2025-11.parquet": "b913e57c22298e18e8f34c701851eaba8e67d0b2fb9551a49f259f9dbade6c4e",
+    "runs/ctx_own2/member_mix/s632/2025-12.parquet": "64a392439a9c2a04a8381c1cb71ab215984a3ecfa0324d03d3302dba45c7917a",
+    "runs/ctx_own2/member_mix/s633/2025-01.parquet": "07eae1a9ac0b3e55a7701658ecc7c8b4595846f4a141100081ab6f3d89e43c07",
+    "runs/ctx_own2/member_mix/s633/2025-07.parquet": "06cda8ebe411995469b778dd0e09c668dc2335cec53af8d30f909778349082f3",
+    "runs/ctx_own2/member_mix/s633/2025-11.parquet": "bec4967fbe63aa4214d58604c95139ed9ba63da15c3296743db8c4bbd1453e9f",
+    "runs/ctx_own2/member_mix/s633/2025-12.parquet": "21511217ba3f207f58fbc19626331c29acfc34d6c72998987be0cca1991bc2ef",
+    "runs/ctx_own2/member_mix/s634/2025-01.parquet": "8d959c40f36403add02254d716a8cb71f307b920600855fae144c50d080ccbe0",
+    "runs/ctx_own2/member_mix/s634/2025-07.parquet": "58eb6adb2a5f1e12f6f8d394980f366c5eeb6e4456436d647a43c178c12e7ab7",
+    "runs/ctx_own2/member_mix/s634/2025-11.parquet": "e3dca6f37bb39eb24edc553848d3c8647f41b0e1fed1e3112ade2ba7f43ee166",
+    "runs/ctx_own2/member_mix/s634/2025-12.parquet": "125423e9c32c1a6d18f4570b141fc6dbfda80da95ba07b7054a3c7484ed128ad",
+    "runs/ctx_own2/member_mix/s635/2025-01.parquet": "455259c77fdd1ef6a0991703eb88b2aa4adca800cb9ae81406bb450659d3595c",
+    "runs/ctx_own2/member_mix/s635/2025-07.parquet": "3aa13b0302fab28daa969e63d193300457322bffc0f414bab7715d1f8d84636c",
+    "runs/ctx_own2/member_mix/s635/2025-11.parquet": "c62d4858a30563c900434b3ccf46e7d6c6cab30dd04c53ef48d93dce671e14f7",
+    "runs/ctx_own2/member_mix/s635/2025-12.parquet": "e356a6c5880ce21d85b492ac3915b07ab6ce33ef61c86ce28b79cfc21fce8f1a",
+    "runs/ctx_own2/member_mix/s636/2025-01.parquet": "fa0d4ea192fd24edad8fd7f98378801383bff3ff4c3e428e5467e89634cd81e9",
+    "runs/ctx_own2/member_mix/s636/2025-07.parquet": "39e6fb10c8bb39e0c1904107d52e76f9da18536b72bdeebce6f2f293b3098f6d",
+    "runs/ctx_own2/member_mix/s636/2025-11.parquet": "08065b0a92c31a1a3951a10774d043e0f1053f318793bed774b4bb48e101cef8",
+    "runs/ctx_own2/member_mix/s636/2025-12.parquet": "05a1f794c6f37d8ad1c765841152da73a843b68fb7c531cad5f133089c50b0a5",
+    "runs/ctx_ownpoints_dev/member/s601/2025-01.parquet": "e88426dfba0b81c75a1a21a714b6a3a9fd36877a6e07d9a289f7ece59a716e6e",
+    "runs/ctx_ownpoints_dev/member/s601/2025-07.parquet": "b212bdcec292a7eca1ac10012428a3a0f4f90128f1e8d68a122f6db9d5b605f3",
+    "runs/ctx_ownpoints_dev/member/s601/2025-11.parquet": "b3d429025dfb0785ce7a036d6955a8e28786289270d07e601aad3d09e8a847c8",
+    "runs/ctx_ownpoints_dev/member/s601/2025-12.parquet": "2ece2fa6e1f42d9b75a5bbebb56c7656cb651f9751f5eb26751406f550e2cf48",
+    "runs/ctx_ownpoints_dev/member/s602/2025-01.parquet": "8e6d5d37df1c9ffd539d49393c242ca9747dc2ee98a6c347c02ed5015b49faeb",
+    "runs/ctx_ownpoints_dev/member/s602/2025-07.parquet": "d6b83d461473b5c080c2f384db24386f14b1c51f1dd7ac46b001fa5e18fe93a8",
+    "runs/ctx_ownpoints_dev/member/s602/2025-11.parquet": "ae1a9a240a35516ba71b275638e6eff1032fc362404516560218c5d03fd39661",
+    "runs/ctx_ownpoints_dev/member/s602/2025-12.parquet": "82b2c8f7966abd6a87c4ef034ddffb624d222d912a69c286dee92d3f70a2cddc",
+    "runs/ctx_ownpoints_dev/member/s603/2025-01.parquet": "70045a5a14c7aa640e06cd31267b59cbef950ef3b09f07a8377d3518b91a00f9",
+    "runs/ctx_ownpoints_dev/member/s603/2025-07.parquet": "757729d6b5e60ec4a5097eb787ab6d6d4723a2bef098cb553368440905e11206",
+    "runs/ctx_ownpoints_dev/member/s603/2025-11.parquet": "366901d96bc0b789f04430fce2d072bc8ea578232faaa19e4c60922ebc788aba",
+    "runs/ctx_ownpoints_dev/member/s603/2025-12.parquet": "fbdbaa38da079d6dd99d1e0977d07d6e81b72a8d631cd5bbfb0b50c65ce2ded6",
+    "runs/ctx_ownpoints_dev/member/s604/2025-01.parquet": "1ed1ae2e6813d0bccbc2ebdc522aa8a0a92598b6c9cab763a160396321b177d7",
+    "runs/ctx_ownpoints_dev/member/s604/2025-07.parquet": "fd8eded8c4d80969b28f0a65302ebbaf3c1587c080f686df467cbe3b500720c1",
+    "runs/ctx_ownpoints_dev/member/s604/2025-11.parquet": "ca3e72c7a9de7b4f3f2d0144b358b1b6945c6dd15f2c9349d76958898b6d074c",
+    "runs/ctx_ownpoints_dev/member/s604/2025-12.parquet": "644f2d5ed6a6246d0e5df44a17e6797ca4ff5d0ca3c2bfd140f37fa849e8f3a4",
+    "runs/ctx_ownpoints_dev/member/s605/2025-01.parquet": "79b4d7777a13691cae9aa99c6d8f4c5e9fe4ef7cd346d9a5ef702724a0d50b84",
+    "runs/ctx_ownpoints_dev/member/s605/2025-07.parquet": "1603bf9d38771390dcfaf957a6c0a747eb48d1b9baeaae0f5ca4087f6ff17b8c",
+    "runs/ctx_ownpoints_dev/member/s605/2025-11.parquet": "a6061768febed6735dc416e3e5d57d5c99e26006362264321261bc9345cad7a8",
+    "runs/ctx_ownpoints_dev/member/s605/2025-12.parquet": "cf50747a6513318eb21bd564703c270572aeee2f7018a3baa529b95868bfe03a",
+    "runs/ctx_ownpoints_dev/member/s606/2025-01.parquet": "8835318348b4b1958aa63d66e955a4f62079701dd2efa2b71b607eb589c4463d",
+    "runs/ctx_ownpoints_dev/member/s606/2025-07.parquet": "23613a85d13be8a9d697c068fc52bfa55af85bbac1aa8aa4ae4121dafa73356b",
+    "runs/ctx_ownpoints_dev/member/s606/2025-11.parquet": "8dcf7a4d4448d97f8332563ac5e80056e87d974c82dc192af7e9a1013dae8a7e",
+    "runs/ctx_ownpoints_dev/member/s606/2025-12.parquet": "6b37a272e329da20d7686ce14f9864d19a59a68d2f61de7259c21a8141d953b9",
+    "runs/ctx_ownpoints_dev/member/s607/2025-01.parquet": "c7c3b0726122e4cdd68f31b2a145ce1bd41456d97f9293593ea14c3ee2349ac6",
+    "runs/ctx_ownpoints_dev/member/s607/2025-07.parquet": "d6125b629d506f4201cb1bbe5aa54f26da4cccf5bff237e0741f5b47486ecaf3",
+    "runs/ctx_ownpoints_dev/member/s607/2025-11.parquet": "055256334fffd266109c4c9e65696fdb70cad93ffdc8ebfc5236bdf4f736ddaf",
+    "runs/ctx_ownpoints_dev/member/s607/2025-12.parquet": "24f0535a3ad73ee8a82f6fee542ed229c383ee8a1d784671f1372c2a1ded43a0",
+    "runs/ctx_ownpoints_dev/member/s608/2025-01.parquet": "71715a5c1ce10cf42f6183ff2e4bf9ab102ff56a0395c373503b45dcd9d733c8",
+    "runs/ctx_ownpoints_dev/member/s608/2025-07.parquet": "888ceeb09959c3702c6fd3a3c19a44c9f561931a7f4c6d04a4ec843154d8e647",
+    "runs/ctx_ownpoints_dev/member/s608/2025-11.parquet": "494334105af9d94bc5910aaad516c8f3971288500a3b3b47e8270a64f4d61a54",
+    "runs/ctx_ownpoints_dev/member/s608/2025-12.parquet": "76310c281d4df71424966cd38df90da70dbec35a0f4985012cd2065cebe22ba6",
+    "runs/ctx_ownpoints_dev/member/s609/2025-01.parquet": "b680f6c4479253176c5962ee6c74975676cfe95615ed233afc792a7aba5aac91",
+    "runs/ctx_ownpoints_dev/member/s609/2025-07.parquet": "c0e580daeae18df0ddb18a5ebba371fdae9cd75e9c2968efa02bca555aabc736",
+    "runs/ctx_ownpoints_dev/member/s609/2025-11.parquet": "1d0b95d7d80f46ba44b12731b9883f8a6d31d71b51ba7ef8e4a4dfbd653c124e",
+    "runs/ctx_ownpoints_dev/member/s609/2025-12.parquet": "1103f3377fb53536bf3e02c4a83775e5880e012c4d763c8ea3d0c4ecb30e15a8",
+    "runs/ctx_ownpoints_dev/member/s610/2025-01.parquet": "cd1716530e7dfa795cd1a71e669114c275b4f28ed990362e488ad356e2a6da39",
+    "runs/ctx_ownpoints_dev/member/s610/2025-07.parquet": "6c5ed2062c2b66e213ad331e8d0ac3c69d542d35162d1ace9738e18f2aa3cda2",
+    "runs/ctx_ownpoints_dev/member/s610/2025-11.parquet": "5b585792aa404e6909d32de931fb12ccba31a89b5587b6ba5b482377f0536f45",
+    "runs/ctx_ownpoints_dev/member/s610/2025-12.parquet": "9bed8558b3eaebd43c1e7ea928d024e09c454928e67d9021599d14d762220d1f",
+    "runs/ctx_ownpoints_dev/member/s611/2025-01.parquet": "b6254f2d66988c593e1406a2470d8f281781b21ca7b7cc927f6fae878043110c",
+    "runs/ctx_ownpoints_dev/member/s611/2025-07.parquet": "3c46018f361ff0123f205bb5fa5d26391ddf3ad00dea6ae296c02b601cfb43e5",
+    "runs/ctx_ownpoints_dev/member/s611/2025-11.parquet": "dca51ab43c2c6982a5e91c790c62008dc21ad5f43239f13267ea5ca36de346e2",
+    "runs/ctx_ownpoints_dev/member/s611/2025-12.parquet": "718095e7cf7b2ed3227291952f4cfbab8d31af228c8231df08fcb7e7c507e901",
+    "runs/ctx_ownpoints_dev/member/s612/2025-01.parquet": "f67047114b7a55023cf4bf20465534f147a6881c76535d046d60c174429002d6",
+    "runs/ctx_ownpoints_dev/member/s612/2025-07.parquet": "95a31250378efe3390dbfc80b75ae633bf4934be15dcafc73d2a3b29f39af809",
+    "runs/ctx_ownpoints_dev/member/s612/2025-11.parquet": "e0ff35b20a57090bf4500109db8fc19ae99cbd4aa5fc5fee90f875c200224c3d",
+    "runs/ctx_ownpoints_dev/member/s612/2025-12.parquet": "ea1022afff6f5f03c4f70417f529e25aeaf812c5cb319bf6ebbc89ed34f345b8",
+    "runs/ctx_ownpoints_dev/member/s613/2025-01.parquet": "c011aaa836ad024ba5f90d9e991594452a1f684432fd5f22fe3e154bed733dea",
+    "runs/ctx_ownpoints_dev/member/s613/2025-07.parquet": "ed1b7eeda9ce8285706e20df01057750dd873e841a71bea555b87f7803f5a7cf",
+    "runs/ctx_ownpoints_dev/member/s613/2025-11.parquet": "2cf088d1c7ccf36e4f90598326154242a66b1a83cd2e057b8f7691300f5f8d57",
+    "runs/ctx_ownpoints_dev/member/s613/2025-12.parquet": "227323e05fb4d6b0e23045beb50add09f79026bb6a62fe48452d3b0c6a4e9b44",
+    "runs/ctx_ownpoints_dev/member/s614/2025-01.parquet": "3d521a6032b4fd9f920237bd550a7eaeeae2f89701f4188aef19a0b0952457b8",
+    "runs/ctx_ownpoints_dev/member/s614/2025-07.parquet": "a6e250a552e0dbd0e50684c1673a65589a8dd9d3d96713f4fcba1679095c180d",
+    "runs/ctx_ownpoints_dev/member/s614/2025-11.parquet": "afe30d939685882902a7c273516df9792543212ed834a605db6e06389e8a546d",
+    "runs/ctx_ownpoints_dev/member/s614/2025-12.parquet": "878e500379f49da472f4af1e8ab8690e3f481bfc9bb1d9e5a0e42efbf98ec47e",
+    "runs/ctx_ownpoints_dev/member/s615/2025-01.parquet": "8e0eb37a91b99fffd6db56d12b96e376e5a0843be73f06ef901696764845df81",
+    "runs/ctx_ownpoints_dev/member/s615/2025-07.parquet": "16984894e7d2362f1b1d941d877e6561aed1cb951095caeabc3b80249711d203",
+    "runs/ctx_ownpoints_dev/member/s615/2025-11.parquet": "fa9ff8d67518dfd42952602e94693738447c846bc724c75a0273f2d953a4357e",
+    "runs/ctx_ownpoints_dev/member/s615/2025-12.parquet": "55987b3dd0cd7bf5d31f2a7bb4f2e30eda3ed6e71d12ff23ac519e1fc3105f58",
+    "runs/ctx_ownpoints_dev/member/s616/2025-01.parquet": "eaf2612ae04a6669c9270df76cbc99e23a0f74b6c4ef43a4b453abd73a52df42",
+    "runs/ctx_ownpoints_dev/member/s616/2025-07.parquet": "9ccdbc52b6c375dab6e93ab0325cfdd3f8da684ec23c2b607c63394b061de92a",
+    "runs/ctx_ownpoints_dev/member/s616/2025-11.parquet": "be3fc2af6c4138611f8884f857d6b7d449bc082a9693b66268abd7e4c268de92",
+    "runs/ctx_ownpoints_dev/member/s616/2025-12.parquet": "40881e8ab5e96191ebb048139c0671f67a36b56e00a4b95f594ace96ddf2bc3c"
+  },
+  "minimum_mean_improvement_fraction": 0.0002,
+  "months": {
+    "2025-01": {
+      "control_rmse": 321.75973662727614,
+      "rows": 153706
+    },
+    "2025-07": {
+      "control_rmse": 256.1838367127905,
+      "rows": 190713
+    },
+    "2025-11": {
+      "control_rmse": 183.94034576369873,
+      "rows": 162332
+    },
+    "2025-12": {
+      "control_rmse": 166.22101734271084,
+      "rows": 165677
+    }
+  },
+  "official_scores_used": "none",
+  "reproductions": {
+    "2025-01": {
+      "own_all_w100": 321.75973662727614,
+      "v46": 322.8584733629641,
+      "v51_model_part": 322.64501781453305
+    },
+    "2025-07": {
+      "own_all_w100": 256.1838367127905,
+      "v46": 257.7184562213178,
+      "v51_model_part": 257.5355573490268
+    },
+    "2025-11": {
+      "own_all_w100": 183.94034576369873,
+      "v46": 184.90496465003605,
+      "v51_model_part": 184.8231449185471
+    },
+    "2025-12": {
+      "own_all_w100": 166.22101734271084,
+      "v46": 167.51368475587924,
+      "v51_model_part": 167.3136536667202
+    }
+  },
+  "rows_sha256": "9072bc730f2cac40b8d85633cc19d41967d88b19c6c97bd12cbb22b15d9c5ed5",
+  "stage_1_selected": "mix_own_w100"
+}
