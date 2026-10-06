@@ -4,7 +4,9 @@ design = json.load(open('docs/lirf_own/design_report.json'))
 assert design['carried'] == 'M_routed', design['carried']
 import hashlib
 dsha = hashlib.sha256(open('docs/lirf_own/design_report.json', 'rb').read()).hexdigest()
-proxy = 'runs/ctx_ownpoints_dev/chain/own_all_w40/dev_v65_proxy.parquet'
+proxy = 'runs/ctx_ownpoints_weight/chain/own_all_w100/dev_v66_proxy.parquet'
+ident = 'runs/lirf_own/chain/identity_pinned_v66/identity_rebuilt.parquet'
+isha = hashlib.sha256(open(ident, 'rb').read()).hexdigest()
 psha = hashlib.sha256(open(proxy, 'rb').read()).hexdigest()
 now = datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).isoformat()
 oct_ = design['readings']['october']['L2']['M_routed']
@@ -17,7 +19,7 @@ d = {
  "declared_at_utc": now,
  "audit_used": False,
  "session": "final-week campaign, fork B (6 October 2026), lever 2; the user: \"yes start on them now\"; GPU: \"yes you can the GPU\"",
- "purpose": "Development round of the masked LIRF member with the 15 own-aircraft columns: lm25_32own (configs/lirf_own_network_ctx3_v1.json; configs/adsb_ctx3_lirf_mask_network_v1.json's lm25_32 plus the own columns, unmasked) replaces the shipped member M (lm25_32, 16 seeds 801-816) on own-route rows of the LIRF route of v53 / v55, inside v65's chain.",
+ "purpose": "Development round of the masked LIRF member with the 15 own-aircraft columns: lm25_32own (configs/lirf_own_network_ctx3_v1.json; configs/adsb_ctx3_lirf_mask_network_v1.json's lm25_32 plus the own columns, unmasked) replaces the shipped member M (lm25_32, 16 seeds 801-816) on own-route rows of the LIRF route of v53 / v55, inside v66's chain (the incumbent since 08:20 UTC, 6 October).",
  "disclosed": disclosed,
  "shipped_member": {"declaration": "configs/adsb_ctx3_lirf_mask_dev_v1.json", "variant": "lm25_32", "seeds": "801-816"},
  "fits": {
@@ -44,14 +46,15 @@ d = {
  },
  "stage_2": {
   "when": "only if stage 1 selects a candidate",
-  "scorer": "tools/run_lirf_own_dev.py --model-part --chain --score --candidate <selected>; the identity run (M' = M) reproduced the v65 development proxy before this declaration",
-  "control": "the v65 development proxy (stage 2 of configs/ctx_ownpoints_dev_v1.json)",
-  "control_file": {"path": proxy, "sha256": psha},
-  "candidate": "v65's development model part (runs/ctx_ownpoints_dev/chain/own_all_w40/dmp.parquet) with the LIRF route rows recomputed with M', then the shipped chain with its shipped parameters: no-NM rematch, v48, extreme-day, variance re-allocation, stack_resid_v3 refitted on the rebuilt components (LIRF: refitted v2), intruder bound, identity extension, own-motion v1, own-motion v2",
-  "rule": "v57's clauses 1-3 against the v65 proxy: (1) no development month worse than +0.005%; (2) the equal-footing mean (January, July, December 2025; January's change is exactly 0 by construction and enters the mean) at most -0.02%; (3) every equal-footing month whose rows change has its paired-day 95% interval below zero (January has no changed row and no interval)",
+  "scorer": "tools/run_lirf_own_dev.py --model-part --chain --score --candidate <selected>; before this declaration the scorer reproduced the stored v66 development proxy exactly from v66's own chain files (runs/lirf_own/chain/scorer_identity_v66/identity_score.json)",
+  "control": "the pinned identity rebuild of v66's chain (M' = M through this tool with the variance re-allocation pinned; two pinned rebuilds are byte-identical); the stored v66 proxy is reported beside it (the pinned rebuild differs from it by -0.009% to +0.024% per month through the LightGBM row/column choice alone)",
+  "identity_file": {"path": ident, "sha256": isha},
+  "stored_incumbent_proxy": {"path": proxy, "sha256": psha},
+  "candidate": "v66's development model part (runs/ctx_ownpoints_weight/chain/own_all_w100/dmp.parquet) with the LIRF route rows recomputed with M', then the shipped chain with its shipped parameters: no-NM rematch, v48, extreme-day, variance re-allocation, stack_resid_v3 refitted on the rebuilt components (LIRF: refitted v2), intruder bound, identity extension, own-motion v1, own-motion v2",
+  "rule": "v57's clauses 1-3 against the pinned identity rebuild of v66: (1) no development month worse than +0.005%; (2) the equal-footing mean (January, July, December 2025; January's change is exactly 0 by construction and enters the mean) at most -0.02%; (3) every equal-footing month whose rows change has its paired-day 95% interval below zero (January has no changed row and no interval)",
   "rule_values": {"equal_footing": ["2025-01", "2025-07", "2025-12"], "max_month_worsening_pct": 0.005, "min_mean_improvement_pct": 0.02}
  },
- "export_plan": "If both stages accept: tools/export_lirf_own.py --dry-run --version N writes runs/lirf_own/rank/dry_vN (v65's chain with the LIRF own-route rows of January 2026 recomputed from the 16 refit12 fits; July 2026 is dark and unchanged); the identity run (M' = M) must reproduce v65 byte for byte first. The coordinator assigns the version; nothing under runs/submissions; no upload.",
+ "export_plan": "If both stages accept: tools/export_lirf_own.py --dry-run --version N writes runs/lirf_own/rank/dry_vN (v66 plus the pinned candidate chain minus the pinned identity chain: the LIRF own-route rows of January 2026 recomputed from the 16 refit12 fits; July 2026 is dark and unchanged); the pinned export identity (runs/lirf_own/rank/identity_pinned_v66) exists. The coordinator assigns the version; nothing under runs/submissions; no upload.",
  "never_read": "No official score, leaderboard or ranking label enters. LIRF population rows and the guard rows MVT 213142471 / 213142469 never change.",
  "selection": "runs/lirf_own/dev/selection.json",
  "report": "docs/lirf_own/results_v1.json",
