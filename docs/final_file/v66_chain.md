@@ -77,7 +77,17 @@ timing test, so a refit under different load can differ (up to 0.024% of a devel
 The chain fits LightGBM models in steps 5 (variance re-allocation, month-blocked on 2025) and 6 (the stacker bags) without pinning
 `force_col_wise`. The rehearsal below shows whether that choice moved on this machine; the shipped values are never changed.
 
-REHEARSAL_RESULT
+## Rehearsal (6 October 2026, 13:50-14:05 UTC, `tools/rehearse_v66.py` -> `runs/final_file/rehearsal_v66/`)
+
+**v66 reproduces byte for byte:** `runs/final_file/rehearsal_v66/vigorous-whistle_v66.parquet` = `b4ea727e...` = the uploaded file, and
+every intermediate of steps 1-10 equals both the shipped dry run and the shipped build (`rehearsal.json`, `intermediates_equal`: dry run
+true, build true). The LightGBM fits of steps 5 and 6 came out identical on a third run under different machine load (WSL holding about
+4 GB for the GPU dispatch, 2-4 GB available), so the unpinned row/column-wise choice did not move these models on this workstation.
+Every input listed in `rehearsal.json` (raw ranking and template, shipped v55 model part, rebuilt development tables, declarations,
+published daily totals, the override record) has the same SHA-256 before and after. Wall time 880 s; peak resident memory of the
+driving process 2.11 GiB (the step tools run as child processes and are not included). Environment: Python 3.14.2, numpy 2.4.2,
+pandas 3.0.0, pyarrow 23.0.1, LightGBM 4.7.0, scikit-learn 1.9.0, Windows 11 (10.0.26200). Code hashes of every tool on the path are
+recorded in `rehearsal.json` (`code`).
 
 ## For a new movement file
 

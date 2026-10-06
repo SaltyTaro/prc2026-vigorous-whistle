@@ -1,4 +1,5 @@
 # The v61 chain on a new movement file (final-file readiness, 3 October 2026)
+> Later files: the v66 chain (steps added after v61, intermediates and rehearsal) is [`v66_chain.md`](v66_chain.md); this page stays the v61 record.
 
 v61 = 218.6142 official is built in eight steps: the final-file runner's model part, then seven separate tools. This page gives the
 exact order, what each step reads, what each tool hard-coded, and the optional flags added on 3 October so the whole chain runs on a
