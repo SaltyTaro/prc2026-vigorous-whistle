@@ -96,7 +96,7 @@ class Dispatcher:
                 continue
             code, out = ssh(n, "test -f ~/prc/.own2_ready && echo READY; "
                                "ls -d ~/prc/.venv/lib/python3*/site-packages/catboost ~/prc/.venv/lib/python3*/site-packages/torch > /dev/null 2>&1 && echo PKGS; "
-                               "test -f ~/prc/data/ctx/tokens_v1/manifest.json && echo TOKENS")
+                               "test -f ~/prc/data/ctx/tokens_v1/manifest.json && echo TOKENS; true")  # exit 0 = reachable, whatever the tests
             if code != 0:
                 self.unreachable[n] = self.unreachable.get(n, 0) + 1
                 continue
