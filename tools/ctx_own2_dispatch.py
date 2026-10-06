@@ -30,8 +30,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SKY = str(Path.home() / ".venv-sky/bin/sky")
 ALL_NODES = [f"prc-ctx4{c}" for c in "abcdefghijkl"]
-SPOT = set(f"prc-ctx4{c}" for c in "efghijkl")
-HEADS = {"prc-ctx4a", "prc-ctx4c", "prc-ctx4e", "prc-ctx4g", "prc-ctx4i"}
+SPOT = set(f"prc-ctx4{c}" for c in "efghkl")  # prc-ctx4i / prc-ctx4j are on-demand in us-east-2 (amendment 2)
+HEADS = {"prc-ctx4a", "prc-ctx4c", "prc-ctx4e", "prc-ctx4g"}  # launched with a head yaml (data uploaded by sky); all others get a fanout
 
 
 def now() -> str:
