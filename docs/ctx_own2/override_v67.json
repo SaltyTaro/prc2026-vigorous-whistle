@@ -1,0 +1,72 @@
+{
+ "kind": "user override of a declared rule result",
+ "recorded_at_utc": "2026-10-06T18:02:38+00:00",
+ "user_words": "override it",
+ "user_words_date": "6 October 2026, about 17:45 UTC (relayed by the coordinator session to fork E; recorded on receipt)",
+ "precedents": "v46, v52, v59, v64 and v66 were built on the user's override of a null declared result",
+ "declaration": {
+  "path": "configs/ctx_own2_dev_v1.json",
+  "sha256": "8ddc8c9fb7c6c4c72235abe2c92570ab95cc4c10e541733011efae8bc52a8446",
+  "commit": "c843eeb"
+ },
+ "rule_result": {
+  "selected_candidate": null,
+  "stage_1": {
+   "path": "docs/ctx_own2/results_stage1.json",
+   "sha256": "c86062a4151f5c755fd3477eb20bc0fe65469ad206d77da102abfa6fc88c9a78",
+   "eligible": [
+    "mix_own_w100"
+   ]
+  },
+  "stage_2": {
+   "path": "docs/ctx_own2/results_v1.json",
+   "sha256": "1eb178de3d64a700ce0a12a3c5500dcdaf5660401a3f5ce468d3c902be797374",
+   "checks": {
+    "1_no_month_worse_than_0.005pct": true,
+    "2_equal_footing_mean_pct": -0.044871276056997665,
+    "2_mean_ok": true,
+    "3_every_equal_interval_below_zero": false,
+    "accepted": false
+   }
+  },
+  "failed_clause": "clause 3: every equal-footing paired-day 95% interval below zero (January, July and December cross zero); clauses 1 and 2 pass",
+  "stage_2_months": {
+   "2025-01": {
+    "change_pct": -0.0182,
+    "interval_pct": [
+     -0.093,
+     0.0092
+    ]
+   },
+   "2025-07": {
+    "change_pct": -0.0082,
+    "interval_pct": [
+     -0.0464,
+     0.0287
+    ]
+   },
+   "2025-11": {
+    "change_pct": -0.0642,
+    "interval_pct": [
+     -0.1336,
+     -0.0076
+    ]
+   },
+   "2025-12": {
+    "change_pct": -0.1082,
+    "interval_pct": [
+     -0.2617,
+     0.0163
+    ]
+   }
+  }
+ },
+ "choice": {
+  "candidate": "mix_own_w100",
+  "member": "mix_own = 0.5 own_all (dl32own / m25dl32own, seeds 601-616) + 0.5 ref_own (r32own / m25r32own, seeds 621-636), ranking tables from the twelve-month refits of both",
+  "member_weight": 1.0,
+  "why_this_candidate": "the declared round's only candidate (the design batch's GO item); no other member, weight or variant was considered"
+ },
+ "build": "v67 = v66's chain (docs/final_file/v66_chain.md) with only step 1 changed (mix_own in place of own_all at 1.00) and steps 2-10 re-run, the stacker refitted on the candidate's rebuilt development tables (runs/ctx_own2/chain/mix_own_w100/, the stage-2 chain); tools/export_ctx_own2_override.py",
+ "official_scores_used": "none (v66's official score only fixes the incumbent; nothing is tuned on it)"
+}
