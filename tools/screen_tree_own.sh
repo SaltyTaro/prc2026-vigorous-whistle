@@ -10,7 +10,10 @@ PY=".venv/Scripts/python.exe -X utf8 -u"
 [ -e runs/tree_own/chain_v66/identity/score.json ] || $PY tools/run_tree_own_chain.py --model-part identity --chain identity --score identity
 [ -e runs/tree_own/chain_v66_pinned/identity/score.json ] || $PY tools/run_tree_own_chain.py --pinned --model-part identity --chain identity --score identity
 for c in lirf_fam100 lirf_exact com_fam100 com_exact both_fam100; do
-  [ -e runs/tree_own/chain_v66_pinned/$c/score.json ] || $PY tools/run_tree_own_chain.py --pinned --model-part $c --chain $c --score $c
+  d=runs/tree_own/chain_v66_pinned/$c
+  [ -e $d/dmp.json ] || $PY tools/run_tree_own_chain.py --pinned --model-part $c
+  [ -e $d/chain.json ] || $PY tools/run_tree_own_chain.py --pinned --chain $c
+  [ -e $d/score.json ] || $PY tools/run_tree_own_chain.py --pinned --score $c
 done
 PYTHONPATH=src $PY - <<'EOF'
 import json
