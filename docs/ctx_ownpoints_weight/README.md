@@ -1,4 +1,4 @@
-# Own-points member weight round (6 October 2026): nothing selected, v65 stays
+# Own-points member weight round (6 October 2026): rule selected nothing; v66 built at the user's override (weight 1.00), not uploaded
 
 Lever 1 of the final-week campaign (the user: "yes start on them now"). Declaration
 [`configs/ctx_ownpoints_weight_v1.json`](../../configs/ctx_ownpoints_weight_v1.json) (bdd0087, 05:16:47 UTC, before any score of a
@@ -57,3 +57,37 @@ v65 stays.** No ranking file, dry run or v66 was built.
   `dev_v66_proxy.parquet`), logs.
 - The imported chain step writes its daily-totals runs to `runs/daily_totals/ctx_ownpts_own_all_w{55,70,85,100}_{ctl,cand}/`, as the v65
   round did for w40.
+
+## User override and v66 (built, not uploaded)
+
+The user overrode the rule result ("i want to override it", 6 October 2026), as with v46 / v52 / v59 / v64. Record
+[`override_v66.json`](override_v66.json) (be882f8): the failed clause (1, November +0.009 to +0.029%), the choice own_all_w100 (the
+declared stage-2 order's first candidate among those passing clauses 2-3; no other weight considered), no official score used.
+
+`tools/export_ownpoints_weight_override.py` runs `tools/export_ctx_ownpoints.chain` unchanged (v65's export path, steps 1-9), with the
+stacker refitted on the candidate's own development tables (`runs/ctx_ownpoints_weight/chain/own_all_w100/`).
+
+- Identity first: own_all_w40 with the v65 round's declaration and tables through the same path reproduces v65 byte for byte
+  (`45160819...`; `runs/ctx_ownpoints_weight/rank/identity_v66/identity.json`).
+- Dry run `runs/ctx_ownpoints_weight/rank/dry_v66/`, rebuild `rank/build_v66/` byte-identical:
+  **`runs/submissions/vigorous-whistle_v66.parquet`, SHA-256 `b4ea727e1644b6add104f44832898bfecfd3d5607f7d6a9ce0471efe581322e4`**
+  (receipt [`export_v66.json`](export_v66.json); audit [`../export_audit/v66_audit.json`](../export_audit/v66_audit.json): integrity clean,
+  min -12, 17 negative predictions, none below -12; the same four January 2026 airport-month level flags as v65's audit; LIRF population
+  predictions identical to v65).
+- Against v65: 303,695 rows differ, squared change 6.71e7 (v65 vs v64: 5.34e7), RMS 14.0 s, mean -0.13 s, largest moves -913 / +864 s
+  (EHAM / EDDF), no row moves more than 1,800 s. January 2026 RMS 19.1 s, July 7.8 s. No LIRF population row and neither guard row
+  changes; 20,532 LIRF non-population rows move only through the stacker step (RMS 5.0 s).
+
+| airport | rows changed | RMS (s) | mean (s) | squared change |
+|---|---:|---:|---:|---:|
+| EHAM | 33,195 | 25.4 | +0.09 | 2.46e7 |
+| EDDF | 32,675 | 17.6 | +0.96 | 1.13e7 |
+| LFPG | 35,504 | 15.9 | -0.42 | 1.01e7 |
+| LTFM | 42,877 | 10.8 | -1.23 | 5.54e6 |
+| EGLL | 36,582 | 11.0 | -0.45 | 4.84e6 |
+| LSZH | 20,536 | 13.9 | +0.17 | 4.45e6 |
+| EDDM / LEBL / LEMD | 22,311 / 26,981 / 32,502 | 8.5 / 7.8 / 7.1 | -0.31 / +0.80 / -0.38 | 1.9e6 each |
+| LIRF | 20,532 | 5.0 | +0.11 | 6.8e5 |
+
+Expected from stage 2 (v65 proxy, own_all_w100): January -0.068%, July -0.163%, November +0.029%, December -0.133% of month RMSE
+(equal-footing mean -0.121%). Upload only at the user's word.
