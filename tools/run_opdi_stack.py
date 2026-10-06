@@ -46,6 +46,9 @@ REL = [("q_stand_vs_pred", "o_stand_exit"), ("q_apron_vs_pred", "o_apron_exit"),
 NEW_COLS = CORE + [q for q, _ in REL]
 MONTHS = ["2025-01", "2025-07", "2025-11", "2025-12"]
 EQUAL = ["2025-01", "2025-07", "2025-12"]
+# screened variants (fixed before any OPDI score): the OPDI learner's value on OPDI-matched rows at every airport except LIRF, or only at
+# the three airports where the 18 September probe found OPDI surface times that adsb.lol lacks (LSZH, EDDF, LEMD)
+VARIANTS = {"opdi": ["EDDF", "EDDM", "EGLL", "EHAM", "LEBL", "LEMD", "LFPG", "LSZH", "LTFM"], "opdi3": ["LSZH", "EDDF", "LEMD"]}
 BAR = {"eq_mean_pct": -0.05, "max_month_pct": 0.01, "min_intervals_below_zero": 2}
 
 
@@ -192,16 +195,21 @@ def score(name: str) -> None:
     X46 = X46.reset_index(drop=True)
     core = V3.own_points("dev", dev[ID].to_numpy())
     Pn = V3.new_columns(core, dev["new"].to_numpy(dtype=float))
-    if name == "opdi":
+    X65 = pd.concat([X46, Pn], axis=1)
+    pr = V3.dev_predictions(dev, X46, X65, Pn, res)
+    new, air = dev["new"].to_numpy(dtype=float), dev["airport"].to_numpy()
+    use = np.zeros(len(dev), bool)
+    if name in VARIANTS:
+        # stack_resid_v3's learner refitted with the OPDI columns appended (and guarded like v3's own-point columns); it replaces v3's
+        # stacking value only on rows with an OPDI match that its guard does not hold (and, per variant, at the listed airports);
+        # every other row keeps the identity value (v3), LIRF keeps v2 as in v3
         Po = opdi_columns("dev", dev[ID].to_numpy(), dev["new"].to_numpy(dtype=float))
         Pg = pd.concat([Pn, Po], axis=1)
-    elif name == "identity":
-        Pg = Pn
-    else:
+        po = V3.dev_predictions(dev, X46, pd.concat([X46, Pg], axis=1), Pg, res)
+        use = (Po["o_has"].to_numpy() > 0) & ~po["h3"] & np.isin(air, VARIANTS[name])
+        pr = {**pr, "base3": np.where(use, po["base3"], pr["base3"]), "h3": po["h3"], "trees": {**pr["trees"], **{f"opdi {k}": v for k, v in po["trees"].items()}}}
+    elif name != "identity":
         raise ValueError(name)
-    X = pd.concat([X46, Pg], axis=1)
-    pr = V3.dev_predictions(dev, X46, X, Pg, res)
-    new, air = dev["new"].to_numpy(dtype=float), dev["airport"].to_numpy()
     s1 = pd.read_parquet(files[3]).set_index(ID)["new"].reindex(dev[ID]).to_numpy(dtype=float)
     keys, _ = O2.O.dev_table()
     keys = keys.set_index(ID).reindex(dev[ID]).reset_index()
@@ -219,6 +227,7 @@ def score(name: str) -> None:
     out = t[[ID, "month", "airport", "label", "cls", "day"]].copy()
     out["value"] = c66
     out["held3"] = pr["h3"]
+    out["opdi_used"] = use
     out.to_parquet(d / "proxy.parquet", index=False)
     rm = {m: float(np.sqrt(np.mean((g["label"] - g["value"]) ** 2))) for m, g in out.groupby("month")}
     ship = pd.read_parquet(SHIP / "proxy.parquet").set_index(ID)["value"].reindex(out[ID]).to_numpy(dtype=float)
@@ -226,7 +235,7 @@ def score(name: str) -> None:
     write_json(d / "score.json", {"created_at_utc": utc_now(), "name": name, "month_rmse": rm, "max_abs_diff_vs_pinned_control": diff,
                                   "inputs": {p.name: sha256_file(p) for p in files}, "stacker_trees": pr["trees"],
                                   "proxy_sha256": sha256_file(d / "proxy.parquet"), "code": sha256_file(Path(__file__)),
-                                  "opdi_features": read_json(OUT / "features_dev.receipt.json") if name == "opdi" else None})
+                                  "opdi_features": read_json(OUT / "features_dev.receipt.json") if name in VARIANTS else None, "opdi_rows_used": int(use.sum())})
     print(name, "month RMSE", {m: round(v, 4) for m, v in rm.items()}, "max |diff| vs pinned control", diff, flush=True)
     if name == "identity" and diff != 0.0:
         raise ValueError("identity: the copied chain does not reproduce the pinned v66 control.")
@@ -235,33 +244,39 @@ def score(name: str) -> None:
 def read() -> None:
     import run_intruder_bound as R
     ctl = pd.read_parquet(SHIP / "proxy.parquet")
-    c = pd.read_parquet(OUT / "chain/opdi/proxy.parquet").set_index(ID).reindex(ctl[ID])
-    t = ctl.rename(columns={"value": "ctl"}).assign(cand=c["value"].to_numpy(dtype=float), held=c["held3"].to_numpy(dtype=bool))
-    rng = np.random.default_rng(20261004)
-    months = {}
-    for m in MONTHS:
-        s = t[t["month"] == m]
-        pct, lo, hi = R.interval(s, "ctl", s["cand"].to_numpy(), rng)
-        ch = s["cand"].to_numpy() - s["ctl"].to_numpy()
-        months[m] = {"pct": pct, "lo": lo, "hi": hi, "rmse": float(np.sqrt(np.mean((s["label"] - s["cand"]) ** 2))),
-                     "control_rmse": float(np.sqrt(np.mean((s["label"] - s["ctl"]) ** 2))),
-                     "rows_changed": int((np.abs(ch) > 1e-9).sum()), "squared_change": float((ch ** 2).sum())}
-    eq = float(np.mean([months[m]["pct"] for m in EQUAL]))
-    n_below = sum(months[m]["hi"] < 0 for m in EQUAL)
-    go = eq <= BAR["eq_mean_pct"] and all(months[m]["pct"] <= BAR["max_month_pct"] for m in MONTHS) and n_below >= BAR["min_intervals_below_zero"]
-    by = {}
-    for (a, m), g in t.groupby(["airport", "month"]):
-        c0, c1 = float(((g["label"] - g["ctl"]) ** 2).sum()), float(((g["label"] - g["cand"]) ** 2).sum())
-        by[f"{a} {m}"] = {"sse_change_pct_of_month": 100 * (c1 - c0) / float(((t[t["month"] == m]["label"] - t[t["month"] == m]["ctl"]) ** 2).sum()),
-                          "rows_changed": int((np.abs(g["cand"] - g["ctl"]) > 1e-9).sum())}
     res = {"created_at_utc": utc_now(), "control": "pinned v66 development proxy (runs/pubrefit/chain/ship/proxy.parquet)", "bar": BAR,
-           "months": months, "equal_footing_mean_pct": eq, "equal_intervals_below_zero": int(n_below), "go": bool(go), "airport_month": by,
-           "official_scores_used": "none"}
+           "variants": {}, "official_scores_used": "none"}
+    for name in VARIANTS:
+        p = OUT / "chain" / name / "proxy.parquet"
+        if not p.exists():
+            continue
+        c = pd.read_parquet(p).set_index(ID).reindex(ctl[ID])
+        t = ctl.rename(columns={"value": "ctl"}).assign(cand=c["value"].to_numpy(dtype=float), used=c["opdi_used"].to_numpy(dtype=bool))
+        rng = np.random.default_rng(20261004)
+        months = {}
+        for m in MONTHS:
+            s = t[t["month"] == m]
+            pct, lo, hi = R.interval(s, "ctl", s["cand"].to_numpy(), rng)
+            ch = s["cand"].to_numpy() - s["ctl"].to_numpy()
+            months[m] = {"pct": pct, "lo": lo, "hi": hi, "rmse": float(np.sqrt(np.mean((s["label"] - s["cand"]) ** 2))),
+                         "control_rmse": float(np.sqrt(np.mean((s["label"] - s["ctl"]) ** 2))), "opdi_rows_used": int(s["used"].sum()),
+                         "rows_changed": int((np.abs(ch) > 1e-9).sum()), "squared_change": float((ch ** 2).sum())}
+        eq = float(np.mean([months[m]["pct"] for m in EQUAL]))
+        n_below = sum(months[m]["hi"] < 0 for m in EQUAL)
+        go = eq <= BAR["eq_mean_pct"] and all(months[m]["pct"] <= BAR["max_month_pct"] for m in MONTHS) and n_below >= BAR["min_intervals_below_zero"]
+        by = {}
+        for (a, m), g in t.groupby(["airport", "month"]):
+            tot = float(((t.loc[t["month"] == m, "label"] - t.loc[t["month"] == m, "ctl"]) ** 2).sum())
+            c0, c1 = float(((g["label"] - g["ctl"]) ** 2).sum()), float(((g["label"] - g["cand"]) ** 2).sum())
+            by[f"{a} {m}"] = {"sse_change_pct_of_month": 100 * (c1 - c0) / tot, "rows_changed": int((np.abs(g["cand"] - g["ctl"]) > 1e-9).sum()),
+                              "opdi_rows_used": int(g["used"].sum())}
+        res["variants"][name] = {"airports": VARIANTS[name], "months": months, "equal_footing_mean_pct": eq, "equal_intervals_below_zero": int(n_below),
+                                 "go": bool(go), "airport_month": by}
+        print(name, {m: (round(v["pct"], 4), round(v["lo"], 3), round(v["hi"], 3)) for m, v in months.items()}, "eq", round(eq, 4), "GO", go, flush=True)
+        for k, v in by.items():
+            if k.startswith(("LSZH", "EDDF", "LEMD")):
+                print("  ", k, round(v["sse_change_pct_of_month"], 4), v["rows_changed"], v["opdi_rows_used"], flush=True)
     write_json(DOCS / "screen.json", res)
-    print({m: (round(v["pct"], 4), round(v["lo"], 3), round(v["hi"], 3)) for m, v in months.items()}, "eq", round(eq, 4), "GO", go, flush=True)
-    for k, v in by.items():
-        if k.startswith(("LSZH", "EDDF", "LEMD")):
-            print(k, round(v["sse_change_pct_of_month"], 4), v["rows_changed"], flush=True)
 
 
 def main() -> None:
