@@ -34,8 +34,25 @@ Report: `tools/ctx_own2_design_report.py` -> `design_report.json`.
 
 ## Pre-emptions
 
-(recorded from `runs/ctx_own2/dispatch_<stage>.log`)
+Design batch: none. No spot node was ever provisioned (spot g6e.2xlarge unavailable in us-east-1 / us-west-2 throughout 10:01-11:30).
+The 32 fits ran on on-demand prc-ctx4b (us-east-1, from 10:31) and prc-ctx4c (us-west-2, from 11:05); prc-ctx4i / prc-ctx4j (us-east-2,
+on-demand, up 10:43) were never prepared by the dispatcher and autostopped idle (see the hand-off). Every fit was mirrored the moment its
+run.json existed, with all six files' SHA-256 equal to the node's (`runs/ctx_own2/dispatch_design.log`); no fit failed or was re-run.
 
-## Results
+## Design result (13:02 UTC, [`design_report.json`](design_report.json)): **GO for `mix_own`**
 
-(pending)
+October non-LIRF RMSE (8-seed means), recipe proxy R2 at v66's member weight b = 1.0 (share 0.75), gain in points against the control:
+
+| item | standalone (s) | matched / unmatched (s) | vs control | gain at b = 1.0 (pts) | interval (s) | GO |
+|---|---:|---|---:|---:|---|---|
+| control (own_all as shipped, GPU refit) | 154.123 | 115.71 / 208.48 | | | | |
+| ref_own (r32own / m25r32own) | 153.271 | 114.46 / 207.97 | -0.553% | +0.126 | [-0.50, +0.11] | no (interval) |
+| **mix_own (0.5 control + 0.5 ref_own)** | **152.738** | 114.37 / 206.93 | **-0.898%** | **+0.184** | **[-0.45, -0.18]** | **yes** |
+| ref_matched (reported) | 153.509 | 114.46 / 208.48 | -0.398% | +0.088 | [-0.25, -0.07] | |
+| ref_unmatched (reported) | 153.885 | 115.71 / 207.97 | -0.154% | +0.038 | [-0.33, +0.28] | |
+
+- The reference recipe is better than dl on both routes (r32own 114.46 vs dl32own 115.71 on matched rows; m25r32own 207.97 vs m25dl32own
+  208.48 on unmatched rows), as the 29 September record suggested; the 50/50 recipe mixture is better still (errors correlate 0.975).
+- GPU controls against tunnel 21's CPU fits of seeds 9-12: per-seed October RMSE within 1.5 s either way (not exact across devices); the
+  4-seed means agree within the seed spread.
+- Design fits: 32 on L40S, about 10-12 min each at two per GPU.
