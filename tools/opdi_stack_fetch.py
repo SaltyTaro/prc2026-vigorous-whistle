@@ -86,7 +86,7 @@ def filter_file(src: Path) -> pd.DataFrame:
 def fetch(url: str, dest: Path) -> tuple[str, int]:
     h, n = hashlib.sha256(), 0
     req = urllib.request.Request(url, headers={"User-Agent": "prc2026-vigorous-whistle/0.1 (research; contact via the PRC Data Challenge)"})
-    for attempt in range(4):
+    for attempt in range(10):
         try:
             with urllib.request.urlopen(req, timeout=120) as r, open(dest, "wb") as fh:
                 while True:
@@ -100,7 +100,7 @@ def fetch(url: str, dest: Path) -> tuple[str, int]:
         except Exception as ex:  # bounded retry, then fail loudly
             print("retry", attempt, url, ex, flush=True)
             h, n = hashlib.sha256(), 0
-            time.sleep(10 * (attempt + 1))
+            time.sleep(min(20 * (attempt + 1), 120))
     raise RuntimeError(f"download failed: {url}")
 
 
