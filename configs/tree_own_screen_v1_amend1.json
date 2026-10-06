@@ -1,0 +1,15 @@
+{
+  "name": "tree_own_screen_v1_amend1",
+  "amends": "configs/tree_own_screen_v1.json (eb59cc6)",
+  "declared_at_utc": "2026-10-06T08:23:01Z",
+  "why": "the coordinator's update of 08:20 UTC: v66 (v65's chain with the own-points member own_all at weight 1.00 instead of 0.40) is the official best and the incumbent; in-chain readings must be on v66's chain. Recorded before any candidate's in-chain score was read (only the zero-delta identity runs on v65's chain had been scored, as pipeline checks).",
+  "status_at_amendment": "all 48 fits done and mirrored; four 12-thread controls refitted at 16 threads (docs/tree_own/thread_deviation.json); no candidate table built, no candidate model part, chain or score run",
+  "changes": {
+    "reading.chain": "v66's development chain: as declared, with the own-points member own_all at weight 1.00 (configs/ctx_ownpoints_weight_v1.json candidate own_all_w100) in place of 0.40; every other step unchanged (stack_resid_v3 refitted on the rebuilt components, LIRF taking v2)",
+    "reading.control": "the v66 development proxy runs/ctx_ownpoints_weight/chain/own_all_w100/dev_v66_proxy.parquet column v66 (SHA-256 5bc62cec0af5856de10a9efd195713bd99d73c3e9bacddb38b8bde81c1991c07)",
+    "reading.identity": "with zero deltas the tool reproduces v66's development model part runs/ctx_ownpoints_weight/chain/own_all_w100/dmp.parquet (SHA-256 5a5c3373...) within 1e-9 s and, unpinned, the v66 proxy within 1e-6 s before any candidate is scored",
+    "reading.noise_control": "the variance re-allocation's LightGBM picks row- or column-wise histograms by a timing test, so chain reruns can differ by up to about 0.0075% of a month (commit 981d536). Every candidate chain and one more zero-delta identity chain therefore run with that LightGBM pinned (deterministic, force_col_wise; the patch of tools/lirf_own_pinned.py), and a candidate's reading is v66 proxy + (pinned candidate - pinned identity) on every row; the GO bar is applied to that reading against the v66 proxy",
+    "reading.v48_runs": "the v48 month runs of this amendment use tags runs/daily_totals/tree_own_v66_<candidate>_<kind> (shared by the pinned and unpinned runs of the same model part; the v48 step has no LightGBM)"
+  },
+  "unchanged": ["leaves, variants, folds, rounds and the control reproduction requirement", "the five candidates and their construction", "months, intervals (seed 20261006), population guard", "the GO bar: equal-footing mean <= -0.05%, no month worse than +0.01%, at least two of three equal-footing intervals below zero", "after_go and the deadline"]
+}

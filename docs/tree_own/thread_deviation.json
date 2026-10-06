@@ -1,0 +1,9 @@
+{
+  "created_at_utc": "2026-10-06T08:06:11.528427+00:00",
+  "declaration": "configs/tree_own_screen_v1.json (eb59cc6): 16 threads, one fit at a time per worker",
+  "deviation": "arcw5 and arcw6 ran their remaining jobs at 12 threads (arcw5: the own variant of lgb_lirf_s31, lgb_lirf_nm_s33, lgb_x19_s25; arcw6: the ctl variant of lgb_lirf_cap_s32, lgb_x19_s24, lgb_x19_s26). The leaves set deterministic=True and force_col_wise=True (thread-count invariant up to floating-point summation order).",
+  "effect_found": "the control check (tools/run_tree_own_chain.py --check) failed on four 12-thread controls: lgb_lirf_cap_s32 lomo_2025-07 (one row differs by 1.1e-13 s) and the jan_nov models of lgb_lirf_cap_s32 / lgb_x19_s24 (model text differs only in the [num_threads: 12] line) and lgb_x19_s26 (the same line plus one leaf value differing in its last digits). Every other 12-thread control reproduced its saved leaf with difference 0.0; December's 19-20 differing rows are the documented ADS-B neighbour tie-order rows.",
+  "no_candidate_read_before_remedy": true,
+  "remedy": "the four controls were refitted at 16 threads on clean hosts (arcw4, arcw7) so that the declared check applies literally; the 12-thread outputs and the failed check are preserved under runs/tree_own/fits_t12/ and runs/tree_own/check_t12_failed.json. The own variants fitted at 12 threads are kept (not covered by the reproduction requirement; their thread-order noise is of order 1e-13 s against own-minus-ctl deltas of seconds).",
+  "what_happened": "arcw5 and arcw6 ran on hosts whose Azure MANA network adapter failed in a loop (dmesg 'mana ... probe with driver mana failed with error -71', several hundred per minute, PCI rescans in kworker threads using 1-2 CPUs); a 16-thread LightGBM fit there took >16 minutes against about 5 on arcw4. A deallocate/start moved arcw7 to a clean host; arcw5 and arcw6 kept the fault."
+}
