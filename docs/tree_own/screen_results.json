@@ -1,0 +1,385 @@
+{
+  "amendment": "configs/tree_own_screen_v1_amend1.json",
+  "amendment_sha256": "db9004d38e4adb63f66d6137c12e5df0006914c1cfa47a45df267ea98b4569eb",
+  "best_by_equal_footing_mean": "both_fam100",
+  "candidates": {
+    "both_fam100": {
+      "go_bar": {
+        "GO": false,
+        "equal_footing_mean_pct": -0.03771020070252318,
+        "equal_intervals_below_zero": 1,
+        "intervals_ok": false,
+        "mean_ok": false,
+        "no_month_worse_than_0.01pct": true
+      },
+      "months": {
+        "2025-01": {
+          "control_rmse": 320.12521878691336,
+          "hi": -0.010099655749423786,
+          "lo": -0.1370784502512079,
+          "pct": -0.036437928554722276,
+          "rmse": 320.00857178840613,
+          "rows_changed": 153582,
+          "squared_change": 5592200.080075043
+        },
+        "2025-07": {
+          "control_rmse": 251.0775198877123,
+          "hi": 0.033699527711145684,
+          "lo": -0.04960955118850641,
+          "pct": -0.008533926615028609,
+          "rmse": 251.05609311641825,
+          "rows_changed": 190247,
+          "squared_change": 18485103.322861597
+        },
+        "2025-11": {
+          "control_rmse": 182.19253192270213,
+          "hi": 0.03445267668052305,
+          "lo": -0.09881588684823694,
+          "pct": -0.027361609303544476,
+          "rmse": 182.14268111393721,
+          "rows_changed": 162212,
+          "squared_change": 8268336.545871516
+        },
+        "2025-12": {
+          "control_rmse": 163.6736468080471,
+          "hi": 0.03850504826400134,
+          "lo": -0.1864309803071615,
+          "pct": -0.06815874693781865,
+          "rmse": 163.5620889013153,
+          "rows_changed": 165516,
+          "squared_change": 8242515.761810144
+        }
+      },
+      "proxy": {
+        "path": "runs\\tree_own\\chain_v66_pinned\\both_fam100\\dev_proxy.parquet",
+        "sha256": "d3d103745dd4473fe74016051bf053f4e41182be0ce775a111f6a5ab3e862c9e"
+      }
+    },
+    "com_exact": {
+      "go_bar": {
+        "GO": false,
+        "equal_footing_mean_pct": -0.006820885760453847,
+        "equal_intervals_below_zero": 1,
+        "intervals_ok": false,
+        "mean_ok": false,
+        "no_month_worse_than_0.01pct": true
+      },
+      "months": {
+        "2025-01": {
+          "control_rmse": 320.12521878691336,
+          "hi": 0.011170532055227979,
+          "lo": -0.008787639054600449,
+          "pct": 0.0011320452221186272,
+          "rmse": 320.12884274915746,
+          "rows_changed": 153557,
+          "squared_change": 639651.558079866
+        },
+        "2025-07": {
+          "control_rmse": 251.0775198877123,
+          "hi": 0.011127179160692608,
+          "lo": -0.006558850456733489,
+          "pct": 0.0011667315332974937,
+          "rmse": 251.08044928830986,
+          "rows_changed": 190204,
+          "squared_change": 1034151.0845804176
+        },
+        "2025-11": {
+          "control_rmse": 182.19253192270213,
+          "hi": 0.017655976984682905,
+          "lo": 0.0027138356315403733,
+          "pct": 0.009603321192708236,
+          "rmse": 182.21002845673178,
+          "rows_changed": 162201,
+          "squared_change": 346378.64594877034
+        },
+        "2025-12": {
+          "control_rmse": 163.6736468080471,
+          "hi": -0.007390279387708978,
+          "lo": -0.0376290865094106,
+          "pct": -0.02276143403677766,
+          "rmse": 163.6363923388933,
+          "rows_changed": 165502,
+          "squared_change": 576272.3919311364
+        }
+      },
+      "proxy": {
+        "path": "runs\\tree_own\\chain_v66_pinned\\com_exact\\dev_proxy.parquet",
+        "sha256": "7bc90bcfd0a6247681a29cab3315f212e5f27eba48b00f933036a10b3f1c19f5"
+      }
+    },
+    "com_fam100": {
+      "go_bar": {
+        "GO": false,
+        "equal_footing_mean_pct": -0.02500571965403653,
+        "equal_intervals_below_zero": 1,
+        "intervals_ok": false,
+        "mean_ok": false,
+        "no_month_worse_than_0.01pct": true
+      },
+      "months": {
+        "2025-01": {
+          "control_rmse": 320.12521878691336,
+          "hi": -0.00016471391347446546,
+          "lo": -0.07303917274969152,
+          "pct": -0.017969383397897776,
+          "rmse": 320.0676942589962,
+          "rows_changed": 153568,
+          "squared_change": 4625469.089402517
+        },
+        "2025-07": {
+          "control_rmse": 251.0775198877123,
+          "hi": 0.013745461866350162,
+          "lo": -0.05180950492168129,
+          "pct": -0.01749764425280631,
+          "rmse": 251.03358723648358,
+          "rows_changed": 190211,
+          "squared_change": 7218689.464179521
+        },
+        "2025-11": {
+          "control_rmse": 182.19253192270213,
+          "hi": 0.03429946698715102,
+          "lo": -0.023583343642363253,
+          "pct": 0.005623184043490603,
+          "rmse": 182.20277694408563,
+          "rows_changed": 162207,
+          "squared_change": 4747749.280337186
+        },
+        "2025-12": {
+          "control_rmse": 163.6736468080471,
+          "hi": 0.039851763985779186,
+          "lo": -0.14535727034960866,
+          "pct": -0.0395501313114055,
+          "rmse": 163.60891366581234,
+          "rows_changed": 165510,
+          "squared_change": 4674250.148698486
+        }
+      },
+      "proxy": {
+        "path": "runs\\tree_own\\chain_v66_pinned\\com_fam100\\dev_proxy.parquet",
+        "sha256": "620d009193e379fc3e7dad2b8606561888dd1202e2587754be7bfa858224a7a4"
+      }
+    },
+    "lirf_exact": {
+      "go_bar": {
+        "GO": false,
+        "equal_footing_mean_pct": -0.006853526766118871,
+        "equal_intervals_below_zero": 0,
+        "intervals_ok": false,
+        "mean_ok": false,
+        "no_month_worse_than_0.01pct": true
+      },
+      "months": {
+        "2025-01": {
+          "control_rmse": 320.12521878691336,
+          "hi": 0.013669351750058562,
+          "lo": -0.011976787793741006,
+          "pct": 0.0015073438926371807,
+          "rmse": 320.1300441748475,
+          "rows_changed": 153463,
+          "squared_change": 659429.39671673
+        },
+        "2025-07": {
+          "control_rmse": 251.0775198877123,
+          "hi": 0.009444604163930668,
+          "lo": -0.01559817901044619,
+          "pct": -0.004265259930680276,
+          "rmse": 251.0668107788616,
+          "rows_changed": 189219,
+          "squared_change": 1671691.9375033525
+        },
+        "2025-11": {
+          "control_rmse": 182.19253192270213,
+          "hi": 0.012369675830725678,
+          "lo": -0.03272835001129154,
+          "pct": -0.009533817176587966,
+          "rmse": 182.17516201979922,
+          "rows_changed": 162141,
+          "squared_change": 1003461.784713961
+        },
+        "2025-12": {
+          "control_rmse": 163.6736468080471,
+          "hi": 0.001754331814959857,
+          "lo": -0.037548347264285686,
+          "pct": -0.017802664260313517,
+          "rmse": 163.64450853822325,
+          "rows_changed": 165397,
+          "squared_change": 862851.3699753401
+        }
+      },
+      "proxy": {
+        "path": "runs\\tree_own\\chain_v66_pinned\\lirf_exact\\dev_proxy.parquet",
+        "sha256": "4bb083d2c7aa7509882a7514b6c01781a4c0be8847cf82384fc77c8c0a4422db"
+      }
+    },
+    "lirf_fam100": {
+      "go_bar": {
+        "GO": false,
+        "equal_footing_mean_pct": -0.007915193125411038,
+        "equal_intervals_below_zero": 0,
+        "intervals_ok": false,
+        "mean_ok": false,
+        "no_month_worse_than_0.01pct": false
+      },
+      "months": {
+        "2025-01": {
+          "control_rmse": 320.12521878691336,
+          "hi": 0.001533358657776484,
+          "lo": -0.0580671282329262,
+          "pct": -0.012086362814434093,
+          "rmse": 320.08652729151027,
+          "rows_changed": 153465,
+          "squared_change": 2332528.4425162384
+        },
+        "2025-07": {
+          "control_rmse": 251.0775198877123,
+          "hi": 0.05180284460702508,
+          "lo": -0.025872346819759973,
+          "pct": 0.011289754516030648,
+          "rmse": 251.10586592335255,
+          "rows_changed": 189219,
+          "squared_change": 13366924.176507778
+        },
+        "2025-11": {
+          "control_rmse": 182.19253192270213,
+          "hi": 0.028739835087763194,
+          "lo": -0.07025250479244849,
+          "pct": -0.016769974939068177,
+          "rmse": 182.16197828075784,
+          "rows_changed": 162146,
+          "squared_change": 4440985.954601889
+        },
+        "2025-12": {
+          "control_rmse": 163.6736468080471,
+          "hi": 0.025387560882479947,
+          "lo": -0.07060463560234959,
+          "pct": -0.022948971077829672,
+          "rmse": 163.6360853901791,
+          "rows_changed": 165400,
+          "squared_change": 4881622.729260927
+        }
+      },
+      "proxy": {
+        "path": "runs\\tree_own\\chain_v66_pinned\\lirf_fam100\\dev_proxy.parquet",
+        "sha256": "b851b5a803894cc9570482290e87b40e5dc52e9c43002b458dba629fe777a8ae"
+      }
+    }
+  },
+  "check_passed": true,
+  "control": "v66 development proxy",
+  "created_at_utc": "2026-10-06T11:13:40.258613+00:00",
+  "declaration": "configs/tree_own_screen_v1.json",
+  "declaration_sha256": "f24c3e443e5e65a0307d4cbf19bd3d5365b751d10c177904cbc24d283f1d5419",
+  "go_candidates": [],
+  "identity_pinned_max_abs_vs_v66_s": 152.7620769540377,
+  "identity_unpinned_max_abs_vs_v66_s": 0.0,
+  "tables": {
+    "created_at_utc": "2026-10-06T08:23:29.235401+00:00",
+    "months": {
+      "2025-01": {
+        "committee": {
+          "d_exact_rms_s": 2.8938923570018114,
+          "d_fam_rms_s": 34.72670828402174,
+          "group_share": 0.08333333333333333,
+          "leaf_delta_rms_s": {
+            "runs/adsb_v20/lgb_x19_s24": 41.1721115266347,
+            "runs/adsb_v20/lgb_x19_s25": 42.97277972872541,
+            "runs/adsb_v20/lgb_x19_s26": 42.65812404420804
+          },
+          "members": 468,
+          "rebuild_max_abs_s": 0.0
+        },
+        "lirf_tree": {
+          "d_exact_rms_s": 9.008831926731188,
+          "d_fam_rms_s": 35.17173678328664,
+          "group_share": 0.25,
+          "leaf_delta_rms_s": {
+            "runs/adsb_v21/lgb_lirf_cap_s32": 44.48818657610946,
+            "runs/adsb_v21/lgb_lirf_nm_s33": 40.063390773938806,
+            "runs/adsb_v21/lgb_lirf_s31": 45.53715021068295
+          },
+          "members": 48,
+          "rebuild_max_abs_s": 0.0
+        }
+      },
+      "2025-07": {
+        "committee": {
+          "d_exact_rms_s": 3.0795410972148867,
+          "d_fam_rms_s": 36.954493166578644,
+          "group_share": 0.08333333333333333,
+          "leaf_delta_rms_s": {
+            "runs/adsb_v20/lgb_x19_s24": 44.54907465292593,
+            "runs/adsb_v20/lgb_x19_s25": 45.12650623018881,
+            "runs/adsb_v20/lgb_x19_s26": 45.183452517345316
+          },
+          "members": 468,
+          "rebuild_max_abs_s": 0.0
+        },
+        "lirf_tree": {
+          "d_exact_rms_s": 9.486620983907281,
+          "d_fam_rms_s": 36.647348654721824,
+          "group_share": 0.25,
+          "leaf_delta_rms_s": {
+            "runs/adsb_v21/lgb_lirf_cap_s32": 46.24540849968953,
+            "runs/adsb_v21/lgb_lirf_nm_s33": 43.420914548173975,
+            "runs/adsb_v21/lgb_lirf_s31": 48.683634823927086
+          },
+          "members": 48,
+          "rebuild_max_abs_s": 0.0
+        }
+      },
+      "2025-11": {
+        "committee": {
+          "d_exact_rms_s": 2.9031707318041606,
+          "d_fam_rms_s": 34.83804878164993,
+          "group_share": 0.08333333333333333,
+          "leaf_delta_rms_s": {
+            "runs/adsb_v20/lgb_x19_s24": 42.31608455042313,
+            "runs/adsb_v20/lgb_x19_s25": 42.33956585573869,
+            "runs/adsb_v20/lgb_x19_s26": 42.22205248470159
+          },
+          "members": 468,
+          "rebuild_max_abs_s": 2.9103830456733704e-11
+        },
+        "lirf_tree": {
+          "d_exact_rms_s": 8.687758712163168,
+          "d_fam_rms_s": 34.14566866320061,
+          "group_share": 0.25,
+          "leaf_delta_rms_s": {
+            "runs/adsb_v21/lgb_lirf_cap_s32": 44.28419715372419,
+            "runs/adsb_v21/lgb_lirf_nm_s33": 39.95701410578908,
+            "runs/adsb_v21/lgb_lirf_s31": 44.528141216160066
+          },
+          "members": 48,
+          "rebuild_max_abs_s": 0.0
+        }
+      },
+      "2025-12": {
+        "committee": {
+          "d_exact_rms_s": 2.990663201892269,
+          "d_fam_rms_s": 35.887958422707236,
+          "group_share": 0.08333333333333333,
+          "leaf_delta_rms_s": {
+            "runs/adsb_v20/lgb_x19_s24": 43.3697446450732,
+            "runs/adsb_v20/lgb_x19_s25": 43.22230155328574,
+            "runs/adsb_v20/lgb_x19_s26": 44.20333859422545
+          },
+          "members": 468,
+          "rebuild_max_abs_s": 0.0
+        },
+        "lirf_tree": {
+          "d_exact_rms_s": 9.019139416345396,
+          "d_fam_rms_s": 35.14352988027796,
+          "group_share": 0.25,
+          "leaf_delta_rms_s": {
+            "runs/adsb_v21/lgb_lirf_cap_s32": 43.88854902161242,
+            "runs/adsb_v21/lgb_lirf_nm_s33": 41.274350399156,
+            "runs/adsb_v21/lgb_lirf_s31": 45.22786142940256
+          },
+          "members": 48,
+          "rebuild_max_abs_s": 0.0
+        }
+      }
+    },
+    "sha256": "bb8640f350a236846da4dba0c201d69963af3761d4f9596914d610e56bdc31a8"
+  }
+}
