@@ -91,3 +91,9 @@ stacker refitted on the candidate's own development tables (`runs/ctx_ownpoints_
 
 Expected from stage 2 (v65 proxy, own_all_w100): January -0.068%, July -0.163%, November +0.029%, December -0.133% of month RMSE
 (equal-footing mean -0.121%). Upload only at the user's word.
+
+## Official result (6 October 2026): **v66 = 216.0926, the official best, -0.7888 s against v65**
+
+Uploaded at the user's word ("upload v66") at 08:15:06 UTC; processed 08:15:48 UTC: **216.0926 on all 344,841 rows**
+([`official_result.json`](official_result.json)). Realised squared-error gain 1.18e8 = 1.75 x the file's squared change against v65
+(6.71e7), inside the range of earlier layers. Nothing is re-tuned from the score; no further weight is read. Never re-upload v1-v66. New layers build on v66's chain (v65's chain with own_all at 1.00).
