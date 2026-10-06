@@ -1,0 +1,58 @@
+{
+ "kind": "user override of a declared rule result",
+ "recorded_at_utc": "2026-10-06T06:59:17+00:00",
+ "user_words": "i want to override it",
+ "user_words_date": "6 October 2026 (relayed by the coordinator session to fork A; recorded on receipt)",
+ "precedents": "v46, v52, v59 and v64 were built and uploaded on the user's override of a null declared result",
+ "declaration": {
+  "path": "configs/ctx_ownpoints_weight_v1.json",
+  "sha256": "3fc0a7356ad355094490f468668488591f5065100ecdab3f8da1462a250aed7b",
+  "commit": "bdd0087"
+ },
+ "rule_result": {
+  "selected_candidate": null,
+  "results": {
+   "path": "docs/ctx_ownpoints_weight/results_stage2.json",
+   "sha256": "85e7186bf7fc08769709f7079b4ae860a64bb69011150f37c3d2734dda407eb8"
+  },
+  "failed_clause": "clause 1: no development month worse than the v65 development proxy by more than 0.005% (all four candidates fail it in November only)",
+  "november_change_pct": {
+   "own_all_w100": 0.0293,
+   "own_all_w55": 0.0112,
+   "own_all_w70": 0.022,
+   "own_all_w85": 0.0093
+  },
+  "november_interval_pct": {
+   "own_all_w100": [
+    -0.0478,
+    0.1115
+   ],
+   "own_all_w55": [
+    -0.0196,
+    0.0449
+   ],
+   "own_all_w70": [
+    -0.0309,
+    0.0813
+   ],
+   "own_all_w85": [
+    -0.055,
+    0.0774
+   ]
+  },
+  "clauses_2_3": "every candidate passes: equal-footing mean own_all_w100 -0.1212%, own_all_w55 -0.0403%, own_all_w70 -0.0745%, own_all_w85 -0.0928%; every equal-footing interval below zero"
+ },
+ "choice": {
+  "candidate": "own_all_w100",
+  "member_weight": 1.0,
+  "why": "the declared selection among candidates eligible under clauses 2 and 3: the stage-2 order is the stage-1 mean ratio (lowest first), and own_all_w100 is first (stage 1 -0.1959%, stage 2 equal-footing mean -0.1212%); no other weight is considered and no weight outside the declared grid is read",
+  "stage_2_months_pct": {
+   "2025-01": -0.0675,
+   "2025-07": -0.1634,
+   "2025-11": 0.0293,
+   "2025-12": -0.1326
+  }
+ },
+ "official_scores_used": "none (no official score, no leaderboard read in the round or in this choice)",
+ "build": "v66 = v65's chain with own_all at weight 1.00 (tools/export_ctx_ownpoints.py arithmetic via tools/export_ownpoints_weight_override.py); v65 reproduced byte for byte through the same path first; never uploaded by this tool"
+}
