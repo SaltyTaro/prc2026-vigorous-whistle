@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Lever 5 (fork E): billing guard, detached from any agent (nohup + setsid, pid-file singleton runs/ctx_own2/guard.pid, log runs/ctx_own2/guard.log).
 # Every 2 minutes, for every prc-ctx4* cluster that sky lists as UP:
-#   on-demand (prc-ctx4a-d, prc-ctx4i-j): autostop in STOP mode after 30 idle minutes (`sky autostop -i 30`), so fits not yet mirrored survive on the disk;
-#   spot (prc-ctx4e-h, prc-ctx4k-l): AWS spot instances cannot be stopped, so autodown after 30 idle minutes (`sky autostop -i 30 --down`); idle means no
+#   on-demand (prc-ctx4a-d, prc-ctx4i-l): autostop in STOP mode after 30 idle minutes (`sky autostop -i 30`), so fits not yet mirrored survive on the disk;
+#   spot (prc-ctx4e-h): AWS spot instances cannot be stopped, so autodown after 30 idle minutes (`sky autostop -i 30 --down`); idle means no
 #   fit runs, and the detached dispatcher mirrors each finished fit within minutes.
 # A cluster is (re)set only when its policy differs (checked against `sky status`). The guard exits at GUARD_UNTIL (default 16 hours after
 # start) or after 6 consecutive checks without any prc-ctx4* cluster once no launch retry (ctx_own2_nodes.sh up) is running.
@@ -23,7 +23,7 @@ while [ "$(date +%s)" -lt "$until" ]; do
   up=$(echo "$st" | awk '$1 ~ /^prc-ctx4[a-l]$/ && / UP / {print $1}')
   any=$(echo "$st" | awk '$1 ~ /^prc-ctx4[a-l]$/ {print $1}')
   for c in $up; do
-    case "$c" in prc-ctx4[a-d]|prc-ctx4i|prc-ctx4j) want="stop30" ;; *) want="down30" ;; esac
+    case "$c" in prc-ctx4[a-d]|prc-ctx4[i-l]) want="stop30" ;; *) want="down30" ;; esac
     [ "${done_policy[$c]:-}" = "$want" ] && continue
     if [ "$want" = stop30 ]; then sky autostop "$c" -i 30 -y >> $log 2>&1; else sky autostop "$c" -i 30 --down -y >> $log 2>&1; fi \
       && { done_policy[$c]=$want; echo "$(date -u +%FT%TZ) $c autostop $want" >> $log; }
