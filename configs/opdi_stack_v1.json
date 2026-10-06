@@ -1,0 +1,72 @@
+{
+ "experiment_id": "opdi_stack_v1",
+ "declared_at_utc": "2026-10-06T18:53:44Z",
+ "declared_by": "final-week campaign, lever 7 (fork H; docs/opdi_stack/README.md). The reserve lever opened because every other lever closed (user, 6 October: 'if all else is closed then we will look into this'). Declared after the screen below and BEFORE the governing run (tools/run_opdi_stack_decl.py --govern) and before any ranking file exists. Nothing is uploaded; a build under runs/submissions and any upload are the user's decision, through the coordinator.",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "data_source": {
+  "name": "EUROCONTROL Open Performance Data Initiative (OPDI) flight events v0.0.2 (opdi.aero), derived from OpenSky Network state vectors",
+  "licence": "open data with attribution",
+  "files": "docs/opdi_stack/sources.json (23 ten-day files, URL / bytes / SHA-256; filtered extracts data/external/opdi/stack_v1/)"
+ },
+ "mechanism": "stack_resid_v3's guarded LightGBM residual learner refitted with 14 label-free OPDI surface columns appended to its 65 inputs (take-off minus the OPDI take-off reference, stand / apron exit, first taxiway entry, first seen, runway entry, taxiway count, de-icing pad flag and duration, a match flag, and four of these times minus the chain's prediction), matched to departures by airport + callsign with the OPDI take-off reference within [-900, +300] s of the supplied take-off; only OPDI events up to that reference enter. The OPDI learner's value replaces v3's stacking value only on rows with an OPDI match that its support guard (v3's guard extended to the OPDI columns) does not hold, at every airport but LIRF; every other row keeps v3's value, LIRF keeps v2 (as v3), LIRF population and guard rows are fixed.",
+ "candidate": {
+  "name": "opdi",
+  "airports": [
+   "EDDF",
+   "EDDM",
+   "EGLL",
+   "EHAM",
+   "LEBL",
+   "LEMD",
+   "LFPG",
+   "LSZH",
+   "LTFM"
+  ],
+  "weight": 0.5,
+  "seeds": [
+   20261003,
+   11,
+   12
+  ],
+  "feature_set": "v3's 65 + 14 OPDI columns (tools/run_opdi_stack.py NEW_COLS)"
+ },
+ "sensitivity_reported_not_selectable": [
+  {
+   "name": "opdi3",
+   "airports": [
+    "LSZH",
+    "EDDF",
+    "LEMD"
+   ],
+   "note": "the same learner, used only at the three airports where the 18 September probe found OPDI surface times that adsb.lol lacks"
+  }
+ ],
+ "control": {
+  "development": "the pinned v66 development proxy runs/pubrefit/chain/ship/proxy.parquet (SHA-256 cf5a4e8e1cc6733e7e8a95fd6dcebb21764fc0b6f1e573a6ad1c38a1cc7dcea3; v66's chain with the variance re-allocation LightGBM pinned deterministic + column-wise; month RMSE 320.1258 / 251.0731 / 182.1762 / 163.7131 s), reproduced exactly (max |diff| 0.0) by tools/run_opdi_stack.py --score identity on the workstation and on arcw4",
+  "ranking": "runs/submissions/vigorous-whistle_v66.parquet (b4ea727e...)"
+ },
+ "rule": {
+  "text": "v57's clauses with configs/own_motion_v2.json's values, read on the four development months against the pinned v66 proxy: accepted when (1) no development month (January, July, November, December 2025) is worse than the control by more than 0.005% of complete-month RMSE; (2) the equal-footing mean (January, July, December 2025) of the complete-month RMSE change is at most -0.02%; (3) every equal-footing month's paired-day 95% interval of the RMSE difference (tools/run_intruder_bound.interval, seed 20261004) lies below zero; (4) transfer guard as stack_resid_v3's rule 4: per airport with at least 200 OPDI-used rows on both sides, the RMS of the OPDI learner's change against v3's value on the ranking rows where it is used, over the same RMS on the development rows (month-blocked, out of month), lies in [0.5, 2.0]. No twelve-month check exists (the stacking components cover only the four development months); stated, not substituted.",
+  "max_month_worsening_pct": 0.005,
+  "min_mean_improvement_pct": 0.02,
+  "equal_footing": [
+   "2025-01",
+   "2025-07",
+   "2025-12"
+  ],
+  "transfer_guard": [
+   0.5,
+   2.0
+  ],
+  "transfer_guard_min_rows": 200
+ },
+ "procedure": {
+  "development": "tools/run_opdi_stack.py --score opdi recomputed from scratch on the pinned chain (the screen's code, commit 800ea9a), then the four clauses (tools/run_opdi_stack_decl.py --govern).",
+  "ranking_dry_run": "v66's chain (docs/final_file/v66_chain.md) from its shipped step-5 outputs (runs/ctx_ownpoints_weight/rank/dry_v66/steps: rematch base, Y file, Y rows, member delta) -> the stack step of tools/export_ctx_ownpoints.step_stack fitted on the development tables the shipped v66 stack used (runs/ctx_ownpoints_weight/chain/own_all_w100), with the OPDI learner added as above (OPDI ranking features from the ranking file and the 2025-12-31 .. 2026-08-08 OPDI windows) -> intruder bound + identity extension -> own-motion v1 -> own_motion_v2, exactly as tools/rehearse_v66.py. Identity first: with the OPDI learner disabled the same path must reproduce the stack step and the uploaded v66 byte for byte; otherwise no ranking file. Output runs/opdi_stack/rank/dry_v67/ (version number provisional; the coordinator assigns it); never under runs/submissions."
+ },
+ "exploration_disclosed": {
+  "screen": "docs/opdi_stack/screen.json (both variants, labels read, four development months, against the pinned control): opdi {\"2025-01\": -0.0322, \"2025-07\": -0.0925, \"2025-11\": -0.116, \"2025-12\": -0.123} eq -0.0826%; opdi3 {\"2025-01\": -0.0277, \"2025-07\": -0.0859, \"2025-11\": -0.1118, \"2025-12\": -0.1002} eq -0.0713%; every equal-footing interval below zero for both. The candidate is the variant with the larger equal-footing gain; both variants and the matching window, columns and guard were fixed before any OPDI score (commit 800ea9a). Coverage docs/opdi_stack/coverage.json: OPDI has no data for 2-10 January 2026 (those ranking rows keep v3)."
+ },
+ "compute": "Azure arcw4 (user, ~17:50 UTC 6 October: 'use the azure vm's please keep as much compute off this workstation'); the workstation only orchestrates, hashes and commits."
+}
