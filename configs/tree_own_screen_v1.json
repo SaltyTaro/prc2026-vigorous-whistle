@@ -1,0 +1,71 @@
+{
+  "name": "tree_own_screen_v1",
+  "declared_at_utc": "2026-10-06T05:25:05Z",
+  "campaign": "final-week campaign (6 October 2026), lever 3 (fork C): the 15 own-aircraft turnaround columns as inputs to the tree members of the stack",
+  "status": "screen: 2025 development months only; no official score, no leaderboard, no submission file, nothing uploaded",
+  "question": "The guarded stacker v3 and the v65 network member carry the own-aircraft turnaround points (tunnel 18 / tunnel 21); the tree members never saw them. Does a tree member refitted with them improve v65's development chain once stack_resid_v3 is refitted on the rebuilt components?",
+  "insertion_points": {
+    "lirf_table": {
+      "table": "ens_v22_lirf_q (runs/adsb_v22/ens_v22_lirf_q; 48 members: 3 LightGBM x4, 4 CatBoost x9)",
+      "why": "LIRF non-population rows are the largest remaining cells of the v61 census (LIRF dark 21.2% + LIRF unmatched 10.7% of ordinary squared error); the LIRF tree has weight 0.45 on lirf_nonpop_matched and 0.25/0.60 on lirf_nonpop_unmatched rows; no shipped LIRF component sees the own points (LIRF keeps stack_resid_v2; the v65 member skips LIRF)",
+      "leaves": ["runs/adsb_v21/lgb_lirf_s31", "runs/adsb_v21/lgb_lirf_cap_s32", "runs/adsb_v21/lgb_lirf_nm_s33"]
+    },
+    "committee": {
+      "table": "ens_v20_bag_q_all (runs/adsb_v20/ens_v20_bag_q_all; 468 members: 9 LightGBM x13, 13 CatBoost x27)",
+      "why": "the committee enters the non-LIRF mix at share 0.15 (0.5 where it sits more than 1,200 s above the networks) and the stacker reads its disagreement with the networks; the x19 LightGBM family already takes the v19 extras, so own points are a column extension",
+      "leaves": ["runs/adsb_v20/lgb_x19_s24", "runs/adsb_v20/lgb_x19_s25", "runs/adsb_v20/lgb_x19_s26"]
+    },
+    "not_screened": "CatBoost leaves (1.7-3 h per fit; a development round may refit the four LIRF CatBoost leaves if the LightGBM screen is GO), the residual stage (adj2 / cat carry 0.05 each of matched non-LIRF rows: too little leverage)"
+  },
+  "leaves": ["runs/adsb_v21/lgb_lirf_s31", "runs/adsb_v21/lgb_lirf_cap_s32", "runs/adsb_v21/lgb_lirf_nm_s33", "runs/adsb_v20/lgb_x19_s24", "runs/adsb_v20/lgb_x19_s25", "runs/adsb_v20/lgb_x19_s26"],
+  "own_columns": {
+    "names": ["p_has_inb", "p_inb_rel", "p_tow", "p_n", "p_first_any", "p_first_mv", "p_last_park", "p_park10", "p_park20", "p_park40", "p_pregap_n", "p_pregap_last", "p_pregap_maxdist", "p_gap_len", "p_seg_start"],
+    "source": "data/external/adsblol/features_v19own/features_v19_<month>.parquet (tools/build_ownpoints_features.py; tunnel 18's 14 raw columns + p_has_inb; label-free, departure BLOCK_TIME blanked on load)",
+    "manifest_sha256": "0e8811e6c218540ec48141a9feb136c3f93b32a4c346d3a8c6775dfe9ba4e46e"
+  },
+  "fits": {
+    "tool": "tools/run_tree_own.py (LightGBM only, 16 threads, one fit at a time per worker)",
+    "variants": {"ctl": "the leaf's own recipe and inputs (its features_v19 extras, if any)", "own": "the same recipe + the 15 own columns appended after the leaf's extras"},
+    "folds": {
+      "lomo_2025-01": "twelve-month refit population minus January 2025 (tools/run_adsb_learner_lomo.py's construction), fixed rounds; the January 2025 development table",
+      "lomo_2025-07": "the same for July 2025",
+      "forward": "tools/run_adsb_learner.py's forward fold (fit January-September, early stopping October with the leaf's cap and patience, score November); the November development table",
+      "jan_nov": "the January-November refit population (hold-out 2025-12 of the same construction), fixed rounds; the December development table"
+    },
+    "rounds": "fixed folds: the leaf's twelve-month rule (median of its recorded seasonal and forward best iterations) for both variants; forward: early stopping for both variants",
+    "count": "6 leaves x 2 variants x 4 folds = 48 LightGBM fits",
+    "workers": "arcw4-arcw7 (fork C's lane), deallocated right after their SHA-256-checked mirror"
+  },
+  "control_reproduction": {
+    "requirement": "before any candidate is read: every ctl fit equals the saved leaf it re-fits -- lomo months against runs/lomo_dev/learners/<leaf>/lomo_<month>/predictions.parquet and forward against <leaf>/forward/predictions.parquet with maximum absolute difference 0.0; jan_nov's model byte-identical to <leaf>/refit/model.txt (the leaf's January-November refit) and its December predictions against runs/december/learners (the documented ADS-B neighbour tie-order rows of docs/lomo_dev/README.md are reported, not a failure). A failure stops the screen and is reported.",
+    "deltas": "candidate deltas are own minus ctl from the same fit path, so refit noise and the December tie-order rows cancel"
+  },
+  "tables": {
+    "rebuild": "each development month's table is rebuilt from its saved leaves with the frozen member rule (prc2026_december.scoring.leaf_members + ensemble_prediction, nanmean with multiplicities) and must equal runs/lomo_dev/rows.parquet's committee / lirf_tree within 1e-9 s before any candidate",
+    "leaf_sources": {"2025-01": "runs/lomo_dev/learners/<leaf>/lomo_2025-01", "2025-07": "runs/lomo_dev/learners/<leaf>/lomo_2025-07", "2025-11": "<leaf>/forward", "2025-12": "runs/december/learners/<leaf>.parquet"}
+  },
+  "candidates": {
+    "lirf_exact": "ens_v22_lirf_q with each of the three LIRF LightGBM leaves replaced by saved + (own - ctl) inside the frozen member list (group share 12/48)",
+    "lirf_fam100": "ens_v22_lirf_q + 1.0 x D_lirf; D_lirf = per-row mean over the three LIRF LightGBM leaves with a finite (own - ctl) of that difference, 0 where none is finite (the LightGBM family's change applied as if the whole table moved with it)",
+    "com_exact": "ens_v20_bag_q_all with each of the three x19 LightGBM leaves replaced by saved + (own - ctl) inside the frozen member list (group share 39/468)",
+    "com_fam100": "ens_v20_bag_q_all + 1.0 x D_com, D_com defined as D_lirf over the three x19 LightGBM leaves",
+    "both_fam100": "lirf_fam100 and com_fam100 together"
+  },
+  "reading": {
+    "tool": "tools/run_tree_own_chain.py",
+    "chain": "v65's development chain with the candidate tables in runs/lomo_dev/rows.parquet: v46 (recomputed with the candidate committee) -> v51m' = the own-points member own_all at 0.40 in place of the combination (configs/ctx_ownpoints_dev_v1.json, v65's member) -> v52m (masked member 0.40) -> LIRF layers v45 gate, v53m, v54m, v55m recomputed on the candidate LIRF tree (tools/build_dev_model_part.py's arithmetic) -> no-NM rematch -> v48 reconciliation -> extreme-day -> variance re-allocation (shipped parameters) -> stack_resid_v3 refitted on the rebuilt components, LIRF taking v2 refitted (as docs/ctx_ownpoints_dev stage 2) -> intruder bound -> identity extension -> own-motion v1 -> own_motion_v2",
+    "control": "the v65 development proxy runs/ctx_ownpoints_dev/chain/own_all_w40/dev_v65_proxy.parquet column v65 (SHA-256 32c9458d3a52677484da9a51366baa65024dd6a279d02e5fecae89300b09bc94)",
+    "identity": "with zero deltas the tool reproduces the v65 model part (runs/ctx_ownpoints_dev/chain/own_all_w40/dmp.parquet) within 1e-9 s and the v65 proxy within 1e-6 s before any candidate is scored",
+    "months": {"equal_footing": ["2025-01", "2025-07", "2025-12"], "supplementary": ["2025-11"]},
+    "intervals": "paired take-off-day bootstrap 95% interval of the month's RMSE change (tools/run_intruder_bound.interval, seed 20261006)",
+    "guard": "LIRF fill-population rows never change in any candidate (asserted per month); every label, extreme ones included, stays in every RMSE"
+  },
+  "go_bar": "a candidate is GO if its equal-footing mean RMSE change is <= -0.05%, no month (four) is worse than +0.01%, and at least two of the three equal-footing intervals lie below zero",
+  "after_go": "a declared development round configs/tree_own_dev_v1.json (committed before any further fit) adds the ranking refits (refit12) and, if time allows, the four LIRF CatBoost leaves; acceptance by v57's clauses in-chain against the v65 proxy; a ranking dry run only under runs/tree_own/rank/ (the coordinator assigns any version)",
+  "deadline": "a candidate must be ready by 9 October 2026 evening UTC; NO GO ends the lever",
+  "inputs_sha256": {
+    "runs/lomo_dev/rows.parquet": "9072bc730f2cac40b8d85633cc19d41967d88b19c6c97bd12cbb22b15d9c5ed5",
+    "runs/dev_model_part/rows.parquet": "f4d75869db5e61eabe92308a55c74536a8b1a397debba35bd9ed3e68e97d25de",
+    "configs/ctx_ownpoints_dev_v1.json": "175a0e3dec69cf4bfca0200adbe84ac1e84a7311374b1f7719ae481b24d63441"
+  }
+}
