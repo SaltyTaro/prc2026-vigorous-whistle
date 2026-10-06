@@ -35,6 +35,10 @@ from prc2026_final import lirf_gate as lg  # noqa: E402
 from prc2026_submission.contract import export_submission  # noqa: E402
 import run_lirf_combo as rlc  # noqa: E402
 import run_lirf_member as rlm  # noqa: E402
+import subprocess  # noqa: E402
+from prc2026_scout import var_alloc as _VA  # noqa: E402
+
+_VA.PARAMS = {**_VA.PARAMS, "deterministic": True, "force_col_wise": True}  # pinned as in tools/run_lirf_own_dev.py
 
 DECL = "configs/lirf_own_dev_v1.json"
 SHIPPED_MEMBER = "configs/adsb_ctx3_lirf_mask_dev_v1.json"
@@ -172,15 +176,22 @@ def step_stack(candidate: str, b: Path, c: Path, c_rows: Path, out: Path, versio
     return path
 
 
+def run_pinned(args: list[str]) -> None:
+    """export_ctx_ownpoints.run with the variance re-allocation pinned (tools/lirf_own_pinned.py)."""
+    print("> (pinned)", " ".join(args), flush=True)
+    subprocess.run([sys.executable, "-X", "utf8", "-B", "tools/lirf_own_pinned.py", *args], cwd=ROOT, check=True)
+
+
 def chain(decl: dict | None, candidate: str, out: Path, version: int) -> Path:
     import export_ctx_ownpoints as E
+    E.run = run_pinned
     import run_stack_resid_v3 as V3
     import run_own_motion_v2 as O2
     if sha256_file(V65) != V65_SHA:
         raise ValueError("v65 differs from its record.")
     steps = out / "steps"
     m = step_model_part(decl, candidate, steps / "model_part", version)
-    if decl is None and sha256_file(ROOT / m["file"]) != sha256_file(V65_MP):
+    if decl is None and m["rows_changed"] != 0:
         raise ValueError("identity: M'' differs from v65's model part.")
     b, c, c_rows = E.steps_2_to_5(ROOT / m["file"], steps, version)
     stack = step_stack(candidate, b, c, c_rows, steps / "stack", version, steps / "model_part/lirf_delta.parquet")
@@ -220,28 +231,42 @@ def main() -> None:
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--version", type=int, required=True)
     a = ap.parse_args()
+    ident_dir = OUT / "identity_pinned"
     if a.identity:
-        out = OUT / f"identity_v{a.version}"
-        if out.exists():
-            raise ValueError(f"{out} exists.")
-        result = chain(None, "identity", out, a.version)
+        if ident_dir.exists():
+            raise ValueError(f"{ident_dir} exists.")
+        result = chain(None, "identity_pinned", ident_dir, 65)
         same = sha256_file(result) == V65_SHA
-        print("identity: the chain reproduces v65 byte for byte:", same, sha256_file(result))
-        write_json(out / "identity.json", {"created_at_utc": utc_now(), "reproduces_v65": same, "sha256": sha256_file(result)})
-        if not same:
-            raise ValueError("identity: the chain does not reproduce v65.")
+        rep = compare(result, V65)
+        rep.update({"created_at_utc": utc_now(), "reproduces_v65_bytes": same, "sha256": sha256_file(result)})
+        write_json(ident_dir / "identity.json", rep)
+        print("identity (pinned, M' = M): reproduces v65 byte for byte:", same, {k: v for k, v in rep.items() if k != "by_airport"})
         return
     decl = read_json(ROOT / DECL)
     sel = read_json(ROOT / "runs/lirf_own/dev/selection.json")["selected_candidate"]
     stage2 = read_json(ROOT / "docs/lirf_own/results_chain_v1.json")
     if not sel or stage2.get("candidate") != sel or not stage2["checks"]["accepted"]:
         raise ValueError("Both declared stages must accept the candidate before a ranking dry run is written.")
+    ident = ident_dir / "vigorous-whistle_v65.parquet"
+    if not ident.exists():
+        raise ValueError("Run --identity first.")
     out = OUT / f"dry_v{a.version}"
     if out.exists():
         raise ValueError(f"{out} exists.")
-    result = chain(decl, sel, out, a.version)
-    rep = compare(result, V65)
-    rep.update({"file": rel(result), "sha256": sha256_file(result), "candidate": sel, "declaration": {DECL: object_hash(decl)}})
+    cand = chain(decl, sel, out / "pinned_chain", a.version)
+    # the candidate's change against the pinned identity, applied to the shipped v65 (removes the pinned/unpinned difference)
+    v65 = pd.read_parquet(V65)
+    c = pd.read_parquet(cand).set_index(ID)[TARGET].reindex(v65[ID]).to_numpy(dtype=float)
+    i = pd.read_parquet(ident).set_index(ID)[TARGET].reindex(v65[ID]).to_numpy(dtype=float)
+    values = np.maximum(v65[TARGET].to_numpy(dtype=float) + (c - i), lg.FLOOR)
+    final = out / f"vigorous-whistle_v{a.version}.parquet"
+    export_submission(pd.DataFrame({ID: v65[ID].to_numpy(), "prediction": values}), ROOT / "data/raw/submitting.parquet", final,
+                      {"dry_run": True, "step": "v65 + (pinned candidate chain - pinned identity chain)", "candidate": sel,
+                       "pinned_candidate": {"path": rel(cand), "sha256": sha256_file(cand)}, "pinned_identity": {"path": rel(ident), "sha256": sha256_file(ident)},
+                       "official_scores_used": "none", "audit_used": False})
+    rep = compare(final, V65)
+    rep.update({"file": rel(final), "sha256": sha256_file(final), "candidate": sel, "declaration": {DECL: object_hash(decl)},
+                "pinned_candidate_vs_identity_rows": int((c != i).sum())})
     write_json(out / f"vigorous-whistle_v{a.version}.report.json", rep)
     print({k: v for k, v in rep.items() if k != "by_airport"})
 
