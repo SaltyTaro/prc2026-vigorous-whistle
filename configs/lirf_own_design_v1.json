@@ -1,0 +1,95 @@
+{
+ "experiment_id": "prc2026-lirf-own-design-v1",
+ "declared_at_utc": "2026-10-06T05:25:14+00:00",
+ "audit_used": false,
+ "session": "final-week campaign, fork B (6 October 2026), lever 2; the user: \"yes start on them now\"; GPU: \"yes you can the GPU\"",
+ "purpose": "Design batch: do the 15 own-aircraft turnaround ADS-B columns (data/external/adsblol/features_v19own, tools/build_ownpoints_features.py; v65's context-network member gained from them outside LIRF, docs/ctx_ownpoints_dev) improve the two LIRF context networks of the shipped LIRF route: the round-1 LIRF network C (ens_ctx_lirf, configs/adsb_ctx_lirf_design_v1.json ctx_lirf) and the masked LIRF member M (lm25_32, configs/adsb_ctx3_lirf_design_v1.json), combined as in v54 / v55: N = (1 - w) C + w M inside the LIRF route's blends and gates. The v65 member touches no LIRF row; LIRF non-population rows hold about 32% of ordinary development squared error (docs/dig/census61.md).",
+ "prior": "Weak to moderate. Tunnel 18's stacker gained little at LIRF from the same points (January -0.010, July -0.046 points of the month; docs/dig/pregap.md), while the network outside LIRF gained -1.56% standalone on rows with an identified inbound (docs/dig/ctx_ownpoints.md). LIRF's own points are sparse where LIRF ground coverage is poor.",
+ "exploration_disclosed": "Label-free coverage of the own columns on LIRF rows, read before this declaration: share with an identified inbound / with own ground motion seen (p_first_mv) / with any own point: January 2025 0.022 / 0.000 / 0.008, July 2025 0.923 / 0.882 / 0.889, October 2025 0.878 / 0.458 / 0.488; ranking January 2026 0.884 / 0.635 / 0.658 (11,061 LIRF rows), July 2026 0.162 / 0.0009 / 0.029 (15,838 rows). No label of any month was read for this design; no own-column model of LIRF exists.",
+ "networks": {
+  "ctx1": "configs/lirf_own_network_ctx1_v1.json",
+  "ctx3": "configs/lirf_own_network_ctx3_v1.json"
+ },
+ "fits": {
+  "ctx_lirf_own": {
+   "config": "configs/lirf_own_network_ctx1_v1.json",
+   "tool": "tools/run_adsb_ctx.py --fold design --threads 4 --extra-features data/external/adsblol/features_v19own",
+   "seeds": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "note": "the saved round-B design seeds' tool and thread count"
+  },
+  "lm25_32own": {
+   "config": "configs/lirf_own_network_ctx3_v1.json",
+   "tool": "tools/run_adsb_ctx3.py --fold design --device cpu --threads 8 --extra-features data/external/adsblol/features_v19own",
+   "seeds": [
+    21,
+    22,
+    23,
+    24
+   ],
+   "note": "the saved LIRF design seeds' tool and thread count"
+  },
+  "ctx_lirf": {
+   "config": "configs/lirf_own_network_ctx1_v1.json",
+   "tool": "tools/run_adsb_ctx.py --fold design --threads 4 (default extra features)",
+   "seeds": [
+    1
+   ],
+   "role": "reproduction control of runs/adsb_ctx/lirf_design/ctx_lirf_s1/design"
+  },
+  "lm25_32": {
+   "config": "configs/lirf_own_network_ctx3_v1.json",
+   "tool": "tools/run_adsb_ctx3.py --fold design --device cpu --threads 8 (default extra features)",
+   "seeds": [
+    21
+   ],
+   "role": "reproduction control of runs/adsb_ctx3_lirf/design/lm25_32_s21/design"
+  }
+ },
+ "hardware": "Azure arcw0-arcw3 (Standard_D16ds_v7), CPU, at most 16 threads per worker: arcw0 lm25_32own s21 + ctx_lirf_own s1 + ctx_lirf s1 (control); arcw1 lm25_32own s22 + lm25_32 s21 (control); arcw2 lm25_32own s23 + ctx_lirf_own s2 + ctx_lirf_own s3; arcw3 lm25_32own s24 + ctx_lirf_own s4 (tools/launch_lirf_own_design.sh). Outputs runs/lirf_own/design/<variant>_s<seed>/design. Each worker is deallocated right after its hash-checked mirror (tools/mirror_lirf_own_design.sh).",
+ "protocol": {
+  "data": "--fold design of each tool, unchanged: the seasonal fold's fit partition (2025-02..06, 08, 09) with LIRF's non-population rows in fitting and monitoring, October monitored, October predictions only. The two families' settings, seeds, tools and thread counts equal the saved design runs they are compared with; the own variants differ only by the 15 columns.",
+  "reproduction": "Before any candidate reading, the two controls' October stop predictions must equal the saved runs' exactly (max absolute difference 0.0 s). If one does not, that family's four saved seeds are replaced in every reading by refitted seeds of the same settings (an amendment before any candidate reading) and the deviation is reported.",
+  "transfer": "A new predictor (tools/lirf_own_predict.py: tools/ctx3_lirf_predict.py's readings with the own columns joined) predicts LIRF rows only, on the workstation CPU, for every model of the readings (the four saved C seeds, the four saved M seeds, the new runs): october (check against each run's stop predictions: RMS at most 0.05 s), 2025-01_natural, 2025-07_natural, 2025-07_thinned, 2025-12_natural. The saved models' october / 2025-07 / 2025-12 predictions must equal runs/adsb_ctx3_lirf/transfer (baseline and lm25_32) to RMS 0.05 s. No label is read by the predictor.",
+  "own_tables": "natural readings: the month's features_v19own table (its 11 v19 columns equal features_v19 byte for byte). 2025-07_thinned (coverage-regime attempt a13; LIRF keeps 0.07% of its ground points): every LIRF row's own columns in the builder's unidentified state (p_has_inb 0, the other 14 NaN), the July 2026 ranking regime (own ground motion on 0.09% of LIRF rows).",
+  "never_read": "No run trains on or monitors 2025-01, 2025-07, 2025-11, 2025-12 or the ranking months. Labels of October, January, July and December 2025 enter only the report below, after every fit and prediction is complete. No official score, leaderboard, ranking label or published aggregate is read.",
+  "rows": "LIRF non-population rows. october: the recipe proxy's October table (labels, cross-fitted v9, population, adsb_matched; as configs/adsb_ctx3_lirf_design_v1.json); 2025-01 / 2025-07 / 2025-12: runs/clean_line_screens/hour/dev_stack.parquet rows with lirf_m | lirf_u (label, v9, day; matched = lirf_m, or the a13 thinned table's adsb_matched for 2025-07_thinned). Every label kept, no clipping.",
+  "composition": "N = (1 - w) C + w M with v54 / v55's member weights: w = 0.40 on matched rows (v55 mw40), 0.55 on unmatched rows (v53), 0.70 on every row of the dark readings 2025-01_natural and 2025-07_thinned (v54, LIRF match share below 5%). C = mean of ctx_lirf seeds 1-4 (saved), M = mean of lm25_32 seeds 21-24 (saved).",
+  "own_route": "rows with own ground motion seen: p_first_mv not null in the reading's own table (none on 2025-07_thinned by construction; 0.0% of January 2025).",
+  "items": {
+   "M_routed": "M replaced by Mown (mean of lm25_32own seeds 21-24) on own-route rows, M elsewhere",
+   "C_routed": "C replaced by Cown (mean of ctx_lirf_own seeds 1-4) on own-route rows, C elsewhere",
+   "CM_routed": "both replacements on own-route rows",
+   "reported_only": "M_all, C_all, CM_all (the own variants on every row) and the four model means' standalone RMSE on own-route rows / all rows"
+  },
+  "readings": "L2 = (1 - b) v9 + b N against the same with the control N, b in {0.35, 0.5}; change in % of RMSE on all LIRF non-population rows of the reading; paired-day 95% interval of the RMSE difference in seconds at b = 0.35 (tools/nn_design_report.day_interval, 2,000 day draws, seed 20260923). Also on own-route rows only.",
+  "GO": "An item is GO when (a) its october L2 change at b = 0.35 is at most -0.20% with the paired-day interval entirely below zero, (b) its 2025-07_natural and 2025-12_natural L2 changes are at most +0.01%, and (c) its dark readings (2025-01_natural, 2025-07_thinned) L2 changes are at most +0.01%. Carried: among GO items the lowest october change; CM_routed is carried only if it is GO and lower than both singles' october changes. No GO: the lever is closed on evidence.",
+  "after": "A carried item goes to a separately declared development round (configs/lirf_own_dev_v1.json, 16 seeds, GPU per the user's word): the carried own variant(s) on the folds where LIRF own points exist (lomo_2025-07, forward, refit, refit12; the routing leaves dark months unchanged), read inside the shipped stack's LIRF route at stage 1 and inside v65's chain at stage 2 with v57's clauses. Every upload is the user's decision; nothing is derived from official scores."
+ },
+ "own_columns": [
+  "p_has_inb",
+  "p_inb_rel",
+  "p_tow",
+  "p_n",
+  "p_first_any",
+  "p_first_mv",
+  "p_last_park",
+  "p_park10",
+  "p_park20",
+  "p_park40",
+  "p_pregap_n",
+  "p_pregap_last",
+  "p_pregap_maxdist",
+  "p_gap_len",
+  "p_seg_start"
+ ],
+ "paths": {
+  "runs": "runs/lirf_own/design/<variant>_s<seed>/design",
+  "transfer": "runs/lirf_own/transfer",
+  "report": "docs/lirf_own/design_report.json"
+ }
+}
