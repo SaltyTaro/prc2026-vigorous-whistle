@@ -43,6 +43,7 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     for old in out.glob("node*.txt"):
         old.unlink()
+    (out / "all.txt").write_text("".join(x + "\n" for x in lines), encoding="utf-8", newline="\n")  # for tools/ctx_own2_dispatch.py
     for i in range(args.nodes):
         mine = lines[i::args.nodes]
         (out / f"node{i}.txt").write_text("".join(x + "\n" for x in mine), encoding="utf-8", newline="\n")
