@@ -94,7 +94,7 @@ class Dispatcher:
             if not (Path.home() / ".sky/generated/ssh" / n).exists():
                 continue
             code, out = ssh(n, "test -f ~/prc/.own2_ready && echo READY; "
-                               "~/prc/.venv/bin/python -c 'import torch, pandas, lightgbm, catboost' 2>/dev/null && echo PKGS; "
+                               "ls -d ~/prc/.venv/lib/python3*/site-packages/catboost ~/prc/.venv/lib/python3*/site-packages/torch > /dev/null 2>&1 && echo PKGS; "
                                "test -f ~/prc/data/ctx/tokens_v1/manifest.json && echo TOKENS")
             if code != 0:
                 self.unreachable[n] = self.unreachable.get(n, 0) + 1

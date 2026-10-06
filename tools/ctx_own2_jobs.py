@@ -34,11 +34,13 @@ def main():
     else:
         config = "configs/ctx_own2_dev_v1.json"
         decl = json.loads((ROOT / config).read_text(encoding="utf-8"))
-        network = decl["network_config"]
-        for fold in decl["folds"]:
-            for seed in decl["seeds"]:
-                for v in decl["variants_fitted"]:
-                    lines.append(f"lomo {network} {v} {seed} {fold} runs/ctx_own2/dev/{v}_s{seed} {EXTRA}")
+        fits = decl["fits"]
+        order = ["refit12", "refit", "lomo_2025-01", "lomo_2025-07", "forward"]  # longest fits first
+        folds = sorted((x["fold"] for x in fits["folds"].values()), key=order.index)
+        for fold in folds:
+            for seed in fits["seeds"]:
+                for v in fits["variants"]:
+                    lines.append(f"lomo {fits['network_config']} {v} {seed} {fold} runs/ctx_own2/nets/{v}_s{seed} {EXTRA}")
     out = ROOT / "runs/ctx_own2" / f"jobs_{args.stage}"
     out.mkdir(parents=True, exist_ok=True)
     for old in out.glob("node*.txt"):
