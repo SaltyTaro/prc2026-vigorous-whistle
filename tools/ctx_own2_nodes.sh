@@ -34,7 +34,7 @@ yaml_for() {
       [ $role = head ] && echo infra/aws/sky_ctx4_head_use2_spot.yaml || echo infra/aws/sky_ctx4_worker_use2_spot.yaml ;;
   esac
 }
-checks="cd ~/prc && .venv/bin/python -X utf8 tools/ctx3_check_tokens.py | head -c 120 && echo && .venv/bin/python -X utf8 tools/ctx_own2_check_features.py && .venv/bin/python -m pytest tests/test_ctx.py tests/test_ctx2.py tests/test_ctx3.py -q -p no:cacheprovider 2>&1 | tail -1 | grep -q passed && touch ~/prc/.own2_ready && echo READY"
+checks="cd ~/prc && .venv/bin/python -X utf8 tools/ctx3_check_tokens.py | head -c 120 && echo && .venv/bin/python -X utf8 tools/ctx_own2_check_features.py && .venv/bin/python -m pytest tests/test_ctx.py tests/test_ctx2.py tests/test_ctx3.py -q -p no:cacheprovider >/dev/null 2>&1                 && touch ~/prc/.own2_ready && echo READY"
 case "${1:-}" in
   up)
     source ~/.venv-sky/bin/activate
