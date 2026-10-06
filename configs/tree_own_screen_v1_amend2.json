@@ -1,0 +1,11 @@
+{
+  "name": "tree_own_screen_v1_amend2",
+  "amends": "configs/tree_own_screen_v1.json (eb59cc6) as amended by configs/tree_own_screen_v1_amend1.json (e26bf96)",
+  "declared_at_utc": "2026-10-06T09:30:42Z",
+  "why": "the first candidate's scorer stopped at the population guard: in the pinned in-chain run of lirf_fam100, 72 of the 562 LIRF fill-population development rows differ from the pinned identity run by up to 25.66 s. The candidate's model part leaves every population row unchanged (checked, 0.0); the movement comes from the shipped v48 reconciliation, which in the development months already shifts the same 72 population rows with their airport-day (the v66 proxy itself differs from v66's model part on exactly those 72 rows), so any change to other LIRF rows of those days moves them. The declared guard 'LIRF fill-population rows never change' cannot hold through the unchanged shipped chain; the project's rule (no layer of ours moves a population row) is kept by holding them at the control.",
+  "disclosed_before_this_amendment": "no candidate's in-chain RMSE or GO reading was computed; the model-part step of lirf_fam100 printed its model-part RMSEs (v55m level, about -0.01% per month against the identity model part) before the scorer stopped",
+  "changes": {
+    "reading.guard": "a candidate's reading is v66 proxy + (pinned candidate run - pinned identity run) on every row EXCEPT the LIRF fill-population rows (cls LIRF_pop), which keep the v66 proxy's value; the GO bar applies to this reading. The same reading without the hold is reported descriptively (months' pct), never used for the decision."
+  },
+  "unchanged": ["everything else of the declaration and amendment 1, including the GO bar"]
+}

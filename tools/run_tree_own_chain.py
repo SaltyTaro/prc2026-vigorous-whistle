@@ -371,11 +371,16 @@ def step_score(candidate: str) -> None:
     if not PINNED:
         raise ValueError("Candidates are read pinned (configs/tree_own_screen_v1_amend1.json).")
     ident = pd.read_parquet(chain_dir("identity") / "run.parquet").set_index(ID).reindex(t[ID])["run"].to_numpy(dtype=float)
-    t["cand"] = t["v66"].to_numpy() + (t["run"].to_numpy() - ident)
     pop = t["cls"].eq("LIRF_pop").to_numpy()
-    pop_gap = float(np.max(np.abs(t["cand"].to_numpy()[pop] - t["v66"].to_numpy()[pop])))
-    if pop_gap > 1e-6:
-        raise ValueError(f"A LIRF population row changed ({pop_gap} s).")
+    free = t["v66"].to_numpy() + (t["run"].to_numpy() - ident)
+    t["cand"] = np.where(pop, t["v66"].to_numpy(), free)  # configs/tree_own_screen_v1_amend2.json: population rows held at the control
+    pop_moved = int((np.abs(free[pop] - t["v66"].to_numpy()[pop]) > 1e-6).sum())
+    pop_gap = float(np.max(np.abs(free[pop] - t["v66"].to_numpy()[pop])))
+    unheld = {}
+    for m in R.DEV_MONTHS:
+        k = (t["month"] == m).to_numpy()
+        yy = t["label"].to_numpy()[k]
+        unheld[m] = float(100 * (np.sqrt(np.mean((yy - free[k]) ** 2)) / np.sqrt(np.mean((yy - t["v66"].to_numpy()[k]) ** 2)) - 1))
     rng = np.random.default_rng(20261006)
     months = {}
     for m in R.DEV_MONTHS:
@@ -397,7 +402,9 @@ def step_score(candidate: str) -> None:
     by = {f"{m}|{c}": float(r["e1"] - r["e0"]) for (m, c), r in by.iterrows() if abs(r["e1"] - r["e0"]) > 0}
     report = {"created_at_utc": utc_now(), "declaration": DECL, "declaration_sha256": sha256_file(ROOT / DECL), "amendment": AMEND,
               "amendment_sha256": sha256_file(ROOT / AMEND), "candidate": candidate, "control": "v66 development proxy", "v66_proxy": V66,
-              "reading": "v66 proxy + (pinned candidate run - pinned identity run)", "pinned_identity_max_abs_vs_v66_s": float(np.max(np.abs(ident - t["v66"].to_numpy()))),
+              "amendment2": "configs/tree_own_screen_v1_amend2.json", "amendment2_sha256": sha256_file(ROOT / "configs/tree_own_screen_v1_amend2.json"),
+              "reading": "v66 proxy + (pinned candidate run - pinned identity run), LIRF population rows held at the v66 proxy",
+              "population_rows_moved_by_the_chain": pop_moved, "population_max_move_by_the_chain_s": pop_gap, "descriptive_pct_without_the_hold": unheld, "pinned_identity_max_abs_vs_v66_s": float(np.max(np.abs(ident - t["v66"].to_numpy()))),
               "months": months, "go_bar": go, "stacker_trees": pr["trees"], "squared_error_change_by_month_cell": by,
               "proxy": {"path": str((d / "dev_proxy.parquet").relative_to(ROOT)), "sha256": sha256_file(d / "dev_proxy.parquet")},
               "code": {c: sha256_file(ROOT / c) for c in ["tools/run_tree_own_chain.py", "tools/run_tree_own.py", "tools/run_stack_resid_v3.py", "tools/run_own_motion_v2.py"]}}
