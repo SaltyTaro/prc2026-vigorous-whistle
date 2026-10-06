@@ -1,0 +1,330 @@
+{
+ "experiment_id": "prc2026-ctx-own2-design-v1",
+ "declared_at_utc": "2026-10-06T09:32:19+00:00",
+ "audit_used": false,
+ "session": "final-week campaign, fork E (lever 5: a stronger / more diverse own-aircraft context-network member on top of v66)",
+ "purpose": "Design batch: v66's network table is the own-points member own_all alone (dl32own on ADS-B-matched rows, m25dl32own on the others, weight 1.00: the older context pool has no weight). Both networks use the 'dl' recipe (numeric embeddings 16 wide, learning rate 0.002). Does the reference recipe with the same 15 own columns (r32own = ref32 + own columns on matched rows, m25r32own = m25_32 + own columns on unmatched rows) replace own_all better, or add to it as a 50/50 recipe mixture?",
+ "prior": "docs/adsb_ctx3_combo/README.md (29 September, October design fold, seeds 9-12, CPU): standalone and at member weight b = 1 the reference recipe was better than dl: route_m25 (ref32 / m25_32) +0.190 points at b = 1 against combo_all (dl32 / m25dl32) +0.123; dl32 alone +0.24% worse than ref32, and dl made the masked network worse on unmatched rows (210.55 against 209.91 s). The dl gain at b = 0.5 came from being different from the old pool, which v66 no longer carries. Recipe diversity helped before (docs/adsb_ctx3/README.md: e24 + e32 seed mixtures -0.128%); a second masked LIRF net with the same recipe correlated 0.98-0.99 (docs/lirf_dark_div/), so the mixture is a separate item. Moderate prior; the design decides.",
+ "exploration_disclosed": "Read before declaring: the records above, docs/dig/ctx_ownpoints.md (tunnel 21 design, October, CPU seeds 9-12 of dl32own / m25dl32own), docs/ctx_ownpoints_dev/ and docs/ctx_ownpoints_weight/ (development months; stage-1 alignment of own_all at 1.00 was 0.7-1.1, so more weight is not the lever). No October prediction of r32own / m25r32own exists; no new score of any kind was read for this declaration. No official score enters (v66's official result is only the reason the incumbent is v66).",
+ "hardware": "AWS g6e.2xlarge (one L40S each) via SkyPilot from WSL: prc-ctx4a (head) and prc-ctx4b in us-east-1, prc-ctx4c and prc-ctx4d in us-west-2 (infra/aws/gpu_authorization_20261006b.json); us-east-2 / prc-ctx3a-d are fork B's. tools/run_adsb_ctx3.py --fold design --device cuda --threads 3, two lanes per GPU. The controls (dl32own, m25dl32own) are refitted in this batch on the same hardware and code with the same seeds as the candidates; tunnel 21's CPU fits of seeds 9-12 are a reproduction reference only (not exact across devices). If AWS supplies fewer nodes the same job list runs on the nodes it supplies.",
+ "protocol": {
+  "data": "tools/run_adsb_ctx3.py --fold design, unchanged: the seasonal fold's fit partition (2025-02..06, 08, 09, LIRF excluded), October monitored, October predictions only",
+  "inputs": "every variant: --extra-features data/external/adsblol/features_v19own (the 11 v19 columns plus the 15 own columns, the shipped member's inputs; tables hash-checked against docs/dig/ctx_ownpoints_features_manifest.json on every node). Own columns are never masked (as shipped).",
+  "never_read": "No run of this declaration predicts, scores or reads a label of 2025-01, 2025-07, 2025-11, 2025-12 or of the ranking months. No official score or leaderboard enters.",
+  "items": {
+   "control": "C = own_all as shipped: dl32own seed mean on rows with adsb_matched = 1, m25dl32own seed mean on the other rows",
+   "ref_own": "R = r32own seed mean on matched rows, m25r32own seed mean on the others (decision item)",
+   "mix_own": "M = 0.5 C + 0.5 R (decision item)",
+   "ref_matched": "r32own on matched rows, m25dl32own on the others (reported)",
+   "ref_unmatched": "dl32own on matched rows, m25r32own on the others (reported)"
+  },
+  "readings": {
+   "R1": "October non-LIRF RMSE of each item (8-seed means); matched / unmatched; by airport; rows with an identified inbound and with own motion seen separately",
+   "R2": "recipe proxy (tools/nn_design_report.RecipeProxy, all October rows) of table = 0.25 committee + 0.75 [(1 - b) P + b X], P = tunnel 21's pool (0.5 ctx seeds 101-116 + 0.5 ctx_e24 seeds 117-132), b in {0.4, 0.5, 1.0}; share 0.85 reported beside it. b = 1.0 is v66's member weight."
+  },
+  "decision": "An item in {ref_own, mix_own} is GO when (a) its R2 at b = 1.0 is at least 0.05 points below the control's, (b) its 8-seed standalone October non-LIRF RMSE is below the control's, and (c) the paired-day 95% interval of the proxy RMSE difference between its table and the control's at b = 1.0 lies below zero. GO items (both, if both pass, since they need the same fits) go to a separately declared development round (configs/ctx_own2_dev_v1.json, before its fits) whose governing reading is stage 2 inside v66's chain against the v66 development proxy with v57's clauses; without a GO the lever is closed and the nodes torn down."
+ },
+ "defaults": {
+  "architecture": {
+   "cat_cap": 16,
+   "d_num": 8,
+   "depth": 3,
+   "dropout": 0.1,
+   "heads": 4,
+   "max_tokens": 128,
+   "n_aux": 0,
+   "sa_dropout": 0.0,
+   "sa_ff": 2,
+   "sa_heads": 4,
+   "sa_layers": 0,
+   "tok_dim": 96,
+   "width": 512
+  },
+  "aux": {
+   "targets": [],
+   "weight": 0.0
+  },
+  "context": {
+   "departures_only": false,
+   "use_adsb": true
+  },
+  "features": {
+   "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+   "extra_features": [
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed",
+    "sfc_ground_10m",
+    "sfc_moving_10m",
+    "sfc_moving_20m",
+    "sfc_rwy_queue_5m",
+    "sfc_rwy_queue_10m"
+   ]
+  },
+  "masking": {
+   "columns": [
+    "adsb_gate",
+    "adsb_first_point_s",
+    "adsb_motion_s",
+    "adsb_first_gs_kt",
+    "adsb_first_dist_stand_m",
+    "adsb_stop_seconds",
+    "adsb_taxi_path_m",
+    "adsb_taxi_stops",
+    "adsb_taxi_stopped_s",
+    "adsb_slow_start_s",
+    "adsb_gap_before_s",
+    "adsb_turnaround_s",
+    "adsb_anchor_dist_stand_m",
+    "adsb_last_ground_s",
+    "adsb_points",
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed"
+   ],
+   "matched": "adsb_matched",
+   "p": 0.0
+  },
+  "preprocess": {
+   "bins": 32,
+   "min_count": 10,
+   "target_clip": null
+  },
+  "rows": {
+   "exclude_airports": [
+    "LIRF"
+   ],
+   "exclude_population": false,
+   "max_label": null
+  },
+  "tokens_dir": "data/ctx/tokens_v1",
+  "training": {
+   "batch_size": 2048,
+   "epochs": 32,
+   "grad_clip": 5.0,
+   "lr": 0.001,
+   "min_lr_fraction": 0.02,
+   "warmup_epochs": 1.0,
+   "weight_decay": 0.0001
+  }
+ },
+ "variants": {
+  "dl32own": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   }
+  },
+  "m25dl32own": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "masking": {
+    "p": 0.25
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   }
+  },
+  "r32own": {
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   }
+  },
+  "m25r32own": {
+   "masking": {
+    "p": 0.25
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   }
+  }
+ },
+ "own_columns": [
+  "p_has_inb",
+  "p_inb_rel",
+  "p_tow",
+  "p_n",
+  "p_first_any",
+  "p_first_mv",
+  "p_last_park",
+  "p_park10",
+  "p_park20",
+  "p_park40",
+  "p_pregap_n",
+  "p_pregap_last",
+  "p_pregap_maxdist",
+  "p_gap_len",
+  "p_seg_start"
+ ],
+ "runs": {
+  "dl32own": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "m25dl32own": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "r32own": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "m25r32own": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ]
+ },
+ "paths": {
+  "runs": "runs/ctx_own2/design/<variant>_s<seed>/design",
+  "report": "docs/ctx_own2/design_report.json",
+  "reproduction_reference": "runs/ctx_ownpoints/design/<variant>_s<seed>/design (tunnel 21, CPU, seeds 9-12)"
+ },
+ "report": "tools/ctx_own2_design_report.py"
+}
