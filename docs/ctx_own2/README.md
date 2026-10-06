@@ -56,3 +56,39 @@ October non-LIRF RMSE (8-seed means), recipe proxy R2 at v66's member weight b =
 - GPU controls against tunnel 21's CPU fits of seeds 9-12: per-seed October RMSE within 1.5 s either way (not exact across devices); the
   4-seed means agree within the seed spread.
 - Design fits: 32 on L40S, about 10-12 min each at two per GPU.
+
+## Development round ([`configs/ctx_own2_dev_v1.json`](../../configs/ctx_own2_dev_v1.json), c843eeb, declared 13:04 UTC before any fit)
+
+160 fits (r32own / m25r32own, seeds 621-636, folds lomo_2025-01, lomo_2025-07, forward, refit, refit12) on on-demand L40S prc-ctx4c
+(us-west-2) and prc-ctx4i / j / k / l (us-east-2), 13:09-17:13 UTC; every fit mirrored with equal SHA-256; no pre-emption. The first two
+attempts on prc-ctx4c failed before fitting because the new network config had not reached the node (fixed: the dispatcher syncs code and
+configs before a node's first fit). ref_own tables: `tools/build_combo_member.py --declaration configs/ctx_own2_dev_v1.json`
+([`member_build.json`](member_build.json)); mix_own: `tools/run_ctx_own2_dev.py --build-mix` (own_all and ref_own finite on the same rows).
+
+### Stage 1 (member level, [`results_stage1.json`](results_stage1.json)): eligible
+
+Control own_all at 1.00 reproduces docs/ctx_ownpoints_weight/results_stage1.json exactly (and v46 / v51's model part their records).
+
+| candidate | January | July | November | December | mean (Jan/Jul/Dec) | eligible |
+|---|---|---|---|---|---|---|
+| mix_own_w100 | -0.056% [-0.449, -0.025] s | -0.108% [-0.449, -0.097] | -0.165% [-0.491, -0.145] | -0.233% [-0.660, -0.170] | -0.132% | yes |
+
+### Stage 2 (governing; v66's chain, variance re-allocation pinned; [`results_v1.json`](results_v1.json)): **NOT accepted**
+
+| month | pinned control (own_all at 1.00) | mix_own_w100 | change | paired-day 95% (%) |
+|---|---|---|---|---|
+| January 2025 | 320.1258 | 320.0675 | -0.018% | [-0.093, +0.009] |
+| July 2025 | 251.0731 | 251.0525 | -0.008% | [-0.046, +0.029] |
+| November 2025 | 182.1762 | 182.0592 | -0.064% | [-0.134, -0.008] |
+| December 2025 | 163.7131 | 163.5360 | -0.108% | [-0.262, +0.016] |
+
+v57's clauses: (1) no month worse by more than 0.005%: yes; (2) equal-footing mean -0.045% (bar -0.02%): yes; (3) every equal-footing
+interval below zero: **no** (January, July and December cross zero). **Nothing is selected; no dry run is built; v66 stays.** The refitted
+stacker (stack_resid_v3, which already reads the own-aircraft points) absorbs most of the member-level gain: -0.132% at stage 1 becomes
+-0.045% in the chain. The pinned control differs from the stored unpinned v66 proxy by +0.0002 / -0.0018 / -0.0090 / +0.0241% (Jan / Jul /
+Nov / Dec), the drift fork B measured; only pinned control and candidate are compared.
+
+## GPU use
+
+On-demand L40S only (spot never provisioned). Every prc-ctx4 cluster was torn
+down at 17:13 UTC after the last hash-checked mirror; the billing guard exited at 17:25 (no cluster left).

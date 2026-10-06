@@ -1,0 +1,520 @@
+{
+  "adsb_cache": {
+    "path": "runs\\adsb_ctx2\\inputs\\adsb_features_arcw0",
+    "sha256": {
+      "adsb_ranking.parquet": "1dcf5c7f01d2bb94a2e967998739c4bd918181e2f013a0c8c8692ba9e7f5be11",
+      "adsb_training_2025-01-01_2025-02-01.parquet": "1b6ef1ffb8a7e486673860a2017db239e37d47b47bc04d97316d616ad1bd4327",
+      "adsb_training_2025-02-01_2025-03-01.parquet": "9141091311803edfd6c967275c51685e48bd85be4ffab13ec75ade3a3693ef3b",
+      "adsb_training_2025-03-01_2025-04-01.parquet": "6ca0bd25a3ade0c064e1df40e992e790ab7ed45e63946a803e29cf31eb6e4b7e",
+      "adsb_training_2025-04-01_2025-05-01.parquet": "989e1f7df98087b8f360da78dd94f5fdd79c3a68f38ecbf85a7de8d17d6e8eb8",
+      "adsb_training_2025-05-01_2025-06-01.parquet": "4d93434ddc014a594b52f0c49827dcbc435babf104008d578fc204d3d716f246",
+      "adsb_training_2025-06-01_2025-07-01.parquet": "15fff184e6da0af3b02db89246bbb54e7cacc004b18203a72d7a0da958ba13a4",
+      "adsb_training_2025-07-01_2025-08-01.parquet": "4261f90e70ea7dbae931ea03bcdc0a6c81b1542f4bc5bf747c8cbf3c1cbe2e0d",
+      "adsb_training_2025-08-01_2025-09-01.parquet": "0c5b757c64ae3ec4326c837b3e135bdf6f4e6ddc9e342fe495b54d51b4369610",
+      "adsb_training_2025-09-01_2025-10-01.parquet": "af57ce50818d26d9a60c98893bb41c5307c885cff9d7392ecb65142ab13531e1",
+      "adsb_training_2025-10-01_2025-11-01.parquet": "3f647d4a375b1a2ae4cb1605f251b24252e278975d8b304737f77c4446c8e12a",
+      "adsb_training_2025-11-01_2025-12-01.parquet": "dc7181e16c611e13cf0dddbf2f445337e6683fb6bc240d0eb393a4b51c0f9aa3",
+      "adsb_training_2025-12-01_2026-01-01.parquet": "b1b90f5d1e98b753f88f50e1752196348bfb092215150966050e589d321315b2"
+    }
+  },
+  "audit_used": false,
+  "created_at_utc": "2026-10-06T17:14:02.958801+00:00",
+  "declaration": "configs/ctx_own2_dev_v1.json",
+  "declaration_sha256": "8ddc8c9fb7c6c4c72235abe2c92570ab95cc4c10e541733011efae8bc52a8446",
+  "leaves": [
+    "2025-01",
+    "2025-07",
+    "2025-11",
+    "2025-12",
+    "ranking"
+  ],
+  "network_config_sha256": "4d5fb143b5e835bcf5752c4dfd631afa2f3210e4d12f68bb5ba3870a24dc2fe3",
+  "note": "routing by the label-free match flag of the tables the fits read; no label read",
+  "route": {
+    "matched": "r32own",
+    "unmatched": "m25r32own"
+  },
+  "tables": {
+    "runs/ctx_own2/member/s621/2025-01.parquet": {
+      "finite": 153706,
+      "matched_rows": 78431,
+      "rows": 153706,
+      "sha256": "d2e3e88e143618e6a8dafc349514015c49902822c667a81d3e81917733a3d3d5"
+    },
+    "runs/ctx_own2/member/s621/2025-07.parquet": {
+      "finite": 190713,
+      "matched_rows": 101722,
+      "rows": 190713,
+      "sha256": "2917b6a6201f41fe8f571ccede75663243abf0b3628843ce4fe6fe89dcb9fea5"
+    },
+    "runs/ctx_own2/member/s621/2025-11.parquet": {
+      "finite": 162332,
+      "matched_rows": 114891,
+      "rows": 162332,
+      "sha256": "f841e07f22703105b870302756f329456b8979ce7d63dc45f9607e4bb4154557"
+    },
+    "runs/ctx_own2/member/s621/2025-12.parquet": {
+      "finite": 165677,
+      "matched_rows": 116713,
+      "rows": 165677,
+      "sha256": "43342f31fb352715e8d31abe8ae834547fea0254f6875f3e987914d991d77b25"
+    },
+    "runs/ctx_own2/member/s621/ranking.parquet": {
+      "finite": 344841,
+      "matched_rows": 225278,
+      "rows": 344841,
+      "sha256": "e31327334eed6ca74f827e11f737eb0e6058d5fdd5822287329bd2d217f508a1"
+    },
+    "runs/ctx_own2/member/s622/2025-01.parquet": {
+      "finite": 153706,
+      "matched_rows": 78431,
+      "rows": 153706,
+      "sha256": "5a47be700c227bbb9f23b69223d5e6eba8cf3db2e9e80f5b35e739bebdcc2456"
+    },
+    "runs/ctx_own2/member/s622/2025-07.parquet": {
+      "finite": 190713,
+      "matched_rows": 101722,
+      "rows": 190713,
+      "sha256": "19f469069813707bed56e4e5dbd17f93af5f6a7a7a7689ebd63ee6cc39d0934a"
+    },
+    "runs/ctx_own2/member/s622/2025-11.parquet": {
+      "finite": 162332,
+      "matched_rows": 114891,
+      "rows": 162332,
+      "sha256": "8e10fde3998b524bd7bd08461627d79d2208531a21b3218f7106ffc85ce4cd20"
+    },
+    "runs/ctx_own2/member/s622/2025-12.parquet": {
+      "finite": 165677,
+      "matched_rows": 116713,
+      "rows": 165677,
+      "sha256": "97b47563eaac69dc8d1c18417a9180648e7bd9067259c9443cd3ab23674cb510"
+    },
+    "runs/ctx_own2/member/s622/ranking.parquet": {
+      "finite": 344841,
+      "matched_rows": 225278,
+      "rows": 344841,
+      "sha256": "8ea234318efe66ddc8c57aa33edf87f294f3bb14babee649057722e55e07c674"
+    },
+    "runs/ctx_own2/member/s623/2025-01.parquet": {
+      "finite": 153706,
+      "matched_rows": 78431,
+      "rows": 153706,
+      "sha256": "5c60e31732ad93a9bf74307fb63c24ad06547551e8abdb2afb84ba719518afd2"
+    },
+    "runs/ctx_own2/member/s623/2025-07.parquet": {
+      "finite": 190713,
+      "matched_rows": 101722,
+      "rows": 190713,
+      "sha256": "dce4a740d0e4f255a858cee5d6697d4dfba13e38c6d9ee3995d2df52a7327a99"
+    },
+    "runs/ctx_own2/member/s623/2025-11.parquet": {
+      "finite": 162332,
+      "matched_rows": 114891,
+      "rows": 162332,
+      "sha256": "c323d3229843bc97481ab1e23d9853493b09f4c47f69ba74d7346c529a11c381"
+    },
+    "runs/ctx_own2/member/s623/2025-12.parquet": {
+      "finite": 165677,
+      "matched_rows": 116713,
+      "rows": 165677,
+      "sha256": "62e7d1aaf3c69dc36fc68f20ad47bd75712aaf33cc77a2972ffd7d48f2257baf"
+    },
+    "runs/ctx_own2/member/s623/ranking.parquet": {
+      "finite": 344841,
+      "matched_rows": 225278,
+      "rows": 344841,
+      "sha256": "965ea725100005a3e035f6f5344cbf309a4d3e0cd79836a6aedffee27a35e2c7"
+    },
+    "runs/ctx_own2/member/s624/2025-01.parquet": {
+      "finite": 153706,
+      "matched_rows": 78431,
+      "rows": 153706,
+      "sha256": "da3916fcabfeb8fd73766bfec738026ef9d11ffa24d15b6f110bd2fcdb67b979"
+    },
+    "runs/ctx_own2/member/s624/2025-07.parquet": {
+      "finite": 190713,
+      "matched_rows": 101722,
+      "rows": 190713,
+      "sha256": "3dc9d42e587bc0f72acfddfdbdc297f397a68c3f8bc9f6d2053372a16a6dd461"
+    },
+    "runs/ctx_own2/member/s624/2025-11.parquet": {
+      "finite": 162332,
+      "matched_rows": 114891,
+      "rows": 162332,
+      "sha256": "7e34c7e0fe598e2733fb17cb4baa2fbfaabe4adfcdd0c85af47d88e3a0b6b245"
+    },
+    "runs/ctx_own2/member/s624/2025-12.parquet": {
+      "finite": 165677,
+      "matched_rows": 116713,
+      "rows": 165677,
+      "sha256": "a92140b44c4a0eef1e7d2ef7a5148bdcf60c81a9c72131ec51bf16494e33af3a"
+    },
+    "runs/ctx_own2/member/s624/ranking.parquet": {
+      "finite": 344841,
+      "matched_rows": 225278,
+      "rows": 344841,
+      "sha256": "b6638860a11117d3fd6d501d2d4f3048138c108a2ff1c1cf7def55501af03bdd"
+    },
+    "runs/ctx_own2/member/s625/2025-01.parquet": {
+      "finite": 153706,
+      "matched_rows": 78431,
+      "rows": 153706,
+      "sha256": "cf07bd76f2cd9962c7d3e1b497e41f6e43f20dceebb90c012918008991cdc410"
+    },
+    "runs/ctx_own2/member/s625/2025-07.parquet": {
+      "finite": 190713,
+      "matched_rows": 101722,
+      "rows": 190713,
+      "sha256": "418c68c3b73082c81a38fede71d33863e4f05d27abeb418c5868cc80f84d5247"
+    },
+    "runs/ctx_own2/member/s625/2025-11.parquet": {
+      "finite": 162332,
+      "matched_rows": 114891,
+      "rows": 162332,
+      "sha256": "464fb9ae229f769c1dcd9429e149bdd5a4e6107d915687d65c52755df44fcd04"
+    },
+    "runs/ctx_own2/member/s625/2025-12.parquet": {
+      "finite": 165677,
+      "matched_rows": 116713,
+      "rows": 165677,
+      "sha256": "bbb04398373be7e488311bb0ee49ad631752d3c5ff118d3d540920facc1a9daf"
+    },
+    "runs/ctx_own2/member/s625/ranking.parquet": {
+      "finite": 344841,
+      "matched_rows": 225278,
+      "rows": 344841,
+      "sha256": "f9de0c2d5255daf75b1835d0146970da40104ded3ada5ea533231f0eb879ec11"
+    },
+    "runs/ctx_own2/member/s626/2025-01.parquet": {
+      "finite": 153706,
+      "matched_rows": 78431,
+      "rows": 153706,
+      "sha256": "363e0479a5423ade913c9e0fdddca602be06eba59b3f74e179fbc3013caf7481"
+    },
+    "runs/ctx_own2/member/s626/2025-07.parquet": {
+      "finite": 190713,
+      "matched_rows": 101722,
+      "rows": 190713,
+      "sha256": "196f983ca604771a50c35e0f6b858ae809770a74b28887ea4c2d810134d218d4"
+    },
+    "runs/ctx_own2/member/s626/2025-11.parquet": {
+      "finite": 162332,
+      "matched_rows": 114891,
+      "rows": 162332,
+      "sha256": "46a90414f6c56c7bca4b093c401ca4fa135396ff63b98c03a30c8a368af7ed8d"
+    },
+    "runs/ctx_own2/member/s626/2025-12.parquet": {
+      "finite": 165677,
+      "matched_rows": 116713,
+      "rows": 165677,
+      "sha256": "1260679d89d0ec52007c34afeb81034caaee6df805c3a4b3133df32ea0ce0faf"
+    },
+    "runs/ctx_own2/member/s626/ranking.parquet": {
+      "finite": 344841,
+      "matched_rows": 225278,
+      "rows": 344841,
+      "sha256": "59ab5e3b8177fe1448d6880e2ec2d2f2485736b52dc72b0beb9ce5acc178e2f1"
+    },
+    "runs/ctx_own2/member/s627/2025-01.parquet": {
+      "finite": 153706,
+      "matched_rows": 78431,
+      "rows": 153706,
+      "sha256": "48ad8d92bf0dfac36e8224ab140b06d41d6cb19ef5cafa6a4d3252a208e0edeb"
+    },
+    "runs/ctx_own2/member/s627/2025-07.parquet": {
+      "finite": 190713,
+      "matched_rows": 101722,
+      "rows": 190713,
+      "sha256": "8eaa7629babea0ed486721e03eaea62005ae0e43be36708d5c53c4ab80e6b0da"
+    },
+    "runs/ctx_own2/member/s627/2025-11.parquet": {
+      "finite": 162332,
+      "matched_rows": 114891,
+      "rows": 162332,
+      "sha256": "6c84b0d8b5c903130e3ed62e3b892665c5b466b0c9e9bd6a39cb9b65e3888100"
+    },
+    "runs/ctx_own2/member/s627/2025-12.parquet": {
+      "finite": 165677,
+      "matched_rows": 116713,
+      "rows": 165677,
+      "sha256": "f959e4488698cf09ee556e6dc13a3b58126be14eb1bc3c03949bd29a01a91a08"
+    },
+    "runs/ctx_own2/member/s627/ranking.parquet": {
+      "finite": 344841,
+      "matched_rows": 225278,
+      "rows": 344841,
+      "sha256": "72f27cd727bf54de553a33a33f5cd5f4461f44b0232816103db4850918a79b47"
+    },
+    "runs/ctx_own2/member/s628/2025-01.parquet": {
+      "finite": 153706,
+      "matched_rows": 78431,
+      "rows": 153706,
+      "sha256": "403b8a39db35e05aafaf78437cd8a9fb84dcac51c2a7dc9fe2f735188b886078"
+    },
+    "runs/ctx_own2/member/s628/2025-07.parquet": {
+      "finite": 190713,
+      "matched_rows": 101722,
+      "rows": 190713,
+      "sha256": "59f37eac542f434b5561e885cbd2558af7caaf69485f5ea2b0c36ac88a349403"
+    },
+    "runs/ctx_own2/member/s628/2025-11.parquet": {
+      "finite": 162332,
+      "matched_rows": 114891,
+      "rows": 162332,
+      "sha256": "c2a351b5e5fce37ef774446909b68773053e688160eaf185f219c6981e4a54e9"
+    },
+    "runs/ctx_own2/member/s628/2025-12.parquet": {
+      "finite": 165677,
+      "matched_rows": 116713,
+      "rows": 165677,
+      "sha256": "b4d2da75ec59dd1b19da59ac1ddb55050af52923b397352aef7ee3ebd0b8cc21"
+    },
+    "runs/ctx_own2/member/s628/ranking.parquet": {
+      "finite": 344841,
+      "matched_rows": 225278,
+      "rows": 344841,
+      "sha256": "137b84bc1becb5ada2a8ca959613e998a563c26476991781c19e13022952deef"
+    },
+    "runs/ctx_own2/member/s629/2025-01.parquet": {
+      "finite": 153706,
+      "matched_rows": 78431,
+      "rows": 153706,
+      "sha256": "7bc922cee3f9ee82748b26f855a7fdd0909946fff6c904dd51796fe0ddf57683"
+    },
+    "runs/ctx_own2/member/s629/2025-07.parquet": {
+      "finite": 190713,
+      "matched_rows": 101722,
+      "rows": 190713,
+      "sha256": "b31d43faeea4681bff4ec0514028e8b7320714c1b72b89560e4a1d99de6c1f6f"
+    },
+    "runs/ctx_own2/member/s629/2025-11.parquet": {
+      "finite": 162332,
+      "matched_rows": 114891,
+      "rows": 162332,
+      "sha256": "3f2620b6bf4e9b073e66a520e0d5c5ccbb02343d120f1fb493a6f2c1b62b9374"
+    },
+    "runs/ctx_own2/member/s629/2025-12.parquet": {
+      "finite": 165677,
+      "matched_rows": 116713,
+      "rows": 165677,
+      "sha256": "839631abbfe5d16329223dc33750038cceaf7386a6459e8e34ddc5155a09830e"
+    },
+    "runs/ctx_own2/member/s629/ranking.parquet": {
+      "finite": 344841,
+      "matched_rows": 225278,
+      "rows": 344841,
+      "sha256": "a59f7b021bc73bac94f13ae8b004f0dcefe5a1764df5de180720da79a5536a1d"
+    },
+    "runs/ctx_own2/member/s630/2025-01.parquet": {
+      "finite": 153706,
+      "matched_rows": 78431,
+      "rows": 153706,
+      "sha256": "c4c1f1b24f94db552225c1710c8c6115c6ed85fc9f481f3e594ad427a58a185b"
+    },
+    "runs/ctx_own2/member/s630/2025-07.parquet": {
+      "finite": 190713,
+      "matched_rows": 101722,
+      "rows": 190713,
+      "sha256": "099b7613c135fb19acabb99e51f2517c44142f9d13bf1c943a40627090ad9f0b"
+    },
+    "runs/ctx_own2/member/s630/2025-11.parquet": {
+      "finite": 162332,
+      "matched_rows": 114891,
+      "rows": 162332,
+      "sha256": "9614ef43464131aeac098420e10bd8c0abb0c03bcc96757d851536ac22fc9c71"
+    },
+    "runs/ctx_own2/member/s630/2025-12.parquet": {
+      "finite": 165677,
+      "matched_rows": 116713,
+      "rows": 165677,
+      "sha256": "a32084bffb8df573b31a67cd48126f316aefa1ef679b2252efc3a7fd88163d16"
+    },
+    "runs/ctx_own2/member/s630/ranking.parquet": {
+      "finite": 344841,
+      "matched_rows": 225278,
+      "rows": 344841,
+      "sha256": "fc9288bb8ed9e2b16e1f8b914bdac606949bb320bc6691c28ba648f7c8a6477f"
+    },
+    "runs/ctx_own2/member/s631/2025-01.parquet": {
+      "finite": 153706,
+      "matched_rows": 78431,
+      "rows": 153706,
+      "sha256": "bc3d951409307ed773073f204077d06e93c1622764a80ac77054ac5d06d7e5d1"
+    },
+    "runs/ctx_own2/member/s631/2025-07.parquet": {
+      "finite": 190713,
+      "matched_rows": 101722,
+      "rows": 190713,
+      "sha256": "13b03d98a322eb7545692b085436c2228a94d9997b93e3fc51f08ea7c3f1b19a"
+    },
+    "runs/ctx_own2/member/s631/2025-11.parquet": {
+      "finite": 162332,
+      "matched_rows": 114891,
+      "rows": 162332,
+      "sha256": "756cbda5c09d3203769f109e2023e3fe4f48d2bffb658834a397f45a97a50452"
+    },
+    "runs/ctx_own2/member/s631/2025-12.parquet": {
+      "finite": 165677,
+      "matched_rows": 116713,
+      "rows": 165677,
+      "sha256": "75d4ff4072fbec987f3277b815bbec4b4a7d2adc0ee3da9889a5c5e0b0160e2d"
+    },
+    "runs/ctx_own2/member/s631/ranking.parquet": {
+      "finite": 344841,
+      "matched_rows": 225278,
+      "rows": 344841,
+      "sha256": "d125eb193cdd70cc65cc0b226588ac5d6ad72034d38c7376d142faeb7178ea3f"
+    },
+    "runs/ctx_own2/member/s632/2025-01.parquet": {
+      "finite": 153706,
+      "matched_rows": 78431,
+      "rows": 153706,
+      "sha256": "aab513ba546bc8539e01e3271d3c25c079af33210b4f3544965d86ab3eaea782"
+    },
+    "runs/ctx_own2/member/s632/2025-07.parquet": {
+      "finite": 190713,
+      "matched_rows": 101722,
+      "rows": 190713,
+      "sha256": "1a27f367cb95789a9eb6a3298495702a7242392cb17b94ccd017fcc9895cbd90"
+    },
+    "runs/ctx_own2/member/s632/2025-11.parquet": {
+      "finite": 162332,
+      "matched_rows": 114891,
+      "rows": 162332,
+      "sha256": "a86e97e03427dbdf166679b64486aa0eb023d80fbf61dbaa2788c1615e142a58"
+    },
+    "runs/ctx_own2/member/s632/2025-12.parquet": {
+      "finite": 165677,
+      "matched_rows": 116713,
+      "rows": 165677,
+      "sha256": "cc7d04983b538e021a844989f2a605f3224083a1a4a68e901e6d4e164e18ea29"
+    },
+    "runs/ctx_own2/member/s632/ranking.parquet": {
+      "finite": 344841,
+      "matched_rows": 225278,
+      "rows": 344841,
+      "sha256": "54766f819ff486b629b3c7070f89993343b125a08f0b7a3eb57fa9ef0aff45ca"
+    },
+    "runs/ctx_own2/member/s633/2025-01.parquet": {
+      "finite": 153706,
+      "matched_rows": 78431,
+      "rows": 153706,
+      "sha256": "eab873b14d3fb36768ff79e27793e6c31cc49814098ca407888e2a4300ecabcc"
+    },
+    "runs/ctx_own2/member/s633/2025-07.parquet": {
+      "finite": 190713,
+      "matched_rows": 101722,
+      "rows": 190713,
+      "sha256": "d454743d378cf1d883cf8f0db9435b0ada086c1f8ac0b9500e06069c4cb12fb0"
+    },
+    "runs/ctx_own2/member/s633/2025-11.parquet": {
+      "finite": 162332,
+      "matched_rows": 114891,
+      "rows": 162332,
+      "sha256": "4792125e2ef6dbd3d7312e9f3e8ddf434d665af0c5e4183887bf0ad980e5b4d8"
+    },
+    "runs/ctx_own2/member/s633/2025-12.parquet": {
+      "finite": 165677,
+      "matched_rows": 116713,
+      "rows": 165677,
+      "sha256": "293b49472b3c485cee552f917ee043048210430344661431cb7ee1bb5700be97"
+    },
+    "runs/ctx_own2/member/s633/ranking.parquet": {
+      "finite": 344841,
+      "matched_rows": 225278,
+      "rows": 344841,
+      "sha256": "160912eea5c51991c509c8cea20c59630fd72a0c6e8b0291c0398b476ace3b9b"
+    },
+    "runs/ctx_own2/member/s634/2025-01.parquet": {
+      "finite": 153706,
+      "matched_rows": 78431,
+      "rows": 153706,
+      "sha256": "109f281b1c0a2e5c7ea34f69e4a3ae7ba1043c30830ed1446f3b860a07828751"
+    },
+    "runs/ctx_own2/member/s634/2025-07.parquet": {
+      "finite": 190713,
+      "matched_rows": 101722,
+      "rows": 190713,
+      "sha256": "b2f93ac58aa8889a17b895f4e19a35053a48bf3d2cf3b551e879ab558b0513fe"
+    },
+    "runs/ctx_own2/member/s634/2025-11.parquet": {
+      "finite": 162332,
+      "matched_rows": 114891,
+      "rows": 162332,
+      "sha256": "116b9af55fc91b85eddb35417b2d816de1b48e381a85cb662b25b27ff19fac99"
+    },
+    "runs/ctx_own2/member/s634/2025-12.parquet": {
+      "finite": 165677,
+      "matched_rows": 116713,
+      "rows": 165677,
+      "sha256": "112223349e3f3491d71edbe7cc9d935fc8a1e7366a77514ed9696b5abef923b4"
+    },
+    "runs/ctx_own2/member/s634/ranking.parquet": {
+      "finite": 344841,
+      "matched_rows": 225278,
+      "rows": 344841,
+      "sha256": "466dbfd07642280778e745d88ae82dbd1c5efad430b8ccc9b5db78b3a072a458"
+    },
+    "runs/ctx_own2/member/s635/2025-01.parquet": {
+      "finite": 153706,
+      "matched_rows": 78431,
+      "rows": 153706,
+      "sha256": "789dbe98d024f0916cb3260fe3cfd72273e0eb9b1a54a6c76095de6cfc076065"
+    },
+    "runs/ctx_own2/member/s635/2025-07.parquet": {
+      "finite": 190713,
+      "matched_rows": 101722,
+      "rows": 190713,
+      "sha256": "5abb255b6a9623eee5e15cb20e01548c3e38a2ca3e2f14a6981d26abcdb04bdf"
+    },
+    "runs/ctx_own2/member/s635/2025-11.parquet": {
+      "finite": 162332,
+      "matched_rows": 114891,
+      "rows": 162332,
+      "sha256": "59f8dc69990f312ce16be4cb45eb387675f39069c93fc1237397feffa91ec749"
+    },
+    "runs/ctx_own2/member/s635/2025-12.parquet": {
+      "finite": 165677,
+      "matched_rows": 116713,
+      "rows": 165677,
+      "sha256": "b509e03df729c658d0bc012d84bbf8fe0c9df59252a0685804329d376257a943"
+    },
+    "runs/ctx_own2/member/s635/ranking.parquet": {
+      "finite": 344841,
+      "matched_rows": 225278,
+      "rows": 344841,
+      "sha256": "d149cacb6251678c33119c6d7be7cd1d5533008d61dfdc4ae1de4a4ded16fee4"
+    },
+    "runs/ctx_own2/member/s636/2025-01.parquet": {
+      "finite": 153706,
+      "matched_rows": 78431,
+      "rows": 153706,
+      "sha256": "502adf8dacb71d4ba2cbfcd049a573b00462255d6f1810068b0063f208c89d77"
+    },
+    "runs/ctx_own2/member/s636/2025-07.parquet": {
+      "finite": 190713,
+      "matched_rows": 101722,
+      "rows": 190713,
+      "sha256": "06d1070f192260cabca2f044a2c65c7b3d739f65d30211c267b6cbc71de758e7"
+    },
+    "runs/ctx_own2/member/s636/2025-11.parquet": {
+      "finite": 162332,
+      "matched_rows": 114891,
+      "rows": 162332,
+      "sha256": "a1d7d3d9c5e8413d7554da3fa36d8440e2563b209676c8f8b8bf2fab854e2018"
+    },
+    "runs/ctx_own2/member/s636/2025-12.parquet": {
+      "finite": 165677,
+      "matched_rows": 116713,
+      "rows": 165677,
+      "sha256": "3284288fb45e8105c9da0bb61ffe295b0b220c433caeebbc7ac7fa2812483876"
+    },
+    "runs/ctx_own2/member/s636/ranking.parquet": {
+      "finite": 344841,
+      "matched_rows": 225278,
+      "rows": 344841,
+      "sha256": "69b5a2b9fe59c447771f5dae4094c06628c001cbc7cba3c2aa89b9f727359895"
+    }
+  },
+  "tool_sha256": "d0d45bd731ca4a35a56a541b197bdcdd9245b7fda4597bffbe402940fe8b0836"
+}

@@ -1,0 +1,212 @@
+{
+  "checks": {
+    "1_no_month_worse_than_0.005pct": true,
+    "2_equal_footing_mean_pct": -0.044871276056997665,
+    "2_mean_ok": true,
+    "3_every_equal_interval_below_zero": false,
+    "accepted": false
+  },
+  "code": {
+    "src/prc2026_final/network_member.py": "d2ce137c38e3ab39aaad6b2d3f0152c859fc05918253d518a7a0cd10460f6126",
+    "src/prc2026_final/share_gate.py": "015df26644d701497bc06874b9e3319013f8d56dbb282f96d12f5f9f52fefdbe",
+    "src/prc2026_scout/var_alloc.py": "91d1788d597f23550ccfa1d68d8b08fea12fe496ba94e69b19ff99f7e81989c0",
+    "tools/export_ctx_ownpoints.py": "03e6bda44a26d6a2563dc255bcb7cc5679cf42c87eca18f0b0e54b7a3b2a0dc1",
+    "tools/run_ctx_own2_dev.py": "d32f27620485a7f338a158e79ed4aa3ee4894fb0816ec02f3103c2d074266e3f",
+    "tools/run_ctx_ownpoints_chain.py": "4fa1a5244fe0520fa9701e352d29c3b1c97ebfe23cc34ee6f0120082a13d5a7d",
+    "tools/run_ctx_ownpoints_dev.py": "07e52572002fae6acfbab8962639875a9bc87892daf98dc7152049a7123ec1fa",
+    "tools/run_network_member.py": "a76f39a29a492c32badad26bf3964adc01bc8a2125440fddea74d1d3bb0e5ca4",
+    "tools/run_own_motion_v2.py": "1fa8f880cd107b06e2cc00aa8d89602c9d3bc6afd35be7567f7a68c5e276d2b7",
+    "tools/run_ownpoints_weight.py": "5260ed72b57dd76ad5d4ed2e4d31673c03503a8cdff7dbc8df3eac93f24d53c6",
+    "tools/run_stack_resid_v3.py": "d3c5f995d39633c7383916e1f80d7553f2bbbecc5461f2c579e816281c071f52"
+  },
+  "control": "own_all_w100 through the pinned chain",
+  "created_at_utc": "2026-10-06T17:49:28.901826+00:00",
+  "declaration": "configs/ctx_own2_dev_v1.json",
+  "declaration_sha256": "8ddc8c9fb7c6c4c72235abe2c92570ab95cc4c10e541733011efae8bc52a8446",
+  "inputs": {
+    "mix_own_w100": {
+      "cand.parquet": "f548fea01299d07510f1e9e21dadebdb85bd30df56613ac9e3167e26694d6e95",
+      "ctl.parquet": "6a3f38e00845e7f98f141e42dfbd436c162a84f1bd8c4b0864b775770e1edd96",
+      "dmp.parquet": "eff79c0c7c36ec70fa820ddd452db04bb4a8786d1f742789bdfbcf64b5c4fdb1",
+      "rows_all.parquet": "49992770a746135afca40f0d6327309fbe4938ca4a75988b098ed2ee9456ab34"
+    },
+    "own_all_w100": {
+      "cand.parquet": "bdf959c953216e0dabad845d6f3cb016b0334ffbaeed019fc0a1ddad6474772f",
+      "ctl.parquet": "cc9f54173d59a1fbfa642bc40abcf09d8fb37b2e6aa48a1c9055e0c16a7870a1",
+      "dmp.parquet": "5a5c3373dcda7f4442f04117ffbd8319e95e7eff6c981585bf206f7db1069d47",
+      "rows_all.parquet": "9389b3d9627667b1d6c9ba7c04f7f0a9a414383a27dd125b3e17b26cf66524ad"
+    }
+  },
+  "months": {
+    "2025-01": {
+      "control_rmse": 320.12578633962187,
+      "hi": 0.009213155992718325,
+      "lo": -0.09295652339934873,
+      "pct": -0.01819931624748028,
+      "rmse": 320.06752563537617,
+      "rows_changed": 153568,
+      "squared_change": 8443752.776721388
+    },
+    "2025-07": {
+      "control_rmse": 251.07310406865693,
+      "hi": 0.028672896041628232,
+      "lo": -0.04636042072779012,
+      "pct": -0.008220939155179074,
+      "rmse": 251.05246350153644,
+      "rows_changed": 190214,
+      "squared_change": 11859916.156552512
+    },
+    "2025-11": {
+      "control_rmse": 182.1761564097935,
+      "hi": -0.007631514882249503,
+      "lo": -0.13359723619049108,
+      "pct": -0.06418196418780386,
+      "rmse": 182.05923217432783,
+      "rows_changed": 162208,
+      "squared_change": 8280251.335165957
+    },
+    "2025-12": {
+      "control_rmse": 163.7130907444459,
+      "hi": 0.016254858088839412,
+      "lo": -0.26165117942372806,
+      "pct": -0.10819357276833363,
+      "rmse": 163.53596370248002,
+      "rows_changed": 165510,
+      "squared_change": 8059559.882489652
+    }
+  },
+  "official_scores_used": "none",
+  "pinned_control_vs_stored_unpinned_v66_proxy": {
+    "2025-01": {
+      "pinned_control_rmse": 320.12578633962187,
+      "pinned_vs_stored_pct": 0.0001772908459596323,
+      "stored_v66_rmse": 320.12521878691336
+    },
+    "2025-07": {
+      "pinned_control_rmse": 251.07310406865693,
+      "pinned_vs_stored_pct": -0.0017587472814550864,
+      "stored_v66_rmse": 251.0775198877123
+    },
+    "2025-11": {
+      "pinned_control_rmse": 182.1761564097935,
+      "pinned_vs_stored_pct": -0.008988026422285245,
+      "stored_v66_rmse": 182.19253192270213
+    },
+    "2025-12": {
+      "pinned_control_rmse": 163.7130907444459,
+      "pinned_vs_stored_pct": 0.024099137013222638,
+      "stored_v66_rmse": 163.6736468080471
+    }
+  },
+  "proxy": {
+    "path": "runs\\ctx_own2\\chain\\mix_own_w100\\dev_v67_proxy.parquet",
+    "sha256": "e54c673115b5acec64cc6a64c690853aa19a75dd79e185b69769df62ffe636bf"
+  },
+  "rule": "v57's clauses 1-3 with configs/own_motion_v2.json's values: (1) no development month (January, July, November, December 2025) worse than the pinned control by more than 0.005%; (2) equal-footing mean change at most -0.02%; (3) every equal-footing paired-day 95% interval (tools/run_intruder_bound.interval, seed 20261004) below zero. Clause 4 (twelve months) does not apply: the stacker's components exist only for the four development months.",
+  "selected_candidate": null,
+  "stacker_trees": {
+    "mix_own_w100": {
+      "v2 2025-01": [
+        377,
+        213,
+        199
+      ],
+      "v2 2025-07": [
+        419,
+        480,
+        356
+      ],
+      "v2 2025-11": [
+        296,
+        295,
+        220
+      ],
+      "v2 2025-12": [
+        331,
+        412,
+        324
+      ],
+      "v3 2025-01": [
+        406,
+        498,
+        435
+      ],
+      "v3 2025-07": [
+        736,
+        508,
+        578
+      ],
+      "v3 2025-11": [
+        312,
+        425,
+        273
+      ],
+      "v3 2025-12": [
+        537,
+        480,
+        650
+      ]
+    },
+    "own_all_w100": {
+      "v2 2025-01": [
+        294,
+        340,
+        394
+      ],
+      "v2 2025-07": [
+        535,
+        517,
+        324
+      ],
+      "v2 2025-11": [
+        274,
+        295,
+        269
+      ],
+      "v2 2025-12": [
+        542,
+        367,
+        306
+      ],
+      "v3 2025-01": [
+        397,
+        556,
+        495
+      ],
+      "v3 2025-07": [
+        481,
+        498,
+        618
+      ],
+      "v3 2025-11": [
+        443,
+        442,
+        642
+      ],
+      "v3 2025-12": [
+        293,
+        470,
+        540
+      ]
+    }
+  },
+  "stage_1": {
+    "path": "docs/ctx_own2/results_stage1.json",
+    "sha256": "c86062a4151f5c755fd3477eb20bc0fe65469ad206d77da102abfa6fc88c9a78"
+  },
+  "var_alloc_params": {
+    "bagging_fraction": 0.8,
+    "bagging_freq": 1,
+    "deterministic": true,
+    "feature_fraction": 0.8,
+    "force_col_wise": true,
+    "lambda_l2": 10.0,
+    "learning_rate": 0.05,
+    "min_data_in_leaf": 2000,
+    "num_leaves": 15,
+    "num_threads": 6,
+    "objective": "regression",
+    "seed": 20261002,
+    "verbose": -1
+  }
+}
