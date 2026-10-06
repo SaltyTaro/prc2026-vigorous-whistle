@@ -12,7 +12,7 @@ now = datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0).isofor
 oct_ = design['readings']['october']['L2']['M_routed']
 disclosed = (f"Known before this declaration: the design batch (configs/lirf_own_design_v1.json, docs/lirf_own/design_report.json sha256 {dsha[:16]}...) "
              f"carried M_routed: October L2 change {oct_['0.35']['change_pct']:+.3f}% (interval {oct_['interval_b0.35_s'][0]:+.2f}..{oct_['interval_b0.35_s'][1]:+.2f} s); "
-             "its other readings are in the report. The v65 development proxy and the official scores of v1-v65 exist; nothing here is derived from the scores. "
+             "its other readings are in the report. The v66 development proxy and the official scores of v1-v66 exist; nothing here is derived from the scores. "
              "The candidates (full replacement and a half mix on own-route rows), the folds and the rules are fixed before any fit of this round.")
 d = {
  "experiment_id": "prc2026-lirf-own-dev-v1",
