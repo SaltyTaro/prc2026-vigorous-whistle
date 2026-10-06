@@ -1,0 +1,299 @@
+{
+ "experiment_id": "prc2026-ctx-own2-dev-v1",
+ "declared_at_utc": "2026-10-06T13:04:49+00:00",
+ "audit_used": false,
+ "session": "final-week campaign, fork E (lever 5)",
+ "purpose": "Development round of the GO item of configs/ctx_own2_design_v1.json: mix_own = 0.5 own_all (the shipped own-points member, 16 seeds 601-616, configs/ctx_ownpoints_dev_v1.json) + 0.5 ref_own (r32own on ADS-B-matched rows, m25r32own on the others: the reference recipe with the same 15 own columns, 16 new seeds 621-636) REPLACES own_all at member weight 1.00 in the committee's network table (v66's model part). Declared after the design report and before any fit of these networks or any development score of them.",
+ "disclosed": "Known before this declaration: the design report docs/ctx_own2/design_report.json (sha256 a85313fe893f500f014772962410bd239763048501882e8a9fc7808ae3fcd900): October recipe proxy at b = 1.0: mix_own +0.184 points against own_all (standalone -0.898%, interval [-0.45, -0.18] s), ref_own +0.126 points (interval [-0.50, +0.11], not GO), ref_matched +0.088, ref_unmatched +0.038. The weight round (docs/ctx_ownpoints_weight/) and v66's official result are known; v66's official score enters no step (it only fixes the incumbent). No development-month score of r32own / m25r32own exists.",
+ "member": {
+  "name": "ref_own",
+  "column": "adsb_full",
+  "route": {
+   "matched": "r32own",
+   "unmatched": "m25r32own"
+  },
+  "tables": {
+   "2025-01": [
+    "runs/ctx_own2/member/s621/2025-01.parquet",
+    "runs/ctx_own2/member/s622/2025-01.parquet",
+    "runs/ctx_own2/member/s623/2025-01.parquet",
+    "runs/ctx_own2/member/s624/2025-01.parquet",
+    "runs/ctx_own2/member/s625/2025-01.parquet",
+    "runs/ctx_own2/member/s626/2025-01.parquet",
+    "runs/ctx_own2/member/s627/2025-01.parquet",
+    "runs/ctx_own2/member/s628/2025-01.parquet",
+    "runs/ctx_own2/member/s629/2025-01.parquet",
+    "runs/ctx_own2/member/s630/2025-01.parquet",
+    "runs/ctx_own2/member/s631/2025-01.parquet",
+    "runs/ctx_own2/member/s632/2025-01.parquet",
+    "runs/ctx_own2/member/s633/2025-01.parquet",
+    "runs/ctx_own2/member/s634/2025-01.parquet",
+    "runs/ctx_own2/member/s635/2025-01.parquet",
+    "runs/ctx_own2/member/s636/2025-01.parquet"
+   ],
+   "2025-07": [
+    "runs/ctx_own2/member/s621/2025-07.parquet",
+    "runs/ctx_own2/member/s622/2025-07.parquet",
+    "runs/ctx_own2/member/s623/2025-07.parquet",
+    "runs/ctx_own2/member/s624/2025-07.parquet",
+    "runs/ctx_own2/member/s625/2025-07.parquet",
+    "runs/ctx_own2/member/s626/2025-07.parquet",
+    "runs/ctx_own2/member/s627/2025-07.parquet",
+    "runs/ctx_own2/member/s628/2025-07.parquet",
+    "runs/ctx_own2/member/s629/2025-07.parquet",
+    "runs/ctx_own2/member/s630/2025-07.parquet",
+    "runs/ctx_own2/member/s631/2025-07.parquet",
+    "runs/ctx_own2/member/s632/2025-07.parquet",
+    "runs/ctx_own2/member/s633/2025-07.parquet",
+    "runs/ctx_own2/member/s634/2025-07.parquet",
+    "runs/ctx_own2/member/s635/2025-07.parquet",
+    "runs/ctx_own2/member/s636/2025-07.parquet"
+   ],
+   "2025-11": [
+    "runs/ctx_own2/member/s621/2025-11.parquet",
+    "runs/ctx_own2/member/s622/2025-11.parquet",
+    "runs/ctx_own2/member/s623/2025-11.parquet",
+    "runs/ctx_own2/member/s624/2025-11.parquet",
+    "runs/ctx_own2/member/s625/2025-11.parquet",
+    "runs/ctx_own2/member/s626/2025-11.parquet",
+    "runs/ctx_own2/member/s627/2025-11.parquet",
+    "runs/ctx_own2/member/s628/2025-11.parquet",
+    "runs/ctx_own2/member/s629/2025-11.parquet",
+    "runs/ctx_own2/member/s630/2025-11.parquet",
+    "runs/ctx_own2/member/s631/2025-11.parquet",
+    "runs/ctx_own2/member/s632/2025-11.parquet",
+    "runs/ctx_own2/member/s633/2025-11.parquet",
+    "runs/ctx_own2/member/s634/2025-11.parquet",
+    "runs/ctx_own2/member/s635/2025-11.parquet",
+    "runs/ctx_own2/member/s636/2025-11.parquet"
+   ],
+   "2025-12": [
+    "runs/ctx_own2/member/s621/2025-12.parquet",
+    "runs/ctx_own2/member/s622/2025-12.parquet",
+    "runs/ctx_own2/member/s623/2025-12.parquet",
+    "runs/ctx_own2/member/s624/2025-12.parquet",
+    "runs/ctx_own2/member/s625/2025-12.parquet",
+    "runs/ctx_own2/member/s626/2025-12.parquet",
+    "runs/ctx_own2/member/s627/2025-12.parquet",
+    "runs/ctx_own2/member/s628/2025-12.parquet",
+    "runs/ctx_own2/member/s629/2025-12.parquet",
+    "runs/ctx_own2/member/s630/2025-12.parquet",
+    "runs/ctx_own2/member/s631/2025-12.parquet",
+    "runs/ctx_own2/member/s632/2025-12.parquet",
+    "runs/ctx_own2/member/s633/2025-12.parquet",
+    "runs/ctx_own2/member/s634/2025-12.parquet",
+    "runs/ctx_own2/member/s635/2025-12.parquet",
+    "runs/ctx_own2/member/s636/2025-12.parquet"
+   ],
+   "ranking": [
+    "runs/ctx_own2/member/s621/ranking.parquet",
+    "runs/ctx_own2/member/s622/ranking.parquet",
+    "runs/ctx_own2/member/s623/ranking.parquet",
+    "runs/ctx_own2/member/s624/ranking.parquet",
+    "runs/ctx_own2/member/s625/ranking.parquet",
+    "runs/ctx_own2/member/s626/ranking.parquet",
+    "runs/ctx_own2/member/s627/ranking.parquet",
+    "runs/ctx_own2/member/s628/ranking.parquet",
+    "runs/ctx_own2/member/s629/ranking.parquet",
+    "runs/ctx_own2/member/s630/ranking.parquet",
+    "runs/ctx_own2/member/s631/ranking.parquet",
+    "runs/ctx_own2/member/s632/ranking.parquet",
+    "runs/ctx_own2/member/s633/ranking.parquet",
+    "runs/ctx_own2/member/s634/ranking.parquet",
+    "runs/ctx_own2/member/s635/ranking.parquet",
+    "runs/ctx_own2/member/s636/ranking.parquet"
+   ]
+  }
+ },
+ "members_derived": {
+  "mix_own": {
+   "rule": "per leaf and seed pair (601 + k, 621 + k), k = 0..15: 0.5 x own_all's table (runs/ctx_ownpoints_dev/member/s<601+k>/<leaf>.parquet) + 0.5 x ref_own's table (runs/ctx_own2/member/s<621+k>/<leaf>.parquet); both must predict the same rows in the same order and be finite on the same rows (else the build stops), so the seed mean of the mixed tables equals 0.5 own_all's seed mean + 0.5 ref_own's. Built by tools/run_ctx_own2_dev.py --build-mix and hash-recorded.",
+   "tables": {
+    "2025-01": [
+     "runs/ctx_own2/member_mix/s621/2025-01.parquet",
+     "runs/ctx_own2/member_mix/s622/2025-01.parquet",
+     "runs/ctx_own2/member_mix/s623/2025-01.parquet",
+     "runs/ctx_own2/member_mix/s624/2025-01.parquet",
+     "runs/ctx_own2/member_mix/s625/2025-01.parquet",
+     "runs/ctx_own2/member_mix/s626/2025-01.parquet",
+     "runs/ctx_own2/member_mix/s627/2025-01.parquet",
+     "runs/ctx_own2/member_mix/s628/2025-01.parquet",
+     "runs/ctx_own2/member_mix/s629/2025-01.parquet",
+     "runs/ctx_own2/member_mix/s630/2025-01.parquet",
+     "runs/ctx_own2/member_mix/s631/2025-01.parquet",
+     "runs/ctx_own2/member_mix/s632/2025-01.parquet",
+     "runs/ctx_own2/member_mix/s633/2025-01.parquet",
+     "runs/ctx_own2/member_mix/s634/2025-01.parquet",
+     "runs/ctx_own2/member_mix/s635/2025-01.parquet",
+     "runs/ctx_own2/member_mix/s636/2025-01.parquet"
+    ],
+    "2025-07": [
+     "runs/ctx_own2/member_mix/s621/2025-07.parquet",
+     "runs/ctx_own2/member_mix/s622/2025-07.parquet",
+     "runs/ctx_own2/member_mix/s623/2025-07.parquet",
+     "runs/ctx_own2/member_mix/s624/2025-07.parquet",
+     "runs/ctx_own2/member_mix/s625/2025-07.parquet",
+     "runs/ctx_own2/member_mix/s626/2025-07.parquet",
+     "runs/ctx_own2/member_mix/s627/2025-07.parquet",
+     "runs/ctx_own2/member_mix/s628/2025-07.parquet",
+     "runs/ctx_own2/member_mix/s629/2025-07.parquet",
+     "runs/ctx_own2/member_mix/s630/2025-07.parquet",
+     "runs/ctx_own2/member_mix/s631/2025-07.parquet",
+     "runs/ctx_own2/member_mix/s632/2025-07.parquet",
+     "runs/ctx_own2/member_mix/s633/2025-07.parquet",
+     "runs/ctx_own2/member_mix/s634/2025-07.parquet",
+     "runs/ctx_own2/member_mix/s635/2025-07.parquet",
+     "runs/ctx_own2/member_mix/s636/2025-07.parquet"
+    ],
+    "2025-11": [
+     "runs/ctx_own2/member_mix/s621/2025-11.parquet",
+     "runs/ctx_own2/member_mix/s622/2025-11.parquet",
+     "runs/ctx_own2/member_mix/s623/2025-11.parquet",
+     "runs/ctx_own2/member_mix/s624/2025-11.parquet",
+     "runs/ctx_own2/member_mix/s625/2025-11.parquet",
+     "runs/ctx_own2/member_mix/s626/2025-11.parquet",
+     "runs/ctx_own2/member_mix/s627/2025-11.parquet",
+     "runs/ctx_own2/member_mix/s628/2025-11.parquet",
+     "runs/ctx_own2/member_mix/s629/2025-11.parquet",
+     "runs/ctx_own2/member_mix/s630/2025-11.parquet",
+     "runs/ctx_own2/member_mix/s631/2025-11.parquet",
+     "runs/ctx_own2/member_mix/s632/2025-11.parquet",
+     "runs/ctx_own2/member_mix/s633/2025-11.parquet",
+     "runs/ctx_own2/member_mix/s634/2025-11.parquet",
+     "runs/ctx_own2/member_mix/s635/2025-11.parquet",
+     "runs/ctx_own2/member_mix/s636/2025-11.parquet"
+    ],
+    "2025-12": [
+     "runs/ctx_own2/member_mix/s621/2025-12.parquet",
+     "runs/ctx_own2/member_mix/s622/2025-12.parquet",
+     "runs/ctx_own2/member_mix/s623/2025-12.parquet",
+     "runs/ctx_own2/member_mix/s624/2025-12.parquet",
+     "runs/ctx_own2/member_mix/s625/2025-12.parquet",
+     "runs/ctx_own2/member_mix/s626/2025-12.parquet",
+     "runs/ctx_own2/member_mix/s627/2025-12.parquet",
+     "runs/ctx_own2/member_mix/s628/2025-12.parquet",
+     "runs/ctx_own2/member_mix/s629/2025-12.parquet",
+     "runs/ctx_own2/member_mix/s630/2025-12.parquet",
+     "runs/ctx_own2/member_mix/s631/2025-12.parquet",
+     "runs/ctx_own2/member_mix/s632/2025-12.parquet",
+     "runs/ctx_own2/member_mix/s633/2025-12.parquet",
+     "runs/ctx_own2/member_mix/s634/2025-12.parquet",
+     "runs/ctx_own2/member_mix/s635/2025-12.parquet",
+     "runs/ctx_own2/member_mix/s636/2025-12.parquet"
+    ],
+    "ranking": [
+     "runs/ctx_own2/member_mix/s621/ranking.parquet",
+     "runs/ctx_own2/member_mix/s622/ranking.parquet",
+     "runs/ctx_own2/member_mix/s623/ranking.parquet",
+     "runs/ctx_own2/member_mix/s624/ranking.parquet",
+     "runs/ctx_own2/member_mix/s625/ranking.parquet",
+     "runs/ctx_own2/member_mix/s626/ranking.parquet",
+     "runs/ctx_own2/member_mix/s627/ranking.parquet",
+     "runs/ctx_own2/member_mix/s628/ranking.parquet",
+     "runs/ctx_own2/member_mix/s629/ranking.parquet",
+     "runs/ctx_own2/member_mix/s630/ranking.parquet",
+     "runs/ctx_own2/member_mix/s631/ranking.parquet",
+     "runs/ctx_own2/member_mix/s632/ranking.parquet",
+     "runs/ctx_own2/member_mix/s633/ranking.parquet",
+     "runs/ctx_own2/member_mix/s634/ranking.parquet",
+     "runs/ctx_own2/member_mix/s635/ranking.parquet",
+     "runs/ctx_own2/member_mix/s636/ranking.parquet"
+    ]
+   }
+  }
+ },
+ "fits": {
+  "network_config": "configs/ctx_own2_network_v1.json",
+  "network_config_sha256": "4d5fb143b5e835bcf5752c4dfd631afa2f3210e4d12f68bb5ba3870a24dc2fe3",
+  "variants": [
+   "r32own",
+   "m25r32own"
+  ],
+  "seeds": [
+   621,
+   622,
+   623,
+   624,
+   625,
+   626,
+   627,
+   628,
+   629,
+   630,
+   631,
+   632,
+   633,
+   634,
+   635,
+   636
+  ],
+  "folds": {
+   "2025-01": {
+    "fold": "lomo_2025-01",
+    "file": "predictions.parquet"
+   },
+   "2025-07": {
+    "fold": "lomo_2025-07",
+    "file": "predictions.parquet"
+   },
+   "2025-11": {
+    "fold": "forward",
+    "file": "predictions.parquet"
+   },
+   "2025-12": {
+    "fold": "refit",
+    "file": "december_predictions.parquet"
+   },
+   "ranking": {
+    "fold": "refit12",
+    "file": "ranking_predictions.parquet"
+   }
+  },
+  "extra_features": "data/external/adsblol/features_v19own (manifest sha256 0e8811e6..., docs/dig/ctx_ownpoints_features_manifest.json; 14 tables hash-checked on 4 October before this declaration): the 11 v19 columns byte-identical to features_v19 plus the 15 own columns",
+  "footing": "as the combination round: January and July 2025 leave-one-month-out on the other eleven months; November the forward fold (reported only); December the January-November refit; ranking the twelve-month refit",
+  "runner": "tools/run_adsb_ctx_lomo.py, unchanged, one fit per sky exec through tools/ctx_own2_run1.sh dispatched by tools/ctx_own2_dispatch.py --stage dev (jobs tools/ctx_own2_jobs.py --stage dev); every finished fit mirrored with its SHA-256 checked; a pre-empted fit re-run from scratch",
+  "outputs": "runs/ctx_own2/nets/<variant>_s<seed>/<fold>/",
+  "count": 160
+ },
+ "hardware": "AWS g6e.2xlarge (one L40S each, the hardware of own_all's seeds 601-616), on-demand or spot, us-east-1 / us-west-2 / us-east-2 (infra/aws/gpu_authorization_20261006b.json with amendments 1-2), --device cuda, two fits per GPU",
+ "incumbent": {
+  "name": "own_all_w100",
+  "member": "own_all",
+  "member_weight": 1.0,
+  "member_spec": "configs/ctx_ownpoints_dev_v1.json member (own_all, 16 seeds 601-616)",
+  "reproduction": "before any candidate is read, own_all at 1.00 through the stage-1 arithmetic must equal docs/ctx_ownpoints_weight/results_stage1.json own_all_w100 month RMSEs to 1e-9 s"
+ },
+ "candidates": {
+  "mix_own_w100": {
+   "member": "mix_own",
+   "member_weight": 1.0
+  }
+ },
+ "stage_1": {
+  "tool": "tools/run_ctx_own2_dev.py --stage1 (arithmetic of tools/run_ownpoints_weight.py stage 1 / tools/run_network_member.py, imported)",
+  "control": "the v46 development stack with own_all at 1.00 in place of the combination member (v66's model part before v52m-v55m)",
+  "rule": "the clean line's unchanged rule against the control: eligible when no equal-footing month (January, July, December 2025) is worse on all rows, the mean ratio over those months is at least 0.02% below 1 and every equal-footing paired-day 95% interval lies below zero; November reported only",
+  "equal_footing_months": [
+   "2025-01",
+   "2025-07",
+   "2025-12"
+  ],
+  "minimum_mean_improvement_fraction": 0.0002
+ },
+ "stage_2": {
+  "when": "only if stage 1 finds mix_own_w100 eligible",
+  "control": "v66's development chain with own_all at 1.00 (docs/ctx_ownpoints_weight stage 2: model part rebuilt, no-NM rematch, v48, extreme-day, variance re-allocation, stack_resid_v3 refitted on the rebuilt components, intruder bound, identity extension, own-motion v1, own_motion_v2) rebuilt by this tool with the variance re-allocation's LightGBM PINNED (deterministic=True, force_col_wise=True; docs/lirf_own/README.md: unpinned reruns drift up to 0.024% per month); its difference from the stored unpinned v66 proxy (runs/ctx_ownpoints_weight/chain/own_all_w100/dev_v66_proxy.parquet) is reported, not used",
+  "candidate": "the same pinned chain with mix_own at 1.00",
+  "rule": "v57's clauses 1-3 with configs/own_motion_v2.json's values: (1) no development month (January, July, November, December 2025) worse than the pinned control by more than 0.005%; (2) equal-footing mean change at most -0.02%; (3) every equal-footing paired-day 95% interval (tools/run_intruder_bound.interval, seed 20261004) below zero. Clause 4 (twelve months) does not apply: the stacker's components exist only for the four development months.",
+  "var_alloc_pinning": {
+   "deterministic": true,
+   "force_col_wise": true
+  }
+ },
+ "export": "if both stages accept: a RANKING DRY RUN on v66 only (runs/ctx_own2/rank/dry_v<N>/), never under runs/submissions: first the unpinned export chain with own_all at 1.00 must reproduce runs/submissions/vigorous-whistle_v66.parquet byte for byte (sha256 b4ea727e...); then the pinned chain with own_all at 1.00 (identity) and with mix_own at 1.00 (candidate) are built; the dry run is v66 + (candidate - identity) row by row (integer seconds), floored at -12 s; rows changed, squared change and RMS by airport against v66 are reported. Building and uploading are the user's decisions.",
+ "never_read": "No official score or leaderboard enters; no ranking label exists.",
+ "selection": "runs/ctx_own2/dev/selection.json",
+ "report": "docs/ctx_own2/results_v1.json",
+ "export_report_dir": "docs/ctx_own2",
+ "automatic_submission": false
+}
