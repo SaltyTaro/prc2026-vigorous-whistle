@@ -72,6 +72,7 @@ class Dispatcher:
         self.preparing: dict[str, subprocess.Popen] = {}
         self.relaunching: dict[str, subprocess.Popen] = {}
         self.unreachable: dict[str, int] = {}
+        self.synced: set[str] = set()
 
     def event(self, text: str) -> None:
         line = f"{now()} {text}"
@@ -206,6 +207,13 @@ class Dispatcher:
                 load[j["node"]] += 1
         pending = [t for t, j in self.state["jobs"].items() if j["status"] == "pending"]
         for node in ready:
+            if pending and node not in self.synced:  # this run's code and configs reach every node before its first fit
+                code, out = run(["bash", "-c", f"NODES={node} bash tools/ctx_own2_nodes.sh sync"], timeout=600)
+                if code != 0 or "synced" not in out:
+                    self.event(f"sync failed for {node}: {out[-200:]}")
+                    continue
+                self.synced.add(node)
+                self.event(f"synced code and configs to {node}")
             while load[node] < self.args.lanes and pending:
                 tag = pending.pop(0)
                 j = self.state["jobs"][tag]
