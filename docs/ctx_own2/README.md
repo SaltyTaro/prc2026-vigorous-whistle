@@ -119,3 +119,11 @@ Built, **not uploaded**: `runs/submissions/vigorous-whistle_v67.parquet`, SHA-25
   had already deallocated arcw1; it is a light read-only check.
 - **Expected change (stage 2, pinned v66 chain):** January -0.018%, July -0.008%, November -0.064%, December -0.108% of month RMSE; the
   equal-footing intervals cross zero (the reason the rule did not accept it).
+
+## Official result (6 October 2026): **v67 = 216.1021, +0.0095 s against v66 (216.0926 stays the official best)**
+
+Uploaded at the user's word ("upload it"); processed 23:27:22 UTC on 6 October: **216.1021 on all 344,841 rows**
+([`official_result.json`](official_result.json)). Squared-error change +1.4e6 against the file's squared change of 2.82e7 against v66
+(alignment about -0.05: no transfer). The declared rule had rejected this candidate on clause 3 (Jan / Jul / Dec intervals crossing zero);
+the score agrees with it. Nothing is re-tuned or re-selected from the score. Never re-upload v1-v67.
+New layers keep building on **v66's** chain.
