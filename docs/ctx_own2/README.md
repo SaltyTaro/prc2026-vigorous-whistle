@@ -92,3 +92,30 @@ Nov / Dec), the drift fork B measured; only pinned control and candidate are com
 
 On-demand L40S only (spot never provisioned). Every prc-ctx4 cluster was torn
 down at 17:13 UTC after the last hash-checked mirror; the billing guard exited at 17:25 (no cluster left).
+
+## v67 at the user's override (6 October 2026, ~17:45 UTC: "override it"; [`override_v67.json`](override_v67.json), 4a2be2e)
+
+**v67 = v66's chain with mix_own (0.5 own_all + 0.5 ref_own, twelve-month refit tables of both, 16 seeds each) in place of own_all at weight
+1.00 (step 1), steps 2-10 re-run, the stacker refitted on the candidate's rebuilt development tables (runs/ctx_own2/chain/mix_own_w100/).**
+Built, **not uploaded**: `runs/submissions/vigorous-whistle_v67.parquet`, SHA-256 **`9f911d018d7a341ee3de4c05df510c27915233e6bc9c9b1b4a242bce985e2137`**
+(receipt `runs/submissions/vigorous-whistle_v67.receipt.json`, report [`export_v67.json`](export_v67.json), audit
+[`../export_audit/v67_audit.json`](../export_audit/v67_audit.json)).
+
+- **Where it ran** (user: "use the azure vm's please keep as much compute off this workstation"): Azure arcw1, ~/prc-v67, Python 3.14.2 with the
+  workstation's pins (numpy 2.4.2, pandas 3.0.0, pyarrow 23.0.1, LightGBM 4.7.0, scikit-learn 1.9.0). Inputs arrived lazily from the
+  workstation's read-only file server through an SSH reverse tunnel (`tools/ctx_own2_fileserver.py`, `tools/ctx_own2_vmfetch/sitecustomize.py`):
+  598 files, 5.89 GB, each SHA-256-listed in `runs/ctx_own2/vm_fetch.jsonl` (4.4 GB of them adsb.lol surface days). Driver
+  `tools/ctx_own2_vmdriver.sh`; the detached watcher `tools/ctx_own2_vmwatch.sh` mirrored 137 output files hash-checked, copied v67 into
+  runs/submissions only after build = dry run = VM hash, deallocated arcw1 (19:20 UTC) and stopped the server and tunnel.
+- **Identity first:** v66's unchanged path (own_all_w100, runs/ctx_ownpoints_weight/chain) reproduced v66 byte for byte on the VM
+  (`b4ea727e...`), every intermediate equal to docs/final_file/v66_chain.md, including the LightGBM fits of steps 5 and 6.
+- **Pinning:** the build is unpinned, as v66 was; the dry run with the variance re-allocation pinned (deterministic, column-wise) is byte-identical
+  (`9f911d01...` both), and so is the rebuild.
+- **Against v66:** 303,088 rows change, squared change 2.82e7, RMS 9.0 s, mean -0.28 s, largest +532 s (LTFM) / -484 s (EGLL), no row moves
+  more than 600 s. RMS by airport: LFPG 12.3, LTFM 10.8, EHAM 10.6, EGLL 9.8, EDDF 8.7, LSZH 8.0, EDDM 6.8, LEMD 6.4, LEBL 6.2, LIRF 4.1 s.
+  19,203 LIRF rows move only through the stacker step; **no LIRF population row (383) and neither guard row moves.**
+- **Audit:** integrity clean (all ranking departures, no NaN, minimum -12); the same four January 2026 airport-month level flags as v66's audit
+  (EDDF, EDDM, EHAM, LSZH). The audit ran on the workstation: on the VM it stopped at a scratch/ file outside the served tree, after the watcher
+  had already deallocated arcw1; it is a light read-only check.
+- **Expected change (stage 2, pinned v66 chain):** January -0.018%, July -0.008%, November -0.064%, December -0.108% of month RMSE; the
+  equal-footing intervals cross zero (the reason the rule did not accept it).
