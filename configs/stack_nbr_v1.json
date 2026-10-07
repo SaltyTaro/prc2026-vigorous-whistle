@@ -1,0 +1,73 @@
+{
+ "experiment_id": "stack_nbr_v1",
+ "declared_at_utc": "see commit (7 October 2026, before its governing run)",
+ "declared_by": "Declaring and the governing run are research; a build under runs/submissions and any upload stay the user's word.",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "status": "DECLARED before its governing run. No stacker with these columns has been fitted or read on any month.",
+ "disclosure": "The neighbour signal itself was explored and declared in nbr_state_v1 / nbr_dark_v1 (shipped in v71); the kernel form nxk was read in exploration as a replacement of both v71 layers (docs/quick_screens/README.md: tau 900 s, shrink 3: eq -0.0156% against v71, below the bar, not declared). Month-blocked LightGBM screens over neighbour summaries on top of v71 read eq -0.016..-0.038% with July's interval above zero. No stacker containing these columns has been read.",
+ "mechanism": "The guarded stacking residual (v70 chain step 6: v2 learner at LIRF, v3 elsewhere, OPDI learner on LSZH OPDI rows, w 0.65, ten-seed bag) gains three label-free neighbour-state columns computed from the pre-stacker chain value of ADS-B-matched departures, so it can weigh the ground state against its other inputs on every row class.",
+ "columns": {
+  "code": "tools/nbr_columns.py (function columns), on a table with value = the stacker's input 'new' (the pre-stacker chain value), v9 = the stacker table's 'v9', matched = the stacker table's 'matched', airport, ts = take-off in seconds and date = UTC take-off date from the raw month file (development) or data/raw/ranking.parquet (ranking).",
+  "nx": "tools/run_nbr_state.state (900 s, at least 3 neighbours, airport-day-demeaned).",
+  "nxk": "exponential time weights (tau 900 s) over neighbours within 1,800 s, at least 3, shrunk toward the airport-day mean by 3 weight units, demeaned.",
+  "nn": "number of matched neighbours within 900 s."
+ },
+ "procedure": {
+  "development": "tools/run_stack_queue.py's path (stack_weight_v1's governing run on the pinned v66 chain files) with the queue switch replaced by a neighbour switch: each learner gets the three columns (v2 46 + 3 = 49, v3 65 + 3 = 68, OPDI 79 + 3 = 82); guards on the unchanged matrices, LightGBM settings, month-blocking and the ten seeds 20261003, 11-19 unchanged; then steps 7-10 and step 11 as run_stack_queue.dev_score.",
+  "candidate_sn65": "the stacker with the columns at weight 0.65 (ten-seed bag), steps 7-11; no neighbour layer afterwards.",
+  "candidate_sn65_layers": "sn65, then nbr_state_v1 w75 and nbr_dark_v1 dark_pool_w75 applied exactly as their declared procedures (tools/run_nbr_state.py, tools/run_nbr_dark.py functions) with sn65's values as the base: x recomputed from sn65's values, slopes month-blocked on development and fitted on all four development months for ranking, both transfer guards (an airport outside 0.5-2x keeps sn65 for that layer).",
+  "control": "v71's development values: v70's development proxy (runs/oooi_lhr/dev_v70_proxy.parquet, 51aaa6a6...) with nbr_state_v1 w75 and nbr_dark_v1 applied (must reproduce docs/nbr_state/dark_results_v1.json's development RMSEs exactly).",
+  "identity_requirement": "Columns off: the path must reproduce the control's base (v70 development proxy value column, max |diff| 0 or the 4.5e-13 s Linux bound) and, on ranking, the uploaded v70 (f1d17747...) byte for byte; with the two layers applied the off path must reproduce v71's development RMSEs and the uploaded v71 (2dfb3b9f...) byte for byte. Otherwise the round stops and nothing is read.",
+  "ranking": "run_stack_queue's --rank-fit path with the columns computed on data/raw/ranking.parquet and rk['new'], weight 0.65, ten seeds, chain_from_stack, own_motion_v2, step 11; for sn65_layers then both layers from v71's procedures. Output runs/stack_nbr/rank/dry_v72/vigorous-whistle_v72.parquet (version provisional; never under runs/submissions)."
+ },
+ "candidates": [
+  {
+   "name": "sn65",
+   "weight": 0.65,
+   "seeds": [
+    20261003,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+   ],
+   "layers_after": false
+  },
+  {
+   "name": "sn65_layers",
+   "weight": 0.65,
+   "seeds": [
+    20261003,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+   ],
+   "layers_after": true
+  }
+ ],
+ "rule": {
+  "text": "v57's clauses against the control (v71's development values): (1) no development month (January, July, November, December 2025) worse by more than 0.005%; (2) equal-footing mean (January, July, December) at most -0.02%; (3) each equal-footing month's paired-day 95% interval below zero; (4) stacker transfer guard as stack_queue_v1 (per airport, RMS of the ranking bag prediction within 0.5x-2x of the RMS of the out-of-month development prediction, for the v3, v2 and OPDI bags). Accepted if all four hold; among accepted candidates the lowest clause-2 mean; none -> v71 stays.",
+  "intervals": "tools/run_intruder_bound.interval, paired-day bootstrap over UTC take-off days, 2,000 replicates, seed 20261004",
+  "scoring": "every row of every complete month, all labels; LIRF population and guard rows included in scoring and kept at the chain's value by every step"
+ },
+ "compute": "Azure arcw0-arcw3 (the workstation only orchestrates and hash-checks); VMs deallocated after the hash-checked mirror.",
+ "outputs": {
+  "tool": "tools/run_stack_nbr.py",
+  "development": "runs/stack_nbr/dev/",
+  "results": "docs/stack_nbr/results_v1.json",
+  "readme": "docs/stack_nbr/README.md",
+  "ranking": "runs/stack_nbr/rank/dry_v72/"
+ }
+}
