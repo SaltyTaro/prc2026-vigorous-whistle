@@ -1,0 +1,23 @@
+Internet Archive (Wayback Machine) captures of airport departure-board pages
+Retrieved 2026-10-07 12:31-12:45 UTC via the public CDX API, sequential requests, no account.
+
+First pass (url prefix queries, 12:31 UTC) was unreliable: lines counted were partly HTML error pages
+(504 Gateway Time-out bodies are 7 lines; another error body 14 lines). Discarded.
+
+Corrected pass (12:39 UTC): https://web.archive.org/cdx/search/cdx?url=<domain>&matchType=domain&from=<YYYYMM>&to=<YYYYMM>&filter=urlkey:<regex>
+Counts below are capture lines; a value of exactly 7 is a 504 error body, not captures.
+  istairport.com   departure pages: 2025-01 0 | 2025-07 1 | 2026-01 6 | 2026-07 2
+                   e.g. com,istairport)/en/flights/flight-info/departure-flights 20260701165734 ... text/html 200 (24,202 B)
+  parisaeroport.fr departure pages: 2026-07 2 (both 18 Jul 2026 ~16:49-16:50 UTC):
+                   .../en/passengers/flights/information-flights-departures/cdg 20260718165050 text/html 200 (79,793 B)
+                   other months returned 504 (7 lines) or 6 lines; not re-queried
+  adr.it           domain query times out (504) for every month; no count obtained
+
+Content check of the CDG capture (id_ raw replay
+https://web.archive.org/web/20260718165050id_/https://www.parisaeroport.fr/en/passengers/flights/information-flights-departures/cdg ,
+76,850 bytes): no HH:MM time, no "departed"/"décollé" string and no AF flight number in the HTML. The board is filled
+client-side from an API that the Wayback capture does not hold. The file was read in memory / temp only, not kept.
+
+Licence: the Internet Archive grants no licence on captured third-party pages; the content belongs to the airport
+operator (no open licence found on parisaeroport.fr, istairport.com or adr.it). Verdict: NOT USABLE (no licence,
+a handful of captures per month, captures hold no flight times).

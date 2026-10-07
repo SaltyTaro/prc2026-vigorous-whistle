@@ -1,0 +1,18 @@
+2026-10-07T12:37:46Z
+OSM API 0.6 trackpoints, page 0 (max 5000 points per page), apron boxes; counts of points with <time> by year
+LFPG_T2 bbox=2.540,49.000,2.580,49.012 trkpt=5000 trk=11 timed_by_year:       7 <time>2025    4993 <time>2026 
+LIRF_T1T3 bbox=12.240,41.790,12.265,41.805 trkpt=5000 trk=15 timed_by_year:      13 <time>2015    3100 <time>2017     179 <time>2018     630 <time>2019      88 <time>2022     170 <time>2024     820 <time>2026 
+LTFM_apron bbox=28.720,41.250,28.760,41.270 trkpt=5000 trk=22 timed_by_year:     870 <time>2019     407 <time>2022       2 <time>2023    1690 <time>2024     368 <time>2025      10 <time>2026 
+
+Per-track summary (page 0 of each box; GPX kept in a temp folder outside the repository, not committed):
+LFPG T2 box: 11 tracks. Timestamped traces in 2026: 1-2 Oct, 8 Sep, 2 Sep, 27 Aug, 24 Aug, 2 May (2 tracks, ~13 m/s,
+  user MyGPStracesRB), 29 Apr (2 tracks, ~16 m/s), 18 Apr (user sbruckfr). 2025: one 7-point trace (Jun-Sep).
+  None in January or July 2026; none in January/July 2025 on this page.
+LIRF T1/T3 box: 15 tracks: 2026-08 (6 points), 2026-04-07 (814 points, user Monolo23), 2024, 2022, 2019, 2018, 2017, 2015.
+  None in January/July 2025 or 2026.
+LTFM apron box: 22 tracks: 2026-07-28..08-01 (10 points, median 4.8 m/s), 2025-07-13 (368 points, median 4.5 m/s,
+  user traveleditor, taxi-like), 2024, 2023, 2022, 2019.
+Licence: https://wiki.openstreetmap.org/wiki/Visibility_of_GPS_traces documents visibility levels
+  ("Identifiable ... Timestamps via API - yes") but states no licence for the traces themselves; the OSM ODbL
+  covers the map database, not uploaded GPS traces. Retrieved 2026-10-07 12:40 UTC.
+Verdict: NOT USABLE. At most one or two timestamped departures per airport per month, and the trace licence is not stated.

@@ -1,0 +1,132 @@
+Licence and content excerpts, source-class sweep 2 (7 October 2026, 12:22-12:55 UTC)
+All reads were public, sequential and unauthenticated. Quotes are verbatim from the page or API response named;
+where a page was read through a summarising fetch tool, the quoted sentence is the one the tool returned as verbatim.
+Lines marked (search summary) come from a web-search result summary, not from opening the page itself.
+Times are UTC on 2026-10-07.
+
+------------------------------------------------------------------------------------------------------------------
+[1] LiveATC.net (ATC voice archives)
+URL: https://www.liveatc.net/terms/  -> HTTP 403 to scripted reads (12:29). https://www.liveatc.net/search/?icao=LIRF
+     (also LTFM, LFPG, EGLL, EDDF) -> HTTP 403, 5,450-byte block page (12:47). Feed lists could not be read.
+URL: https://backend.ainonline.com/aviation-news/air-transport/2025-12-15/how-liveatc-went-live (12:29)
+  "So nominally, we can store pretty much everything that we take in for four to five years from all over the world."
+  "There are countries such as the UK, Spain, and France that don't allow third-party rebroadcasting of ATC
+   frequencies, with controller privacy being one of the chief objections."
+  "the site has B2B opportunities to run commercial ATC audio streaming systems, and the sale of audio data"
+URL: https://rotatepilot.com/live-atc/lirf (12:51)
+  "the last LiveATC.net listing we could check (archived Aug 14, 2025) shows no public feed for LIRF, because
+   LiveATC says rebroadcasting ATC from this country is not allowed."
+  LTFM: no LiveATC feed confirmed by a web search (12:50).
+Licence: no open licence found; audio data is sold commercially.
+
+[2] ATC speech corpora on Hugging Face (12:44)
+URL: https://huggingface.co/api/datasets?search=atco2 , ...?search=liveatc , ...?search=atc%20speech
+  ATCO2 mirrors last modified 2022-2025 (corpus recorded 2020-2022); LiveATC-derived sets carry no licence tag
+  (e.g. SAadettin-BERber/liveATC1..8, adityarra07/live_ATC_*) or "license:other" (nyuuzyou/liveatc).
+  None is a 2025-2026 recording at the ten airports.
+
+[3] Air France-KLM "Open Data" Flight Status API (12:28, 12:46)
+URL: https://datacollaboratives.org/cases/air-france-klm-open-data-portal.html
+  data shared: "flight times, flight numbers and routes, fares, transport conditions, and flight status data";
+  access: "accessible following registration". No licence or conditions stated.
+URL: https://dlthub.com/context/source/air-france-klm-flight-status
+  "Authentication is performed by passing an API key in the request header named 'API-Key'."
+  "The REST API base URL is `https://api.airfranceklm.com/opendata/flightstatus/`"
+URL: https://mcp.directory/skills/airfrance-afkl
+  "Register on: https://developer.airfranceklm.com" ; "Keep within limits: <= 1 request/sec."
+URL: https://developer.airfranceklm.com/products/api/flightstatus/api-reference -> JavaScript shell, no text.
+  Query history range and field list could not be read without an account (not created).
+
+[4] Wayback Machine captures of airport departure boards -> see wayback_fids_cdx.txt (12:31-12:45).
+  The Internet Archive grants no licence on captured third-party pages.
+
+[5] Hugging Face "345rf4gt56t4r3e3/flight-delays-europe-2023-2025" (12:24)
+URL: https://huggingface.co/datasets/345rf4gt56t4r3e3/flight-delays-europe-2023-2025
+  licence tag "apache-2.0"; columns dof, first_seen, last_seen, adep, ades, duration_min, expected_duration_min,
+  delay_min, registration, typecode, operator; 15.3 M rows, 2023-2025. These are OPDI flight-list fields
+  (first/last ADS-B sighting), not off-block times; the upstream OPDI terms are not changed by a re-upload tag.
+Hugging Face "nyuuzyou/airportwebcams" (12:33)
+URL: https://huggingface.co/datasets/nyuuzyou/airportwebcams
+  "This dataset is dedicated to the public domain under the Creative Commons Zero (CC0) license."
+  Content: 2,508 webcam entries (airportwebcams.net page URL, YouTube embed link, external feed URL); no images,
+  no timestamps. The feeds themselves keep their owners' terms.
+Hugging Face ADS-B sets: alexisplacet/adsblol_globe_history ("license: odbl", "source_datasets: https://github.com/adsblol")
+  is an adsb.lol mirror; juliangehring/adsb: "Access to dataset juliangehring/adsb is restricted." (12:45)
+
+[6] Zenodo (12:24-12:26)
+URL: https://zenodo.org/api/records/22030891
+  "Dataset for "Track Mile and CO2 Effects of Triple Independent Runway Operations: A Case Study of Istanbul Airport""
+  licence cc-by-4.0, published 2026-08-20; the API returns no description and no files.
+URL: https://zenodo.org/api/records/18459771  "Hourly Global ADS-B Kinematic Sensitivity Dataset (2025)", cc-by-4.0:
+  "A global, hourly, system-level dataset summarizing the distributional properties of successive ADS-B kinematic
+   reports. Each row corresponds to one UTC hour."
+
+[7] Bruitparif (Ile-de-France noise observatory) (12:25-12:26, 12:48)
+URL: https://survol.bruitparif.fr/  -> JavaScript loader only ("ajax-loader.gif"); export terms not readable.
+URL: https://www.data.gouv.fr/api/1/datasets/bruit-parif-bruit-aerien-sur-une-nuit-grand-orly-seine-bievre/
+  license "lov2" (Licence Ouverte 2.0); "Donnée surfacique représentant le bruit aérien ... indicateur Ln ...
+  moyennes sur les périodes de temps concernées." (Orly area noise map, 2020).
+  SURVOL stations sit under flight paths around CDG and record airborne overflight events.
+
+[8] Aeroporti di Roma noise monitoring (12:26)
+URL: https://www.adr.it/rumore-aeroportuale
+  "Il monitoraggio dello stato di attuazione del Piano è assicurato attraverso la rendicontazione annuale di dati di
+   traffico". No data download, API or reuse terms on the page (first 100,000 characters read).
+
+[9] Istanbul Airport noise (12:43)
+  Only an environmental-impact chapter PDF found: https://www.igairport.aero/media/gh1f5bqx/bolum-7_3-gurultu.pdf
+  (not opened). No monitoring data or licence found.
+
+[10] Frankfurt noise/flight viewers (12:34)
+  INAA (http://inaa.umwelthaus.org): "Flight data is delivered by Deutsche Flugsicherung (DFS), noise data by
+  Gemeinnütziges Umwelthaus, Fraport and cities in the Rhein-Main-Area" (search summary of dl.gi.de paper).
+  City of Frankfurt monthly analyses are PDFs (frankfurt.de/fluglaermschutz). No open per-flight data found.
+
+[11] A-CDM / SESAR (12:26-12:27)
+URL: https://research.hva.nl/en/publications/a-post-analysis-study-of-the-departure-phase-based-on-a-cdm-looki/
+  study of A-CDM timestamps "using one week of sample data from Schiphol Airport" (search summary; data not published).
+URL: https://cdn-web.enav.it//content/2021-07/Fiumicino%20airport%20CDM.File(...).fiumicino_acdm.pdf
+  ENAV, created 2014-03-03; no AOBT capture method, no data, no licence statement.
+
+[12] COHOR (French slot coordinator) (12:33)
+URL: https://www.cohor.org/wp-content/uploads/2023/04/CDGS23-SOS-WebCohor.pdf (and other CDG start-of-season PDFs)
+  Start-of-season slot statistics only.
+
+[13] National / EU open-data catalogues (12:27-12:36)
+data.europa.eu hub search (aggregates all EU national portals): see data_europa_eu_search.txt; "pushback" returns 4
+  unrelated datasets; "aircraft movements per flight" returns airport/month aggregates (opendata.swiss, Stuttgart
+  CC BY 4.0, Eurostat CC BY 4.0, Spain INE CC BY 4.0, Milan CC BY 4.0).
+datos.gob.es keyword API: see national_portals.txt; e.g. Barcelona City Council (L01080193) "Número de operaciones
+  de aeronaves del aeropuerto Josep Tarradellas Barcelona-El Prat por principale[s compañías]", licence
+  http://publications.europa.eu/resource/authority/licence/CC_BY_4_0 (monthly aggregates).
+GovData.de CKAN: "Monatszahlen Flugverkehr", "Flugbewegungen und Fluggastaufkommen" (dl-by-de/2.0), noise maps.
+data.gouv.fr API: no trajectory, DSNA or CDG per-flight dataset for the queries listed in datagouv_noise_trajectories.txt.
+ENAIRE: publishes AIP data sets ("CSV format (resembling AIP section tables), AIXM5.1 format") - search summary of
+  enaire.es data-governance page. ENAC/ENAV: periodic traffic reports (enac.gov.it/pubblicazioni/dati-di-traffico-2025).
+DHMİ: monthly statistics PDFs (dhmi.gov.tr/Lists/Istatislikler/...).
+
+[14] NOTAM archives (12:42)
+  No openly licensed historical NOTAM archive found (acukwik.com shows current NOTAMs; aviation-edge.com is a paid API;
+  EUROCONTROL EAD needs an account). NOTAMs describe stand/apron closures, not off-block times.
+
+[15] Copernicus Sentinel-2 (12:29)
+URL: https://sentinel.esa.int/documents/247904/690755/Sentinel_Data_Legal_Notice
+  "users shall have a free, full and open access to Copernicus Sentinel Data and Service Information" (search summary)
+URL: https://dataspace.copernicus.eu/explore-data/data-collections/sentinel-data/sentinel-2
+  "designed to provide a high revisit frequency of 5 days at the Equator" (search summary; one image per pass).
+
+[16] Climate TRACE (12:32)
+URL: https://zenodo.org/records/20414751 (Climate TRACE Emissions Inventory)
+  "All Climate TRACE data are free and publicly available under a CC-BY 4.0 license" (search summary); monthly
+  source-level emissions (airports as sources), 2021-2026.
+
+[17] OpenStreetMap GPS traces -> see osm_gps_traces.txt (12:37-12:40).
+
+[18] Surface-movement benchmarks outside Europe (12:32)
+  (search summaries) Amelia-48 (https://arxiv.org/pdf/2407.21185): "surface area operations ... within the designated airport movement
+  area" at US airports (FAA SWIM). TartanAviation (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11926361/): images,
+  ATC speech and ADS-B from setups "installed inside airport boundaries" in Pennsylvania. Not the ten airports.
+
+[19] Organiser data page re-read (12:27)
+URL: https://prc-data-challenge-2026.netlify.app/data.html (redirect from ansperformance.eu)
+  Ten airports, training 2025 (12 monthly files), ranking Jan/Jul 2026, submission template. No new data release.
