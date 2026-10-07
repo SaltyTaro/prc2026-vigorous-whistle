@@ -1,0 +1,197 @@
+{
+ "experiment_id": "oooi_lhr_v1",
+ "computed_at_utc": "2026-10-07T12:17:13Z",
+ "config_sha256": "15c045fee6986fcdb3552eb3df53bf495f0da1f0dd9b53304ccbcbf596a39817",
+ "official_scores_used": "none",
+ "audit_used": false,
+ "code_sha256": {
+  "tools/run_oooi_lhr.py": "61fd4ba78af38b08f3e378cd5bdf455ff3c65d129e6841900bfe49072bc12658",
+  "tools/run_oooi_pin.py": "0dfeb502565c91030e61925a59d207e36123437f7d52f7bbc01613ada09b4588",
+  "tools/oooi_ext_formats.py": "eca828839c16cbbbf2436a93fb80dcda0b95792301604192e403500727aff4f7",
+  "tools/oooi_ext_scan.py": "e9512e8a77ed0993ba5be387c8509c44ef1fb4dd4f483f03b8dfddf81f796533",
+  "tools/oooi_ext_extract.py": "bbfd8a81b45e4e2b5cf2d05faa50034aa3e8e85bb91c46f1ecef31ac315d508c",
+  "tools/oooi_ext_pack.py": "61dd214a1ccd8fce8445b16cbc98dc5447db812e0a8b4d79e8b3d011325bce1f",
+  "tools/oooi_ext_screen.py": "0454689c174ed5d313208fa9ff5865657e3f12b3e828ff70ad59b7ae89647e19",
+  "tools/hunt_census.py": "6cba22c173c330dd0d5e3666e61979e66b622f174a8af416143c6be07cdcdf68",
+  "tools/run_intruder_bound.py": "3d5b2b838d2d40cbc5d093a328c91f353fa3c31711422f6552e739b2f1e7a914",
+  "tools/run_stack_resid.py": "0da9f31559965dd0f630df10d16d26f5e838f3feef62b3aecd06bd5626584063",
+  "configs/oooi_lhr_v1.json": "15c045fee6986fcdb3552eb3df53bf495f0da1f0dd9b53304ccbcbf596a39817"
+ },
+ "inputs_sha256": {
+  "formats": "822b7cf5b823e53763af8184caa82e398e97909513a2bba732ffaf2702089c71",
+  "v69_proxy": "c088e409de153d81b006bcd26b5b2a28e0e306043a5172c2158d0ecc6e6f5cb8",
+  "v70": "f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f",
+  "rows12": "af8d46221266183b0c94f382eb62eb6762a466dc1382beba71e1b58efd64a27c",
+  "matches2_2025-01": "8e193124758cfed753770457e128183946b619013e5339837972a783afd200e4",
+  "matches2_2025-07": "ee616db675250461310c298ed00b6d00bdc794b1cc40928622f7923bfbc5c65a",
+  "matches2_2025-10": "92f3b5c211160bfd6004bea80e1a06b2284d22278d304b872420497287ad7ff3",
+  "matches2_2025-11": "e665167348e2e2aded9ea852a364b33a4e322acf7b0c163669fc9b66195441b4",
+  "matches2_2025-12": "412f11ff82e93948bc50cb88be116a4fceeb6e9e69379dfdd7e1fe9b32d024a8",
+  "matches2_2026-01": "40dd963e42230cc87d863b42058fa0d6b3ebc738796813a14dfe0f9a6c52bcc2",
+  "matches2_2026-07": "0e4039774724d8ab6d0dd901c4816e4e4c0e4078b3324c2e44171f070886387c"
+ },
+ "control_rebuild": {
+  "want_w50_rmse": {
+   "2025-01": 320.01471166018143,
+   "2025-07": 250.7120149541308,
+   "2025-11": 181.60803006780952,
+   "2025-12": 162.78954177405467
+  },
+  "got_rmse": {
+   "2025-01": 320.01471166018143,
+   "2025-07": 250.7120149541308,
+   "2025-11": 181.60803006780952,
+   "2025-12": 162.78954177405467
+  },
+  "exact": true,
+  "rows_moved_vs_v69_proxy": 1533,
+  "path": "runs/oooi_lhr/dev_v70_proxy.parquet",
+  "sha256": "51aaa6a62f64897290199f6c6c9e7d3d43245a3862f36b2bdbc35be8012eabbe"
+ },
+ "dev_family_rows_by_month_class": {
+  "2025-11|dark": 528,
+  "2025-11|gate": 229,
+  "2025-11|unm": 104,
+  "2025-12|dark": 143,
+  "2025-12|gate": 105,
+  "2025-12|unm": 14
+ },
+ "dev_offsets": {
+  "2025-11": {
+   "fitted_on": "2025-12",
+   "by_format": {
+    "BA_MVT16": 145.1595744680851,
+    "MVA_AD": 27.38235294117647,
+    "QP_VS": 23.0,
+    "UA_OUT13": 86.9
+   },
+   "pooled": 101.1592356687898,
+   "formats_using_pooled": []
+  },
+  "2025-12": {
+   "fitted_on": "2025-11",
+   "by_format": {
+    "BA_MVT16": 137.1818181818182,
+    "MVA_AD": 26.62264150943396,
+    "QP_VS": -2.69,
+    "UA_OUT13": 92.36923076923077
+   },
+   "pooled": 82.62658227848101,
+   "formats_using_pooled": []
+  }
+ },
+ "offsets_nov_dec": {
+  "by_format": {
+   "BA_MVT16": 139.04726368159203,
+   "MVA_AD": 26.756476683937823,
+   "QP_VS": 1.411764705882353,
+   "UA_OUT13": 91.64
+  },
+  "pooled": 86.31432192648923
+ },
+ "candidate": {
+  "name": "lhr_w50",
+  "weight": 0.5,
+  "development": {
+   "2025-01": {
+    "rows": 153706,
+    "control_rmse": 320.01471166018143,
+    "rmse": 320.01471166018143,
+    "pct": 0.0,
+    "lo": 0.0,
+    "hi": 0.0,
+    "rows_changed": 0,
+    "squared_change": 0.0,
+    "sse_gain_s2": 0.0,
+    "max_abs_change_s": 0.0
+   },
+   "2025-07": {
+    "rows": 190713,
+    "control_rmse": 250.7120149541308,
+    "rmse": 250.7120149541308,
+    "pct": 0.0,
+    "lo": 0.0,
+    "hi": 0.0,
+    "rows_changed": 0,
+    "squared_change": 0.0,
+    "sse_gain_s2": 0.0,
+    "max_abs_change_s": 0.0
+   },
+   "2025-11": {
+    "rows": 162332,
+    "control_rmse": 181.60803006780952,
+    "rmse": 181.45042974672978,
+    "pct": -0.08678048047814357,
+    "lo": -0.15408147018562024,
+    "hi": -0.04069906508780115,
+    "rows_changed": 632,
+    "squared_change": 4152505.6295867297,
+    "sse_gain_s2": 9288333.45277977,
+    "max_abs_change_s": 406.5871142051178
+   },
+   "2025-12": {
+    "rows": 165677,
+    "control_rmse": 162.78954177405467,
+    "rmse": 162.76559121621148,
+    "pct": -0.014712589999443804,
+    "lo": -0.0347539492552465,
+    "hi": -8.605342212086875e-05,
+    "rows_changed": 157,
+    "squared_change": 558771.3424458494,
+    "sse_gain_s2": 1291821.1849403381,
+    "max_abs_change_s": 366.1022385525564
+   }
+  },
+  "dev_in_scope_rows": 789,
+  "dev_in_scope_by_month_format": {
+   "2025-11|BA_MVT16": 308,
+   "2025-11|MVA_AD": 159,
+   "2025-11|QP_VS": 100,
+   "2025-11|UA_OUT13": 65,
+   "2025-12|BA_MVT16": 94,
+   "2025-12|MVA_AD": 34,
+   "2025-12|QP_VS": 19,
+   "2025-12|UA_OUT13": 10
+  },
+  "dev_change_rms_in_scope_s": 77.27354151350096,
+  "october": {
+   "rows": 185674,
+   "control_rmse": 237.9610691425077,
+   "rmse": 237.9621415731822,
+   "pct": 0.0004506748428889651,
+   "lo": -0.0035986225617173906,
+   "hi": 0.0048997963416402834,
+   "rows_changed": 84,
+   "squared_change": 1131787.447545467,
+   "sse_gain_s2": -94767.01622200012,
+   "max_abs_change_s": 628.0751879554455,
+   "pinned_rows": 84,
+   "pinned_by_format": {
+    "QP_VS": 37,
+    "MVA_AD": 27,
+    "UA_OUT13": 20
+   },
+   "pinned_by_class": {
+    "dark": 81,
+    "unm": 3
+   },
+   "share_pin_abs_err_gt_1800": 0.0,
+   "october_labels_unblanked": "October 2025 labels read from runs/daily_totals/rows12.parquet for clause 4 only; runs/oooi_ext/scan/formats.parquet unchanged (block / label still blank)"
+  },
+  "ranking_in_scope_rows": 551,
+  "ranking_change_rms_in_scope_s": 65.63087671379543,
+  "checks": {
+   "1_no_dev_month_worse_than_0.005pct": true,
+   "2_mean_nov_dec_pct": -0.05074653523879369,
+   "2_ok": true,
+   "3_nov_dec_intervals_below_zero": true,
+   "4_october_change_below_zero": false,
+   "4_october_share_gt1800_le_2pct": true,
+   "5_ratio": 0.8493318078650328,
+   "5_ok": true,
+   "4_ok": false,
+   "passes": false
+  }
+ },
+ "selected": null
+}
