@@ -1,0 +1,360 @@
+{
+ "experiment_id": "prc2026-ctx-opdi-design-v1",
+ "declared_at_utc": "2026-10-07T02:45:00+00:00",
+ "audit_used": false,
+ "session": "rank-1 hunt, fork J (lever 9), 7 October 2026",
+ "purpose": "Design batch: does the shipped own-points member own_all (dl32own on ADS-B-matched rows, m25dl32own on the others; v66/v68 network table at weight 1.00) gain from ten OPDI flight-event columns (lever 7's surface times as network inputs)? The own-aircraft points went stacker (v63) -> network (v65, -0.98 s official); OPDI went into the stacker at LSZH (v68, -0.148 s official).",
+ "prior": "docs/opdi_stack/README.md: OPDI in stack_resid_v3 read eq -0.083% in v66's chain (every interval below zero) but its transfer guard failed at EDDF / LEBL / EDDM / LEMD, exactly the airports whose OPDI coverage differs most between 2025 and 2026; LSZH alone (v68) passed. A network sees OPDI on every row, so a coverage-shift mask is declared here, before any fit or table.",
+ "exploration_disclosed": "Known before this declaration: lever 7's screen / declared readings and v68's LSZH-only reading (all in v66's chain, development months only). No network fit with OPDI columns exists; no October reading of OPDI columns was made.",
+ "hardware": "AWS g6e.2xlarge (one L40S each), on-demand or spot, us-east-2 / us-east-1 / us-west-2 via SkyPilot from WSL, clusters prc-ctx5a-l (infra/aws/gpu_authorization_20261007.json). tools/run_adsb_ctx3.py --fold design --device cuda --threads 3, two lanes per GPU, unchanged code (no commit to the network runner or src/ since 5 October).",
+ "protocol": {
+  "data": "tools/run_adsb_ctx3.py --fold design, unchanged: the seasonal fold's fit partition (2025-02..06, 08, 09, LIRF excluded), October monitored, October predictions only",
+  "inputs": "candidates: --extra-features data/external/opdi/features_v19ownopdi (the shipped own-points tables, hash-checked against docs/dig/ctx_ownpoints_features_manifest.json, with ten OPDI columns appended by tools/ctx_opdi_features.py; manifest data/external/opdi/features_v19ownopdi/manifest.json). OPDI columns are never masked by the training masking (the masked list is the ADS-B list, as shipped).",
+  "coverage_shift_mask": "fixed before the tables exist (label-free): per airport, the share of departures with opdi_has = 1 and with an opdi_stand_exit in January + July 2026 over the same shares in all of 2025; an airport whose ratio lies outside [0.5, 2.0] for either share, or whose 2025 matched share is below 2%, has all ten OPDI columns blanked (opdi_has 0, the rest NaN) in every month, development and ranking alike.",
+  "control": "C = own_all as shipped: dl32own seed mean on rows with adsb_matched = 1, m25dl32own seed mean on the others, from lever 5's GPU design fits (runs/ctx_own2/design/<variant>_s<seed>/design, seeds 9-16, L40S, configs/ctx_own2_design_v1.json, same code); reused, not refitted. The report checks each control run's variant_sha256 against this file's dl32own / m25dl32own (identical settings) and that it ran on cuda.",
+  "items": {
+   "opdi_all": "O = dl32opdi seed mean on matched rows, m25dl32opdi seed mean on the others (decision item)",
+   "opdi_matched": "dl32opdi on matched rows, m25dl32own on the others (reported)",
+   "opdi_unmatched": "dl32own on matched rows, m25dl32opdi on the others (reported)"
+  },
+  "readings": {
+   "R1": "October non-LIRF RMSE of each item (8-seed means); matched / unmatched; by airport; rows with an identified inbound and with own motion seen separately",
+   "R2": "recipe proxy (tools/nn_design_report.RecipeProxy, all October rows) of table = 0.25 committee + 0.75 [(1 - b) P + b X], P = tunnel 21's pool (0.5 ctx seeds 101-116 + 0.5 ctx_e24 seeds 117-132), b in {0.4, 0.5, 1.0}; share 0.85 reported beside it. b = 1.0 is v66's member weight."
+  },
+  "decision": "opdi_all is GO when (a) its R2 at b = 1.0 is at least 0.05 points below the control's, (b) its 8-seed standalone October non-LIRF RMSE is below the control's, and (c) the paired-day 95% interval of the proxy difference against the control at b = 1.0 lies below zero (tunnel 21's / lever 5's bar). Reported beside it: by airport, by OPDI coverage, the two half items. A development round is declared separately only after a GO.",
+  "never_read": "No run of this declaration predicts, scores or reads a label of 2025-01, 2025-07, 2025-11, 2025-12 or of the ranking months. No official score or leaderboard enters."
+ },
+ "defaults": {
+  "architecture": {
+   "cat_cap": 16,
+   "d_num": 8,
+   "depth": 3,
+   "dropout": 0.1,
+   "heads": 4,
+   "max_tokens": 128,
+   "n_aux": 0,
+   "sa_dropout": 0.0,
+   "sa_ff": 2,
+   "sa_heads": 4,
+   "sa_layers": 0,
+   "tok_dim": 96,
+   "width": 512
+  },
+  "aux": {
+   "targets": [],
+   "weight": 0.0
+  },
+  "context": {
+   "departures_only": false,
+   "use_adsb": true
+  },
+  "features": {
+   "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+   "extra_features": [
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed",
+    "sfc_ground_10m",
+    "sfc_moving_10m",
+    "sfc_moving_20m",
+    "sfc_rwy_queue_5m",
+    "sfc_rwy_queue_10m"
+   ]
+  },
+  "masking": {
+   "columns": [
+    "adsb_gate",
+    "adsb_first_point_s",
+    "adsb_motion_s",
+    "adsb_first_gs_kt",
+    "adsb_first_dist_stand_m",
+    "adsb_stop_seconds",
+    "adsb_taxi_path_m",
+    "adsb_taxi_stops",
+    "adsb_taxi_stopped_s",
+    "adsb_slow_start_s",
+    "adsb_gap_before_s",
+    "adsb_turnaround_s",
+    "adsb_anchor_dist_stand_m",
+    "adsb_last_ground_s",
+    "adsb_points",
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed"
+   ],
+   "matched": "adsb_matched",
+   "p": 0.0
+  },
+  "preprocess": {
+   "bins": 32,
+   "min_count": 10,
+   "target_clip": null
+  },
+  "rows": {
+   "exclude_airports": [
+    "LIRF"
+   ],
+   "exclude_population": false,
+   "max_label": null
+  },
+  "tokens_dir": "data/ctx/tokens_v1",
+  "training": {
+   "batch_size": 2048,
+   "epochs": 32,
+   "grad_clip": 5.0,
+   "lr": 0.001,
+   "min_lr_fraction": 0.02,
+   "warmup_epochs": 1.0,
+   "weight_decay": 0.0001
+  }
+ },
+ "variants": {
+  "dl32own": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   }
+  },
+  "m25dl32own": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "masking": {
+    "p": 0.25
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   }
+  },
+  "dl32opdi": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start",
+     "opdi_ref_rel",
+     "opdi_stand_exit",
+     "opdi_apron_exit",
+     "opdi_twy_first",
+     "opdi_first_seen",
+     "opdi_rwy_entry",
+     "opdi_n_twy",
+     "opdi_deice",
+     "opdi_deice_dur",
+     "opdi_has"
+    ]
+   }
+  },
+  "m25dl32opdi": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "masking": {
+    "p": 0.25
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start",
+     "opdi_ref_rel",
+     "opdi_stand_exit",
+     "opdi_apron_exit",
+     "opdi_twy_first",
+     "opdi_first_seen",
+     "opdi_rwy_entry",
+     "opdi_n_twy",
+     "opdi_deice",
+     "opdi_deice_dur",
+     "opdi_has"
+    ]
+   }
+  }
+ },
+ "opdi_columns": [
+  "opdi_ref_rel",
+  "opdi_stand_exit",
+  "opdi_apron_exit",
+  "opdi_twy_first",
+  "opdi_first_seen",
+  "opdi_rwy_entry",
+  "opdi_n_twy",
+  "opdi_deice",
+  "opdi_deice_dur",
+  "opdi_has"
+ ],
+ "runs": {
+  "dl32opdi": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "m25dl32opdi": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ]
+ },
+ "control_runs": {
+  "dl32own": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "m25dl32own": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "path": "runs/ctx_own2/design/<variant>_s<seed>/design"
+ },
+ "paths": {
+  "runs": "runs/ctx_opdi/design/<variant>_s<seed>/design",
+  "report": "docs/ctx_opdi/design_report.json"
+ },
+ "report": "tools/ctx_opdi_design_report.py",
+ "budget": "design 16 fits, about 10-14 min each at two lanes per L40S"
+}
