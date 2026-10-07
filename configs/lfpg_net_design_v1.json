@@ -1,0 +1,497 @@
+{
+ "experiment_id": "prc2026-lfpg-net-design-v1",
+ "declared_at_utc": "2026-10-07T04:38:03+00:00",
+ "audit_used": false,
+ "session": "lever 12 (fork N), 7 October 2026, at the user's word: 'start Paris-only network bet'",
+ "purpose": "Design batch: does an LFPG-specialised context network (the shipped own_all recipe fitted on LFPG rows only) improve the shipped own-points member own_all on LFPG rows? LFPG carries the largest projected ranking error pot (rows never seen on the ground: 6.4e9 s2 of the projected ranking squared error, docs/hunt/README.md); 79% of its ranking rows have no ADS-B match.",
+ "prior": "Low. docs/adsb_unm/README.md (28 September): tree specialists fitted only on unmatched rows or with unmatched rows up-weighted read within +-0.04% of their all-row controls (no GO): the committee's all-row members already spend their capacity where the unmatched rows need it. docs/hunt/README.md (7 October): every LFPG gap is receiver coverage, not a matching key; no new observation exists. No airport-specialist context network has been fitted before (the LIRF networks exist because the global networks exclude LIRF, not as specialists).",
+ "exploration_disclosed": "Known before this declaration: docs/hunt/pools.csv (2025 development squared error by airport and observation class against the v68 development proxy: LFPG unm_unseen 1.35e10 s2 on 59,062 2025 rows, RMSE 477.6 s); label-free LFPG ADS-B match shares by month (matches2 tables over raw LFPG departures): 2025-07 7.2%, 2025-10 19.5% (gate 0.3%), 2025-11 36.5%, 2025-12 24.1%, 2026-01 20.6% (gate 0.2%), 2026-07 21.1% (gate 0.3%). No network was fitted on LFPG rows alone and no October reading of such a network exists.",
+ "coverage_note": "October 2025 LFPG coverage (matched 19.5%, gate 0.3%) equals the ranking months' (20.6% / 21.1%, gate 0.2% / 0.3%), so the complete October reading is already a reading at 2026 LFPG coverage: no separate thinned October reading is made (the thinned sets of docs/coverage_regime/ do not thin LFPG). The shipped masking (m25 on the unmatched-row network) is kept; no LFPG-specific masking.",
+ "hardware": "AWS g6e.2xlarge (one L40S each), on-demand or spot, us-east-2 / us-east-1 / us-west-2 via SkyPilot from WSL, clusters prc-ctx6a-l only (infra/aws/sky_ctx6_*.yaml; infra/aws/gpu_authorization_20261007b.json). tools/run_adsb_ctx3.py --fold design --device cuda --threads 3, two lanes per GPU, unchanged runner and model code.",
+ "protocol": {
+  "data": "tools/run_adsb_ctx3.py --fold design, unchanged: the seasonal fold's fit partition (2025-02..06, 08, 09); the LFPG variants keep only LFPG rows for fitting and monitoring (rows.exclude_airports = the nine other airports); October predictions of every October row are written, only LFPG rows are read for the candidates",
+  "inputs": "--extra-features data/external/adsblol/features_v19own (the shipped own-points tables, hash-checked against docs/dig/ctx_ownpoints_features_manifest.json)",
+  "variants": {
+   "lfpg_own": "lfpg_dl32own (matched-row network) + lfpg_m25dl32own (unmatched-row network): the own_all recipe (dl32own / m25dl32own settings unchanged) fitted on LFPG rows only",
+   "lfpg_b512": "lfpg_dl32own_b512 + lfpg_m25dl32own_b512: the same rows with batch 512 (about four times the optimiser steps of the LFPG-only fit at batch 2048), lr 0.001, dropout 0.2 (more regularisation for about one ninth of the data)"
+  },
+  "control": "C = own_all as shipped: dl32own seed mean on rows with adsb_matched = 1, m25dl32own seed mean on the others, from lever 5's GPU design fits (runs/ctx_own2/design/<variant>_s<seed>/design, seeds 9-16, L40S, configs/ctx_own2_design_v1.json, same code); reused, not refitted. The report checks each control run's variant_sha256 against this file's dl32own / m25dl32own (identical settings) and that it ran on cuda.",
+  "items": "for each variant V in {lfpg_own, lfpg_b512} and c in {0.5, 1.0}: X = C on every non-LFPG row; on LFPG rows X = (1 - c) C + c S_V, S_V = V's matched-row network seed mean on matched rows and V's unmatched-row network seed mean on the others. Four decision items: lfpg_own_c50, lfpg_own_c100, lfpg_b512_c50, lfpg_b512_c100.",
+  "readings": {
+   "R1": "October LFPG RMSE of each item (8-seed means), LFPG matched / unmatched; October non-LIRF RMSE",
+   "R2": "recipe proxy (tools/nn_design_report.RecipeProxy, all October rows) of table = 0.25 committee + 0.75 [(1 - b) P + b X], P = tunnel 21's pool (0.5 ctx seeds 101-116 + 0.5 ctx_e24 seeds 117-132), b in {0.4, 0.5, 1.0}; share 0.85 reported beside it. b = 1.0 is v66 / v69's member weight.",
+   "interval": "paired-day 95% interval (tools/nn_design_report.day_interval) of the proxy difference against the control at b = 1.0"
+  },
+  "decision": "An item is GO when (a) its R2 at b = 1.0 is at least 0.05 points below the control's (lever 9 / lever 5 / tunnel 21's bar), (b) its 8-seed October LFPG RMSE is below the control's, and (c) the paired-day 95% interval of the proxy difference at b = 1.0 lies below zero. Several GO items: the one with the lowest R2 at b = 1.0. A development round (16 seeds x the 2025 LOMO folds, stage 2 in v69's pinned chain) is declared separately only after a GO and only with the coordinator's word.",
+  "never_read": "No run of this declaration predicts, scores or reads a label of 2025-01, 2025-07, 2025-11, 2025-12 or of the ranking months. No official score or leaderboard enters."
+ },
+ "defaults": {
+  "architecture": {
+   "cat_cap": 16,
+   "d_num": 8,
+   "depth": 3,
+   "dropout": 0.1,
+   "heads": 4,
+   "max_tokens": 128,
+   "n_aux": 0,
+   "sa_dropout": 0.0,
+   "sa_ff": 2,
+   "sa_heads": 4,
+   "sa_layers": 0,
+   "tok_dim": 96,
+   "width": 512
+  },
+  "aux": {
+   "targets": [],
+   "weight": 0.0
+  },
+  "context": {
+   "departures_only": false,
+   "use_adsb": true
+  },
+  "features": {
+   "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+   "extra_features": [
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed",
+    "sfc_ground_10m",
+    "sfc_moving_10m",
+    "sfc_moving_20m",
+    "sfc_rwy_queue_5m",
+    "sfc_rwy_queue_10m"
+   ]
+  },
+  "masking": {
+   "columns": [
+    "adsb_gate",
+    "adsb_first_point_s",
+    "adsb_motion_s",
+    "adsb_first_gs_kt",
+    "adsb_first_dist_stand_m",
+    "adsb_stop_seconds",
+    "adsb_taxi_path_m",
+    "adsb_taxi_stops",
+    "adsb_taxi_stopped_s",
+    "adsb_slow_start_s",
+    "adsb_gap_before_s",
+    "adsb_turnaround_s",
+    "adsb_anchor_dist_stand_m",
+    "adsb_last_ground_s",
+    "adsb_points",
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed"
+   ],
+   "matched": "adsb_matched",
+   "p": 0.0
+  },
+  "preprocess": {
+   "bins": 32,
+   "min_count": 10,
+   "target_clip": null
+  },
+  "rows": {
+   "exclude_airports": [
+    "LIRF"
+   ],
+   "exclude_population": false,
+   "max_label": null
+  },
+  "tokens_dir": "data/ctx/tokens_v1",
+  "training": {
+   "batch_size": 2048,
+   "epochs": 32,
+   "grad_clip": 5.0,
+   "lr": 0.001,
+   "min_lr_fraction": 0.02,
+   "warmup_epochs": 1.0,
+   "weight_decay": 0.0001
+  }
+ },
+ "variants": {
+  "dl32own": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   }
+  },
+  "m25dl32own": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "masking": {
+    "p": 0.25
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   }
+  },
+  "lfpg_dl32own": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   },
+   "rows": {
+    "exclude_airports": [
+     "EDDF",
+     "EDDM",
+     "EGLL",
+     "EHAM",
+     "LEBL",
+     "LEMD",
+     "LIRF",
+     "LSZH",
+     "LTFM"
+    ]
+   }
+  },
+  "lfpg_m25dl32own": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "masking": {
+    "p": 0.25
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   },
+   "rows": {
+    "exclude_airports": [
+     "EDDF",
+     "EDDM",
+     "EGLL",
+     "EHAM",
+     "LEBL",
+     "LEMD",
+     "LIRF",
+     "LSZH",
+     "LTFM"
+    ]
+   }
+  },
+  "lfpg_dl32own_b512": {
+   "architecture": {
+    "d_num": 16,
+    "dropout": 0.2
+   },
+   "training": {
+    "lr": 0.001,
+    "batch_size": 512
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   },
+   "rows": {
+    "exclude_airports": [
+     "EDDF",
+     "EDDM",
+     "EGLL",
+     "EHAM",
+     "LEBL",
+     "LEMD",
+     "LIRF",
+     "LSZH",
+     "LTFM"
+    ]
+   }
+  },
+  "lfpg_m25dl32own_b512": {
+   "architecture": {
+    "d_num": 16,
+    "dropout": 0.2
+   },
+   "training": {
+    "lr": 0.001,
+    "batch_size": 512
+   },
+   "masking": {
+    "p": 0.25
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   },
+   "rows": {
+    "exclude_airports": [
+     "EDDF",
+     "EDDM",
+     "EGLL",
+     "EHAM",
+     "LEBL",
+     "LEMD",
+     "LIRF",
+     "LSZH",
+     "LTFM"
+    ]
+   }
+  }
+ },
+ "runs": {
+  "lfpg_dl32own": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "lfpg_m25dl32own": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "lfpg_dl32own_b512": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "lfpg_m25dl32own_b512": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ]
+ },
+ "control_runs": {
+  "dl32own": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "m25dl32own": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "path": "runs/ctx_own2/design/<variant>_s<seed>/design"
+ },
+ "pairs": {
+  "control": [
+   "dl32own",
+   "m25dl32own"
+  ],
+  "lfpg_own": [
+   "lfpg_dl32own",
+   "lfpg_m25dl32own"
+  ],
+  "lfpg_b512": [
+   "lfpg_dl32own_b512",
+   "lfpg_m25dl32own_b512"
+  ]
+ },
+ "paths": {
+  "runs": "runs/lfpg_net/design/<variant>_s<seed>/design",
+  "report": "docs/lfpg_net/design_report.json"
+ },
+ "report": "tools/lfpg_net_design_report.py"
+}
