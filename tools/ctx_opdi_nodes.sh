@@ -73,7 +73,7 @@ case "${1:-}" in
       ( rsync -a --delete -e ssh src/ "$n":prc/src/ --exclude __pycache__ && rsync -a -e ssh tools/ "$n":prc/tools/ --exclude __pycache__ \
         && rsync -a -e ssh configs/ "$n":prc/configs/ && rsync -a --delete -e ssh tests/ "$n":prc/tests/ --exclude __pycache__ \
         && ssh "$n" "mkdir -p ~/prc/docs/dig ~/prc/docs/ctx_opdi" && rsync -a -e ssh docs/dig/ctx_ownpoints_features_manifest.json "$n":prc/docs/dig/ \
-        && rsync -a -e ssh docs/ctx_opdi/features_manifest.json "$n":prc/docs/ctx_opdi/ && echo "$n synced" ) &
+        && { [ ! -f docs/ctx_opdi/features_manifest.json ] || rsync -a -e ssh docs/ctx_opdi/features_manifest.json "$n":prc/docs/ctx_opdi/; } && echo "$n synced" ) &
     done
     wait ;;
   down)
