@@ -172,6 +172,8 @@ def stage1(decl: dict) -> None:
 # ----------------------------------------------------------------------------------------------------------------------------- stage 2
 def patch_members(decl: dict) -> None:
     import run_ctx_ownpoints_chain as CH
+    import scout_refit_prep as SRP
+    SRP.ROOT, SRP.OUT = ROOT, ROOT / "runs/scout/refit"  # the module hard-codes the workstation's D:/ root (identical there; needed on the Linux VM)
     sp = specs(decl)
     CH.member_spec = lambda _decl, name: sp[name]
     CH.OUT = OUT / "chain"
