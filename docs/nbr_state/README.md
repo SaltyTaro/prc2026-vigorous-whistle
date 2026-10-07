@@ -58,5 +58,28 @@ gate-only neighbours (weak), with / without intercepts, raw / day-demeaned. The 
 
 ## Build (only at the user's word)
 
-`docs/nbr_state/build_v71.py` copies the verified dry-run bytes to `runs/submissions/vigorous-whistle_v71.parquet`, validates against
-the template and writes the receipt; then the export audit and `tools/prc_submit.py upload --expected-sha256 7a0b1431...`.
+`docs/nbr_state/build_v71.py` (set CHOICE "state" or "state+dark" and the user's words) copies the verified dry-run bytes to
+`runs/submissions/vigorous-whistle_v71.parquet`, validates against the template and writes the receipt; then
+`tools/audit_export.py --version 71 --report docs/export_audit/v71_audit.json` and
+`tools/prc_submit.py upload --file runs/submissions/vigorous-whistle_v71.parquet --expected-sha256 <sha> --calendar-day`.
+
+## Extension to dark rows: `nbr_dark_v1` (7 October 2026) — ACCEPTED
+
+Declaration `configs/nbr_dark_v1.json` (56ca0a9), after the user's "ok run it"; tool `tools/run_nbr_dark.py`; results
+`dark_results_v1.json`. On top of nbr_state_v1 w75 (rebuilt and checked against `results_v1.json` exactly), matched rows whose
+pushback ADS-B did not trace (gate False) move by 0.75 x B x x, with ONE slope B for all airports (0.1172; month-blocked
+0.109-0.131), cap 120 s.
+
+| | Jan 2025 | Jul 2025 | Nov 2025 | Dec 2025 | eq mean | Aug 2025 (fresh) | Sep 2025 (fresh) | Oct 2025 (fresh) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| dark_pool_w75 vs nbr_state w75 | -0.0055 [-0.020, -0.002] | -0.0167 [-0.032, -0.002] | -0.0346 | -0.0387 [-0.056, -0.025] | -0.0203 | -0.0043 [-0.0066, -0.0029] | -0.0087 [-0.017, -0.005] | -0.0216 [-0.038, -0.011] |
+
+Clauses 1-3 pass (clause 2 by 0.0003 points; the candidate was chosen after the reads listed in the declaration); **the binding
+fresh clause passes, every interval below zero**; transfer 0.77-1.28 at every airport (none excluded). Gain per unit squared change
+on 2025: 1.16-3.93.
+
+Dry run `runs/nbr_state/rank/dry_v72/vigorous-whistle_v72.parquet`, SHA-256
+`2dfb3b9f53284c7ae3a02882d19cfd61b19116b1b00504176551bcae8b82e6ba` = v70 + both layers: 124,159 dark rows changed against the v71 dry
+run (squared change 4.09e6, max |change| 96 s, mean +0.03 s; no gate-traced, unmatched, fixed or guard row moved), 160,046 rows and
+11.39e6 against v70. Expected about -0.06 s on top of nbr_state (about -0.18 s for both against v70, if 2025-like). It can be uploaded
+directly as v71 (CHOICE "state+dark").
