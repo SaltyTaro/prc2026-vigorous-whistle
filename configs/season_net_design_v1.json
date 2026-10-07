@@ -1,0 +1,486 @@
+{
+ "experiment_id": "prc2026-season-net-design-v1",
+ "declared_at_utc": "2026-10-07T08:08:17+00:00",
+ "audit_used": false,
+ "session": "fork S of the coordinator (7 October 2026), after the user's push for untried levers: 'we need to keep pushing, maybe you need to try out things you have not tried yet'. GPU approvals: 6 October 'use the gpu now if you think it will help us'",
+ "purpose": "Design batch: does weighting the training rows of the own-points context network (own_all = dl32own on matched rows + m25dl32own on the others, the shipped member at weight 1.00 in v66-v69) by seasonal closeness to the target month improve the member? Every member is trained on all 2025 months equally, while the ranking months are January and July 2026. Month weighting helped the residual stage (v25 round, mean_adj2_cat, month-weighted LightGBM); no network member was ever season-weighted.",
+ "prior": "Low to moderate. The design month October has seasonal neighbours September (in the fit partition) and November (not in it). Airport specialisation (lever 12, docs/lfpg_net/) and unmatched-row specialisation (docs/adsb_unm/) both lost to the all-row network: restricting or re-weighting rows can cost more than it gains. Seasonal weighting keeps every row and only re-weights the loss.",
+ "exploration_disclosed": "Nothing of this lever was read before this declaration: no season-weighted fit exists. Known: lever 5's own_all October design fits (runs/ctx_own2/design, seeds 9-16, L40S) and the readings of levers 5 / 9 / 12 on that control; v25's month-weighted residual round.",
+ "mechanism": "Per fitting row, w = 1 + a * exp(-d^2 / (2 * sigma^2)), d = circular month distance between the row's UTC movement month and the target month (min(|m - t|, 12 - |m - t|)), sigma = 1.5 months; w normalised so its mean over the fitting rows is 1. The main squared-error term becomes mean(w * (out - target)^2) (tools/season_net_train.train_weighted, a line-for-line copy of prc2026_ctx3.train.train with the weight; with w = 1 it equals the frozen loop bit for bit, tools/season_net_selftest.py). Preprocessing (bins, target mean / scale), rows, masking, seeds, epochs, schedule and architecture are unchanged. Runner: tools/run_season_net_ctx3.py = tools/run_adsb_ctx3.py unchanged, with the train call swapped for the weighted copy and the per-row weights recorded in <run>/season.json.",
+ "design_fold_weights_before_normalisation": {
+  "a1": {
+   "2025-02": 1.0286,
+   "2025-03": 1.0039,
+   "2025-04": 1.0003,
+   "2025-05": 1.0039,
+   "2025-06": 1.0286,
+   "2025-08": 1.4111,
+   "2025-09": 1.8007
+  },
+  "a3": {
+   "2025-02": 1.0857,
+   "2025-03": 1.0116,
+   "2025-04": 1.001,
+   "2025-05": 1.0116,
+   "2025-06": 1.0857,
+   "2025-08": 2.2333,
+   "2025-09": 3.4022
+  }
+ },
+ "target_month_note": "Design: target October, the monitoring month, not in the fit partition (no d = 0 rows), as in the LOMO development folds (the held month is never fitted). Ranking (only after a GO and a separately declared round): one refit per ranking month, centred on January (2025-12 / 01 / 02 neighbours) and on July (06 / 07 / 08), where the same 2025 month (d = 0) is in the fit; this asymmetry is stated, not tuned.",
+ "hardware": "AWS g6e.2xlarge (one L40S each), on-demand or spot, us-east-2 first (us-east-1 / us-west-2 fallback) via SkyPilot from WSL, clusters prc-ctx7a-l only (infra/aws/sky_ctx7_*.yaml; infra/aws/gpu_authorization_20261007c.json). tools/run_season_net_ctx3.py --fold design --device cuda --threads 3, two lanes per GPU.",
+ "protocol": {
+  "data": "tools/run_adsb_ctx3.py's design fold, unchanged: fit = the seasonal fold's fit partition (2025-02..06, 08, 09), LIRF excluded from fitting and monitoring as shipped; October predictions of every October row written",
+  "inputs": "--extra-features data/external/adsblol/features_v19own (the shipped own-points tables, hash-checked against docs/dig/ctx_ownpoints_features_manifest.json)",
+  "variants": {
+   "season_a1": "s1_dl32own (matched-row network) + s1_m25dl32own (unmatched-row network): own_all's settings with the seasonal weight, a = 1",
+   "season_a3": "s3_dl32own + s3_m25dl32own: a = 3"
+  },
+  "control": "C = own_all as shipped: dl32own seed mean on rows with adsb_matched = 1, m25dl32own seed mean on the others, from lever 5's GPU design fits (runs/ctx_own2/design/<variant>_s<seed>/design, seeds 9-16, L40S); reused, not refitted. The report checks each control run's variant_sha256 against this file's dl32own / m25dl32own (identical settings) and that it ran on cuda.",
+  "items": "for V in {season_a1, season_a3} and c in {0.5, 1.0}: X = (1 - c) C + c S_V on every row, S_V = V's matched-row network seed mean on matched rows and its unmatched-row network seed mean on the others. Four decision items: season_a1_c50, season_a1_c100, season_a3_c50, season_a3_c100.",
+  "readings": {
+   "R1": "October non-LIRF RMSE of each item (8-seed means); matched / unmatched; per airport (information)",
+   "R2": "recipe proxy (tools/nn_design_report.RecipeProxy, all October rows) of table = 0.25 committee + 0.75 [(1 - b) P + b X], P = tunnel 21's pool (0.5 ctx seeds 101-116 + 0.5 ctx_e24 seeds 117-132), b in {0.4, 0.5, 1.0}; share 0.85 reported beside it. b = 1.0 is v66 / v69's member weight.",
+   "interval": "paired-day 95% interval (tools/nn_design_report.day_interval) of the proxy difference against the control at b = 1.0"
+  },
+  "decision": "An item is GO when (a) its R2 at b = 1.0 is at least 0.05 points below the control's (the bar of levers 5 / 9 / 12 and tunnel 21), (b) its 8-seed October non-LIRF RMSE is below the control's, and (c) the paired-day 95% interval of the proxy difference at b = 1.0 lies below zero. Several GO items: the one with the lowest R2 at b = 1.0. A development round (16 seeds x the 2025 LOMO folds with the kernel centred on each held month, stage 2 in v69's pinned chain) is declared separately only after a GO and only with the coordinator's word.",
+  "never_read": "No run of this declaration predicts, scores or reads a label of 2025-01, 2025-07, 2025-11, 2025-12 or of the ranking months. No official score or leaderboard enters."
+ },
+ "defaults": {
+  "architecture": {
+   "cat_cap": 16,
+   "d_num": 8,
+   "depth": 3,
+   "dropout": 0.1,
+   "heads": 4,
+   "max_tokens": 128,
+   "n_aux": 0,
+   "sa_dropout": 0.0,
+   "sa_ff": 2,
+   "sa_heads": 4,
+   "sa_layers": 0,
+   "tok_dim": 96,
+   "width": 512
+  },
+  "aux": {
+   "targets": [],
+   "weight": 0.0
+  },
+  "context": {
+   "departures_only": false,
+   "use_adsb": true
+  },
+  "features": {
+   "contract": "the x19 committee learners: 276 timeline bundle features + 27 ADS-B departure/neighbour features + 11 v19 features (314)",
+   "extra_features": [
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed",
+    "sfc_ground_10m",
+    "sfc_moving_10m",
+    "sfc_moving_20m",
+    "sfc_rwy_queue_5m",
+    "sfc_rwy_queue_10m"
+   ]
+  },
+  "masking": {
+   "columns": [
+    "adsb_gate",
+    "adsb_first_point_s",
+    "adsb_motion_s",
+    "adsb_first_gs_kt",
+    "adsb_first_dist_stand_m",
+    "adsb_stop_seconds",
+    "adsb_taxi_path_m",
+    "adsb_taxi_stops",
+    "adsb_taxi_stopped_s",
+    "adsb_slow_start_s",
+    "adsb_gap_before_s",
+    "adsb_turnaround_s",
+    "adsb_anchor_dist_stand_m",
+    "adsb_last_ground_s",
+    "adsb_points",
+    "adsb_appear_s",
+    "adsb_last_stand_s",
+    "adsb_pre_motion_gap_s",
+    "adsb_first_motion_s",
+    "adsb_first_dist_stand_imp_m",
+    "adsb_stand_imputed"
+   ],
+   "matched": "adsb_matched",
+   "p": 0.0
+  },
+  "preprocess": {
+   "bins": 32,
+   "min_count": 10,
+   "target_clip": null
+  },
+  "rows": {
+   "exclude_airports": [
+    "LIRF"
+   ],
+   "exclude_population": false,
+   "max_label": null
+  },
+  "tokens_dir": "data/ctx/tokens_v1",
+  "training": {
+   "batch_size": 2048,
+   "epochs": 32,
+   "grad_clip": 5.0,
+   "lr": 0.001,
+   "min_lr_fraction": 0.02,
+   "warmup_epochs": 1.0,
+   "weight_decay": 0.0001
+  }
+ },
+ "variants": {
+  "dl32own": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   }
+  },
+  "m25dl32own": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "masking": {
+    "p": 0.25
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   }
+  },
+  "s1_dl32own": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   },
+   "season": {
+    "kernel": "gaussian_circular_month",
+    "a": 1,
+    "sigma_months": 1.5,
+    "target_month": 10
+   }
+  },
+  "s1_m25dl32own": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "masking": {
+    "p": 0.25
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   },
+   "season": {
+    "kernel": "gaussian_circular_month",
+    "a": 1,
+    "sigma_months": 1.5,
+    "target_month": 10
+   }
+  },
+  "s3_dl32own": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   },
+   "season": {
+    "kernel": "gaussian_circular_month",
+    "a": 3,
+    "sigma_months": 1.5,
+    "target_month": 10
+   }
+  },
+  "s3_m25dl32own": {
+   "architecture": {
+    "d_num": 16
+   },
+   "training": {
+    "lr": 0.002
+   },
+   "masking": {
+    "p": 0.25
+   },
+   "features": {
+    "extra_features": [
+     "adsb_appear_s",
+     "adsb_last_stand_s",
+     "adsb_pre_motion_gap_s",
+     "adsb_first_motion_s",
+     "adsb_first_dist_stand_imp_m",
+     "adsb_stand_imputed",
+     "sfc_ground_10m",
+     "sfc_moving_10m",
+     "sfc_moving_20m",
+     "sfc_rwy_queue_5m",
+     "sfc_rwy_queue_10m",
+     "p_has_inb",
+     "p_inb_rel",
+     "p_tow",
+     "p_n",
+     "p_first_any",
+     "p_first_mv",
+     "p_last_park",
+     "p_park10",
+     "p_park20",
+     "p_park40",
+     "p_pregap_n",
+     "p_pregap_last",
+     "p_pregap_maxdist",
+     "p_gap_len",
+     "p_seg_start"
+    ]
+   },
+   "season": {
+    "kernel": "gaussian_circular_month",
+    "a": 3,
+    "sigma_months": 1.5,
+    "target_month": 10
+   }
+  }
+ },
+ "runs": {
+  "s1_dl32own": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "s1_m25dl32own": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "s3_dl32own": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "s3_m25dl32own": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ]
+ },
+ "control_runs": {
+  "dl32own": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "m25dl32own": [
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "path": "runs/ctx_own2/design/<variant>_s<seed>/design"
+ },
+ "pairs": {
+  "control": [
+   "dl32own",
+   "m25dl32own"
+  ],
+  "season_a1": [
+   "s1_dl32own",
+   "s1_m25dl32own"
+  ],
+  "season_a3": [
+   "s3_dl32own",
+   "s3_m25dl32own"
+  ]
+ },
+ "paths": {
+  "runs": "runs/season_net/design/<variant>_s<seed>/design",
+  "report": "docs/season_net/design_report.json"
+ },
+ "report": "tools/season_net_design_report.py"
+}
