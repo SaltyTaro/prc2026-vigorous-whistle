@@ -103,3 +103,11 @@ Summary [`v69_rehearsal.json`](v69_rehearsal.json); full reports `runs/final_reh
 - Two earlier attempts of the full run stopped on inputs missing from the VM (`runs/adsb_rematch/out_arcw5.parquet`,
   `runs/rematch_nonm/matches_2025.parquet`); they were copied from this workstation hash-checked and the run restarted from scratch.
   The partial attempts are kept under `runs/final_rehearsal_v69_attempts/`. No shipped file was changed.
+
+## Step 11 (v70): data-link OUT pin at LFPG
+
+After step 10, `tools/run_oooi_pin.py` (declaration `configs/oooi_pin_v1.json`, w50): LFPG departures matched to an Air France 2N or
+easyJet 8D data-link report from the adsb.lol Aircraft Data Links archive (CC0; `tools/oooi_pin_extract.py` / `oooi_pin_pack.py` on a
+VM, `tools/oooi_pin_join.py` locally) and passing the source guard take value = max(0.5 x (take-off - OUT + offset) + 0.5 x v69, -12),
+offsets from July / November / December 2025 (2N -62.26 s, 8D -22.84 s), np.rint. 775 rows; every other row equals v69. v70
+SHA-256 `f1d17747...`, 215.8099 official.

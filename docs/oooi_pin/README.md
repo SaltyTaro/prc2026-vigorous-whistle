@@ -190,3 +190,12 @@ the 783 in-scope LFPG rows, `np.rint` into int32, written to `runs/oooi_pin/rank
 - Squared change S = 8.21e6 s² against v69. Largest move +927 s, smallest −609 s, mean +2.2 s.
 - No LIRF, LIRF population or guard row (213142471, 213142469) changes, and every other row is byte-identical to v69.
 - The receipt sits next to the file.
+
+## v70: built and uploaded (7 October 2026)
+
+At the user's word ("yes build and upload now") the verified dry-run bytes were copied to `runs/submissions/vigorous-whistle_v70.parquet`
+(`docs/oooi_pin/build_v70.py`; SHA-256 `f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f`), validated against the
+template, receipt written with provenance; audit `docs/export_audit/v70_audit.json` clean (differs from v69 only at LFPG). Uploaded with
+the hash check: **215.8099 official on all 344,841 rows** (processed 11:27:03 UTC), **-0.0736 s against v69 (215.8835); the official
+best.** Scored squared-error gain 1.10e7 = 1.34 x the layer's squared change (8.21e6), inside 2025's range (dev 1.70-2.24, fresh
+1.25-1.88). Nothing is re-tuned from the score. Record `official_result.json`.
