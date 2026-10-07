@@ -1,0 +1,551 @@
+{
+  "audit_used": false,
+  "b_decision": 1.0,
+  "bar_points": 0.05,
+  "base_proxy_rmse": 176.26167383161464,
+  "correlation_opdi_all_vs_control_errors": 0.9771064608909754,
+  "created_at_utc": "2026-10-07T02:53:07.578749+00:00",
+  "decision": "opdi_all is GO when (a) its R2 at b = 1.0 is at least 0.05 points below the control's, (b) its 8-seed standalone October non-LIRF RMSE is below the control's, and (c) the paired-day 95% interval of the proxy difference against the control at b = 1.0 lies below zero (tunnel 21's / lever 5's bar). Reported beside it: by airport, by OPDI coverage, the two half items. A development round is declared separately only after a GO.",
+  "declaration_sha256": "260ffa7859be78c29fdec2b6d8ec7a73469413d4bb9e016f9aa09159a7698571",
+  "go": false,
+  "go_items": [],
+  "items": {
+    "control": {
+      "r2_pct": {
+        "0.4": -0.2830064719346437,
+        "0.5": -0.32136982030279704,
+        "1.0": -0.3181721899258694
+      },
+      "r2_pct_share_085": {
+        "0.4": -0.32091289047680993,
+        "0.5": -0.3594789904069917,
+        "1.0": -0.301474246562472
+      },
+      "rmse_by_airport": {
+        "EDDF": 92.91095061095531,
+        "EDDM": 70.5391669252958,
+        "EGLL": 200.4686393143924,
+        "EHAM": 94.31014231368879,
+        "LEBL": 136.53269692067897,
+        "LEMD": 133.11904955218654,
+        "LFPG": 216.69919800884813,
+        "LSZH": 93.57704771348268,
+        "LTFM": 210.82498514802862
+      },
+      "rmse_by_group": {
+        "no_opdi": 160.60028835542292,
+        "opdi_has": 130.91646726356717,
+        "opdi_stand_exit": 98.6370806804662
+      },
+      "rmse_matched": 115.71234646961875,
+      "rmse_non_lirf": 154.12266416952275,
+      "rmse_unmatched": 208.48072961164135
+    },
+    "opdi_all": {
+      "by_airport_vs_control_pct": {
+        "EDDF": -0.5581589792130193,
+        "EDDM": -0.6843911443814243,
+        "EGLL": 0.1051477159060843,
+        "EHAM": -1.128438498692852,
+        "LEBL": 1.1074322029447803,
+        "LEMD": 1.368674562956218,
+        "LFPG": -0.037954865818967676,
+        "LSZH": -7.61433393782106,
+        "LTFM": 0.26613899152874154
+      },
+      "by_group_vs_control_pct": {
+        "no_opdi": 0.21581116207489703,
+        "opdi_has": -1.0914485338621716,
+        "opdi_stand_exit": -13.239793182397886
+      },
+      "gain_points_vs_control": {
+        "0.4": 0.031672051330533524,
+        "0.5": 0.03637886984062533,
+        "1.0": 0.040483584096706604
+      },
+      "gain_points_vs_control_share_085": {
+        "0.4": 0.0354397461409417,
+        "0.5": 0.04016652359108974,
+        "1.0": 0.03879659280319192
+      },
+      "go": false,
+      "interval_vs_control_b1.0_s": [
+        -0.2960013153877711,
+        0.15155464319016823
+      ],
+      "proxy_change_vs_control_b1.0_pct": -0.040612802740580545,
+      "r2_pct": {
+        "0.4": -0.3146785232651772,
+        "0.5": -0.35774869014342237,
+        "1.0": -0.358655774022576
+      },
+      "r2_pct_share_085": {
+        "0.4": -0.35635263661775163,
+        "0.5": -0.39964551399808146,
+        "1.0": -0.34027083936566394
+      },
+      "rmse_by_airport": {
+        "EDDF": 92.3923597974481,
+        "EDDM": 70.05640311353865,
+        "EGLL": 200.67942750973947,
+        "EHAM": 93.2459103596491,
+        "LEBL": 138.04470397392757,
+        "LEMD": 134.9410161218564,
+        "LFPG": 216.6169501190131,
+        "LSZH": 86.45177881142396,
+        "LTFM": 211.3860726373922
+      },
+      "rmse_by_group": {
+        "no_opdi": 160.9468817040184,
+        "opdi_has": 129.48758140103482,
+        "opdi_stand_exit": 85.57773519721754
+      },
+      "rmse_matched": 115.33242697495909,
+      "rmse_non_lirf": 154.1146487325198,
+      "rmse_unmatched": 208.86353578956403,
+      "standalone_below_control": true,
+      "standalone_vs_control_pct": -0.005200686768636054
+    },
+    "opdi_matched": {
+      "by_airport_vs_control_pct": {
+        "EDDF": -0.5099929967720129,
+        "EDDM": -0.3487222896400466,
+        "EGLL": -0.20201070644535468,
+        "EHAM": -0.7160715787755567,
+        "LEBL": 0.8659526700826259,
+        "LEMD": 1.2232416415796532,
+        "LFPG": -0.2290039561863244,
+        "LSZH": -4.991861874553027,
+        "LTFM": 0.0
+      },
+      "by_group_vs_control_pct": {
+        "no_opdi": 0.0010181908870476875,
+        "opdi_has": -0.7199246545410598,
+        "opdi_stand_exit": -8.047670302588816
+      },
+      "gain_points_vs_control": {
+        "0.4": 0.03927838718832399,
+        "0.5": 0.04670129245842869,
+        "1.0": 0.06923398188989349
+      },
+      "gain_points_vs_control_share_085": {
+        "0.4": 0.044645966206791066,
+        "0.5": 0.0527217664261892,
+        "1.0": 0.07431271812521345
+      },
+      "interval_vs_control_b1.0_s": [
+        -0.24482889667091357,
+        -0.018212475073213753
+      ],
+      "proxy_change_vs_control_b1.0_pct": -0.06945496828349995,
+      "r2_pct": {
+        "0.4": -0.32228485912296767,
+        "0.5": -0.3680711127612257,
+        "1.0": -0.38740617181576287
+      },
+      "r2_pct_share_085": {
+        "0.4": -0.365558856683601,
+        "0.5": -0.4122007568331809,
+        "1.0": -0.37578696468768547
+      },
+      "rmse_by_airport": {
+        "EDDF": 92.43711126960514,
+        "EDDM": 70.2931811273009,
+        "EGLL": 200.063671199912,
+        "EHAM": 93.63481418867768,
+        "LEBL": 137.71500545519942,
+        "LEMD": 134.74741719918393,
+        "LFPG": 216.20294827238382,
+        "LSZH": 88.90581074534104,
+        "LTFM": 210.82498514802862
+      },
+      "rmse_by_group": {
+        "no_opdi": 160.60192357292354,
+        "opdi_has": 129.97396733888257,
+        "opdi_stand_exit": 90.69909363120375
+      },
+      "rmse_matched": 115.33242697495909,
+      "rmse_non_lirf": 153.9359202171416,
+      "rmse_unmatched": 208.48072961164135,
+      "standalone_below_control": true,
+      "standalone_vs_control_pct": -0.12116579569099173
+    },
+    "opdi_unmatched": {
+      "by_airport_vs_control_pct": {
+        "EDDF": -0.04792022123244477,
+        "EDDM": -0.3344943671335199,
+        "EGLL": 0.30653982760509013,
+        "EHAM": -0.409401894777528,
+        "LEBL": 0.2435655722087926,
+        "LEMD": 0.1472093181877021,
+        "LFPG": 0.1906124137055265,
+        "LSZH": -2.48812901144585,
+        "LTFM": 0.26613899152874154
+      },
+      "by_group_vs_control_pct": {
+        "no_opdi": 0.21479515350282252,
+        "opdi_has": -0.36883924931100376,
+        "opdi_stand_exit": -4.752414464976152
+      },
+      "gain_points_vs_control": {
+        "0.4": -0.007603339960993161,
+        "0.5": -0.010317586871444462,
+        "1.0": -0.028730434969226337
+      },
+      "gain_points_vs_control_share_085": {
+        "0.4": -0.00920209700800978,
+        "0.5": -0.01254860044505035,
+        "1.0": -0.035489661938925554
+      },
+      "interval_vs_control_b1.0_s": [
+        -0.15858586270379574,
+        0.2691248891633861
+      ],
+      "proxy_change_vs_control_b1.0_pct": 0.02882213900006203,
+      "r2_pct": {
+        "0.4": -0.2754031319736505,
+        "0.5": -0.3110522334313526,
+        "1.0": -0.28944175495664304
+      },
+      "r2_pct_share_085": {
+        "0.4": -0.31171079346880015,
+        "0.5": -0.34693038996194137,
+        "1.0": -0.26598458462354646
+      },
+      "rmse_by_airport": {
+        "EDDF": 92.86642747787337,
+        "EDDM": 70.30321738530778,
+        "EGLL": 201.083155535749,
+        "EHAM": 93.92403480408916,
+        "LEBL": 136.86524356518592,
+        "LEMD": 133.31501319741025,
+        "LFPG": 217.1122535806533,
+        "LSZH": 91.248730041269,
+        "LTFM": 211.3860726373922
+      },
+      "rmse_by_group": {
+        "no_opdi": 160.94524999132193,
+        "opdi_has": 130.43359594848775,
+        "opdi_stand_exit": 93.94943779037753
+      },
+      "rmse_matched": 115.71234646961875,
+      "rmse_non_lirf": 154.3011763777622,
+      "rmse_unmatched": 208.86353578956403,
+      "standalone_below_control": false,
+      "standalone_vs_control_pct": 0.11582476153091381
+    }
+  },
+  "networks": {
+    "dl32opdi": {
+      "mean_rmse_matched": 115.33242697495909,
+      "mean_rmse_non_lirf": 154.06746111193291,
+      "mean_rmse_unmatched": 208.76249296694596,
+      "per_seed_rmse_non_lirf": {
+        "10": 165.751312557371,
+        "11": 163.0662464248676,
+        "12": 164.76515439522186,
+        "13": 165.78642899129184,
+        "14": 164.42692567282157,
+        "15": 163.03454090699248,
+        "16": 164.48348329844788,
+        "9": 164.47208401681232
+      }
+    },
+    "dl32own": {
+      "mean_rmse_matched": 115.71234646961875,
+      "mean_rmse_non_lirf": 154.94257609990976,
+      "mean_rmse_unmatched": 210.2368476445627,
+      "per_seed_rmse_non_lirf": {
+        "10": 165.88245570442615,
+        "11": 162.73548435550902,
+        "12": 164.415735590351,
+        "13": 165.86574682611584,
+        "14": 166.11579788631937,
+        "15": 165.43433496827376,
+        "16": 165.79500869347916,
+        "9": 164.20997124894242
+      }
+    },
+    "m25dl32opdi": {
+      "mean_rmse_matched": 116.23931513912164,
+      "mean_rmse_non_lirf": 154.56054076025703,
+      "mean_rmse_unmatched": 208.86353578956403,
+      "per_seed_rmse_non_lirf": {
+        "10": 164.87712611320202,
+        "11": 163.24200220052137,
+        "12": 164.94534949700636,
+        "13": 165.30171759661502,
+        "14": 162.8678303027958,
+        "15": 163.68623713188694,
+        "16": 164.4411178512056,
+        "9": 164.94146280428524
+      }
+    },
+    "m25dl32own": {
+      "mean_rmse_matched": 116.27853117756638,
+      "mean_rmse_non_lirf": 154.4016818583059,
+      "mean_rmse_unmatched": 208.48072961164135,
+      "per_seed_rmse_non_lirf": {
+        "10": 164.38651349847316,
+        "11": 163.55225989764125,
+        "12": 162.84313443069064,
+        "13": 164.8311249980038,
+        "14": 165.14230652446318,
+        "15": 164.0106398740428,
+        "16": 164.8570940538628,
+        "9": 162.49259779991624
+      }
+    }
+  },
+  "note": "October only; no scoring month, ranking row or official score read.",
+  "october_opdi_share_non_lirf": 0.23559216185325274,
+  "october_opdi_stand_exit_share_non_lirf": 0.03823629915043539,
+  "october_rows": 183761,
+  "pool_rmse_non_lirf": 154.01647144993638,
+  "runs": {
+    "dl32opdi": {
+      "10": {
+        "dir": "runs/ctx_opdi/design/dl32opdi_s10/design",
+        "epochs": 32,
+        "extra_features_used": 36,
+        "fit_seconds": 631.3,
+        "predictions_sha256": "1f911fd273bf5b2732e7d409a6c0a6f0187a04276d30746b3442f63a2381ae05"
+      },
+      "11": {
+        "dir": "runs/ctx_opdi/design/dl32opdi_s11/design",
+        "epochs": 32,
+        "extra_features_used": 36,
+        "fit_seconds": 626.9,
+        "predictions_sha256": "5580522e8d7acb936e17f68e45b1afe85fad7022be30a8dbfc6a21e55ac3fb48"
+      },
+      "12": {
+        "dir": "runs/ctx_opdi/design/dl32opdi_s12/design",
+        "epochs": 32,
+        "extra_features_used": 36,
+        "fit_seconds": 624.2,
+        "predictions_sha256": "05ecc53bf4f8a173a40ce4a469d9e7d1d232231dae80a4c32e61cd596f0dd667"
+      },
+      "13": {
+        "dir": "runs/ctx_opdi/design/dl32opdi_s13/design",
+        "epochs": 32,
+        "extra_features_used": 36,
+        "fit_seconds": 482.8,
+        "predictions_sha256": "ae7b49ab3b3923d1a54154d40be77a7ce70e3d776a86984c176f02c8911a3216"
+      },
+      "14": {
+        "dir": "runs/ctx_opdi/design/dl32opdi_s14/design",
+        "epochs": 32,
+        "extra_features_used": 36,
+        "fit_seconds": 623.1,
+        "predictions_sha256": "19748920d826708bbb0a7dc58e63cecd8861917b0adde246c975222755992cbf"
+      },
+      "15": {
+        "dir": "runs/ctx_opdi/design/dl32opdi_s15/design",
+        "epochs": 32,
+        "extra_features_used": 36,
+        "fit_seconds": 621.5,
+        "predictions_sha256": "1acc5f08b384d43f9f41b5e682ac9c27eb5ffd5a87b9d35ef1f11fb8b6097f34"
+      },
+      "16": {
+        "dir": "runs/ctx_opdi/design/dl32opdi_s16/design",
+        "epochs": 32,
+        "extra_features_used": 36,
+        "fit_seconds": 622.8,
+        "predictions_sha256": "2ace9949851b130d713447249895495e851ffa3b3d9621d962816134d5da8891"
+      },
+      "9": {
+        "dir": "runs/ctx_opdi/design/dl32opdi_s9/design",
+        "epochs": 32,
+        "extra_features_used": 36,
+        "fit_seconds": 625.7,
+        "predictions_sha256": "e4b95fd26a6bb3c806ed6e02d3d415e0dc68e16424150696dc72fb612d3a666b"
+      }
+    },
+    "dl32own": {
+      "10": {
+        "dir": "runs/ctx_own2/design/dl32own_s10/design",
+        "epochs": 32,
+        "extra_features_used": 26,
+        "fit_seconds": 610.6,
+        "predictions_sha256": "cc21b5b8c2e8f304dee9b78a9a866039ff5154636ffc8517fee8e2adafb4f74a"
+      },
+      "11": {
+        "dir": "runs/ctx_own2/design/dl32own_s11/design",
+        "epochs": 32,
+        "extra_features_used": 26,
+        "fit_seconds": 530.9,
+        "predictions_sha256": "b4a532334e432c006da184af0b04f85cc30aae2d5a65d8100fa0c1ce86c94e5c"
+      },
+      "12": {
+        "dir": "runs/ctx_own2/design/dl32own_s12/design",
+        "epochs": 32,
+        "extra_features_used": 26,
+        "fit_seconds": 578.1,
+        "predictions_sha256": "25ecac36f5c089dd67dc2d134816b4f7ced810ef6e5e52b3efcfb5708be31d20"
+      },
+      "13": {
+        "dir": "runs/ctx_own2/design/dl32own_s13/design",
+        "epochs": 32,
+        "extra_features_used": 26,
+        "fit_seconds": 628.1,
+        "predictions_sha256": "f37af9c0e83c41d1dd7c129b26cd798d53b1be3b4625040c6e95f3c3fcd1b926"
+      },
+      "14": {
+        "dir": "runs/ctx_own2/design/dl32own_s14/design",
+        "epochs": 32,
+        "extra_features_used": 26,
+        "fit_seconds": 527.2,
+        "predictions_sha256": "45c385259ec5de65820908e082cd515b5ecd9aefe2a8923a023d7c35fd1fef14"
+      },
+      "15": {
+        "dir": "runs/ctx_own2/design/dl32own_s15/design",
+        "epochs": 32,
+        "extra_features_used": 26,
+        "fit_seconds": 526.4,
+        "predictions_sha256": "79161b2bbf2d55709fc6353b2f9efd3dc79b1a81504e44d9b888a7f96e443350"
+      },
+      "16": {
+        "dir": "runs/ctx_own2/design/dl32own_s16/design",
+        "epochs": 32,
+        "extra_features_used": 26,
+        "fit_seconds": 444.2,
+        "predictions_sha256": "7003b78d570b2a29b1e507fc2b258384006e0546e63f3d95e2e8e8cc50f95a62"
+      },
+      "9": {
+        "dir": "runs/ctx_own2/design/dl32own_s9/design",
+        "epochs": 32,
+        "extra_features_used": 26,
+        "fit_seconds": 610.6,
+        "predictions_sha256": "6d91aeb70098a4e84e3fa405946cae0556747084a22a8ea0f08b731bdbff1f29"
+      }
+    },
+    "m25dl32opdi": {
+      "10": {
+        "dir": "runs/ctx_opdi/design/m25dl32opdi_s10/design",
+        "epochs": 32,
+        "extra_features_used": 36,
+        "fit_seconds": 685.3,
+        "predictions_sha256": "0c252072cbab92a0c08f943cefde45109aa35ddf425fb9c877833505e1c936b4"
+      },
+      "11": {
+        "dir": "runs/ctx_opdi/design/m25dl32opdi_s11/design",
+        "epochs": 32,
+        "extra_features_used": 36,
+        "fit_seconds": 684.2,
+        "predictions_sha256": "a5fba8ba4edc78ab61a70cf62157bfffda6906b0395494b4dc3d6253ba4af15f"
+      },
+      "12": {
+        "dir": "runs/ctx_opdi/design/m25dl32opdi_s12/design",
+        "epochs": 32,
+        "extra_features_used": 36,
+        "fit_seconds": 682.4,
+        "predictions_sha256": "02cd08c81884eb8db46272fc763673997957ae6af49bfe256a2eec635a83d3ed"
+      },
+      "13": {
+        "dir": "runs/ctx_opdi/design/m25dl32opdi_s13/design",
+        "epochs": 32,
+        "extra_features_used": 36,
+        "fit_seconds": 518.0,
+        "predictions_sha256": "c3e35aece4902ad00d1c612302f41d43993d5d67ecc94db389b9a8946fc7fc06"
+      },
+      "14": {
+        "dir": "runs/ctx_opdi/design/m25dl32opdi_s14/design",
+        "epochs": 32,
+        "extra_features_used": 36,
+        "fit_seconds": 681.3,
+        "predictions_sha256": "36ad8666f298289288c89dcf265ccf07489e5d34beed957f5f3ac7e73ab4f150"
+      },
+      "15": {
+        "dir": "runs/ctx_opdi/design/m25dl32opdi_s15/design",
+        "epochs": 32,
+        "extra_features_used": 36,
+        "fit_seconds": 679.8,
+        "predictions_sha256": "ccab00044da68f012100f6ad2bd36c8fa47778cab7aaffb67c114c0d264b40a6"
+      },
+      "16": {
+        "dir": "runs/ctx_opdi/design/m25dl32opdi_s16/design",
+        "epochs": 32,
+        "extra_features_used": 36,
+        "fit_seconds": 680.9,
+        "predictions_sha256": "eec4f3e4d8150a4b350ca4ab98be7dd2302d38963b713fd520bc1ebb99821553"
+      },
+      "9": {
+        "dir": "runs/ctx_opdi/design/m25dl32opdi_s9/design",
+        "epochs": 32,
+        "extra_features_used": 36,
+        "fit_seconds": 683.8,
+        "predictions_sha256": "949333bf4278a6226f53ced4fa39871182d40d3e615e8a9fbe1d40336ae513db"
+      }
+    },
+    "m25dl32own": {
+      "10": {
+        "dir": "runs/ctx_own2/design/m25dl32own_s10/design",
+        "epochs": 32,
+        "extra_features_used": 26,
+        "fit_seconds": 661.5,
+        "predictions_sha256": "c51482b7cd7144a595c690b1d9ca3eb4e1e1e6463c249c0ae8270ead391a3f42"
+      },
+      "11": {
+        "dir": "runs/ctx_own2/design/m25dl32own_s11/design",
+        "epochs": 32,
+        "extra_features_used": 26,
+        "fit_seconds": 672.3,
+        "predictions_sha256": "386006a74e2ec144e92034f58fa349e81c280bec24f0e9dad0a3a42980ec1fb9"
+      },
+      "12": {
+        "dir": "runs/ctx_own2/design/m25dl32own_s12/design",
+        "epochs": 32,
+        "extra_features_used": 26,
+        "fit_seconds": 589.5,
+        "predictions_sha256": "589e836f799a40b7fb0e9e1730ebf49dd60f384850eb3486162384e38f666325"
+      },
+      "13": {
+        "dir": "runs/ctx_own2/design/m25dl32own_s13/design",
+        "epochs": 32,
+        "extra_features_used": 26,
+        "fit_seconds": 687.4,
+        "predictions_sha256": "8ba87bbcfe922fea5b33cc63682f94566b4b9775ed7f2a8b7a2d1c4298bb6b9b"
+      },
+      "14": {
+        "dir": "runs/ctx_own2/design/m25dl32own_s14/design",
+        "epochs": 32,
+        "extra_features_used": 26,
+        "fit_seconds": 676.2,
+        "predictions_sha256": "79ec90ff70497d332ad4c31f39e7fea6ae209a226b5fce3ccc05600482dea616"
+      },
+      "15": {
+        "dir": "runs/ctx_own2/design/m25dl32own_s15/design",
+        "epochs": 32,
+        "extra_features_used": 26,
+        "fit_seconds": 635.8,
+        "predictions_sha256": "f4c6875b4add7bcf62c5e5a9fcf93382dd82c25beabf9895cd2940b2f386d9d8"
+      },
+      "16": {
+        "dir": "runs/ctx_own2/design/m25dl32own_s16/design",
+        "epochs": 32,
+        "extra_features_used": 26,
+        "fit_seconds": 452.5,
+        "predictions_sha256": "37d1f4947e92b2782d4a590e980bd43017f7c18c20896ceaffe4120995b28f48"
+      },
+      "9": {
+        "dir": "runs/ctx_own2/design/m25dl32own_s9/design",
+        "epochs": 32,
+        "extra_features_used": 26,
+        "fit_seconds": 670.0,
+        "predictions_sha256": "f974ef2e77b15d6d59fe2ee71c7b4a2b02a7f098af07bf5368accbb9320aa1a8"
+      }
+    }
+  },
+  "seeds": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "share": 0.75,
+  "tool_sha256": "362924da67ef769130b43bd2e0d5a35f1703ad46c2ecd22b899d83ac855125b6"
+}
