@@ -57,7 +57,8 @@ def month_window(month: str) -> tuple[str, str]:
     return (start - dt.timedelta(days=1)).strftime("%Y%m%d"), (end - dt.timedelta(days=1)).strftime("%Y%m%d")
 
 
-def cmd_list(out: str) -> None:
+def cmd_list(out: str, months: list[str] | None = None) -> None:
+    months = months or MONTHS
     os.makedirs(out, exist_ok=True)
     rows = []
     listing_hashes = {}
@@ -78,14 +79,14 @@ def cmd_list(out: str) -> None:
                         "n_assets_in_release": len(r.get("assets", [])),
                     })
             page += 1
-    windows = [month_window(m) for m in MONTHS]
+    windows = [month_window(m) for m in months]
     sel = []
     for r in rows:
         mm = NAME_RE.match(r["name"])
         if not mm:
             continue
         d0 = mm.group(2)
-        hit = [MONTHS[i] for i, (a, b) in enumerate(windows) if a <= d0 <= b]
+        hit = [months[i] for i, (a, b) in enumerate(windows) if a <= d0 <= b]
         if hit:
             r["kind"] = mm.group(1)
             r["month"] = hit[0]
@@ -266,7 +267,7 @@ def main() -> None:
     ap.add_argument("--workers", type=int, default=24)
     a = ap.parse_args()
     if a.cmd == "list":
-        cmd_list(a.out)
+        cmd_list(a.out, a.months.split(",") if a.months else None)
     else:
         cmd_run(a.out, a.kinds.split(","), a.workers, a.months.split(",") if a.months else None)
 

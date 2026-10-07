@@ -167,15 +167,21 @@ def join(p: pd.DataFrame, d: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
     return keep, stats
 
 
-def main() -> None:
+DEV_MONTHS = ["2025-07", "2025-11", "2025-12"]
+
+
+def main(run: Path = RUN, dev_months: list[str] | None = None) -> None:
+    """run: directory holding messages_unique.parquet and receiving the outputs; dev_months: training months joined
+    (default July, November and December 2025). Only these two inputs are parameters; the logic is unchanged."""
+    RUN = run
+    dev_months = dev_months or DEV_MONTHS
     u = pd.read_parquet(RUN / "messages_unique.parquet")
     p = parse(u)
     p.to_parquet(RUN / "parsed.parquet", index=False)
     stats = {"parsed_counts": {f"{k[0]}|{k[1]}|{k[2]}": int(v)
                                for k, v in p.groupby(["source", "org", "month"]).size().items()}}
     raw = ROOT / "data" / "raw"
-    dev = load_deps([raw / "training_2025-07-01_2025-08-01.parquet", raw / "training_2025-11-01_2025-12-01.parquet",
-                     raw / "training_2025-12-01_2026-01-01.parquet"])
+    dev = load_deps([next(raw.glob(f"training_{m}-01_*.parquet")) for m in dev_months])
     rank = load_deps([raw / "ranking.parquet"])
     jd, sd = join(p, dev)
     jr, sr = join(p, rank)
@@ -196,4 +202,10 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--run-dir", default=str(RUN))
+    ap.add_argument("--months", default=",".join(DEV_MONTHS))
+    a = ap.parse_args()
+    main(Path(a.run_dir), a.months.split(","))

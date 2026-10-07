@@ -142,3 +142,51 @@ a reading.
 
 arcw0 was started shortly before 10:00 UTC and deallocated at 10:15 UTC; its final state is `VM deallocated`. No other VM
 and no AWS resource was used, and `.env` was not read.
+
+## Declared round oooi_pin_v1 (governing run 10:30 UTC, 7 October 2026)
+
+Declaration: [`configs/oooi_pin_v1.json`](../../configs/oooi_pin_v1.json) (0010550 + 3f093f0, declared 10:21:01 UTC,
+SHA-256 f40bf9a4…), run exactly as written by [`tools/run_oooi_pin.py`](../../tools/run_oooi_pin.py). Numbers are in
+[`results_v1.json`](results_v1.json). Scope: LFPG departures matched to a 2N or 8D report that pass the screen's source
+guard, verbatim. Candidate value = max(w × pin + (1 − w) × chain, −12) on those rows; every other row keeps the chain.
+No fixed row (LIRF population, guard) is in scope. Intervals: `tools/run_intruder_bound.interval`, 2,000 replicates over
+UTC take-off days, seed 20261004, on complete-month RMSE change. The proxy's `day` equals the take-off day on 100% of
+rows.
+
+**Clean months (clause 4).** August, September and October 2025 were downloaded and filtered on arcw0 (10:23–10:28
+UTC). That is 17,995 files, 5.71 GB and 62.4 M messages, with 0 digest mismatches. The filtered tables were copied back
+with matching SHA-256 (`messages_unique.parquet` bb297728…, `messages_all.parquet` c6137ae3…), and arcw0 was
+**deallocated at 10:30 UTC (state `VM deallocated`)**. The first run's files on arcw0 also hash-match the local copies.
+With 35 GB free, nothing needed removing. Receipts: [`receipts/fresh_listing_receipt.json`](receipts/fresh_listing_receipt.json)
+and [`receipts/fresh_archive_files.csv.gz`](receipts/fresh_archive_files.csv.gz).
+
+Code changes since 8de5d74 are parameters only, recorded in [`receipts/param_diff_v1.patch`](receipts/param_diff_v1.patch).
+`oooi_pin_extract.py list` takes `--months` (8a3f27f2…). `oooi_pin_join.py` takes `--run-dir` and `--months`
+(849e33b3…), and its defaults reproduce the screen's `joined_dev`, `joined_rank`, `parsed` and `join_stats` exactly.
+
+In-scope rows: development July 242, November 560, December 731. Fresh August 373, September 461, October 493.
+Ranking January 83, July 700.
+
+| candidate | Jan | Jul [95%] | Nov [95%] | Dec [95%] | eq mean | c1 | c2 | c3 | Aug [95%] | Sep [95%] | Oct [95%] | c4 | c5 ratio | passes |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| w100 | 0 | −0.0405 [−0.128, **+0.026**] | −0.1359 [−0.238, −0.038] | −0.3823 [−0.583, −0.206] | −0.1409 | ✓ | ✓ | **✗** | −0.0088 [−0.031, +0.009] | −0.0203 [−0.039, −0.011] | −0.0525 [−0.090, −0.011] | ✓ (2/3) | 0.737 ✓ | no |
+| w75 | 0 | −0.0522 [−0.129, **+0.001**] | −0.1645 [−0.253, −0.093] | −0.4025 [−0.613, −0.233] | −0.1516 | ✓ | ✓ | **✗** | −0.0199 [−0.040, −0.009] | −0.0238 [−0.044, −0.014] | −0.0738 [−0.102, −0.050] | ✓ (3/3) | 0.738 ✓ | no |
+| **w50** | 0 | −0.0494 [−0.108, −0.011] | −0.1514 [−0.221, −0.100] | −0.3454 [−0.529, −0.205] | −0.1316 | ✓ | ✓ | ✓ | −0.0222 [−0.041, −0.012] | −0.0216 [−0.040, −0.013] | −0.0722 [−0.093, −0.057] | ✓ (3/3) | 0.737 ✓ | **yes** |
+
+All figures are percent changes of complete-month RMSE. Development control: the v69 proxy (July 250.8358, November
+181.8835, December 163.3537). Fresh control: rows12 `stack` (August 396.814, September 428.445, October 237.961). Offsets for
+the fresh months and the ranking come from July, November and December: 2N −62.26 s, 8D −22.84 s. Pinned rows with
+|pin − label| > 1,800 s: August 1 of 373 (0.27%), September 0 of 461, October 0 of 493. Clause 5 compares the RMS of the
+ranking change on in-scope rows (w50 102.4 s, after rounding) with the RMS of the out-of-month development change (138.9 s).
+
+**Selection: w50** is the only candidate that passes clauses 1–5. w100 and w75 fail clause 3 because July's interval
+includes zero.
+
+**Dry run** (not a submission; nothing under `runs/submissions`, no upload). The uploaded v69 (192c4a30…) with w50 on
+the 783 in-scope LFPG rows, `np.rint` into int32, written to `runs/oooi_pin/rank/dry_v70/vigorous-whistle_v70.parquet`.
+- SHA-256 **f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f**.
+- 775 rows change: January 83 (unm_unseen 50, dark 23, unm_seen 9, gate 1) and July 692 (unm_unseen 432, dark 196,
+  unm_seen 61, gate 3).
+- Squared change S = 8.21e6 s² against v69. Largest move +927 s, smallest −609 s, mean +2.2 s.
+- No LIRF, LIRF population or guard row (213142471, 213142469) changes, and every other row is byte-identical to v69.
+- The receipt sits next to the file.
