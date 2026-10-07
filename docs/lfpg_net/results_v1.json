@@ -1,0 +1,165 @@
+{
+  "audit_used": false,
+  "candidate_vs_declared_control_pct": {
+    "2025-01": -0.002406611000838055,
+    "2025-07": -0.004213484684001401,
+    "2025-11": -0.09036981729642068,
+    "2025-12": 0.04062159463265047
+  },
+  "checks": {
+    "1_no_month_worse_than_0.005pct": false,
+    "2_equal_footing_mean_pct": 0.011333832982603672,
+    "2_mean_ok": false,
+    "3_every_equal_interval_below_zero": false,
+    "4_member_transfer_guard": true,
+    "accepted": false
+  },
+  "code": {
+    "src/prc2026_scout/var_alloc.py": "91d1788d597f23550ccfa1d68d8b08fea12fe496ba94e69b19ff99f7e81989c0",
+    "tools/export_ctx_ownpoints.py": "03e6bda44a26d6a2563dc255bcb7cc5679cf42c87eca18f0b0e54b7a3b2a0dc1",
+    "tools/run_ctx_own2_dev.py": "d32f27620485a7f338a158e79ed4aa3ee4894fb0816ec02f3103c2d074266e3f",
+    "tools/run_ctx_ownpoints_chain.py": "4fa1a5244fe0520fa9701e352d29c3b1c97ebfe23cc34ee6f0120082a13d5a7d",
+    "tools/run_lfpg_net_dev.py": "b9dd57897ee3e69aed20d6d9b9262760fc09fba41de15bae2a405a6fff100217",
+    "tools/run_opdi_stack.py": "3cdcc1bcfd1910e3cd396f54b6dc681a32708fec1bd956479d6f57c8fd961422",
+    "tools/run_opdi_stack_decl.py": "ddb16f9b554fafd2db11da17eecae71729c58765c747be4c4594e187eb39754a",
+    "tools/run_own_motion_v2.py": "1fa8f880cd107b06e2cc00aa8d89602c9d3bc6afd35be7567f7a68c5e276d2b7",
+    "tools/run_ownpoints_weight.py": "5260ed72b57dd76ad5d4ed2e4d31673c03503a8cdff7dbc8df3eac93f24d53c6",
+    "tools/run_stack_resid.py": "0da9f31559965dd0f630df10d16d26f5e838f3feef62b3aecd06bd5626584063",
+    "tools/run_stack_resid_v3.py": "d3c5f995d39633c7383916e1f80d7553f2bbbecc5461f2c579e816281c071f52",
+    "tools/run_stack_weight.py": "dd6f70ee6ea39bc38662e01b0e189c886be2a1f9fdd63c79c2e8115655e85cb9"
+  },
+  "control": {
+    "path": "runs/stack_weight/dev/w65_bag10/proxy.parquet",
+    "sha256": "c088e409de153d81b006bcd26b5b2a28e0e306043a5172c2158d0ecc6e6f5cb8"
+  },
+  "created_at_utc": "2026-10-07T07:43:39.168577+00:00",
+  "declaration": "configs/lfpg_net_dev_v1.json",
+  "declaration_sha256": "14a7cd61fd639917cc2434fdf0e2d06a1b74bcf2ff67090df487b38713e64db4",
+  "environment": {
+    "disk_available_bytes": 430630961152,
+    "logical_cpus": 16,
+    "memory_total_bytes": 67413827584,
+    "packages": {
+      "numpy": "2.4.2",
+      "pandas": "3.0.0",
+      "psutil": "7.2.2",
+      "pyarrow": "23.0.1",
+      "tzdata": "2025.3"
+    },
+    "physical_cpus_reported": 8,
+    "platform": "Linux-7.0.0-1014-azure-x86_64-with-glibc2.39",
+    "python": "3.14.2"
+  },
+  "fixed_rows_moved": 0,
+  "identity": {
+    "a_chain_files_equal_ship": true,
+    "b_max_abs_vs_control": 0.0,
+    "c_rebuilt_control_max_abs_vs_control": 4.547473508864641e-13,
+    "c_rebuilt_control_rows_differing": 1225
+  },
+  "identity_proxy_rows": 672428,
+  "months": {
+    "2025-01": {
+      "control_rmse": 320.01471166018143,
+      "hi": 0.0014418100110213923,
+      "lfpg_change_pct": -0.0004163075720708953,
+      "lfpg_rows_changed": 17582,
+      "lfpg_squared_change": 175137.75551763637,
+      "lo": -0.015024189407089328,
+      "pct": -0.002406611000838055,
+      "rmse": 320.0070101509263,
+      "rows_changed": 147919,
+      "squared_change": 442740.998849358
+    },
+    "2025-07": {
+      "control_rmse": 250.8358263007596,
+      "hi": 0.015958229302567847,
+      "lfpg_change_pct": -0.08182574660514641,
+      "lfpg_rows_changed": 21700,
+      "lfpg_squared_change": 899005.0302747736,
+      "lo": -0.02753686096907959,
+      "pct": -0.004213484684001401,
+      "rmse": 250.82525737163644,
+      "rows_changed": 189201,
+      "squared_change": 1435515.1816828032
+    },
+    "2025-11": {
+      "control_rmse": 181.88348385861053,
+      "hi": -0.019692172385646373,
+      "lfpg_change_pct": -0.4587122675049238,
+      "lfpg_rows_changed": 18626,
+      "lfpg_squared_change": 8927470.26685351,
+      "lo": -0.2009636612890453,
+      "pct": -0.09036981729642068,
+      "rmse": 181.71911608655515,
+      "rows_changed": 162152,
+      "squared_change": 9314301.001665799
+    },
+    "2025-12": {
+      "control_rmse": 163.35369652579521,
+      "hi": 0.09457888768171606,
+      "lfpg_change_pct": 0.19271071295465791,
+      "lfpg_rows_changed": 19761,
+      "lfpg_squared_change": 2305461.5617792355,
+      "lo": -0.001140815986425958,
+      "pct": 0.04062159463265047,
+      "rmse": 163.42005340221536,
+      "rows_changed": 165428,
+      "squared_change": 2602828.1372812646
+    }
+  },
+  "official_scores_used": "none",
+  "proxy": {
+    "path": "runs/lfpg_net/dev/lfpg_mix_w100_proxy.parquet",
+    "sha256": "d43b67169becdb2a54dbe6e7cfd2464b8ec700b0bf1ac7e1268ad6054ce19e09"
+  },
+  "selected_candidate": null,
+  "transfer_guard_member": {
+    "by_leaf": {
+      "2025-01": {
+        "rms_s": null,
+        "rows": 0,
+        "sum_sq": 0.0
+      },
+      "2025-07": {
+        "rms_s": 49.20512564377003,
+        "rows": 1569,
+        "sum_sq": 3798775.5473125167
+      },
+      "2025-11": {
+        "rms_s": 62.104438150349395,
+        "rows": 6797,
+        "sum_sq": 26215765.53448599
+      },
+      "2025-12": {
+        "rms_s": 37.5355490802689,
+        "rows": 4773,
+        "sum_sq": 6724762.963826476
+      },
+      "ranking": {
+        "rms_s": 50.06862391370767,
+        "rows": 8315,
+        "sum_sq": 20844599.94159127
+      }
+    },
+    "development_rms_s": 52.87913061115621,
+    "ok": true,
+    "ranking_rms_s": 50.06862391370767,
+    "ratio": 0.9468503610977373
+  },
+  "var_alloc_params": {
+    "bagging_fraction": 0.8,
+    "bagging_freq": 1,
+    "deterministic": true,
+    "feature_fraction": 0.8,
+    "force_col_wise": true,
+    "lambda_l2": 10.0,
+    "learning_rate": 0.05,
+    "min_data_in_leaf": 2000,
+    "num_leaves": 15,
+    "num_threads": 6,
+    "objective": "regression",
+    "seed": 20261002,
+    "verbose": -1
+  }
+}
