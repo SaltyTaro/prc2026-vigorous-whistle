@@ -41,3 +41,13 @@ guard rows unchanged; minimum −12; int32; template order. Checked again on the
 `runs/submissions/vigorous-whistle_v68.parquet`.
 
 Build (copy the dry-run bytes, `validate_submission`, receipt) and upload only at the user's word.
+
+## v69: built and uploaded at the user's word ("build and upload v69", 7 October 2026)
+
+`docs/stack_weight/build_v69.py` copied the verified dry-run bytes to `runs/submissions/vigorous-whistle_v69.parquet`
+(SHA-256 `192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665`), validated against the template and wrote the receipt;
+audit `docs/export_audit/v69_audit.json` clean (against v68: RMS 3.8 s, no row moved more than 600 s).
+
+**Official: 215.8835 on all 344,841 rows (processed 04:30:31 UTC 7 October 2026), -0.0614 s against v68 (215.9449); the official best.**
+Squared-error gain 9.1e6 = 1.82 x the squared change (5.04e6). Record [`official_result.json`](official_result.json). Nothing is
+re-tuned from the score. 3rd of 232 at 04:32 UTC. Never re-upload v1-v69.
