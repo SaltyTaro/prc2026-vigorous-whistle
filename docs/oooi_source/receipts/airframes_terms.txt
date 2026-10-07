@@ -1,0 +1,33 @@
+Source: Airframes.io (community ACARS / VDL2 / HFDL / satcom aggregator)
+
+URL: https://docs.airframes.io/api/licensing
+Retrieved: 2026-10-07T09:45:29Z (HTTP 200, 16,085 bytes, SHA-256 c87ec87a2c4af98fd7225a2a1dfae672d2e109eb6f261627f87662fe4d7774ba)
+Verbatim:
+  "Redistribution & commercial use  Bulk redistribution, resale, or commercial use beyond your access tier requires prior
+   arrangement. Contact api@airframes.io to discuss licensing for your use case."
+  "Under development  The Airframes API and its licensing terms are still being finalized. This page describes the
+   intended approach; reach out at api@airframes.io with any questions."
+  "The API is subject to the Terms of Service."
+
+URL: https://docs.airframes.io/api/pricing
+Retrieved: 2026-10-07T09:45:3xZ, about 2 s after the licensing page (HTTP 200, 15,039 bytes, SHA-256 72a34aa96b75026c81bed7ac4acf3409caaf3526877e2aa976651e992255ddd9)
+Verbatim:
+  "... receive free API access. ... Requirements: An active feeder station on Airframes Consistent feeding over at least
+   7 days Includes: 60 requests per minute Access to messages, flights, aircraft, and station endpoints Personal and
+   non-commercial use"
+  "Commercial Access  Paid tiers for commercial users, researchers, and organizations with higher-volume needs are in
+   development."
+
+Reading: no open licence; free access only to active feeders for personal / non-commercial use; bulk redistribution
+needs a separate arrangement; terms not final. NOT USABLE under the prize rule.
+
+Format evidence (not a licence): airframes' MIT-licensed decoder documents the ARINC OOOI labels used in the samples.
+  https://raw.githubusercontent.com/airframesio/acars-decoder-typescript/master/lib/plugins/Label_QP.ts
+    retrieved 2026-10-07T09:30:28Z, SHA-256 0af4eb0e579169035ce542ab7e9d550b9f26b087401accf99456708493ee3169
+    -> decodeResult.formatted.description = 'OUT Report'; departure = text[0:4], arrival = text[4:8], OUT = text[8:12]
+  https://raw.githubusercontent.com/airframesio/acars-decoder-typescript/master/lib/plugins/Label_QQ.ts
+    retrieved 2026-10-07T09:30:28Z, SHA-256 8777415ed89e0923cd3e015468951f5809b65021210d2b2cc29b9ea35988bc5e
+    -> 'OFF Report'; departure text[0:4], arrival text[4:8], OFF text[8:12]; remainder undecoded
+       (in the Ryanair samples the remainder equals the same flight's QP OUT time).
+  The plugin list (https://api.github.com/repos/airframesio/acars-decoder-typescript/contents/lib/plugins, 09:30:21Z) has
+  no decoder for label 2N (the Air France report discussed in README.md).

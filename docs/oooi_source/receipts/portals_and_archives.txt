@@ -1,0 +1,59 @@
+Airport / national open-data portals and research archives checked on 2026-10-07 (read-only, sequential)
+
+1. data.gouv.fr (France)
+   Catalogue API: https://www.data.gouv.fr/api/1/datasets/?q=<query>&page_size=15
+   Retrieved 2026-10-07T09:38:03Z. Queries "vols roissy", "aeroports de paris vols", "ponctualite vols",
+   "mouvements avions aeroport", "groupe ADP": 0 datasets each. Query "aeroport" (page_size 40): 58 datasets, all
+   aggregates or geometry (e.g. "Trafic aéroport Paris-CDG : passagers et mouvements", Ministère de la Transition
+   écologique, licence fr-lo, last update 2014-01-06); no per-flight off-block or gate-out record.
+   https://www.data.gouv.fr/api/1/datasets/transport-aerien-1/ retrieved 2026-10-07T09:48:55Z
+   (SHA-256 58b2abb58b4cc08face87f83f81e03887d140d53baad40d73293f7f71b991bf2): title "Transport aérien",
+   "license": "notspecified", temporal coverage 2019-02-07..2019-03-01, 0 resources.
+
+2. Istanbul Metropolitan Municipality open data (data.ibb.gov.tr, CKAN)
+   https://data.ibb.gov.tr/api/3/action/package_search?q=havalimani&rows=30 retrieved 2026-10-07T09:43:41Z
+   (SHA-256 870cd41882a8c771b7633b3fb2f81c37c630718d5e7c79a9e2cc7d98ab4c39b5): 6 datasets, all monthly airport totals
+   (flights, passengers, freight), licence "Istanbul Metropolitan Municipality Open Data License", last modified
+   2024-11-27. No per-flight times.
+   DHMİ (Turkish State Airports Authority): web search 2026-10-07 ~09:43Z returned only monthly statistics PDFs
+   (e.g. https://www.dhmi.gov.tr/Lists/Istatislikler/Attachments/415/TÜM%20UÇAK.pdf) and a statistics metadata PDF
+   (https://ssd.dhmi.gov.tr/Lists/IstatisliklerDiger/Attachments/3/havalimani-istatistikleri-metaveri-dosyasi.pdf).
+   No per-flight data and no open licence statement found.
+
+3. dati.gov.it (Italy, CKAN)
+   https://www.dati.gov.it/opendata/api/3/action/package_search?q=<query>&rows=20 retrieved 2026-10-07T09:43:51Z
+   "fiumicino voli": 0; "aeroporto voli partenze": 8 (Palermo 2010-2011 and Milan totals, CC BY 4.0);
+   "ENAC voli": 3 (Milan airport-system totals); "aeroporti di roma": 495 hits, none a per-flight record for FCO
+   (e.g. "Traffico Aereo - Anno 2012", Ministero Infrastrutture e Trasporti, CC-BY-4.0).
+   ENAC open data page https://www.enac.gov.it/open-data/ retrieved 2026-10-07T09:48:57Z
+   (SHA-256 94fc2225f3fcc3dd3f6a2011b9f040436e3749610f90dea8b2cf019b385ce6ae): lists only certification registers
+   (paratroop examiners, CAMO/CAO/AMO-145/MTOA-147 organisations), verbatim: "l'ENAC rende disponibile un primo
+   nucleo di propri dati in formato aperto o Open Data liberamente utilizzabili dall'intera collettività."
+   No flight datasets. Aeroporti di Roma: no open-data portal found by web search (2026-10-07 ~09:44Z).
+
+4. EUROCONTROL Aviation Data Repository for Research (ADRR)
+   https://www.eurocontrol.int/dashboard/rnd-data-archive retrieved 2026-10-07T09:49:04Z
+   (SHA-256 591f300836fb3b15abe847890095710a97e4882fcc0683bdc88d9ef943df7e79), verbatim:
+   "From October 2026, the ADRR provides access to more than 100 million flight records covering every month from
+   2015 to 2025." / "The ADRR tool is open for all R&D use. Please consult the Terms of Use that have to be signed off
+   by each individual user." / "Register to OneSky online ... Please use either an academic or a prof[essional email]"
+   Reading: no 2026; account, approval and a signed terms-of-use; not an open licence. It is also NM-derived like the
+   supplied AOBT_3 / LOBT fields, not an independent OUT observation.
+
+5. OpenSky Network
+   pyopensky Trino schema https://raw.githubusercontent.com/open-aviation/pyopensky/master/src/pyopensky/schema.py
+   retrieved 2026-10-07T09:40:53Z (SHA-256 b394b513e79e067b534ba2b6d84027437199002f93f9df7ca8b7f9f8e3185f9e):
+   tables state_vectors_data4, flights_data4, flights_data5, acas_data4, allcall_replies_data4,
+   identification_data4, operational_status_data4, position_data4, rollcall_replies_data4, velocity_data4,
+   flarm_raw. No ACARS / VDL2 table. Trino access is research-only and was already denied to this project
+   (memory note opensky-trino-access; docs/adsb_coverage/external_sources_20260926.md).
+
+6. Zenodo
+   https://zenodo.org/api/records?q=<query>&size=25 retrieved 2026-10-07T09:42:36Z. "ACARS": 11 records (PRC 2025 fuel
+   data challenge, unrelated papers); "VDL2": 1 (a simulation dataset); "OOOI": 0; "HFDL": 2 (unrelated);
+   "off-block": 17, of which two ATRDS 2025 conference papers (records 20127242 and 20110753, CC BY-SA 4.0, PDF only,
+   read 09:49:22Z). No decoded ACARS / VDL2 / OOOI message dataset.
+
+7. Commercial OOOI feeds (OAG, FlightAware AeroAPI, Cirium, SITA / Collins ARINC): found only as product documents in
+   search results (e.g. https://www.oag.com/hubfs/Inbound-Services/OAG-ACARS-OOOI-Message-Types-and-Examples.pdf,
+   https://www.flightaware.com/commercial/aeroapi/AeroAPI_Standard_License.pdf). Commercial licences; not opened.

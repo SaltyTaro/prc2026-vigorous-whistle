@@ -1,0 +1,33 @@
+Source: GitHub releases of adsblol/aircraft-data-links-2025 and adsblol/aircraft-data-links-2026 (CC0 data-link archive)
+Repository URLs: https://github.com/adsblol/aircraft-data-links-2025 , https://github.com/adsblol/aircraft-data-links-2026
+Release listing read through the public GitHub REST API (no token):
+  https://api.github.com/orgs/adsblol/repos?per_page=100            retrieved 2026-10-07T09:23:13Z
+  https://api.github.com/repos/adsblol/aircraft-data-links-2025      retrieved 2026-10-07T09:23:27Z
+  https://api.github.com/repos/adsblol/aircraft-data-links-2026      retrieved 2026-10-07T09:23:27Z
+  https://api.github.com/repos/adsblol/aircraft-data-links-{2025,2026}/releases?per_page=100&page=1..4
+                                                                     retrieved 2026-10-07T09:23:35Z
+  (listing JSON SHA-256: 2025 page 1 df9450e7c3d81e5352bac6e5db5f2ce2d1eb677822af7c4792d7727e54ec61ad,
+   2026 page 1 2141b4ccc6dd7dc23a0b07a3f17eff1e8b8acccadf3c889db29c0d42a1055228)
+
+Repository metadata (verbatim):
+  aircraft-data-links-2025: description "Open Data for ADSB.lol ACARS / HFDL / VDL2 collection. Licensed CC0.",
+    homepage https://www.adsb.lol/docs/open-data/aircraft-data-links/, created 2025-06-14T18:35:02Z,
+    GitHub licence field: none (no LICENSE file; the licence is stated in each release body and on the homepage).
+  aircraft-data-links-2026: no description, created 2026-05-14T16:56:51Z, GitHub licence field: none.
+  README (2025): "We collect HFDL, ACARS and VDL2 & publish open data to GitHub Releases."
+
+Release body, identical on every release checked (first and last release of each repository), verbatim:
+  "Automated aircraft data link collection uploads
+   Created: 2026-10-07T01:05:24.201336+00:00
+   ## License
+   This data is released under CC0 1.0 Universal (CC0 1.0) Public Domain Dedication.
+   To the extent possible under law, the person who associated CC0 with this work has waived all copyright and related
+   or neighboring rights to this work.
+   You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.
+   See: https://creativecommons.org/publicdomain/zero/1.0/"
+
+Release range: 2025 repository 261 releases, tags adsblol-adl-2025-06-14 .. adsblol-adl-2026-03-01;
+               2026 repository 148 releases, tags adsblol-adl-2026-05-14 .. adsblol-adl-2026-10-07.
+               No releases between 2026-03-02 and 2026-05-13. Nothing before 2025-06-14 (no January 2025).
+Assets: 72,002 hourly-ish JSONL(.zst) files named adsblol-adl-{acars|vdl2|hfdl}_<start>_<end>.jsonl[.zst]
+(acarsdec / dumpvdl2 / dumphfdl JSON, one message per line, feeder id in station_id / vdl2.station).
