@@ -1,0 +1,54 @@
+{
+ "experiment_id": "oooi_pin_v1",
+ "declared_at_utc": "to be set to the commit time of this file",
+ "declared_by": "Declaring and the governing run are research; a build under runs/submissions and any upload stay the user's word.",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "status": "DECLARED before its governing run. August, September and October 2025 have not been downloaded or read for this lever.",
+ "disclosure": "The screen (docs/oooi_pin/README.md, 8de5d74) already read July, November and December 2025 on the v69 development proxy for the guarded pin (w 1.00) and the 50/50 blend (w 0.50): -0.041 / -0.140 / -0.378% and -0.050 / -0.154 / -0.343% of complete-month RMSE. The source guard and the 300-3,600 s window were written after inspecting December's outliers. The development clauses below are therefore NOT a clean test; clause 4 (three months never read for this lever) is the clean test and is binding. w 0.75 has not been read.",
+ "mechanism": "The adsb.lol Aircraft Data Links archive (CC0 1.0; GitHub releases adsblol/aircraft-data-links-2025 and -2026) holds airline data-link reports heard in flight that carry the airline OUT time of LFPG departures: Air France label 2N (first time = OUT, second = OFF) and easyJet label 8D (OUT = scheduled time + the sum of its delay fields). On 2025 the airport's recorded off-block equals OUT at minute resolution on 58-70% of matched rows and within 2 min on 89-90%, including the early records, which the NM clock misses.",
+ "procedure": {
+  "extraction": "tools/oooi_pin_extract.py and tools/oooi_pin_pack.py as committed in 8de5d74 (SHA-256 e06a41e7... / e573a2d9...), every ACARS, VDL2 and HFDL file of the month, on an Azure VM; for clause 4 the months 2025-08, 2025-09 and 2025-10 are added through --months only, no logic change.",
+  "join": "tools/oooi_pin_join.py as committed in 8de5d74 (962adb79...): origin, destination, ICAO prefix and callsign suffix, take-off window; label-free fields only. The only permitted change is the list of input months.",
+  "scope": "Departures with ADEP_mvt == 'LFPG' matched to a 2N or 8D message and passing the source guard; every other row keeps the chain's value. LIRF and LTFM matches are not used. Rows of tools/run_stack_resid.fixed_rows keep the chain (none expected at LFPG).",
+  "source_guard": "2N: |take-off - OFF| <= 120 s and take-off - OUT >= 300 s. 8D: 300 s <= take-off - OUT <= 3,600 s and, where AOBT_3_flt exists, |AOBT_3_flt - OUT| <= 1,800 s. Label-free.",
+  "value": "pin = (take-off - OUT) + offset(source), offset(source) = mean over guarded fitting rows of label - (take-off - OUT). Candidate value = max(w x pin + (1 - w) x chain, -12), applied LAST, after own_motion_v2 (v69's step 10).",
+  "offsets": "Development: month-blocked, each of July / November / December 2025 fitted on the other two. Clause 4 months: fitted on July, November and December 2025. Ranking: fitted on July, November and December 2025.",
+  "development_control": [
+   "runs/stack_weight/dev/w65_bag10/proxy.parquet",
+   "c088e409de153d81b006bcd26b5b2a28e0e306043a5172c2158d0ecc6e6f5cb8"
+  ],
+  "fresh_control": "runs/daily_totals/rows12.parquet, column 'stack' (the older twelve-month predictor used by the twelve-month checks of the intruder bound and own-motion layers), months 2025-08, 2025-09, 2025-10, every row of each month.",
+  "ranking": "Start from the uploaded v69 runs/submissions/vigorous-whistle_v69.parquet (192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665); replace the value of in-scope LFPG rows by the candidate value, rounded with np.rint into the file's dtype as tools/run_own_motion_v2.py does; every other row byte-identical to v69. Output runs/oooi_pin/rank/dry_v70/vigorous-whistle_v70.parquet (version provisional; never under runs/submissions)."
+ },
+ "candidates": [
+  {
+   "name": "w100",
+   "weight": 1.0
+  },
+  {
+   "name": "w75",
+   "weight": 0.75
+  },
+  {
+   "name": "w50",
+   "weight": 0.5
+  }
+ ],
+ "rule": {
+  "clause_1": "No development month (January, July, November, December 2025) worse than the control by more than 0.005% of complete-month RMSE.",
+  "clause_2": "Equal-footing mean (January, July, December) of the complete-month RMSE change at most -0.02%. January 2025 precedes the archive (it starts 14 June 2025): its change is zero by construction and counts as zero in the mean.",
+  "clause_3": "Paired-day 95% interval of the complete-month RMSE change strictly below zero for July and December 2025 (tools/run_intruder_bound.interval, 2,000 replicates over UTC take-off days, seed 20261004). January is exempt because the source does not exist for it (disclosed deviation from v57's clause 3).",
+  "clause_4_fresh": "Binding clean test on August, September and October 2025 against rows12's 'stack', same scope / guard / value, offsets from July, November and December 2025: every one of the three months better (complete-month RMSE change < 0) and at least two of the three paired-day intervals (same function and seed) strictly below zero. Also reported, not ruled: the share of pinned rows with |pin - label| > 1,800 s per month.",
+  "clause_5_transfer": "LFPG only: RMS of the ranking change (candidate - v69 on in-scope rows) within 0.5x-2x of the RMS of the out-of-month development change on in-scope rows.",
+  "selection": "Among candidates passing clauses 1-5, the lowest clause-2 mean; ties -> the lower weight. None passing -> v69 stays.",
+  "scoring": "Every row of every complete month, all labels, LIRF population and guard rows included in scoring."
+ },
+ "compute": "Download and filtering on Azure arcw0 (deallocated after the hash-checked copy back); joins and scoring are light and run locally under 4 GB.",
+ "outputs": {
+  "results": "docs/oooi_pin/results_v1.json",
+  "readme": "docs/oooi_pin/README.md (round section appended)",
+  "runs": "runs/oooi_pin/",
+  "ranking": "runs/oooi_pin/rank/dry_v70/"
+ }
+}
