@@ -1,0 +1,111 @@
+{
+ "experiment_id": "stack_weight_v1",
+ "declared_at_utc": "2026-10-07T03:55:00Z",
+ "declared_by": "Declaring and the governing run are research; a build under runs/submissions and any upload stay the user's word.",
+ "audit_used": false,
+ "official_scores_used": "none for the candidate set or the selection. Disclosed: the coordinator knows the official gain per unit of squared change of the shipped stacking layers (v60 1.11, v63 3.15, v68 3.25). They are not used; the candidates below are fixed from development readings only, before any reading of this round.",
+ "status": "DECLARED before its governing run. No candidate of this round has been scored on any month.",
+ "mechanism": "The guarded stacking residual (stack_resid_v2 at LIRF, stack_resid_v3 elsewhere, the OPDI learner on LSZH OPDI rows as in v68) adds 0.5 x its bag prediction to the chain. The 0.5 was fixed a priori in configs/stack_resid_v1.json and carried unchanged to v2, v3 and the OPDI layer; v3 and the OPDI learner were never read at any other weight. A three-seed bag carries refit noise (lever A's November failure was stacker-refit noise of 0.01-0.03% per month). This round reads the weight and a ten-seed bag.",
+ "development_motivation": {
+  "stack_resid_v1_exploration_3_oct": "docs/dig/residual_ore.md (comp + pub, equal-footing mean): w 0.25 -0.155%, w 0.5 -0.258% (3-seed bag), w 1.0 -0.291% (single seed; January interval [-0.50, +0.04] s). A quadratic through these readings peaks near w 0.8 (gain per unit of squared change at w 0.5 about 2.3).",
+  "not_comparable": "docs/dig/pregap.md 'stage 2 ... w 1.0' (July +0.241%) is a second-stage learner stacked on v2's output, not the shipped replace design; it is not a reading of v3 at weight 1.0."
+ },
+ "procedure": {
+  "development": "tools/run_opdi_stack.score's path on the pinned v66 chain files (runs/pubrefit/chain/ship: ctl, rows_all, dmp, cand; var-alloc pinned deterministic + force_col_wise): dev table from ctl, the 46 v2 inputs, + 19 own-point columns (v3, 65), + the OPDI columns (79); month-blocked guarded bags for v2, v3 and the OPDI learner (each development month fitted on the other three, LightGBM settings of tools/run_stack_resid.py unchanged, seeds per candidate). Value at weight w: LIRF rows take v2's bag, LSZH rows with an OPDI match not held by the OPDI guard take the OPDI bag, every other row v3's bag; value = max(chain + w x bag, -12); held rows keep the chain. Then the intruder bound, identity extension and own-motion v1 (run_stack_resid_v3.Chain) and own_motion_v2, month-blocked, exactly as tools/run_opdi_stack.score.",
+  "control": [
+   "runs/opdi_stack_lszh/dev_v68_proxy.parquet",
+   "938a91cd84a9e6c0773afb72dec490fdf30c6762ee3f505469b3a26e3ab56aca"
+  ],
+  "identity_requirement": "w50_bag3 through the same code must equal the control's value column on every row (max abs difference 0); otherwise the round stops and nothing is read.",
+  "ranking": "tools/run_opdi_stack_decl.step_stack_opdi(..., airports=['LSZH']) with the candidate's weight and seeds, then run_stack_resid_v3.chain_from_stack and run_own_motion_v2.dry_run, exactly as tools/run_opdi_stack_lszh.py rank. Identity first: w50_bag3 must reproduce the uploaded v68 (d41d8705e75a71e865fe21a8d6ad2f62044a5ed07f125fd208067914b2b10eab) byte for byte; otherwise no candidate ranking file."
+ },
+ "candidates": [
+  {
+   "name": "w65_bag3",
+   "weight": 0.65,
+   "seeds": [
+    20261003,
+    11,
+    12
+   ]
+  },
+  {
+   "name": "w80_bag3",
+   "weight": 0.8,
+   "seeds": [
+    20261003,
+    11,
+    12
+   ]
+  },
+  {
+   "name": "w100_bag3",
+   "weight": 1.0,
+   "seeds": [
+    20261003,
+    11,
+    12
+   ]
+  },
+  {
+   "name": "w50_bag10",
+   "weight": 0.5,
+   "seeds": [
+    20261003,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+   ]
+  },
+  {
+   "name": "w65_bag10",
+   "weight": 0.65,
+   "seeds": [
+    20261003,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+   ]
+  },
+  {
+   "name": "w80_bag10",
+   "weight": 0.8,
+   "seeds": [
+    20261003,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+   ]
+  }
+ ],
+ "rule": {
+  "text": "v57's clauses against the control (v68's development proxy): (1) no development month (January, July, November, December 2025) worse than the control by more than 0.005%; (2) the equal-footing mean (January, July, December) of the complete-month RMSE change at most -0.02%; (3) each equal-footing month's paired-day 95% interval below zero; (4) transfer guard for the ten-seed candidates: per airport, the RMS of the ranking bag prediction (guarded, fixed rows at 0) within 0.5x-2x of the RMS of the out-of-month guarded development prediction, read for v3's bag (all airports but LIRF), v2's bag (LIRF) and the OPDI bag (LSZH); for the three-seed candidates the shipped bags are unchanged and the ratio does not depend on the weight. Selection: the accepted candidate with the lowest equal-footing mean; none accepted -> v68 stays.",
+  "intervals": "tools/run_intruder_bound.interval, paired-day bootstrap over UTC take-off days, 2,000 replicates, seed 20261004",
+  "scoring": "every row of every complete month, all labels; LIRF population and guard rows included in scoring"
+ },
+ "compute": "Azure arcw4-7 (where lever 7 ran); the workstation only orchestrates and hash-checks. VMs deallocated after the hash-checked mirror.",
+ "outputs": {
+  "development": "runs/stack_weight/dev/",
+  "results": "docs/stack_weight/results_v1.json",
+  "ranking": "runs/stack_weight/rank/dry_v69/ (version provisional; never under runs/submissions)",
+  "readme": "docs/stack_weight/README.md"
+ }
+}
