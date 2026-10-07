@@ -261,6 +261,31 @@ def member_guard(decl: dict) -> dict:
     return {"by_leaf": rms, "development_rms_s": dev_rms, "ranking_rms_s": rms["ranking"]["rms_s"], "ratio": ratio, "ok": bool(0.5 <= ratio <= 2.0)}
 
 
+def check_control(decl: dict) -> None:
+    """Identities (b) and (c) of the control alone (no candidate is read): fork K's stored predictions on the ship files and this path's
+    refitted predictions on the rebuilt chain, each at w65_bag10 through the chain, against the v69 development proxy."""
+    import run_own_motion_v2 as O2
+    import run_stack_resid_v3 as V3
+    ctl_path, ctl_sha = decl["stage_2"]["control"]
+    if sha256_file(ROOT / ctl_path) != ctl_sha:
+        raise ValueError("The control differs from the declared file.")
+    ctl = pd.read_parquet(ROOT / ctl_path)
+    keys, _ = O2.O.dev_table()
+    chain = V3.Chain()
+    _, t12, _ = O2.v62_tables()
+    trig, _ = O2.triggers_2025(O2.IDS_DIR, use_cache=True)
+    months = ["2025-01", "2025-07", "2025-11", "2025-12"]
+    pk = pd.concat([pd.read_parquet(ROOT / f"runs/stack_weight/dev/preds_{m}.parquet") for m in months], ignore_index=True)
+    vi, ti = chain_value(SHIP, pk, chain, keys, t12, trig)
+    c = ctl.set_index(ID)["value"].reindex(ti[ID]).to_numpy(dtype=float)
+    pr = pd.concat([pd.read_parquet(OUT / f"stack/own_all_w100/dev/preds_{m}.parquet") for m in months], ignore_index=True)
+    vr, tr = chain_value(OUT / "chain/own_all_w100", pr, chain, keys, t12, trig)
+    rec = {"created_at_utc": utc_now(), "b_max_abs_vs_control": float(np.abs(vi - c).max()), "c_max_abs_vs_control": float(np.abs(vr - c).max()),
+           "c_rows_differing": int((np.abs(vr - c) > 0).sum()), "same_rows": bool(tr[ID].equals(ti[ID]))}
+    write_json(OUT / "dev/control_identity.json", rec)
+    print(rec, flush=True)
+
+
 def score(decl: dict) -> None:
     import run_intruder_bound as R
     import run_own_motion_v2 as O2
@@ -523,6 +548,7 @@ def main() -> None:
     ap.add_argument("--chain")
     ap.add_argument("--dev-month", nargs=2, metavar=("NAME", "MONTH"))
     ap.add_argument("--score", action="store_true")
+    ap.add_argument("--check-control", action="store_true")
     ap.add_argument("--rank-steps")
     ap.add_argument("--pinned", action="store_true")
     ap.add_argument("--rank-identity-final", action="store_true")
@@ -540,6 +566,8 @@ def main() -> None:
         build_chain(decl, a.chain)
     if a.dev_month:
         dev_month(*a.dev_month)
+    if a.check_control:
+        check_control(decl)
     if a.score:
         score(decl)
     if a.rank_steps:
