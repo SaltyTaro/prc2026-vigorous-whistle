@@ -1,0 +1,60 @@
+{
+ "experiment_id": "stack_queue_v1",
+ "declared_at_utc": "to be set to the commit time of this file",
+ "declared_by": "Declaring and the governing run are research; a build under runs/submissions and any upload stay the user's word.",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "status": "DECLARED before its governing run. No stacker with these columns has been fitted or read on any month.",
+ "disclosure": "Exploration before this declaration (docs/quick_screens/README.md, 7 October): v70's development residuals are correlated between consecutive take-offs on a runway (lag-1 0.11-0.13 every month; LTFM 0.26, LFPG 0.20). A STANDALONE residual LightGBM on the seven queue columns below plus an airport code, month-blocked, 0.5 x prediction capped +-120 s, LIRF population and guard rows held, read on v70's development proxy: January -0.0044 / July -0.0177 / November -0.0166 / December -0.0321% (equal-footing mean -0.0181%, January's interval [-0.0161, +0.0000]); six variants were read (with / without the arrivals column, weights 0.5 / 0.75 / 1.0, with / without the LIRF population). The columns below are fixed from that exploration. Their combination with the stacker's existing inputs has not been read.",
+ "mechanism": "The guarded stacking residual (step 6 of docs/final_file/v69_chain.md: v2 learner at LIRF, v3 elsewhere, OPDI learner on LSZH OPDI rows, weight 0.65, ten-seed bag) gains seven label-free columns describing the departure's place in its runway's take-off sequence. Take-off times of every departure are supplied, in the ranking months too.",
+ "queue_columns": {
+  "definition": "Per airport (ADEP_mvt) and runway (RUNWAY_mvt), departures (PHASE_mvt == 'DEP') sorted by take-off MVT_TIME_UTC_mvt, over the whole month file of the row (development: the month's training file; ranking: data/raw/ranking.parquet); t = take-off in seconds.",
+  "gp": "t - t of the previous departure on the runway (NaN for the first)",
+  "gn": "t of the next departure on the runway - t (NaN for the last)",
+  "gp2": "t - t of the departure two before",
+  "gp4": "t - t of the departure four before",
+  "gn4": "t of the departure four after - t",
+  "bpos": "position (0-based) inside the current burst, a burst being a maximal run of departures on the runway with consecutive gaps <= 150 s",
+  "blen": "number of departures in the current burst",
+  "code": "the coordinator's exploration code is reproduced in tools/run_stack_queue.py (function queue_columns); development and ranking use the same function."
+ },
+ "procedure": {
+  "development": "The path of tools/run_stack_weight.py (stack_weight_v1's governing run) on the pinned v66 chain files, unchanged except that each of the three stacker learners (v2 46 + 7 = 53 columns, v3 65 + 7 = 72, OPDI 79 + 7 = 86) gets the seven queue columns; LightGBM settings of tools/run_stack_resid.py, guards, month-blocking (each development month fitted on the other three) and the ten seeds 20261003, 11-19 unchanged. Value: LIRF rows v2's bag, LSZH OPDI rows the OPDI bag, every other row v3's bag; max(chain + 0.65 x bag, -12); held rows keep the chain. Then steps 7-10 exactly as tools/run_stack_weight.py, then step 11 (oooi_pin_v1 w50 at LFPG) exactly as tools/run_oooi_pin.py.",
+  "control": [
+   "runs/oooi_lhr/dev_v70_proxy.parquet",
+   "51aaa6a6 (full SHA-256 in docs/oooi_lhr/results_v1.json)"
+  ],
+  "identity_requirement": "The same code with the queue columns switched off must reproduce the control's value column on every row (max abs difference 0, or the 4.5e-13 s platform bound recorded in docs/var_alloc_bag/ when run on Linux); otherwise the round stops and nothing is read.",
+  "ranking": "tools/run_opdi_stack_decl.step_stack_opdi path of tools/run_stack_weight.py --rank-fit with the queue columns computed on data/raw/ranking.parquet, weight 0.65, ten seeds, then chain_from_stack, own_motion_v2 and step 11. Identity first: with the queue columns off the path must reproduce the uploaded v70 (f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f) byte for byte; otherwise no candidate ranking file."
+ },
+ "candidates": [
+  {
+   "name": "q65_bag10",
+   "weight": 0.65,
+   "seeds": [
+    20261003,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+   ]
+  }
+ ],
+ "rule": {
+  "text": "v57's clauses against the control (v70's development proxy): (1) no development month (January, July, November, December 2025) worse than the control by more than 0.005%; (2) the equal-footing mean (January, July, December) of the complete-month RMSE change at most -0.02%; (3) each equal-footing month's paired-day 95% interval below zero; (4) transfer guard: per airport, the RMS of the ranking bag prediction (guarded, fixed rows at 0) within 0.5x-2x of the RMS of the out-of-month guarded development prediction, for the v3 bag (all airports but LIRF), the v2 bag (LIRF) and the OPDI bag (LSZH). Accepted if all four hold; otherwise v70 stays.",
+  "intervals": "tools/run_intruder_bound.interval, paired-day bootstrap over UTC take-off days, 2,000 replicates, seed 20261004",
+  "scoring": "every row of every complete month, all labels; LIRF population and guard rows included in scoring"
+ },
+ "compute": "Azure arcw0-arcw3 (the workstation only orchestrates and hash-checks); VMs deallocated after the hash-checked mirror.",
+ "outputs": {
+  "development": "runs/stack_queue/dev/",
+  "results": "docs/stack_queue/results_v1.json",
+  "ranking": "runs/stack_queue/rank/dry_v71/ (version provisional; never under runs/submissions)",
+  "readme": "docs/stack_queue/README.md"
+ }
+}
