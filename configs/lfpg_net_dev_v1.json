@@ -1,0 +1,295 @@
+{
+ "experiment_id": "prc2026-lfpg-net-dev-v1",
+ "declared_at_utc": "2026-10-07T05:34:37+00:00",
+ "audit_used": false,
+ "session": "lever 12b (fork N), 7 October 2026, at the user's word relayed by the coordinator: 'ok do it' (~05:40 UTC)",
+ "purpose": "Development round: on LFPG rows with an ADS-B match (adsb_matched = 1) only, the shipped member own_all is replaced by 0.5 own_all + 0.5 lfpg_dl32own (own_all's matched-row network dl32own fitted on LFPG rows only, 16 seeds); every other row keeps own_all exactly; member weight 1.00 in the committee's network table as shipped (v66 / v69's model part).",
+ "post_hoc_narrowing_disclosed": "Chosen AFTER the October design of configs/lfpg_net_design_v1.json (docs/lfpg_net/design_report.json, NO GO): every declared item was worse (lfpg_own_c50 LFPG +0.87%, gain -0.101 pts, interval [+0.097, +0.285] s; the c100 items +5.1%); only the matched LFPG rows (about 20% of LFPG rows) gained at c = 0.5: -1.05% (lfpg_own) / -0.72% (lfpg_b512). This round restricts the change to exactly those rows and that mix, fixed now: one candidate, no other variant, no weight search. The narrowing is a selection on the October reading; the development months (2025-01, -07, -11, -12) were never read by any LFPG-only network.",
+ "member": {
+  "name": "lfpg_matched",
+  "column": "adsb_full",
+  "route": {
+   "matched": "lfpg_dl32own",
+   "unmatched": null
+  },
+  "rows": "LFPG rows with adsb_matched = 1 (the label-free flag of the ADS-B feature tables the fits read); NaN elsewhere",
+  "tables": {
+   "2025-01": [
+    "runs/lfpg_net/member/s641/2025-01.parquet",
+    "runs/lfpg_net/member/s642/2025-01.parquet",
+    "runs/lfpg_net/member/s643/2025-01.parquet",
+    "runs/lfpg_net/member/s644/2025-01.parquet",
+    "runs/lfpg_net/member/s645/2025-01.parquet",
+    "runs/lfpg_net/member/s646/2025-01.parquet",
+    "runs/lfpg_net/member/s647/2025-01.parquet",
+    "runs/lfpg_net/member/s648/2025-01.parquet",
+    "runs/lfpg_net/member/s649/2025-01.parquet",
+    "runs/lfpg_net/member/s650/2025-01.parquet",
+    "runs/lfpg_net/member/s651/2025-01.parquet",
+    "runs/lfpg_net/member/s652/2025-01.parquet",
+    "runs/lfpg_net/member/s653/2025-01.parquet",
+    "runs/lfpg_net/member/s654/2025-01.parquet",
+    "runs/lfpg_net/member/s655/2025-01.parquet",
+    "runs/lfpg_net/member/s656/2025-01.parquet"
+   ],
+   "2025-07": [
+    "runs/lfpg_net/member/s641/2025-07.parquet",
+    "runs/lfpg_net/member/s642/2025-07.parquet",
+    "runs/lfpg_net/member/s643/2025-07.parquet",
+    "runs/lfpg_net/member/s644/2025-07.parquet",
+    "runs/lfpg_net/member/s645/2025-07.parquet",
+    "runs/lfpg_net/member/s646/2025-07.parquet",
+    "runs/lfpg_net/member/s647/2025-07.parquet",
+    "runs/lfpg_net/member/s648/2025-07.parquet",
+    "runs/lfpg_net/member/s649/2025-07.parquet",
+    "runs/lfpg_net/member/s650/2025-07.parquet",
+    "runs/lfpg_net/member/s651/2025-07.parquet",
+    "runs/lfpg_net/member/s652/2025-07.parquet",
+    "runs/lfpg_net/member/s653/2025-07.parquet",
+    "runs/lfpg_net/member/s654/2025-07.parquet",
+    "runs/lfpg_net/member/s655/2025-07.parquet",
+    "runs/lfpg_net/member/s656/2025-07.parquet"
+   ],
+   "2025-11": [
+    "runs/lfpg_net/member/s641/2025-11.parquet",
+    "runs/lfpg_net/member/s642/2025-11.parquet",
+    "runs/lfpg_net/member/s643/2025-11.parquet",
+    "runs/lfpg_net/member/s644/2025-11.parquet",
+    "runs/lfpg_net/member/s645/2025-11.parquet",
+    "runs/lfpg_net/member/s646/2025-11.parquet",
+    "runs/lfpg_net/member/s647/2025-11.parquet",
+    "runs/lfpg_net/member/s648/2025-11.parquet",
+    "runs/lfpg_net/member/s649/2025-11.parquet",
+    "runs/lfpg_net/member/s650/2025-11.parquet",
+    "runs/lfpg_net/member/s651/2025-11.parquet",
+    "runs/lfpg_net/member/s652/2025-11.parquet",
+    "runs/lfpg_net/member/s653/2025-11.parquet",
+    "runs/lfpg_net/member/s654/2025-11.parquet",
+    "runs/lfpg_net/member/s655/2025-11.parquet",
+    "runs/lfpg_net/member/s656/2025-11.parquet"
+   ],
+   "2025-12": [
+    "runs/lfpg_net/member/s641/2025-12.parquet",
+    "runs/lfpg_net/member/s642/2025-12.parquet",
+    "runs/lfpg_net/member/s643/2025-12.parquet",
+    "runs/lfpg_net/member/s644/2025-12.parquet",
+    "runs/lfpg_net/member/s645/2025-12.parquet",
+    "runs/lfpg_net/member/s646/2025-12.parquet",
+    "runs/lfpg_net/member/s647/2025-12.parquet",
+    "runs/lfpg_net/member/s648/2025-12.parquet",
+    "runs/lfpg_net/member/s649/2025-12.parquet",
+    "runs/lfpg_net/member/s650/2025-12.parquet",
+    "runs/lfpg_net/member/s651/2025-12.parquet",
+    "runs/lfpg_net/member/s652/2025-12.parquet",
+    "runs/lfpg_net/member/s653/2025-12.parquet",
+    "runs/lfpg_net/member/s654/2025-12.parquet",
+    "runs/lfpg_net/member/s655/2025-12.parquet",
+    "runs/lfpg_net/member/s656/2025-12.parquet"
+   ],
+   "ranking": [
+    "runs/lfpg_net/member/s641/ranking.parquet",
+    "runs/lfpg_net/member/s642/ranking.parquet",
+    "runs/lfpg_net/member/s643/ranking.parquet",
+    "runs/lfpg_net/member/s644/ranking.parquet",
+    "runs/lfpg_net/member/s645/ranking.parquet",
+    "runs/lfpg_net/member/s646/ranking.parquet",
+    "runs/lfpg_net/member/s647/ranking.parquet",
+    "runs/lfpg_net/member/s648/ranking.parquet",
+    "runs/lfpg_net/member/s649/ranking.parquet",
+    "runs/lfpg_net/member/s650/ranking.parquet",
+    "runs/lfpg_net/member/s651/ranking.parquet",
+    "runs/lfpg_net/member/s652/ranking.parquet",
+    "runs/lfpg_net/member/s653/ranking.parquet",
+    "runs/lfpg_net/member/s654/ranking.parquet",
+    "runs/lfpg_net/member/s655/ranking.parquet",
+    "runs/lfpg_net/member/s656/ranking.parquet"
+   ]
+  }
+ },
+ "members_derived": {
+  "lfpg_mix": {
+   "rule": "per leaf and seed pair (601 + k, 641 + k), k = 0..15: own_all's table (runs/ctx_ownpoints_dev/member/s<601+k>/<leaf>.parquet), with every LFPG row where lfpg_matched's table is finite replaced by 0.5 x own_all + 0.5 x lfpg_matched; both tables must predict the same rows in the same order and own_all must be finite wherever lfpg_matched is (else the build stops); every other row equals own_all's value bit for bit. Built by tools/run_lfpg_net_dev.py --build-mix and hash-recorded.",
+   "tables": {
+    "2025-01": [
+     "runs/lfpg_net/member_mix/s641/2025-01.parquet",
+     "runs/lfpg_net/member_mix/s642/2025-01.parquet",
+     "runs/lfpg_net/member_mix/s643/2025-01.parquet",
+     "runs/lfpg_net/member_mix/s644/2025-01.parquet",
+     "runs/lfpg_net/member_mix/s645/2025-01.parquet",
+     "runs/lfpg_net/member_mix/s646/2025-01.parquet",
+     "runs/lfpg_net/member_mix/s647/2025-01.parquet",
+     "runs/lfpg_net/member_mix/s648/2025-01.parquet",
+     "runs/lfpg_net/member_mix/s649/2025-01.parquet",
+     "runs/lfpg_net/member_mix/s650/2025-01.parquet",
+     "runs/lfpg_net/member_mix/s651/2025-01.parquet",
+     "runs/lfpg_net/member_mix/s652/2025-01.parquet",
+     "runs/lfpg_net/member_mix/s653/2025-01.parquet",
+     "runs/lfpg_net/member_mix/s654/2025-01.parquet",
+     "runs/lfpg_net/member_mix/s655/2025-01.parquet",
+     "runs/lfpg_net/member_mix/s656/2025-01.parquet"
+    ],
+    "2025-07": [
+     "runs/lfpg_net/member_mix/s641/2025-07.parquet",
+     "runs/lfpg_net/member_mix/s642/2025-07.parquet",
+     "runs/lfpg_net/member_mix/s643/2025-07.parquet",
+     "runs/lfpg_net/member_mix/s644/2025-07.parquet",
+     "runs/lfpg_net/member_mix/s645/2025-07.parquet",
+     "runs/lfpg_net/member_mix/s646/2025-07.parquet",
+     "runs/lfpg_net/member_mix/s647/2025-07.parquet",
+     "runs/lfpg_net/member_mix/s648/2025-07.parquet",
+     "runs/lfpg_net/member_mix/s649/2025-07.parquet",
+     "runs/lfpg_net/member_mix/s650/2025-07.parquet",
+     "runs/lfpg_net/member_mix/s651/2025-07.parquet",
+     "runs/lfpg_net/member_mix/s652/2025-07.parquet",
+     "runs/lfpg_net/member_mix/s653/2025-07.parquet",
+     "runs/lfpg_net/member_mix/s654/2025-07.parquet",
+     "runs/lfpg_net/member_mix/s655/2025-07.parquet",
+     "runs/lfpg_net/member_mix/s656/2025-07.parquet"
+    ],
+    "2025-11": [
+     "runs/lfpg_net/member_mix/s641/2025-11.parquet",
+     "runs/lfpg_net/member_mix/s642/2025-11.parquet",
+     "runs/lfpg_net/member_mix/s643/2025-11.parquet",
+     "runs/lfpg_net/member_mix/s644/2025-11.parquet",
+     "runs/lfpg_net/member_mix/s645/2025-11.parquet",
+     "runs/lfpg_net/member_mix/s646/2025-11.parquet",
+     "runs/lfpg_net/member_mix/s647/2025-11.parquet",
+     "runs/lfpg_net/member_mix/s648/2025-11.parquet",
+     "runs/lfpg_net/member_mix/s649/2025-11.parquet",
+     "runs/lfpg_net/member_mix/s650/2025-11.parquet",
+     "runs/lfpg_net/member_mix/s651/2025-11.parquet",
+     "runs/lfpg_net/member_mix/s652/2025-11.parquet",
+     "runs/lfpg_net/member_mix/s653/2025-11.parquet",
+     "runs/lfpg_net/member_mix/s654/2025-11.parquet",
+     "runs/lfpg_net/member_mix/s655/2025-11.parquet",
+     "runs/lfpg_net/member_mix/s656/2025-11.parquet"
+    ],
+    "2025-12": [
+     "runs/lfpg_net/member_mix/s641/2025-12.parquet",
+     "runs/lfpg_net/member_mix/s642/2025-12.parquet",
+     "runs/lfpg_net/member_mix/s643/2025-12.parquet",
+     "runs/lfpg_net/member_mix/s644/2025-12.parquet",
+     "runs/lfpg_net/member_mix/s645/2025-12.parquet",
+     "runs/lfpg_net/member_mix/s646/2025-12.parquet",
+     "runs/lfpg_net/member_mix/s647/2025-12.parquet",
+     "runs/lfpg_net/member_mix/s648/2025-12.parquet",
+     "runs/lfpg_net/member_mix/s649/2025-12.parquet",
+     "runs/lfpg_net/member_mix/s650/2025-12.parquet",
+     "runs/lfpg_net/member_mix/s651/2025-12.parquet",
+     "runs/lfpg_net/member_mix/s652/2025-12.parquet",
+     "runs/lfpg_net/member_mix/s653/2025-12.parquet",
+     "runs/lfpg_net/member_mix/s654/2025-12.parquet",
+     "runs/lfpg_net/member_mix/s655/2025-12.parquet",
+     "runs/lfpg_net/member_mix/s656/2025-12.parquet"
+    ],
+    "ranking": [
+     "runs/lfpg_net/member_mix/s641/ranking.parquet",
+     "runs/lfpg_net/member_mix/s642/ranking.parquet",
+     "runs/lfpg_net/member_mix/s643/ranking.parquet",
+     "runs/lfpg_net/member_mix/s644/ranking.parquet",
+     "runs/lfpg_net/member_mix/s645/ranking.parquet",
+     "runs/lfpg_net/member_mix/s646/ranking.parquet",
+     "runs/lfpg_net/member_mix/s647/ranking.parquet",
+     "runs/lfpg_net/member_mix/s648/ranking.parquet",
+     "runs/lfpg_net/member_mix/s649/ranking.parquet",
+     "runs/lfpg_net/member_mix/s650/ranking.parquet",
+     "runs/lfpg_net/member_mix/s651/ranking.parquet",
+     "runs/lfpg_net/member_mix/s652/ranking.parquet",
+     "runs/lfpg_net/member_mix/s653/ranking.parquet",
+     "runs/lfpg_net/member_mix/s654/ranking.parquet",
+     "runs/lfpg_net/member_mix/s655/ranking.parquet",
+     "runs/lfpg_net/member_mix/s656/ranking.parquet"
+    ]
+   }
+  }
+ },
+ "fits": {
+  "network_config": "configs/lfpg_net_network_v1.json",
+  "network_config_sha256": "3cd5beb2bae36504481570f89c3455919198ec90907e117cf73c67532c1fe0f2",
+  "variants": [
+   "lfpg_dl32own"
+  ],
+  "seeds": [
+   641,
+   642,
+   643,
+   644,
+   645,
+   646,
+   647,
+   648,
+   649,
+   650,
+   651,
+   652,
+   653,
+   654,
+   655,
+   656
+  ],
+  "folds": {
+   "2025-01": {
+    "fold": "lomo_2025-01",
+    "file": "predictions.parquet"
+   },
+   "2025-07": {
+    "fold": "lomo_2025-07",
+    "file": "predictions.parquet"
+   },
+   "2025-11": {
+    "fold": "forward",
+    "file": "predictions.parquet"
+   },
+   "2025-12": {
+    "fold": "refit",
+    "file": "december_predictions.parquet"
+   },
+   "ranking": {
+    "fold": "refit12",
+    "file": "ranking_predictions.parquet"
+   }
+  },
+  "extra_features": "data/external/adsblol/features_v19own (docs/dig/ctx_ownpoints_features_manifest.json), as own_all",
+  "footing": "as own_all's round (configs/ctx_ownpoints_dev_v1.json): January and July 2025 leave-one-month-out on the other eleven months; November the forward fold; December the January-November refit; ranking the twelve-month refit",
+  "runner": "tools/run_adsb_ctx_lomo.py, unchanged, one fit per sky exec through tools/lfpg_net_run1.sh dispatched by tools/lfpg_net_dispatch.py --stage dev (jobs tools/lfpg_net_jobs.py --stage dev); every finished fit mirrored with its SHA-256 checked",
+  "outputs": "runs/lfpg_net/nets/<variant>_s<seed>/<fold>/",
+  "count": 80
+ },
+ "hardware": "AWS g6e.2xlarge (L40S, as own_all's seeds 601-616), prc-ctx6a-l (infra/aws/gpu_authorization_20261007b.json amended for this round), --device cuda, two fits per GPU",
+ "incumbent": {
+  "name": "own_all_w100",
+  "member": "own_all",
+  "member_weight": 1.0,
+  "reproduction": "own_all at 1.00 through the stage-1 arithmetic must equal docs/ctx_ownpoints_weight/results_stage1.json own_all_w100 month RMSEs to 1e-9 s"
+ },
+ "candidates": {
+  "lfpg_mix_w100": {
+   "member": "lfpg_mix",
+   "member_weight": 1.0
+  }
+ },
+ "stage_1": {
+  "role": "INFORMATION ONLY (not a gate): member level, tools/run_ctx_own2_dev.py's stage-1 arithmetic (v46 development stack with own_all at 1.00 as control)",
+  "readings": "month RMSE change, paired-day intervals, rows changed, LFPG matched-row change"
+ },
+ "stage_2": {
+  "role": "GOVERNING",
+  "chain": "v69's development chain: model part rebuilt with the member (tools/run_ctx_ownpoints_chain.step_model_part / step_chain: no-NM rematch, v48, extreme-day, variance re-allocation with LightGBM PINNED deterministic=True, force_col_wise=True), then the stacking layer of configs/stack_weight_v1.json's selected w65_bag10 (stack_resid_v2 at LIRF, stack_resid_v3 elsewhere, the OPDI learner on LSZH OPDI rows; month-blocked, ten seeds 20261003, 11-19, weight 0.65; tools/run_stack_weight.py's dev_month / dev_value arithmetic on the rebuilt chain files), then the intruder bound, identity extension, own-motion v1 and own_motion_v2 (tools/run_stack_weight.dev_score's chain path).",
+  "control": [
+   "runs/stack_weight/dev/w65_bag10/proxy.parquet",
+   "c088e409de153d81b006bcd26b5b2a28e0e306043a5172c2158d0ecc6e6f5cb8"
+  ],
+  "control_note": "v69's development proxy (fork K's governing run of configs/stack_weight_v1.json, docs/stack_weight/results_v1.json proxy_sha256; month RMSE 320.0147 / 250.8358 / 181.8835 / 163.3537 s)",
+  "identity": "before the candidate is read: (a) own_all at 1.00 through this tool's model-part + chain rebuild must give the pinned chain files runs/pubrefit/chain/ship/{ctl,rows_all,dmp,cand}.parquet byte for byte (cc9f5417 / 9389b3d9 / 5a5c3373 / bdf959c9...); (b) the w65_bag10 value through this tool's scoring path on those files, from fork K's stored month-blocked predictions (runs/stack_weight/dev/preds_<month>.parquet, the same code on the same inputs), must equal the control on every row (max abs 0). Otherwise nothing is read.",
+  "candidate": "the same path with lfpg_mix at 1.00: chain files rebuilt, the ten-seed stacking predictions fitted anew on them (one model per seed per learner per month), w65_bag10",
+  "rule": "v57's clauses with configs/own_motion_v2.json's values: (1) no development month (January, July, November, December 2025) worse than the control by more than 0.005%; (2) equal-footing mean (January, July, December) change at most -0.02%; (3) every equal-footing paired-day 95% interval (tools/run_intruder_bound.interval, 2,000 replicates, seed 20261004) below zero; (4) transfer guard: the RMS of the declared member change (lfpg_mix - own_all, 16-seed means) on LFPG matched ranking rows (refit12) lies within 0.5x-2x of its RMS on LFPG matched development rows (the four leaves); the final-chain change on LFPG rows (ranking dry run - v69 against development candidate - control) is reported beside it.",
+  "scoring": "every row of every complete month, all labels; LIRF population and guard rows included in scoring and never moved"
+ },
+ "export": "only if stage 2 accepts: a RANKING DRY RUN on v69 (runs/lfpg_net/rank/dry_v70/, version provisional; never under runs/submissions): first the unpinned export path with own_all at 1.00 (v66's export steps 1-5 of tools/export_ctx_ownpoints.chain, then configs/stack_weight_v1.json's w65_bag10 ranking stack, then run_stack_resid_v3.chain_from_stack and run_own_motion_v2.dry_run) must reproduce runs/submissions/vigorous-whistle_v69.parquet (192c4a30...) byte for byte; then the same path pinned with own_all (identity) and with lfpg_mix (candidate); dry run = v69 + (candidate - identity) row by row (integer seconds), floored at -12 s; rows changed, squared change and RMS by airport against v69 reported. Building and uploading are the user's decisions.",
+ "compute": "GPU fits on prc-ctx6 nodes; member tables, stages 1-2 and the ranking path on Azure arcw0-3 (deallocated after hash-checked mirrors); the workstation orchestrates, serves files and hash-checks",
+ "never_read": "No official score or leaderboard enters; no ranking label exists.",
+ "selection": "runs/lfpg_net/dev/selection.json",
+ "report": "docs/lfpg_net/results_v1.json",
+ "export_report_dir": "docs/lfpg_net",
+ "automatic_submission": false
+}
