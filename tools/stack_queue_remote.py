@@ -20,7 +20,7 @@ from pathlib import Path
 
 W = Path(__file__).resolve().parents[1]
 ST, LG = W / "runs/stack_queue/state", W / "runs/stack_queue/logs"
-MAXJ, MIN_FREE_GB = 8, 10.0
+MAXJ, MIN_FREE_GB = 6, 10.0
 MONTHS = ["2025-01", "2025-07", "2025-11", "2025-12"]
 TOOL = [str(W / ".venv/bin/python"), "-X", "utf8", "-B", "-u", "tools/run_stack_queue.py"]
 JOBS: list[tuple[str, list[str], list[str]]] = [("warm_fit", ["--warm", "fit"], [])]
