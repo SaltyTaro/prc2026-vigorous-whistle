@@ -346,10 +346,19 @@ def rank_steps(decl: dict, name: str, pinned: bool) -> None:
     got = {k: sha256_file(p) for k, p in files.items()}
     rec = {"created_at_utc": utc_now(), "name": name, "pinned": pinned, "files": got}
     if name == "own_all_w100" and not pinned:
+        # every exported step file byte for byte; Y/rows.parquet (float side table) to 1e-9 s (it was built on Windows, these on Linux)
         ref = {k: sha256_file(V66_STEPS / k) for k in files}
-        rec["identity_equals_v66_steps"] = got == ref
-        rec["v66_steps"] = ref
-        print("identity: unpinned steps 1-5 with own_all equal v66's (v69's) shipped steps:", rec["identity_equals_v66_steps"], flush=True)
+        exact = {k: got[k] == ref[k] for k in files}
+        ra, rb = pd.read_parquet(files["Y/rows.parquet"]), pd.read_parquet(V66_STEPS / "Y/rows.parquet")
+        same_frame = list(ra.columns) == list(rb.columns) and ra[ID].equals(rb[ID])
+        rows_diff = {c: float(np.nanmax(np.abs(ra[c].to_numpy(dtype=float) - rb[c].to_numpy(dtype=float)), initial=0.0))
+                     for c in ra.columns if c != ID and pd.api.types.is_numeric_dtype(ra[c])}
+        nonnum_equal = all(ra[c].equals(rb[c]) for c in ra.columns if c != ID and not pd.api.types.is_numeric_dtype(ra[c]))
+        nan_equal = all(np.array_equal(ra[c].isna().to_numpy(), rb[c].isna().to_numpy()) for c in ra.columns)
+        rec["v66_steps"], rec["exact"], rec["y_rows_max_abs_diff"] = ref, exact, rows_diff
+        rec["identity_equals_v66_steps"] = bool(all(v for k, v in exact.items() if k != "Y/rows.parquet") and same_frame and nonnum_equal and nan_equal
+                                                and max(rows_diff.values(), default=0.0) <= 1e-9)
+        print("identity: unpinned steps 1-5 with own_all equal v66's (v69's) shipped steps:", rec["identity_equals_v66_steps"], exact, rows_diff, flush=True)
     write_json(OUT / "rank" / tag / "steps.json", rec)
     if name == "own_all_w100" and not pinned and not rec["identity_equals_v66_steps"]:
         raise ValueError("identity: the ranking steps 1-5 differ from v66's shipped steps.")
