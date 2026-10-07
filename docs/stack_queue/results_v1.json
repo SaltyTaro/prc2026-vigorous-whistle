@@ -1,0 +1,322 @@
+{
+  "audit_used": false,
+  "candidate": {
+    "accepted": false,
+    "airport_month_change_pct": {
+      "EDDF 2025-01": 0.02496426607976332,
+      "EDDF 2025-07": 0.035183298865337775,
+      "EDDF 2025-11": -0.029006962843747264,
+      "EDDF 2025-12": 0.0,
+      "EDDM 2025-01": 0.04058868827918616,
+      "EDDM 2025-07": 0.01293359018690321,
+      "EDDM 2025-11": -0.024607983844582293,
+      "EDDM 2025-12": 0.08800542365170472,
+      "EGLL 2025-01": -0.02867505269966708,
+      "EGLL 2025-07": 0.025930146410102495,
+      "EGLL 2025-11": -0.06261163442509154,
+      "EGLL 2025-12": 0.09337422135162754,
+      "EHAM 2025-01": 0.006479395294589629,
+      "EHAM 2025-07": 0.010864298833102026,
+      "EHAM 2025-11": 0.014364217010798264,
+      "EHAM 2025-12": 0.010473134700705877,
+      "LEBL 2025-01": 0.002005647244796016,
+      "LEBL 2025-07": -0.006564874277181776,
+      "LEBL 2025-11": 0.024548957304593166,
+      "LEBL 2025-12": 0.008163212531853148,
+      "LEMD 2025-01": -0.0430809714138225,
+      "LEMD 2025-07": -0.04592045662452637,
+      "LEMD 2025-11": -0.0041810840478162525,
+      "LEMD 2025-12": 0.023915991253598,
+      "LFPG 2025-01": 0.006936343727903527,
+      "LFPG 2025-07": -0.09768104720239146,
+      "LFPG 2025-11": 0.0008404823146346274,
+      "LFPG 2025-12": -0.026623955656945864,
+      "LIRF 2025-01": -0.02405761821586694,
+      "LIRF 2025-07": -0.009232221413746355,
+      "LIRF 2025-11": -0.01164365506598486,
+      "LIRF 2025-12": -0.027905977626163647,
+      "LSZH 2025-01": 0.00328845463730687,
+      "LSZH 2025-07": 0.11204029912517122,
+      "LSZH 2025-11": -0.0398351937474728,
+      "LSZH 2025-12": 0.008469123531162914,
+      "LTFM 2025-01": -0.013945811898141702,
+      "LTFM 2025-07": -0.003948594665514893,
+      "LTFM 2025-11": 0.006352312507007518,
+      "LTFM 2025-12": -0.0015290461313544057
+    },
+    "checks_1_to_3": {
+      "1_no_month_worse_than_0.005pct": true,
+      "2_equal_footing_mean_pct": -0.0036429452013098107,
+      "2_mean_ok": false,
+      "3_every_equal_interval_below_zero": false
+    },
+    "clauses_1_to_3": false,
+    "fixed_rows_moved": 0,
+    "months": {
+      "2025-01": {
+        "control_rmse": 320.01471166018143,
+        "hi": 0.012469520589603034,
+        "lo": -0.012585578275707276,
+        "max_abs_change_s": 394.5847484618205,
+        "pct": -7.006927957853293e-05,
+        "rms_change_s": 3.7438437978368966,
+        "rmse": 320.0144874281784,
+        "rows_changed": 147919,
+        "squared_change": 2154399.611204192
+      },
+      "2025-07": {
+        "control_rmse": 250.7120149541308,
+        "hi": 0.0007835453099780363,
+        "lo": -0.022681527890837938,
+        "max_abs_change_s": 416.80845639052836,
+        "pct": -0.010683457508220418,
+        "rms_change_s": 4.047654406326951,
+        "rmse": 250.68523024254517,
+        "rows_changed": 158697,
+        "squared_change": 3124547.6165966676
+      },
+      "2025-11": {
+        "control_rmse": 181.60803006780952,
+        "hi": 0.00956344870432335,
+        "lo": -0.03158544736825308,
+        "max_abs_change_s": 153.3847631057854,
+        "pct": -0.010620018079421367,
+        "rms_change_s": 2.8933351565599765,
+        "rmse": 181.58874326218265,
+        "rows_changed": 159122,
+        "squared_change": 1358944.2100910807
+      },
+      "2025-12": {
+        "control_rmse": 162.78954177405467,
+        "hi": 0.03211114419176763,
+        "lo": -0.032044591346420404,
+        "max_abs_change_s": 270.98498360556323,
+        "pct": -0.00017530881613048166,
+        "rms_change_s": 3.409870516670142,
+        "rmse": 162.7892563896362,
+        "rows_changed": 145010,
+        "squared_change": 1926362.4210439785
+      }
+    },
+    "name": "q65_bag10",
+    "proxy_sha256": "5afab5624654456e83331ac38da8e47a7df86019568f07a24d95141949b9ca31",
+    "seeds": [
+      20261003,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "weight": 0.65
+  },
+  "clause_4_transfer_guard": {
+    "ok": true,
+    "ranking_prediction_by_airport": {
+      "opdi_LSZH_used": {
+        "LSZH": {
+          "mean_s": 1.521655731002086,
+          "rms_s": 43.74281022199193,
+          "rows": 18308
+        }
+      },
+      "v2_LIRF": {
+        "LIRF": {
+          "mean_s": -3.451922837096106,
+          "rms_s": 46.695501316279014,
+          "rows": 26499
+        }
+      },
+      "v3": {
+        "EDDF": {
+          "mean_s": -2.791085749179054,
+          "rms_s": 18.84390108668895,
+          "rows": 36317
+        },
+        "EDDM": {
+          "mean_s": -1.5737368038277861,
+          "rms_s": 16.384492604797103,
+          "rows": 25966
+        },
+        "EGLL": {
+          "mean_s": -2.663479439148425,
+          "rms_s": 24.625308088630227,
+          "rows": 39840
+        },
+        "EHAM": {
+          "mean_s": -4.196128135255924,
+          "rms_s": 16.920766899453408,
+          "rows": 38182
+        },
+        "LEBL": {
+          "mean_s": 0.26634671052854253,
+          "rms_s": 12.197405499783546,
+          "rows": 30080
+        },
+        "LEMD": {
+          "mean_s": -5.16453503040299,
+          "rms_s": 14.125047429055815,
+          "rows": 36954
+        },
+        "LFPG": {
+          "mean_s": -2.5155832591771525,
+          "rms_s": 28.807032429020925,
+          "rows": 39872
+        },
+        "LSZH": {
+          "mean_s": -3.5435020004461903,
+          "rms_s": 18.9443321450877,
+          "rows": 23150
+        },
+        "LTFM": {
+          "mean_s": -3.110886560040063,
+          "rms_s": 20.655145961551693,
+          "rows": 47581
+        }
+      }
+    },
+    "ratios": {
+      "opdi_LSZH_used LSZH": 1.0453273014872435,
+      "v2_LIRF LIRF": 1.1317284559372627,
+      "v3 EDDF": 1.338830746023316,
+      "v3 EDDM": 0.9863483701672642,
+      "v3 EGLL": 0.8388296084093941,
+      "v3 EHAM": 1.2252326754095446,
+      "v3 LEBL": 1.1166758465689752,
+      "v3 LEMD": 1.0465897083048108,
+      "v3 LFPG": 1.0782729480243771,
+      "v3 LSZH": 1.2325432716581315,
+      "v3 LTFM": 1.1093560993323692
+    }
+  },
+  "code": {
+    "tools/export_ctx_ownpoints.py": "03e6bda44a26d6a2563dc255bcb7cc5679cf42c87eca18f0b0e54b7a3b2a0dc1",
+    "tools/run_ctx_ownpoints_chain.py": "4fa1a5244fe0520fa9701e352d29c3b1c97ebfe23cc34ee6f0120082a13d5a7d",
+    "tools/run_intruder_bound.py": "b0ae6ad5bce149005ca3dba0cdc4d40f3776c29e643eeaa88790c3ae92668c56",
+    "tools/run_intruder_identity.py": "d070b37f9781b512034a4e2cb4bf1a312044c1f0b82e167437b939ba5468a882",
+    "tools/run_oooi_lhr.py": "61fd4ba78af38b08f3e378cd5bdf455ff3c65d129e6841900bfe49072bc12658",
+    "tools/run_oooi_pin.py": "0dfeb502565c91030e61925a59d207e36123437f7d52f7bbc01613ada09b4588",
+    "tools/run_opdi_stack.py": "4165849e9016b06bbd45c022ac64993eaf44535e3d13d1445a3f3555aef4c6fd",
+    "tools/run_opdi_stack_decl.py": "ddb16f9b554fafd2db11da17eecae71729c58765c747be4c4594e187eb39754a",
+    "tools/run_own_motion.py": "10585ae33764629cc408bde67793c87cc37cd5fd6cff2ef69415f4e10d7637ff",
+    "tools/run_own_motion_v2.py": "1fa8f880cd107b06e2cc00aa8d89602c9d3bc6afd35be7567f7a68c5e276d2b7",
+    "tools/run_ownpoints_weight.py": "5260ed72b57dd76ad5d4ed2e4d31673c03503a8cdff7dbc8df3eac93f24d53c6",
+    "tools/run_stack_queue.py": "f5f1f05af81a2493c727fc839c462c35462db9f5e020b6787eadc5002e761477",
+    "tools/run_stack_resid.py": "84e9e5034918b3da19bfdf91b7dd8c5123eb0c8bcc3661f0fbdaeb654926e71e",
+    "tools/run_stack_resid_v3.py": "d3c5f995d39633c7383916e1f80d7553f2bbbecc5461f2c579e816281c071f52",
+    "tools/run_stack_weight.py": "dd6f70ee6ea39bc38662e01b0e189c886be2a1f9fdd63c79c2e8115655e85cb9"
+  },
+  "control": "runs/oooi_lhr/dev_v70_proxy.parquet",
+  "control_sha256": "51aaa6a62f64897290199f6c6c9e7d3d43245a3862f36b2bdbc35be8012eabbe",
+  "created_at_utc": "2026-10-07T16:39:51.800927+00:00",
+  "declaration": "configs/stack_queue_v1.json",
+  "declaration_sha256": "1c1c0572c2028da007ff4fff61da90d54a2c939106ee10ee01e16afba654ee75",
+  "dev_oof_prediction_by_airport": {
+    "opdi_LSZH_used": {
+      "LSZH": {
+        "mean_s": 2.2721947441219865,
+        "rms_s": 41.846042057599256,
+        "rows": 38829
+      }
+    },
+    "v2_LIRF": {
+      "LIRF": {
+        "mean_s": -15.417504583416722,
+        "rms_s": 41.26034038581034,
+        "rows": 49362
+      }
+    },
+    "v3": {
+      "EDDF": {
+        "mean_s": -1.3920774815716015,
+        "rms_s": 14.074894188574886,
+        "rows": 72276
+      },
+      "EDDM": {
+        "mean_s": -1.9594198858155403,
+        "rms_s": 16.611263424117215,
+        "rows": 51688
+      },
+      "EGLL": {
+        "mean_s": -8.726991496597696,
+        "rms_s": 29.356746402079487,
+        "rows": 79633
+      },
+      "EHAM": {
+        "mean_s": -3.274854926928498,
+        "rms_s": 13.81024783214951,
+        "rows": 79639
+      },
+      "LEBL": {
+        "mean_s": 0.004239234024756833,
+        "rms_s": 10.922959905742111,
+        "rows": 56153
+      },
+      "LEMD": {
+        "mean_s": -4.293672909896775,
+        "rms_s": 13.496260585186272,
+        "rows": 70732
+      },
+      "LFPG": {
+        "mean_s": -1.174387846670837,
+        "rms_s": 26.715900164055373,
+        "rows": 78036
+      },
+      "LSZH": {
+        "mean_s": -1.6719224471253433,
+        "rms_s": 15.370115257375124,
+        "rows": 43009
+      },
+      "LTFM": {
+        "mean_s": -2.3837519721824987,
+        "rms_s": 18.619040336986778,
+        "rows": 91338
+      }
+    }
+  },
+  "identity": {
+    "bound_s": 4.5e-13,
+    "holds": true,
+    "platform": "linux",
+    "proxy_sha256": "b67116c44e77d747c3cd88bfbf89469734319a908ae76e7abc6a46912555cd97",
+    "queue_off_v69like_vs_v69_proxy_max_abs_s": 0.0,
+    "queue_off_vs_control_max_abs_s": 0.0
+  },
+  "official_scores_used": "none",
+  "queue_columns": [
+    "gp",
+    "gn",
+    "gp2",
+    "gp4",
+    "gn4",
+    "bpos",
+    "blen"
+  ],
+  "rank_identity": {
+    "created_at_utc": "2026-10-07T16:35:31.937403+00:00",
+    "final_sha256": "f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f",
+    "opdi_rows_used": 18308,
+    "queue_off_preds_vs_stack_weight_preds_max_abs": 0.0,
+    "reproduces_v69": true,
+    "reproduces_v70": true,
+    "v69like_sha256": "192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665"
+  },
+  "seeds": [
+    20261003,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "selected": null,
+  "weight": 0.65
+}
