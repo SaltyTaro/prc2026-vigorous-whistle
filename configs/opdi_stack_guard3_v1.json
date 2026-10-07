@@ -1,0 +1,18 @@
+{
+  "experiment_id": "opdi_stack_guard3_v1",
+  "declared_at_utc": "2026-10-07T02:20:00+00:00",
+  "user_decision": "7 October 2026: the user approved the four-lever plan including 'OPDI at the other airports that passed the 2025-vs-2026 check' ('yes start on all four now').",
+  "official_scores_used": "none (no leaderboard figure enters any step; v68's official score is not used)",
+  "exploration_disclosed": "Lever 7's full layer (configs/opdi_stack_v1.json) read Jan -0.032 / Jul -0.093 / Nov -0.116 / Dec -0.123% against the pinned v66 proxy and failed its transfer guard at EDDF 2.75 / LEBL 2.04 / EDDM 0.42 / LEMD 0.36; it passed at EGLL 0.74, EHAM 0.89, LFPG 0.93, LSZH 1.05 (label-free ratios). The LSZH-only variant (configs/opdi_stack_lszh_v1.json) read -0.027 / -0.083 / -0.100 / -0.100% and shipped as v68. This variant adds the airports that passed the declared guard; the airport set follows the guard, not any score of this variant.",
+  "candidate": {
+    "name": "opdi_guard3",
+    "airports_added": [
+      "EGLL",
+      "EHAM",
+      "LFPG"
+    ],
+    "definition": "v68 (v66 + lever 7's change at LSZH) plus lever 7's governing change (runs/opdi_stack/govern/chain/opdi/proxy.parquet; ranking runs/opdi_stack/rank/dry_v67/NOT_ACCEPTED_vigorous-whistle_v67.parquet) on EGLL, EHAM and LFPG rows where OPDI is used; every other row keeps v68. The downstream layers are row-local, so the splice equals the chain restricted to these airports (verified for LSZH: docs/opdi_stack_lszh/dry_v68_report.json splice_of_lever7_file_equal true)."
+  },
+  "control": "the v68 development proxy runs/opdi_stack_lszh/dev_v68_proxy.parquet (SHA-256 938a91cd84a9e6c0773afb72dec490fdf30c6762ee3f505469b3a26e3ab56aca; 320.0400 / 250.8650 / 181.9933 / 163.5496 s)",
+  "rule": "configs/opdi_stack_v1.json's clauses: (1) no development month worse than the control by more than 0.005%; (2) equal-footing (Jan / Jul / Dec 2025) mean change at most -0.02%; (3) every equal-footing paired-day 95% interval (tools/run_intruder_bound.interval, seed 20261004) below zero; (4) transfer guard [0.5, 2.0] at each added airport (already read: EGLL 0.74, EHAM 0.89, LFPG 0.93). If accepted: ranking dry run on v68 by the same splice; a build only at the user's word."
+}
