@@ -51,3 +51,11 @@ destination witness and OPDI identity, case files 4/5 (early records, minute-gri
 
 No class reaches 1e7 s² of plausible ranking gain. The rematch-sized pots are the unseen rows (no observation in any open source we
 hold) and the early-record recording mode (not observable). Stopped early, as the directive allows.
+
+## Erratum
+
+- `tools/hunt_pools.py` relabels the LIRF population and guard rows on the development side only; on the ranking side 383 protected
+  LIRF rows (both guard IDs among them) fall into ordinary classes and carry 3.3e7 s² of projected SSE (about 0.2% of the projection).
+  The table above is otherwise unchanged; no prediction or closed test depends on it.
+- Without them the LFPG
+  unseen bound is about 1.5e9 and the unseen share about 55%.
