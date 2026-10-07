@@ -1,0 +1,679 @@
+{
+  "audit_used": false,
+  "b_decision": 1.0,
+  "bar_points": 0.05,
+  "base_proxy_rmse": 176.26167383161464,
+  "created_at_utc": "2026-10-07T05:26:16.001708+00:00",
+  "decision": "An item is GO when (a) its R2 at b = 1.0 is at least 0.05 points below the control's (lever 9 / lever 5 / tunnel 21's bar), (b) its 8-seed October LFPG RMSE is below the control's, and (c) the paired-day 95% interval of the proxy difference at b = 1.0 lies below zero. Several GO items: the one with the lowest R2 at b = 1.0. A development round (16 seeds x the 2025 LOMO folds, stage 2 in v69's pinned chain) is declared separately only after a GO and only with the coordinator's word.",
+  "declaration_sha256": "74f5173f967c3f2546fdb43b1a2f24c98ed7e42e2f6b8311da3a7b165ba12e41",
+  "go": false,
+  "go_items": [],
+  "items": {
+    "control": {
+      "r2_pct": {
+        "0.4": -0.2830064719346437,
+        "0.5": -0.32136982030279704,
+        "1.0": -0.3181721899258694
+      },
+      "r2_pct_share_085": {
+        "0.4": -0.32091289047680993,
+        "0.5": -0.3594789904069917,
+        "1.0": -0.301474246562472
+      },
+      "rmse_by_group": {
+        "lfpg": 216.69919800884813,
+        "lfpg_matched": 196.08508088938936,
+        "lfpg_unmatched": 221.4096887819921
+      },
+      "rmse_non_lirf": 154.12266416952275
+    },
+    "lfpg_b512_c100": {
+      "by_group_vs_control_pct": {
+        "lfpg": 5.137059239292485,
+        "lfpg_matched": 3.6746513361353816,
+        "lfpg_unmatched": 5.412941846297925
+      },
+      "gain_points_vs_control": {
+        "0.4": -0.11468191257458793,
+        "0.5": -0.149652452268334,
+        "1.0": -0.36160972035659267
+      },
+      "gain_points_vs_control_share_085": {
+        "0.4": -0.13286094911512114,
+        "0.5": -0.17417003327573344,
+        "1.0": -0.4281858925873183
+      },
+      "go": false,
+      "interval_vs_control_b1.0_s": [
+        0.3776497921901772,
+        0.9566114706945056
+      ],
+      "lfpg_below_control": false,
+      "lfpg_vs_control_pct": 5.137059239292485,
+      "proxy_change_vs_control_b1.0_pct": 0.36276393431065035,
+      "proxy_lfpg_rows_change_b1.0_pct": 2.2908029176145206,
+      "r2_pct": {
+        "0.4": -0.16832455936005575,
+        "0.5": -0.17171736803446302,
+        "1.0": 0.04343753043072329
+      },
+      "r2_pct_share_085": {
+        "0.4": -0.1880519413616888,
+        "0.5": -0.18530895713125828,
+        "1.0": 0.1267116460248463
+      },
+      "rmse_by_group": {
+        "lfpg": 227.8311641816344,
+        "lfpg_matched": 203.29052393425343,
+        "lfpg_unmatched": 233.39446647783052
+      },
+      "rmse_non_lirf": 156.04889367080932
+    },
+    "lfpg_b512_c50": {
+      "by_group_vs_control_pct": {
+        "lfpg": 1.1729010710902488,
+        "lfpg_matched": -0.722630241954425,
+        "lfpg_unmatched": 1.5294630155064937
+      },
+      "gain_points_vs_control": {
+        "0.4": -0.04651879450117136,
+        "0.5": -0.0579148560997389,
+        "1.0": -0.11326776803818328
+      },
+      "gain_points_vs_control_share_085": {
+        "0.4": -0.05251222514910392,
+        "0.5": -0.06533644389341564,
+        "1.0": -0.12730909543501312
+      },
+      "go": false,
+      "interval_vs_control_b1.0_s": [
+        0.08821394236027658,
+        0.3382874235744694
+      ],
+      "lfpg_below_control": false,
+      "lfpg_vs_control_pct": 1.1729010710902488,
+      "proxy_change_vs_control_b1.0_pct": 0.1136293048859427,
+      "proxy_lfpg_rows_change_b1.0_pct": 0.7222611021131975,
+      "r2_pct": {
+        "0.4": -0.23648767743347232,
+        "0.5": -0.26345496420305814,
+        "1.0": -0.2049044218876861
+      },
+      "r2_pct_share_085": {
+        "0.4": -0.268400665327706,
+        "0.5": -0.2941425465135761,
+        "1.0": -0.1741651511274589
+      },
+      "rmse_by_group": {
+        "lfpg": 219.24086522333786,
+        "lfpg_matched": 194.66811079492183,
+        "lfpg_unmatched": 224.7960680846607
+      },
+      "rmse_non_lirf": 154.5560507705931
+    },
+    "lfpg_own_c100": {
+      "by_group_vs_control_pct": {
+        "lfpg": 5.081822972527861,
+        "lfpg_matched": 3.6905889364889477,
+        "lfpg_unmatched": 5.344383640838912
+      },
+      "gain_points_vs_control": {
+        "0.4": -0.10485227234954264,
+        "0.5": -0.13953307190934794,
+        "1.0": -0.36304882821198703
+      },
+      "gain_points_vs_control_share_085": {
+        "0.4": -0.12003002418484732,
+        "0.5": -0.16091991872765332,
+        "1.0": -0.4295626038471112
+      },
+      "go": false,
+      "interval_vs_control_b1.0_s": [
+        0.4465685799129318,
+        0.8983014804421138
+      ],
+      "lfpg_below_control": false,
+      "lfpg_vs_control_pct": 5.081822972527861,
+      "proxy_change_vs_control_b1.0_pct": 0.3642076356221047,
+      "proxy_lfpg_rows_change_b1.0_pct": 2.299833589812228,
+      "r2_pct": {
+        "0.4": -0.17815419958510104,
+        "0.5": -0.1818367483934491,
+        "1.0": 0.044876638286117654
+      },
+      "r2_pct_share_085": {
+        "0.4": -0.20088286629196261,
+        "0.5": -0.1985590716793384,
+        "1.0": 0.1280883572846392
+      },
+      "rmse_by_group": {
+        "lfpg": 227.71146763454541,
+        "lfpg_matched": 203.32177519079855,
+        "lfpg_unmatched": 233.24267196848922
+      },
+      "rmse_non_lirf": 156.0277983560851
+    },
+    "lfpg_own_c50": {
+      "by_group_vs_control_pct": {
+        "lfpg": 0.8667950641306987,
+        "lfpg_matched": -1.0507011033575542,
+        "lfpg_unmatched": 1.2274295548305947
+      },
+      "gain_points_vs_control": {
+        "0.4": -0.039512837078803376,
+        "0.5": -0.04958738995004541,
+        "1.0": -0.100943890198546
+      },
+      "gain_points_vs_control_share_085": {
+        "0.4": -0.04340630773768117,
+        "0.5": -0.054507168739148515,
+        "1.0": -0.11123105818809931
+      },
+      "go": false,
+      "interval_vs_control_b1.0_s": [
+        0.09654523726917716,
+        0.2845895827258629
+      ],
+      "lfpg_below_control": false,
+      "lfpg_vs_control_pct": 0.8667950641306987,
+      "proxy_change_vs_control_b1.0_pct": 0.10126609073708437,
+      "proxy_lfpg_rows_change_b1.0_pct": 0.6438885374277392,
+      "r2_pct": {
+        "0.4": -0.2434936348558403,
+        "0.5": -0.2717824303527516,
+        "1.0": -0.21722829972732338
+      },
+      "r2_pct_share_085": {
+        "0.4": -0.27750658273912876,
+        "0.5": -0.3049718216678432,
+        "1.0": -0.1902431883743727
+      },
+      "rmse_by_group": {
+        "lfpg": 218.57753596119963,
+        "lfpg_matched": 194.024812780965,
+        "lfpg_unmatched": 224.12733673936071
+      },
+      "rmse_non_lirf": 154.4425749549629
+    }
+  },
+  "networks": {
+    "dl32own": {
+      "mean_rmse_lfpg": 218.85088426342216,
+      "mean_rmse_lfpg_matched": 196.08508088938936,
+      "mean_rmse_lfpg_unmatched": 224.0238957511014,
+      "per_seed_rmse_lfpg": {
+        "10": 234.15010858417412,
+        "11": 228.46732424813015,
+        "12": 233.6692310515134,
+        "13": 234.78062300005746,
+        "14": 235.42268871780846,
+        "15": 233.06762170360346,
+        "16": 234.54634227782884,
+        "9": 232.8934183171778
+      }
+    },
+    "lfpg_dl32own": {
+      "mean_rmse_lfpg": 228.23738689167033,
+      "mean_rmse_lfpg_matched": 203.32177519079855,
+      "mean_rmse_lfpg_unmatched": 233.88050890288105,
+      "per_seed_rmse_lfpg": {
+        "10": 243.1088518611709,
+        "11": 239.07525314926187,
+        "12": 247.11324922669064,
+        "13": 243.06044980237985,
+        "14": 242.17506740013974,
+        "15": 242.14852516138686,
+        "16": 236.40473199801832,
+        "9": 240.28588526029526
+      }
+    },
+    "lfpg_dl32own_b512": {
+      "mean_rmse_lfpg": 229.03146110612605,
+      "mean_rmse_lfpg_matched": 203.29052393425343,
+      "mean_rmse_lfpg_unmatched": 234.84961695794613,
+      "per_seed_rmse_lfpg": {
+        "10": 241.175205236745,
+        "11": 241.7302781989412,
+        "12": 238.68219749742823,
+        "13": 245.96396618930905,
+        "14": 239.65204457068464,
+        "15": 240.89670300857904,
+        "16": 234.637749477049,
+        "9": 238.3905130040771
+      }
+    },
+    "lfpg_m25dl32own": {
+      "mean_rmse_lfpg": 228.15936596379197,
+      "mean_rmse_lfpg_matched": 205.87818933002387,
+      "mean_rmse_lfpg_unmatched": 233.24267196848922,
+      "per_seed_rmse_lfpg": {
+        "10": 239.2489550300914,
+        "11": 241.15377319993405,
+        "12": 245.0016858023249,
+        "13": 245.067649392322,
+        "14": 243.81261532816504,
+        "15": 244.27881833391925,
+        "16": 236.63894030989204,
+        "9": 240.96954823351913
+      }
+    },
+    "lfpg_m25dl32own_b512": {
+      "mean_rmse_lfpg": 228.18557764149637,
+      "mean_rmse_lfpg_matched": 205.31694755709844,
+      "mean_rmse_lfpg_unmatched": 233.39446647783052,
+      "per_seed_rmse_lfpg": {
+        "10": 241.15860126881563,
+        "11": 239.3598431925558,
+        "12": 239.42030663932857,
+        "13": 242.31050474117353,
+        "14": 236.93129456000756,
+        "15": 240.02416607370003,
+        "16": 235.01391032463783,
+        "9": 238.52236694018066
+      }
+    },
+    "m25dl32own": {
+      "mean_rmse_lfpg": 216.78231553424294,
+      "mean_rmse_lfpg_matched": 196.55520646231665,
+      "mean_rmse_lfpg_unmatched": 221.4096887819921,
+      "per_seed_rmse_lfpg": {
+        "10": 231.3438986593273,
+        "11": 230.1364531490227,
+        "12": 229.8099052289946,
+        "13": 231.87422621678633,
+        "14": 233.15574911323753,
+        "15": 231.9685746680165,
+        "16": 230.20774554839065,
+        "9": 228.78023679230532
+      }
+    }
+  },
+  "note": "October only; no scoring month, ranking row or official score read.",
+  "october_lfpg_matched_share": 0.19518860098570243,
+  "october_lfpg_rows": 20493,
+  "october_rows": 183761,
+  "pool_rmse_non_lirf": 154.01647144993638,
+  "runs": {
+    "dl32own": {
+      "10": {
+        "dir": "runs/ctx_own2/design/dl32own_s10/design",
+        "epochs": 32,
+        "fit_seconds": 610.6,
+        "fitted_rows": 1130307,
+        "predictions_sha256": "cc21b5b8c2e8f304dee9b78a9a866039ff5154636ffc8517fee8e2adafb4f74a"
+      },
+      "11": {
+        "dir": "runs/ctx_own2/design/dl32own_s11/design",
+        "epochs": 32,
+        "fit_seconds": 530.9,
+        "fitted_rows": 1130307,
+        "predictions_sha256": "b4a532334e432c006da184af0b04f85cc30aae2d5a65d8100fa0c1ce86c94e5c"
+      },
+      "12": {
+        "dir": "runs/ctx_own2/design/dl32own_s12/design",
+        "epochs": 32,
+        "fit_seconds": 578.1,
+        "fitted_rows": 1130307,
+        "predictions_sha256": "25ecac36f5c089dd67dc2d134816b4f7ced810ef6e5e52b3efcfb5708be31d20"
+      },
+      "13": {
+        "dir": "runs/ctx_own2/design/dl32own_s13/design",
+        "epochs": 32,
+        "fit_seconds": 628.1,
+        "fitted_rows": 1130307,
+        "predictions_sha256": "f37af9c0e83c41d1dd7c129b26cd798d53b1be3b4625040c6e95f3c3fcd1b926"
+      },
+      "14": {
+        "dir": "runs/ctx_own2/design/dl32own_s14/design",
+        "epochs": 32,
+        "fit_seconds": 527.2,
+        "fitted_rows": 1130307,
+        "predictions_sha256": "45c385259ec5de65820908e082cd515b5ecd9aefe2a8923a023d7c35fd1fef14"
+      },
+      "15": {
+        "dir": "runs/ctx_own2/design/dl32own_s15/design",
+        "epochs": 32,
+        "fit_seconds": 526.4,
+        "fitted_rows": 1130307,
+        "predictions_sha256": "79161b2bbf2d55709fc6353b2f9efd3dc79b1a81504e44d9b888a7f96e443350"
+      },
+      "16": {
+        "dir": "runs/ctx_own2/design/dl32own_s16/design",
+        "epochs": 32,
+        "fit_seconds": 444.2,
+        "fitted_rows": 1130307,
+        "predictions_sha256": "7003b78d570b2a29b1e507fc2b258384006e0546e63f3d95e2e8e8cc50f95a62"
+      },
+      "9": {
+        "dir": "runs/ctx_own2/design/dl32own_s9/design",
+        "epochs": 32,
+        "fit_seconds": 610.6,
+        "fitted_rows": 1130307,
+        "predictions_sha256": "6d91aeb70098a4e84e3fa405946cae0556747084a22a8ea0f08b731bdbff1f29"
+      }
+    },
+    "lfpg_dl32own": {
+      "10": {
+        "dir": "runs/lfpg_net/design/lfpg_dl32own_s10/design",
+        "epochs": 32,
+        "fit_seconds": 65.7,
+        "fitted_rows": 140707,
+        "predictions_sha256": "0d4f7811df3e2c53b244d718ab70795f47b06c71e76f242a02950ce2d10f8bb8"
+      },
+      "11": {
+        "dir": "runs/lfpg_net/design/lfpg_dl32own_s11/design",
+        "epochs": 32,
+        "fit_seconds": 64.5,
+        "fitted_rows": 140707,
+        "predictions_sha256": "5c2e5cf8ee2aaa91ce78fcd3d21413b798221706a643d1a80a1fa3aa058a74f9"
+      },
+      "12": {
+        "dir": "runs/lfpg_net/design/lfpg_dl32own_s12/design",
+        "epochs": 32,
+        "fit_seconds": 64.7,
+        "fitted_rows": 140707,
+        "predictions_sha256": "d0cee98a4dd84f7231c7933a65391de46e9dcd6705ad67be75be1f8ae29fc962"
+      },
+      "13": {
+        "dir": "runs/lfpg_net/design/lfpg_dl32own_s13/design",
+        "epochs": 32,
+        "fit_seconds": 39.0,
+        "fitted_rows": 140707,
+        "predictions_sha256": "0dadfa8d3add1813133b34e4090e3a198cf1ee794a83130dfe98498418fc451d"
+      },
+      "14": {
+        "dir": "runs/lfpg_net/design/lfpg_dl32own_s14/design",
+        "epochs": 32,
+        "fit_seconds": 64.3,
+        "fitted_rows": 140707,
+        "predictions_sha256": "71acd97f37d665458eb9eb34d61d513bd9f1b909dbf623fd84590212669bcd64"
+      },
+      "15": {
+        "dir": "runs/lfpg_net/design/lfpg_dl32own_s15/design",
+        "epochs": 32,
+        "fit_seconds": 39.0,
+        "fitted_rows": 140707,
+        "predictions_sha256": "ce46b94c237d4790ae507ad2e5c86b36418853a7a1b233dee9d57553fbe8af16"
+      },
+      "16": {
+        "dir": "runs/lfpg_net/design/lfpg_dl32own_s16/design",
+        "epochs": 32,
+        "fit_seconds": 63.5,
+        "fitted_rows": 140707,
+        "predictions_sha256": "ec972d9932d14abcbdfd75fd2ba6e407659c1a49f6930094a25a1a1c097a2544"
+      },
+      "9": {
+        "dir": "runs/lfpg_net/design/lfpg_dl32own_s9/design",
+        "epochs": 32,
+        "fit_seconds": 66.5,
+        "fitted_rows": 140707,
+        "predictions_sha256": "1c5eebc45dfde0af4aa3886828e229d16f3f1a103615938033dd399aba93d35d"
+      }
+    },
+    "lfpg_dl32own_b512": {
+      "10": {
+        "dir": "runs/lfpg_net/design/lfpg_dl32own_b512_s10/design",
+        "epochs": 32,
+        "fit_seconds": 62.0,
+        "fitted_rows": 140707,
+        "predictions_sha256": "feddf93ff9c9a32299761504128157562203ef996f323ca624897183e843a576"
+      },
+      "11": {
+        "dir": "runs/lfpg_net/design/lfpg_dl32own_b512_s11/design",
+        "epochs": 32,
+        "fit_seconds": 67.2,
+        "fitted_rows": 140707,
+        "predictions_sha256": "bc73901ce6cda7bb429d38ba3787f57811a2a6f5187748ce3a81da73f2872a83"
+      },
+      "12": {
+        "dir": "runs/lfpg_net/design/lfpg_dl32own_b512_s12/design",
+        "epochs": 32,
+        "fit_seconds": 63.7,
+        "fitted_rows": 140707,
+        "predictions_sha256": "b1b3238104150fa0dcf23bd8735b5f92a5a82935ac46e4351f4ba4aeca17432b"
+      },
+      "13": {
+        "dir": "runs/lfpg_net/design/lfpg_dl32own_b512_s13/design",
+        "epochs": 32,
+        "fit_seconds": 66.0,
+        "fitted_rows": 140707,
+        "predictions_sha256": "595fc56d268366fed7aa85e421affb9a615e50e08e6de67d48f625e12fe8e263"
+      },
+      "14": {
+        "dir": "runs/lfpg_net/design/lfpg_dl32own_b512_s14/design",
+        "epochs": 32,
+        "fit_seconds": 62.4,
+        "fitted_rows": 140707,
+        "predictions_sha256": "0b6173737a696c5f20d91e1c777d0939ed3e014c762ee0a58c1ae3ef9dd67874"
+      },
+      "15": {
+        "dir": "runs/lfpg_net/design/lfpg_dl32own_b512_s15/design",
+        "epochs": 32,
+        "fit_seconds": 67.2,
+        "fitted_rows": 140707,
+        "predictions_sha256": "5110983e8fb91857ae83425acee2b39a7f0f550030dfd1564ac1d14b10725fff"
+      },
+      "16": {
+        "dir": "runs/lfpg_net/design/lfpg_dl32own_b512_s16/design",
+        "epochs": 32,
+        "fit_seconds": 63.1,
+        "fitted_rows": 140707,
+        "predictions_sha256": "1720a3a1c7fa7b8baf914234ea24b1dcf66f21c49e7fc2e8a74c4f2382710d19"
+      },
+      "9": {
+        "dir": "runs/lfpg_net/design/lfpg_dl32own_b512_s9/design",
+        "epochs": 32,
+        "fit_seconds": 67.7,
+        "fitted_rows": 140707,
+        "predictions_sha256": "5453877b60469472077b9e80c06ec4db8b3a7e714adabdc157e03fefa68187e5"
+      }
+    },
+    "lfpg_m25dl32own": {
+      "10": {
+        "dir": "runs/lfpg_net/design/lfpg_m25dl32own_s10/design",
+        "epochs": 32,
+        "fit_seconds": 71.8,
+        "fitted_rows": 140707,
+        "predictions_sha256": "2a2c0bb2cad7e8094d3fc6183015144ceab855eb46f4741e8fbb53c76ea0d994"
+      },
+      "11": {
+        "dir": "runs/lfpg_net/design/lfpg_m25dl32own_s11/design",
+        "epochs": 32,
+        "fit_seconds": 39.6,
+        "fitted_rows": 140707,
+        "predictions_sha256": "a56b636791d27b9d88cb8fa77a116627b257baec6693690b03ba16f8768b931c"
+      },
+      "12": {
+        "dir": "runs/lfpg_net/design/lfpg_m25dl32own_s12/design",
+        "epochs": 32,
+        "fit_seconds": 70.6,
+        "fitted_rows": 140707,
+        "predictions_sha256": "07a5968d208bb0002ddd400d0100e2c1872d36a0b04dc8074e30de2d159f910e"
+      },
+      "13": {
+        "dir": "runs/lfpg_net/design/lfpg_m25dl32own_s13/design",
+        "epochs": 32,
+        "fit_seconds": 39.6,
+        "fitted_rows": 140707,
+        "predictions_sha256": "5ed04a8824af6529ced73530884299bb2521f9996deb2b83fd5febaf9bec2fde"
+      },
+      "14": {
+        "dir": "runs/lfpg_net/design/lfpg_m25dl32own_s14/design",
+        "epochs": 32,
+        "fit_seconds": 70.2,
+        "fitted_rows": 140707,
+        "predictions_sha256": "b09ed3d94393134e99817e21ad29ce69052f94642c0247b3c2c0b1fd415067cd"
+      },
+      "15": {
+        "dir": "runs/lfpg_net/design/lfpg_m25dl32own_s15/design",
+        "epochs": 32,
+        "fit_seconds": 39.6,
+        "fitted_rows": 140707,
+        "predictions_sha256": "7a9c9b8aec5c9d0448b2ceb0bdb0d87f96a92c9e8e025b69a89212bcf0393156"
+      },
+      "16": {
+        "dir": "runs/lfpg_net/design/lfpg_m25dl32own_s16/design",
+        "epochs": 32,
+        "fit_seconds": 69.2,
+        "fitted_rows": 140707,
+        "predictions_sha256": "da8c0e3cae0aff342bfc17421b6959b9c4bece9633ac2f62f4e9f069b57e8e3d"
+      },
+      "9": {
+        "dir": "runs/lfpg_net/design/lfpg_m25dl32own_s9/design",
+        "epochs": 32,
+        "fit_seconds": 71.8,
+        "fitted_rows": 140707,
+        "predictions_sha256": "0e4f607b9d9c214873a588d6830cab6a6ea3152cddbee94da9c513f05a7e1db7"
+      }
+    },
+    "lfpg_m25dl32own_b512": {
+      "10": {
+        "dir": "runs/lfpg_net/design/lfpg_m25dl32own_b512_s10/design",
+        "epochs": 32,
+        "fit_seconds": 97.2,
+        "fitted_rows": 140707,
+        "predictions_sha256": "c8f0988a2f6e2c22502cb955c29a6e93e03f1a6aa582532f18fa0c7d631a164f"
+      },
+      "11": {
+        "dir": "runs/lfpg_net/design/lfpg_m25dl32own_b512_s11/design",
+        "epochs": 32,
+        "fit_seconds": 81.5,
+        "fitted_rows": 140707,
+        "predictions_sha256": "620e51b1285b6673d0626fd2d5c514a479219e8f6d49c6fa683c84e7523e0464"
+      },
+      "12": {
+        "dir": "runs/lfpg_net/design/lfpg_m25dl32own_b512_s12/design",
+        "epochs": 32,
+        "fit_seconds": 65.1,
+        "fitted_rows": 140707,
+        "predictions_sha256": "99de4cb05ef8a5045315016bbe0b095ba7667bd556912c45db33e70bd6482917"
+      },
+      "13": {
+        "dir": "runs/lfpg_net/design/lfpg_m25dl32own_b512_s13/design",
+        "epochs": 32,
+        "fit_seconds": 80.8,
+        "fitted_rows": 140707,
+        "predictions_sha256": "f79b063845bd9eeff40135ed922766c3742b54852d173ed7b763bca05f9848c5"
+      },
+      "14": {
+        "dir": "runs/lfpg_net/design/lfpg_m25dl32own_b512_s14/design",
+        "epochs": 32,
+        "fit_seconds": 64.2,
+        "fitted_rows": 140707,
+        "predictions_sha256": "0929338f4d89cfad8954a779a1cc8741120af848006827ac404d908ec133caf0"
+      },
+      "15": {
+        "dir": "runs/lfpg_net/design/lfpg_m25dl32own_b512_s15/design",
+        "epochs": 32,
+        "fit_seconds": 81.2,
+        "fitted_rows": 140707,
+        "predictions_sha256": "62d3a5f6a83e9b5d2c0cc68a9ba766d4fccc9a9073a03f6d7367c5f776d55d6b"
+      },
+      "16": {
+        "dir": "runs/lfpg_net/design/lfpg_m25dl32own_b512_s16/design",
+        "epochs": 32,
+        "fit_seconds": 63.6,
+        "fitted_rows": 140707,
+        "predictions_sha256": "1415e8388a6fcf78bdbf91e1c94e2b528c84def6680dc2297c172617cbb221ce"
+      },
+      "9": {
+        "dir": "runs/lfpg_net/design/lfpg_m25dl32own_b512_s9/design",
+        "epochs": 32,
+        "fit_seconds": 81.7,
+        "fitted_rows": 140707,
+        "predictions_sha256": "cd7113fb0b35817c86d64ba5aa1fdcefb65897b6533195a03d1cc9a2c131cc5a"
+      }
+    },
+    "m25dl32own": {
+      "10": {
+        "dir": "runs/ctx_own2/design/m25dl32own_s10/design",
+        "epochs": 32,
+        "fit_seconds": 661.5,
+        "fitted_rows": 1130307,
+        "predictions_sha256": "c51482b7cd7144a595c690b1d9ca3eb4e1e1e6463c249c0ae8270ead391a3f42"
+      },
+      "11": {
+        "dir": "runs/ctx_own2/design/m25dl32own_s11/design",
+        "epochs": 32,
+        "fit_seconds": 672.3,
+        "fitted_rows": 1130307,
+        "predictions_sha256": "386006a74e2ec144e92034f58fa349e81c280bec24f0e9dad0a3a42980ec1fb9"
+      },
+      "12": {
+        "dir": "runs/ctx_own2/design/m25dl32own_s12/design",
+        "epochs": 32,
+        "fit_seconds": 589.5,
+        "fitted_rows": 1130307,
+        "predictions_sha256": "589e836f799a40b7fb0e9e1730ebf49dd60f384850eb3486162384e38f666325"
+      },
+      "13": {
+        "dir": "runs/ctx_own2/design/m25dl32own_s13/design",
+        "epochs": 32,
+        "fit_seconds": 687.4,
+        "fitted_rows": 1130307,
+        "predictions_sha256": "8ba87bbcfe922fea5b33cc63682f94566b4b9775ed7f2a8b7a2d1c4298bb6b9b"
+      },
+      "14": {
+        "dir": "runs/ctx_own2/design/m25dl32own_s14/design",
+        "epochs": 32,
+        "fit_seconds": 676.2,
+        "fitted_rows": 1130307,
+        "predictions_sha256": "79ec90ff70497d332ad4c31f39e7fea6ae209a226b5fce3ccc05600482dea616"
+      },
+      "15": {
+        "dir": "runs/ctx_own2/design/m25dl32own_s15/design",
+        "epochs": 32,
+        "fit_seconds": 635.8,
+        "fitted_rows": 1130307,
+        "predictions_sha256": "f4c6875b4add7bcf62c5e5a9fcf93382dd82c25beabf9895cd2940b2f386d9d8"
+      },
+      "16": {
+        "dir": "runs/ctx_own2/design/m25dl32own_s16/design",
+        "epochs": 32,
+        "fit_seconds": 452.5,
+        "fitted_rows": 1130307,
+        "predictions_sha256": "37d1f4947e92b2782d4a590e980bd43017f7c18c20896ceaffe4120995b28f48"
+      },
+      "9": {
+        "dir": "runs/ctx_own2/design/m25dl32own_s9/design",
+        "epochs": 32,
+        "fit_seconds": 670.0,
+        "fitted_rows": 1130307,
+        "predictions_sha256": "f974ef2e77b15d6d59fe2ee71c7b4a2b02a7f098af07bf5368accbb9320aa1a8"
+      }
+    }
+  },
+  "seeds": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16
+  ],
+  "selected": null,
+  "share": 0.75,
+  "specialists": {
+    "control": {
+      "error_correlation_with_control_lfpg": 1.0,
+      "rmse_lfpg": 216.69919800884813,
+      "rmse_lfpg_matched": 196.08508088938936,
+      "rmse_lfpg_unmatched": 221.4096887819921
+    },
+    "lfpg_b512": {
+      "error_correlation_with_control_lfpg": 0.9458973590879056,
+      "rmse_lfpg": 227.8311641816344,
+      "rmse_lfpg_matched": 203.29052393425343,
+      "rmse_lfpg_unmatched": 233.39446647783052
+    },
+    "lfpg_own": {
+      "error_correlation_with_control_lfpg": 0.9351683600428394,
+      "rmse_lfpg": 227.71146763454541,
+      "rmse_lfpg_matched": 203.32177519079855,
+      "rmse_lfpg_unmatched": 233.24267196848922
+    }
+  },
+  "tool_sha256": "40092d02a2946f7841358b5aed69669574e397699dca0073a55face00bfd8179"
+}
