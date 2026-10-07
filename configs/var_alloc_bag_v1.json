@@ -1,0 +1,44 @@
+{
+ "experiment_id": "var_alloc_bag_v1",
+ "declared_at_utc": "2026-10-07T08:30:00Z",
+ "declared_by": "Declaring and the governing run are research; a build under runs/submissions and any upload stay the user's word.",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "status": "DECLARED before any reading of this candidate: no ten-seed variance re-allocation value has been computed on any development or ranking row.",
+ "expectation_stated_to_the_user": "likely under 0.02 s",
+ "mechanism": "v57's variance re-allocation (configs/scout_var_alloc_v1.json, src/prc2026_scout/var_alloc.py; step 5 of docs/final_file/v69_chain.md) re-splits each airport-day's published discrepancy by w_i = exp(variance model) x P(late), two LightGBMs with bagging_fraction 0.8 / feature_fraction 0.8 fitted with one seed (20261002). Unpinned refits drift up to 0.024% of a development month (docs/pubrefit/README.md), i.e. the single-seed weights carry fit noise. This round averages each model over ten seeds; nothing else changes.",
+ "candidate": {
+  "name": "va_bag10",
+  "seeds": [
+   20261002,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19
+  ],
+  "definition": "each of the two LightGBMs (log-variance regression, late binary) is fitted once per seed with var_alloc.PARAMS and only 'seed' changed; w_i = exp(mean over seeds of the log-variance prediction) x mean over seeds of P(late); k is fitted by the shipped least-squares rule (var_alloc.slope) on the bagged out-of-fold weights; I_d, eligibility, the 100 s cap, the 600 s clip, the -12 s floor, heavy rows, the LIRF population and the two guard rows unchanged."
+ },
+ "procedure": {
+  "development": "as tools/run_pubrefit.py's ship layers (the pinned rebuild of v66's development chain): tools/scout_var_alloc.layered on the mixed tables runs/ctx_ownpoints_weight/chain/own_all_w100/rows_{ctl,cand}_<m>.parquet with v48_{ctl,cand}_<m>/, var_alloc.PARAMS pinned (deterministic, force_col_wise), keeping month m's rows; both ctl (pre-rematch, the stacker's table) and cand (post-rematch, the chain value). Then v69's stacker (configs/stack_weight_v1.json w65_bag10: v2 at LIRF, OPDI bag on LSZH OPDI rows, v3 elsewhere, weight 0.65, seeds 20261003, 11-19): month-blocked models fitted on the SHIPPED development table (runs/pubrefit/chain/ship ctl, rows_all, dmp: the training table does not change, exactly as on the ranking side, where the stacker is fitted on the stored development chain), predicting the held month from the candidate's table (its features and guards), value = max(chain + 0.65 x bag, -12); then intruder bound, identity extension, own-motion v1 (run_stack_resid_v3.Chain) and own_motion_v2, as tools/run_stack_weight.dev_score.",
+  "control_and_identity": "the same path with the single shipped seed (s1 = [20261002]) is the control. Identity (a): its ctl / cand layer values equal runs/pubrefit/layers/ship_{ctl,cand}.parquet (952d7977... / f14799bb...) 'new' to <= 1e-9 s; identity (b): its final values equal v69's development proxy runs/stack_weight/dev/w65_bag10/proxy.parquet (c088e409de153d81b006bcd26b5b2a28e0e306043a5172c2158d0ecc6e6f5cb8) to <= 1e-9 s. If either fails, the round stops and nothing is read. The governing comparison is the candidate against the same-path control (as configs/lfpg_net_dev_v1.json amendment 1); the comparison against the v69 proxy is reported beside it.",
+  "ranking": "step 5 rerun with the shipped (unpinned) settings, as the ranking chain has always run it, on the shipped step 1-4 outputs runs/ctx_ownpoints_weight/rank/dry_v66/steps (rematch/base, R, X): tools/scout_var_alloc.export with the bag. Identity first: s1 reproduces the shipped Y/vigorous-whistle_v66.parquet (12a50ea0...) byte for byte and Y/rows.parquet values to <= 1e-9; then v69's step 6-10 on it (tools/rehearse_v69.stage_c's path) reproduces v69 (192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665) byte for byte. Only if accepted: va_bag10's step 5, then the same steps 6-10 -> runs/var_alloc_bag/rank/dry_v70/ (version provisional), report against v69 (rows changed, squared change, by airport / month, LIRF population and guard rows unchanged). Never under runs/submissions."
+ },
+ "rule": {
+  "text": "v57's clauses against the same-path control: (1) no development month (January, July, November, December 2025) worse by more than 0.005%; (2) the equal-footing mean (January, July, December) of the complete-month RMSE change at most -0.02%; (3) each equal-footing month's paired-day 95% interval below zero; (4) transfer guard: per airport, the RMS of va_bag10's correction (new - ext) on the eligible ranking rows within 0.5x-2x of its RMS on the eligible development rows (cand table, out-of-fold); airports with fewer than 200 eligible rows on either side are reported, not ruled.",
+  "intervals": "tools/run_intruder_bound.interval, paired-day bootstrap over UTC take-off days, 2,000 replicates, seed 20261004",
+  "scoring": "every row of every complete month, all labels; LIRF population and guard rows included in scoring",
+  "accepted": "clauses 1-4 all hold"
+ },
+ "compute": "Azure (arcw0-3; the workstation orchestrates and hash-checks only). VMs deallocated after the hash-checked mirror.",
+ "outputs": {
+  "development": "runs/var_alloc_bag/dev/",
+  "results": "docs/var_alloc_bag/results_v1.json",
+  "ranking": "runs/var_alloc_bag/rank/",
+  "readme": "docs/var_alloc_bag/README.md"
+ }
+}
