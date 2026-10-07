@@ -14,6 +14,8 @@ import hashlib
 import json
 import sys
 import time
+import urllib.error
+import urllib.request
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -38,6 +40,22 @@ def windows() -> list[tuple[date, date]]:
     return out
 
 
+def exists(url: str) -> bool:
+    """False only for an HTTP 404 (the window is not published: 2-12 October 2025 is missing from OPDI v0.0.2); other errors raise."""
+    req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "prc2026-vigorous-whistle/0.1 (research; contact via the PRC Data Challenge)"})
+    for attempt in range(5):
+        try:
+            with urllib.request.urlopen(req, timeout=60):
+                return True
+        except urllib.error.HTTPError as ex:
+            if ex.code == 404:
+                return False
+            time.sleep(20 * (attempt + 1))
+        except Exception:
+            time.sleep(20 * (attempt + 1))
+    raise RuntimeError(f"cannot reach {url}")
+
+
 def main() -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     TMP.mkdir(parents=True, exist_ok=True)
@@ -55,6 +73,11 @@ def main() -> None:
         if out.exists() and name in src["files"]:
             continue
         url = F.URL.format(f"{a:%Y%m%d}", f"{b:%Y%m%d}")
+        if not exists(url):
+            src.setdefault("missing_windows", {})[name] = "HTTP 404 (not published)"
+            SOURCES.write_text(json.dumps(src, indent=1, sort_keys=True), encoding="utf-8")
+            print(name, "MISSING (404)", flush=True)
+            continue
         t0 = time.time()
         raw = TMP / name
         sha, size = F.fetch(url, raw)

@@ -10,7 +10,7 @@
  "protocol": {
   "data": "tools/run_adsb_ctx3.py --fold design, unchanged: the seasonal fold's fit partition (2025-02..06, 08, 09, LIRF excluded), October monitored, October predictions only",
   "inputs": "candidates: --extra-features data/external/opdi/features_v19ownopdi (the shipped own-points tables, hash-checked against docs/dig/ctx_ownpoints_features_manifest.json, with ten OPDI columns appended by tools/ctx_opdi_features.py; manifest data/external/opdi/features_v19ownopdi/manifest.json). OPDI columns are never masked by the training masking (the masked list is the ADS-B list, as shipped).",
-  "coverage_shift_mask": "fixed before the tables exist (label-free): per airport, the share of departures with opdi_has = 1 and with an opdi_stand_exit in January + July 2026 over the same shares in all of 2025; an airport whose ratio lies outside [0.5, 2.0] for either share, or whose 2025 matched share is below 2%, has all ten OPDI columns blanked (opdi_has 0, the rest NaN) in every month, development and ranking alike.",
+  "coverage_shift_mask": "fixed before the tables exist (label-free): per airport, the share of departures with opdi_has = 1 and with an opdi_stand_exit in January + July 2026 over the same shares in all of 2025; an airport whose ratio lies outside [0.5, 2.0] for either share, or whose 2025 matched share is below 2%, has all ten OPDI columns blanked (opdi_has 0, the rest NaN) in every month, development and ranking alike. AMENDED (see amendments[0]): the stand-exit criterion applies only where the stand-exit share is >= 2% in 2025 or in the ranking months.",
   "control": "C = own_all as shipped: dl32own seed mean on rows with adsb_matched = 1, m25dl32own seed mean on the others, from lever 5's GPU design fits (runs/ctx_own2/design/<variant>_s<seed>/design, seeds 9-16, L40S, configs/ctx_own2_design_v1.json, same code); reused, not refitted. The report checks each control run's variant_sha256 against this file's dl32own / m25dl32own (identical settings) and that it ran on cuda.",
   "items": {
    "opdi_all": "O = dl32opdi seed mean on matched rows, m25dl32opdi seed mean on the others (decision item)",
@@ -356,5 +356,14 @@
   "report": "docs/ctx_opdi/design_report.json"
  },
  "report": "tools/ctx_opdi_design_report.py",
- "budget": "design 16 fits, about 10-14 min each at two lanes per L40S"
+ "budget": "design 16 fits, about 10-14 min each at two lanes per L40S",
+ "amendments": [
+  {
+   "recorded_at_utc": "2026-10-07T02:14:00+00:00",
+   "when": "after the label-free OPDI coverage tables existed and BEFORE any network fit or any score with OPDI columns",
+   "change": "coverage-shift mask: the stand-exit share ratio is applied only where the stand-exit share is material (>= 2% of departures in 2025 or in the ranking months); the matched-share ratio and the 2025 matched floor (2%) are unchanged.",
+   "why": "As declared, the stand-exit ratio compared shares of 0.01-0.08% at EGLL / EHAM / LFPG / LIRF (0.0001 vs 0.0002 at EGLL gave ratio 3.2), so sampling noise in an almost absent column masked nine of ten airports and left only LSZH (docs/ctx_opdi/manifest_rule_as_declared.json, sha256 d48a643a...). The rule's purpose is to blank airports whose OPDI inputs change between 2025 and 2026; a column present on a few dozen rows cannot carry that change. Coverage is label-free and no model output was read.",
+   "effect": "masked: EDDF (stand exit 4.5% -> 19.7%, ratio 4.3), LEBL (3.1% -> 0.13%, ratio 0.04), LTFM (matched 0.08% < 2%); unmasked: EDDM, EGLL, EHAM, LEMD, LFPG, LSZH (LIRF rows are outside the network's rows). The tables are rebuilt by tools/ctx_opdi_features.py with this rule; the as-declared tables were never used by any fit."
+  }
+ ]
 }

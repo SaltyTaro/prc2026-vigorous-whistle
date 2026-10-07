@@ -6,9 +6,10 @@ take-off reference within [-900, +300] s of the supplied take-off, nearest; only
 before the supplied take-off unless named otherwise (no chain-relative column: the network never sees the chain's prediction):
   opdi_ref_rel, opdi_stand_exit, opdi_apron_exit, opdi_twy_first, opdi_first_seen, opdi_rwy_entry, opdi_n_twy, opdi_deice,
   opdi_deice_dur, opdi_has (1 when matched, else 0; the others NaN when absent).
-Coverage-shift mask (declared in configs/ctx_opdi_design_v1.json before any fit, label-free): per airport, the share of departures with
-opdi_has = 1 and with an opdi_stand_exit in the two ranking months over the same shares in all of 2025; an airport whose ratio lies outside
-[0.5, 2.0] for either share, or whose 2025 matched share is below 2%, has all ten columns blanked (opdi_has 0, the rest NaN) in every month.
+Coverage-shift mask (declared in configs/ctx_opdi_design_v1.json before any fit, label-free; amendment 1 before any fit): per airport, the share
+of departures with opdi_has = 1 and with an opdi_stand_exit in the two ranking months over the same shares in all of 2025; an airport whose matched
+ratio lies outside [0.5, 2.0], whose stand-exit ratio does so while that share is material (>= 2% in either period), or whose 2025 matched share is
+below 2%, has all ten columns blanked (opdi_has 0, the rest NaN) in every month.
 Output: data/external/opdi/features_v19ownopdi/features_v19_<M>.parquet = the shipped own-points table of M
 (data/external/adsblol/features_v19own, hash-checked against docs/dig/ctx_ownpoints_features_manifest.json) with the ten columns appended
 (left join on MVT_ID_mvt), manifest.json (hashes, coverage, mask). Departure labels and block times are never read.
@@ -42,6 +43,7 @@ COLS = ["opdi_ref_rel", "opdi_stand_exit", "opdi_apron_exit", "opdi_twy_first", 
         "opdi_deice", "opdi_deice_dur", "opdi_has"]
 RATIO = (0.5, 2.0)
 MIN_2025_MATCHED = 0.02
+MATERIAL_STAND_EXIT = 0.02  # amendment 1 (configs/ctx_opdi_design_v1.json): the stand-exit ratio applies only when that share is material
 
 
 def sha(path: Path) -> str:
@@ -120,13 +122,16 @@ def main() -> None:
         for key in ("matched", "stand_exit"):
             base, rk = share(y25, key), share(RANKING, key)
             r[key] = {"2025": base, "ranking": rk, "ratio": (rk / base) if base > 0 else None}
-        bad = (r["matched"]["2025"] < MIN_2025_MATCHED or any(v["ratio"] is None or not RATIO[0] <= v["ratio"] <= RATIO[1] for v in r.values()))
+        def off(v):
+            return v["ratio"] is None or not RATIO[0] <= v["ratio"] <= RATIO[1]
+        material = max(r["stand_exit"]["2025"], r["stand_exit"]["ranking"]) >= MATERIAL_STAND_EXIT
+        bad = r["matched"]["2025"] < MIN_2025_MATCHED or off(r["matched"]) or (material and off(r["stand_exit"]))
         ratios[ap] = r
         if bad:
             mask.append(ap)
     print("masked airports:", mask, flush=True)
     OUT.mkdir(parents=True, exist_ok=True)
-    manifest = {"created_at_utc": pd.Timestamp.now("UTC").isoformat(), "columns": COLS, "mask_rule": {"ratio": RATIO, "min_2025_matched": MIN_2025_MATCHED},
+    manifest = {"created_at_utc": pd.Timestamp.now("UTC").isoformat(), "columns": COLS, "mask_rule": {"ratio": RATIO, "min_2025_matched": MIN_2025_MATCHED, "material_stand_exit": MATERIAL_STAND_EXIT},
                 "masked_airports": mask, "coverage_ratios": ratios, "coverage_by_airport_month": cov, "code_sha256": sha(Path(__file__)),
                 "lever7_code_sha256": sha(ROOT / "tools/run_opdi_stack.py"), "keymap_sha256": sha(KEYMAP), "files": {}}
     for month in MONTHS:
