@@ -1,0 +1,44 @@
+{
+ "experiment_id": "nbr_state_v1",
+ "declared_at_utc": "see commit (7 October 2026, before the governing run)",
+ "declared_by": "Declaring and the governing run are research; a build under runs/submissions and any upload stay the user's word.",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "status": "DECLARED before its governing run. August, September and October 2025 have not been read for this lever (no residual, no score).",
+ "disclosure": "Exploration before this declaration (docs/quick_screens/README.md, 7 October, local scratch scripts) read the four development months on v70's development proxy for: neighbour windows 900 / 1,800 s; weights 0.5 / 0.75 / 1.0; focal rows unmatched only / all; non-ADS-B baselines v9 / base / mix / committee / nets (only v9 carries the signal); a model-free gate-row taxi excess (weak, eq -0.006%); gate-only neighbours (eq -0.013%); with / without per-airport intercepts; raw / day-demeaned neighbour means; an intercept-only control (eq -0.003%). The declared form (day-demeaned, slope only, 900 s, unmatched focal rows, v9 baseline, all matched neighbours) read: w0.50 Jan -0.0104 / Jul -0.0509 / Nov -0.0217 / Dec -0.0464% (eq -0.0359%), w0.75 -0.0139 / -0.0537 / -0.0227 / -0.0609% (eq -0.0428%), every interval below zero for both. Clauses 1-3 are therefore NOT a clean test. Clause 4 (three months never read for this lever, on the older twelve-month predictor) is the clean test and is binding. The ranking-side transfer ratios were also computed in exploration (label-free): EHAM about 2x (January 2026 disruption days), LEMD about 0.5x, others 0.75-1.3x; clause 5's per-airport exclusion is declared for that reason.",
+ "mechanism": "v70's residuals are correlated between departures close in time at an airport (lag-1 0.11-0.26). On ADS-B-matched departures the chain's value differs from the non-ADS-B v9 prediction by what ADS-B (and the later models) see of the ground state now; that difference, averaged over matched neighbours within 15 minutes and taken relative to the airport-day's mean, predicts the residual of unmatched departures, whose own value cannot see the current ground state. Day-demeaning leaves the day level to the published-total reconciliation; slope-only (no intercept) carries no 2025 airport bias.",
+ "procedure": {
+  "matched_flag": "The base predictor's own ADS-B routing: development = v70 development proxy cls 'm' (runs/oooi_lhr/dev_v70_proxy.parquet); fresh = runs/daily_totals/rows12.parquet column 'matched'; ranking = runs/final_dryrun/run/recipe/detail.parquet scope in {matched_no_lirf, lirf_nonpop_matched} (equal to matches2_2026-* membership).",
+  "excess": "ex_j = value_j - v9_j on matched rows j. value = the base predictor (development: v70 proxy 'value'; fresh: rows12 'stack'; ranking: the uploaded v70 file). v9: development runs/lomo_dev/rows.parquet 'v9'; fresh scratch/v24/<month>.parquet 'v9' (cross-fit, out of sample); ranking runs/final_dryrun/run/recipe/detail.parquet 'v9'.",
+  "neighbour_mean": "For each row i: m_i = mean of ex_j over matched rows j != i at the same airport (ADEP) with |takeoff_j - takeoff_i| <= 900 s; undefined if fewer than 3 such j. x_i = m_i - mean of ex_j over all matched rows of the same airport and UTC take-off date.",
+  "scope": "Unmatched rows with x defined; Development: dev proxy cls 'pop' rows are fixed.",
+  "slope": "Per airport, b = sum(x * y) / sum(x^2) over in-scope rows of the fitting months, y = clip(label - value, -1800, 1800). Development: each month fitted on the other three development months. Fresh and ranking: fitted on all four development months (v70 proxy). Airports with fewer than 200 fitting rows keep the base value.",
+  "value": "new = max(value + clip(w * b * x, -120, 120), -12), applied LAST (after v70's step 11). Ranking: in-scope rows np.rint into the file's dtype; every other row byte-identical to v70."
+ },
+ "candidates": [
+  {
+   "name": "w50",
+   "weight": 0.5
+  },
+  {
+   "name": "w75",
+   "weight": 0.75
+  }
+ ],
+ "rule": {
+  "clause_1": "No development month (January, July, November, December 2025) worse than v70's development proxy by more than 0.005% of complete-month RMSE.",
+  "clause_2": "Equal-footing mean (January, July, December) of the complete-month RMSE change at most -0.02%.",
+  "clause_3": "Paired-day 95% interval below zero for January, July and December (tools/run_intruder_bound.interval, 2,000 replicates over UTC take-off days, seed 20261004).",
+  "clause_4_fresh": "BINDING clean test on August, September and October 2025 against rows12 'stack' (every row of each month, all labels), slopes from the four development months: every month better (complete-month RMSE change < 0) and at least two of the three paired-day intervals (same function and seed) strictly below zero.",
+  "clause_5_transfer": "Per airport, RMS of the ranking change (both ranking months pooled, in-scope rows) within 0.5x-2x of the RMS of the out-of-month development change on in-scope rows. An airport outside that range keeps v70 on every row; the candidate stands on the remaining airports (the dry run is built that way). Reported per airport.",
+  "selection": "Among candidates passing clauses 1-4, the lowest clause-2 mean; ties -> the lower weight. None passing -> v70 stays.",
+  "scoring": "Every row of every complete month, all labels; LIRF population and guard rows included in scoring."
+ },
+ "compute": "Local and light (pandas over existing tables; no fit beyond per-airport least squares).",
+ "outputs": {
+  "tool": "tools/run_nbr_state.py",
+  "results": "docs/nbr_state/results_v1.json",
+  "readme": "docs/nbr_state/README.md",
+  "ranking": "runs/nbr_state/rank/dry_v71/vigorous-whistle_v71.parquet (version provisional; never under runs/submissions)"
+ }
+}
