@@ -465,13 +465,14 @@ def rank_final(decl: dict, name: str) -> None:
     out = base / "final"
     if out.exists():
         raise ValueError(f"{out} exists.")
-    import run_ownpoints_weight as W
-    W.OUT = OUT  # run_stack_weight.rank_inputs sets E.CHAIN = W.OUT / "chain": the training tables are this round's chain files
+    import run_ownpoints_weight as OWW
+    OWW.OUT = OUT  # run_stack_weight.rank_inputs sets E.CHAIN = W.OUT / "chain": the training tables are this round's chain files
     E.CHAIN = OUT / "chain"
     D.CANDIDATE_CHAIN = name
     D.SH = base / "steps"
     KW.OUT = base / "stackfit"
-    KW.rank_fit()
+    if not (base / "stackfit/rank/preds.parquet").exists():
+        KW.rank_fit()
     P = pd.read_parquet(base / "stackfit/rank/preds.parquet")
     values, use, _ = KW.rank_value(P, W, K)
     st = out / "steps/stack/vigorous-whistle_v70.parquet"
