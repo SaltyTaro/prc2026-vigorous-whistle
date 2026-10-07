@@ -1,0 +1,78 @@
+{
+  "accepted": false,
+  "candidate_source_sha256": "25ae9e1861800c4b370fb0c22afaa7b248986de46a92159b6251ec94feac879a",
+  "checks": {
+    "1_no_month_worse_than_0.005pct": true,
+    "2_equal_footing_mean_pct": -0.009902470092123158,
+    "2_mean_ok": false,
+    "3_every_equal_interval_below_zero": true,
+    "4_guard": {
+      "EGLL": 0.7395,
+      "EHAM": 0.8856,
+      "LFPG": 0.927
+    }
+  },
+  "control_sha256": "938a91cd84a9e6c0773afb72dec490fdf30c6762ee3f505469b3a26e3ab56aca",
+  "created_at_utc": "2026-10-07T01:48:20.271076+00:00",
+  "declaration": "configs/opdi_stack_guard3_v1.json",
+  "declaration_sha256": "a8d8644ba312508f7025d0ae1995b5aa44d6eded05e0e00c85cf93b46a21e428",
+  "months": {
+    "2025-01": {
+      "control_rmse": 320.04004504990695,
+      "hi": -0.0008645702436899109,
+      "lo": -0.013582451019895081,
+      "pct": -0.003449602171123889,
+      "rmse": 320.02900494156444,
+      "rows_changed": 35629,
+      "squared_change": 523116.40917276795,
+      "sse_change_by_airport": {
+        "EGLL": 349973.8036131859,
+        "EHAM": -916823.6562014818,
+        "LFPG": -519303.09192276
+      }
+    },
+    "2025-07": {
+      "control_rmse": 250.86504819377097,
+      "hi": -0.00046511568785462346,
+      "lo": -0.004853865059346318,
+      "pct": -0.0026808981241965846,
+      "rmse": 250.8583227573997,
+      "rows_changed": 33808,
+      "squared_change": 386525.40276281367,
+      "sse_change_by_airport": {
+        "EGLL": -235830.32193994522,
+        "EHAM": -224083.28165644407,
+        "LFPG": -183610.91383194923
+      }
+    },
+    "2025-11": {
+      "control_rmse": 181.99334069805133,
+      "hi": 0.00466007221994857,
+      "lo": -0.010802835032598102,
+      "pct": -0.003172791524952423,
+      "rmse": 181.98756642876168,
+      "rows_changed": 30816,
+      "squared_change": 265139.68316286465,
+      "sse_change_by_airport": {
+        "EGLL": -58502.185437738895,
+        "EHAM": -144098.63341623545,
+        "LFPG": -138576.2048342228
+      }
+    },
+    "2025-12": {
+      "control_rmse": 163.54962152720137,
+      "hi": -0.012294292857379666,
+      "lo": -0.03734670347884661,
+      "pct": -0.023576909981049,
+      "rmse": 163.51106158015955,
+      "rows_changed": 33725,
+      "squared_change": 354084.33920174564,
+      "sse_change_by_airport": {
+        "EGLL": -858752.5564966202,
+        "EHAM": -651916.2152031958,
+        "LFPG": -578757.2072658539
+      }
+    }
+  },
+  "official_scores_used": "none"
+}
