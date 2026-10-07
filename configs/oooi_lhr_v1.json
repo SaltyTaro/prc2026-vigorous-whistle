@@ -1,0 +1,42 @@
+{
+ "experiment_id": "oooi_lhr_v1",
+ "declared_at_utc": "to be set to the commit time of this file",
+ "declared_by": "Declaring and the governing run are research; a build under runs/submissions and any upload stay the user's word.",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "status": "DECLARED before its governing run. The restricted scope below has not been scored on any month; October 2025 has not been scored for this lever.",
+ "disclosure": "WEAKER THAN v57's RULE, by necessity and by choice. (a) The Heathrow formats exist only from October 2025 (a receiver near LHR came online then): January and July 2025 have no rows, so the development rule is read on November and December only. (b) The extension screen already read November and December for the full family on all classes (w50: -0.0969% / -0.0186%; gain intervals above zero). (c) The restriction to rows ADS-B did not trace from the stand (dark and unmatched) is chosen after that screen, motivated by its by-class reading (unmatched EGLL rows gained about 2.4x more per row than matched ones). The development clauses are therefore not clean; October 2025 (counted, never scored) is the only clean month and is thin (106 guarded family rows before the class restriction).",
+ "mechanism": "Airline data-link messages heard near Heathrow carry the airline OUT time: BA label 16 MVT, United label 13 OUT EVENT, Aer Lingus label 80 MVA (AD), Virgin label QP. After a per-format offset the OUT time matches EGLL's recorded off-block within 30 s on 49-61% and within 2 min on 87-95% of 2025 rows. Where ADS-B traced the pushback from the stand (gate class) v69 is already close; elsewhere the OUT time is new information.",
+ "procedure": {
+  "messages_and_formats": "tools/oooi_ext_extract.py, oooi_ext_pack.py, oooi_ext_scan.py, oooi_ext_formats.py as committed in 84df504, unchanged; the EGLL_family is BA_MVT16, UA_OUT13, MVA_AD and QP_VS with the screen's membership and priority order, one pin per departure.",
+  "source_guard": "As in the screen, label-free and uniform: 180 s <= take-off - OUT <= 3,600 s, and |take-off - OFF| <= 180 s where an OFF time exists.",
+  "scope": "ADEP_mvt == 'EGLL' departures with a guarded EGLL_family pin AND ADS-B class dark or unmatched: class from data/external/adsblol/matches/matches2_<month>.parquet exactly as tools/hunt_census.py (gate True -> gate, gate False -> dark, no match -> unm); gate rows keep the chain. Rows of tools/run_stack_resid.fixed_rows keep the chain. Rows in oooi_pin_v1's scope (LFPG) are not touched.",
+  "value": "pin = (take-off - OUT) + offset(format), offset(format) = mean over in-scope guarded fitting rows of label - (take-off - OUT); value = max(0.5 x pin + 0.5 x chain, -12), applied LAST, after v70's step 11.",
+  "offsets": "Development: November fitted on December and December on November (July 2025 has no rows). If a format has no in-scope fitting row in the other month, its offset is the family's pooled offset from that month. October and ranking: fitted on November and December 2025.",
+  "development_control": "v70's development proxy: runs/stack_weight/dev/w65_bag10/proxy.parquet (c088e409...) with oooi_pin_v1 w50 applied as tools/run_oooi_pin.py does; it must reproduce results_v1.json's w50 complete-month RMSEs exactly, else the round stops. Saved as runs/oooi_lhr/dev_v70_proxy.parquet with its SHA-256.",
+  "fresh_control": "runs/daily_totals/rows12.parquet column 'stack', month 2025-10, every row of the month.",
+  "ranking": "From the uploaded v70 runs/submissions/vigorous-whistle_v70.parquet (f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f): in-scope EGLL rows take the value, np.rint into the file's dtype; every other row byte-identical to v70. Output runs/oooi_lhr/rank/dry_v71/vigorous-whistle_v71.parquet (version provisional; never under runs/submissions)."
+ },
+ "candidates": [
+  {
+   "name": "lhr_w50",
+   "weight": 0.5
+  }
+ ],
+ "rule": {
+  "clause_1": "No development month (January, July, November, December 2025) worse than the control by more than 0.005% of complete-month RMSE.",
+  "clause_2": "Mean of the complete-month RMSE change over November and December 2025 (the months the source exists) at most -0.02%.",
+  "clause_3": "Paired-day 95% interval of the complete-month RMSE change strictly below zero for November and for December 2025 (tools/run_intruder_bound.interval, 2,000 replicates over UTC take-off days, seed 20261004).",
+  "clause_4_fresh": "Binding clean check, October 2025 against rows12 'stack', same scope / guard / value, offsets from November and December: complete-month RMSE change below zero, and at most 2% of pinned rows with |pin - label| > 1,800 s. The paired-day interval is reported, not ruled (too few rows).",
+  "clause_5_transfer": "RMS of the ranking change (candidate - v70 on in-scope rows) within 0.5x-2x of the RMS of the out-of-month development change on in-scope rows.",
+  "selection": "lhr_w50 if clauses 1-5 pass; otherwise v70 stays.",
+  "scoring": "Every row of every complete month, all labels."
+ },
+ "compute": "Local and light (the filtered message tables are already in runs/oooi_ext/); no VM unless a re-extraction is needed, then one VM deallocated after the hash-checked copy back.",
+ "outputs": {
+  "results": "docs/oooi_lhr/results_v1.json",
+  "readme": "docs/oooi_lhr/README.md",
+  "runs": "runs/oooi_lhr/",
+  "ranking": "runs/oooi_lhr/rank/dry_v71/"
+ }
+}
