@@ -23,6 +23,7 @@ for step in "$@"; do
     chain_cand) args=(--chain lfpg_mix_w100) ;;
     stage1) args=(--stage1) ;;
     devm_2025-01|devm_2025-07|devm_2025-11|devm_2025-12) args=(--dev-month lfpg_mix_w100 "${step#devm_}") ;;
+    devmown_2025-01|devmown_2025-07|devmown_2025-11|devmown_2025-12) args=(--dev-month own_all_w100 "${step#devmown_}") ;;
     score) args=(--score) ;;
     rsteps_unpinned_own) args=(--rank-steps own_all_w100) ;;
     rsteps_pinned_own) args=(--rank-steps own_all_w100 --pinned) ;;

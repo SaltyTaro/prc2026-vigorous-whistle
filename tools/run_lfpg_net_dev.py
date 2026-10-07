@@ -183,18 +183,32 @@ def build_chain(decl: dict, name: str) -> None:
     import run_ctx_ownpoints_chain as CH
     patch_members(decl)
     d = CH.OUT / name
-    if (d / "cand.parquet").exists():
-        raise ValueError(f"{d} exists; never overwrite.")
-    CH.step_model_part({"candidates": CANDS}, name, False)
-    CH.step_chain(name)
+    if not (d / "cand.parquet").exists():
+        CH.step_model_part({"candidates": CANDS}, name, False)
+        CH.step_chain(name)
     got = {f: sha256_file(d / f) for f in SHIP_SHA}
     rec = {"created_at_utc": utc_now(), "name": name, "files": got, "var_alloc_params": _VA.PARAMS}
     if name == "own_all_w100":
-        rec["identity_equals_ship"] = all(got[f].startswith(SHIP_SHA[f]) for f in SHIP_SHA)
-        print("identity: own_all_w100 chain files equal the ship files:", rec["identity_equals_ship"], flush=True)
+        # amendment 1 (configs/lfpg_net_dev_v1.json): byte identity is reported; the identity is numeric (<= 1e-9 s on every column)
+        rec["byte_identical_to_ship"] = {f: got[f].startswith(SHIP_SHA[f]) for f in SHIP_SHA}
+        diffs = {}
+        for f in SHIP_SHA:
+            a, b = pd.read_parquet(d / f), pd.read_parquet(SHIP / f)
+            if list(a.columns) != list(b.columns) or not a[ID].equals(b[ID]):
+                raise ValueError(f"identity: {f} differs in layout from the ship file.")
+            for c in a.columns:
+                if a[c].equals(b[c]):
+                    continue
+                if not pd.api.types.is_numeric_dtype(a[c]) or not np.array_equal(a[c].isna().to_numpy(), b[c].isna().to_numpy()):
+                    raise ValueError(f"identity: {f}:{c} differs beyond rounding.")
+                diffs[f"{f}:{c}"] = float(np.nanmax(np.abs(a[c].to_numpy(dtype=float) - b[c].to_numpy(dtype=float))))
+        rec["max_abs_diff_vs_ship"] = diffs
+        rec["identity_equals_ship"] = bool(max(diffs.values(), default=0.0) <= 1e-9)
+        print("identity: own_all_w100 chain files equal the ship files (bytes)", rec["byte_identical_to_ship"], "max |diff|", diffs,
+              "->", rec["identity_equals_ship"], flush=True)
     write_json(d / "build.json", rec)
     if name == "own_all_w100" and not rec["identity_equals_ship"]:
-        raise ValueError("identity: the rebuilt control chain differs from runs/pubrefit/chain/ship.")
+        raise ValueError("identity: the rebuilt control chain differs from runs/pubrefit/chain/ship beyond 1e-9 s.")
 
 
 def dev_month(name: str, m: str) -> None:
@@ -280,6 +294,20 @@ def score(decl: dict) -> None:
     if imax != 0.0:
         write_json(OUT / "dev/identity_failed.json", res)
         raise ValueError("identity (b) failed; nothing is read.")
+    # amendment 1: the control rebuilt through this VM path (rebuilt chain files, stacking predictions refitted on them)
+    pr = pd.concat([pd.read_parquet(OUT / f"stack/own_all_w100/dev/preds_{m}.parquet") for m in months], ignore_index=True)
+    vr, tr = chain_value(OUT / "chain/own_all_w100", pr, chain, keys, t12, trig)
+    if not tr[ID].equals(ti[ID]):
+        raise ValueError("Row order differs between the rebuilt control and the control.")
+    rmax = float(np.abs(vr - c).max())
+    res["identity"]["c_rebuilt_control_max_abs_vs_control"] = rmax
+    res["identity"]["c_rebuilt_control_rows_differing"] = int((np.abs(vr - c) > 0).sum())
+    print("identity (c): the control rebuilt on this path vs the v69 development proxy max |diff|", rmax, flush=True)
+    if rmax > 1e-6:
+        write_json(OUT / "dev/identity_failed.json", res)
+        raise ValueError("identity (c) failed; nothing is read.")
+    c_declared = c
+    c = vr  # governing comparison against the same-path control (amendment 1); the declared control is reported beside it
     cd = OUT / "chain/lfpg_mix_w100"
     pc = pd.concat([pd.read_parquet(OUT / f"stack/lfpg_mix_w100/dev/preds_{m}.parquet") for m in months], ignore_index=True)
     vc, tc = chain_value(cd, pc, chain, keys, t12, trig)
@@ -310,6 +338,12 @@ def score(decl: dict) -> None:
     guard = member_guard(decl)
     checks["4_member_transfer_guard"] = guard["ok"]
     checks["accepted"] = bool(checks["1_no_month_worse_than_0.005pct"] and checks["2_mean_ok"] and checks["3_every_equal_interval_below_zero"] and guard["ok"])
+    vs_declared = {}
+    for m in months:
+        mm = tt["month"].eq(m).to_numpy()
+        y = tt["label"].to_numpy()[mm]
+        vs_declared[m] = float(100 * (np.sqrt(np.mean((y - vc[mm]) ** 2)) / np.sqrt(np.mean((y - c_declared[mm]) ** 2)) - 1))
+    res["candidate_vs_declared_control_pct"] = vs_declared
     fx = ti["cls"].eq("LIRF_pop").to_numpy() | ti[ID].isin(GUARD).to_numpy()
     res.update({"months": out, "checks": checks, "transfer_guard_member": guard, "fixed_rows_moved": int((np.abs(vc - c)[fx] > 1e-9).sum()),
                 "selected_candidate": "lfpg_mix_w100" if checks["accepted"] else None, "proxy": {"path": proxy.relative_to(ROOT).as_posix(), "sha256": sha256_file(proxy)},

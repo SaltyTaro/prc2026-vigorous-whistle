@@ -291,5 +291,14 @@
  "selection": "runs/lfpg_net/dev/selection.json",
  "report": "docs/lfpg_net/results_v1.json",
  "export_report_dir": "docs/lfpg_net",
- "automatic_submission": false
+ "automatic_submission": false,
+ "amendments": [
+  {
+   "recorded_at_utc": "2026-10-07T06:09:08+00:00",
+   "when": "after the control-side identity runs on the Linux VM and BEFORE any candidate fit, member table or candidate reading exists (the GPU fits were still running; no lfpg_mix table had been built)",
+   "found": "identity (a) as declared (byte for byte) fails only through cross-platform float rounding: the control chain rebuilt on arcw1 (Linux) gives dmp.parquet and rows_all.parquet byte-identical to runs/pubrefit/chain/ship (built on the Windows workstation), and ctl.parquet / cand.parquet equal to 4.5e-13 s in `new` (186 / 1,229 rows differ in the last bits) and 5.6e-17 in `k`. The ranking path reproduced v69 byte for byte on the same VM (steps 1-5 byte-identical except the float side table Y/rows.parquet, 5.8e-11).",
+   "change": "(a) becomes numeric: every column of the rebuilt control chain files within 1e-9 s of the ship files (byte equality reported). (c) NEW: the control is rebuilt through the whole VM path (the ten-seed stacking predictions refitted on the rebuilt control chain files, weight 0.65, then the chain) and must equal the v69 development proxy on every row to 1e-6 s; the GOVERNING comparison is the candidate against this same-path control (identical code, platform and float path), and the comparison against the declared control (the v69 development proxy) is reported beside it. Rule, candidate and everything else unchanged.",
+   "why": "a byte-for-byte cross-platform identity is not attainable for float side columns; comparing a Linux-built candidate with a Windows-built control would mix float paths. The same-path control removes that without any reading of the candidate."
+  }
+ ]
 }
