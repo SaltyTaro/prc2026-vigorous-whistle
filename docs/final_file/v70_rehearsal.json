@@ -1,0 +1,926 @@
+{
+ "expected": {
+  "v66": "b4ea727e1644b6add104f44832898bfecfd3d5607f7d6a9ce0471efe581322e4",
+  "v68": "d41d8705e75a71e865fe21a8d6ad2f62044a5ed07f125fd208067914b2b10eab",
+  "v69": "192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665",
+  "v70": "f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f"
+ },
+ "official_scores_used": "none",
+ "runs": {
+  "from_v69_rehearsal": {
+   "byte_identical": {
+    "70": true
+   },
+   "code": {
+    "src/prc2026_submission/contract.py": "c818bba565fed582f5a7490e4ab615947d2bf2a3f583e9b81b6aa43d880fb476",
+    "tools/export_ctx_ownpoints.py": "03e6bda44a26d6a2563dc255bcb7cc5679cf42c87eca18f0b0e54b7a3b2a0dc1",
+    "tools/export_daily_totals.py": "77cdcb37c1b0790481068dce3283580925e5f15552f348cfd405a2d9aaf47efd",
+    "tools/export_disagreement_gate.py": "cac6682f9d7c365d5efc217a5e3262096030a1ca012ca682c6f29923cee27986",
+    "tools/export_network_member.py": "1a71bc4db897bbf6e044b914db861a617f7d3f6fbebaaf931f8429abdc80b712",
+    "tools/export_ownpoints_weight_override.py": "e99bbb5ffa21789a166310a8b19fb6c55a4051c0dc07afa505897c288e67d03a",
+    "tools/oooi_pin_extract.py": "8a3f27f212129a6e75db506e7e20b2db4b5d3013c9ceba9de7ed713bc56529be",
+    "tools/oooi_pin_join.py": "82a6a4ab7fcb2c14b945bf83457bf284aa48718269fa000645938748bf709eac",
+    "tools/oooi_pin_pack.py": "e573a2d98b5f45d482e3cc1ea69631c92f2740621885970f46c7269e20494004",
+    "tools/rehearse_v69.py": "8eb240985c88e0f4f85d27dafc442901defca529a2c8b55a16c3cec7900dccda",
+    "tools/rehearse_v70.py": "67568587dc5e119cd500992e87695334ad8bbefd144ddd2fae9c5b5476737fce",
+    "tools/run_ctx_ownpoints_chain.py": "4fa1a5244fe0520fa9701e352d29c3b1c97ebfe23cc34ee6f0120082a13d5a7d",
+    "tools/run_intruder_bound.py": "b0ae6ad5bce149005ca3dba0cdc4d40f3776c29e643eeaa88790c3ae92668c56",
+    "tools/run_intruder_identity.py": "d070b37f9781b512034a4e2cb4bf1a312044c1f0b82e167437b939ba5468a882",
+    "tools/run_network_member.py": "a76f39a29a492c32badad26bf3964adc01bc8a2125440fddea74d1d3bb0e5ca4",
+    "tools/run_oooi_pin.py": "0dfeb502565c91030e61925a59d207e36123437f7d52f7bbc01613ada09b4588",
+    "tools/run_opdi_stack.py": "4165849e9016b06bbd45c022ac64993eaf44535e3d13d1445a3f3555aef4c6fd",
+    "tools/run_opdi_stack_decl.py": "ddb16f9b554fafd2db11da17eecae71729c58765c747be4c4594e187eb39754a",
+    "tools/run_opdi_stack_lszh.py": "5938f4db91f85950b1007bc8eec340891343f55aa243117849764097349c26db",
+    "tools/run_own_motion.py": "10585ae33764629cc408bde67793c87cc37cd5fd6cff2ef69415f4e10d7637ff",
+    "tools/run_own_motion_v2.py": "1fa8f880cd107b06e2cc00aa8d89602c9d3bc6afd35be7567f7a68c5e276d2b7",
+    "tools/run_ownpoints_weight.py": "5260ed72b57dd76ad5d4ed2e4d31673c03503a8cdff7dbc8df3eac93f24d53c6",
+    "tools/run_rematch_nonm.py": "640d46ecaf9e81a3597bfa31b7a704f9598099e8f3b4e94c6bd24e2fbfff0a7a",
+    "tools/run_stack_resid.py": "84e9e5034918b3da19bfdf91b7dd8c5123eb0c8bcc3661f0fbdaeb654926e71e",
+    "tools/run_stack_resid_v3.py": "d3c5f995d39633c7383916e1f80d7553f2bbbecc5461f2c579e816281c071f52",
+    "tools/run_stack_weight.py": "dd6f70ee6ea39bc38662e01b0e189c886be2a1f9fdd63c79c2e8115655e85cb9",
+    "tools/scout_extreme_shift.py": "e67a0f510807466e6f6fb4a7c1ced9c40193ca77c611461fcf00540263e37b3c",
+    "tools/scout_var_alloc.py": "79e1dcdb29981686252749dd4287184bdb5dd4333976e79a8857c6ea204bf98a"
+   },
+   "created_at_utc": "2026-10-07T12:46:55.899197+00:00",
+   "environment": {
+    "lightgbm": "4.7.0",
+    "numpy": "2.4.2",
+    "pandas": "3.0.0",
+    "platform": "Linux-7.0.0-1014-azure-x86_64-with-glibc2.39",
+    "pyarrow": "23.0.1",
+    "python": "3.12.3",
+    "sklearn": "1.7.2"
+   },
+   "extraction_binding": {
+    "all_ok": true,
+    "dev": {
+     "bytes": 11750040061,
+     "digest_ok_column_all_true": true,
+     "every_message_from_a_receipted_file": true,
+     "files": 25499,
+     "files_by_month_kind": {
+      "2025-07|acars": 2044,
+      "2025-07|hfdl": 1298,
+      "2025-07|vdl2": 2114,
+      "2025-11|acars": 2230,
+      "2025-11|hfdl": 2199,
+      "2025-11|vdl2": 2231,
+      "2025-12|acars": 1393,
+      "2025-12|hfdl": 1419,
+      "2025-12|vdl2": 1575,
+      "2026-01|acars": 952,
+      "2026-01|hfdl": 663,
+      "2026-01|vdl2": 942,
+      "2026-07|acars": 2242,
+      "2026-07|hfdl": 1960,
+      "2026-07|vdl2": 2237
+     },
+     "files_equal_n_selected": true,
+     "files_receipt": "docs/oooi_pin/receipts/archive_files.csv.gz",
+     "files_receipt_sha256": "68206fd886380a4f943a26b6184796d9a1ecd7098b04799cc21f4f47db878a2f",
+     "github_digest_equal_sha256": true,
+     "github_digest_present": 25499,
+     "lines": 137668633,
+     "listing_pages_hashed": 7,
+     "listing_receipt": "docs/oooi_pin/receipts/listing_receipt.json",
+     "listing_receipt_sha256": "4d283ea5d7c19ca5de6d19f8fd1fb3a88cf9bd4b1b540a4832c1478b04bbb0b0",
+     "listing_retrieved_utc": "2026-10-07T10:01:13.282004+00:00",
+     "message_source_files": 14577,
+     "messages": 257969,
+     "messages_table": "runs/oooi_pin/messages_unique.parquet",
+     "messages_table_sha256": "13a089c2973b42f5d0848affcef438a352fb9ede5a0f8b148ec75a18b2bc14d4",
+     "months": [
+      "2025-07",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-07"
+     ],
+     "n_assets_total": 72009,
+     "n_selected": 25499,
+     "sha256_well_formed": true,
+     "unique_names": 25499,
+     "unique_urls": 25499,
+     "urls_on_archive_repos": true
+    },
+    "fresh": {
+     "bytes": 5711654029,
+     "digest_ok_column_all_true": true,
+     "every_message_from_a_receipted_file": true,
+     "files": 17995,
+     "files_by_month_kind": {
+      "2025-08|acars": 2193,
+      "2025-08|hfdl": 1482,
+      "2025-08|vdl2": 2247,
+      "2025-09|acars": 2038,
+      "2025-09|hfdl": 1661,
+      "2025-09|vdl2": 2038,
+      "2025-10|acars": 2175,
+      "2025-10|hfdl": 1977,
+      "2025-10|vdl2": 2184
+     },
+     "files_equal_n_selected": true,
+     "files_receipt": "docs/oooi_pin/receipts/fresh_archive_files.csv.gz",
+     "files_receipt_sha256": "b3be6bde92a4bebf90a28c55e1df4bf4c0b0ae409647ad553405ad6df4d3561a",
+     "github_digest_equal_sha256": true,
+     "github_digest_present": 17995,
+     "lines": 62368867,
+     "listing_pages_hashed": 7,
+     "listing_receipt": "docs/oooi_pin/receipts/fresh_listing_receipt.json",
+     "listing_receipt_sha256": "06dd1b1c16adbf72481d7a36aa0308e828cf0800f8d64ffaf136fd1757461eaa",
+     "listing_retrieved_utc": "2026-10-07T10:25:57.966314+00:00",
+     "message_source_files": 10476,
+     "messages": 132178,
+     "messages_table": "runs/oooi_pin/fresh/messages_unique.parquet",
+     "messages_table_sha256": "bb2977283c4043ca35a1a02ed6a98b9c36b0ea513d67f7105741dcbea2cb0f21",
+     "months": [
+      "2025-08",
+      "2025-09",
+      "2025-10"
+     ],
+     "n_assets_total": 72011,
+     "n_selected": 17995,
+     "sha256_well_formed": true,
+     "unique_names": 17995,
+     "unique_urls": 17995,
+     "urls_on_archive_repos": true
+    }
+   },
+   "inputs": {
+    "configs/adsb_ctx3_combo_dev_v1.json": "7f594b5386caa3333df43acf4244754e69ef0aed2fbe8ae5cc26556c17ce8577",
+    "configs/adsb_ctx3_mask_dev_v1.json": "d81817a201e561fbeda8c1b1bbee754129f78fe32b48bb7eca09a95f2556858d",
+    "configs/ctx_ownpoints_dev_v1.json": "175a0e3dec69cf4bfca0200adbe84ac1e84a7311374b1f7719ae481b24d63441",
+    "configs/ctx_ownpoints_network_v1.json": "8013ddae2a05522d5944aa958336d6b094eca8e676dd65afd58414fc84a50be2",
+    "configs/ctx_ownpoints_weight_v1.json": "a706ca3102ffa88e32ba6f44c5d3f0277879f4800bea430342ebd680b8598dfe",
+    "configs/daily_totals_v1.json": "55bcfef990e4d1ab47979c27145f9d6874c6695250019004882ec7bb918eb27d",
+    "configs/intruder_bound_v1.json": "9e4c298e73c21669049730bf2a2b7fde85ba45905a1929bca370d8be4d0e90c2",
+    "configs/intruder_identity_v1.json": "f52c3d1d4a488093399cba79b801f98f00971ce06f030f1723bb6d92ece67771",
+    "configs/oooi_pin_v1.json": "f40bf9a4ef56bc8c2b700f48270694f58cbc76a26e625afdeb98928d3afa3b7d",
+    "configs/opdi_stack_lszh_v1.json": "6c6c7de0201191d511ef688a23ae2a6d4d145e3576416874f101c00255b742ac",
+    "configs/opdi_stack_v1.json": "56b36dac2a25b94d8e423b16454a83e222269819e10cf04cf3881cc8188526e3",
+    "configs/own_motion_v1.json": "78e77151417fb6a143b5a18b390f392eb44441f972777d548f8927a491e368e1",
+    "configs/own_motion_v2.json": "f8d855b2490fe41a0d95518b12eddc5be296b4dfa946e0f4714d91986df733e3",
+    "configs/rematch_nonm_v1.json": "716d81b27e8b36e1094ed3956b9bcba035b664934726dda5b4fac9996f982922",
+    "configs/scout_extreme_shift_v1.json": "03693dc61f7cd8d634c48d40efc822b3826f239e0bfec0191f42d54af4a8e969",
+    "configs/scout_var_alloc_v1.json": "865a50f079276af23c98144ad35f5d2f9b3d2a0885c2a088ed6eba27b24a99fb",
+    "configs/stack_resid_v2.json": "c0c0a4bf6716763abe746dcb199d81b611ffd13a0c1411830efeab8edfa78dd3",
+    "configs/stack_resid_v3.json": "402d838e1a1d862d9fc4f9f4a303bcac7b3437b2adc99aa3fbde7d9800c9afc3",
+    "configs/stack_weight_v1.json": "7bb293cadcd581964eb415e96242521543805407ea3125f3d35bb3cf5ecbc931",
+    "data/external/adsblol/matches_v11/stands.parquet": "63502c9465e3742d537fca30bd3c03622623a3be047eb01ba068292a249d995d",
+    "data/external/adsblol_links/target_origin_messages.csv.gz": "c1f482177903621341909de379362e835423d62317e1a5278b11513a911d2951",
+    "data/external/eurocontrol_aiu/All_Pre-Departure_Delay.parquet": "24434d40306efa952471d38f17f6892456902245244686bb8c1cf74c3d0bbad0",
+    "data/raw/ranking.parquet": "9db75e3a56fa09b87aab72e191a53da3fe763d9887ad2b23aea9cde6a6325f86",
+    "data/raw/submitting.parquet": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "data/raw/training_2025-01-01_2025-02-01.parquet": "a4dc8f152c082c650cd7eb745fe9c641089f34f74df127e6944a188990a0ed94",
+    "data/raw/training_2025-07-01_2025-08-01.parquet": "34d1c5bba7c8596a1c20c09edd3cb2f63277b5a684fa801911660fe0eaf63c9d",
+    "data/raw/training_2025-08-01_2025-09-01.parquet": "6c8d2aa7a1b6c9dff9a0305a37eb02de1e87a68d07557264f41b77738272c540",
+    "data/raw/training_2025-09-01_2025-10-01.parquet": "955308a4000947e32a00586d3ee13928949d2231b67f84f6dfb0631893f3754a",
+    "data/raw/training_2025-10-01_2025-11-01.parquet": "4a31a35601c1bdcd74b8cd6379231ba516a48324e4c2478bf1c9360cd23e687f",
+    "data/raw/training_2025-11-01_2025-12-01.parquet": "ac36b17db7a537e3baeb682fa4763dacaa1fcc5d9bfa6bf32b3ee5d9f91300b0",
+    "data/raw/training_2025-12-01_2026-01-01.parquet": "2d357f2f403a86778a69e93f72d8754effe77f1ac0942399b3d1b7728241f724",
+    "docs/ctx_ownpoints_weight/override_v66.json": "5be0661ede707432f07609a21a90b7d2e9d9dc24b75fca4b180d31f8b15e909a",
+    "docs/oooi_pin/receipts/archive_files.csv.gz": "68206fd886380a4f943a26b6184796d9a1ecd7098b04799cc21f4f47db878a2f",
+    "docs/oooi_pin/receipts/fresh_archive_files.csv.gz": "b3be6bde92a4bebf90a28c55e1df4bf4c0b0ae409647ad553405ad6df4d3561a",
+    "docs/oooi_pin/receipts/fresh_listing_receipt.json": "06dd1b1c16adbf72481d7a36aa0308e828cf0800f8d64ffaf136fd1757461eaa",
+    "docs/oooi_pin/receipts/listing_receipt.json": "4d283ea5d7c19ca5de6d19f8fd1fb3a88cf9bd4b1b540a4832c1478b04bbb0b0",
+    "docs/oooi_pin/results_v1.json": "c08a5bee55897ab2cb2e65c83b10589ef9d05c882d952e16fa8f68fc1daca633",
+    "docs/opdi_stack_lszh/results_v1.json": "7ac9e5a5121a0e93f6ccc4df50839f571624c870f2135a6ad756ceebbb23e11d",
+    "docs/stack_weight/results_v1.json": "c4778f017f49c71e7fe0199830dcea5579ad3bfd158566d60906617dbbebc6fe",
+    "runs/ctx_ownpoints_weight/chain/own_all_w100/ctl.parquet": "462fc5f01cd5ed32b8e1f11bf2abd44204baea00377350f2882281bb97d8d49b",
+    "runs/ctx_ownpoints_weight/chain/own_all_w100/dmp.parquet": "5a5c3373dcda7f4442f04117ffbd8319e95e7eff6c981585bf206f7db1069d47",
+    "runs/ctx_ownpoints_weight/chain/own_all_w100/rows_all.parquet": "9389b3d9627667b1d6c9ba7c04f7f0a9a414383a27dd125b3e17b26cf66524ad",
+    "runs/daily_totals/rows12.parquet": "af8d46221266183b0c94f382eb62eb6762a466dc1382beba71e1b58efd64a27c",
+    "runs/dig/position/ids_ranking.parquet": "b8cf4ce0619d9b46f78c1521dd0830a0fbbbdfcc34de2c74b1ecc3ad7708d2cd",
+    "runs/dig/position/park_ranking.parquet": "28471b34d6ac52e99fbf0f3b6b8c86456168645318be3b8449fba75ed9bc3490",
+    "runs/hunt/census_rank.parquet": "a5e6e80744d281dfb2d0426cbd5b79ea18956aa340a14481a0de3468ef1fc99c",
+    "runs/intruder_identity/ids.parquet": "3097dd067aaa165fe2510310e05bcccae269fec7ee75a088af5e7285846b7dba",
+    "runs/lirf_combo/export_dry/vigorous-whistle_v55.parquet": "266b8c936f2625578e4980f1b11c3a26cc63594a13916510fa3fe86925ec800f",
+    "runs/oooi_pin/fresh/join_stats.json": "9cc08472ab6290b95c605960897a237870508a19b4e05718a06741b8f7b511dd",
+    "runs/oooi_pin/fresh/joined_dev.parquet": "3e1b795787bf71022d1b151785a9300b3b628921af9e91a0c93c1637e8dfb91d",
+    "runs/oooi_pin/fresh/joined_rank.parquet": "f54b153ec4fc6398dc355d13ac5df40c2d9af46701bd6125675832b0a3f54493",
+    "runs/oooi_pin/fresh/messages_unique.parquet": "bb2977283c4043ca35a1a02ed6a98b9c36b0ea513d67f7105741dcbea2cb0f21",
+    "runs/oooi_pin/fresh/parsed.parquet": "9288f2332e9b1a3b779601fcd32593a477efacb13b3e2f7de3e834a692200268",
+    "runs/oooi_pin/join_stats.json": "bc00c3e01fae734638b3c52ab7a6379cf3b6398b1484563995f5bcd0cf94d128",
+    "runs/oooi_pin/joined_dev.parquet": "4116042f715a2860c12a233bdc53cd61b34a7fc158602b99cb148ae5f2810c34",
+    "runs/oooi_pin/joined_rank.parquet": "645d6218b1f93fe4fe0bb3f44ea625a29f594fc5d57efc1a8d7f6e6949658fbe",
+    "runs/oooi_pin/messages_unique.parquet": "13a089c2973b42f5d0848affcef438a352fb9ede5a0f8b148ec75a18b2bc14d4",
+    "runs/oooi_pin/parsed.parquet": "4a588559f1210192131bd67eabf36e81502bbbaaad932f0167cfb180a91004ed",
+    "runs/oooi_pin/rank/dry_v70/vigorous-whistle_v70.parquet": "f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f",
+    "runs/oooi_pin/rank/dry_v70/vigorous-whistle_v70.receipt.json": "a9717e166f756aecfb4043dbd81296bca49ead68d904d56e6fc4368d0bd07731",
+    "runs/opdi_stack/features_dev.parquet": "0f0278d8e39e06a995df6daf6eb1ec95248820f6037640dd86f5e18ca6dd7380",
+    "runs/opdi_stack/features_rank.parquet": "eb9896f89df5254c5e6cff5909aaffb8cab6508f4729da6e1be6e6118de2b333",
+    "runs/rematch_nonm/key_map.parquet": "79276c48511e587ccd476c5c9ec85a7ced55503924d5701ba126b98cbacac02c",
+    "runs/stack_resid/v3_features/dev.parquet": "11f739731ae9ba48a8eddc8bcd91a06612d19689fd2263b946ece9c7e17a48ed",
+    "runs/stack_resid/v3_features/rank.parquet": "b16be93d992ae7ec881643543aed1b30d53993038aba01acaf39c45e188b8bbc",
+    "runs/stack_weight/dev/w65_bag10/proxy.parquet": "c088e409de153d81b006bcd26b5b2a28e0e306043a5172c2158d0ecc6e6f5cb8"
+   },
+   "inputs_unchanged": true,
+   "peak_rss_gib_driver": 0.78,
+   "report": "runs/final_rehearsal_v70/from_v69_rehearsal/rehearsal.json",
+   "report_sha256": "39f04cdb993801f964dac9d1a28c4306c648a477e0046b3e7879a13d8ca5a983",
+   "stages": {
+    "v70": {
+     "dry_run_receipt_vs_shipped": {
+      "all_equal": true,
+      "leaves_compared": 26,
+      "leaves_equal": 26,
+      "max_abs_numeric_diff": 0.0,
+      "mismatches_first_25": [],
+      "skipped": [
+       "written_at_utc",
+       "base",
+       "file"
+      ]
+     },
+     "final": {
+      "byte_identical": true,
+      "expected": "f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f",
+      "file": "runs/final_rehearsal_v70/from_v69_rehearsal/v70/vigorous-whistle_v70.parquet",
+      "sha256": "f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f",
+      "shipped_dry_run_sha256": "f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f",
+      "vs_v69": {
+       "guard_rows_changed": 0,
+       "max_down_s": -609.0,
+       "max_up_s": 927.0,
+       "rows_changed": 775,
+       "rows_changed_by_airport": {
+        "LFPG": 775
+       },
+       "same_dtypes": true,
+       "same_ids_and_order": true,
+       "squared_change": 8209146.0
+      }
+     },
+     "intermediates": {
+      "dev/join_stats": {
+       "bytes_equal": false,
+       "bytes_equal_modulo_crlf": true,
+       "rehearsal": "runs/final_rehearsal_v70/from_v69_rehearsal/v70/oooi_pin/join_stats.json",
+       "rehearsal_sha256": "9104a4cae1e02101a7ff8217d62298a51d2f649635e73576681be858c2cd7c33",
+       "shipped": "runs/oooi_pin/join_stats.json",
+       "shipped_sha256": "bc00c3e01fae734638b3c52ab7a6379cf3b6398b1484563995f5bcd0cf94d128",
+       "values_equal": true
+      },
+      "dev/joined_dev": {
+       "bytes_equal": true,
+       "rehearsal": "runs/final_rehearsal_v70/from_v69_rehearsal/v70/oooi_pin/joined_dev.parquet",
+       "rehearsal_sha256": "4116042f715a2860c12a233bdc53cd61b34a7fc158602b99cb148ae5f2810c34",
+       "shipped": "runs/oooi_pin/joined_dev.parquet",
+       "shipped_sha256": "4116042f715a2860c12a233bdc53cd61b34a7fc158602b99cb148ae5f2810c34",
+       "values_equal": true
+      },
+      "dev/joined_rank": {
+       "bytes_equal": true,
+       "rehearsal": "runs/final_rehearsal_v70/from_v69_rehearsal/v70/oooi_pin/joined_rank.parquet",
+       "rehearsal_sha256": "645d6218b1f93fe4fe0bb3f44ea625a29f594fc5d57efc1a8d7f6e6949658fbe",
+       "shipped": "runs/oooi_pin/joined_rank.parquet",
+       "shipped_sha256": "645d6218b1f93fe4fe0bb3f44ea625a29f594fc5d57efc1a8d7f6e6949658fbe",
+       "values_equal": true
+      },
+      "dev/parsed": {
+       "bytes_equal": true,
+       "rehearsal": "runs/final_rehearsal_v70/from_v69_rehearsal/v70/oooi_pin/parsed.parquet",
+       "rehearsal_sha256": "4a588559f1210192131bd67eabf36e81502bbbaaad932f0167cfb180a91004ed",
+       "shipped": "runs/oooi_pin/parsed.parquet",
+       "shipped_sha256": "4a588559f1210192131bd67eabf36e81502bbbaaad932f0167cfb180a91004ed",
+       "values_equal": true
+      },
+      "dry_run": {
+       "bytes_equal": true,
+       "rehearsal": "runs/final_rehearsal_v70/from_v69_rehearsal/v70/dry/vigorous-whistle_v70.parquet",
+       "rehearsal_sha256": "f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f",
+       "shipped": "runs/oooi_pin/rank/dry_v70/vigorous-whistle_v70.parquet",
+       "shipped_sha256": "f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f",
+       "values_equal": true
+      },
+      "fresh/join_stats": {
+       "bytes_equal": false,
+       "bytes_equal_modulo_crlf": true,
+       "rehearsal": "runs/final_rehearsal_v70/from_v69_rehearsal/v70/oooi_pin/fresh/join_stats.json",
+       "rehearsal_sha256": "d5a5a6b66487079bc794f178bea0754f820db0af988efae2ccc9a8476ee1ec85",
+       "shipped": "runs/oooi_pin/fresh/join_stats.json",
+       "shipped_sha256": "9cc08472ab6290b95c605960897a237870508a19b4e05718a06741b8f7b511dd",
+       "values_equal": true
+      },
+      "fresh/joined_dev": {
+       "bytes_equal": true,
+       "rehearsal": "runs/final_rehearsal_v70/from_v69_rehearsal/v70/oooi_pin/fresh/joined_dev.parquet",
+       "rehearsal_sha256": "3e1b795787bf71022d1b151785a9300b3b628921af9e91a0c93c1637e8dfb91d",
+       "shipped": "runs/oooi_pin/fresh/joined_dev.parquet",
+       "shipped_sha256": "3e1b795787bf71022d1b151785a9300b3b628921af9e91a0c93c1637e8dfb91d",
+       "values_equal": true
+      },
+      "fresh/joined_rank": {
+       "bytes_equal": true,
+       "rehearsal": "runs/final_rehearsal_v70/from_v69_rehearsal/v70/oooi_pin/fresh/joined_rank.parquet",
+       "rehearsal_sha256": "f54b153ec4fc6398dc355d13ac5df40c2d9af46701bd6125675832b0a3f54493",
+       "shipped": "runs/oooi_pin/fresh/joined_rank.parquet",
+       "shipped_sha256": "f54b153ec4fc6398dc355d13ac5df40c2d9af46701bd6125675832b0a3f54493",
+       "values_equal": true
+      },
+      "fresh/parsed": {
+       "bytes_equal": true,
+       "rehearsal": "runs/final_rehearsal_v70/from_v69_rehearsal/v70/oooi_pin/fresh/parsed.parquet",
+       "rehearsal_sha256": "9288f2332e9b1a3b779601fcd32593a477efacb13b3e2f7de3e834a692200268",
+       "shipped": "runs/oooi_pin/fresh/parsed.parquet",
+       "shipped_sha256": "9288f2332e9b1a3b779601fcd32593a477efacb13b3e2f7de3e834a692200268",
+       "values_equal": true
+      }
+     },
+     "intermediates_bytes_equal_shipped": false,
+     "intermediates_values_equal_shipped": true,
+     "message_tables": {
+      "dev": {
+       "declared_sha256": "13a089c2973b42f5d0848affcef438a352fb9ede5a0f8b148ec75a18b2bc14d4",
+       "equal": true,
+       "from": "runs/oooi_pin/messages_unique.parquet",
+       "sha256": "13a089c2973b42f5d0848affcef438a352fb9ede5a0f8b148ec75a18b2bc14d4"
+      },
+      "fresh": {
+       "declared_sha256": "bb2977283c4043ca35a1a02ed6a98b9c36b0ea513d67f7105741dcbea2cb0f21",
+       "equal": true,
+       "from": "runs/oooi_pin/fresh/messages_unique.parquet",
+       "sha256": "bb2977283c4043ca35a1a02ed6a98b9c36b0ea513d67f7105741dcbea2cb0f21"
+      }
+     },
+     "offsets_jul_nov_dec": {
+      "2N": -62.260598503740646,
+      "8D": -22.84268125854993
+     },
+     "published_csv": {
+      "decompressed_equal": true,
+      "line_terminator": "CRLF (pandas' os.linesep default where the published file was written)",
+      "published": "data/external/adsblol_links/target_origin_messages.csv.gz",
+      "published_decompressed_sha256": "ab63c7a4c3fc0edddbafccf996b8e6e1d7b8d3b9456badb2e5936f398c831f8f",
+      "published_sha256": "c1f482177903621341909de379362e835423d62317e1a5278b11513a911d2951",
+      "rehearsal_decompressed_sha256": "ab63c7a4c3fc0edddbafccf996b8e6e1d7b8d3b9456badb2e5936f398c831f8f",
+      "rows": 2497
+     },
+     "rehearsal_results": "runs/final_rehearsal_v70/from_v69_rehearsal/v70/results_v1.json",
+     "results_v1_vs_shipped": {
+      "all_equal": true,
+      "leaves_compared": 345,
+      "leaves_equal": 345,
+      "max_abs_numeric_diff": 0.0,
+      "mismatches_first_25": [],
+      "skipped": [
+       "computed_at_utc",
+       "code_sha256",
+       "dry_run.written_at_utc",
+       "dry_run.base",
+       "dry_run.file"
+      ]
+     },
+     "rows_in_scope": 783,
+     "selected": "w50",
+     "v69_input": {
+      "file": "runs/final_rehearsal_v69/full_chain/v69/vigorous-whistle_v69.parquet",
+      "sha256": "192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665"
+     },
+     "wall_seconds": 13.9
+    }
+   },
+   "start": "v69",
+   "started_at_utc": "2026-10-07T12:46:40.730447+00:00",
+   "v69_rehearsal_check": {
+    "files_changed": [],
+    "files_checked": 60,
+    "report": "runs/final_rehearsal_v69/full_chain/rehearsal.json",
+    "report_byte_identical": {
+     "66": true,
+     "68": true,
+     "69": true
+    },
+    "report_created_at_utc": "2026-10-07T07:21:14.906193+00:00",
+    "report_sha256": "47c1682c6bafd1654b84cf44ef5cad9a4e31f90011cc92c9a2648ad8c0a0233e",
+    "v69": "runs/final_rehearsal_v69/full_chain/v69/vigorous-whistle_v69.parquet",
+    "v69_sha256": "192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665",
+    "valid": true
+   },
+   "wall_seconds": 14.9
+  },
+  "full_chain": {
+   "byte_identical": {
+    "66": true,
+    "68": true,
+    "69": true,
+    "70": true
+   },
+   "code": {
+    "src/prc2026_submission/contract.py": "c818bba565fed582f5a7490e4ab615947d2bf2a3f583e9b81b6aa43d880fb476",
+    "tools/export_ctx_ownpoints.py": "03e6bda44a26d6a2563dc255bcb7cc5679cf42c87eca18f0b0e54b7a3b2a0dc1",
+    "tools/export_daily_totals.py": "77cdcb37c1b0790481068dce3283580925e5f15552f348cfd405a2d9aaf47efd",
+    "tools/export_disagreement_gate.py": "cac6682f9d7c365d5efc217a5e3262096030a1ca012ca682c6f29923cee27986",
+    "tools/export_network_member.py": "1a71bc4db897bbf6e044b914db861a617f7d3f6fbebaaf931f8429abdc80b712",
+    "tools/export_ownpoints_weight_override.py": "e99bbb5ffa21789a166310a8b19fb6c55a4051c0dc07afa505897c288e67d03a",
+    "tools/oooi_pin_extract.py": "8a3f27f212129a6e75db506e7e20b2db4b5d3013c9ceba9de7ed713bc56529be",
+    "tools/oooi_pin_join.py": "82a6a4ab7fcb2c14b945bf83457bf284aa48718269fa000645938748bf709eac",
+    "tools/oooi_pin_pack.py": "e573a2d98b5f45d482e3cc1ea69631c92f2740621885970f46c7269e20494004",
+    "tools/rehearse_v69.py": "8eb240985c88e0f4f85d27dafc442901defca529a2c8b55a16c3cec7900dccda",
+    "tools/rehearse_v70.py": "67568587dc5e119cd500992e87695334ad8bbefd144ddd2fae9c5b5476737fce",
+    "tools/run_ctx_ownpoints_chain.py": "4fa1a5244fe0520fa9701e352d29c3b1c97ebfe23cc34ee6f0120082a13d5a7d",
+    "tools/run_intruder_bound.py": "b0ae6ad5bce149005ca3dba0cdc4d40f3776c29e643eeaa88790c3ae92668c56",
+    "tools/run_intruder_identity.py": "d070b37f9781b512034a4e2cb4bf1a312044c1f0b82e167437b939ba5468a882",
+    "tools/run_network_member.py": "a76f39a29a492c32badad26bf3964adc01bc8a2125440fddea74d1d3bb0e5ca4",
+    "tools/run_oooi_pin.py": "0dfeb502565c91030e61925a59d207e36123437f7d52f7bbc01613ada09b4588",
+    "tools/run_opdi_stack.py": "4165849e9016b06bbd45c022ac64993eaf44535e3d13d1445a3f3555aef4c6fd",
+    "tools/run_opdi_stack_decl.py": "ddb16f9b554fafd2db11da17eecae71729c58765c747be4c4594e187eb39754a",
+    "tools/run_opdi_stack_lszh.py": "5938f4db91f85950b1007bc8eec340891343f55aa243117849764097349c26db",
+    "tools/run_own_motion.py": "10585ae33764629cc408bde67793c87cc37cd5fd6cff2ef69415f4e10d7637ff",
+    "tools/run_own_motion_v2.py": "1fa8f880cd107b06e2cc00aa8d89602c9d3bc6afd35be7567f7a68c5e276d2b7",
+    "tools/run_ownpoints_weight.py": "5260ed72b57dd76ad5d4ed2e4d31673c03503a8cdff7dbc8df3eac93f24d53c6",
+    "tools/run_rematch_nonm.py": "640d46ecaf9e81a3597bfa31b7a704f9598099e8f3b4e94c6bd24e2fbfff0a7a",
+    "tools/run_stack_resid.py": "84e9e5034918b3da19bfdf91b7dd8c5123eb0c8bcc3661f0fbdaeb654926e71e",
+    "tools/run_stack_resid_v3.py": "d3c5f995d39633c7383916e1f80d7553f2bbbecc5461f2c579e816281c071f52",
+    "tools/run_stack_weight.py": "dd6f70ee6ea39bc38662e01b0e189c886be2a1f9fdd63c79c2e8115655e85cb9",
+    "tools/scout_extreme_shift.py": "e67a0f510807466e6f6fb4a7c1ced9c40193ca77c611461fcf00540263e37b3c",
+    "tools/scout_var_alloc.py": "79e1dcdb29981686252749dd4287184bdb5dd4333976e79a8857c6ea204bf98a"
+   },
+   "created_at_utc": "2026-10-07T13:07:31.020654+00:00",
+   "environment": {
+    "lightgbm": "4.7.0",
+    "numpy": "2.4.2",
+    "pandas": "3.0.0",
+    "platform": "Linux-7.0.0-1014-azure-x86_64-with-glibc2.39",
+    "pyarrow": "23.0.1",
+    "python": "3.12.3",
+    "sklearn": "1.7.2"
+   },
+   "extraction_binding": {
+    "all_ok": true,
+    "dev": {
+     "bytes": 11750040061,
+     "digest_ok_column_all_true": true,
+     "every_message_from_a_receipted_file": true,
+     "files": 25499,
+     "files_by_month_kind": {
+      "2025-07|acars": 2044,
+      "2025-07|hfdl": 1298,
+      "2025-07|vdl2": 2114,
+      "2025-11|acars": 2230,
+      "2025-11|hfdl": 2199,
+      "2025-11|vdl2": 2231,
+      "2025-12|acars": 1393,
+      "2025-12|hfdl": 1419,
+      "2025-12|vdl2": 1575,
+      "2026-01|acars": 952,
+      "2026-01|hfdl": 663,
+      "2026-01|vdl2": 942,
+      "2026-07|acars": 2242,
+      "2026-07|hfdl": 1960,
+      "2026-07|vdl2": 2237
+     },
+     "files_equal_n_selected": true,
+     "files_receipt": "docs/oooi_pin/receipts/archive_files.csv.gz",
+     "files_receipt_sha256": "68206fd886380a4f943a26b6184796d9a1ecd7098b04799cc21f4f47db878a2f",
+     "github_digest_equal_sha256": true,
+     "github_digest_present": 25499,
+     "lines": 137668633,
+     "listing_pages_hashed": 7,
+     "listing_receipt": "docs/oooi_pin/receipts/listing_receipt.json",
+     "listing_receipt_sha256": "4d283ea5d7c19ca5de6d19f8fd1fb3a88cf9bd4b1b540a4832c1478b04bbb0b0",
+     "listing_retrieved_utc": "2026-10-07T10:01:13.282004+00:00",
+     "message_source_files": 14577,
+     "messages": 257969,
+     "messages_table": "runs/oooi_pin/messages_unique.parquet",
+     "messages_table_sha256": "13a089c2973b42f5d0848affcef438a352fb9ede5a0f8b148ec75a18b2bc14d4",
+     "months": [
+      "2025-07",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-07"
+     ],
+     "n_assets_total": 72009,
+     "n_selected": 25499,
+     "sha256_well_formed": true,
+     "unique_names": 25499,
+     "unique_urls": 25499,
+     "urls_on_archive_repos": true
+    },
+    "fresh": {
+     "bytes": 5711654029,
+     "digest_ok_column_all_true": true,
+     "every_message_from_a_receipted_file": true,
+     "files": 17995,
+     "files_by_month_kind": {
+      "2025-08|acars": 2193,
+      "2025-08|hfdl": 1482,
+      "2025-08|vdl2": 2247,
+      "2025-09|acars": 2038,
+      "2025-09|hfdl": 1661,
+      "2025-09|vdl2": 2038,
+      "2025-10|acars": 2175,
+      "2025-10|hfdl": 1977,
+      "2025-10|vdl2": 2184
+     },
+     "files_equal_n_selected": true,
+     "files_receipt": "docs/oooi_pin/receipts/fresh_archive_files.csv.gz",
+     "files_receipt_sha256": "b3be6bde92a4bebf90a28c55e1df4bf4c0b0ae409647ad553405ad6df4d3561a",
+     "github_digest_equal_sha256": true,
+     "github_digest_present": 17995,
+     "lines": 62368867,
+     "listing_pages_hashed": 7,
+     "listing_receipt": "docs/oooi_pin/receipts/fresh_listing_receipt.json",
+     "listing_receipt_sha256": "06dd1b1c16adbf72481d7a36aa0308e828cf0800f8d64ffaf136fd1757461eaa",
+     "listing_retrieved_utc": "2026-10-07T10:25:57.966314+00:00",
+     "message_source_files": 10476,
+     "messages": 132178,
+     "messages_table": "runs/oooi_pin/fresh/messages_unique.parquet",
+     "messages_table_sha256": "bb2977283c4043ca35a1a02ed6a98b9c36b0ea513d67f7105741dcbea2cb0f21",
+     "months": [
+      "2025-08",
+      "2025-09",
+      "2025-10"
+     ],
+     "n_assets_total": 72011,
+     "n_selected": 17995,
+     "sha256_well_formed": true,
+     "unique_names": 17995,
+     "unique_urls": 17995,
+     "urls_on_archive_repos": true
+    }
+   },
+   "inputs": {
+    "configs/adsb_ctx3_combo_dev_v1.json": "7f594b5386caa3333df43acf4244754e69ef0aed2fbe8ae5cc26556c17ce8577",
+    "configs/adsb_ctx3_mask_dev_v1.json": "d81817a201e561fbeda8c1b1bbee754129f78fe32b48bb7eca09a95f2556858d",
+    "configs/ctx_ownpoints_dev_v1.json": "175a0e3dec69cf4bfca0200adbe84ac1e84a7311374b1f7719ae481b24d63441",
+    "configs/ctx_ownpoints_network_v1.json": "8013ddae2a05522d5944aa958336d6b094eca8e676dd65afd58414fc84a50be2",
+    "configs/ctx_ownpoints_weight_v1.json": "a706ca3102ffa88e32ba6f44c5d3f0277879f4800bea430342ebd680b8598dfe",
+    "configs/daily_totals_v1.json": "55bcfef990e4d1ab47979c27145f9d6874c6695250019004882ec7bb918eb27d",
+    "configs/intruder_bound_v1.json": "9e4c298e73c21669049730bf2a2b7fde85ba45905a1929bca370d8be4d0e90c2",
+    "configs/intruder_identity_v1.json": "f52c3d1d4a488093399cba79b801f98f00971ce06f030f1723bb6d92ece67771",
+    "configs/oooi_pin_v1.json": "f40bf9a4ef56bc8c2b700f48270694f58cbc76a26e625afdeb98928d3afa3b7d",
+    "configs/opdi_stack_lszh_v1.json": "6c6c7de0201191d511ef688a23ae2a6d4d145e3576416874f101c00255b742ac",
+    "configs/opdi_stack_v1.json": "56b36dac2a25b94d8e423b16454a83e222269819e10cf04cf3881cc8188526e3",
+    "configs/own_motion_v1.json": "78e77151417fb6a143b5a18b390f392eb44441f972777d548f8927a491e368e1",
+    "configs/own_motion_v2.json": "f8d855b2490fe41a0d95518b12eddc5be296b4dfa946e0f4714d91986df733e3",
+    "configs/rematch_nonm_v1.json": "716d81b27e8b36e1094ed3956b9bcba035b664934726dda5b4fac9996f982922",
+    "configs/scout_extreme_shift_v1.json": "03693dc61f7cd8d634c48d40efc822b3826f239e0bfec0191f42d54af4a8e969",
+    "configs/scout_var_alloc_v1.json": "865a50f079276af23c98144ad35f5d2f9b3d2a0885c2a088ed6eba27b24a99fb",
+    "configs/stack_resid_v2.json": "c0c0a4bf6716763abe746dcb199d81b611ffd13a0c1411830efeab8edfa78dd3",
+    "configs/stack_resid_v3.json": "402d838e1a1d862d9fc4f9f4a303bcac7b3437b2adc99aa3fbde7d9800c9afc3",
+    "configs/stack_weight_v1.json": "7bb293cadcd581964eb415e96242521543805407ea3125f3d35bb3cf5ecbc931",
+    "data/external/adsblol/matches_v11/stands.parquet": "63502c9465e3742d537fca30bd3c03622623a3be047eb01ba068292a249d995d",
+    "data/external/adsblol_links/target_origin_messages.csv.gz": "c1f482177903621341909de379362e835423d62317e1a5278b11513a911d2951",
+    "data/external/eurocontrol_aiu/All_Pre-Departure_Delay.parquet": "24434d40306efa952471d38f17f6892456902245244686bb8c1cf74c3d0bbad0",
+    "data/raw/ranking.parquet": "9db75e3a56fa09b87aab72e191a53da3fe763d9887ad2b23aea9cde6a6325f86",
+    "data/raw/submitting.parquet": "0d383408ed5ac27bfcfd12d6b961cee77c8a6364b10dad9fe3ec81115c79652b",
+    "data/raw/training_2025-01-01_2025-02-01.parquet": "a4dc8f152c082c650cd7eb745fe9c641089f34f74df127e6944a188990a0ed94",
+    "data/raw/training_2025-07-01_2025-08-01.parquet": "34d1c5bba7c8596a1c20c09edd3cb2f63277b5a684fa801911660fe0eaf63c9d",
+    "data/raw/training_2025-08-01_2025-09-01.parquet": "6c8d2aa7a1b6c9dff9a0305a37eb02de1e87a68d07557264f41b77738272c540",
+    "data/raw/training_2025-09-01_2025-10-01.parquet": "955308a4000947e32a00586d3ee13928949d2231b67f84f6dfb0631893f3754a",
+    "data/raw/training_2025-10-01_2025-11-01.parquet": "4a31a35601c1bdcd74b8cd6379231ba516a48324e4c2478bf1c9360cd23e687f",
+    "data/raw/training_2025-11-01_2025-12-01.parquet": "ac36b17db7a537e3baeb682fa4763dacaa1fcc5d9bfa6bf32b3ee5d9f91300b0",
+    "data/raw/training_2025-12-01_2026-01-01.parquet": "2d357f2f403a86778a69e93f72d8754effe77f1ac0942399b3d1b7728241f724",
+    "docs/ctx_ownpoints_weight/override_v66.json": "5be0661ede707432f07609a21a90b7d2e9d9dc24b75fca4b180d31f8b15e909a",
+    "docs/oooi_pin/receipts/archive_files.csv.gz": "68206fd886380a4f943a26b6184796d9a1ecd7098b04799cc21f4f47db878a2f",
+    "docs/oooi_pin/receipts/fresh_archive_files.csv.gz": "b3be6bde92a4bebf90a28c55e1df4bf4c0b0ae409647ad553405ad6df4d3561a",
+    "docs/oooi_pin/receipts/fresh_listing_receipt.json": "06dd1b1c16adbf72481d7a36aa0308e828cf0800f8d64ffaf136fd1757461eaa",
+    "docs/oooi_pin/receipts/listing_receipt.json": "4d283ea5d7c19ca5de6d19f8fd1fb3a88cf9bd4b1b540a4832c1478b04bbb0b0",
+    "docs/oooi_pin/results_v1.json": "c08a5bee55897ab2cb2e65c83b10589ef9d05c882d952e16fa8f68fc1daca633",
+    "docs/opdi_stack_lszh/results_v1.json": "7ac9e5a5121a0e93f6ccc4df50839f571624c870f2135a6ad756ceebbb23e11d",
+    "docs/stack_weight/results_v1.json": "c4778f017f49c71e7fe0199830dcea5579ad3bfd158566d60906617dbbebc6fe",
+    "runs/ctx_ownpoints_weight/chain/own_all_w100/ctl.parquet": "462fc5f01cd5ed32b8e1f11bf2abd44204baea00377350f2882281bb97d8d49b",
+    "runs/ctx_ownpoints_weight/chain/own_all_w100/dmp.parquet": "5a5c3373dcda7f4442f04117ffbd8319e95e7eff6c981585bf206f7db1069d47",
+    "runs/ctx_ownpoints_weight/chain/own_all_w100/rows_all.parquet": "9389b3d9627667b1d6c9ba7c04f7f0a9a414383a27dd125b3e17b26cf66524ad",
+    "runs/daily_totals/rows12.parquet": "af8d46221266183b0c94f382eb62eb6762a466dc1382beba71e1b58efd64a27c",
+    "runs/dig/position/ids_ranking.parquet": "b8cf4ce0619d9b46f78c1521dd0830a0fbbbdfcc34de2c74b1ecc3ad7708d2cd",
+    "runs/dig/position/park_ranking.parquet": "28471b34d6ac52e99fbf0f3b6b8c86456168645318be3b8449fba75ed9bc3490",
+    "runs/hunt/census_rank.parquet": "a5e6e80744d281dfb2d0426cbd5b79ea18956aa340a14481a0de3468ef1fc99c",
+    "runs/intruder_identity/ids.parquet": "3097dd067aaa165fe2510310e05bcccae269fec7ee75a088af5e7285846b7dba",
+    "runs/lirf_combo/export_dry/vigorous-whistle_v55.parquet": "266b8c936f2625578e4980f1b11c3a26cc63594a13916510fa3fe86925ec800f",
+    "runs/oooi_pin/fresh/join_stats.json": "9cc08472ab6290b95c605960897a237870508a19b4e05718a06741b8f7b511dd",
+    "runs/oooi_pin/fresh/joined_dev.parquet": "3e1b795787bf71022d1b151785a9300b3b628921af9e91a0c93c1637e8dfb91d",
+    "runs/oooi_pin/fresh/joined_rank.parquet": "f54b153ec4fc6398dc355d13ac5df40c2d9af46701bd6125675832b0a3f54493",
+    "runs/oooi_pin/fresh/messages_unique.parquet": "bb2977283c4043ca35a1a02ed6a98b9c36b0ea513d67f7105741dcbea2cb0f21",
+    "runs/oooi_pin/fresh/parsed.parquet": "9288f2332e9b1a3b779601fcd32593a477efacb13b3e2f7de3e834a692200268",
+    "runs/oooi_pin/join_stats.json": "bc00c3e01fae734638b3c52ab7a6379cf3b6398b1484563995f5bcd0cf94d128",
+    "runs/oooi_pin/joined_dev.parquet": "4116042f715a2860c12a233bdc53cd61b34a7fc158602b99cb148ae5f2810c34",
+    "runs/oooi_pin/joined_rank.parquet": "645d6218b1f93fe4fe0bb3f44ea625a29f594fc5d57efc1a8d7f6e6949658fbe",
+    "runs/oooi_pin/messages_unique.parquet": "13a089c2973b42f5d0848affcef438a352fb9ede5a0f8b148ec75a18b2bc14d4",
+    "runs/oooi_pin/parsed.parquet": "4a588559f1210192131bd67eabf36e81502bbbaaad932f0167cfb180a91004ed",
+    "runs/oooi_pin/rank/dry_v70/vigorous-whistle_v70.parquet": "f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f",
+    "runs/oooi_pin/rank/dry_v70/vigorous-whistle_v70.receipt.json": "a9717e166f756aecfb4043dbd81296bca49ead68d904d56e6fc4368d0bd07731",
+    "runs/opdi_stack/features_dev.parquet": "0f0278d8e39e06a995df6daf6eb1ec95248820f6037640dd86f5e18ca6dd7380",
+    "runs/opdi_stack/features_rank.parquet": "eb9896f89df5254c5e6cff5909aaffb8cab6508f4729da6e1be6e6118de2b333",
+    "runs/rematch_nonm/key_map.parquet": "79276c48511e587ccd476c5c9ec85a7ced55503924d5701ba126b98cbacac02c",
+    "runs/stack_resid/v3_features/dev.parquet": "11f739731ae9ba48a8eddc8bcd91a06612d19689fd2263b946ece9c7e17a48ed",
+    "runs/stack_resid/v3_features/rank.parquet": "b16be93d992ae7ec881643543aed1b30d53993038aba01acaf39c45e188b8bbc",
+    "runs/stack_weight/dev/w65_bag10/proxy.parquet": "c088e409de153d81b006bcd26b5b2a28e0e306043a5172c2158d0ecc6e6f5cb8"
+   },
+   "inputs_unchanged": true,
+   "peak_rss_gib_driver": 3.58,
+   "report": "runs/final_rehearsal_v70/full_chain/rehearsal.json",
+   "report_sha256": "32655a1571da0ab9134d2dbf690ae968485f6b6882983e93e6efc6c6fc58ea5e",
+   "stages": {
+    "v66": {
+     "final": {
+      "byte_identical": true,
+      "expected": "b4ea727e1644b6add104f44832898bfecfd3d5607f7d6a9ce0471efe581322e4",
+      "file": "runs/final_rehearsal_v70/full_chain/v66/vigorous-whistle_v66.parquet",
+      "sha256": "b4ea727e1644b6add104f44832898bfecfd3d5607f7d6a9ce0471efe581322e4",
+      "uploaded_file_sha256": "b4ea727e1644b6add104f44832898bfecfd3d5607f7d6a9ce0471efe581322e4"
+     },
+     "intermediates": {
+      "steps/R/vigorous-whistle_v66.parquet": true,
+      "steps/X/vigorous-whistle_v66.parquet": true,
+      "steps/Y/vigorous-whistle_v66.parquet": true,
+      "steps/identity/vigorous-whistle_v66.parquet": true,
+      "steps/model_part/vigorous-whistle_v66.parquet": true,
+      "steps/om2/vigorous-whistle_v66.parquet": true,
+      "steps/own/vigorous-whistle_v66.parquet": true,
+      "steps/rematch/base/vigorous-whistle_v55m_rematch.parquet": true,
+      "steps/stack/vigorous-whistle_v66.parquet": true
+     },
+     "intermediates_equal_shipped_dry_run": true,
+     "wall_seconds": 464.1
+    },
+    "v68": {
+     "final": {
+      "byte_identical": true,
+      "expected": "d41d8705e75a71e865fe21a8d6ad2f62044a5ed07f125fd208067914b2b10eab",
+      "file": "runs/final_rehearsal_v70/full_chain/v68/vigorous-whistle_v68.parquet",
+      "sha256": "d41d8705e75a71e865fe21a8d6ad2f62044a5ed07f125fd208067914b2b10eab",
+      "uploaded_file_sha256": "d41d8705e75a71e865fe21a8d6ad2f62044a5ed07f125fd208067914b2b10eab"
+     },
+     "intermediates": {
+      "steps/identity/vigorous-whistle_v68.parquet": true,
+      "steps/om2/vigorous-whistle_v68.parquet": true,
+      "steps/own/vigorous-whistle_v68.parquet": true,
+      "steps/stack/vigorous-whistle_v68.parquet": true
+     },
+     "intermediates_equal_shipped_dry_run": true,
+     "opdi_rows_used": 18308,
+     "wall_seconds": 286.0
+    },
+    "v69": {
+     "candidate": "w65_bag10",
+     "final": {
+      "byte_identical": true,
+      "expected": "192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665",
+      "file": "runs/final_rehearsal_v70/full_chain/v69/vigorous-whistle_v69.parquet",
+      "sha256": "192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665",
+      "uploaded_file_sha256": "192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665"
+     },
+     "intermediates": {
+      "steps/identity/vigorous-whistle_v69.parquet": true,
+      "steps/om2/vigorous-whistle_v69.parquet": true,
+      "steps/own/vigorous-whistle_v69.parquet": true,
+      "steps/stack/vigorous-whistle_v69.parquet": true
+     },
+     "intermediates_equal_shipped_dry_run": true,
+     "opdi_rows_used": 18308,
+     "per_seed_ranking_predictions": {
+      "columns_compared": 38,
+      "max_abs_pred_diff": 0.0,
+      "sha256": "8083ffcfdf861e278ac8693fb2320872cd95378f3f9ac861decf23c9a6163772",
+      "shipped_sha256": "8083ffcfdf861e278ac8693fb2320872cd95378f3f9ac861decf23c9a6163772",
+      "values_equal": true
+     },
+     "seeds": [
+      20261003,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+     ],
+     "wall_seconds": 467.5,
+     "weight": 0.65
+    },
+    "v70": {
+     "dry_run_receipt_vs_shipped": {
+      "all_equal": true,
+      "leaves_compared": 26,
+      "leaves_equal": 26,
+      "max_abs_numeric_diff": 0.0,
+      "mismatches_first_25": [],
+      "skipped": [
+       "written_at_utc",
+       "base",
+       "file"
+      ]
+     },
+     "final": {
+      "byte_identical": true,
+      "expected": "f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f",
+      "file": "runs/final_rehearsal_v70/full_chain/v70/vigorous-whistle_v70.parquet",
+      "sha256": "f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f",
+      "shipped_dry_run_sha256": "f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f",
+      "vs_v69": {
+       "guard_rows_changed": 0,
+       "max_down_s": -609.0,
+       "max_up_s": 927.0,
+       "rows_changed": 775,
+       "rows_changed_by_airport": {
+        "LFPG": 775
+       },
+       "same_dtypes": true,
+       "same_ids_and_order": true,
+       "squared_change": 8209146.0
+      }
+     },
+     "intermediates": {
+      "dev/join_stats": {
+       "bytes_equal": false,
+       "bytes_equal_modulo_crlf": true,
+       "rehearsal": "runs/final_rehearsal_v70/full_chain/v70/oooi_pin/join_stats.json",
+       "rehearsal_sha256": "9104a4cae1e02101a7ff8217d62298a51d2f649635e73576681be858c2cd7c33",
+       "shipped": "runs/oooi_pin/join_stats.json",
+       "shipped_sha256": "bc00c3e01fae734638b3c52ab7a6379cf3b6398b1484563995f5bcd0cf94d128",
+       "values_equal": true
+      },
+      "dev/joined_dev": {
+       "bytes_equal": true,
+       "rehearsal": "runs/final_rehearsal_v70/full_chain/v70/oooi_pin/joined_dev.parquet",
+       "rehearsal_sha256": "4116042f715a2860c12a233bdc53cd61b34a7fc158602b99cb148ae5f2810c34",
+       "shipped": "runs/oooi_pin/joined_dev.parquet",
+       "shipped_sha256": "4116042f715a2860c12a233bdc53cd61b34a7fc158602b99cb148ae5f2810c34",
+       "values_equal": true
+      },
+      "dev/joined_rank": {
+       "bytes_equal": true,
+       "rehearsal": "runs/final_rehearsal_v70/full_chain/v70/oooi_pin/joined_rank.parquet",
+       "rehearsal_sha256": "645d6218b1f93fe4fe0bb3f44ea625a29f594fc5d57efc1a8d7f6e6949658fbe",
+       "shipped": "runs/oooi_pin/joined_rank.parquet",
+       "shipped_sha256": "645d6218b1f93fe4fe0bb3f44ea625a29f594fc5d57efc1a8d7f6e6949658fbe",
+       "values_equal": true
+      },
+      "dev/parsed": {
+       "bytes_equal": true,
+       "rehearsal": "runs/final_rehearsal_v70/full_chain/v70/oooi_pin/parsed.parquet",
+       "rehearsal_sha256": "4a588559f1210192131bd67eabf36e81502bbbaaad932f0167cfb180a91004ed",
+       "shipped": "runs/oooi_pin/parsed.parquet",
+       "shipped_sha256": "4a588559f1210192131bd67eabf36e81502bbbaaad932f0167cfb180a91004ed",
+       "values_equal": true
+      },
+      "dry_run": {
+       "bytes_equal": true,
+       "rehearsal": "runs/final_rehearsal_v70/full_chain/v70/dry/vigorous-whistle_v70.parquet",
+       "rehearsal_sha256": "f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f",
+       "shipped": "runs/oooi_pin/rank/dry_v70/vigorous-whistle_v70.parquet",
+       "shipped_sha256": "f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f",
+       "values_equal": true
+      },
+      "fresh/join_stats": {
+       "bytes_equal": false,
+       "bytes_equal_modulo_crlf": true,
+       "rehearsal": "runs/final_rehearsal_v70/full_chain/v70/oooi_pin/fresh/join_stats.json",
+       "rehearsal_sha256": "d5a5a6b66487079bc794f178bea0754f820db0af988efae2ccc9a8476ee1ec85",
+       "shipped": "runs/oooi_pin/fresh/join_stats.json",
+       "shipped_sha256": "9cc08472ab6290b95c605960897a237870508a19b4e05718a06741b8f7b511dd",
+       "values_equal": true
+      },
+      "fresh/joined_dev": {
+       "bytes_equal": true,
+       "rehearsal": "runs/final_rehearsal_v70/full_chain/v70/oooi_pin/fresh/joined_dev.parquet",
+       "rehearsal_sha256": "3e1b795787bf71022d1b151785a9300b3b628921af9e91a0c93c1637e8dfb91d",
+       "shipped": "runs/oooi_pin/fresh/joined_dev.parquet",
+       "shipped_sha256": "3e1b795787bf71022d1b151785a9300b3b628921af9e91a0c93c1637e8dfb91d",
+       "values_equal": true
+      },
+      "fresh/joined_rank": {
+       "bytes_equal": true,
+       "rehearsal": "runs/final_rehearsal_v70/full_chain/v70/oooi_pin/fresh/joined_rank.parquet",
+       "rehearsal_sha256": "f54b153ec4fc6398dc355d13ac5df40c2d9af46701bd6125675832b0a3f54493",
+       "shipped": "runs/oooi_pin/fresh/joined_rank.parquet",
+       "shipped_sha256": "f54b153ec4fc6398dc355d13ac5df40c2d9af46701bd6125675832b0a3f54493",
+       "values_equal": true
+      },
+      "fresh/parsed": {
+       "bytes_equal": true,
+       "rehearsal": "runs/final_rehearsal_v70/full_chain/v70/oooi_pin/fresh/parsed.parquet",
+       "rehearsal_sha256": "9288f2332e9b1a3b779601fcd32593a477efacb13b3e2f7de3e834a692200268",
+       "shipped": "runs/oooi_pin/fresh/parsed.parquet",
+       "shipped_sha256": "9288f2332e9b1a3b779601fcd32593a477efacb13b3e2f7de3e834a692200268",
+       "values_equal": true
+      }
+     },
+     "intermediates_bytes_equal_shipped": false,
+     "intermediates_values_equal_shipped": true,
+     "message_tables": {
+      "dev": {
+       "declared_sha256": "13a089c2973b42f5d0848affcef438a352fb9ede5a0f8b148ec75a18b2bc14d4",
+       "equal": true,
+       "from": "runs/oooi_pin/messages_unique.parquet",
+       "sha256": "13a089c2973b42f5d0848affcef438a352fb9ede5a0f8b148ec75a18b2bc14d4"
+      },
+      "fresh": {
+       "declared_sha256": "bb2977283c4043ca35a1a02ed6a98b9c36b0ea513d67f7105741dcbea2cb0f21",
+       "equal": true,
+       "from": "runs/oooi_pin/fresh/messages_unique.parquet",
+       "sha256": "bb2977283c4043ca35a1a02ed6a98b9c36b0ea513d67f7105741dcbea2cb0f21"
+      }
+     },
+     "offsets_jul_nov_dec": {
+      "2N": -62.260598503740646,
+      "8D": -22.84268125854993
+     },
+     "published_csv": {
+      "decompressed_equal": true,
+      "line_terminator": "CRLF (pandas' os.linesep default where the published file was written)",
+      "published": "data/external/adsblol_links/target_origin_messages.csv.gz",
+      "published_decompressed_sha256": "ab63c7a4c3fc0edddbafccf996b8e6e1d7b8d3b9456badb2e5936f398c831f8f",
+      "published_sha256": "c1f482177903621341909de379362e835423d62317e1a5278b11513a911d2951",
+      "rehearsal_decompressed_sha256": "ab63c7a4c3fc0edddbafccf996b8e6e1d7b8d3b9456badb2e5936f398c831f8f",
+      "rows": 2497
+     },
+     "rehearsal_results": "runs/final_rehearsal_v70/full_chain/v70/results_v1.json",
+     "results_v1_vs_shipped": {
+      "all_equal": true,
+      "leaves_compared": 345,
+      "leaves_equal": 345,
+      "max_abs_numeric_diff": 0.0,
+      "mismatches_first_25": [],
+      "skipped": [
+       "computed_at_utc",
+       "code_sha256",
+       "dry_run.written_at_utc",
+       "dry_run.base",
+       "dry_run.file"
+      ]
+     },
+     "rows_in_scope": 783,
+     "selected": "w50",
+     "v69_input": {
+      "file": "runs/final_rehearsal_v70/full_chain/v69/vigorous-whistle_v69.parquet",
+      "sha256": "192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665"
+     },
+     "wall_seconds": 14.6
+    }
+   },
+   "start": "full",
+   "started_at_utc": "2026-10-07T12:46:57.091901+00:00",
+   "v69_rehearsal_check": null,
+   "wall_seconds": 1233.6
+  }
+ },
+ "step11": {
+  "declaration": "configs/oooi_pin_v1.json",
+  "extraction": {
+   "filter": "tools/oooi_pin_extract.keep: every label 2N and QP / QQ / QR / QS message, plus every message whose text names LFPG, LTFM or LIRF and has at least two 4-digit groups; tools/oooi_pin_pack.py keeps the first copy of each (label, flight, text) as messages_unique.parquet",
+   "month_rule": "a file belongs to a month when its start date (from the file name) lies between the day before the month's first day and the month's last day (tools/oooi_pin_extract.month_window)",
+   "re_extraction_note": "A new extraction lists the live GitHub releases; the receipts fix the file set used here (name, URL, size, SHA-256, line count per file). Its messages_unique.parquet may order copies with equal time stamps differently; the byte-for-byte check of v70 starts from the stored message tables, whose SHA-256 is recorded in docs/oooi_pin/results_v1.json (inputs_sha256.messages_dev / messages_fresh).",
+   "runs": {
+    "dev": {
+     "commands": [
+      "python tools/oooi_pin_extract.py list --out runs/oooi_pin",
+      "python tools/oooi_pin_extract.py run --out runs/oooi_pin --kinds acars,hfdl",
+      "python tools/oooi_pin_extract.py run --out runs/oooi_pin --kinds vdl2",
+      "python tools/oooi_pin_pack.py runs/oooi_pin"
+     ],
+     "files_by_pass": {
+      "acars,hfdl": 16400,
+      "vdl2": 9099
+     },
+     "months": [
+      "2025-07",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-07"
+     ],
+     "output": "runs/oooi_pin/messages_unique.parquet",
+     "receipts": {
+      "files": "docs/oooi_pin/receipts/archive_files.csv.gz",
+      "listing": "docs/oooi_pin/receipts/listing_receipt.json"
+     }
+    },
+    "fresh": {
+     "commands": [
+      "python tools/oooi_pin_extract.py list --out runs/oooi_pin/fresh --months 2025-08,2025-09,2025-10",
+      "python tools/oooi_pin_extract.py run --out runs/oooi_pin/fresh --kinds acars,hfdl",
+      "python tools/oooi_pin_extract.py run --out runs/oooi_pin/fresh --kinds vdl2",
+      "python tools/oooi_pin_pack.py runs/oooi_pin/fresh"
+     ],
+     "files_by_pass": {
+      "acars,hfdl": 11526,
+      "vdl2": 6469
+     },
+     "months": [
+      "2025-08",
+      "2025-09",
+      "2025-10"
+     ],
+     "output": "runs/oooi_pin/fresh/messages_unique.parquet",
+     "receipts": {
+      "files": "docs/oooi_pin/receipts/fresh_archive_files.csv.gz",
+      "listing": "docs/oooi_pin/receipts/fresh_listing_receipt.json"
+     }
+    }
+   },
+   "source": "adsb.lol Aircraft Data Links archive, CC0 1.0: GitHub releases of adsblol/aircraft-data-links-2025 and adsblol/aircraft-data-links-2026 (zstd-compressed JSONL of ACARS, VDL2 and HFDL messages)",
+   "where": "Azure arcw0 (Linux), 7 October 2026, with the repository's .venv and the zstd command-line tool; the raw archive is never stored: each file is downloaded into memory, hashed (SHA-256 of the compressed bytes), decompressed and filtered",
+   "worker_count": "--workers (default 24) changes only the completion order of messages.jsonl, not the set of kept messages"
+  },
+  "selected": "w50",
+  "tool": "tools/run_oooi_pin.py (main, paths redirected)"
+ },
+ "uploaded": false,
+ "what": "rehearsal of docs/final_file/v69_chain.md steps 1-11 by tools/rehearse_v70.py on Azure arcw4 (Linux); the uploaded v70 bytes must be reproduced exactly (v66, v68 and v69 on the way, as in v69_rehearsal.json)"
+}

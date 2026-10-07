@@ -111,3 +111,26 @@ easyJet 8D data-link report from the adsb.lol Aircraft Data Links archive (CC0; 
 VM, `tools/oooi_pin_join.py` locally) and passing the source guard take value = max(0.5 x (take-off - OUT + offset) + 0.5 x v69, -12),
 offsets from July / November / December 2025 (2N -62.26 s, 8D -22.84 s), np.rint. 775 rows; every other row equals v69. v70
 SHA-256 `f1d17747...`, 215.8099 official.
+
+**Rehearsal of v70 (7 October 2026, [`tools/rehearse_v70.py`](../../tools/rehearse_v70.py) on Azure arcw4, Linux): v66, v68, v69 and
+v70 reproduce byte for byte.** Summary [`v70_rehearsal.json`](v70_rehearsal.json); full reports `runs/final_rehearsal_v70/<run>/rehearsal.json`
+(102 files mirrored, hash-checked). Run `full_chain` (12:47-13:07 UTC, 1,234 s): `rehearse_v69.py`'s stages unchanged (all ten steps of
+v66, then v68's and v69's step 6 and steps 7-10; every intermediate equal to the shipped dry runs, v69's 30 per-seed predictions exact), then
+step 11 from the v69 it had just rebuilt: `run_oooi_pin.main()` imported unchanged, only its paths redirected into the rehearsal directory,
+reading the stored filtered message tables `runs/oooi_pin/messages_unique.parquet` (`13a089c2...`) and `runs/oooi_pin/fresh/messages_unique.parquet`
+(`bb297728...`, the governing run's recorded inputs). It re-parses and re-joins them, refits the offsets (2N −62.26 s, 8D −22.84 s), re-reads
+clauses 1-5, selects w50 again and writes **v70 `f1d17747e0e384ccec520a760d42c8e55a3e88a1476daafacdf7fe1f9603099f`, identical to the
+uploaded file** (775 LFPG rows differ from v69, nothing else). The parsed and joined tables equal the governing run's byte for byte (the two
+`join_stats.json` differ only by CRLF), `docs/oooi_pin/results_v1.json` equals on all 345 compared values (time stamp and code hashes
+excepted), the dry-run receipt on all 26, and the published `data/external/adsblol_links/target_origin_messages.csv.gz` is rewritten
+identically (decompressed; CRLF as on Windows). Run `from_v69_rehearsal` (15 s): step 11 alone from the v69 rehearsal's verified output, after
+re-checking all 60 input and code hashes that rehearsal recorded; same bytes. A first step-11-only attempt also gave v70's bytes but
+compared the CSV with Linux line endings; it is kept under `runs/final_rehearsal_v70_attempts/`. **The extraction is not rerun.** It was
+`tools/oooi_pin_extract.py list --out runs/oooi_pin` (months 2025-07, 2025-11, 2025-12, 2026-01, 2026-07), `... run --kinds acars,hfdl` and
+`... run --kinds vdl2`, then `tools/oooi_pin_pack.py runs/oooi_pin` on arcw0; the same with `--out runs/oooi_pin/fresh --months
+2025-08,2025-09,2025-10` for the fresh months. The receipts [`receipts/archive_files.csv.gz`](../oooi_pin/receipts/archive_files.csv.gz) and
+[`receipts/fresh_archive_files.csv.gz`](../oooi_pin/receipts/fresh_archive_files.csv.gz) (with the listing-page hashes in `listing_receipt.json`
+and `fresh_listing_receipt.json`) bind 25,499 + 17,995 archive files by URL, size and SHA-256, each equal to GitHub's digest. The rehearsal
+checks this, and checks that every one of the 257,969 + 132,178 stored messages comes from a receipted file. Same environment as the v69
+rehearsal (Python 3.12.3, LightGBM 4.7.0, numpy 2.4.2, pandas 3.0.0, pyarrow 23.0.1); all inputs unchanged before and after. arcw4 was
+deallocated after the copy back.
