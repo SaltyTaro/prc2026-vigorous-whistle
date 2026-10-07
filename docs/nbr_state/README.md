@@ -83,3 +83,10 @@ Dry run `runs/nbr_state/rank/dry_v72/vigorous-whistle_v72.parquet`, SHA-256
 run (squared change 4.09e6, max |change| 96 s, mean +0.03 s; no gate-traced, unmatched, fixed or guard row moved), 160,046 rows and
 11.39e6 against v70. Expected about -0.06 s on top of nbr_state (about -0.18 s for both against v70, if 2025-like). It can be uploaded
 directly as v71 (CHOICE "state+dark").
+
+## Official result
+
+**v71 = 215.6232 official** (the combined file, dry run 2dfb3b9f..., built at the user's "upload it"; processed 22:06:26 UTC on
+7 October): **-0.1867 s against v70 (215.8099); the official best.** Scored gain 2.78e7 = 2.44 x the squared change against v70
+(2025 range 0.7-5.8). Record `official_result_v71.json`; audit `docs/export_audit/v71_audit.json` (flags as v70's). Nothing is
+re-tuned from this score. Never re-upload v1-v71.

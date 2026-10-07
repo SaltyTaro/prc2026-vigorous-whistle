@@ -18,8 +18,8 @@ DRIES = {
     "state+dark": ("runs/nbr_state/rank/dry_v72/vigorous-whistle_v72.parquet",
                    "2dfb3b9f53284c7ae3a02882d19cfd61b19116b1b00504176551bcae8b82e6ba", ["nbr_state_v1", "nbr_dark_v1"], ["w75", "dark_pool_w75"]),
 }
-CHOICE = None
-USER_DECISION = "FILL IN the user's words before running"
+CHOICE = "state+dark"
+USER_DECISION = "'upload it' (8 October 2026 UTC), after the combined file (nbr_state + nbr_dark) was offered as v71"
 VERSION = 71
 if CHOICE not in DRIES or USER_DECISION.startswith("FILL IN"):
     raise ValueError("Build only at the user's word: set CHOICE and USER_DECISION.")
