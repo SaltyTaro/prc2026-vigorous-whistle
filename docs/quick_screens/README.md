@@ -24,3 +24,4 @@ One-line hypotheses checked in minutes before spending a lane. Each is closed un
 | Pier pushback conflicts (same-pier planned off-blocks / take-offs within 300 s) | standalone layer as above | eq +0.0005% (November +0.016%). Closed |
 | Take-off-order displacement vs planned order (overtaken flights) | rank by take-off minus rank by LOBT within airport-runway-day | eq +0.0008%. Closed |
 | Runway-direction flips (time since / until the departure direction changes) | smoothed direction of the last five departures | alone eq +0.0032% (every month worse); with the queue columns eq -0.0178% (no gain). Closed |
+| FIFO at the runway: isotonic projection of predicted runway-arrival times (predicted off-block + unimpeded taxi, 10th / 25th percentile per stand x runway) in take-off order per runway-day | v70 dev proxy, w 0.5 / 1.0 | **every month +3% to +28% RMSE**: departures do not keep FIFO order (multiple holding points, crossings). Closed |
