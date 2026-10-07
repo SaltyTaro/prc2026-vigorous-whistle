@@ -1,0 +1,245 @@
+{
+ "expected": {
+  "v66": "b4ea727e1644b6add104f44832898bfecfd3d5607f7d6a9ce0471efe581322e4",
+  "v68": "d41d8705e75a71e865fe21a8d6ad2f62044a5ed07f125fd208067914b2b10eab",
+  "v69": "192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665"
+ },
+ "official_scores_used": "none",
+ "runs": {
+  "from_shipped_step5": {
+   "byte_identical": {
+    "68": true,
+    "69": true
+   },
+   "code": {
+    "src/prc2026_submission/contract.py": "c818bba565fed582f5a7490e4ab615947d2bf2a3f583e9b81b6aa43d880fb476",
+    "tools/export_ctx_ownpoints.py": "03e6bda44a26d6a2563dc255bcb7cc5679cf42c87eca18f0b0e54b7a3b2a0dc1",
+    "tools/export_daily_totals.py": "77cdcb37c1b0790481068dce3283580925e5f15552f348cfd405a2d9aaf47efd",
+    "tools/export_disagreement_gate.py": "cac6682f9d7c365d5efc217a5e3262096030a1ca012ca682c6f29923cee27986",
+    "tools/export_network_member.py": "1a71bc4db897bbf6e044b914db861a617f7d3f6fbebaaf931f8429abdc80b712",
+    "tools/export_ownpoints_weight_override.py": "e99bbb5ffa21789a166310a8b19fb6c55a4051c0dc07afa505897c288e67d03a",
+    "tools/rehearse_v69.py": "8eb240985c88e0f4f85d27dafc442901defca529a2c8b55a16c3cec7900dccda",
+    "tools/run_ctx_ownpoints_chain.py": "4fa1a5244fe0520fa9701e352d29c3b1c97ebfe23cc34ee6f0120082a13d5a7d",
+    "tools/run_intruder_bound.py": "b0ae6ad5bce149005ca3dba0cdc4d40f3776c29e643eeaa88790c3ae92668c56",
+    "tools/run_intruder_identity.py": "d070b37f9781b512034a4e2cb4bf1a312044c1f0b82e167437b939ba5468a882",
+    "tools/run_network_member.py": "a76f39a29a492c32badad26bf3964adc01bc8a2125440fddea74d1d3bb0e5ca4",
+    "tools/run_opdi_stack.py": "4165849e9016b06bbd45c022ac64993eaf44535e3d13d1445a3f3555aef4c6fd",
+    "tools/run_opdi_stack_decl.py": "ddb16f9b554fafd2db11da17eecae71729c58765c747be4c4594e187eb39754a",
+    "tools/run_opdi_stack_lszh.py": "5938f4db91f85950b1007bc8eec340891343f55aa243117849764097349c26db",
+    "tools/run_own_motion.py": "10585ae33764629cc408bde67793c87cc37cd5fd6cff2ef69415f4e10d7637ff",
+    "tools/run_own_motion_v2.py": "1fa8f880cd107b06e2cc00aa8d89602c9d3bc6afd35be7567f7a68c5e276d2b7",
+    "tools/run_ownpoints_weight.py": "5260ed72b57dd76ad5d4ed2e4d31673c03503a8cdff7dbc8df3eac93f24d53c6",
+    "tools/run_rematch_nonm.py": "640d46ecaf9e81a3597bfa31b7a704f9598099e8f3b4e94c6bd24e2fbfff0a7a",
+    "tools/run_stack_resid.py": "84e9e5034918b3da19bfdf91b7dd8c5123eb0c8bcc3661f0fbdaeb654926e71e",
+    "tools/run_stack_resid_v3.py": "d3c5f995d39633c7383916e1f80d7553f2bbbecc5461f2c579e816281c071f52",
+    "tools/run_stack_weight.py": "dd6f70ee6ea39bc38662e01b0e189c886be2a1f9fdd63c79c2e8115655e85cb9",
+    "tools/scout_extreme_shift.py": "e67a0f510807466e6f6fb4a7c1ced9c40193ca77c611461fcf00540263e37b3c",
+    "tools/scout_var_alloc.py": "79e1dcdb29981686252749dd4287184bdb5dd4333976e79a8857c6ea204bf98a"
+   },
+   "created_at_utc": "2026-10-07T06:56:17.691796+00:00",
+   "environment": {
+    "lightgbm": "4.7.0",
+    "numpy": "2.4.2",
+    "pandas": "3.0.0",
+    "platform": "Linux-7.0.0-1014-azure-x86_64-with-glibc2.39",
+    "pyarrow": "23.0.1",
+    "python": "3.12.3",
+    "sklearn": "1.7.2"
+   },
+   "inputs_unchanged": true,
+   "report": "runs/final_rehearsal_v69/from_shipped_step5/rehearsal.json",
+   "stages": {
+    "v68": {
+     "final": {
+      "byte_identical": true,
+      "expected": "d41d8705e75a71e865fe21a8d6ad2f62044a5ed07f125fd208067914b2b10eab",
+      "file": "runs/final_rehearsal_v69/from_shipped_step5/v68/vigorous-whistle_v68.parquet",
+      "sha256": "d41d8705e75a71e865fe21a8d6ad2f62044a5ed07f125fd208067914b2b10eab",
+      "uploaded_file_sha256": "d41d8705e75a71e865fe21a8d6ad2f62044a5ed07f125fd208067914b2b10eab"
+     },
+     "intermediates": {
+      "steps/identity/vigorous-whistle_v68.parquet": true,
+      "steps/om2/vigorous-whistle_v68.parquet": true,
+      "steps/own/vigorous-whistle_v68.parquet": true,
+      "steps/stack/vigorous-whistle_v68.parquet": true
+     },
+     "intermediates_equal_shipped_dry_run": true,
+     "opdi_rows_used": 18308,
+     "wall_seconds": 417.9
+    },
+    "v69": {
+     "candidate": "w65_bag10",
+     "final": {
+      "byte_identical": true,
+      "expected": "192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665",
+      "file": "runs/final_rehearsal_v69/from_shipped_step5/v69/vigorous-whistle_v69.parquet",
+      "sha256": "192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665",
+      "uploaded_file_sha256": "192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665"
+     },
+     "intermediates": {
+      "steps/identity/vigorous-whistle_v69.parquet": true,
+      "steps/om2/vigorous-whistle_v69.parquet": true,
+      "steps/own/vigorous-whistle_v69.parquet": true,
+      "steps/stack/vigorous-whistle_v69.parquet": true
+     },
+     "intermediates_equal_shipped_dry_run": true,
+     "opdi_rows_used": 18308,
+     "per_seed_ranking_predictions": {
+      "columns_compared": 38,
+      "max_abs_pred_diff": 0.0,
+      "sha256": "8083ffcfdf861e278ac8693fb2320872cd95378f3f9ac861decf23c9a6163772",
+      "shipped_sha256": "8083ffcfdf861e278ac8693fb2320872cd95378f3f9ac861decf23c9a6163772",
+      "values_equal": true
+     },
+     "seeds": [
+      20261003,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+     ],
+     "wall_seconds": 544.5,
+     "weight": 0.65
+    }
+   },
+   "started_at_utc": "2026-10-07T06:40:14.304441+00:00",
+   "step5": "shipped",
+   "wall_seconds": 963.2
+  },
+  "full_chain": {
+   "byte_identical": {
+    "66": true,
+    "68": true,
+    "69": true
+   },
+   "code": {
+    "src/prc2026_submission/contract.py": "c818bba565fed582f5a7490e4ab615947d2bf2a3f583e9b81b6aa43d880fb476",
+    "tools/export_ctx_ownpoints.py": "03e6bda44a26d6a2563dc255bcb7cc5679cf42c87eca18f0b0e54b7a3b2a0dc1",
+    "tools/export_daily_totals.py": "77cdcb37c1b0790481068dce3283580925e5f15552f348cfd405a2d9aaf47efd",
+    "tools/export_disagreement_gate.py": "cac6682f9d7c365d5efc217a5e3262096030a1ca012ca682c6f29923cee27986",
+    "tools/export_network_member.py": "1a71bc4db897bbf6e044b914db861a617f7d3f6fbebaaf931f8429abdc80b712",
+    "tools/export_ownpoints_weight_override.py": "e99bbb5ffa21789a166310a8b19fb6c55a4051c0dc07afa505897c288e67d03a",
+    "tools/rehearse_v69.py": "8eb240985c88e0f4f85d27dafc442901defca529a2c8b55a16c3cec7900dccda",
+    "tools/run_ctx_ownpoints_chain.py": "4fa1a5244fe0520fa9701e352d29c3b1c97ebfe23cc34ee6f0120082a13d5a7d",
+    "tools/run_intruder_bound.py": "b0ae6ad5bce149005ca3dba0cdc4d40f3776c29e643eeaa88790c3ae92668c56",
+    "tools/run_intruder_identity.py": "d070b37f9781b512034a4e2cb4bf1a312044c1f0b82e167437b939ba5468a882",
+    "tools/run_network_member.py": "a76f39a29a492c32badad26bf3964adc01bc8a2125440fddea74d1d3bb0e5ca4",
+    "tools/run_opdi_stack.py": "4165849e9016b06bbd45c022ac64993eaf44535e3d13d1445a3f3555aef4c6fd",
+    "tools/run_opdi_stack_decl.py": "ddb16f9b554fafd2db11da17eecae71729c58765c747be4c4594e187eb39754a",
+    "tools/run_opdi_stack_lszh.py": "5938f4db91f85950b1007bc8eec340891343f55aa243117849764097349c26db",
+    "tools/run_own_motion.py": "10585ae33764629cc408bde67793c87cc37cd5fd6cff2ef69415f4e10d7637ff",
+    "tools/run_own_motion_v2.py": "1fa8f880cd107b06e2cc00aa8d89602c9d3bc6afd35be7567f7a68c5e276d2b7",
+    "tools/run_ownpoints_weight.py": "5260ed72b57dd76ad5d4ed2e4d31673c03503a8cdff7dbc8df3eac93f24d53c6",
+    "tools/run_rematch_nonm.py": "640d46ecaf9e81a3597bfa31b7a704f9598099e8f3b4e94c6bd24e2fbfff0a7a",
+    "tools/run_stack_resid.py": "84e9e5034918b3da19bfdf91b7dd8c5123eb0c8bcc3661f0fbdaeb654926e71e",
+    "tools/run_stack_resid_v3.py": "d3c5f995d39633c7383916e1f80d7553f2bbbecc5461f2c579e816281c071f52",
+    "tools/run_stack_weight.py": "dd6f70ee6ea39bc38662e01b0e189c886be2a1f9fdd63c79c2e8115655e85cb9",
+    "tools/scout_extreme_shift.py": "e67a0f510807466e6f6fb4a7c1ced9c40193ca77c611461fcf00540263e37b3c",
+    "tools/scout_var_alloc.py": "79e1dcdb29981686252749dd4287184bdb5dd4333976e79a8857c6ea204bf98a"
+   },
+   "created_at_utc": "2026-10-07T07:21:14.906193+00:00",
+   "environment": {
+    "lightgbm": "4.7.0",
+    "numpy": "2.4.2",
+    "pandas": "3.0.0",
+    "platform": "Linux-7.0.0-1014-azure-x86_64-with-glibc2.39",
+    "pyarrow": "23.0.1",
+    "python": "3.12.3",
+    "sklearn": "1.7.2"
+   },
+   "inputs_unchanged": true,
+   "report": "runs/final_rehearsal_v69/full_chain/rehearsal.json",
+   "stages": {
+    "v66": {
+     "final": {
+      "byte_identical": true,
+      "expected": "b4ea727e1644b6add104f44832898bfecfd3d5607f7d6a9ce0471efe581322e4",
+      "file": "runs/final_rehearsal_v69/full_chain/v66/vigorous-whistle_v66.parquet",
+      "sha256": "b4ea727e1644b6add104f44832898bfecfd3d5607f7d6a9ce0471efe581322e4",
+      "uploaded_file_sha256": "b4ea727e1644b6add104f44832898bfecfd3d5607f7d6a9ce0471efe581322e4"
+     },
+     "intermediates": {
+      "steps/R/vigorous-whistle_v66.parquet": true,
+      "steps/X/vigorous-whistle_v66.parquet": true,
+      "steps/Y/vigorous-whistle_v66.parquet": true,
+      "steps/identity/vigorous-whistle_v66.parquet": true,
+      "steps/model_part/vigorous-whistle_v66.parquet": true,
+      "steps/om2/vigorous-whistle_v66.parquet": true,
+      "steps/own/vigorous-whistle_v66.parquet": true,
+      "steps/rematch/base/vigorous-whistle_v55m_rematch.parquet": true,
+      "steps/stack/vigorous-whistle_v66.parquet": true
+     },
+     "intermediates_equal_shipped_dry_run": true,
+     "wall_seconds": 472.0
+    },
+    "v68": {
+     "final": {
+      "byte_identical": true,
+      "expected": "d41d8705e75a71e865fe21a8d6ad2f62044a5ed07f125fd208067914b2b10eab",
+      "file": "runs/final_rehearsal_v69/full_chain/v68/vigorous-whistle_v68.parquet",
+      "sha256": "d41d8705e75a71e865fe21a8d6ad2f62044a5ed07f125fd208067914b2b10eab",
+      "uploaded_file_sha256": "d41d8705e75a71e865fe21a8d6ad2f62044a5ed07f125fd208067914b2b10eab"
+     },
+     "intermediates": {
+      "steps/identity/vigorous-whistle_v68.parquet": true,
+      "steps/om2/vigorous-whistle_v68.parquet": true,
+      "steps/own/vigorous-whistle_v68.parquet": true,
+      "steps/stack/vigorous-whistle_v68.parquet": true
+     },
+     "intermediates_equal_shipped_dry_run": true,
+     "opdi_rows_used": 18308,
+     "wall_seconds": 322.3
+    },
+    "v69": {
+     "candidate": "w65_bag10",
+     "final": {
+      "byte_identical": true,
+      "expected": "192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665",
+      "file": "runs/final_rehearsal_v69/full_chain/v69/vigorous-whistle_v69.parquet",
+      "sha256": "192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665",
+      "uploaded_file_sha256": "192c4a30c76ae1967a4d7594eeca4704554bdc7535f337f5022ef77eaea17665"
+     },
+     "intermediates": {
+      "steps/identity/vigorous-whistle_v69.parquet": true,
+      "steps/om2/vigorous-whistle_v69.parquet": true,
+      "steps/own/vigorous-whistle_v69.parquet": true,
+      "steps/stack/vigorous-whistle_v69.parquet": true
+     },
+     "intermediates_equal_shipped_dry_run": true,
+     "opdi_rows_used": 18308,
+     "per_seed_ranking_predictions": {
+      "columns_compared": 38,
+      "max_abs_pred_diff": 0.0,
+      "sha256": "8083ffcfdf861e278ac8693fb2320872cd95378f3f9ac861decf23c9a6163772",
+      "shipped_sha256": "8083ffcfdf861e278ac8693fb2320872cd95378f3f9ac861decf23c9a6163772",
+      "values_equal": true
+     },
+     "seeds": [
+      20261003,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+     ],
+     "wall_seconds": 528.4,
+     "weight": 0.65
+    }
+   },
+   "started_at_utc": "2026-10-07T06:59:11.133761+00:00",
+   "step5": "rehearse",
+   "wall_seconds": 1323.6
+  }
+ },
+ "uploaded": false,
+ "what": "rehearsal of docs/final_file/v69_chain.md by tools/rehearse_v69.py on Azure arcw4 (Linux); the uploaded v68 / v69 bytes must be reproduced exactly"
+}
