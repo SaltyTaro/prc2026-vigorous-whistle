@@ -1,0 +1,17 @@
+{
+ "experiment_id": "tree_pos_screen_v1",
+ "declared_at_utc": "2026-10-08T05:55:00Z",
+ "declared_by": "user: 'keep going only stop when the upload step comes from my side').",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "purpose": "Screen: do the three x19 LightGBM committee leaves, refitted with the first ADS-B point's position (matches2 first_lat, first_lon, anchor_lat, anchor_lon; label-free, never in any member or the networks), carry information a late pass on v73 can use at airports where the three-month late passes failed (EGLL, EDDM, LEBL, LEMD; July 2025 predicted from winter months)? The third pass's top inputs were first_lat / first_lon at EDDF / EHAM / LSZH.",
+ "disclosed": "Known before this declaration: the raw-input late passes (docs/audit_v72, aud5-aud9): EDDF / EHAM / LSZH positive (shipped as v73), EGLL November / December strongly positive and July 2025 negative in every form, EDDM / LEBL / LEMD flat; the tree_own screen (docs/tree_own): own columns improved the leaves 0.4-1.6% standalone but did not pass through v66's chain.",
+ "leaves": [
+  "runs/adsb_v20/lgb_x19_s24",
+  "runs/adsb_v20/lgb_x19_s25",
+  "runs/adsb_v20/lgb_x19_s26"
+ ],
+ "fits": "tools/run_tree_pos.py (tools/run_tree_own.py with a 'pos' variant): pos on lomo_2025-01, lomo_2025-07, forward, jan_nov, refit12; ctl on refit12 (the dev-fold ctl fits are runs/tree_own/fits, reproduced exactly there). Fixed rounds and parameters of each leaf, as run_tree_own. arcw4-arcw7, deallocated after a hash-checked mirror.",
+ "reading": "(1) standalone change of the leaves' RMSE by airport-month (descriptive); (2) an exploration late pass on v73's development values with the leaves' mean (pos - ctl) and pos prediction added to the t3 inputs (docs/audit_v72 aud style, single seed). Any candidate that follows is declared separately with v57's clauses before its five-seed run.",
+ "never_read": "official scores, the leaderboard; nothing under runs/submissions"
+}
