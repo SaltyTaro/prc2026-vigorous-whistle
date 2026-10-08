@@ -1,0 +1,56 @@
+{
+ "experiment_id": "season_pass_v2",
+ "declared_at_utc": "see commit (8 October 2026, before its governing run)",
+ "declared_by": "user: 'keep going only stop when the upload step comes from my side'). Declaring and the governing run are research; a build under runs/submissions and any upload stay the user's word.",
+ "audit_used": false,
+ "official_scores_used": "none (the season mechanism below was found on development labels; v72 / v73's official results are not used to select anything)",
+ "status": "DECLARED before its governing run. The five-seed bags have not been fitted or read.",
+ "finding": "season_pass_v1 (v74) established the W25 mechanism (configs/season_pass_v1.json 'finding'). Follow-up exploration on v74's development values (docs/audit_v72/aud13; single seed; one-month fits, Nov<->Dec): with the stacker inputs (+ neighbour, queue, raw ADS-B, clocks, chain columns) the airports v74 did not touch gain on both adjacent pairs: EDDF -0.0116 / -0.0131%, EDDM -0.0070 / -0.0082%, EHAM -0.0107 / -0.0061%, LSZH -0.0051 / -0.0071% ('all' inputs); LEMD -0.0023 / -0.0064%. EGLL / LIRF / LEBL (already corrected by v74) and LFPG / LTFM lose.",
+ "disclosure": "NOT A CLEAN TEST. The airports and the input set were chosen after reading the aud13 table above (three input sets x ten airports, single seed); the rule is season_pass_v1's. Cross-season Dec->Jan 2025 readings (descriptive): EDDF +0.0041, EDDM -0.0024, EHAM +0.0028, LSZH -0.0009, LEMD -0.0007%.",
+ "inputs": "runs/audit_v72/dev_w25.parquet's columns (aud13_build.py): the stacker's 79 inputs (s_), nx / nxk / nn / x_nmerr, gp / gn / gp2 / gp4 / gn4 / bpos / blen, the raw ADS-B columns (features_v19own + matches2), clocks, p2 / d2 / p3 / d3 / p4 / d4 and ship = v74 (development: v73 + season_pass_v1's out-of-month W25 values; ranking: the uploaded v74 85e57d05..., equal to v73 at these airports); the ranking table is built the same way from runs/stack_second/rank_table.parquet and runs/season_pass/rank_sp.parquet",
+ "procedure": {
+  "target": "clip(label - v74, -1800, 1800)",
+  "model": "LightGBM regression, learning_rate 0.03, num_leaves 31, min_data_in_leaf 800, lambda_l2 50, feature_fraction 0.7, bagging_fraction 0.7, bagging_freq 1, max_bin 127, 400 rounds, deterministic, force_col_wise, 16 threads; categorical kind, ap; five seeds 7, 11, 12, 13, 14, predictions averaged; ONE model per airport (fitted on that airport's non-fixed rows only)",
+  "development": "November 2025 predicted by the bag fitted on December 2025; December 2025 predicted by the bag fitted on November 2025 (same airport)",
+  "ranking": "the bag fitted on November + December 2025, applied to the airport's non-fixed January 2026 rows",
+  "value": "new = max(v74 + clip(0.5 x bag, -120, 120), -12) on the airport's non-fixed January 2026 rows; every other row keeps v74. Ranking: np.rint into the file's dtype from the uploaded v74; every other row byte-identical.",
+  "descriptive": "December 2025 -> January 2025 (cross-season) reported for each airport, never used to select"
+ },
+ "candidates": [
+  {
+   "name": "w25b_4",
+   "airports": [
+    "EDDF",
+    "EDDM",
+    "EHAM",
+    "LSZH"
+   ],
+   "weight": 0.5
+  },
+  {
+   "name": "w25b_5",
+   "airports": [
+    "EDDF",
+    "EDDM",
+    "EHAM",
+    "LSZH",
+    "LEMD"
+   ],
+   "weight": 0.5
+  }
+ ],
+ "rule": {
+  "clause_1": "November and December 2025 (complete-month RMSE against v74's development values) each improve, with paired-day 95% intervals below zero (tools/run_intruder_bound.interval, 2,000 replicates, seed 20261004).",
+  "clause_2": "Mean of the November and December changes at most -0.02%.",
+  "clause_3_transfer": "Per airport, RMS of the January 2026 ranking change (moved rows) within 0.5x-2x of the RMS of the development change (November and December pooled); an airport outside keeps v73. If more than one of the candidate's airports falls outside, the candidate is not accepted.",
+  "selection": "Among candidates passing clauses 1-3, the lowest clause-2 mean; none -> v73 stays.",
+  "scoring": "Every row of every complete month, all labels."
+ },
+ "compute": "Tables locally (light pandas); LightGBM fits on Azure arcw0, deallocated after the hash-checked copy back.",
+ "outputs": {
+  "tool": "tools/run_season_pass2.py",
+  "runs": "runs/season_pass2/",
+  "results": "docs/season_pass2/results_v1.json",
+  "ranking": "runs/season_pass2/rank/dry_v75/vigorous-whistle_v75.parquet (version provisional; never under runs/submissions)"
+ }
+}
