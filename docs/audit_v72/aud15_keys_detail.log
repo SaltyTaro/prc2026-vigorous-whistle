@@ -1,0 +1,16 @@
+fn                     2025-11->2025-12 rmse% -0.0533 [-0.0752, -0.0307] dSSE -4.63e6 top20 -2.91e6 S 2.82e6 rows 157954 rms 4.2 g/S 1.64
+   by airport x kind dSSE e6: {('EGLL', 1): 0.21, ('LFPG', 0): -0.62, ('LFPG', 1): -0.61, ('LIRF', 0): -0.52, ('LIRF', 1): -2.26, ('LTFM', 0): -0.45}
+   dSSE by label band e6: {Interval(-1000000000.0, 300.0, closed='right'): 0.03, Interval(300.0, 900.0, closed='right'): -0.86, Interval(900.0, 1800.0, closed='right'): -0.19, Interval(1800.0, 3600.0, closed='right'): -2.15, Interval(3600.0, 20000.0, closed='right'): -1.46, Interval(20000.0, 1000000000.0, closed='right'): 0.0}
+fn                     2025-12->2025-11 rmse% -0.0521 [-0.0809, -0.0308] dSSE -5.53e6 top20 -2.22e6 S 2.05e6 rows 155892 rms 3.6 g/S 2.70
+   by airport x kind dSSE e6: {('EGLL', 0): -0.13, ('EGLL', 1): 0.17, ('EGLL', 2): 0.11, ('LFPG', 0): -0.92, ('LFPG', 1): -0.58, ('LIRF', 0): -1.06, ('LIRF', 1): -2.05, ('LIRF', 2): -0.13, ('LTFM', 0): -0.58}
+   dSSE by label band e6: {Interval(-1000000000.0, 300.0, closed='right'): -0.13, Interval(300.0, 900.0, closed='right'): -2.74, Interval(900.0, 1800.0, closed='right'): -0.55, Interval(1800.0, 3600.0, closed='right'): -1.45, Interval(3600.0, 20000.0, closed='right'): -0.67, Interval(20000.0, 1000000000.0, closed='right'): 0.0}
+fn                     2025-12->2025-01 rmse% +0.0076 [+0.0030, +0.0276] dSSE +2.39e6 top20 -1.31e6 S 1.13e6 rows 87882 rms 3.6 g/S -2.10
+fn_noEGLL              2025-11->2025-12 rmse% -0.0555 [-0.0783, -0.0324] dSSE -4.82e6 top20 -2.91e6 S 2.47e6 rows 138074 rms 4.2 g/S 1.95
+fn_noEGLL              2025-12->2025-11 rmse% -0.0534 [-0.0819, -0.0320] dSSE -5.68e6 top20 -2.22e6 S 1.75e6 rows 136658 rms 3.6 g/S 3.25
+fn_noEGLL              2025-12->2025-01 rmse% +0.0059 [+0.0017, +0.0223] dSSE +1.85e6 top20 -1.31e6 S 0.90e6 rows 73300 rms 3.5 g/S -2.06
+fn+op_hr               2025-11->2025-12 rmse% -0.0571 [-0.0975, -0.0141] dSSE -4.96e6 top20 -5.12e6 S 8.10e6 rows 163456 rms 7.0 g/S 0.61
+fn+op_hr               2025-12->2025-11 rmse% -0.0746 [-0.1216, -0.0393] dSSE -7.93e6 top20 -4.12e6 S 5.43e6 rows 160191 rms 5.8 g/S 1.46
+fn+op_hr               2025-12->2025-01 rmse% +0.0159 [+0.0060, +0.0583] dSSE +5.01e6 top20 -2.67e6 S 3.45e6 rows 148436 rms 4.8 g/S -1.45
+fn_noEGLL_LEBL_LEMD    2025-11->2025-12 rmse% -0.0553 [-0.0777, -0.0322] dSSE -4.80e6 top20 -2.91e6 S 2.24e6 rows 109034 rms 4.5 g/S 2.14
+fn_noEGLL_LEBL_LEMD    2025-12->2025-11 rmse% -0.0531 [-0.0817, -0.0316] dSSE -5.64e6 top20 -2.22e6 S 1.55e6 rows 108118 rms 3.8 g/S 3.64
+fn_noEGLL_LEBL_LEMD    2025-12->2025-01 rmse% +0.0052 [+0.0013, +0.0199] dSSE +1.64e6 top20 -1.31e6 S 0.82e6 rows 64413 rms 3.6 g/S -2.00

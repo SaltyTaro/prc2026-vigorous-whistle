@@ -1,0 +1,66 @@
+{
+ "experiment_id": "key_memory_v1",
+ "declared_at_utc": "see commit (8 October 2026, before its governing run)",
+ "declared_by": "Declaring and the governing run are research; a build under runs/submissions and any upload stay the user's word.",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "status": "DECLARED before its governing run. The governing run has not been made; the base below is fixed by season_pass_v2's outcome, which is not known at declaration.",
+ "finding": "Exploration on v74's development values (docs/audit_v72/aud14_keys, aud15_keys_detail, aud16_keys_cap; single reading, 48 key x beta x lambda settings): the residual of a schedule key carries between the two W25 months and not across seasons. Airport + flight number (FLIGHT_mvt), beta 0.25, lambda 30: November -> December -0.0533% RMSE [-0.075, -0.031], December -> November -0.0521% [-0.081, -0.031], gain / squared change 1.64 / 2.70; cross-season December -> January 2025 +0.0076% [+0.003, +0.028], January 2025 -> December, July -> November and November -> July worse at every setting. The 29 September screen (docs/clean_line_screens/README.md section 1) pooled the other three months and read the same sign pattern (November / December correlation +0.040, January / July -0.01) as a fold effect; under the season mechanism (configs/season_pass_v1.json) it is the W25 adjacency. The gain sits at LIRF (non-population), LFPG, LTFM; EGLL loses in both directions (+0.2 / +0.1e6 s^2); half of it is in the 20 largest-gain rows (habitually late flight numbers, labels 1,800-20,000 s). FLIGHT_mvt is not a model input (only its prefix and shape are).",
+ "disclosure": "NOT A CLEAN TEST. The key (flight number among eight keys), beta 0.25 and lambda 30 (the most stable of 48 settings in both directions; lambda 10 read slightly better on the mean) and the second candidate's airport set (without EGLL) were chosen after reading the tables above. The rule is season_pass_v1's (a season-specific layer can be read only on November and December 2025). January / July 2025 and every July 2026 row are never changed",
+ "base": "The chain current at the governing run. If season_pass_v2 (configs/season_pass_v2.json) selected a candidate: development = v74's development values with that candidate's out-of-month bags applied at its airports (tools/run_season_pass2.py's apply, its weight), ranking = its dry run runs/season_pass2/rank/dry_v75/vigorous-whistle_v75.parquet (verified hash in docs/season_pass2/results_v1.json); otherwise development = v74's development values (runs/season_pass2/dev_sp2.parquet ship), ranking = the uploaded v74 (85e57d05...).",
+ "procedure": {
+  "key": "airport (ADEP_mvt) + FLIGHT_mvt, stripped and upper-cased; rows without a flight number get no correction",
+  "residual": "r = clip(label - base, -1800, 1800) on the fitting month's non-fixed rows with label < 20,000 s",
+  "correction": "c = clip(0.25 x n / (n + 30) x mean(r of the key in the fitting rows), -120, 120); n = the key's fitting row count",
+  "development": "December 2025 corrected from November's keys; November 2025 from December's (same airport)",
+  "ranking": "January 2026 non-fixed rows at the candidate's airports corrected from November + December 2025 pooled",
+  "value": "new = max(base + c, -12) on those rows; every other row keeps the base. Ranking: np.rint into the file's dtype from the base file; every other row byte-identical.",
+  "descriptive": "December 2025 -> January 2025 (cross-season) reported, never used to select"
+ },
+ "candidates": [
+  {
+   "name": "km_10",
+   "airports": [
+    "EDDF",
+    "EDDM",
+    "EGLL",
+    "EHAM",
+    "LEBL",
+    "LEMD",
+    "LFPG",
+    "LIRF",
+    "LSZH",
+    "LTFM"
+   ]
+  },
+  {
+   "name": "km_9",
+   "airports": [
+    "EDDF",
+    "EDDM",
+    "EHAM",
+    "LEBL",
+    "LEMD",
+    "LFPG",
+    "LIRF",
+    "LSZH",
+    "LTFM"
+   ],
+   "note": "without EGLL"
+  }
+ ],
+ "rule": {
+  "clause_1": "November and December 2025 (complete-month RMSE against the base's development values) each improve, with paired-day 95% intervals below zero (tools/run_intruder_bound.interval, 2,000 replicates, seed 20261004).",
+  "clause_2": "Mean of the November and December changes at most -0.02%.",
+  "clause_3_transfer": "Per airport, RMS of the January 2026 ranking change (moved rows) within 0.5x-2x of the RMS of the development change (November and December pooled); an airport outside keeps the base. If more than one of the candidate's airports falls outside, the candidate is not accepted.",
+  "selection": "Among candidates passing clauses 1-3, the lowest clause-2 mean; none -> the base stays.",
+  "scoring": "Every row of every complete month, all labels."
+ },
+ "compute": "Light pandas group-bys on the workstation (no model fit).",
+ "outputs": {
+  "tool": "tools/run_key_memory.py",
+  "runs": "runs/key_memory/",
+  "results": "docs/key_memory/results_v1.json",
+  "ranking": "runs/key_memory/rank/dry_v<N>/vigorous-whistle_v<N>.parquet, N = 75 on v74's base or 76 on v75's (version provisional; never under runs/submissions)"
+ }
+}
