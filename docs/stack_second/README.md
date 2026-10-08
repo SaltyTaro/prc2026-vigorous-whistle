@@ -53,3 +53,24 @@ Tables built locally (seconds); 50 LightGBM fits on arcw0 (about four minutes), 
 `docs/stack_second/build_v72.py` (fill in USER_DECISION), then `tools/audit_export.py --version 72 --compare 71 --report
 docs/export_audit/v72_audit.json`, then `tools/prc_submit.py upload --file runs/submissions/vigorous-whistle_v72.parquet
 --expected-sha256 4280c399aa148847c4be4588dfc3d98d4adfd1a5e64981035b4e0fa3ee802f80 --calendar-day`.
+
+## Inspection before the build (8 October ~03:50 UTC; development labels and label-free ranking inputs only)
+
+Scripts: [`inspect_breakdown.py`](inspect_breakdown.py), [`inspect_published_days.py`](inspect_published_days.py) (both re-derive the
+ranking values from `preds_rank.parquet` and reproduce the dry run exactly).
+
+* **Spread, not a few rows.** Development gain (SSE removed) is positive in 27 of 28 airport-months; the one loss is EGLL July
+  (+0.66e6 s²). Gain / squared change per airport over the four months: EDDF 5.0, EDDM 2.8, EGLL 0.9, EHAM 3.4, LEBL 1.9, LEMD 3.2,
+  LSZH 4.3. The top 1% of moved rows by |change| carry 37% of the squared change and 42% of the gain; 10 development rows and 25
+  ranking rows reach the 120 s cap.
+* **Ranking changes look like development changes.** Quantiles of the change (0.1 / 1 / 50 / 99 / 99.9%): development -52.8 / -23.5 /
+  -1.0 / 23.4 / 52.9 s, ranking -59.0 / -26.6 / -0.9 / 29.6 / 68.9 s; share positive 0.367 / 0.376; mean -1.05 / -0.71 s. By airport
+  and row class (unmatched / dark / gate-traced) the RMS ratio is 0.80-1.95; the largest are EHAM unmatched 1.95 (2,142 rows) and EDDF
+  dark / gate-traced 1.72 / 1.82 (EDDF's ranking coverage is a third of 2025's).
+* **Published day totals (EUROCONTROL DLY_ALL_PRE, label-free on the ranking).** Implied day delay Σ max(a - value, 0) against the
+  published figure at the seven airports: development moves toward the published figure on 60.7% of 862 airport-days (sum of |gap|
+  -5.2%), ranking on 57.8% of 436 (-1.4%); per airport the direction agrees except EDDF (0.75 development, 0.50 ranking). The day
+  channel is not the main mechanism: development days moved away from the published figure still gain (-26.7e6 against -44.6e6 toward).
+* **Expected effect.** ΔRMSE ≈ -g x S / (2 N R) = -0.122 x g s with S = 1.82e7. No alignment at all (g = 0... the change pure noise):
+  +0.12 s. Development alignment g = 1.5-3.9: -0.19 to -0.48 s. Official alignments of earlier stacker layers (v60 1.11, v69 1.82,
+  v63 3.15): -0.14 to -0.38 s.
