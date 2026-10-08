@@ -1,0 +1,75 @@
+{
+ "experiment_id": "stack_third_v1",
+ "declared_at_utc": "see commit (8 October 2026, before its governing run)",
+ "declared_by": "Declaring and the governing run are research; a build under runs/submissions and any upload stay the user's word.",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "status": "DECLARED before its governing run. The five-seed bags have not been fitted or read.",
+ "disclosure": "NOT A CLEAN TEST. Exploration on v72's development values (docs/audit_v72/, 8 October; single seed 7, the settings below): with raw ADS-B match inputs (features_v19own's 26 columns + 17 matches2 numeric columns, times as seconds before take-off) a third pass at the seven airports read eq -0.0347% (raw inputs + second-pass prediction + v72 + clocks) / -0.0212% (with the stacker inputs too), but EGLL worsened January and July (+2.1 / +8.7e6 s² and +2.9 / +11.0e6), its July 2025 being a coverage collapse (77% of rows unmatched; 3% in July 2026). EDDF, EHAM and LSZH improved in every month (raw-only variant: EDDF -0.95 / -2.37 / -2.86 / -2.50, EHAM -0.72 / -0.36 / -0.57 / -0.31, LSZH -3.09 / -1.83 / -2.03 / -1.04e6 s²). The airport set below was chosen AFTER reading that table; other variants read in the same exploration: regularised (-0.0165%), all ten airports (+0.0036%), LFPG / LIRF / three-airport passes (below the bar). Rationale beyond the reading: these three airports had the highest gain per unit change in the second pass (4.9 / 3.6 / 4.0) and stable coverage in both years. No fresh-month check is possible (the stacker's inputs exist only for the four development months).",
+ "mechanism": "A third guarded residual pass on v72: the stacker and the second pass never saw the raw ADS-B match inputs (first point, segment and motion start, stops, path length, gaps, surface traffic, own-aircraft points); the components used them to predict the label, the late passes only combined the components.",
+ "inputs": {
+  "raw": "data/external/adsblol/features_v19own/features_v19_<month>.parquet (26 columns) and data/external/adsblol/matches/matches2_<month>.parquet (first_gs, stop_seconds, first_lat, first_lon, taxi_path_m, taxi_stops, taxi_stopped_s, slow_start_s, gap_before_s, points, at_known_stand, first_dist_stand_m, anchor_dist_stand_m; segment_start, motion_start, arrival_last_ground, last_ground as seconds before take-off), prefixed m_ for the matches2 columns; built by docs/audit_v72/raw_build.py",
+  "chain": "ship = v72's value (development: runs/stack_second v71 + sp_hicov7; ranking: the uploaded v72 4280c399...), p2 = sp_hicov7's bag prediction, d2 = v72 - v71",
+  "clocks": "c_sched, c_aobt, c_lobt, c_eobt, c_iobt, c_arvt, c_hour, c_dow, c_layers (runs/stack_second tables)",
+  "class": "kind, ap (categorical)"
+ },
+ "procedure": {
+  "target": "clip(label - v72, -1800, 1800)",
+  "model": "LightGBM regression, learning_rate 0.03, num_leaves 31, min_data_in_leaf 800, lambda_l2 50, feature_fraction 0.7, bagging_fraction 0.7, bagging_freq 1, max_bin 127, 400 rounds, deterministic, force_col_wise, 16 threads; categorical kind, ap; five seeds 7, 11, 12, 13, 14, predictions averaged",
+  "development": "each development month predicted by bags fitted on the other three months",
+  "ranking": "bags fitted on all four development months",
+  "value": "new = max(v72 + clip(0.5 x bag, -120, 120), -12) on non-fixed rows of EDDF, EHAM, LSZH; every other row keeps v72. Ranking: np.rint into the file's dtype from the uploaded v72; every other row byte-identical."
+ },
+ "candidates": [
+  {
+   "name": "t3_ro_h7",
+   "features": "raw + chain + clocks + class",
+   "fit_airports": [
+    "EDDF",
+    "EDDM",
+    "EGLL",
+    "EHAM",
+    "LEBL",
+    "LEMD",
+    "LSZH"
+   ],
+   "apply_airports": [
+    "EDDF",
+    "EHAM",
+    "LSZH"
+   ],
+   "weight": 0.5,
+   "note": "as read in the exploration"
+  },
+  {
+   "name": "t3_ro_3",
+   "features": "raw + chain + clocks + class",
+   "fit_airports": [
+    "EDDF",
+    "EHAM",
+    "LSZH"
+   ],
+   "apply_airports": [
+    "EDDF",
+    "EHAM",
+    "LSZH"
+   ],
+   "weight": 0.5
+  }
+ ],
+ "rule": {
+  "clause_1": "No development month (January, July, November, December 2025) worse than v72's development values by more than 0.005% of complete-month RMSE.",
+  "clause_2": "Equal-footing mean (January, July, December) at most -0.02%.",
+  "clause_3": "Paired-day 95% interval below zero for January, July and December (tools/run_intruder_bound.interval, 2,000 replicates, seed 20261004).",
+  "clause_4_transfer": "Per airport, RMS of the ranking change (moved rows) within 0.5x-2x of the RMS of the out-of-month development change; an airport outside keeps v72 on every row. If more than one of the three falls outside, the candidate is not accepted.",
+  "selection": "Among candidates passing clauses 1-4, the lowest clause-2 mean; none -> v72 stays.",
+  "scoring": "Every row of every complete month, all labels."
+ },
+ "compute": "Tables locally (light pandas); LightGBM fits on Azure arcw0, deallocated after the hash-checked copy back.",
+ "outputs": {
+  "tool": "tools/run_stack_third.py",
+  "runs": "runs/stack_third/",
+  "results": "docs/stack_third/results_v1.json",
+  "ranking": "runs/stack_third/rank/dry_v73/vigorous-whistle_v73.parquet (version provisional; never under runs/submissions)"
+ }
+}
