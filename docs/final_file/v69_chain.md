@@ -150,7 +150,9 @@ After step 11, two label-free layers, both applied last ([`docs/nbr_state/README
 Inputs: the uploaded v70 file, `runs/final_dryrun/run/recipe/detail.parquet` (ranking v9 and routing scope), `data/raw/ranking.parquet`
 (take-off times), `data/external/adsblol/matches/matches2_2026-*.parquet` (gate flags), and for the slopes the v70 development proxy
 `runs/oooi_lhr/dev_v70_proxy.parquet` (51aaa6a6...), `runs/lomo_dev/rows.parquet` (v9) and the 2025 raw month files. Commands:
-`.venv\Scripts\python.exe -X utf8 -B toolsun_nbr_state.py` then `... toolsun_nbr_dark.py`; the second writes
+`.venv\Scripts\python.exe -X utf8 -B tools
+un_nbr_state.py` then `... tools
+un_nbr_dark.py`; the second writes
 `runs/nbr_state/rank/dry_v72/vigorous-whistle_v72.parquet`, which `docs/nbr_state/build_v71.py` (CHOICE "state+dark") copied to
 `runs/submissions/vigorous-whistle_v71.parquet`. **v71 SHA-256 `2dfb3b9f53284c7ae3a02882d19cfd61b19116b1b00504176551bcae8b82e6ba`,
 215.6232 official.**
@@ -159,4 +161,3 @@ Inputs: the uploaded v70 file, `runs/final_dryrun/run/recipe/detail.parquet` (ra
 starting from the v70 that the stacker path had just rebuilt byte for byte, the two layers' code reproduced nbr_state's dry run 7a0b1431...
 and **v71 `2dfb3b9f...` byte for byte**, with the same exclusions (step 12 EHAM, step 13 none). Both layers are pandas / numpy arithmetic
 with no random state.
-
