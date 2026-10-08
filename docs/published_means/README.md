@@ -68,3 +68,24 @@ configs/published_means_v2.json`, [`export_v47.json`](export_v47.json)): `runs/s
 `docs/export_audit/v47_audit.json`: clean. Tests: `tests/test_published_means.py` (2 pass).
 
 **Expectation against v46's 223.9339:** 223.53 (−0.41 s) if the estimates hold; 224.33 (+0.40 s) if every move is noise. Upload is the user's decision.
+
+## Third declaration on v72's chain (`configs/published_means_v3.json`, 8 October 2026): not accepted
+
+The v2 procedure unchanged, with v72's chain as the control (development: `runs/stack_second` v71 + sp_hicov7; ranking: the uploaded
+v72) and the fixed rows (LIRF population, guard rows) never moved; `pm_np` also leaves them out of LIRF's means. Tool
+`tools/run_published_means_v3.py`, results [`results_v3.json`](results_v3.json). Exploration readings of the ranking cells were known
+before the declaration (disclosed in it).
+
+| month | change | interval | cells shifted: shift / true level error (s) |
+|---|---|---|---|
+| January | **+0.0006%** | [-0.000, +0.003] | LEBL -6.7 / -2.3 |
+| July | -0.0013% | [-0.005, +0.001] | EGLL 7.7 / 6.5 |
+| November | -0.0015% | [-0.004, +0.001] | EGLL 2.2 / 3.0 |
+| December | -0.0050% | [-0.009, -0.001] | EGLL 4.5 / 4.7 |
+
+Both candidates read the same on 2025 (LIRF has no eligible development cell). **Primary rule: not accepted** (January worse, by LEBL's
+overshoot); v57's clauses 2-3 fail by construction. No dry run written. EGLL's shifts track the truth within 1.2 s in all three months.
+
+Ranking cells the procedure would shift: EGLL January -2.2 s (19,283 rows), EGLL July -8.1 s (20,553), LEBL July -8.6 s (17,879), LIRF
+July -37.9 s (`pm`) or -26.7 s (`pm_np`, non-population means) on 15,544 non-fixed rows. Stakes: `pm` -0.175 s if the estimates hold,
++0.171 s if every move is noise; `pm_np` -0.10 / +0.10 s. Most of either stake is LIRF July 2026.
