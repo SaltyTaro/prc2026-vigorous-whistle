@@ -25,6 +25,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 RUN = ROOT / "runs" / "oooi_pin"
+RANKING = ROOT / "data" / "raw" / "ranking.parquet"   # the movement file joined as the ranking side (final-file chain: a new file)
 AIRPORTS = {"LFPG", "LTFM", "LIRF"}
 # ACARS two-character airline designator -> ICAO callsign prefix
 AL = {"AF": "AFR", "U2": "EZY", "EC": "EJU", "DS": "EZS", "DL": "DAL", "UA": "UAL", "AA": "AAL", "TK": "THY",
@@ -182,7 +183,7 @@ def main(run: Path = RUN, dev_months: list[str] | None = None) -> None:
                                for k, v in p.groupby(["source", "org", "month"]).size().items()}}
     raw = ROOT / "data" / "raw"
     dev = load_deps([next(raw.glob(f"training_{m}-01_*.parquet")) for m in dev_months])
-    rank = load_deps([raw / "ranking.parquet"])
+    rank = load_deps([RANKING])
     jd, sd = join(p, dev)
     jr, sr = join(p, rank)
     for j in (jd, jr):

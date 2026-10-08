@@ -30,6 +30,7 @@ PARAMS = dict(objective="regression", learning_rate=0.03, num_leaves=31, min_dat
               bagging_fraction=0.7, bagging_freq=1, verbose=-1, num_threads=16, max_bin=127, deterministic=True, force_col_wise=True)
 SEEDS, ROUNDS, CAP, FLOOR, CLIP_Y = [7, 11, 12, 13, 14], 400, 120.0, -12.0, 1800.0
 NOV, DEC, JAN25, JAN26 = "2025-11", "2025-12", "2025-01", "2026-01"
+DEV_PREDS_FROM = None    # final-file chain: an existing preds_dev.parquet copied by fit(), which then fits only the ranking bags
 
 
 def sha(p: Path) -> str:
@@ -92,18 +93,23 @@ def fit(table_dir: Path) -> None:
             acc += mdl.predict(X[t]) / len(SEEDS)
         return acc
 
+    stored = pd.read_parquet(DEV_PREDS_FROM).set_index(ID).reindex(T[ID]) if DEV_PREDS_FROM is not None else None
     for a in airports:
         base = nf & (apt == a)
         col, desc = np.full(len(T), np.nan), np.full(len(T), np.nan)
-        for tr, te in [(DEC, NOV), (NOV, DEC)]:
-            t = base & (mon == te)
-            col[t] = bag(base & (mon == tr), XT, t)
-        t = base & (mon == JAN25)
-        desc[t] = bag(base & (mon == DEC), XT, t)
+        if stored is None:
+            for tr, te in [(DEC, NOV), (NOV, DEC)]:
+                t = base & (mon == te)
+                col[t] = bag(base & (mon == tr), XT, t)
+            t = base & (mon == JAN25)
+            desc[t] = bag(base & (mon == DEC), XT, t)
+        else:
+            col, desc = stored[f"sp_{a}"].to_numpy(), stored[f"desc_{a}"].to_numpy()
         pdv[f"sp_{a}"], pdv[f"desc_{a}"] = col, desc
         tk = nfk & (aptk == a) & (monk == JAN26)
         pr = np.full(len(K), np.nan)
-        pr[tk] = bag(base & np.isin(mon, [NOV, DEC]), XK, tk)
+        if tk.any():   # the declared rule acts on January 2026 rows only; a file without them gets no ranking bag
+            pr[tk] = bag(base & np.isin(mon, [NOV, DEC]), XK, tk)
         prk[f"sp_{a}"] = pr
         print(a, "done", flush=True)
     pdv.to_parquet(table_dir / "preds_dev.parquet", index=False)

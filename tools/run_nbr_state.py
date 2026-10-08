@@ -28,6 +28,7 @@ V70 = (ROOT / "runs/submissions/vigorous-whistle_v70.parquet", "f1d17747e0e384cc
 LOMO = ROOT / "runs/lomo_dev/rows.parquet"
 ROWS12 = ROOT / "runs/daily_totals/rows12.parquet"
 RECIPE = ROOT / "runs/final_dryrun/run/recipe/detail.parquet"
+RANKING = ROOT / "data/raw/ranking.parquet"   # the movement file (final-file chain: a new file)
 RAW = {"2025-01": "training_2025-01-01_2025-02-01", "2025-07": "training_2025-07-01_2025-08-01", "2025-08": "training_2025-08-01_2025-09-01",
        "2025-09": "training_2025-09-01_2025-10-01", "2025-10": "training_2025-10-01_2025-11-01", "2025-11": "training_2025-11-01_2025-12-01",
        "2025-12": "training_2025-12-01_2026-01-01"}
@@ -132,7 +133,7 @@ def ranking_table() -> pd.DataFrame:
         raise ValueError("v70 file changed")
     sub = pd.read_parquet(V70[0])
     rec = pd.read_parquet(RECIPE, columns=[ID, "airport", "month", "scope", "v9"])
-    raw = pd.read_parquet(ROOT / "data/raw/ranking.parquet", columns=[ID, "PHASE_mvt", "MVT_TIME_UTC_mvt"])
+    raw = pd.read_parquet(RANKING, columns=[ID, "PHASE_mvt", "MVT_TIME_UTC_mvt"])
     raw = raw[raw["PHASE_mvt"] == "DEP"][[ID, "MVT_TIME_UTC_mvt"]]
     k = sub.rename(columns={TARGET: "value"}).merge(rec, on=ID, how="left").merge(raw, on=ID, how="left")
     if len(k) != len(sub) or k[["v9", "MVT_TIME_UTC_mvt", "scope"]].isna().any().any():

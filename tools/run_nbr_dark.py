@@ -24,10 +24,13 @@ V71 = (ROOT / "runs/nbr_state/rank/dry_v71/vigorous-whistle_v71.parquet", "7a0b1
 STATE_RESULTS = ROOT / "docs/nbr_state/results_v1.json"
 W_STATE = 0.75
 DRY = ROOT / "runs/nbr_state/rank/dry_v72/vigorous-whistle_v72.parquet"
+RANK_MONTHS = ["2026-01", "2026-07"]   # months of the movement file (final-file chain: the new file's months)
+MATCHES = ROOT / "data/external/adsblol/matches"   # folder of matches2_<month>.parquet
+DARK_RESULTS = ROOT / "docs/nbr_state/dark_results_v1.json"
 
 
 def gates(months: list[str]) -> pd.DataFrame:
-    g = pd.concat([pd.read_parquet(ROOT / f"data/external/adsblol/matches/matches2_{m}.parquet", columns=[ID, "gate"]) for m in months])
+    g = pd.concat([pd.read_parquet(MATCHES / f"matches2_{m}.parquet", columns=[ID, "gate"]) for m in months])
     return g.drop_duplicates(ID)
 
 
@@ -43,7 +46,7 @@ def main() -> None:
     state_res = json.loads(STATE_RESULTS.read_text(encoding="utf-8"))
     d, f, k = N.dev_table(), N.fresh_table(), N.ranking_table()
     d, f = with_gate(d, N.DEV_MONTHS), with_gate(f, N.FRESH)
-    k = with_gate(k, ["2026-01", "2026-07"])
+    k = with_gate(k, RANK_MONTHS)
     for t in (d, f, k):
         t["x"] = N.state(t)
         t["unm"] = ~t["matched"].to_numpy() & ~t["fixed"].to_numpy() & ~np.isnan(t["x"].to_numpy())
@@ -135,7 +138,7 @@ def main() -> None:
                           "squared_change_vs_v70": float(((back[TARGET].to_numpy(float) - v70[TARGET].to_numpy(float)) ** 2).sum()),
                           "template_order_same": bool((back[ID].to_numpy() == v71[ID].to_numpy()).all()), "dtype": str(back[TARGET].dtype)}
         print("dry run", out["dry_run"])
-    (ROOT / "docs/nbr_state/dark_results_v1.json").write_text(json.dumps(out, indent=1, default=float), encoding="utf-8")
+    DARK_RESULTS.write_text(json.dumps(out, indent=1, default=float), encoding="utf-8")
 
 
 if __name__ == "__main__":

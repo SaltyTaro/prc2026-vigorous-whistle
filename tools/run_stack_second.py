@@ -37,6 +37,13 @@ CL = ["c_sched", "c_aobt", "c_lobt", "c_eobt", "c_iobt", "c_arvt", "c_hour", "c_
 PARAMS = dict(objective="regression", learning_rate=0.03, num_leaves=31, min_data_in_leaf=800, lambda_l2=50.0, feature_fraction=0.7,
               bagging_fraction=0.7, bagging_freq=1, verbose=-1, num_threads=16, max_bin=127, deterministic=True, force_col_wise=True)
 SEEDS, ROUNDS, W, CAP, FLOOR, CLIP_Y = [7, 11, 12, 13, 14], 400, 0.5, 120.0, -12.0, 1800.0
+# Final-file chain options (docs/final_file/lane_L.md, tools/final_late_chain.py); the defaults reproduce the governing run.
+RANKING = ROOT / "data/raw/ranking.parquet"   # the movement file
+RANK_MONTHS = ["2026-01", "2026-07"]          # its months (gate flags)
+MATCHES = ROOT / "data/external/adsblol/matches"
+DEV_TABLE_FROM = None    # an existing dev_table.parquet (hash-checked by the caller) copied instead of rebuilding the development table
+STACKER_RANK = None      # parquet: MVT_ID_mvt + the 79 s_* stacker columns of the ranking rows, instead of run_stack_weight.rank_inputs()
+DEV_PREDS_FROM = None    # an existing preds_dev.parquet: fit() copies it and fits only the ranking bags
 
 
 def sha(p: Path) -> str:
@@ -76,7 +83,7 @@ def nm_error_state(t: pd.DataFrame, raw: pd.DataFrame) -> np.ndarray:
 
 
 def gate_flags(ids: np.ndarray, months: list[str]) -> np.ndarray:
-    g = pd.concat([pd.read_parquet(ROOT / f"data/external/adsblol/matches/matches2_{m}.parquet", columns=[ID, "gate"]) for m in months])
+    g = pd.concat([pd.read_parquet(MATCHES / f"matches2_{m}.parquet", columns=[ID, "gate"]) for m in months])
     return g.drop_duplicates(ID).set_index(ID)["gate"].reindex(ids).fillna(False).astype(bool).to_numpy()
 
 
@@ -110,6 +117,9 @@ def build() -> None:
     import run_stack_queue as Q
     import run_stack_weight as SW
     OUT.mkdir(parents=True, exist_ok=True)
+    if DEV_TABLE_FROM is not None:
+        build_rank(pd.read_parquet(DEV_TABLE_FROM))
+        return
     # ---- development
     d = N.dev_table()
     gate = gate_flags(d[ID].to_numpy(), MONTHS)
@@ -144,18 +154,40 @@ def build() -> None:
     if T[X79.columns[0]].isna().any() or T["bpos"].isna().any():
         raise ValueError("development join incomplete")
     T.to_parquet(OUT / "dev_table.parquet", index=False)
+    build_rank(T)
+
+
+def build_rank(T: pd.DataFrame) -> None:
+    """The ranking half of build() (unchanged), split out so that the final-file chain can reuse a stored development table."""
+    import nbr_columns as C
+    import run_nbr_state as N
+    import run_stack_queue as Q
+    import run_stack_weight as SW
+    dark = json.loads(DARK.read_text(encoding="utf-8"))
+    if DEV_TABLE_FROM is not None:   # the stored table, byte for byte
+        import shutil
+        shutil.copyfile(DEV_TABLE_FROM, OUT / "dev_table.parquet")
     # ---- ranking
     if sha(V70[0]) != V70[1] or sha(V71[0]) != V71[1]:
         raise ValueError("v70 / v71 files changed")
     k = N.ranking_table()
-    gk = gate_flags(k[ID].to_numpy(), ["2026-01", "2026-07"])
-    _, _, _, mats, rk, fxr, h2, h3, ho, Por = SW.rank_inputs()
-    X79r = [m for m in mats if m[0] == "po"][0][2].reset_index(drop=True)
-    X79r.columns = X79.columns[:-1]
-    X79r[ID] = rk[ID].to_numpy()
+    gk = gate_flags(k[ID].to_numpy(), RANK_MONTHS)
+    s_cols = [c for c in T.columns if c.startswith("s_")]
+    if STACKER_RANK is None:
+        _, _, _, mats, rk, fxr, h2, h3, ho, Por = SW.rank_inputs()
+        X79r = [m for m in mats if m[0] == "po"][0][2].reset_index(drop=True)
+        X79r.columns = s_cols
+        X79r[ID] = rk[ID].to_numpy()
+    else:
+        X79r = pd.read_parquet(STACKER_RANK)
+        if [c for c in X79r.columns if c != ID] != s_cols:
+            raise ValueError("stacker inputs: columns differ from the development table's s_* columns")
+        rk = X79r[[ID]]
+        X79r = X79r[s_cols + [ID]]
+    Q.RANKING = RANKING
     qr = Q.queue_rank(rk)
     qr[ID] = rk[ID].to_numpy()
-    rraw = pd.read_parquet(ROOT / "data/raw/ranking.parquet", columns=[ID, "PHASE_mvt", "SCHED_TIME_UTC_mvt", "AOBT_3_flt", "LOBT_flt", "EOBT_1_flt",
+    rraw = pd.read_parquet(RANKING, columns=[ID, "PHASE_mvt", "SCHED_TIME_UTC_mvt", "AOBT_3_flt", "LOBT_flt", "EOBT_1_flt",
                                                                      "IOBT_flt", "ARVT_3_flt"])
     rraw = rraw[rraw["PHASE_mvt"] == "DEP"].drop(columns="PHASE_mvt")
     v71 = pd.read_parquet(V71[0]).set_index(ID)[TARGET]
@@ -171,7 +203,7 @@ def build() -> None:
     K = pd.concat([K.reset_index(drop=True), clocks(k, rraw)], axis=1)
     K["c_layers"] = K["v71"] - K["v70"]
     K = K.merge(qr, on=ID, how="left", validate="one_to_one").merge(X79r, on=ID, how="left", validate="one_to_one")
-    if K[X79.columns[0]].isna().any() or K["bpos"].isna().any() or K["v71"].isna().any():
+    if K[s_cols[0]].isna().any() or K["bpos"].isna().any() or K["v71"].isna().any():
         raise ValueError("ranking join incomplete")
     K.to_parquet(OUT / "rank_table.parquet", index=False)
     rec = {"created_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "dev_rows": len(T), "rank_rows": len(K),
@@ -194,10 +226,11 @@ def fit(table_dir: Path) -> None:
     y = np.clip((T["label"] - T["v71"]).to_numpy(), -CLIP_Y, CLIP_Y)
     pd_dev, pd_rank = pd.DataFrame({ID: T[ID]}), pd.DataFrame({ID: K[ID]})
     XT, XK = T[F].astype(np.float32), K[F].astype(np.float32)
+    stored = pd.read_parquet(DEV_PREDS_FROM) if DEV_PREDS_FROM is not None else None
     for c in decl["candidates"]:
         inset = T["airport"].isin(c["airports"]).to_numpy() & (T["kind"] != 3).to_numpy()
         p = np.full(len(T), np.nan)
-        for m in MONTHS:
+        for m in (MONTHS if stored is None else []):
             f, t = inset & (T["month"] != m).to_numpy(), inset & (T["month"] == m).to_numpy()
             acc = np.zeros(int(t.sum()))
             for s in SEEDS:
@@ -205,10 +238,10 @@ def fit(table_dir: Path) -> None:
                 acc += mdl.predict(XT[t]) / len(SEEDS)
             p[t] = acc
             print(c["name"], m, "done", flush=True)
-        pd_dev[c["name"]] = p
+        pd_dev[c["name"]] = p if stored is None else stored.set_index(ID)[c["name"]].reindex(T[ID]).to_numpy()
         kin = K["airport"].isin(c["airports"]).to_numpy() & (K["kind"] != 3).to_numpy()
         acc = np.zeros(int(kin.sum()))
-        for s in SEEDS:
+        for s in (SEEDS if kin.any() else []):
             mdl = lgb.train({**PARAMS, "seed": s}, lgb.Dataset(XT[inset], y[inset], categorical_feature=["kind", "ap"]), ROUNDS)
             acc += mdl.predict(XK[kin]) / len(SEEDS)
         pr = np.full(len(K), np.nan)

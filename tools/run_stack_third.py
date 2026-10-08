@@ -29,6 +29,9 @@ CL = ["c_sched", "c_aobt", "c_lobt", "c_eobt", "c_iobt", "c_arvt", "c_hour", "c_
 PARAMS = dict(objective="regression", learning_rate=0.03, num_leaves=31, min_data_in_leaf=800, lambda_l2=50.0, feature_fraction=0.7,
               bagging_fraction=0.7, bagging_freq=1, verbose=-1, num_threads=16, max_bin=127, deterministic=True, force_col_wise=True)
 SEEDS, ROUNDS, CAP, FLOOR, CLIP_Y = [7, 11, 12, 13, 14], 400, 120.0, -12.0, 1800.0
+# Final-file chain options (docs/final_file/lane_L.md, tools/final_late_chain.py); the defaults reproduce the governing run.
+RAW_DIR = ROOT / "runs/audit_v72"   # raw_{dev,rank}.parquet of docs/audit_v72/raw_build.py
+DEV_PREDS_FROM = None    # an existing preds_dev.parquet: fit() copies it and fits only the ranking bags
 
 
 def sha(p: Path) -> str:
@@ -62,14 +65,14 @@ def build() -> None:
     for X in (T, K):
         X["d2"] = X["ship"] - X["v71"]
     for X, nm in ((T, "dev"), (K, "rank")):
-        raw = pd.read_parquet(ROOT / f"runs/audit_v72/raw_{nm}.parquet")
+        raw = pd.read_parquet(RAW_DIR / f"raw_{nm}.parquet")
         if not (raw[ID].to_numpy() == X[ID].to_numpy()).all():
             raise ValueError(f"raw_{nm} not aligned")
         out = pd.concat([X.reset_index(drop=True), raw.drop(columns=[ID]).reset_index(drop=True)], axis=1)
         out.to_parquet(OUT / f"{nm}_t3.parquet", index=False)
     rec = {"created_at_utc": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds"), "features": features(pd.read_parquet(OUT / "dev_t3.parquet")),
            "sha256": {"dev_t3": sha(OUT / "dev_t3.parquet"), "rank_t3": sha(OUT / "rank_t3.parquet"), "declaration": sha(DECL), "tool": sha(Path(__file__)),
-                      "raw_dev": sha(ROOT / "runs/audit_v72/raw_dev.parquet"), "raw_rank": sha(ROOT / "runs/audit_v72/raw_rank.parquet")}}
+                      "raw_dev": sha(RAW_DIR / "raw_dev.parquet"), "raw_rank": sha(RAW_DIR / "raw_rank.parquet")}}
     (OUT / "tables.json").write_text(json.dumps(rec, indent=1), encoding="utf-8")
     print(json.dumps(rec["sha256"], indent=1), len(rec["features"]), "features")
 
@@ -88,11 +91,12 @@ def fit(table_dir: Path) -> None:
     pd_dev, pd_rank = pd.DataFrame({ID: T[ID]}), pd.DataFrame({ID: K[ID]})
     XT, XK = T[F].astype(np.float32), K[F].astype(np.float32)
     nf = (T["kind"] != 3).to_numpy()
+    stored = pd.read_parquet(DEV_PREDS_FROM) if DEV_PREDS_FROM is not None else None
     for c in decl["candidates"]:
         tr = T["airport"].isin(c["fit_airports"]).to_numpy() & nf
         ap = T["airport"].isin(c["apply_airports"]).to_numpy() & nf
         p = np.full(len(T), np.nan)
-        for m in MONTHS:
+        for m in (MONTHS if stored is None else []):
             f, t = tr & (T["month"] != m).to_numpy(), ap & (T["month"] == m).to_numpy()
             acc = np.zeros(int(t.sum()))
             for s in SEEDS:
@@ -100,10 +104,10 @@ def fit(table_dir: Path) -> None:
                 acc += mdl.predict(XT[t]) / len(SEEDS)
             p[t] = acc
             print(c["name"], m, "done", flush=True)
-        pd_dev[c["name"]] = p
+        pd_dev[c["name"]] = p if stored is None else stored.set_index(ID)[c["name"]].reindex(T[ID]).to_numpy()
         kin = K["airport"].isin(c["apply_airports"]).to_numpy() & (K["kind"] != 3).to_numpy()
         acc = np.zeros(int(kin.sum()))
-        for s in SEEDS:
+        for s in (SEEDS if kin.any() else []):
             mdl = lgb.train({**PARAMS, "seed": s}, lgb.Dataset(XT[tr], y[tr], categorical_feature=["kind", "ap"]), ROUNDS)
             acc += mdl.predict(XK[kin]) / len(SEEDS)
         pr = np.full(len(K), np.nan)

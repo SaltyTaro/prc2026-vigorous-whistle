@@ -26,6 +26,7 @@ SP2_DECL, SP2_RES = ROOT / "configs/season_pass_v2.json", ROOT / "docs/season_pa
 FILES = {"2025-01": "training_2025-01-01_2025-02-01", "2025-11": "training_2025-11-01_2025-12-01", "2025-12": "training_2025-12-01_2026-01-01"}
 BETA, LAM, CAP, FLOOR, CLIP_R, ORD = 0.25, 30.0, 120.0, -12.0, 1800.0, 20000.0
 NOV, DEC, JAN25, JAN26 = "2025-11", "2025-12", "2025-01", "2026-01"
+RANKING = ROOT / "data/raw/ranking.parquet"   # the movement file (final-file chain: a new file)
 
 
 def sha(p: Path) -> str:
@@ -98,7 +99,7 @@ def run() -> dict:
     decl = json.loads(DECL.read_text(encoding="utf-8"))
     T, K, B, info = base_chain()
     T["fn"] = flight_numbers([ROOT / f"data/raw/{f}.parquet" for f in FILES.values()], T[ID]).to_numpy()
-    K["fn"] = flight_numbers([ROOT / "data/raw/ranking.parquet"], K[ID]).to_numpy()
+    K["fn"] = flight_numbers([RANKING], K[ID]).to_numpy()
     y, base = T["label"].to_numpy(dtype=float), T["base"].to_numpy()
     T["r"] = np.clip(y - base, -CLIP_R, CLIP_R)
     fixed, fixk = (T["kind"] == 3).to_numpy(), (K["kind"] == 3).to_numpy()
