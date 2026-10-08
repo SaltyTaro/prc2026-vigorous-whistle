@@ -1,0 +1,71 @@
+{
+ "experiment_id": "stack_second_v1",
+ "declared_at_utc": "see commit (8 October 2026, before its governing run)",
+ "declared_by": "Declaring and the governing run are research; a build under runs/submissions and any upload stay the user's word.",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "status": "DECLARED before its governing run. The five-seed bags have not been fitted or read.",
+ "disclosure": "NOT A CLEAN TEST. A 'what's left' audit on v71's development residuals (8 October, exploration; runs/audit_v71/audit_results.json, scratch scripts aud_build / aud_fit / aud_fit2) fitted a month-blocked single-seed LightGBM (the settings below, seed 7) on several input groups. All airports: Jan -0.014 / Jul -0.008 / Nov -0.147 / Dec -0.192%, with LIRF worsening January and July (+5.4e6 / +14.1e6 s²) and LFPG / LTFM mixed. The airport sets below were chosen AFTER reading that per-airport table; single-seed readings: no-LIRF, trained in-set, eq -0.0914% (every interval below zero); the seven high-coverage airports, trained in-set, eq -0.1171% (every interval below zero); stacker-only inputs -0.082 / -0.105%. Rationale beyond the reading: LIRF runs its own stacker learner (v2) and the fill-population hedges; LFPG (9% of 2025 rows ADS-B-matched) and LTFM (0%) carry little of the ADS-B-derived inputs. No fresh-month check is possible: the stacker's inputs exist only for the four development months. The stacker-weight round (docs/stack_weight/README.md) had already shown that more stacker weight helps November / December and hurts January / July overall.",
+ "mechanism": "A second guarded residual pass on top of v71: v70's stacker applies 0.65 of its out-of-month prediction and the neighbour layers come after it; a further LightGBM on the same label-free inputs (plus the neighbour, queue and clock columns) learns the remaining systematic error at the high-coverage airports.",
+ "inputs": {
+  "stacker": "the 79 columns of tools/run_stack_weight.dev_inputs / rank_inputs (OPDI learner's matrix X79 / X79r), prefixed 's_', a repeated name suffixed with its position",
+  "neighbour": "nx, nxk, nn (tools/nbr_columns.columns with value = v70: development the v70 development proxy, ranking the uploaded v70) and x_nmerr = tools/run_nbr_state.state on value = v70 and v9 replaced by take-off - AOBT_3, neighbours = matched rows with take-off - AOBT_3 in [-3600, 7200] s",
+  "queue": "gp, gn, gp2, gp4, gn4, bpos, blen (tools/run_stack_queue.queue_dev / queue_rank)",
+  "clocks": "take-off minus SCHED_TIME / AOBT_3 / LOBT / EOBT_1 / IOBT, ARVT_3 minus take-off, hour of day (fractional), day of week, and v71 - v70 (the neighbour layers' change)",
+  "class": "kind (0 unmatched, 1 dark = matched not gate-traced, 2 gate-traced, 3 fixed) and ap (airport code, categorical)"
+ },
+ "procedure": {
+  "target": "clip(label - v71, -1800, 1800); v71 = the control's development values (v70 development proxy + nbr_state_v1 w75 + nbr_dark_v1, rebuilt and checked against docs/nbr_state/dark_results_v1.json's RMSEs).",
+  "model": "LightGBM regression, learning_rate 0.03, num_leaves 31, min_data_in_leaf 800, lambda_l2 50, feature_fraction 0.7, bagging_fraction 0.7, bagging_freq 1, max_bin 127, 400 rounds, deterministic, force_col_wise, 16 threads; categorical kind, ap; five seeds 7, 11, 12, 13, 14, predictions averaged.",
+  "fit_rows": "non-fixed rows of the candidate's airports.",
+  "development": "each development month predicted by bags fitted on the other three months.",
+  "ranking": "bags fitted on all four development months, applied to the ranking rows of the candidate's airports.",
+  "value": "new = max(v71 + clip(0.5 x bag, -120, 120), -12) on non-fixed rows of the candidate's airports; every other row keeps v71. Ranking: np.rint into the file's dtype from the uploaded v71 (2dfb3b9f...); every other row byte-identical."
+ },
+ "candidates": [
+  {
+   "name": "sp_hicov7",
+   "airports": [
+    "EDDF",
+    "EDDM",
+    "EGLL",
+    "EHAM",
+    "LEBL",
+    "LEMD",
+    "LSZH"
+   ],
+   "weight": 0.5
+  },
+  {
+   "name": "sp_nolirf",
+   "airports": [
+    "EDDF",
+    "EDDM",
+    "EGLL",
+    "EHAM",
+    "LEBL",
+    "LEMD",
+    "LFPG",
+    "LSZH",
+    "LTFM"
+   ],
+   "weight": 0.5
+  }
+ ],
+ "rule": {
+  "clause_1": "No development month (January, July, November, December 2025) worse than the control by more than 0.005% of complete-month RMSE.",
+  "clause_2": "Equal-footing mean (January, July, December) at most -0.02%.",
+  "clause_3": "Paired-day 95% interval below zero for January, July and December (tools/run_intruder_bound.interval, 2,000 replicates, seed 20261004).",
+  "clause_4_transfer": "Per airport, RMS of the ranking change (both months pooled, moved rows) within 0.5x-2x of the RMS of the out-of-month development change; an airport outside keeps v71 on every row (the dry run is built that way). If more than two of the candidate's airports fall outside, the candidate is not accepted.",
+  "selection": "Among candidates passing clauses 1-4, the lowest clause-2 mean; none -> v71 stays.",
+  "scoring": "Every row of every complete month, all labels."
+ },
+ "compute": "Tables built locally (light pandas, seconds); the LightGBM fits on Azure arcw0, deallocated after the hash-checked copy back.",
+ "outputs": {
+  "tool": "tools/run_stack_second.py",
+  "runs": "runs/stack_second/",
+  "results": "docs/stack_second/results_v1.json",
+  "readme": "docs/stack_second/README.md",
+  "ranking": "runs/stack_second/rank/dry_v72/vigorous-whistle_v72.parquet (version provisional; never under runs/submissions)"
+ }
+}
