@@ -169,3 +169,13 @@ EDDF / EDDM / EGLL / EHAM / LEBL / LEMD / LSZH; `--score` writes max(v71 + clip(
 byte-identical) as `runs/stack_second/rank/dry_v72/vigorous-whistle_v72.parquet`, which `docs/stack_second/build_v72.py` copied to
 `runs/submissions/vigorous-whistle_v72.parquet`. **v72 SHA-256 `4280c399aa148847c4be4588dfc3d98d4adfd1a5e64981035b4e0fa3ee802f80`,
 214.927 official.** Predictions copied back from arcw0 with matching SHA-256 (`runs/stack_second/vm_preds.sha256`).
+## Step 15 (v73): third guarded pass with raw ADS-B inputs at EDDF / EHAM / LSZH
+
+After step 14, `docs/audit_v72/raw_build.py` writes the raw ADS-B input tables (`runs/audit_v72/raw_{dev,rank}.parquet`: features_v19own
+26 columns + matches2 17 columns, times as seconds before take-off), then **`tools/run_stack_third.py`** (declaration
+`configs/stack_third_v1.json`, candidate t3_ro_3; [`docs/stack_third/README.md`](../stack_third/README.md)): `--build` joins them with
+runs/stack_second's tables, the second pass's predictions and the uploaded v72 (checking that v72 = v71 + sp_hicov7 exactly); `--fit DIR`
+(Azure) fits five-seed LightGBM bags (seeds 7, 11-14, 400 rounds, deterministic) on the non-fixed rows of EDDF / EHAM / LSZH; `--score` writes
+max(v72 + clip(0.5 x bag, +-120 s), -12) on those rows (every other row byte-identical) as `runs/stack_third/rank/dry_v73/vigorous-whistle_v73.parquet`,
+which `docs/stack_third/build_v73.py` copied to `runs/submissions/vigorous-whistle_v73.parquet`. **v73 SHA-256
+`649e99725ee3f700041b07a231dcd2fa656fdbeef3aa8db5b5b9c9fc341af3ba`, 214.5851 official.**

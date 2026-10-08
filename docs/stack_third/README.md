@@ -1,4 +1,4 @@
-# Third guarded residual pass on v72 with raw ADS-B inputs (`stack_third_v1`, 8 October 2026) — ACCEPTED: `t3_ro_3`
+# Third guarded residual pass on v72 with raw ADS-B inputs (`stack_third_v1`, 8 October 2026) — ACCEPTED: `t3_ro_3`; **v73 = 214.5851 official**
 
 Declaration `configs/stack_third_v1.json` (a26f565), committed before the five-seed bags were fitted; tool `tools/run_stack_third.py`
 (a4994a5; `--build` locally, `--fit` on Azure arcw0, `--score` locally); results [`results_v1.json`](results_v1.json); the exploration that
@@ -41,3 +41,10 @@ minimum -12, int32, template order. Predictions copied back from arcw0 with matc
 `docs/stack_third/build_v73.py` (fill in USER_DECISION), then `tools/audit_export.py --version 73 --compare 72 --report
 docs/export_audit/v73_audit.json`, then `tools/prc_submit.py upload --file runs/submissions/vigorous-whistle_v73.parquet --expected-sha256
 649e99725ee3f700041b07a231dcd2fa656fdbeef3aa8db5b5b9c9fc341af3ba --calendar-day`; status `--report-dir docs/stack_third`.
+## Official result (8 October 2026)
+
+Built (`build_v73.py`, USER_DECISION "'upload it'") and uploaded at the user's word; audit
+[`../export_audit/v73_audit.json`](../export_audit/v73_audit.json) (flag sets identical to v72's). **v73 = 214.5851 official on all
+344,841 rows** (processed 04:46:33 UTC 8 October), **-0.3419 s against v72 (214.927); the official best.** Scored squared-error gain
+50.6e6 = 4.87 x the layer's squared change (1.04e7), above development's 1.3-3.1; nothing re-tuned from the score. Record
+[`official_result_v73.json`](official_result_v73.json). Never re-upload v1-v73.

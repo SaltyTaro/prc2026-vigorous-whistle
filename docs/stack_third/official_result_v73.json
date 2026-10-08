@@ -1,0 +1,27 @@
+{
+ "version": 73,
+ "filename": "vigorous-whistle_v73.parquet",
+ "sha256": "649e99725ee3f700041b07a231dcd2fa656fdbeef3aa8db5b5b9c9fc341af3ba",
+ "official_score": 214.5851,
+ "used_pairs": 344841,
+ "processed_at_utc": "2026-10-08T04:46:33.286728Z",
+ "submission_id": "482a58dc-5407-401f-b12e-75d1a3bd0b71",
+ "previous_best": {
+  "version": 72,
+  "score": 214.927
+ },
+ "change_s": -0.3419,
+ "content": "v72 + stack_third_v1 t3_ro_3 (third guarded LightGBM pass with raw ADS-B match inputs, five seeds, 0.5 x capped 120 s, floor -12) at EDDF / EHAM / LSZH; dry run runs/stack_third/rank/dry_v73/vigorous-whistle_v73.parquet",
+ "squared_change_vs_v72": 10390459.0,
+ "scored_gain_sse": 50639965.33181581,
+ "gain_over_squared_change": 4.873698585578925,
+ "development_gain_over_squared_change": {
+  "2025-01": 1.78,
+  "2025-07": 1.31,
+  "2025-11": 3.14,
+  "2025-12": 2.09
+ },
+ "user_decision": "'upload it' (8 October 2026 UTC)",
+ "audit": "docs/export_audit/v73_audit.json: flag sets identical to v72's; diff to v72 RMS 5.5 s, EDDF / EHAM / LSZH only, no row > 600 s",
+ "official_scores_used_for_selection": "none; nothing is re-tuned from this score"
+}
