@@ -36,6 +36,7 @@ OUT = ROOT / "runs/opdi_stack"
 DOCS = ROOT / "docs/opdi_stack"
 SHIP = ROOT / "runs/pubrefit/chain/ship"
 KEYMAP = ROOT / "runs/rematch_nonm/key_map.parquet"
+RANKING = "data/raw/ranking.parquet"   # tools/final_early_chain.py: the movement file of a final file
 AIRPORTS = {"EDDF": (50.0333, 8.5706), "EDDM": (48.3538, 11.7861), "EGLL": (51.4700, -0.4543), "EHAM": (52.3086, 4.7639),
             "LEBL": (41.2971, 2.0785), "LEMD": (40.4719, -3.5626), "LFPG": (49.0097, 2.5479), "LIRF": (41.8003, 12.2389),
             "LSZH": (47.4647, 8.5492), "LTFM": (41.2753, 28.7519)}
@@ -60,7 +61,7 @@ def departures(kind: str) -> pd.DataFrame:
         files = sorted(glob.glob(str(ROOT / "data/raw/training_2025-*.parquet")))
         mv = pd.concat([pd.read_parquet(files[i], columns=cols) for i in (0, 6, 10, 11)], ignore_index=True)
     else:
-        mv = pd.read_parquet(ROOT / "data/raw/ranking.parquet", columns=cols)
+        mv = pd.read_parquet(ROOT / RANKING, columns=cols)
     dep = mv[mv["PHASE_mvt"].eq("DEP")].drop_duplicates(ID).rename(columns={"ADEP_mvt": "airport"}).copy()
     km = pd.read_parquet(KEYMAP)[["ADEP_mvt", "FLIGHT_mvt", "key"]].rename(columns={"ADEP_mvt": "airport"})
     dep = dep.merge(km, on=["airport", "FLIGHT_mvt"], how="left")

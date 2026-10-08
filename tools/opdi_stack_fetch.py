@@ -6,6 +6,8 @@ Source: EUROCONTROL Open Performance Data Initiative (opdi.aero), flight events 
 open data with attribution.
 
   python tools/opdi_stack_fetch.py            fetch + filter every missing window, one at a time (sequential, polite)
+  python tools/opdi_stack_fetch.py --need 2026-02-01:2026-04-01 [...]   a final file: also the windows covering these date ranges
+                                               (start inclusive, end exclusive; the default windows are unchanged)
 Outputs: data/external/opdi/stack_v1/events_<start>_<end>.parquet (+ .receipt.json); docs/opdi_stack/sources.json.
 The 18 September probe file (data/external/opdi/flight_events/flight_events_20251101_20251111.parquet) is read in place, never changed.
 No label is read. Nothing is uploaded.
@@ -42,11 +44,13 @@ AIRPORTS = {"EDDF": (50.0333, 8.5706), "EDDM": (48.3538, 11.7861), "EGLL": (51.4
 BOX = (0.10, 0.15)
 
 
-def windows() -> list[tuple[date, date]]:
+def windows(extra: list[tuple[date, date]] | None = None) -> list[tuple[date, date]]:
+    need = NEED + list(extra or [])
+    stop = max([date(2026, 8, 10)] + [b + timedelta(days=10) for _, b in (extra or [])])
     out, d = [], date(2022, 1, 1)
-    while d < date(2026, 8, 10):
+    while d < stop:
         e = d + timedelta(days=10)
-        if any(d < b and e > a for a, b in NEED):
+        if any(d < b and e > a for a, b in need):
             out.append((d, e))
         d = e
     return out
@@ -105,10 +109,14 @@ def fetch(url: str, dest: Path) -> tuple[str, int]:
 
 
 def main() -> None:
+    import argparse
+    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--need", nargs="*", default=[], help="extra date ranges START:END (YYYY-MM-DD, end exclusive) for a final file's period")
+    extra = [tuple(date.fromisoformat(x) for x in r.split(":")) for r in ap.parse_args().need]
     OUT.mkdir(parents=True, exist_ok=True)
     TMP.mkdir(parents=True, exist_ok=True)
     src = json.loads(SOURCES.read_text(encoding="utf-8")) if SOURCES.exists() else {"source": "EUROCONTROL OPDI flight events v0.0.2 (opdi.aero)", "files": {}}
-    for a, b in windows():
+    for a, b in windows(extra):
         name = f"flight_events_{a:%Y%m%d}_{b:%Y%m%d}.parquet"
         out = OUT / f"events_{a:%Y%m%d}_{b:%Y%m%d}.parquet"
         if out.exists() and name in src["files"]:
