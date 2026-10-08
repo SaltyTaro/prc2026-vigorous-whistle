@@ -43,3 +43,16 @@ lon), the third pass's top inputs; a member refit with it would need a GPU round
 Also closed the same morning (no file): a Rome dark-month level shift. On the thinned-July simulation the shipped dark arithmetic (v54) is
 unbiased on average (all rows -0.6 s, ordinary rows +1.2 s; typical rows +32 s against an under-predicted tail), so the +27 s that the
 published monthly mean implies for July 2026 is not a simulated dark-mode bias.
+
+## After v76 (8 October, exploration, nothing declared): W25 well exhausted
+
+- **aud17** (`aud17_second_key.py`, log): a second key-memory layer on v76's development values (operator x hour, operator x destination,
+  operator x stand, stand x runway, type x hour, destination, stand, flight number x runway, operator; beta 0.25 / 0.5, lambda 10 / 30 / 100).
+  Best: stand x runway beta 0.25 lambda 100, -0.008% RMSE each way (bar -0.02%); every other key loses. The flight number absorbed them. Closed.
+- **aud18** (`aud18_build.py`, `aud18_fit.py` on arcw0-2, `aud18_score.py`, log): a third W25 pass on v76 (single seed, per airport, Nov <-> Dec)
+  with season_pass_v2's inputs (ctl), plus the 38 raw-trace features of the 29 September screen (trace), or trace features alone (tronly):
+  **every airport loses in both W25 months in every variant** (e.g. EGLL +10.1 / +8.4e6 s^2, LFPG +9.0 / +4.8e6 for ctl); the trace features
+  change nothing (trace ~ ctl). After v74 + v76 a further winter pass is a double correction. Closed.
+- The raw-trace builder (`tools/screen_trace_features.py`, run unchanged through `trace_build.py`) on Azure reproduces the 29 September
+  December features for 10-11 December (7,465 rows) to 4e-12, and built January 2026 (104,740 of 104,882 matches, 19 s):
+  `runs/audit_v72/trace/features_2026-01.parquet` (unused).
