@@ -32,3 +32,15 @@ The final file must come from the documented, frozen pipeline run on the new mon
 - **Lane E (early chain):** step 1 on a new file (CPU prediction of the 16 own-points nets, own-point features for any movement file);
   steps 2-10 gaps (key map pass-through, step 6 in its v69 form from a work directory, OPDI features for a new file).
 - **Lane L (late chain):** steps 11-18 runnable on (movement file, base file, work directory) without the shipped-file hash checks.
+
+## Progress
+
+- **Lane L done (315236f, `docs/final_file/lane_L.md`):** `tools/final_late_chain.py` runs steps 11-18 on (movement file, step-10 base,
+  work directory). Rehearsed on `ranking.parquet` from the shipped v69: v70, the nbr_state dry run, v71-v74, the v75 dry run and v76
+  (`a2ff395d...`) reproduce byte for byte, with all five intermediate ranking tables and the four refitted ranking bags (arcw1).
+  A July-only cut runs end to end; its only difference from the full-file run is the declared transfer guard evaluated on the file
+  being predicted (EHAM nbr_state ratio 0.89 on July alone vs 2.07 on the full file; LEMD 0.51, near the 0.5 edge). The W25 layers
+  change nothing outside January 2026 (February / March 2026 would need a new declaration). Interface for a new file: `--base` (step-10
+  output, fill pins off), `--recipe`, `--stacker-rank` (Lane E: `run_stack_weight.rank_inputs()` on the new file), `--matches-dir`,
+  `--features-own-dir`, `--messages` (data-link messages; without them the LFPG pin passes through).
+- **Main:** runner `--no-fill-pins` (13d8b52). Pre-staged inputs: `docs/final_file/prestage.md`.
