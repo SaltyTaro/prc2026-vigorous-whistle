@@ -32,6 +32,7 @@ class Options:
     detail_ensembles: bool = False
     vocab_cache: Path | None = None
     repair_root: Path | None = None
+    no_fill_pins: bool = False  # final blind round (docs/final_file/final_round_plan.md): no fill pin (v39 / v40 / v41) on this file
     layers: str = "v54m"  # the final file's layer set: v54m (v54's open-data model part; default), v55m, v53m, v52m, v51m, v46, v45, v40, v41, v39, v38, v35, v36 or v37
 
 
@@ -318,8 +319,9 @@ def stage_rematch(ctx: Context) -> dict:
     return ctx.run.finish("rematch", record, [deps_out, out], started)
 
 
-def stage_stack(ctx: Context) -> dict:
-    """v31 -> v33 -> v34 -> v35 on the recipe detail (tools/export_stack.py's construction, the run's own tables)."""
+def stage_stack(ctx: Context, no_fill_pins: bool = False) -> dict:
+    """v31 -> v33 -> v34 -> v35 on the recipe detail (tools/export_stack.py's construction, the run's own tables). With no_fill_pins (the
+    final blind round's decision, docs/final_file/final_round_plan.md) the fill-pin table is empty, so v39 / v40 / v41 equal their bases."""
     from . import stack
     started = time.time()
     for stage in ["recipe", "repair", "rematch"]:
@@ -338,6 +340,8 @@ def stage_stack(ctx: Context) -> dict:
     peer = stack.peers(ctx.raw_path)
     peer_out = save_frame(peer, ctx.run.path("stack", "peers.parquet"))
     fill = stack.pins(ctx.raw_path)
+    if no_fill_pins:
+        fill = fill.iloc[0:0].reset_index(drop=True)
     fill_out = save_frame(fill, ctx.run.path("stack", "fill_pins.parquet"))
     member_frame = None
     if ctx.run.receipt_path("members").exists():
@@ -347,6 +351,8 @@ def stage_stack(ctx: Context) -> dict:
     flagged = {(f["airport"], f["month"]) for f in rep["flagged"]}
     in_flagged = np.array([(a, m) in flagged for a, m in zip(frame["airport"], frame["month"])], dtype=bool)
     record["rows"]["repair_effect_nonzero_outside_flagged"] = int(((frame["repair_effect"].to_numpy() != 0) & ~in_flagged).sum())
+    if no_fill_pins:
+        record["no_fill_pins"] = True
     out = save_frame(frame, ctx.run.path("stack", "detail.parquet"))
     return ctx.run.finish("stack", record, [out, peer_out, fill_out], started)
 
@@ -386,7 +392,10 @@ def stage_final(ctx: Context, version: int, layers: str) -> dict:
                   "stages": {s: sha256_file(ctx.run.receipt_path(s)) for s in STAGES[:-1] if s != "members" or ctx.run.receipt_path(s).exists()},
                   "note": "written into the run root only; never copied to runs/submissions or uploaded by this tool"}
     receipt = export_submission(pd.DataFrame({ID: frame[ID].to_numpy(), "prediction": frame[layers].to_numpy(dtype=float)}), ctx.template, output, provenance)
-    return ctx.run.finish(f"final-{layers}", {"layers": layers, "version": version, "receipt": receipt}, [output, output.with_suffix(".receipt.json")], started)
+    record = {"layers": layers, "version": version, "receipt": receipt}
+    if ctx.run.receipt("stack").get("no_fill_pins"):
+        record["no_fill_pins"] = True
+    return ctx.run.finish(f"final-{layers}", record, [output, output.with_suffix(".receipt.json")], started)
 
 
 def run_stage(ctx: Context, stage: str, options: Options) -> dict:
@@ -414,7 +423,7 @@ def run_stage(ctx: Context, stage: str, options: Options) -> dict:
     if stage == "rematch":
         return stage_rematch(ctx)
     if stage == "stack":
-        return stage_stack(ctx)
+        return stage_stack(ctx, options.no_fill_pins)
     if options.version is None:
         raise SystemExit(f"the {stage} stage needs --version N (the file is written inside the run root)")
     if stage == "export":

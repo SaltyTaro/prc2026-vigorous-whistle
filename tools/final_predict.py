@@ -61,6 +61,8 @@ def main() -> None:
                              "configs/lirf_gate_v1.json), v40 (v38 + configs/fill_pin_v2.json evidenced_nine), v41 (v40 + configs/fill_pin_v3.json's one-day value on "
                              "population rows with intervals of 100,000 s or more), v39 (v38 + all fill pins of configs/fill_pin_v1.json), "
                              "v38 (two-sided stretch), v35, v36 (mu600 mix gate + peer-congestion lifts) or v37 (tail stretch above 1,500 s)")
+    parser.add_argument("--no-fill-pins", action="store_true",
+                        help="final blind round (docs/final_file/final_round_plan.md): the stack stage pins no row (v39 / v40 / v41 equal their bases)")
     parser.add_argument("--month", default=None)
     parser.add_argument("--execute", action="store_true")
     args = parser.parse_args()
@@ -89,12 +91,14 @@ def main() -> None:
     options = runner.Options(threads=args.threads, workers=args.workers, weather_inventory=args.weather_inventory, allow_missing_weather=args.allow_missing_weather,
                              version=args.version, detail_ensembles=args.detail_ensembles, vocab_cache=args.vocab_cache,
                              repair_root=(ROOT / args.repair_root if not args.repair_root.is_absolute() else args.repair_root) if args.repair_root else None,
-                             layers=args.layers)
+                             layers=args.layers, no_fill_pins=args.no_fill_pins)
     stages = args.stages or runner.STAGES
     for stage in stages:
         if stage not in runner.STAGES + runner.EXTRA_STAGES:
             raise SystemExit(f"Unknown stage {stage}")
         key = runner.receipt_key(stage, options)
+        if (key == "stack" or key.startswith("final-")) and run.done(key) and bool(run.receipt(key).get("no_fill_pins")) != options.no_fill_pins:
+            raise SystemExit(f"{key} was built with no_fill_pins={not options.no_fill_pins}; delete stages/{key}.json (and the final receipts) to rebuild it")
         if run.done(key):
             run.verify_outputs(key)
             print(key, "done (receipt present; outputs verified)", flush=True)
