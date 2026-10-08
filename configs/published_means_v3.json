@@ -1,0 +1,42 @@
+{
+ "experiment_id": "published_means_v3",
+ "declared_at_utc": "see commit (8 October 2026, before its governing run)",
+ "declared_by": "let us continue this pace of improvement' (8 October 2026). Declaring and the governing run are research; a build under runs/submissions and any upload stay the user's word.",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "status": "DECLARED before its governing run. The procedure is configs/published_means_v2.json's (v47), unchanged except for the control (v72's chain) and the fixed rows (never moved; candidate pm_np also leaves them out of LIRF's means).",
+ "disclosure": "Exploration read before this declaration (8 October, docs/stack_second inspection and scratch scripts): on the ranking months, v72's predictions minus v2's mapped published means, less v2's method bias (from the v46 stack), read EGLL +2.2 / +8.1 s (January / July, sigma 0.6), LEBL +1.1 / +9.5 (sigma 2.9), LIRF +2.3 / +38.4 (sigma 4.1), LSZH +30.3 (January; u outside the 2025 range, ineligible), LEMD +20.6 (January; sigma 7.1, ineligible), others below their gate. The cells the procedure will select are therefore foreseeable (EGLL both months, LEBL July, LIRF July). The LIRF July 2026 reading was cross-checked against the published daily delay totals: after removing one month-boundary off-block day (2026-06-30, 2 rows against 493 published departures) the implied-delay gap is 18.5 s per row against 4.2-13.4 in the 2025 months. In July 2025 the LIRF population rows raised LIRF's ordinary-row level by about 17 s relative to the non-population rows; candidate pm_np removes them from LIRF's means for that reason. By construction 2025's levels are close to right, so the development read is mainly a no-harm check and cannot meet v57's clauses 2-3; the value lies in the scored months, which no 2025 month can score. A build therefore needs the user's explicit decision.",
+ "external_data": {
+  "name": "EUROCONTROL Performance Review Unit, Taxi-Out Additional Time (airport, month)",
+  "sha256": "82d119ed3cfaf7a3c2f29b27ce942f0a36ea599b3af76e777e4eb354a7a4adb8",
+  "local_path": "data/external/eurocontrol_aiu/Taxi-Out_Additional_Time.xlsx (not in the repository)",
+  "terms_and_organiser_statement": "as recorded in configs/published_means_v2.json; used on the user's decision of 29 September 2026 ('yes use it')"
+ },
+ "definitions": "configs/published_means_v2.json 'definitions', with the stack = v72's chain: development values = runs/stack_second/dev_table.parquet v71 + sp_hicov7 (0.5 x out-of-month bag, cap 120, floor -12) from runs/stack_second/preds_dev.parquet; ranking = the uploaded runs/submissions/vigorous-whistle_v72.parquet (4280c399...).",
+ "candidates": [
+  {
+   "name": "pm",
+   "description": "v2's procedure verbatim on v72's chain (means over all rows in (0, 7200] s); fixed rows keep their value"
+  },
+  {
+   "name": "pm_np",
+   "description": "as pm, but LIRF's label means (2025 mapping), stack means and true level errors use non-fixed rows only (population by its raw rule: LIRF, ADEP_flt null, AIRCRAFT_TYPE_mvt null); other airports as pm"
+  }
+ ],
+ "procedure": {
+  "eligible_cell": "u within the fitting months' maximum + 0.02, sigma_a <= 5 s, |level_estimate - bias_a| >= 3 x sigma_a",
+  "shift": "every non-fixed prediction in (0, 7200] s of an eligible cell moves by -(level_estimate - bias_a) x max(0, 1 - sigma_a^2 / (level_estimate - bias_a)^2); floor -12 s; every other row unchanged",
+  "method_bias_and_noise": "from the development months on v72's development values (mapping without the month read; bias and noise from the other three development months)",
+  "max_sigma_s": 5.0
+ },
+ "rule": {
+  "primary": "configs/published_means_v2.json's rule: accepted when no equal-footing month (2025-01, 2025-07, 2025-12) is worse than v72's development values and their mean change is below zero; among accepted candidates the lower mean.",
+  "also_reported": "v57's clauses (no month worse than +0.005%, equal-footing mean <= -0.02%, paired-day intervals of January / July / December below zero); expected to fail clauses 2-3 by construction (disclosure).",
+  "export": "a dry run under runs/published_means_v3/ only; never under runs/submissions without the user's word"
+ },
+ "outputs": {
+  "tool": "tools/run_published_means_v3.py",
+  "results": "docs/published_means/results_v3.json",
+  "dry_run": "runs/published_means_v3/dry_v73/vigorous-whistle_v73.parquet (version provisional)"
+ }
+}
