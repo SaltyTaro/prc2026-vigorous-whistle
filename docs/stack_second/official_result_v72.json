@@ -1,0 +1,27 @@
+{
+ "version": 72,
+ "filename": "vigorous-whistle_v72.parquet",
+ "sha256": "4280c399aa148847c4be4588dfc3d98d4adfd1a5e64981035b4e0fa3ee802f80",
+ "official_score": 214.927,
+ "used_pairs": 344841,
+ "processed_at_utc": "2026-10-08T03:56:09.427437Z",
+ "submission_id": "88f1b9b0-ae52-4e0a-9d52-ce63d1fa448d",
+ "previous_best": {
+  "version": 71,
+  "score": 215.6232
+ },
+ "change_s": -0.6962,
+ "content": "v71 + stack_second_v1 sp_hicov7 (second guarded LightGBM residual pass, five seeds, 0.5 x capped 120 s, floor -12) at EDDF / EDDM / EGLL / EHAM / LEBL / LEMD / LSZH; dry run runs/stack_second/rank/dry_v72/vigorous-whistle_v72.parquet",
+ "squared_change_vs_v71": 18173347.0,
+ "scored_gain_sse": 103365761.88896935,
+ "gain_over_squared_change": 5.687766919817761,
+ "development_gain_over_squared_change": {
+  "2025-01": 2.986,
+  "2025-07": 1.541,
+  "2025-11": 3.033,
+  "2025-12": 3.934
+ },
+ "user_decision": "'upload it' (8 October 2026 UTC, after the inspection before the build)",
+ "audit": "docs/export_audit/v72_audit.json: flag sets identical to v71's (inherited January 2026 shifts, EHAM 2-7 January disruption), diff to v71 RMS 7.3 s, no row > 600 s, LIRF / LFPG / LTFM unchanged",
+ "official_scores_used_for_selection": "none; nothing is re-tuned from this score (the alignment above development is noted, not acted on)"
+}

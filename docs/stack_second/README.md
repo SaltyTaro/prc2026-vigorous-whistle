@@ -1,4 +1,4 @@
-# Second guarded residual pass on v71 (`stack_second_v1`, 8 October 2026) — ACCEPTED: `sp_hicov7`
+# Second guarded residual pass on v71 (`stack_second_v1`, 8 October 2026) — ACCEPTED: `sp_hicov7`; **v72 = 214.927 official**
 
 Declaration `configs/stack_second_v1.json` (b77fa7f), committed before the five-seed bags were fitted; tool `tools/run_stack_second.py`
 (e5cfd9f; `--build` locally, `--fit` on Azure arcw0, `--score` locally); results [`results_v1.json`](results_v1.json); the exploration that
@@ -74,3 +74,10 @@ ranking values from `preds_rank.parquet` and reproduce the dry run exactly).
 * **Expected effect.** ΔRMSE ≈ -g x S / (2 N R) = -0.122 x g s with S = 1.82e7. If the change were pure noise (no alignment):
   +0.12 s. Development alignment g = 1.5-3.9: -0.19 to -0.48 s. Official alignments of earlier stacker layers (v60 1.11, v69 1.82,
   v63 3.15): -0.14 to -0.38 s.
+## Official result (8 October 2026)
+
+Built (`build_v72.py`, USER_DECISION "'upload it'") and uploaded at the user's word; audit
+[`../export_audit/v72_audit.json`](../export_audit/v72_audit.json) (flag sets identical to v71's). **v72 = 214.927 official on all
+344,841 rows** (processed 03:56:09 UTC 8 October), **-0.6962 s against v71 (215.6232); the official best.** Scored squared-error gain
+1.03e8 = 5.69 x the layer's squared change (1.82e7), above development's 1.5-3.9; noted, nothing re-tuned from the score. Record
+[`official_result_v72.json`](official_result_v72.json). Never re-upload v1-v72.

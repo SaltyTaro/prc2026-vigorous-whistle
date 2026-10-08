@@ -159,3 +159,13 @@ Inputs: the uploaded v70 file, `runs/final_dryrun/run/recipe/detail.parquet` (ra
 starting from the v70 that the stacker path had just rebuilt byte for byte, the two layers' code reproduced nbr_state's dry run 7a0b1431...
 and **v71 `2dfb3b9f...` byte for byte**, with the same exclusions (step 12 EHAM, step 13 none). Both layers are pandas / numpy arithmetic
 with no random state.
+## Step 14 (v72): second guarded residual pass at the seven high-coverage airports
+
+After step 13, **`tools/run_stack_second.py`** (declaration `configs/stack_second_v1.json`, candidate sp_hicov7;
+[`docs/stack_second/README.md`](../stack_second/README.md)): `--build` writes the development table (stacker inputs X79 prefixed `s_`,
+neighbour columns nx / nxk / nn / x_nmerr, queue columns, clock columns, kind, ap; target clip(label - v71, +-1800)) and the ranking table
+from the uploaded v71; `--fit DIR` (Azure) fits five-seed LightGBM bags (seeds 7, 11-14, 400 rounds, deterministic) on the non-fixed rows of
+EDDF / EDDM / EGLL / EHAM / LEBL / LEMD / LSZH; `--score` writes max(v71 + clip(0.5 x bag, +-120 s), -12) on those rows (every other row
+byte-identical) as `runs/stack_second/rank/dry_v72/vigorous-whistle_v72.parquet`, which `docs/stack_second/build_v72.py` copied to
+`runs/submissions/vigorous-whistle_v72.parquet`. **v72 SHA-256 `4280c399aa148847c4be4588dfc3d98d4adfd1a5e64981035b4e0fa3ee802f80`,
+214.927 official.** Predictions copied back from arcw0 with matching SHA-256 (`runs/stack_second/vm_preds.sha256`).
