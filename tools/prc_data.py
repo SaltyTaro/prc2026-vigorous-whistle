@@ -25,7 +25,7 @@ TEAM_BUCKET = "prc-2026-vigorous-whistle"
 INVENTORY = ROOT / "docs/competition/data_inventory.json"
 DATA_DIR = ROOT / "data/raw"
 DATA_FILENAME = re.compile(
-    r"(?:training_\d{4}-\d{2}-\d{2}_\d{4}-\d{2}-\d{2}|ranking|submitting)\.parquet"
+    r"(?:training_\d{4}-\d{2}-\d{2}_\d{4}-\d{2}-\d{2}|ranking|submitting|final_ranking|final_submitting)\.parquet"
 )
 
 
