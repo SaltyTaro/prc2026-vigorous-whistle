@@ -72,7 +72,46 @@ the frozen objects (January / July) + `data/external/iem_final/prestage_2026/inv
 July boosters + the pre-staged February / June refits copied into `residual/adj2/`. **The EOBT_1 detector flags LFPG 2026-06 (share 26.7%)
 and LFPG 2026-07 (34.5%)** against a 10.2% threshold, so `repair` reruns the chain features -> recipe on the edited file (as declared).
 
-TIMINGS_PLACEHOLDER
+**Status: PAUSED at the user's request (8 October, ~14:00 UTC).** The runner stages features -> recipe are complete; `repair` stopped in
+its sub-run (below); `rematch`, `members` (arcw0), `stack` and `final` were not started. Every output is mirrored to this workstation
+with matching SHA-256 (`runs/final_blind/mirror_main.sha`, 125 files; `runs/final_blind/mirror_repair.sha`, 139 files; root 3.1 GB at
+`runs/final_blind/run_final4m/`). arcw0 and arcw3 are deallocated; their disks keep the same files.
+
+| stage (arcw0, 16 threads) | s | note |
+|---|---:|---|
+| features | 202 | |
+| adsb | 1,295 | matches for the four months by 11:27, then ~15 min single-threaded (learner / v19 columns) |
+| tokens | 10 | |
+| v9 | 92 | |
+| leaves | 438 | |
+| networks | 3,730 | 64 nets, 58 s each (670,790 departures) |
+| residual | 818 | adj2: saved January / July, pre-staged February / June |
+| recipe | 6 | `recipe/detail.parquet` (v30 detail of the final file) |
+| repair: detector + edit | — | LFPG 2026-06 / 2026-07 flagged; 13,034 departures edited (`repair/edited_ids.parquet`); edited input `repair/input/final.parquet` |
+| repair sub-run features / adsb / tokens / v9 / leaves / networks | 199 / 1,385 / 6 / 86 / 429 / 2,771 | complete, receipts in `repair/run/stages/` |
+| repair sub-run residual | failed | **"No adj2 booster for 2026-02"**: the sub-run looks in `repair/run/residual/adj2/`; the February / June boosters were only in the root's `residual/adj2/` |
+| members (arcw3, in parallel) | 3,624 | all 64 member nets predicted on arcw3 (same CPU type, same torch / numpy / pandas) from arcw0's hash-checked inputs; mirrored to `runs/final_blind/members_arcw3/` (per-net files, `members.parquet`, `ensembles.parquet`, its receipt); **not** placed into arcw0's root |
+
+**Finding for the procedure (runner.md step 3):** when the detector flags an airport-month in a file whose months need refitted adj2
+boosters, the boosters must also be copied into `<root>/repair/run/residual/adj2/` (the sub-run is a separate root). Neither the
+stand-in (nothing flagged) nor the ranking file (saved January / July boosters) could show this.
+
+### Resume point (exact)
+
+    R=runs/final_blind/run_final4m          # on arcw0 (start it) or on this workstation (the mirror is complete)
+    mkdir -p $R/repair/run/residual/adj2 && cp runs/final_prestage/adj2/residual_adj2_2026-0[26].* $R/repair/run/residual/adj2/
+    OPTS="--threads 16 --workers 8 --weather-inventory data/external/iem_final/prestage_2026/inventory.json --vocab-cache runs/final_dryrun/run/leaves/vocabularies.json --layers v55m"
+    .venv/bin/python -X utf8 -B tools/final_predict.py run --root $R --stages repair  $OPTS   # sub-run: residual + recipe only (~14 min), then v31's edit
+    .venv/bin/python -X utf8 -B tools/final_predict.py run --root $R --stages rematch $OPTS   # ~1 min
+    # members (~60 min on a D16), or reuse arcw3's predictions: copy runs/final_blind/members_arcw3/members/<ensemble>/*.parquet into
+    # $R/members/<ensemble>/ (the stage reads existing per-net files and only averages them; recompute one net first as a cross-VM check)
+    .venv/bin/python -X utf8 -B tools/final_predict.py run --root $R --stages members $OPTS
+    # after the user's fill-pin decision:
+    .venv/bin/python -X utf8 -B tools/final_predict.py run --root $R --stages stack final --no-fill-pins --version N $OPTS
+    # then lane_E.md 'For the final file' (key map, own member, early chain) and lane_L.md (late chain) on $R's outputs
+
+Expected remaining wall time on a D16: repair ~15 min, rematch ~1 min, members ~60 min (or seconds with arcw3's files), stack / final
+~1 min, then the own member (~35 min for 670,790 departures) and the early / late chains.
 
 ## Command sequence for the real final file on a VM
 
@@ -80,7 +119,9 @@ TIMINGS_PLACEHOLDER
     R=runs/final_blind/run_final4m
     .venv/bin/python -X utf8 -B tools/final_predict.py inspect --root $R --raw data/raw/final_ranking.parquet --template data/raw/final_submitting.parquet
     .venv/bin/python -X utf8 -B tools/final_predict.py external --root $R          # must list nothing missing
-    mkdir -p $R/residual/adj2 && cp runs/final_prestage/adj2/residual_adj2_2026-0[26].* $R/residual/adj2/
+    mkdir -p $R/residual/adj2 $R/repair/run/residual/adj2
+    cp runs/final_prestage/adj2/residual_adj2_2026-0[26].* $R/residual/adj2/
+    cp runs/final_prestage/adj2/residual_adj2_2026-0[26].* $R/repair/run/residual/adj2/   # the repair sub-run is its own root
     for s in features adsb tokens v9 leaves networks residual recipe repair rematch members; do
       .venv/bin/python -X utf8 -B tools/final_predict.py run --root $R --stages $s --threads 16 --workers 8 \
         --weather-inventory data/external/iem_final/prestage_2026/inventory.json \
