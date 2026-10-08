@@ -1,0 +1,35 @@
+{
+ "version": 76,
+ "filename": "vigorous-whistle_v76.parquet",
+ "sha256": "a2ff395db4fdf22be86e1001f5dd97c8f27adc7b836fd7b4902690a576f9725c",
+ "official_score": 214.3353,
+ "used_pairs": 344841,
+ "processed_at_utc": "2026-10-08T08:03:41.286393Z",
+ "submission_id": "cc344286-5092-464a-85c7-a5953a80f20e",
+ "previous_best": {
+  "version": 74,
+  "score": 214.4666
+ },
+ "change_s": -0.1313,
+ "content": "v74 + season_pass_v2 w25b_5 (second W25 pass: per-airport bags on Nov + Dec 2025 with stacker / neighbour / queue + raw inputs, January 2026 at EDDF / EDDM / EHAM / LSZH / LEMD; dry run v75 a227c51c..., never uploaded) + key_memory_v1 km_9 (W25 flight-number memory: airport + FLIGHT_mvt mean residual of Nov + Dec 2025, c = 0.25 n/(n+30) mean, cap 120 s, January 2026 at nine airports, no EGLL); dry run runs/key_memory/rank/dry_v76/vigorous-whistle_v76.parquet",
+ "squared_change_vs_v74": 7648761.0,
+ "squared_change_parts": {
+  "season_pass_v2_vs_v74": 5241878.0,
+  "key_memory_vs_v75": 2277323.0
+ },
+ "scored_gain_sse": 19415130.898525972,
+ "gain_over_squared_change": 2.5383367186562595,
+ "development_gain_over_squared_change": {
+  "season_pass_v2": {
+   "2025-11": 1.35,
+   "2025-12": 0.76
+  },
+  "key_memory_v1": {
+   "2025-11": 2.9,
+   "2025-12": 1.71
+  }
+ },
+ "user_decision": "'upload v76 alone' (8 October 2026 UTC; one slot for both layers; v75 is never uploaded)",
+ "audit": "docs/export_audit/v76_audit.json: flag sets identical to v74's; diff to v74 RMS 4.7 s, January 2026 only, EGLL unchanged, no row > 600 s",
+ "official_scores_used_for_selection": "none; nothing is re-tuned from this score"
+}

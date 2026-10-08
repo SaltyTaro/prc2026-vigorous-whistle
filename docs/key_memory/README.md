@@ -47,3 +47,11 @@ LEMD 13,088, EHAM 11,969, EDDF 11,831, LIRF 9,861 non-population, LEBL 9,748, ED
 `docs/key_memory/build_v76.py` (fill in USER_DECISION), then `tools/audit_export.py --version 76 --compare 75 --report
 docs/export_audit/v76_audit.json`, then `tools/prc_submit.py upload --file runs/submissions/vigorous-whistle_v76.parquet --expected-sha256
 a2ff395db4fdf22be86e1001f5dd97c8f27adc7b836fd7b4902690a576f9725c --calendar-day`; status `--report-dir docs/key_memory`.
+
+## Official result (8 October 2026)
+
+At the user's word ("upload v76 alone": one slot for both layers; v75 is never uploaded) built with `build_v76.py` and uploaded; audit
+[`../export_audit/v76_audit.json`](../export_audit/v76_audit.json) (flag sets identical to v74's; diff to v74 RMS 4.7 s, January 2026 only).
+**v76 = 214.3353 official on all 344,841 rows** (processed 08:03:41 UTC 8 October), **-0.1313 s against v74 (214.4666); the official best.**
+Scored squared-error gain 19.4e6 = 2.54 x the two layers' combined squared change (7.65e6; development 0.76-2.9); nothing re-tuned from the
+score. Record [`official_result_v76.json`](official_result_v76.json). Never re-upload v1-v76.

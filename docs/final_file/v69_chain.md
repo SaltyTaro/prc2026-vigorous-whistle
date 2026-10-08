@@ -188,3 +188,17 @@ non-fixed November + December 2025 rows (target clip(label - v73, +-1800)); `--s
 airport's non-fixed January 2026 rows (every other row byte-identical) as `runs/season_pass/rank/dry_v74/vigorous-whistle_v74.parquet`, which
 `docs/season_pass/build_v74.py` copied to `runs/submissions/vigorous-whistle_v74.parquet`. **v74 SHA-256
 `85e57d05322009d886d7423ba818ec6435f023bb8fd054463dd8adca6983f761`, 214.4666 official.**
+## Steps 17-18 (v76): second W25 pass at EDDF / EDDM / EHAM / LSZH / LEMD, then the W25 flight-number memory
+
+After step 16, **`tools/run_season_pass2.py`** (declaration `configs/season_pass_v2.json`, candidate w25b_5;
+[`docs/season_pass2/README.md`](../season_pass2/README.md)): `--build` adds the stacker / neighbour / queue inputs of runs/stack_second to
+runs/season_pass's tables (checking that the uploaded v74 = v73 + w25_e3 exactly); `--fit DIR` (Azure) fits one five-seed LightGBM bag per
+airport on its non-fixed November + December 2025 rows (target clip(label - v74, +-1800), 151 features); `--score` writes max(v74 + clip(0.5 x
+bag, +-120 s), -12) on the airport's non-fixed January 2026 rows as `runs/season_pass2/rank/dry_v75/vigorous-whistle_v75.parquet` (SHA-256
+`a227c51ca90589bf6966f49ae94e2113394ee8f508bee0794d20871a800a6036`; never uploaded on its own). Then **`tools/run_key_memory.py`**
+(declaration `configs/key_memory_v1.json`, candidate km_9; [`docs/key_memory/README.md`](../key_memory/README.md)) takes that file as its
+base: per airport + FLIGHT_mvt, the mean of clip(label - base, +-1800) over November + December 2025 non-fixed rows (labels below 20,000 s,
+base = v74's development values + w25b_5's out-of-month bags), c = clip(0.25 n/(n+30) mean, +-120 s), new = max(base + c, -12) on non-fixed
+January 2026 rows at the nine airports other than EGLL, written as `runs/key_memory/rank/dry_v76/vigorous-whistle_v76.parquet`, which
+`docs/key_memory/build_v76.py` copied to `runs/submissions/vigorous-whistle_v76.parquet`. **v76 SHA-256
+`a2ff395db4fdf22be86e1001f5dd97c8f27adc7b836fd7b4902690a576f9725c`, 214.3353 official.**

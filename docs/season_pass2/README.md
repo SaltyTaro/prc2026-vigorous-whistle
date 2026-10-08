@@ -44,3 +44,8 @@ template order. Predictions copied back with matching SHA-256 (`runs/season_pass
 docs/export_audit/v75_audit.json`, then `tools/prc_submit.py upload --file runs/submissions/vigorous-whistle_v75.parquet --expected-sha256
 a227c51ca90589bf6966f49ae94e2113394ee8f508bee0794d20871a800a6036 --calendar-day`; status `--report-dir docs/season_pass2`.
 The flight-number memory layer (`docs/key_memory/`, dry run v76) is built on this file.
+
+## Shipped inside v76 (8 October 2026)
+
+This file was never uploaded on its own: the user chose to upload v76 (this file + the flight-number memory, `docs/key_memory/`) alone,
+saving a slot. **v76 = 214.3353 official, -0.1313 s against v74**; record `docs/key_memory/official_result_v76.json`. v75 is never uploaded.
