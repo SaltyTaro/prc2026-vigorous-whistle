@@ -16,3 +16,30 @@ three, eq -0.0209% with January [-0.007, +0.004] and July [-0.024, +0.005] acros
 -2.2 / -2.4e6 s²; LIRF and LTFM mixed); applied at LFPG alone it is about -0.013% (arithmetic from the same table); Huber version at LFPG
 -0.0085%; regularised all-input pass at the three -0.0082% (January worse); LTFM alone -0.0015%; LIRF alone -0.0022% (January worse).
 Full-input passes overfit LIRF (July +12e6 s²) as on v71. **Closed: the residual-pass family is exhausted on development.**
+
+## Follow-up on v73's development values (8 October, after v73; exploration, single seed; `aud6_fit.py`, `aud7_fit.py`, `aud8_fit.py`)
+
+v73 dev = v72 dev + t3_ro_3's out-of-month bag at EDDF / EHAM / LSZH. Inputs: raw ADS-B (as t3) plus the second / third passes' predictions
+and changes; `aud7` adds the IEM weather columns (`wx_build.py`, 61 columns, full coverage); `aud8` fits and applies on matched rows only
+(dark / gate-traced). Runs on arcw0-2 (arcw0's first run stopped after four variants; the rest was rerun, `aud6b`).
+
+| variant | January | July | November | December | eq |
+|---|---:|---:|---:|---:|---:|
+| EDDM+EGLL+LEBL+LEMD in-set (raw) | +0.0087 | +0.0401 | -0.0492 | -0.0658 | -0.0057 |
+| the same, trained on the seven | +0.0079 | +0.0376 | -0.0318 | -0.0689 | -0.0078 |
+| EDDM / EGLL / LEBL / LEMD alone | -0.0007 / +0.0044 / +0.0052 / +0.0031 | +0.0015 / +0.0376 / +0.0095 / +0.0016 | | | -0.0016 / -0.0056 / +0.0028 / +0.0014 |
+| fourth pass at EDDF / EHAM / LSZH | +0.0028 | +0.0025 | -0.0118 | -0.0066 | -0.0004 |
+| weather, all ten / LFPG+LTFM+LIRF / LTFM / LFPG / LIRF | +0.060 / +0.072 / +0.013 / +0.047 / +0.033 | +0.053 / +0.034 / +0.008 / +0.020 / +0.056 | | | +0.037 / +0.044 / +0.022 / +0.029 / +0.023 |
+| weather + raw at the three / weather at the seven | +0.0035 / +0.0046 | +0.0045 / +0.0231 | | | +0.0030 / +0.0083 |
+| matched rows only: EGLL | +0.0005 | +0.0107 | -0.0829 | -0.0600 | -0.0163 |
+| matched rows only: EDDM / LEBL / LEMD | -0.0005 / +0.0051 / 0.0000 | +0.0015 / +0.0087 / -0.0012 | | | -0.0016 / +0.0030 / -0.0006 |
+| matched rows only: LIRF / LFPG | 0 (no rows) | +0.1146 / +0.0021 | -0.0213 / -0.0046 | -0.0404 / +0.0103 | +0.0247 / +0.0042 |
+
+**Closed.** No fourth pass at the three; the raw pass does not extend to the other airports (EGLL gains November / December but loses July
+2025 even on matched rows, its July 2025 coverage collapse); weather in a late pass overfits month-specific weather everywhere. The late-pass
+family is exhausted on development. Noted, not run: the networks and committee learners do not see the first ADS-B point's position (lat /
+lon), the third pass's top inputs; a member refit with it would need a GPU round and a full chain rebuild.
+
+Also closed the same morning (no file): a Rome dark-month level shift. On the thinned-July simulation the shipped dark arithmetic (v54) is
+unbiased on average (all rows -0.6 s, ordinary rows +1.2 s; typical rows +32 s against an under-predicted tail), so the +27 s that the
+published monthly mean implies for July 2026 is not a simulated dark-mode bias.
