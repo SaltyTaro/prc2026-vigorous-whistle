@@ -1,0 +1,53 @@
+{
+ "experiment_id": "season_pass_v1",
+ "declared_at_utc": "see commit (8 October 2026, before its governing run)",
+ "declared_by": "Declaring and the governing run are research; a build under runs/submissions and any upload stay the user's word.",
+ "audit_used": false,
+ "official_scores_used": "none (the season mechanism below was found on development labels; v72 / v73's official results are not used to select anything)",
+ "status": "DECLARED before its governing run. The five-seed bags have not been fitted or read.",
+ "finding": "Exploration on v73's development values (docs/audit_v72/aud11, aud12; single seed; the raw-input late pass of aud6 fitted on ONE month and read on another): fits on an ADJACENT month gain strongly (EGLL Nov->Dec -0.067% [-0.101, -0.039], Dec->Nov -0.053% [-0.084, -0.030]; LIRF -0.058% / -0.043%; LEBL -0.013% / -0.007%), every non-adjacent pair is worse (EGLL Jan->Dec +0.083%, Dec->Jan 2025 +0.016%, any -> July +0.027..+0.053%), including the same calendar season one year apart. Mechanism (interpretation): airport and airline operations are organised by IATA scheduling season; November and December 2025 and January 2026 are all in winter season W25 (26 October 2025 - 28 March 2026), January 2025 in W24, July in summer seasons. The late passes learn season-specific structure. January 2026 (ranking) is in W25 with November / December 2025.",
+ "disclosure": "NOT A CLEAN TEST. The mechanism, the airports and this rule were chosen after reading the exploration tables above (single seed): EGLL / LIRF strong, LEBL modest, EDDM / LEMD small (not candidates), LFPG / LTFM worse even on adjacent months (excluded), EDDF / EHAM / LSZH nothing left after v73's third pass (excluded). The rule differs from v57's clauses because a season-specific layer can be read only on its season's development months (November, December 2025); January / July 2025 and July 2026 rows are never changed. LIRF: only non-population rows move",
+ "inputs": "as configs/stack_third_v1.json's raw + chain + clocks + class inputs (runs/stack_third/dev_t3.parquet / rank_t3.parquet: features_v19own 26 + matches2 17 columns, p2, d2, v72), plus p3 = t3_ro_3's prediction, d3 = v73 - v72 and ship = v73 (development: v72 + t3_ro_3's out-of-month bag; ranking: the uploaded v73 649e9972...)",
+ "procedure": {
+  "target": "clip(label - v73, -1800, 1800)",
+  "model": "LightGBM regression, learning_rate 0.03, num_leaves 31, min_data_in_leaf 800, lambda_l2 50, feature_fraction 0.7, bagging_fraction 0.7, bagging_freq 1, max_bin 127, 400 rounds, deterministic, force_col_wise, 16 threads; categorical kind, ap; five seeds 7, 11, 12, 13, 14, predictions averaged; ONE model per airport (fitted on that airport's non-fixed rows only)",
+  "development": "November 2025 predicted by the bag fitted on December 2025; December 2025 predicted by the bag fitted on November 2025 (same airport)",
+  "ranking": "the bag fitted on November + December 2025, applied to the airport's non-fixed January 2026 rows",
+  "value": "new = max(v73 + clip(0.5 x bag, -120, 120), -12) on those rows; every other row (all July 2026 rows, all other airports, fixed rows) keeps v73. Ranking: np.rint into the file's dtype from the uploaded v73; every other row byte-identical.",
+  "descriptive": "December 2025 -> January 2025 (cross-season) reported for each airport, never used to select"
+ },
+ "candidates": [
+  {
+   "name": "w25_e3",
+   "airports": [
+    "EGLL",
+    "LIRF",
+    "LEBL"
+   ],
+   "weight": 0.5
+  },
+  {
+   "name": "w25_e2",
+   "airports": [
+    "EGLL",
+    "LEBL"
+   ],
+   "weight": 0.5,
+   "note": "the same without LIRF"
+  }
+ ],
+ "rule": {
+  "clause_1": "November and December 2025 (complete-month RMSE against v73's development values) each improve, with paired-day 95% intervals below zero (tools/run_intruder_bound.interval, 2,000 replicates, seed 20261004).",
+  "clause_2": "Mean of the November and December changes at most -0.02%.",
+  "clause_3_transfer": "Per airport, RMS of the January 2026 ranking change (moved rows) within 0.5x-2x of the RMS of the development change (November and December pooled); an airport outside keeps v73. If more than one of the candidate's airports falls outside, the candidate is not accepted.",
+  "selection": "Among candidates passing clauses 1-3, the lowest clause-2 mean; none -> v73 stays.",
+  "scoring": "Every row of every complete month, all labels."
+ },
+ "compute": "Tables locally (light pandas); LightGBM fits on Azure arcw0, deallocated after the hash-checked copy back.",
+ "outputs": {
+  "tool": "tools/run_season_pass.py",
+  "runs": "runs/season_pass/",
+  "results": "docs/season_pass/results_v1.json",
+  "ranking": "runs/season_pass/rank/dry_v74/vigorous-whistle_v74.parquet (version provisional; never under runs/submissions)"
+ }
+}
