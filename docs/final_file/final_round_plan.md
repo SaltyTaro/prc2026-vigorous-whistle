@@ -44,3 +44,15 @@ The final file must come from the documented, frozen pipeline run on the new mon
   output, fill pins off), `--recipe`, `--stacker-rank` (Lane E: `run_stack_weight.rank_inputs()` on the new file), `--matches-dir`,
   `--features-own-dir`, `--messages` (data-link messages; without them the LFPG pin passes through).
 - **Main:** runner `--no-fill-pins` (13d8b52). Pre-staged inputs: `docs/final_file/prestage.md`.
+- **Lane E done (76da2ed, `docs/final_file/lane_E.md`, `lane_E_rehearsal.json`):** `tools/final_own_member.py` (own-points member on CPU,
+  32 nets ~17 min on a D16; per-month `features_v19own` for Lane L) and `tools/final_early_chain.py` (steps 0-10 on a new file; v69's step 6
+  writes `stacker_rank.parquet` for Lane L). Shipped inputs + every new-file redirection: v69 `192c4a30...` and all nine intermediates
+  byte for byte. Full new-file path with the CPU member and a real step-6 refit: 17,351 rows differ from v69 (95% within 2 s; squared
+  change 4.4e4 s^2, about 0.0003 s of RMSE), 1,015 s. Gaps: steps 3-10 read ~8 GB of 2025 development tables that exist only on this
+  workstation; `--no-published` (steps 3-6 skipped) drops the reconciliation and the stacker (333,120 rows differ from v69) and leaves
+  Lane L without stacker inputs; OPDI for the final months may not be published (the OPDI learner then moves nothing).
+- **Next lanes (8 October):** **Lane P** measures, on the 2025 development months, the chain without published figures (step 6 with NaN
+  published-day features / a stacker without those columns / skipping it, and what the late passes do in each case) — the likely case if
+  the final months are after July 2026 (the workbook ends 31 July; the next release is expected after 14 October). **Lane V** syncs the
+  development inputs to arcw0 and runs the whole pipeline (runner -> early chain -> late chain, `--no-fill-pins`) on the December 2025
+  stand-in there, timing every stage.
