@@ -56,3 +56,12 @@ The final file must come from the documented, frozen pipeline run on the new mon
   the final months are after July 2026 (the workbook ends 31 July; the next release is expected after 14 October). **Lane V** syncs the
   development inputs to arcw0 and runs the whole pipeline (runner -> early chain -> late chain, `--no-fill-pins`) on the December 2025
   stand-in there, timing every stage.
+- **Lane P done (83634a0, `docs/final_file/lane_P.md`, `lane_P_results.json`, `lane_P_final_p2_manifest.json`):** without published figures
+  (2025 development months, Jan/Jul/Dec mean, complete-month RMSE): no stacker (P3) is +0.77% against the full published chain; the shipped
+  stacker with the published-day features NaN (P1) is **harmful** (+0.60% against P3; LightGBM 4.7 predicts NaN as 0.0 on columns never
+  missing in training); the same learners / seeds / weight refitted without the nine published columns (**P2**) is **-0.29% against P3, every
+  month and interval below zero** (about 40% of the gap); on P2 the second pass reads -0.105% and the third -0.030% (intervals below zero).
+  Implemented: 30 frozen P2 models (`runs/final_nopub/final_p2/`, fitted on arcw1, hash-checked) and `final_early_chain.py --published-missing
+  {off,auto}` (auto: steps 3-5 pass through at zero coverage - they used to crash; P2 on rows without a published day, v69's stacker on
+  the rest); default path still reproduces v69 byte for byte. **For the final file: `--published-missing auto`** whatever the coverage; never P1.
+- arcw2 (like arcw6) ran about ten times slower than its twin on identical work: avoid arcw2 / arcw6 for timed final-day runs.
