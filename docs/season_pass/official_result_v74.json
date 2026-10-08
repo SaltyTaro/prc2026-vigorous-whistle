@@ -1,0 +1,25 @@
+{
+ "version": 74,
+ "filename": "vigorous-whistle_v74.parquet",
+ "sha256": "85e57d05322009d886d7423ba818ec6435f023bb8fd054463dd8adca6983f761",
+ "official_score": 214.4666,
+ "used_pairs": 344841,
+ "processed_at_utc": "2026-10-08T07:03:35.292159Z",
+ "submission_id": "bde752c1-c2f7-4b02-a6bc-450dde136c8a",
+ "previous_best": {
+  "version": 73,
+  "score": 214.5851
+ },
+ "change_s": -0.1185,
+ "content": "v73 + season_pass_v1 w25_e3 (per-airport W25 bags fitted on November + December 2025, applied to January 2026 at EGLL / LIRF non-population / LEBL; 0.5 x capped 120 s, floor -12); dry run runs/season_pass/rank/dry_v74/vigorous-whistle_v74.parquet",
+ "squared_change_vs_v73": 10309700.0,
+ "scored_gain_sse": 17532622.147647396,
+ "gain_over_squared_change": 1.700594793994723,
+ "development_gain_over_squared_change": {
+  "2025-11": 1.47,
+  "2025-12": 0.96
+ },
+ "user_decision": "'upload it' (8 October 2026 UTC; w25_e3, with LIRF)",
+ "audit": "docs/export_audit/v74_audit.json: flag sets identical to v73's; diff to v73 RMS 5.5 s, EGLL / LEBL / LIRF January 2026 only, no row > 600 s",
+ "official_scores_used_for_selection": "none; nothing is re-tuned from this score"
+}

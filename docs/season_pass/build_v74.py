@@ -11,7 +11,7 @@ from prc2026_submission.contract import validate_submission  # noqa: E402
 DRY = ROOT / "runs/season_pass/rank/dry_v74/vigorous-whistle_v74.parquet"
 OUT = ROOT / "runs/submissions/vigorous-whistle_v74.parquet"
 SHA = "85e57d05322009d886d7423ba818ec6435f023bb8fd054463dd8adca6983f761"
-USER_DECISION = "FILL IN the user's words before running"
+USER_DECISION = "'upload it' (8 October 2026 UTC; w25_e3, with LIRF)"
 if USER_DECISION.startswith("FILL IN"):
     raise ValueError("Build only at the user's word: fill in USER_DECISION.")
 if OUT.exists() or sha256_file(DRY) != SHA:

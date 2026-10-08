@@ -1,4 +1,4 @@
-# Winter-season (W25) late pass on v73 (`season_pass_v1`, 8 October 2026) — ACCEPTED: `w25_e3`
+# Winter-season (W25) late pass on v73 (`season_pass_v1`, 8 October 2026) — ACCEPTED: `w25_e3`; **v74 = 214.4666 official**
 
 Declaration `configs/season_pass_v1.json` (11b29f2), committed before the five-seed bags were fitted; tool `tools/run_season_pass.py`
 (7da8df3; `--build` locally, `--fit` on Azure arcw0, `--score` locally); results [`results_v1.json`](results_v1.json); exploration
@@ -48,3 +48,10 @@ rows 25,499 / 47,705 unchanged, minimum -12, int32, template order. Predictions 
 `docs/season_pass/build_v74.py` (fill in USER_DECISION), then `tools/audit_export.py --version 74 --compare 73 --report
 docs/export_audit/v74_audit.json`, then `tools/prc_submit.py upload --file runs/submissions/vigorous-whistle_v74.parquet --expected-sha256
 85e57d05322009d886d7423ba818ec6435f023bb8fd054463dd8adca6983f761 --calendar-day`; status `--report-dir docs/season_pass`.
+## Official result (8 October 2026)
+
+Built (`build_v74.py`, USER_DECISION "'upload it'") and uploaded at the user's word; audit
+[`../export_audit/v74_audit.json`](../export_audit/v74_audit.json) (flag sets identical to v73's). **v74 = 214.4666 official on all
+344,841 rows** (processed 07:03:35 UTC 8 October), **-0.1185 s against v73 (214.5851); the official best.** Scored squared-error gain
+17.5e6 = 1.70 x the layer's squared change (1.03e7), development 1.0-1.5; nothing re-tuned from the score. Record
+[`official_result_v74.json`](official_result_v74.json). Never re-upload v1-v74.

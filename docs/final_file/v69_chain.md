@@ -179,3 +179,12 @@ runs/stack_second's tables, the second pass's predictions and the uploaded v72 (
 max(v72 + clip(0.5 x bag, +-120 s), -12) on those rows (every other row byte-identical) as `runs/stack_third/rank/dry_v73/vigorous-whistle_v73.parquet`,
 which `docs/stack_third/build_v73.py` copied to `runs/submissions/vigorous-whistle_v73.parquet`. **v73 SHA-256
 `649e99725ee3f700041b07a231dcd2fa656fdbeef3aa8db5b5b9c9fc341af3ba`, 214.5851 official.**
+## Step 16 (v74): winter-season (W25) pass, January 2026 at EGLL / LIRF / LEBL
+
+After step 15, **`tools/run_season_pass.py`** (declaration `configs/season_pass_v1.json`, candidate w25_e3;
+[`docs/season_pass/README.md`](../season_pass/README.md)): `--build` takes runs/stack_third's tables and t3_ro_3's predictions (checking that
+the uploaded v73 = v72 + t3_ro_3 exactly); `--fit DIR` (Azure) fits one five-seed LightGBM bag per airport (EGLL, LIRF, LEBL) on that airport's
+non-fixed November + December 2025 rows (target clip(label - v73, +-1800)); `--score` writes max(v73 + clip(0.5 x bag, +-120 s), -12) on the
+airport's non-fixed January 2026 rows (every other row byte-identical) as `runs/season_pass/rank/dry_v74/vigorous-whistle_v74.parquet`, which
+`docs/season_pass/build_v74.py` copied to `runs/submissions/vigorous-whistle_v74.parquet`. **v74 SHA-256
+`85e57d05322009d886d7423ba818ec6435f023bb8fd054463dd8adca6983f761`, 214.4666 official.**
