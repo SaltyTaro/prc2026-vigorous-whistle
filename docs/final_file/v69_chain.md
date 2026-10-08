@@ -134,3 +134,29 @@ and `fresh_listing_receipt.json`) bind 25,499 + 17,995 archive files by URL, siz
 checks this, and checks that every one of the 257,969 + 132,178 stored messages comes from a receipted file. Same environment as the v69
 rehearsal (Python 3.12.3, LightGBM 4.7.0, numpy 2.4.2, pandas 3.0.0, pyarrow 23.0.1); all inputs unchanged before and after. arcw4 was
 deallocated after the copy back.
+
+## Steps 12-13 (v71): neighbour ADS-B ground state on unmatched and dark rows
+
+After step 11, two label-free layers, both applied last ([`docs/nbr_state/README.md`](../nbr_state/README.md)):
+
+- **Step 12, `tools/run_nbr_state.py`** (declaration `configs/nbr_state_v1.json`, w75): for each departure, x = mean over ADS-B-matched
+  departures of the same airport within 900 s (at least 3, the row itself excluded) of (value - v9), minus the airport-day mean of that
+  difference; unmatched, non-fixed rows take max(value + clip(0.75 x b_airport x x, +-120 s), -12), b_airport a least-squares slope through
+  the origin fitted on the four development months (v70's development proxy). EHAM keeps v70 (transfer guard). Dry run 7a0b1431...
+- **Step 13, `tools/run_nbr_dark.py`** (declaration `configs/nbr_dark_v1.json`, dark_pool_w75): matched rows whose pushback ADS-B did not
+  trace (gate False in `matches2_<month>`) take max(value + clip(0.75 x B x x, +-120 s), -12) with ONE pooled slope B = 0.1172 from the
+  development months. No airport excluded.
+
+Inputs: the uploaded v70 file, `runs/final_dryrun/run/recipe/detail.parquet` (ranking v9 and routing scope), `data/raw/ranking.parquet`
+(take-off times), `data/external/adsblol/matches/matches2_2026-*.parquet` (gate flags), and for the slopes the v70 development proxy
+`runs/oooi_lhr/dev_v70_proxy.parquet` (51aaa6a6...), `runs/lomo_dev/rows.parquet` (v9) and the 2025 raw month files. Commands:
+`.venv\Scripts\python.exe -X utf8 -B toolsun_nbr_state.py` then `... toolsun_nbr_dark.py`; the second writes
+`runs/nbr_state/rank/dry_v72/vigorous-whistle_v72.parquet`, which `docs/nbr_state/build_v71.py` (CHOICE "state+dark") copied to
+`runs/submissions/vigorous-whistle_v71.parquet`. **v71 SHA-256 `2dfb3b9f53284c7ae3a02882d19cfd61b19116b1b00504176551bcae8b82e6ba`,
+215.6232 official.**
+
+**Reproduction on Linux (7 October 2026, Azure arcw1, during stack_nbr_v1's identity stage; [`docs/stack_nbr/HANDOFF.md`](../stack_nbr/HANDOFF.md)):**
+starting from the v70 that the stacker path had just rebuilt byte for byte, the two layers' code reproduced nbr_state's dry run 7a0b1431...
+and **v71 `2dfb3b9f...` byte for byte**, with the same exclusions (step 12 EHAM, step 13 none). Both layers are pandas / numpy arithmetic
+with no random state.
+
