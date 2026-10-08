@@ -102,6 +102,8 @@ class Chain:
                              "model_part_sha256": sha256_file(ROOT / self.model_part), "step1_source": a.step1_source, "members": a.members,
                              "published": None if a.no_published else (rel(a.published_table) if a.published_table else "shipped"),
                              "steps": {}, "seconds": {}}
+        if a.published_missing != "off":
+            self.record["published_missing"] = a.published_missing
         if (ROOT / "runs/submissions").resolve() in [self.out.resolve(), *self.out.resolve().parents]:
             raise ValueError("The chain never writes under runs/submissions.")
         if self.new_file and (a.step1_source == "shipped" or a.members != "runner"):
@@ -315,6 +317,34 @@ class Chain:
              "--dry-run", rel(s / "Y"), *self.flags(detail=True, published=True)])
         return s / "Y" / f"vigorous-whistle_v{v}.parquet", s / "Y" / "rows.parquet"
 
+    def published_covers(self) -> bool:
+        """--published-missing auto: whether the published table holds any airport-day within the file's departure days (an off-block day
+        just outside them holds too few of the file's rows to be read: the reconciliation reads complete airport-days only)."""
+        from screen_daily_totals import published
+        raw = pd.read_parquet(ROOT / self.raw, columns=["PHASE_mvt", "ADEP_mvt", "MVT_TIME_UTC_mvt"])
+        dep = raw[raw["PHASE_mvt"].eq("DEP")]
+        days = pd.to_datetime(dep["MVT_TIME_UTC_mvt"], utc=True).dt.tz_convert(None).dt.normalize()
+        lo, hi = days.min(), days.max()
+        pub = published().reset_index()
+        d = pd.to_datetime(pub["bday"])
+        return bool(((d >= lo) & (d <= hi) & pub["airport"].isin(dep["ADEP_mvt"].unique())).any())
+
+    def passthrough_3_to_5(self, b: Path) -> Path:
+        """Steps 3-5 with no published airport-day in the period change nothing (they read only published days); the tools' reports do
+        not handle an empty day table, so the chain writes their pass-through instead: the step-5 file = B, and Y/rows.parquet with the
+        off-block day the stacker's ranking table checks (take-off minus B, as run_stack_resid.ranking_table computes it)."""
+        y = self.steps / "Y"
+        y.mkdir(parents=True, exist_ok=True)
+        out = y / f"vigorous-whistle_v{self.v15}.parquet"
+        shutil.copyfile(b, out)
+        raw = pd.read_parquet(ROOT / self.raw, columns=[ID, "PHASE_mvt", "MVT_TIME_UTC_mvt"])
+        raw = raw[raw["PHASE_mvt"].eq("DEP")].drop_duplicates(ID).set_index(ID)
+        v = pd.read_parquet(b).set_index(ID)[TARGET]
+        tk = pd.to_datetime(raw["MVT_TIME_UTC_mvt"].reindex(v.index), utc=True).reset_index(drop=True)
+        bday = (tk - pd.to_timedelta(v.to_numpy(dtype=float), unit="s")).dt.strftime("%Y-%m-%d")
+        pd.DataFrame({ID: v.index.to_numpy(), "bday": bday.to_numpy()}).to_parquet(y / "rows.parquet", index=False)
+        return out
+
     # ------------------------------------------------------------ step 6 (v69's form)
 
     def step6(self) -> tuple[Path, dict]:
@@ -333,7 +363,13 @@ class Chain:
         info: dict = {"candidate": sel, "weight": w, "seeds": list(cand["seeds"]), "matrices_sha256": {}}
         for key, X, Xr in mats:
             info["matrices_sha256"][key] = {"dev": _frame_hash(X), "rank": _frame_hash(Xr)}
-        if self.a.stack_preds:
+        none_published = self.a.published_missing == "auto" and bool((rk["pub"].isna().to_numpy() | fxr).all())
+        if none_published:   # every non-fixed row takes the P2 stacker below: v69's own fits would not be used
+            for key, _, _ in mats:
+                for i in range(k):
+                    P[f"{key}_{i}"] = 0.0
+            info["preds"] = "not fitted: no airport-day of the period is published (--published-missing auto replaces every non-fixed row)"
+        elif self.a.stack_preds:
             ref = pd.read_parquet(ROOT / rel(self.a.stack_preds))
             same = ref[ID].equals(P[ID]) and all(np.array_equal(ref[c].to_numpy(), P[c].to_numpy(), equal_nan=True) for c in ["fx", "h2", "h3", "ho", "o_has"]) \
                 and np.array_equal(ref["new"].to_numpy(dtype=float), P["new"].to_numpy(dtype=float))
@@ -376,12 +412,63 @@ class Chain:
         info["stacker_rank"] = {"file": rel(srp), "sha256": sha256_file(srp)}
         info["preds_file"] = {"file": rel(pp), "sha256": sha256_file(pp)}
         values, use, _ = SW.rank_value(P, w, k)
+        if self.a.published_missing == "auto":
+            values, info["published_missing"] = self.published_missing(dev, fx, rk, fxr, mats, Por, values, w, k)
         st = self.steps / "stack" / f"vigorous-whistle_v{self.version}.parquet"
         export_submission(pd.DataFrame({ID: P[ID].to_numpy(), "prediction": values}), ROOT / self.template, st,
                           {"dry_run": True, "step": f"stack_weight_v1 {sel}: stacking value at weight {cand['weight']} with {len(cand['seeds'])} seeds (tools/final_early_chain.py)",
                            "official_scores_used": "none", "audit_used": False})
         info["opdi_rows_used"] = int(use.sum())
         return st, info
+
+    def published_missing(self, dev, fx, rk, fxr, mats, Por, values, w, k):
+        """--published-missing auto (docs/final_file/lane_P.md, variant P2): rows whose airport-day has no published figure take the
+        frozen P2 learners (runs/final_nopub/final_p2: v69's three learners x ten seeds fitted on the development months' no-published
+        chain without the nine published-day columns) at v69's weight, with P2's guards; every other row keeps v69's stacker value."""
+        import lightgbm as lgb
+        import final_nopub as NP
+        import run_stack_resid as S
+        import run_stack_resid_v3 as V3
+        import run_stack_weight as SW
+        missing = rk["pub"].isna().to_numpy() & ~fxr
+        rec = {"rows_without_published_day": int(missing.sum()), "rows": int(len(rk))}
+        if not missing.any():
+            return values, rec
+        man = read_json(NP.FINAL / "manifest.json")
+        devn = dev.assign(new=dev["stack"].to_numpy(dtype=float), pub=np.nan, n_pub=np.nan, complete=False)
+        X79n, _, _ = NP.matrices(devn)
+        X79r = [m for m in mats if m[0] == "po"][0][2].reset_index(drop=True)
+        cols = NP._unique(list(X79n.columns))
+        if cols != NP._unique(list(X79r.columns)):
+            raise ValueError("published-missing: development and ranking stacker columns differ.")
+        air, rair = dev["airport"].to_numpy(), rk["airport"].to_numpy()
+        top = list(S.TOP)
+        S.TOP = [c for c in top if c not in NP.PUB_COLS]
+        try:
+            h2 = S.outside_support(X79n.iloc[:, :46][~fx], air[~fx], X79r.iloc[:, :46], rair) & ~fxr
+        finally:
+            S.TOP = top
+        h3 = (h2 | V3.guard_new(X79n.iloc[:, 46:65][~fx].reset_index(drop=True), air[~fx], X79r.iloc[:, 46:65], rair)) & ~fxr
+        ho = (h2 | V3.guard_new(X79n.iloc[:, 46:79][~fx].reset_index(drop=True), air[~fx], X79r.iloc[:, 46:79], rair)) & ~fxr
+        Q = pd.DataFrame({ID: rk[ID].to_numpy(), "airport": rair, "new": rk["new"].to_numpy(dtype=float), "fx": fxr, "h2": h2, "h3": h3, "ho": ho,
+                          "o_has": Por["o_has"].to_numpy()})
+        Xr = X79r.to_numpy(np.float32)
+        for key, spec in man["learners"].items():
+            if [cols[i] for i in spec["positions"]] != spec["columns"]:
+                raise ValueError(f"published-missing: {key}'s columns differ from the frozen learner's.")
+            for i, mdl in enumerate(spec["models"][:k]):
+                f = NP.FINAL / mdl["file"]
+                if sha256_file(f) != mdl["sha256"]:
+                    raise ValueError(f"{f} differs from its manifest.")
+                Q[f"{key}_{i}"] = lgb.Booster(model_file=str(f)).predict(Xr[:, spec["positions"]])
+        pq_path = self.steps / "stack" / "preds_published_missing.parquet"
+        Q.to_parquet(pq_path, index=False)
+        vnp, use_np, _ = SW.rank_value(Q, w, k)
+        out = np.where(missing, vnp, values)
+        rec.update({"preds_file": {"file": rel(pq_path), "sha256": sha256_file(pq_path)}, "manifest_sha256": sha256_file(NP.FINAL / "manifest.json"),
+                    "rows_changed_vs_v69_stacker": int((np.abs(out - values) > 1e-9).sum()), "opdi_rows_used": int((use_np & missing).sum()),
+                    "held_h2": int((h2 & missing).sum())})
+        return out, rec
 
     # ------------------------------------------------------------ steps 7-10
 
@@ -430,7 +517,11 @@ class Chain:
             self.record["skipped"] = "steps 3-6 (no published daily totals for the period; docs/final_file/v61_chain.md)"
         else:
             t = time.time()
-            c, _ = self.steps_3_to_5(b)
+            if self.a.published_missing == "auto" and not self.published_covers():
+                c = self.passthrough_3_to_5(b)
+                self.record["steps_3_to_5"] = "pass-through: the published table holds no airport-day of the file's period (--published-missing auto)"
+            else:
+                c, _ = self.steps_3_to_5(b)
             self.record["seconds"]["3-5"] = round(time.time() - t, 1)
             if self.stop(5):
                 return c
@@ -475,6 +566,8 @@ def parser() -> argparse.ArgumentParser:
     ap.add_argument("--workbook", default=None)
     ap.add_argument("--workbook-sha256", default=None)
     ap.add_argument("--no-published", action="store_true")
+    ap.add_argument("--published-missing", choices=["off", "auto"], default="off",
+                    help="auto: rows whose airport-day has no published figure take the frozen P2 stacker (docs/final_file/lane_P.md); off: v69 as shipped")
     ap.add_argument("--stack-preds", default=None)
     ap.add_argument("--own-dir", default=None, help="--members runner: tools/final_own_member.py's output directory (default R/own)")
     ap.add_argument("--stop-after", type=int, choices=[1, 2, 5], default=None, help="stop after step 1, 2 or 5 (checks)")
