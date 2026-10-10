@@ -1,0 +1,398 @@
+{
+ "created": "2026-10-10T06:38:21+00:00",
+ "opdi": {
+  "windows": 28,
+  "months_with_events": [
+   "2024-12",
+   "2025-01",
+   "2025-02",
+   "2025-06",
+   "2025-07",
+   "2025-08",
+   "2025-10",
+   "2025-11",
+   "2025-12",
+   "2026-01",
+   "2026-02",
+   "2026-05",
+   "2026-06",
+   "2026-07"
+  ],
+  "event_types_in_airport_boxes": {
+   "entry-taxiway": 2278867,
+   "exit-taxiway": 2170155,
+   "first_seen": 1717585,
+   "exit-runway": 1556350,
+   "entry-runway": 1541038,
+   "exit-parking_position": 451344,
+   "entry-parking_position": 451089,
+   "entry-apron": 162310,
+   "exit-apron": 162306,
+   "take-off": 148883,
+   "entry-hangar": 1240,
+   "exit-hangar": 1240
+  },
+  "deicing_events_in_airport_boxes": 0,
+  "raw_probe_window_20251101_20251111": {
+   "entry-deicing_pad": 35,
+   "exit-deicing_pad": 35,
+   "by_osm_airport": {
+    "EDDS": 62,
+    "EDDP": 8
+   },
+   "note": "all European airports in the raw window; none of the ten"
+  }
+ },
+ "osm_cache": {
+  "files": [
+   "data/external/osm/source_geometry_v1\\LFPG_20250101.json",
+   "data/external/osm/source_geometry_v1\\LFPG_20250701.json",
+   "data/external/osm/source_geometry_v1\\LFPG_20260101.json",
+   "data/external/osm/source_geometry_v1\\LFPG_20260701.json",
+   "data/external/osm/source_geometry_v1\\LFPG_current.json",
+   "data/external/osm/source_geometry_v1\\LIRF_20250101.json",
+   "data/external/osm/source_geometry_v1\\LIRF_20250701.json",
+   "data/external/osm/source_geometry_v1\\LIRF_20260101.json",
+   "data/external/osm/source_geometry_v1\\LIRF_20260701.json",
+   "data/external/osm/source_geometry_v1\\LIRF_current.json"
+  ],
+  "deicing_pad_tags": 0,
+  "note": "the cache holds LFPG and LIRF only"
+ },
+ "osm_live": {
+  "attempted": [
+   "https://overpass-api.de/api/interpreter (HTTP 504)",
+   "https://overpass.kumi.systems/api/interpreter (HTTP 500)"
+  ],
+  "result": "not obtained; not retried (screen only)"
+ },
+ "weather_census": {
+  "definition": {
+   "frozen": "METAR wxcodes contain SN, SG, PL, GS or FZ",
+   "cold_wet": "temperature <= 3 C and wxcodes contain RA, DZ, SN, SG, PL, GS, FZ, FG or BR",
+   "frost": "temperature <= 0 C"
+  },
+  "unit": "% of METAR reports in the airport-month",
+  "sources_sha256": {
+   "data/external/iem/EDDF_train.csv": "55352675463c848d32af151f33a47692f76f50afb7184b26fa7c017fcc288ad7",
+   "data/external/iem_final/run/EDDF_2025-12.csv": "20cd15651f6de5eac928998cddab9fa12db306cae2a27e4813fb8164fdb4e9d6",
+   "data/external/iem/EDDF_ranking_january.csv": "d26d145a299ea2f4951ecf2fe8036a496486384796a2e5f29869af94daebd451",
+   "data/external/iem_final/prestage_2026/EDDF_2026-02.csv": "1be02df1f41362461ab6f96e2157fee770d503fd2fa3824b7979e2d4658dfee8",
+   "data/external/iem/EDDM_train.csv": "39c14b3b336943075065de749004909f8077bff37294c4c0864c83ea43ba0bdd",
+   "data/external/iem_final/run/EDDM_2025-12.csv": "ef2d983b0f55cf19462c3df1c1217cffe925d507dc9c202768d912f54ff08063",
+   "data/external/iem/EDDM_ranking_january.csv": "02b8f22734c5b05996d9bba45c21dac40aeec84c2a28f1dffed5d03b1410e330",
+   "data/external/iem_final/prestage_2026/EDDM_2026-02.csv": "b3adcdc87e8d896b1fba92aec4577ddb30b7e3b2a55fb5ac96b6b7fba3071969",
+   "data/external/iem/EGLL_train.csv": "3095ee1aa750878f43a2b91a6823271022371318e5bfbdd6dbe37252e5d11440",
+   "data/external/iem_final/run/EGLL_2025-12.csv": "560a391dd75be5f51a29d23a3c55aab0ed1747eb339975d420e506c6e3982a9f",
+   "data/external/iem/EGLL_ranking_january.csv": "1ff771b5a16464a616b7cb6cc819b297eb72cf73cb6b18fedd0bf3d0f30f600c",
+   "data/external/iem_final/prestage_2026/EGLL_2026-02.csv": "694770d41eedb8a036f12b96481a9b4c4a0cf51153fd2c58ec1ca0e1f878080e",
+   "data/external/iem/EHAM_train.csv": "67895186fcbde328b64a205dfd02e5e0e42f3047df028c1d1fe2b545f0475d6d",
+   "data/external/iem_final/run/EHAM_2025-12.csv": "72a385d71762c05e82f05b51052c2055ca33cc5476fc15e5baa9f3de07d2a12b",
+   "data/external/iem/EHAM_ranking_january.csv": "467e08e4144f333d007cb9b7eb158d4f5f7ce473116c87ca9d5f9898f26d9797",
+   "data/external/iem_final/prestage_2026/EHAM_2026-02.csv": "e7a666eae7f9b6f74c389fc6d1c20e96e4722d2f16f2cdc8d1e6b9e687727ff7",
+   "data/external/iem/LEBL_train.csv": "73fb37a7922c7b3a3749801c240837131b272f61cda348ec008041ba8f2fad33",
+   "data/external/iem_final/run/LEBL_2025-12.csv": "878bf439494af5d3c0be5ef2800def31e701a6765cc296306db115af5b809774",
+   "data/external/iem/LEBL_ranking_january.csv": "6f78372ede397d63edd4193be0e672dac5671c042bdf13aa65bc70b430ffe209",
+   "data/external/iem_final/prestage_2026/LEBL_2026-02.csv": "a1d287249edb4084ec7dc3cff1c9a05af87430862f9ab35d2274786b7271e462",
+   "data/external/iem/LEMD_train.csv": "7d3718bee3f17c69192e210afc2923049024bd308dee235fcebd3d19fa211e3e",
+   "data/external/iem_final/run/LEMD_2025-12.csv": "0509094aa0f4dfad1977dc66c56b70d66693d8a2cd2e68ef0b2d4a24b201c60b",
+   "data/external/iem/LEMD_ranking_january.csv": "8658c00eb17a1fad5a560c7d522a802ffe158525b0a011f2c1a729877f16eae8",
+   "data/external/iem_final/prestage_2026/LEMD_2026-02.csv": "19fbee84d015231eca893780dc621091e2dd0f3dcd5e369b5bafefefd2cd2d3a",
+   "data/external/iem/LFPG_train.csv": "44c928fe33cd3679b04f416ae6b51f0215319a7a680a456f3f8678707ad87279",
+   "data/external/iem_final/run/LFPG_2025-12.csv": "ca92ed61a489a02e04dd3686e0014aaf4090918e8e2edbe73f9a380bc89dba7b",
+   "data/external/iem/LFPG_ranking_january.csv": "b5c2094756a7a500eeb14308293faa3f4fccba6e78fe54c2aa0d91130420532e",
+   "data/external/iem_final/prestage_2026/LFPG_2026-02.csv": "086f7678f8614dde0b79ad4c502cb38bbc296ee8cb044d54282719768b28828c",
+   "data/external/iem/LIRF_train.csv": "e8943c331fc9dfa693f295bc415cc40373ba87fa11101a82bd3121c31d17b896",
+   "data/external/iem_final/run/LIRF_2025-12.csv": "f3103e095295a28a60d3d24eac74b177e1c6884056626f97b7e67187801c2c4a",
+   "data/external/iem/LIRF_ranking_january.csv": "5e26c19618a355553884a1a63ebe99995fe5111d8571fd5f4152479b9dc54509",
+   "data/external/iem_final/prestage_2026/LIRF_2026-02.csv": "58aea4291fe503d5b6fe58c376cb24c4103af480c67cfb34d08f29983eabed0c",
+   "data/external/iem/LSZH_train.csv": "fbbc5026795c4c3111592f5555fcdd6f4ea551d6bea6baf196118b2a80ba9371",
+   "data/external/iem_final/run/LSZH_2025-12.csv": "4c91e0494f2dec25c80167e617bbed28074c319f32b9da672d7dca2b9c2fcb4c",
+   "data/external/iem/LSZH_ranking_january.csv": "dfb0c7759c013030da09bff8f1ab0facc91c354c6a546a73f566293d3d667657",
+   "data/external/iem_final/prestage_2026/LSZH_2026-02.csv": "03c6497130df46b1c7032fe639bf00d95dbc55a85bc60f070ca3aa700a08b936",
+   "data/external/iem/LTFM_train.csv": "4d70c5dbb4dba92271bdf08779f41fef181c3c53e717a2777539a05a24a0f8a8",
+   "data/external/iem_final/run/LTFM_2025-12.csv": "b70f3553167033e9cd47811da83127ee213b6eac7a1f3f4a7922d2a25fe0fe15",
+   "data/external/iem/LTFM_ranking_january.csv": "b9246c624a3bea392dc1f9018a918518595ebaea738883727a514fd6c591d0d7",
+   "data/external/iem_final/prestage_2026/LTFM_2026-02.csv": "cd20485d6f415265ba1b51c7a7ded0e85b76f11430c68ff24e855292a5a9233d"
+  },
+  "tables": {
+   "frozen": {
+    "EDDF": {
+     "2025-01": 2.0,
+     "2025-02": 0.8,
+     "2025-03": 0.0,
+     "2025-11": 1.2,
+     "2025-12": 0.6,
+     "2026-01": 8.5,
+     "2026-02": 4.1
+    },
+    "EDDM": {
+     "2025-01": 6.7,
+     "2025-02": 3.3,
+     "2025-03": 1.6,
+     "2025-11": 5.5,
+     "2025-12": 10.4,
+     "2026-01": 12.0,
+     "2026-02": 7.4
+    },
+    "EGLL": {
+     "2025-01": 0.9,
+     "2025-02": 0.0,
+     "2025-03": 0.0,
+     "2025-11": 0.1,
+     "2025-12": 0.2,
+     "2026-01": 0.2,
+     "2026-02": 0.0
+    },
+    "EHAM": {
+     "2025-01": 5.9,
+     "2025-02": 2.6,
+     "2025-03": 3.0,
+     "2025-11": 2.6,
+     "2025-12": 0.3,
+     "2026-01": 13.3,
+     "2026-02": 1.5
+    },
+    "LEBL": {
+     "2025-01": 0.0,
+     "2025-02": 0.0,
+     "2025-03": 0.0,
+     "2025-11": 0.0,
+     "2025-12": 0.0,
+     "2026-01": 0.0,
+     "2026-02": 0.0
+    },
+    "LEMD": {
+     "2025-01": 0.1,
+     "2025-02": 0.0,
+     "2025-03": 0.2,
+     "2025-11": 0.0,
+     "2025-12": 0.4,
+     "2026-01": 0.6,
+     "2026-02": 0.0
+    },
+    "LFPG": {
+     "2025-01": 3.3,
+     "2025-02": 2.2,
+     "2025-03": 0.0,
+     "2025-11": 1.5,
+     "2025-12": 0.1,
+     "2026-01": 1.7,
+     "2026-02": 0.3
+    },
+    "LIRF": {
+     "2025-01": 0.0,
+     "2025-02": 0.0,
+     "2025-03": 0.0,
+     "2025-11": 0.0,
+     "2025-12": 0.0,
+     "2026-01": 0.0,
+     "2026-02": 0.0
+    },
+    "LSZH": {
+     "2025-01": 5.8,
+     "2025-02": 3.0,
+     "2025-03": 0.0,
+     "2025-11": 4.0,
+     "2025-12": 3.2,
+     "2026-01": 17.2,
+     "2026-02": 6.4
+    },
+    "LTFM": {
+     "2025-01": 0.0,
+     "2025-02": 19.2,
+     "2025-03": 0.8,
+     "2025-11": 0.0,
+     "2025-12": 1.1,
+     "2026-01": 9.9,
+     "2026-02": 5.5
+    }
+   },
+   "cold_wet": {
+    "EDDF": {
+     "2025-01": 11.6,
+     "2025-02": 3.3,
+     "2025-03": 0.5,
+     "2025-11": 3.3,
+     "2025-12": 3.5,
+     "2026-01": 20.0,
+     "2026-02": 11.5
+    },
+    "EDDM": {
+     "2025-01": 20.3,
+     "2025-02": 14.6,
+     "2025-03": 5.8,
+     "2025-11": 25.3,
+     "2025-12": 33.3,
+     "2026-01": 34.9,
+     "2026-02": 23.4
+    },
+    "EGLL": {
+     "2025-01": 5.6,
+     "2025-02": 2.5,
+     "2025-03": 1.1,
+     "2025-11": 0.2,
+     "2025-12": 1.7,
+     "2026-01": 3.4,
+     "2026-02": 0.9
+    },
+    "EHAM": {
+     "2025-01": 25.0,
+     "2025-02": 11.3,
+     "2025-03": 7.6,
+     "2025-11": 5.9,
+     "2025-12": 3.4,
+     "2026-01": 30.5,
+     "2026-02": 7.0
+    },
+    "LEBL": {
+     "2025-01": 0.0,
+     "2025-02": 0.0,
+     "2025-03": 0.0,
+     "2025-11": 0.0,
+     "2025-12": 0.0,
+     "2026-01": 0.0,
+     "2026-02": 0.0
+    },
+    "LEMD": {
+     "2025-01": 2.7,
+     "2025-02": 0.1,
+     "2025-03": 1.3,
+     "2025-11": 0.0,
+     "2025-12": 1.8,
+     "2026-01": 9.2,
+     "2026-02": 1.1
+    },
+    "LFPG": {
+     "2025-01": 22.0,
+     "2025-02": 10.3,
+     "2025-03": 0.4,
+     "2025-11": 3.7,
+     "2025-12": 3.4,
+     "2026-01": 11.6,
+     "2026-02": 2.8
+    },
+    "LIRF": {
+     "2025-01": 0.1,
+     "2025-02": 0.0,
+     "2025-03": 0.0,
+     "2025-11": 0.0,
+     "2025-12": 0.1,
+     "2026-01": 0.0,
+     "2026-02": 0.0
+    },
+    "LSZH": {
+     "2025-01": 18.8,
+     "2025-02": 17.2,
+     "2025-03": 3.8,
+     "2025-11": 22.3,
+     "2025-12": 20.6,
+     "2026-01": 44.8,
+     "2026-02": 20.0
+    },
+    "LTFM": {
+     "2025-01": 0.5,
+     "2025-02": 21.5,
+     "2025-03": 1.5,
+     "2025-11": 0.0,
+     "2025-12": 0.1,
+     "2026-01": 12.9,
+     "2026-02": 5.0
+    }
+   },
+   "frost": {
+    "EDDF": {
+     "2025-01": 28.7,
+     "2025-02": 27.2,
+     "2025-03": 8.4,
+     "2025-11": 10.5,
+     "2025-12": 17.3,
+     "2026-01": 44.5,
+     "2026-02": 5.4
+    },
+    "EDDM": {
+     "2025-01": 54.8,
+     "2025-02": 52.4,
+     "2025-03": 21.3,
+     "2025-11": 25.3,
+     "2025-12": 49.4,
+     "2026-01": 69.4,
+     "2026-02": 28.9
+    },
+    "EGLL": {
+     "2025-01": 11.1,
+     "2025-02": 4.6,
+     "2025-03": 3.6,
+     "2025-11": 2.8,
+     "2025-12": 2.7,
+     "2026-01": 9.8,
+     "2026-02": 0.0
+    },
+    "EHAM": {
+     "2025-01": 19.3,
+     "2025-02": 18.0,
+     "2025-03": 5.2,
+     "2025-11": 2.1,
+     "2025-12": 8.9,
+     "2026-01": 24.0,
+     "2026-02": 9.1
+    },
+    "LEBL": {
+     "2025-01": 0.5,
+     "2025-02": 0.0,
+     "2025-03": 0.0,
+     "2025-11": 0.0,
+     "2025-12": 0.0,
+     "2026-01": 0.0,
+     "2026-02": 0.0
+    },
+    "LEMD": {
+     "2025-01": 12.6,
+     "2025-02": 6.2,
+     "2025-03": 0.6,
+     "2025-11": 4.3,
+     "2025-12": 7.2,
+     "2026-01": 12.7,
+     "2026-02": 2.2
+    },
+    "LFPG": {
+     "2025-01": 22.6,
+     "2025-02": 14.2,
+     "2025-03": 0.7,
+     "2025-11": 5.8,
+     "2025-12": 13.6,
+     "2026-01": 15.3,
+     "2026-02": 1.9
+    },
+    "LIRF": {
+     "2025-01": 0.0,
+     "2025-02": 0.0,
+     "2025-03": 0.0,
+     "2025-11": 0.4,
+     "2025-12": 0.1,
+     "2026-01": 1.6,
+     "2026-02": 0.1
+    },
+    "LSZH": {
+     "2025-01": 40.7,
+     "2025-02": 31.3,
+     "2025-03": 9.8,
+     "2025-11": 17.4,
+     "2025-12": 29.6,
+     "2026-01": 61.2,
+     "2026-02": 14.7
+    },
+    "LTFM": {
+     "2025-01": 0.0,
+     "2025-02": 10.0,
+     "2025-03": 0.0,
+     "2025-11": 0.0,
+     "2025-12": 0.8,
+     "2026-01": 6.9,
+     "2026-02": 0.0
+    }
+   }
+  }
+ },
+ "stage2": "not run: no departure can be linked to a de-icing event (directive: stage 2 only if stage 1 shows enough linked de-iced departures)"
+}
