@@ -1,0 +1,359 @@
+{
+ "created_at_utc": "2026-10-10T23:55:08.432146+00:00",
+ "declaration": "configs/sixmonth_refit_v1.json (4465d52); readings docs/sixmonth/results_v1.json (0a9ab7a): C15 third pass accepted, C6 / C14 not",
+ "candidate_2": {
+  "file": "runs/final_blind/final_candidate2/chain_out_km.parquet",
+  "work_file": "runs/final_blind/late_c2/key_memory/rank/dry_v76/vigorous-whistle_v76.parquet",
+  "sha256": "f11ca28f7503a98cad9211facafe30d7f4185a589aefdb655372896d59e2669e",
+  "rows": 670790
+ },
+ "candidate_1": {
+  "file": "runs/final_blind/final_candidate/chain_out_km.parquet",
+  "sha256": "30e116a9a0ae4bdf5f2150938272b571bb20b980ac18a7e3bb3f0c48374f381b"
+ },
+ "built_on": "arcw6, 10 October 2026 23:36-23:47 UTC; work copies of candidate 1's late_9002 (hash-checked against runs/final_blind/chain_9002.sha) truncated before st_build by runs/sixmonth/vm/make_c2_work.py, steps by runs/sixmonth/vm/run_c2.sh under strace",
+ "control": {
+  "work": "runs/final_blind/late_c2_control",
+  "third_pass_learner": "shipped (final_late_chain.py fit --stage st)",
+  "km_sha256": "30e116a9a0ae4bdf5f2150938272b571bb20b980ac18a7e3bb3f0c48374f381b",
+  "reproduces_candidate_1": true,
+  "stages_equal": {
+   "st": true,
+   "sp": true,
+   "sp2": true,
+   "km": true
+  },
+  "files_differing_from_late_9002": "8 JSON records only (created_at / run_at timestamps; late_chain.json work paths); every parquet equal"
+ },
+ "candidate_build": {
+  "work": "runs/final_blind/late_c2",
+  "third_pass_learner": "tools/run_sixmonth.py fit-final --kind st (t3_ro_3 and t3_ro_h7 fitted on the development table + both Tier B months' rows read)",
+  "fit_record": {
+   "created_at_utc": "2026-10-10T23:44:28.614003+00:00",
+   "extra_rows_offered": 323246,
+   "kind": "st",
+   "preds_dev": "68aa91d36a4f2b87a71a9d7b5e0e9cc3b9ff76305536195d9bfec5dd138e355a",
+   "preds_rank": "a4659e15fc65285867c0d0b6044ee380b82862bf7b2a69edc70c381f04f280f9",
+   "table_dir": "runs/final_blind/late_c2/stack_third",
+   "tierb_table": {
+    "runs/febjun_tierb/chain/work/late/stack_third/rank_t3.parquet": "288b878c843597023d6ae3928f1d8860d05e51ab6a8977db1feea561cb751251"
+   }
+  },
+  "selections": {
+   "ss": "stack_second_v1 selected sp_hicov7",
+   "st": "stack_third_v1 selected t3_ro_3",
+   "sp": "season_pass_v1 selected w25_e3",
+   "sp2": "season_pass_v2 selected w25b_5",
+   "km": "key_memory_v1 selected km_9"
+  },
+  "selection_flags": {
+   "ss": null,
+   "st": null,
+   "sp": null,
+   "sp2": null,
+   "km": null
+  },
+  "third_pass_transfer_ratio": {
+   "candidate_2": {
+    "EDDF": 1.544,
+    "EHAM": 1.048,
+    "LSZH": 1.04
+   },
+   "candidate_1": {
+    "EDDF": 1.609,
+    "EHAM": 1.051,
+    "LSZH": 1.031
+   }
+  },
+  "stage_sha256": {
+   "st": "1a0048bb15185c1aaea6494e409799228c8d661a32f021863c2e86a03e0c3164",
+   "sp": "d3c39a07b17eaabfa3b3384d467195fde1fa0c10fa76cef7971e30b1aa18bda8",
+   "sp2": "1078b35f2cce72f8b369c3b4e63769b518b8a968a6dbfdd1f48dcc722211d8b2",
+   "km": "f11ca28f7503a98cad9211facafe30d7f4185a589aefdb655372896d59e2669e"
+  }
+ },
+ "checks": {
+  "contract": {
+   "rows": 670790,
+   "columns": [
+    "MVT_ID_mvt",
+    "TAXITIME_SEC_mvt"
+   ],
+   "dtypes": {
+    "MVT_ID_mvt": "float64",
+    "TAXITIME_SEC_mvt": "int32"
+   },
+   "template_columns": [
+    "MVT_ID_mvt",
+    "TAXITIME_SEC_mvt"
+   ],
+   "template_dtypes": {
+    "MVT_ID_mvt": "float64",
+    "TAXITIME_SEC_mvt": "float64"
+   },
+   "id_order_equals_template": true,
+   "id_order_equals_candidate_1": true,
+   "nan": 0,
+   "min": -12.0,
+   "max": 120636.0,
+   "negative": 80,
+   "min_ge_minus_12": true
+  },
+  "uploader_check_only": {
+   "status": "checked_not_uploaded",
+   "validation": {
+    "columns": [
+     "MVT_ID_mvt",
+     "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_final.parquet",
+    "ids_sha256": "ff4c10b76deda7e0773e4f3d5220fd8b313a0debd8b85b06ea6d7b1be6ab9bfd",
+    "maximum_prediction_seconds": 120636,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 80,
+    "rows": 670790,
+    "sha256": "f11ca28f7503a98cad9211facafe30d7f4185a589aefdb655372896d59e2669e",
+    "size_bytes": 4083753,
+    "template_sha256": "b3445d80e29bf599a5583ca9675f63ddf57b51fdf1ca3f498facb38ea84f3924",
+    "types": {
+     "MVT_ID_mvt": "double",
+     "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-10-10T23:55:08.432146+00:00",
+    "version": "final"
+   },
+   "limits": {
+    "bucket_bytes_after_upload": 113038619,
+    "bucket_bytes_before": 108954866,
+    "existing_submission_versions": 69,
+    "final_object_present": false
+   },
+   "note": "tools/prc_submit.py upload-final --check-only (returns before put_object; staged on a temporary copy); its log overwrote runs/submissions/vigorous-whistle_final.check.json, which was restored byte for byte to candidate 1's record afterwards; candidate 2's copy is runs/final_blind/final_candidate2/vigorous-whistle_final.check_c2.json"
+  },
+  "diff_vs_candidate_1": {
+   "rows_changed": 142400,
+   "max_abs_s": 60.0,
+   "squared_change": 2884411.0,
+   "mean_change_s": 0.1556985047481328,
+   "rms_change_on_changed_s": 4.500632758259565,
+   "by_airport_month": {
+    "EDDF 2026-01": {
+     "rows": 15667,
+     "changed": 13134,
+     "squared_change": 474698.0,
+     "max_abs": 46.0
+    },
+    "EDDF 2026-02": {
+     "rows": 14654,
+     "changed": 13384,
+     "squared_change": 704882.0,
+     "max_abs": 38.0
+    },
+    "EDDF 2026-06": {
+     "rows": 19700,
+     "changed": 16538,
+     "squared_change": 367340.0,
+     "max_abs": 47.0
+    },
+    "EDDF 2026-07": {
+     "rows": 20650,
+     "changed": 17494,
+     "squared_change": 376108.0,
+     "max_abs": 40.0
+    },
+    "EHAM 2026-01": {
+     "rows": 16232,
+     "changed": 10600,
+     "squared_change": 206403.0,
+     "max_abs": 56.0
+    },
+    "EHAM 2026-02": {
+     "rows": 16802,
+     "changed": 11073,
+     "squared_change": 68184.0,
+     "max_abs": 26.0
+    },
+    "EHAM 2026-06": {
+     "rows": 20881,
+     "changed": 14165,
+     "squared_change": 98210.0,
+     "max_abs": 48.0
+    },
+    "EHAM 2026-07": {
+     "rows": 21950,
+     "changed": 14588,
+     "squared_change": 82889.0,
+     "max_abs": 39.0
+    },
+    "LSZH 2026-01": {
+     "rows": 9995,
+     "changed": 6693,
+     "squared_change": 145886.0,
+     "max_abs": 60.0
+    },
+    "LSZH 2026-02": {
+     "rows": 9374,
+     "changed": 6135,
+     "squared_change": 74812.0,
+     "max_abs": 38.0
+    },
+    "LSZH 2026-06": {
+     "rows": 12384,
+     "changed": 8995,
+     "squared_change": 146816.0,
+     "max_abs": 42.0
+    },
+    "LSZH 2026-07": {
+     "rows": 13155,
+     "changed": 9601,
+     "squared_change": 138183.0,
+     "max_abs": 40.0
+    }
+   }
+  },
+  "by_stage_vs_candidate_1": {
+   "ss": {
+    "rows_changed": 0,
+    "airports": [],
+    "months": [],
+    "outside_t3_airports_and_not_january": 0
+   },
+   "st": {
+    "rows_changed": 143284,
+    "airports": [
+     "EDDF",
+     "EHAM",
+     "LSZH"
+    ],
+    "months": [
+     "2026-01",
+     "2026-02",
+     "2026-06",
+     "2026-07"
+    ],
+    "outside_t3_airports_and_not_january": 0
+   },
+   "sp": {
+    "rows_changed": 143284,
+    "airports": [
+     "EDDF",
+     "EHAM",
+     "LSZH"
+    ],
+    "months": [
+     "2026-01",
+     "2026-02",
+     "2026-06",
+     "2026-07"
+    ],
+    "outside_t3_airports_and_not_january": 0
+   },
+   "sp2": {
+    "rows_changed": 142400,
+    "airports": [
+     "EDDF",
+     "EHAM",
+     "LSZH"
+    ],
+    "months": [
+     "2026-01",
+     "2026-02",
+     "2026-06",
+     "2026-07"
+    ],
+    "outside_t3_airports_and_not_january": 0
+   },
+   "km": {
+    "rows_changed": 142400,
+    "airports": [
+     "EDDF",
+     "EHAM",
+     "LSZH"
+    ],
+    "months": [
+     "2026-01",
+     "2026-02",
+     "2026-06",
+     "2026-07"
+    ],
+    "outside_t3_airports_and_not_january": 0
+   }
+  },
+  "attribution": {
+   "changed_rows_at_EDDF_EHAM_LSZH": 142400,
+   "changed_rows_elsewhere_january": 0,
+   "changed_rows_elsewhere_not_january": 0
+  },
+  "fixed_rows": {
+   "lirf_population_rows": 619,
+   "lirf_population_changed": 0,
+   "guard_rows_present": 2,
+   "guard_rows_changed": 0
+  },
+  "month_means": {
+   "flags_candidate_1": [
+    "EDDF 2026-01",
+    "EDDM 2026-01",
+    "LIRF 2026-07",
+    "LSZH 2026-01"
+   ],
+   "flags_candidate_2": [
+    "EDDF 2026-01",
+    "EDDM 2026-01",
+    "LIRF 2026-07",
+    "LSZH 2026-01"
+   ],
+   "flags_equal": true,
+   "gap_changes_s": {
+    "EDDF 2026-01": [
+     174.8,
+     176.0
+    ],
+    "EDDF 2026-02": [
+     52.6,
+     55.8
+    ],
+    "EDDF 2026-06": [
+     9.5,
+     10.4
+    ],
+    "EDDF 2026-07": [
+     6.6,
+     7.6
+    ],
+    "EHAM 2026-02": [
+     3.1,
+     2.9
+    ],
+    "EHAM 2026-06": [
+     -1.8,
+     -1.7
+    ],
+    "EHAM 2026-07": [
+     -5.2,
+     -5.0
+    ],
+    "LSZH 2026-01": [
+     190.1,
+     190.2
+    ],
+    "LSZH 2026-02": [
+     47.6,
+     47.7
+    ],
+    "LSZH 2026-06": [
+     17.6,
+     17.3
+    ],
+    "LSZH 2026-07": [
+     17.0,
+     16.7
+    ]
+   }
+  },
+  "all_ok": true
+ },
+ "mirror": "87 files from arcw6 hash-equal on both sides (runs/sixmonth/vm/c2_mirror.{local,remote}.sha): final_candidate2/*, late_c2's new subdirectories + late_chain.json, late_c2_control's records, logs; the unchanged late_c2 subdirectories are byte copies of late_9002 (runs/final_blind/final_candidate2/late_c2.sha)",
+ "uploaded": false
+}
