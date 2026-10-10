@@ -1,5 +1,11 @@
 # Final file candidate 1 (10 October 2026) — built, checked, NOT uploaded
 
+> **Superseded by final candidate 2 (11 October 2026, ~00:30 UTC; [`../sixmonth/final_candidate2.md`](../sixmonth/final_candidate2.md)),
+> SHA-256 `f11ca28f7503a98cad9211facafe30d7f4185a589aefdb655372896d59e2669e`, NOT uploaded.** Tier B switched nothing off
+> ([`febjun_check.md`](febjun_check.md)); the separately declared six-month refit (`configs/sixmonth_refit_v1.json`) accepted only the third
+> pass (C15), so candidate 2 = candidate 1 with the third pass fitted on six months: 142,400 rows differ, all at EDDF / EHAM / LSZH (max 60 s,
+> squared change 2.88e6, about 0.01 s expected). Its control rebuild reproduced candidate 1 byte for byte. Candidate 1 stays the fallback.
+
 The full v76 chain run on the final dataset (`data/raw/final_ranking.parquet`, 8 October 11:04 UTC version, still the live one on
 10 October) with the user's 8 October decisions (`final_round_plan.md`): v40's fill pins off, the published-delay layers on (the
 workbook covers January-July 2026). Execution record: [`lane_V.md`](lane_V.md) ("Resumed on 10 October" and after).
