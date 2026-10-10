@@ -10,7 +10,7 @@ nothing, or a W25 layer on a file without January 2026 departures (the declared 
 unchanged.
 
   init      --work DIR --raw FILE --base FILE --recipe FILE [--months M,M] [--matches-dir DIR] [--features-own-dir DIR]
-            [--messages FILE] [--stacker-rank FILE]                     writes DIR/late_chain.json
+            [--messages FILE [--messages-merge files]] [--stacker-rank FILE]  writes DIR/late_chain.json
   stacker   --work DIR                     (ranking.parquet only) writes the stacker-inputs interface file from run_stack_weight.rank_inputs()
   step      --work DIR --name NAME         NAME in oooi, nbr_state, nbr_dark, ss_build, ss_score, raw, st_build, st_score, sp_build,
                                            sp_score, sp2_build, sp2_score, km   (workstation, light)
@@ -147,8 +147,17 @@ def step_oooi(cfg: dict, work: Path) -> None:
     msgs = pd.read_parquet(ROOT / "runs/oooi_pin/messages_unique.parquet")
     if cfg.get("messages"):
         new = pd.read_parquet(path(cfg, "messages"))
-        if set(new["ts_utc"].dt.strftime("%Y-%m")) & set(msgs["ts_utc"].dt.strftime("%Y-%m")):
-            raise ValueError("the new months' data-link messages overlap the stored ones")
+        if cfg.get("messages_merge") == "files":
+            # Month-boundary archives (e.g. 20260131, 20260630) sit in both extractions: drop the new set's rows from archive files
+            # the stored set already holds, then any message the stored set already has (oooi_pin_pack's label|flight|text key).
+            # Every stored row is kept as it is, so the development months read exactly as shipped.
+            key = lambda f: f["label"].astype(str) + "|" + f["flight"].astype(str) + "|" + f["text"].astype(str)
+            n_new = len(new)
+            new = new[~new["file"].isin(set(msgs["file"]))]
+            new = new[~key(new).isin(set(key(msgs)))]
+            cfg.setdefault("messages_merge_counts", {}).update(new_rows=n_new, kept_after_file_and_key_dedupe=len(new))
+        elif set(new["ts_utc"].dt.strftime("%Y-%m")) & set(msgs["ts_utc"].dt.strftime("%Y-%m")):
+            raise ValueError("the new months' data-link messages overlap the stored ones (--messages-merge files de-duplicates by archive file)")
         msgs = pd.concat([msgs, new[msgs.columns]], ignore_index=True)
         msgs.to_parquet(run / "messages_unique.parquet", index=False)
     else:
@@ -385,6 +394,9 @@ def main() -> None:
     ap.add_argument("--matches-dir", default="data/external/adsblol/matches")
     ap.add_argument("--features-own-dir", default=None, help="folder of features_v19_<month>.parquet (default the stored one)")
     ap.add_argument("--messages", default=None, help="messages_unique.parquet of the new months (tools/oooi_pin_extract.py + oooi_pin_pack.py)")
+    ap.add_argument("--messages-merge", choices=["months", "files"], default="months",
+                    help="months (as shipped): refuse new messages in a month the stored set holds; files: drop the new set's rows from "
+                         "archive files the stored set already holds, then messages it already has (month-boundary archives overlap)")
     ap.add_argument("--stacker-rank", default=None, help="MVT_ID_mvt + the 79 s_* stacker columns of the file's rows (Lane E)")
     ap.add_argument("--name")
     ap.add_argument("--stage")
@@ -399,7 +411,7 @@ def main() -> None:
         cfg = {"raw": rel(raw), "raw_sha256": sha(raw), "base": rel(ROOT / a.base), "base_sha256": sha(ROOT / a.base),
                "recipe": rel(ROOT / a.recipe), "recipe_sha256": sha(ROOT / a.recipe), "months": months,
                "matches_dir": rel(ROOT / a.matches_dir), "features_own_dir": rel(ROOT / a.features_own_dir) if a.features_own_dir else None,
-               "messages": rel(ROOT / a.messages) if a.messages else None, "stacker_rank": rel(ROOT / a.stacker_rank) if a.stacker_rank else None,
+               "messages": rel(ROOT / a.messages) if a.messages else None, "messages_merge": a.messages_merge, "stacker_rank": rel(ROOT / a.stacker_rank) if a.stacker_rank else None,
                "outputs": {}}
         save(work, cfg)
         print(json.dumps(cfg, indent=1))
