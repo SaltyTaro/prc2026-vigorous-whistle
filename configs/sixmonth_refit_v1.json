@@ -1,0 +1,28 @@
+{
+ "experiment_id": "sixmonth_refit_v1",
+ "declared_at_utc": "see commit (10 October 2026, before any February / June 2025 score of a five- or six-month learner)",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "design": "docs/sixmonth/README.md",
+ "tool": "tools/run_sixmonth.py (control / held / read)",
+ "purpose": "Refit the chain's late learners (step-6 guarded stacker, second pass, third pass) with February / June 2025 rows from the Tier B out-of-sample chain added to the four development months, so that the final file's February / June 2026 rows are corrected by learners that have seen the seasonal analogues. Everything else frozen.",
+ "learners": {
+  "C6 guarded stacker": "configs/stack_weight_v1.json w65_bag10 (v2 / v3 / OPDI bags of tools/run_stack_resid.fit_bag, ten seeds 20261003, 11-19, weight 0.65), guards with the shipped support (the four development months' non-fixed rows)",
+  "C14 second pass": "configs/stack_second_v1.json, both candidates (sp_hicov7, sp_nolirf), ranking bags of tools/run_stack_second.fit (five seeds, 400 rounds); the layer's own score() rule on each file (clauses 1-3 from the stored development predictions, clause 4 transfer on the file, selection)",
+  "C15 third pass": "configs/stack_third_v1.json, both candidates (t3_ro_h7, t3_ro_3), ranking bags of tools/run_stack_third.fit; the layer's own score() rule as above"
+ },
+ "frozen": "features, LightGBM parameters, seeds, rounds, the step-6 early-stopping split (day of month % 5 == 0), weights, caps, floors, clip of the targets, airport sets, candidates, clauses 1-3, the step-6 guards' support; no parameter is chosen on February / June 2025",
+ "training_rows_added": "Tier B chain tables (runs/febjun_tierb/chain/work: steps/stack/{stacker_rank,preds}.parquet, late/stack_second/rank_table.parquet, late/stack_third/rank_t3.parquet) of lane M's rows read (runs/febjun_tierb/model/chain_<month>.parquet IDs), non-fixed, with labels from data/raw/training_2025-*.parquet; targets defined as in each learner's shipped fit",
+ "control": "before any February / June table: with no rows added, tools/run_sixmonth.py control reproduces the shipped ranking-mode predictions exactly (C6: runs/final_early_chain/rehearsal_shipped3/steps/stack/preds.parquet, 30 bag columns and the three guards; C14 / C15: runs/stack_second|stack_third/preds_rank.parquet, every candidate); records runs/sixmonth/control_{stack,ss,st}.json",
+ "evaluation": {
+  "held": "for held month h in 2025-02 / 2025-06: the learner fitted on the four development months + the other Tier B month (its lane-M rows read, non-fixed), predicting h's rows of F (tools/run_sixmonth.py held)",
+  "position": "each layer read at its position in the Tier B chain: input = the layer's input file in the Tier B chain (every earlier layer as in the Tier B readings); control = the Tier B chain's output of that layer (four-month learner); candidate = the same layer with the five-month predictions on each month (C14 / C15: the layer's selection and clause 4 on both months pooled, as the chain does)",
+  "population": "lane M's rows read of month h (configs/febjun_tierb_readings_chain_v1.json 'rows_read')",
+  "statistic": "complete-month RMSE change of the candidate against the control and the paired-day 95% interval (tools/run_intruder_bound.interval, 2,000 replicates, one generator seeded 20261004 per learner over February then June)"
+ },
+ "rule": "A learner's six-month refit is ACCEPTED only if BOTH held months improve (change < 0) AND BOTH paired-day 95% intervals lie entirely below zero; for C6 additionally no transfer failure: per airport (v3 bag all airports but LIRF, v2 bag LIRF, OPDI bag LSZH used rows), the RMS of the guarded bag prediction on the held month within 0.5x-2x of the stored out-of-month development RMS (docs/stack_weight/results_v1.json dev_oof_prediction_by_airport bag10) wherever the four-month bag is within it. Accepted -> the final file's chain uses that learner fitted on all six months (development rows + both Tier B months' rows read); otherwise the shipped four-month learner. Learners are read independently at their positions; no other choice is made from the readings.",
+ "clean_test_status": "They read whether a layer helps at all, not the four- against six-month learner; nothing in this declaration was chosen from them, and none had been read when it was written.",
+ "deadline": "readings and, if anything is accepted, the six-month fits for the final file must be complete in time for the final file's build through the same chain and checks (docs/final_file/final_candidate.md) before 13 October 2026 12:00 UTC; otherwise the shipped learners stay",
+ "compute": "Azure VMs only (arcw2; arcw4 / arcw7 once released); the workstation orchestrates, copies and hash-checks; VMs deallocated after hash-checked mirrors",
+ "automatic_submission": false
+}

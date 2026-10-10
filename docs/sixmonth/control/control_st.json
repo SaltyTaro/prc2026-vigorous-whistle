@@ -1,0 +1,31 @@
+{
+  "all_equal": true,
+  "candidates": {
+    "t3_ro_3": {
+      "equal": true,
+      "max_abs_pred_diff": 0.0,
+      "nan_pattern_equal": true
+    },
+    "t3_ro_h7": {
+      "equal": true,
+      "max_abs_pred_diff": 0.0,
+      "nan_pattern_equal": true
+    }
+  },
+  "code": {
+    "tools/run_opdi_stack.py": "f8c0aac7a5c1a710dfd52fed6730074524cf27f8b63ca48132a8197909557522",
+    "tools/run_sixmonth.py": "751a1c33246954564ba875d94a95e792147737235451dec88ca81b5fc7feb59b",
+    "tools/run_stack_resid.py": "84e9e5034918b3da19bfdf91b7dd8c5123eb0c8bcc3661f0fbdaeb654926e71e",
+    "tools/run_stack_resid_v3.py": "d3c5f995d39633c7383916e1f80d7553f2bbbecc5461f2c579e816281c071f52",
+    "tools/run_stack_second.py": "8055a43980d8493ff555b90fa0c81621aa289fd6df30eae5e839a6043846de94",
+    "tools/run_stack_third.py": "48c5f263c840894109cd53dd2d24f26f089ab49693877118e73b17a7565c24d8",
+    "tools/run_stack_weight.py": "dd6f70ee6ea39bc38662e01b0e189c886be2a1f9fdd63c79c2e8115655e85cb9"
+  },
+  "created_at_utc": "2026-10-10T18:49:11.693023+00:00",
+  "inputs": {
+    "runs/stack_third/dev_t3.parquet": "07ba779ab49c5c5f60e8f875e9fb806fc4bf62a0a608c9980ff3cbdf533a0f70",
+    "runs/stack_third/preds_rank.parquet": "0b58d94649e026f7aa820f0d4a529416739430bd67e58bb4c82a899cf402807a",
+    "runs/stack_third/rank_t3.parquet": "299171d3c021c8c2aaaff8ecdf764d4988af088735ebef2108ced61d5edbbf0a"
+  },
+  "kind": "st"
+}
