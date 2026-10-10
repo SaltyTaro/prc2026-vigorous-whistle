@@ -1,0 +1,156 @@
+{
+ "experiment_id": "febjun_check_v1",
+ "declared_at_utc": "2026-10-10T05:55Z (see commit), before any new February / June 2025 reading of nbr_state_v1, nbr_dark_v1 or oooi_pin_v1 and before the key_memory analogue screen",
+ "declared_by": "Tier A only, Tier B waits for the user). Declaring and the readings are research; uploads stay the user's word.",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "purpose": "The final file is ranked on January / July 2026, February / June 2026 and all four months. Every chain layer was declared on 2025 development months that exclude February and June. February / June 2025 are the analogues of the final's new months. This declaration fixes the rule that decides, per layer, whether it stays on for the final file's February 2026 and June 2026 rows. Survey and gaps: docs/final_file/febjun_check.md.",
+ "rule": {
+  "default": "Every layer of the accepted v76 chain stays on (the user's decision of 8 October 2026: full v76 chain, fill pins off).",
+  "switch_off_february": "A layer is switched off on the final file's February 2026 rows only if its February 2025 complete-month RMSE change is worse (> 0) AND its paired-day 95% interval of the RMSE difference lies entirely above zero.",
+  "switch_off_june": "The same for the final file's June 2026 rows with its June 2025 reading.",
+  "unreadable": "A layer without a February (June) 2025 reading stays on for February (June).",
+  "no_tuning": "No partial weights, no re-tuned thresholds, offsets or slopes, no airport choices; a switched-off layer passes its input through unchanged on that month's rows.",
+  "tier_b": "Readings on a later Tier B out-of-sample base (if the user approves one) replace the rows12 readings for the same layer under the same rule."
+ },
+ "governed_layers_and_readings": {
+  "already_known_at_declaration": {
+   "base": "runs/daily_totals/rows12.parquet 'stack' (max(cross-fit v9 + mean of the twelve-month LOMO adj2 / cat residual on matched non-LIRF rows, -12); the v23 recipe), each after the earlier accepted layers as recorded in its own result file",
+   "readings_pct_and_interval_s": {
+    "rematch_nonm_v1 (no-NM rematch)": {
+     "2025-02": [
+      -0.01399749150176044,
+      -0.17171033961669338,
+      -0.020028185670196312
+     ],
+     "2025-06": [
+      -0.00839158557183195,
+      -0.05955265970992514,
+      -0.020360183679142097
+     ],
+     "source": "docs/rematch_nonm/results_v1.json twelve_months"
+    },
+    "daily_totals_v1 (v48 reconciliation)": {
+     "2025-02": [
+      -0.7647731363835009,
+      -2.7812258547425706,
+      -0.5603749627989397
+     ],
+     "2025-06": [
+      -0.30487994893774184,
+      -0.8968836168773848,
+      -0.36438401019194444
+     ],
+     "source": "docs/daily_totals/check12_report.json"
+    },
+    "scout_extreme_shift_v1 (extreme-day)": {
+     "2025-02": [
+      -0.4498106732295559,
+      -2.250969045161745,
+      0.08646680780596477
+     ],
+     "2025-06": [
+      -0.034315931275941125,
+      -0.21097440134870737,
+      0.0
+     ],
+     "source": "docs/scout/extreme_shift_results_v1.json twelve"
+    },
+    "scout_var_alloc_v1 (variance re-allocation)": {
+     "2025-02": [
+      -0.4992890734899502,
+      -1.8207749774867934,
+      -0.3274499893319169
+     ],
+     "2025-06": [
+      -0.11018259853101675,
+      -0.3650439698726231,
+      -0.09297266391907906
+     ],
+     "source": "docs/scout/var_alloc_results_v1.json twelve"
+    },
+    "intruder_bound_v1 g3600_w100": {
+     "2025-02": [
+      -1.085912126015609,
+      -3.2013421439749736,
+      -0.20070716148361978
+     ],
+     "2025-06": [
+      -0.21026278930714737,
+      -0.3716766980922964,
+      -0.11502074654385161
+     ],
+     "source": "docs/intruder_bound/results_v1.json"
+    },
+    "intruder_identity_v1": {
+     "2025-02": [
+      -0.03902988707440436,
+      -0.2419352404390701,
+      -0.00033471802022955237
+     ],
+     "2025-06": [
+      -0.011587178134209175,
+      -0.021054698798015636,
+      -0.0029258790268985053
+     ],
+     "source": "docs/intruder_identity/results_v1.json results.twelve"
+    },
+    "own_motion_v1 om_b2700_w100": {
+     "2025-02": [
+      -0.009649845998593864,
+      -0.037286068359446145,
+      -0.00268241462937913
+     ],
+     "2025-06": [
+      -0.014570527600898942,
+      -0.03165205523824599,
+      0.008421391081223077
+     ],
+     "source": "docs/own_motion/results_v1.json"
+    },
+    "own_motion_v2 om5_b2700_w50": {
+     "2025-02": [
+      -0.036579608887288284,
+      -0.14480180467944803,
+      -0.01122587555982855
+     ],
+     "2025-06": [
+      -0.023332756152505407,
+      -0.053589310114503796,
+      -0.011255486805678285
+     ],
+     "source": "docs/own_motion/results_v2.json"
+    }
+   }
+  },
+  "new_readings_tier_a": {
+   "nbr_state_v1 w75": "Exactly its declared fresh check (tools/run_nbr_state.py fresh_table / state / apply / month_row) with the fresh months set to 2025-02, 2025-06: base rows12 'stack'; slopes = the stored final slopes of the four development months (docs/nbr_state/results_v1.json slopes_final); every airport with a slope (the ranking transfer guard is evaluated on the predicted file and does not apply to a 2025 reading); fixed rows = the LIRF population by its raw rule + the two guard IDs; interval run_intruder_bound.interval, 2,000 replicates, one generator seeded 20261004 over the months in calendar order. Before the new months, the same code must reproduce the stored August-October readings exactly.",
+   "nbr_dark_v1 dark_pool_w75": "Exactly its declared fresh check (tools/run_nbr_dark.py): control = nbr_state_v1 w75 on the same rows12 rows; pooled slope B from the four development months (must equal the stored 0.11723932676307021); gates from data/external/adsblol/matches/matches2_2025-02.parquet / matches2_2025-06.parquet; same interval and seed. The stored August-October readings must reproduce first.",
+   "oooi_pin_v1 w50": "Exactly its declared fresh check (tools/run_oooi_pin.py): messages for 2025-02 and 2025-06 from the adsb.lol Aircraft Data Links archive (CC0) extracted with tools/oooi_pin_extract.py list / run (unchanged) on one Azure VM (arcw1, arcw4, arcw5 or arcw7) and packed with tools/oooi_pin_pack.py; joined with tools/oooi_pin_join.py (declared logic, month list as parameter); scope and source guard as declared; offsets = the stored July / November / December 2025 offsets (must reproduce: 2N -62.26 s, 8D -22.84 s); base rows12 'stack' on LFPG non-fixed rows; weight 0.5; same interval and seed. A month with no archive assets is unreadable (the layer stays on)."
+  },
+  "unreadable_without_tier_b": "v30 committee side and mix, v33 / v34, v35-v38, v45, v46, v51m-v55m, the own-points member (v66), the guarded stacker (v60 / v63 / v68 / v69), the second pass (v72), the third pass (v73). The W25 layers (v74 / v76) act on January 2026 only. The EOBT_1 repair and the LIRF dark rule have no 2025 analogue (they fire on LFPG / LIRF June 2026 by their own label-free detectors).",
+  "not_applicable": "v39 / v40 fill pins (off in the final file)."
+ },
+ "screen_not_governed": {
+  "name": "key_memory analogue, W24 2025",
+  "status": "SCREEN ONLY. It switches nothing on or off; a positive result can only motivate a separate declaration for February 2026, with its own rule.",
+  "procedure": "key_memory_v1's arithmetic on rows12 'stack' residuals: key = ADEP_mvt + FLIGHT_mvt (stripped, upper-cased; rows without a flight number get nothing); r = clip(label - stack, +-1800) on the memory month's non-fixed rows with label < 20,000 s; c = clip(0.25 x n / (n + 30) x mean r, +-120); new = max(stack + c, -12) on the target month's non-fixed rows with a key; complete-month RMSE change with the paired-day interval (seed 20261004).",
+  "pairs": {
+   "analogue": "January 2025 -> March 2025 (one month between, same IATA season W24, like November / December 2025 -> February 2026)",
+   "adjacent_control": "February 2025 -> March 2025"
+  },
+  "airport_sets": [
+   "all ten (km_10)",
+   "without EGLL (km_9, the shipped set)"
+  ],
+  "caveat": "rows12 is a weaker base than the chain, so a flight-number memory will look stronger on it than on the chain."
+ },
+ "disclosure": "The eight readings under already_known_at_declaration were read and tabulated (docs/final_file/febjun_check.md, commit eac5281) before this rule was written; all are better on both months, so the rule switches none of them off. The rule's form (worse AND interval above zero) was proposed in that survey after seeing them. nbr_state_v1, nbr_dark_v1 and oooi_pin_v1 have never been read on February or June 2025 (their August-October fresh readings are known: all better). The key_memory analogue has never been computed. No official score is used.",
+ "compute": "Workstation for the neighbour readings and the screen (minutes, pandas); one Azure VM (arcw1 / arcw4 / arcw5 / arcw7; never arcw0, which Lane V uses; not arcw2 / arcw6) for the data-link extraction, deallocated right after its hash-checked mirror. No GPU.",
+ "outputs": {
+  "tool": "tools/run_febjun_check.py",
+  "runs": "runs/febjun_check/",
+  "results": "docs/final_file/febjun_results_v1.json",
+  "record": "docs/final_file/febjun_check.md (results section)"
+ }
+}
