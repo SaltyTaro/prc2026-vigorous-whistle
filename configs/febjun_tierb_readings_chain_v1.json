@@ -1,0 +1,125 @@
+{
+ "experiment_id": "febjun_tierb_readings_chain_v1",
+ "declared_at_utc": "2026-10-10 (see commit), before lane M's February / June 2025 model part exists and before any February / June 2025 reading of a chain layer on a Tier B base",
+ "declared_by": "Tier B lane C; uploads stay the user's word",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "umbrella": "configs/febjun_tierb_v1.json (commits a315f22 / a3a285d): its readings.exact_computation names this file for the own-points member and the chain after the model part (C1-C15); the model part is configs/febjun_tierb_readings_model_v1.json (lane M, 4fb2ad6)",
+ "rule": "UNCHANGED (configs/febjun_check_v1.json): a layer is switched off on the final file's February (June) 2026 rows only if its February (June) 2025 complete-month RMSE change on the rows read is worse (> 0) AND its paired-day 95% interval lies entirely above zero; a layer that moves no read row, or that cannot be read (C11 in February: no data-link archive before 14 June 2025), stays on. No partial weights, no re-tuned thresholds, offsets, slopes or airport choices.",
+ "tool": "tools/febjun_tierb_chain.py (input, own-member, opdi-check, root, c1, early, repro12, late, read); record docs/final_file/tierb_chain.md; results docs/final_file/tierb_chain_results.json",
+ "movement_file": {
+  "F": "runs/febjun_tierb/chain/input/febjun2025.parquet, SHA-256 8a0de5bdfb9b64503f182f7d87737fd39c7f6473c456c1a3563d3a881ed1ea55: every movement (DEP and ARR) of the twelve 2025 training files with MVT_TIME_UTC_mvt in February or June 2025 (the catalog's month assignment), plus the arrivals of January 2025 as context, in file order; departures without block time and label, as data/raw/ranking.parquet (806,950 movements; departures February 143,732, June 183,142 -- the same departures as runs/daily_totals/rows12.parquet's two months; arrivals January 153,551, February 143,680, June 182,845). The January arrivals mirror the final file, which holds January 2026 before its February rows (the inbound turn of a 1 February departure); the final file holds nothing before June 2026, so June 2025 gets no May context.",
+  "T": "runs/febjun_tierb/chain/input/febjun2025_template.parquet, SHA-256 7d23346e71dab84dc8649ae91d4a24c83305f74229ba480d3fcf5ac762c3f144: F's departure IDs, float64, and an all-null int32 prediction column (the form of data/raw/submitting.parquet)"
+ },
+ "base": {
+  "model_part": "lane M's v55m column (runs/febjun_tierb/model/chain_<month>.parquet), nearest integer, in T's order = file root/final/vigorous-whistle_v9201.parquet",
+  "rows_without_a_lane_m_row": "F's departures that lane M does not read (no out-of-sample v9: missing NM clock, the LIRF fill population, and the one month-boundary row of the March file) enter every column of the synthetic runner root at their airport-month's median of lane M's v55m (the rows12 convention for its extra rows; residual 0); scope from the residual stage's matches_v11 flag (runs/adsb_v24/features), the LIRF fill population (no NM record, no aircraft type) as 'fixed'. They pass through the whole chain (every airport-day layer sees all departures) and are NOT read.",
+  "runner_root": "runs/febjun_tierb/chain/root: recipe/detail.parquet (MVT_ID_mvt, airport, month, scope, v9, residual, committee, ens_v22_lirf_q, ens_ctx_e24 / e24b / e32 / lirf, committee_mix, v30), networks/ensembles.parquet, leaves/tables.parquet, stack/detail.parquet (v30 ... v55m), members/members.parquet, input.json; all from lane M's tables, so that run_stack_resid.ranking_table (the stacker's ranking-side table) rebuilds the components exactly as on the final file's runner root"
+ },
+ "chain": {
+  "C1": "the own-points member: own_all = dl32own on rows with adsb_matched = 1, m25dl32own on the others (build_combo_member's routing and match flags, runs/adsb_ctx2/inputs/adsb_features_arcw0), folds lomo_2025-02 / lomo_2025-06 of runs/febjun_nets/nets (GPU), seeds 601-604 (4 of the shipped 16: the cheap Tier B), seed mean; in the network table at its shipped weight 1.00 (configs/ctx_ownpoints_weight_v1.json own_all_w100) in place of the combination member at 0.40, then the masked member at 0.40, through lane M's v46 stack functions (network_member.table_with_member, share_gate.mix n85_nd1200, run_share_gate_reread.full_stack with the month's own rematch / queue inputs); M' = that value on non-LIRF rows where it differs from v52m, else M (tools/final_early_chain.py step 1's arithmetic). Guards: the same functions with the combination member reproduce lane M's v51m and v52m to 1e-9; no LIRF row moves. member_delta.parquet (d51, d52) feeds the stacker's v51m-v54m columns as on the final file.",
+  "C2-C10": "tools/final_early_chain.Chain's new-file path on (F, T, the runner root, M) with --published-missing auto (as the final file): step 2 the no-NM rematch (run_rematch_nonm.step_ranking_base), steps 3-5 v48 reconciliation, extreme-day layer, variance re-allocation (the shipped tools as subprocesses with --raw F --template T --detail root/recipe/detail.parquet; the shipped published table, which covers February / June 2025), step 6 v69's stacker (run_stack_weight.rank_inputs, three learners x ten seeds refitted on the stored development tables, weight 0.65, the P2 learners on rows without a published airport-day), steps 7-8 run_intruder_identity.dry_run (intruder bound, then identity extension), step 9 run_own_motion.dry_run, step 10 run_own_motion_v2.dry_run. Key map and the no-NM matches of F relearned label-free (run_rematch_nonm --matches on F: 2025 + F), the identity tables of F's movements rebuilt in new-file mode, the own-point cache's F rows rebuilt from the surface days, the OPDI features of F built from the February / June 2025 event windows (tools/opdi_stack_fetch.py --need 2025-01-31:2025-03-02 2025-05-31:2025-07-01) by a replica of run_opdi_stack.build whose only change is the explicit window list (the replica with the shipped window list reproduces runs/opdi_stack/features_rank.parquet exactly).",
+  "month_blocked_fits": "The shipped ranking path fits five layers' offsets on the labels of all twelve 2025 months, which include February / June. For F these fits are month-blocked, as each layer's own development / twelve-month form ('every other 2025 month'): each of steps 2, 7-8, 9 and 10 runs twice, once with February 2025 and once with June 2025 removed from every fit over all twelve months (run_rematch_nonm.offsets; run_intruder_bound.fit, run_intruder_identity.fit, run_own_motion.fit, which run_own_motion_v2 calls), and its output takes February rows from the first run and June rows from the second. Fits the tools make over fewer months (their own month-blocked twelve-month tables, e.g. the intruder-bound table under the identity extension) are left as they are: the held month's labels reach them only through other months' table values (candidate selection), a second-order effect, disclosed. Steps 3-6 and 11-15 fit on the four development months (January, July, November, December 2025) only, so they are out of sample for February / June as on the final file. Every wrapped call is logged in work/chain_tierb.json.",
+  "C11-C18": "tools/final_late_chain.py init / step / fit on F: --base the step-10 output, --recipe root/recipe/detail.parquet, --months 2025-02,2025-06, --matches-dir data/external/adsblol/matches, --features-own-dir data/external/adsblol/features_v19own, --messages runs/febjun_check/oooi/vm/messages_unique.parquet --messages-merge files (Tier A's February / June 2025 extraction), --stacker-rank step 6's stacker_rank.parquet; the ranking bags refitted on the stored development tables (as the final file); each layer's declared rule and transfer guard applied to F. The W25 layers (season_pass v1 / v2, key_memory) act on 2026-01 rows only and must pass F through unchanged (checked)."
+ },
+ "readings": {
+  "layers": [
+   {
+    "name": "C1 own-points member",
+    "off": "M (v55m)",
+    "on": "M' (steps/model_part)"
+   },
+   {
+    "name": "C2 no-NM rematch",
+    "off": "M'",
+    "on": "steps/rematch/base"
+   },
+   {
+    "name": "C3 v48 reconciliation",
+    "off": "steps/rematch/base",
+    "on": "steps/R"
+   },
+   {
+    "name": "C4 extreme-day",
+    "off": "steps/R",
+    "on": "steps/X"
+   },
+   {
+    "name": "C5 variance re-allocation",
+    "off": "steps/X",
+    "on": "steps/Y"
+   },
+   {
+    "name": "C6 guarded stacker (v69's form)",
+    "off": "steps/Y",
+    "on": "steps/stack"
+   },
+   {
+    "name": "C7 intruder bound",
+    "off": "steps/stack",
+    "on": "steps/intruder (the accepted layer inside step 7-8, kept separately)"
+   },
+   {
+    "name": "C8 identity extension",
+    "off": "steps/intruder",
+    "on": "steps/identity"
+   },
+   {
+    "name": "C9 own-motion v1",
+    "off": "steps/identity",
+    "on": "steps/own"
+   },
+   {
+    "name": "C10 own-motion v2",
+    "off": "steps/own",
+    "on": "steps/om2"
+   },
+   {
+    "name": "C11 OUT pin (February unreadable)",
+    "off": "steps/om2",
+    "on": "late oooi"
+   },
+   {
+    "name": "C12 nbr_state",
+    "off": "late oooi",
+    "on": "late nbr_state"
+   },
+   {
+    "name": "C13 nbr_dark",
+    "off": "late nbr_state",
+    "on": "late nbr_dark"
+   },
+   {
+    "name": "C14 second pass",
+    "off": "late nbr_dark",
+    "on": "late ss"
+   },
+   {
+    "name": "C15 third pass",
+    "off": "late ss",
+    "on": "late st"
+   }
+  ],
+  "rows_read": "governing: F's departures that carry a lane-M row (lane M's rows read: every clock-present departure of its cross-fit tables; configs/febjun_tierb_readings_model_v1.json counts February 142,622 and June 180,640), by MVT month; the change on all departures and on the placeholder rows alone is reported, never governing",
+  "reading_of_a_layer": "change = 100 x (RMSE(on) / RMSE(off) - 1) on the rows read of the month, both files as exported (nearest integer, as the final file); interval = run_intruder_bound.interval (paired take-off days, 2,000 replicates); per layer and population one generator numpy.random.default_rng(20261004) drawn over the months in calendar order (February, then June), as tools/run_febjun_check.py; switch-off if change > 0 and the interval's lower end > 0; rows moved, both RMSEs and the squared change reported",
+  "no_iteration": "computed once with every layer on; a switch-off applies to the final file only",
+  "replaces": "for C2-C13 these readings replace the rows12 / Tier A readings of configs/febjun_check_v1.json (umbrella); C6, C14, C15 and C1 had none"
+ },
+ "caveats": [
+  "4 seeds for the own-points member (16 shipped) and for every network member and context network under lane M's model part",
+  "placeholder rows sit in every airport-day layer's day totals at a crude value; they are not read",
+  "28 May - 10 June 2025: adsb.lol holds no surface data (no matches2 rows), so every ADS-B layer is dark on those June days, as in the 2025 data the learners saw",
+  "the key map is relearned from the 2025 files (+ F, which adds nothing), as the final file relearns it from 2025 + its own file",
+  "month-blocked fits: second-order use of the held month's labels inside the tools' own twelve-month tables, see chain.month_blocked_fits"
+ ],
+ "reproductions_before_declaring": {
+  "own_member": "tools/febjun_tierb_chain.py own-member --check: the own_all routing of this tool, applied to the stored lomo_2025-01 fits of all 16 seeds (runs/ctx_ownpoints_dev/nets), equals the stored development member tables runs/ctx_ownpoints_dev/member/s601-s616/2025-01.parquet exactly (ids, NaN pattern, max |difference| 0.0); runs/febjun_tierb/chain/checks/own_member.json",
+  "opdi_builder": "tools/febjun_tierb_chain.py opdi-check: the OPDI builder replica with the shipped 'rank' window list on data/raw/ranking.parquet equals runs/opdi_stack/features_rank.parquet (DataFrame.equals; 154,475 rows); runs/febjun_tierb/chain/checks/opdi_build.json",
+  "month_blocked_steps_7_to_10": "tools/febjun_tierb_chain.py repro12: steps 7-10 of this path (month-blocked) on F with base = runs/daily_totals/rows12.parquet 'stack' (nearest integer) against the stored twelve-month readings of configs/febjun_check_v1.json (already read before Tier B): intruder bound Feb -1.0858% (stored -1.0859%), Jun -0.2102% (-0.2103%); identity extension Feb -0.0390% (-0.0390%), Jun -0.0116% (-0.0116%); own-motion v1 Feb -0.0096% (-0.0096%), Jun -0.0146% (-0.0146%); own-motion v2 Feb -0.0366% (-0.0366%), Jun -0.0233% (-0.0233%). The only gap is the integer base (stored readings used the float 'stack'); interval ends differ because the stored runs drew their bootstrap from other generators. Without January's arrivals in F, own-motion v2 read Feb -0.0283% and the intruder bound -1.0793% (the 1 February inbound turns): hence the context arrivals. In each blocked run exactly one fit per layer spanned all twelve months and lost the held month (run_intruder_bound.fit 5,231 / 4,982 candidate rows kept, run_intruder_identity.fit 146 / 141, run_own_motion.fit (v1) and (v2) once each); runs/febjun_tierb/chain/checks/repro12.json",
+  "identity_tables": "the identity table rebuilt for F's movements in new-file mode (the key map relearned from the 2025 files) agrees with the shipped table on every one of F's 195,600 movements both identify (0 different aircraft); 5 more are identified",
+  "code_path_standin": "the whole chain (root, c1, early steps 2-10, late steps 11-18) ran end to end on a stand-in base (rows12 'stack' in every component column; work_standin; no reading computed) with the first form of F (without the January context arrivals, SHA-256 5ff8884a...); steps 7-10 then ran on the current F in repro12. Every late layer selected what it selected on the ranking file (OUT pin w50, nbr_state w75, nbr_dark accepted, second pass sp_hicov7, third pass t3_ro_3); the W25 layers passed F through byte for byte; early chain 1,727 s, late chain about 160 s on the workstation",
+  "rehearsals_inherited": "the chain code itself (tools/final_early_chain.py, tools/final_late_chain.py and the layer tools) is unchanged; on data/raw/ranking.parquet it reproduces v69 and v76 byte for byte (docs/final_file/lane_E.md, lane_L.md)"
+ },
+ "disclosure": "No February / June 2025 value of any chain layer on a Tier B base has been computed or read. The stand-in run (rows12 'stack' in every component column; work_standin) exercised the code path only; its readings were never computed. The rows12 reproduction (repro12) re-reads C7-C10 on rows12 'stack' -- readings already known and recorded in configs/febjun_check_v1.json -- to check the month-blocked path.",
+ "automatic_submission": false
+}
