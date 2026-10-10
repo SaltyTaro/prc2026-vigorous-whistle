@@ -16,6 +16,8 @@ from prc2026.validation import identity_hash
 
 TEAM = "vigorous-whistle"
 FILENAME = re.compile(r"vigorous-whistle_v([1-9]\d*)\.parquet")
+# The final phase takes one unscored file under a fixed name (ranking page: "<team-name>_final.parquet").
+FINAL_NAME = f"{TEAM}_final.parquet"
 
 
 def filename_version(name: str) -> int:
@@ -37,7 +39,17 @@ def rounded_predictions(values) -> np.ndarray:
 
 
 def validate_submission(path: Path, template_path: Path) -> dict:
-    version = filename_version(path.name)
+    return _validate_table(path, template_path, filename_version(path.name))
+
+
+def validate_final_submission(path: Path, template_path: Path) -> dict:
+    """The final-phase file: the same table contract against the final template, under FINAL_NAME."""
+    if path.name != FINAL_NAME:
+        raise ValueError(f"The final submission must be named {FINAL_NAME}.")
+    return _validate_table(path, template_path, "final")
+
+
+def _validate_table(path: Path, template_path: Path, version) -> dict:
     table, template = pq.read_table(path), pq.read_table(template_path)
     if table.column_names != [ID, TARGET] or template.column_names != [ID, TARGET]:
         raise ValueError("Expected exactly the two template columns in template order.")

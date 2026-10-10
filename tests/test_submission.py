@@ -7,8 +7,9 @@ import pyarrow.parquet as pq
 import pytest
 
 from prc2026.features import ID, TARGET
-from prc2026_submission.contract import export_submission, rounded_predictions, validate_submission
-from prc2026_submission.remote import check_upload_window
+from prc2026_submission.contract import (FINAL_NAME, export_submission, rounded_predictions, validate_final_submission,
+                                        validate_submission)
+from prc2026_submission.remote import check_final_upload, check_upload_window
 
 
 @pytest.fixture
@@ -89,3 +90,34 @@ def test_upload_limit_counts_all_bucket_objects():
                 "LastModified": datetime.now(timezone.utc)}]
     with pytest.raises(ValueError, match="1 GB"):
         check_upload_window(objects, "vigorous-whistle_v1.parquet", 100)
+
+
+def test_final_file_needs_the_final_name_and_the_same_table_contract(template, tmp_path):
+    table = pa.table({ID: pa.array([3., 1., 2.]), TARGET: pa.array([5, -2, 7], type=pa.int32())})
+    versioned = tmp_path / "vigorous-whistle_v9.parquet"
+    pq.write_table(table, versioned)
+    with pytest.raises(ValueError, match="final"):
+        validate_final_submission(versioned, template)
+    final = tmp_path / FINAL_NAME
+    pq.write_table(table, final)
+    report = validate_final_submission(final, template)
+    assert FINAL_NAME == "vigorous-whistle_final.parquet"
+    assert report["version"] == "final" and report["rows"] == 3 and report["minimum_prediction_seconds"] == -2
+    pq.write_table(pa.table({ID: pa.array([1., 2., 3.]), TARGET: pa.array([5, -2, 7], type=pa.int32())}), final)
+    with pytest.raises(ValueError, match="exact template order"):
+        validate_final_submission(final, template)
+    with pytest.raises(ValueError, match="vN"):
+        validate_submission(final, template)
+
+
+def test_final_upload_is_single_and_respects_the_bucket_allowance():
+    now = datetime.now(timezone.utc)
+    objects = [{"Key": f"vigorous-whistle_v{i}.parquet", "Size": 100, "LastModified": now} for i in range(1, 6)]
+    # Five ranked versions in the window do not block the unscored final file.
+    assert check_final_upload(objects, 100)["existing_submission_versions"] == 5
+    with pytest.raises(ValueError, match="once"):
+        check_final_upload(objects + [{"Key": FINAL_NAME, "Size": 100, "LastModified": now}], 100)
+    with pytest.raises(ValueError, match="1 GB"):
+        check_final_upload([{"Key": "big.json", "Size": 999_999_950, "LastModified": now}], 100)
+    with pytest.raises(ValueError, match="Empty"):
+        check_final_upload(objects, 0)

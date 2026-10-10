@@ -65,3 +65,19 @@ The final file must come from the documented, frozen pipeline run on the new mon
   {off,auto}` (auto: steps 3-5 pass through at zero coverage - they used to crash; P2 on rows without a published day, v69's stacker on
   the rest); default path still reproduces v69 byte for byte. **For the final file: `--published-missing auto`** whatever the coverage; never P1.
 - arcw2 (like arcw6) ran about ten times slower than its twin on identical work: avoid arcw2 / arcw6 for timed final-day runs.
+
+- **Deadline:** code, docs and the final file are all due **14 October 2026 10:00 UTC**; the organisers review code up to the last commit
+  before it. The board on `ranking.parquet` stays open until then (five uploads a day; the last upload is still v76 of 8 October).
+- **The model may change until the deadline** ("you can change your model till the deadline"). This lifts the freeze this plan was written
+  under (and the final-week schedule's "10-11 October no new lever"). The three decisions above were made under the freeze and still stand
+  unless the user changes them. A new layer can still enter the final file if it is declared, accepted and run through the final chain
+  before the deadline. Three of the four final rankings include February / June 2026, so a new layer should also be read on February /
+  June 2025.
+- **Final file name and upload:** `vigorous-whistle_final.parquet`, one upload ("unique final submission"), to the team bucket, unscored.
+  `tools/prc_submit.py upload-final --source <late-chain export> --expected-sha256 <sha> [--check-only]` stages a byte copy under
+  `runs/submissions/`, validates it against `final_submitting.parquet` (670,790 rows, exact order and types), checks that the organiser's
+  final objects still carry the ETags of our download, refuses an existing final object, uploads with `IfNoneMatch` and reads the object
+  back. `--check-only` stages nothing and uploads nothing. A check-only rehearsal on a dummy 670,790-row file passed on 10 October (organiser
+  ETags unchanged, no final object in the bucket); its log was removed. Tests: `tests/test_submission.py` (17 passing).
+- **Data:** the 8 October 11:04 UTC `final_ranking.parquet` / `final_submitting.parquet` are definitive; the jitter is intended.
+  Their live ETags, sizes and timestamps equal our download on 10 October, so nothing is re-downloaded.
