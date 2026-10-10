@@ -110,3 +110,44 @@ Under this rule nothing read so far switches off.
 Started today this lands on 12 October at the earliest, leaving one day to absorb any switch-off into the final build. Expected value is
 modest: everything readable helps, and the late passes' worst case is about 0.1 s each. The committee-side layers' stakes are not bounded
 this way.
+
+## Results of Tier A (10 October 2026, `configs/febjun_check_v1.json`, commit 61f904f, declared before these readings)
+
+Tool `tools/run_febjun_check.py`; results [`febjun_results_v1.json`](febjun_results_v1.json). Every layer is read with its own declared
+fresh-check code, with the month list as the only parameter. Before reading the new months, the same path reproduced the stored
+August-October readings exactly: nbr_state, nbr_dark, and the OUT pin with its July / November / December offsets (2N −62.2606 s, 8D −22.8427 s).
+One change to the declared path: take-off times are looked up in all twelve 2025 raw files, not only the month's own file. rows12
+holds one February "extra" LTFM row that sits in the March file, and the declared
+lookup refused it. The change only adds lookups, as the exact reproduction shows.
+
+| layer | Feb 2025 | Jun 2025 | rows moved Feb / Jun |
+|---|---|---|---|
+| nbr_state_v1 w75 (rows12 `stack`) | −0.00645% [−0.0246, −0.0024] | −0.00862% [−0.0205, −0.0045] | 6,786 / 8,073 |
+| nbr_dark_v1 (on nbr_state) | −0.00259% [−0.0099, −0.0009] | −0.00132% [−0.0055, +0.0020] | 46,998 / 37,068 |
+| oooi_pin_v1 w50 (LFPG, rows12 `stack`) | **unreadable** | −0.00939% [−0.0182, −0.0019] | — / 61 |
+
+- **OUT pin, February:** the adsb.lol Aircraft Data Links archive has no asset before 14 June 2025 (listing of 10 October,
+  `runs/febjun_check/oooi/assets_all.json`), so February 2025 cannot be read and the layer stays on. The June 2025 reading covers 14-30 June
+  only: 61 pinned LFPG rows (57 2N, 4 8D). The final file's February / June 2026 messages are pre-staged for whole months.
+- **Extraction:** `tools/oooi_pin_extract.py` (git blob, SHA-256 `8a3f27f2...`) on **arcw1**: 2,071 files, 0.27 GB, 15 s, 0 digest
+  mismatches. Packed with `oooi_pin_pack.py` (`e573a2d9...`). Mirrored with all six output hashes checked
+  (`messages_unique.parquet` `c8cf467d...`, `runs/febjun_check/oooi/vm/mirror.sha256`). **arcw1 was deallocated right after the mirror.**
+  arcw0 (Lane V) was not touched.
+
+**Rule (declared): nothing is switched off.** All eleven readable layers are better on February and June 2025. The eight known before
+the declaration are in the table above; the three new ones are in this section. The two intervals that touch zero (nbr_dark June,
+own-motion v1 June) do not lie above zero. Every unreadable layer stays on. The final file keeps the full v76 chain on February / June 2026.
+
+### key_memory W24 analogue (screen only, not governed by the rule)
+
+key_memory_v1's arithmetic on rows12 residuals, March 2025 as the target:
+
+| memory → target | km_10 (all ten) | km_9 (no EGLL, shipped set) | gain / squared change |
+|---|---|---|---|
+| January → March 2025 (one month between, same season W24) | **+0.00918% [+0.0014, +0.0271]** | +0.00603% [−0.0009, +0.0198] | −0.88 / −0.68 |
+| February → March 2025 (adjacent control) | −0.01909% [−0.0542, −0.0065] | −0.01902% [−0.0544, −0.0064] | +1.19 / +1.26 |
+
+The flight-number memory carries to the next month but not across a one-month gap inside the same season: with January's memory,
+March gets worse (all ten airports, interval above zero). The analogue of "November + December 2025 → February 2026" is a one-month gap,
+so this screen gives **no support for a February 2026 declaration of key_memory**. The season passes cannot be screened without Tier B.
+Caveat as declared: rows12 is a weaker base than the chain.

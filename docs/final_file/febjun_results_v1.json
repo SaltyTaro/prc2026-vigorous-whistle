@@ -1,0 +1,200 @@
+{
+ "experiment_id": "febjun_check_v1",
+ "declaration_sha256": "8185267f05f5f6b0de5b319780868f50a160cbea9b442a22331f8d290156e387",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "run_at_utc": "2026-10-10T06:06:35+00:00",
+ "code_sha256": {
+  "tools/run_febjun_check.py": "4268cc1a2315acf889f667e4325e66a4eb8d1bfec307d23c724d76d00e61bbdb",
+  "tools/run_nbr_state.py": "8fb86caf2027ad80af81c7ccace24578baf065bc332428991d356735927446a4",
+  "tools/run_nbr_dark.py": "c4e81d61b35af2bed0eacde5b751fafe00ec8d0d1265ede2fc67cc32cf978e0f",
+  "tools/run_oooi_pin.py": "0dfeb502565c91030e61925a59d207e36123437f7d52f7bbc01613ada09b4588",
+  "tools/oooi_pin_join.py": "c6c63814633ba7a135ae233bd0848b70e6e186fc57bce6fac758dbb6c17232a0",
+  "tools/run_intruder_bound.py": "3d5b2b838d2d40cbc5d093a328c91f353fa3c31711422f6552e739b2f1e7a914"
+ },
+ "inputs_sha256": {
+  "rows12": "af8d46221266183b0c94f382eb62eb6762a466dc1382beba71e1b58efd64a27c",
+  "oooi_june_2025_messages_unique": "c8cf467d0f76379eda35bab3a76cc3d8e03abd30068bcb24218c526f388df4c2"
+ },
+ "nbr_control": {
+  "state_reproduced": true,
+  "dark_reproduced": true
+ },
+ "nbr": {
+  "state": {
+   "2025-02": {
+    "pct": -0.0064523928014703635,
+    "lo": -0.024635239587733337,
+    "hi": -0.002444958823710486,
+    "rows_changed": 6786,
+    "squared_change": 779476.0755756908,
+    "control_rmse": 467.49591349170265,
+    "rmse": 467.46574881903337
+   },
+   "2025-06": {
+    "pct": -0.008621275255804584,
+    "lo": -0.020531210610643946,
+    "hi": -0.004485427297067912,
+    "rows_changed": 8073,
+    "squared_change": 1113992.4105583848,
+    "control_rmse": 426.6212954493054,
+    "rmse": 426.58451525312483
+   }
+  },
+  "dark": {
+   "2025-02": {
+    "pct": -0.0025933495268581908,
+    "lo": -0.009907225550016552,
+    "hi": -0.0009245160712287317,
+    "rows_changed": 46998,
+    "squared_change": 815099.8617412925,
+    "control_rmse": 467.46574881903337,
+    "rmse": 467.45362579824814
+   },
+   "2025-06": {
+    "pct": -0.0013213206622952889,
+    "lo": -0.005516157833981017,
+    "hi": 0.001992614414885738,
+    "rows_changed": 37068,
+    "squared_change": 1009411.9394966395,
+    "control_rmse": 426.58451525312483,
+    "rmse": 426.57887870378266
+   }
+  },
+  "rows": {
+   "unmatched_scope": 14860,
+   "dark_scope": 84066,
+   "by_month": {
+    "2025-02": {
+     "rows": 143732,
+     "unmatched_scope": 6786,
+     "dark_scope": 46998
+    },
+    "2025-06": {
+     "rows": 183142,
+     "unmatched_scope": 8074,
+     "dark_scope": 37068
+    }
+   }
+  }
+ },
+ "pin_control": {
+  "offsets_reproduced": true,
+  "fresh_reproduced": true,
+  "offsets": {
+   "2N": -62.260598503740646,
+   "8D": -22.84268125854993
+  }
+ },
+ "pin": {
+  "2025-02": "unreadable: the adsb.lol Aircraft Data Links archive has no asset before 14 June 2025 (listing 10 October, runs/febjun_check/oooi/assets_all.json)",
+  "2025-06": {
+   "rows": 183142,
+   "control_rmse": 426.6212954493054,
+   "rmse": 426.5812239690043,
+   "pct": -0.009392752009462768,
+   "lo": -0.018205647389638313,
+   "hi": -0.0018631841020283488,
+   "rows_changed": 61,
+   "squared_change": 2594236.2047530594,
+   "sse_gain_s2": 6261457.945289612,
+   "max_abs_change_s": 1032.4564276385086,
+   "pinned_rows": 61
+  },
+  "pins_missing_from_rows12": 0,
+  "scope_by_source": {
+   "2N": 57,
+   "8D": 4
+  },
+  "joined_sha256": "fe469fdab02544c83c02b4bd3c8dff3e404fcc002da3e2184dd29957c87a6ed7"
+ },
+ "key_memory_screen": {
+  "analogue_jan_to_mar/km_10": {
+   "memory_month": "2025-01",
+   "target_month": "2025-03",
+   "pct": 0.009177748936894936,
+   "lo": 0.0014485985235568322,
+   "hi": 0.027115245786951674,
+   "rows_changed": 152078,
+   "squared_change": 3194212.608388624,
+   "gain_over_squared_change": -0.8788504397491883
+  },
+  "analogue_jan_to_mar/km_9": {
+   "memory_month": "2025-01",
+   "target_month": "2025-03",
+   "pct": 0.00602550398558499,
+   "lo": -0.0009402800308891401,
+   "hi": 0.019755362009523058,
+   "rows_changed": 133253,
+   "squared_change": 2700004.650476506,
+   "gain_over_squared_change": -0.6825974192643787
+  },
+  "adjacent_feb_to_mar/km_10": {
+   "memory_month": "2025-02",
+   "target_month": "2025-03",
+   "pct": -0.01908557048206916,
+   "lo": -0.05419649184924186,
+   "hi": -0.006517549151636992,
+   "rows_changed": 153470,
+   "squared_change": 4885983.8363984665,
+   "gain_over_squared_change": 1.1946326119951423
+  },
+  "adjacent_feb_to_mar/km_9": {
+   "memory_month": "2025-02",
+   "target_month": "2025-03",
+   "pct": -0.01902269057963979,
+   "lo": -0.054419063937622136,
+   "hi": -0.006419942952743121,
+   "rows_changed": 134621,
+   "squared_change": 4605895.399011448,
+   "gain_over_squared_change": 1.2631044229014163
+  }
+ },
+ "rule_decision": {
+  "nbr_state_v1 w75": {
+   "2025-02": "stays on",
+   "2025-06": "stays on"
+  },
+  "nbr_dark_v1": {
+   "2025-02": "stays on",
+   "2025-06": "stays on"
+  },
+  "oooi_pin_v1 w50": {
+   "2025-02": "stays on (unreadable)",
+   "2025-06": "stays on"
+  },
+  "rematch_nonm_v1 (no-NM rematch)": {
+   "2025-02": "stays on",
+   "2025-06": "stays on"
+  },
+  "daily_totals_v1 (v48 reconciliation)": {
+   "2025-02": "stays on",
+   "2025-06": "stays on"
+  },
+  "scout_extreme_shift_v1 (extreme-day)": {
+   "2025-02": "stays on",
+   "2025-06": "stays on"
+  },
+  "scout_var_alloc_v1 (variance re-allocation)": {
+   "2025-02": "stays on",
+   "2025-06": "stays on"
+  },
+  "intruder_bound_v1 g3600_w100": {
+   "2025-02": "stays on",
+   "2025-06": "stays on"
+  },
+  "intruder_identity_v1": {
+   "2025-02": "stays on",
+   "2025-06": "stays on"
+  },
+  "own_motion_v1 om_b2700_w100": {
+   "2025-02": "stays on",
+   "2025-06": "stays on"
+  },
+  "own_motion_v2 om5_b2700_w50": {
+   "2025-02": "stays on",
+   "2025-06": "stays on"
+  }
+ },
+ "switched_off": []
+}
