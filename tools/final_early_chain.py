@@ -114,6 +114,9 @@ class Chain:
             self.repaired = Path(repair["repair_root"])
             if not self.repaired.is_absolute():
                 self.repaired = ROOT / self.repaired
+            if not self.repaired.exists() and (self.runner / "repair" / "run" / "stages").exists():
+                # the runner records the sub-run's absolute path; a root mirrored from another machine keeps it at <runner>/repair/run
+                self.repaired = self.runner / "repair" / "run"
         elif not self.new_file:
             self.repaired = ROOT / "runs/final_lfpg_eobt/run"   # the shipped chain's repaired ranking run (tools/run_stack_resid.REPAIRED)
         self.record["repaired"] = rel(self.repaired) if self.repaired is not None else None
