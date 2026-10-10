@@ -137,7 +137,11 @@ def export_v19own(root: Path, own_dir: Path, out: Path) -> dict:
     ctx = run_context(root)
     v19 = pd.read_parquet(root / "adsb" / "v19.parquet")
     if not np.array_equal(v19[ID].to_numpy(), ctx.ids):
-        raise ValueError("R/adsb/v19.parquet is not the file's departures in order.")
+        # The runner joins v19 by ID; on the final file its rows come in another order (the ranking file's happened to match the template).
+        # Same departures, each once: put them in the file's order (a no-op on the ranking file).
+        if len(v19) != len(ctx.ids) or v19[ID].duplicated().any() or not np.array_equal(np.sort(v19[ID].to_numpy()), np.sort(ctx.ids)):
+            raise ValueError("R/adsb/v19.parquet does not hold exactly the file's departures.")
+        v19 = v19.set_index(ID).loc[ctx.ids].reset_index()
     own = pd.read_parquet(own_dir / "own_points.parquet")
     t = v19.merge(own, on=ID, how="left", validate="one_to_one")
     t["p_has_inb"] = t["p_has_inb"].fillna(0.0)
