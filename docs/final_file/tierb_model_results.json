@@ -1,0 +1,414 @@
+{
+  "chain_sha256": {
+    "2025-02": "e9b265f206cbc91fe80408331e5fc53414793345b22d519234cf3dac25e2deea",
+    "2025-06": "65fd843770a592cf5ac537a1051a0df9ea5c85ea1dd7bc974b6841ed0c9c52df"
+  },
+  "created_at_utc": "2026-10-10T22:23:23.184505+00:00",
+  "declaration": "configs/febjun_tierb_readings_model_v1.json",
+  "declaration_commit": "4fb2ad6c15c442d434bada9738fc055ac5f1d097",
+  "declaration_sha256": "1ff4c2f36da9de5584850bb0ad3088870aac67d12bf5806f660c3c1a6632aa4a",
+  "layers": {
+    "R10": {
+      "label": "v45 LIRF disagreement gate (v40 = v38, fill pins off)",
+      "months": {
+        "2025-02": {
+          "change_pct": -0.03820100180250696,
+          "interval_pct": [
+            -0.22329571588658476,
+            0.07488827025788167
+          ],
+          "rmse_off": 183.14044381420715,
+          "rmse_on": 183.07048232996456,
+          "rows": 142622,
+          "rows_moved": 11,
+          "sum_squared_change": 2021337.348667739,
+          "switch_off": false
+        },
+        "2025-06": {
+          "change_pct": -0.1214177036307662,
+          "interval_pct": [
+            -0.26491274884493043,
+            -0.009808017069596177
+          ],
+          "rmse_off": 190.06982365028566,
+          "rmse_on": 189.83904523511444,
+          "rows": 180640,
+          "rows_moved": 55,
+          "sum_squared_change": 3703024.734562485,
+          "switch_off": false
+        }
+      },
+      "off": "v40",
+      "on": "v45"
+    },
+    "R11": {
+      "label": "v46 network share 0.85 + networks-far-below gate",
+      "months": {
+        "2025-02": {
+          "change_pct": 0.03801782766390538,
+          "interval_pct": [
+            -0.1436299823148346,
+            0.2285047781573034
+          ],
+          "rmse_off": 183.07048232996456,
+          "rmse_on": 183.14008175044023,
+          "rows": 142622,
+          "rows_moved": 131977,
+          "sum_squared_change": 10618345.85754824,
+          "switch_off": false
+        },
+        "2025-06": {
+          "change_pct": -0.05960704554861529,
+          "interval_pct": [
+            -0.10517294213851641,
+            -0.010357958392564497
+          ],
+          "rmse_off": 189.83904523511444,
+          "rmse_on": 189.7258877889521,
+          "rows": 180640,
+          "rows_moved": 166129,
+          "sum_squared_change": 7759863.371369809,
+          "switch_off": false
+        }
+      },
+      "off": "v45",
+      "on": "v46"
+    },
+    "R12a": {
+      "label": "v51m combination member w40",
+      "months": {
+        "2025-02": {
+          "change_pct": 0.25952891828440183,
+          "interval_pct": [
+            -0.13057237498789037,
+            0.6649061361817354
+          ],
+          "rmse_off": 183.14008175044023,
+          "rmse_on": 183.6153832235523,
+          "rows": 142622,
+          "rows_moved": 131977,
+          "sum_squared_change": 28093902.853520494,
+          "switch_off": false
+        },
+        "2025-06": {
+          "change_pct": -0.25207013908213893,
+          "interval_pct": [
+            -0.3340338965552392,
+            -0.17208277170883635
+          ],
+          "rmse_off": 189.7258877889521,
+          "rmse_on": 189.24764547972765,
+          "rows": 180640,
+          "rows_moved": 166129,
+          "sum_squared_change": 21417849.259950034,
+          "switch_off": false
+        }
+      },
+      "off": "v46",
+      "on": "v51m"
+    },
+    "R12b": {
+      "label": "v52m masked member w40",
+      "months": {
+        "2025-02": {
+          "change_pct": -0.39260141478829613,
+          "interval_pct": [
+            -0.7853493831647657,
+            -0.0027565589968869568
+          ],
+          "rmse_off": 183.6153832235523,
+          "rmse_on": 182.89450663124768,
+          "rows": 142622,
+          "rows_moved": 56864,
+          "sum_squared_change": 18411692.958339866,
+          "switch_off": false
+        },
+        "2025-06": {
+          "change_pct": -0.1299860184592827,
+          "interval_pct": [
+            -0.21459012278248452,
+            -0.0435879374742177
+          ],
+          "rmse_off": 189.24764547972765,
+          "rmse_on": 189.00165000034062,
+          "rows": 180640,
+          "rows_moved": 104745,
+          "sum_squared_change": 14516557.797375355,
+          "switch_off": false
+        }
+      },
+      "off": "v51m",
+      "on": "v52m"
+    },
+    "R13a": {
+      "label": "v53m masked LIRF member w55 (LIRF non-population unmatched rows)",
+      "months": {
+        "2025-02": {
+          "change_pct": -0.07695447188061921,
+          "interval_pct": [
+            -0.16718280865710616,
+            0.013434009681997289
+          ],
+          "rmse_off": 182.89450663124768,
+          "rmse_on": 182.75376112957093,
+          "rows": 142622,
+          "rows_moved": 10640,
+          "sum_squared_change": 4955384.275727645,
+          "switch_off": false
+        },
+        "2025-06": {
+          "change_pct": -0.0385721709047937,
+          "interval_pct": [
+            -0.08548346123194106,
+            0.0024366411877585164
+          ],
+          "rmse_off": 189.00165000034062,
+          "rmse_on": 188.9287479608896,
+          "rows": 180640,
+          "rows_moved": 5804,
+          "sum_squared_change": 3614332.3133385316,
+          "switch_off": false
+        }
+      },
+      "off": "v52m",
+      "on": "v53m"
+    },
+    "R13b": {
+      "label": "v54m dark re-read w70_s750 (only in LIRF months with a non-population match share below 5%, read from the rows; it moves no row in a covered month)",
+      "months": {
+        "2025-02": {
+          "change_pct": -0.01026464431599372,
+          "interval_pct": [
+            -0.06265464497346163,
+            0.04231606673609
+          ],
+          "rmse_off": 182.75376112957093,
+          "rmse_on": 182.73500210601688,
+          "rows": 142622,
+          "rows_moved": 10640,
+          "sum_squared_change": 3509135.6740581417,
+          "switch_off": false
+        },
+        "2025-06": {
+          "change_pct": 0.0,
+          "interval_pct": [
+            0.0,
+            0.0
+          ],
+          "rmse_off": 188.9287479608896,
+          "rmse_on": 188.9287479608896,
+          "rows": 180640,
+          "rows_moved": 0,
+          "sum_squared_change": 0.0,
+          "switch_off": false
+        }
+      },
+      "off": "v53m",
+      "on": "v54m"
+    },
+    "R13c": {
+      "label": "v55m matched-row LIRF member mw40",
+      "months": {
+        "2025-02": {
+          "change_pct": 0.0,
+          "interval_pct": [
+            0.0,
+            0.0
+          ],
+          "rmse_off": 182.73500210601688,
+          "rmse_on": 182.73500210601688,
+          "rows": 142622,
+          "rows_moved": 0,
+          "sum_squared_change": 0.0,
+          "switch_off": false
+        },
+        "2025-06": {
+          "change_pct": 0.0026779718340197434,
+          "interval_pct": [
+            -0.033763153997579676,
+            0.04042474857197552
+          ],
+          "rmse_off": 188.9287479608896,
+          "rmse_on": 188.93380741954638,
+          "rows": 180640,
+          "rows_moved": 8696,
+          "sum_squared_change": 1878793.6878842055,
+          "switch_off": false
+        }
+      },
+      "off": "v54m",
+      "on": "v55m"
+    },
+    "R3": {
+      "label": "v30 recipe, committee side and mix: v30 against the v9 side alone (off_r3 = max(v9 + residual on matched non-LIRF rows, floor))",
+      "months": {
+        "2025-02": {
+          "change_pct": -5.549774178208267,
+          "interval_pct": [
+            -7.084642443470823,
+            -3.742494645151364
+          ],
+          "rmse_off": 200.04862272587795,
+          "rmse_on": 188.9463759179759,
+          "rows": 142622,
+          "rows_moved": 142617,
+          "sum_squared_change": 331623352.2841481,
+          "switch_off": false
+        },
+        "2025-06": {
+          "change_pct": -4.232925543964328,
+          "interval_pct": [
+            -4.9531949235951425,
+            -3.5842752207062514
+          ],
+          "rmse_off": 199.35775816467472,
+          "rmse_on": 190.91909269544757,
+          "rows": 180640,
+          "rows_moved": 180629,
+          "sum_squared_change": 447842796.260865,
+          "switch_off": false
+        }
+      },
+      "off": "off_r3",
+      "on": "v30"
+    },
+    "R5a": {
+      "label": "v33 outer weights (LTFM 1.0 / matched 0.6 / unmatched 0.7)",
+      "months": {
+        "2025-02": {
+          "change_pct": -0.957225920393201,
+          "interval_pct": [
+            -1.5317711583353921,
+            -0.31401289694489953
+          ],
+          "rmse_off": 188.9463759179759,
+          "rmse_on": 187.13773223204547,
+          "rows": 142622,
+          "rows_moved": 93077,
+          "sum_squared_change": 33284136.29756593,
+          "switch_off": false
+        },
+        "2025-06": {
+          "change_pct": -0.2142764943604658,
+          "interval_pct": [
+            -0.28461849135723444,
+            -0.15369899639182288
+          ],
+          "rmse_off": 190.91909269544757,
+          "rmse_on": 190.50999795655497,
+          "rows": 180640,
+          "rows_moved": 84580,
+          "sum_squared_change": 14002579.983801158,
+          "switch_off": false
+        }
+      },
+      "off": "v31",
+      "on": "v33"
+    },
+    "R5b": {
+      "label": "v34 LIRF unmatched v9 share 0",
+      "months": {
+        "2025-02": {
+          "change_pct": -0.011640576933102942,
+          "interval_pct": [
+            -0.16393945861945952,
+            0.20664817863897178
+          ],
+          "rmse_off": 187.13773223204547,
+          "rmse_on": 187.11594832035414,
+          "rows": 142622,
+          "rows_moved": 10640,
+          "sum_squared_change": 11850175.20378924,
+          "switch_off": false
+        },
+        "2025-06": {
+          "change_pct": -0.053351865229578355,
+          "interval_pct": [
+            -0.1317775613105518,
+            0.029105875692141923
+          ],
+          "rmse_off": 190.50999795655497,
+          "rmse_on": 190.4083573191963,
+          "rows": 180640,
+          "rows_moved": 5804,
+          "sum_squared_change": 7781703.446943192,
+          "switch_off": false
+        }
+      },
+      "off": "v33",
+      "on": "v34"
+    },
+    "R6": {
+      "label": "v35: u300 gate, callsign fix 50%, queue trust 0.75",
+      "months": {
+        "2025-02": {
+          "change_pct": -0.013781347327612714,
+          "interval_pct": [
+            -0.05240458232659395,
+            0.01838493776523397
+          ],
+          "rmse_off": 187.11594832035414,
+          "rmse_on": 187.09016122161074,
+          "rows": 142622,
+          "rows_moved": 70,
+          "sum_squared_change": 1252106.08304019,
+          "switch_off": false
+        },
+        "2025-06": {
+          "change_pct": -0.05711003568089623,
+          "interval_pct": [
+            -0.1189780346798397,
+            -0.0006077297682285954
+          ],
+          "rmse_off": 190.4083573191963,
+          "rmse_on": 190.29961503839192,
+          "rows": 180640,
+          "rows_moved": 171,
+          "sum_squared_change": 4482310.964264285,
+          "switch_off": false
+        }
+      },
+      "off": "v34",
+      "on": "v35"
+    },
+    "R8": {
+      "label": "v38 two-sided tail stretch",
+      "months": {
+        "2025-02": {
+          "change_pct": -2.1111304739991676,
+          "interval_pct": [
+            -3.2960874341754063,
+            -0.7699557197091073
+          ],
+          "rmse_off": 187.09016122161074,
+          "rmse_on": 183.14044381420715,
+          "rows": 142622,
+          "rows_moved": 73997,
+          "sum_squared_change": 65788961.41389391,
+          "switch_off": false
+        },
+        "2025-06": {
+          "change_pct": -0.12075241878966025,
+          "interval_pct": [
+            -0.2755572437405418,
+            0.03743646617220485
+          ],
+          "rmse_off": 190.29961503839192,
+          "rmse_on": 190.06982365028566,
+          "rows": 180640,
+          "rows_moved": 91787,
+          "sum_squared_change": 34340746.9156586,
+          "switch_off": false
+        }
+      },
+      "off": "v35",
+      "on": "v38"
+    }
+  },
+  "replicates": 2000,
+  "seed": 20261004,
+  "switched_off": {
+    "2025-02": [],
+    "2025-06": []
+  }
+}

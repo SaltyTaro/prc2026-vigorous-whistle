@@ -1,6 +1,6 @@
 # Tier B, chain side (lane C): February / June 2025 readings of C1-C15
 
-Status: **tooling and reproductions done, declaration committed; waiting for lane M's February / June model part** (10 October 2026).
+Status: **complete** (10 October 2026, read 22:51 UTC on arcw6): **nothing switched off**.
 Umbrella `configs/febjun_tierb_v1.json`; rule `configs/febjun_check_v1.json` (unchanged); this lane's readings declaration
 [`configs/febjun_tierb_readings_chain_v1.json`](../../configs/febjun_tierb_readings_chain_v1.json); model part: lane M,
 [`tierb_model.md`](tierb_model.md). Tool `tools/febjun_tierb_chain.py`. No shipped tool was changed.
@@ -49,3 +49,38 @@ the stored runs drew their bootstrap from other generators.
 
 Early chain 1,399-1,727 s (step 2 90 s, 3-5 209 s, 6 424 s, 7-8 53 s, 9 434 s, 10 518 s; each month-blocked step runs twice); late chain
 about 160 s (fits of the second / third pass 62 s / 31 s locally).
+
+## Results (10 October 2026, 22:51 UTC; `docs/final_file/tierb_chain_results.json`)
+
+Run on arcw6 (execution record [`tierb_vm.md`](tierb_vm.md)); the stand-in was first rerun there and reproduced this workstation's stand-in
+byte for byte (model part `21f2d65c`, early final `8ca9dbc6`, all eight late outputs). Governing rows: lane M's rows read (February
+142,622 of 143,732, June 180,640 of 183,142); intervals in seconds of RMSE.
+
+| reading | Feb 2025 change [95% interval, s] | rows moved | Jun 2025 change [95% interval, s] | rows moved | off? |
+|---|---|---:|---|---:|---|
+| C1 own-points member | +0.709% [-0.024, +1.427] | 126,144 | -0.159% [-0.288, -0.035] | 159,465 | no |
+| C2 no-NM rematch | +0.000% [+0.000, +0.000] | 0 | +0.000% [+0.000, +0.000] | 0 | no |
+| C3 v48 reconciliation | -0.713% [-1.304, -0.247] | 132,801 | -0.353% [-0.509, -0.195] | 172,592 | no |
+| C4 extreme-day | -0.470% [-1.190, -0.010] | 2,955 | +0.000% [+0.000, +0.000] | 0 | no |
+| C5 variance re-allocation | -0.594% [-1.085, -0.177] | 105,142 | -0.188% [-0.278, -0.110] | 126,508 | no |
+| C6 guarded stacker | -0.472% [-0.641, -0.332] | 126,618 | -0.410% [-0.587, -0.215] | 158,582 | no |
+| C7 intruder bound | -0.518% [-1.101, -0.001] | 28 | -0.383% [-0.650, -0.138] | 21 | no |
+| C8 identity extension | -0.268% [-0.833, -0.002] | 4 | -0.021% [-0.065, +0.000] | 2 | no |
+| C9 own-motion v1 | -0.002% [-0.007, +0.000] | 6 | +0.045% [-0.016, +0.148] | 11 | no |
+| C10 own-motion v2 | +0.034% [-0.014, +0.095] | 768 | -0.006% [-0.026, +0.016] | 646 | no |
+| C11 OUT pin | +0.000% [+0.000, +0.000] | 0 | -0.033% [-0.073, -0.007] | 61 | no |
+| C12 nbr_state | -0.016% [-0.027, -0.007] | 5,982 | -0.016% [-0.033, -0.000] | 7,412 | no |
+| C13 nbr_dark | -0.007% [-0.015, +0.000] | 41,841 | -0.009% [-0.023, +0.003] | 40,435 | no |
+| C14 second pass | -0.148% [-0.204, -0.104] | 84,282 | -0.290% [-0.365, -0.216] | 111,345 | no |
+| C15 third pass | -0.050% [-0.067, -0.037] | 35,472 | -0.112% [-0.151, -0.074] | 48,126 | no |
+
+**Rule outcome: no chain layer is switched off in either month.** Notes:
+- **C1 (own-points member at 1.00) in February: +0.709%, interval [-0.024, +1.427] s** -- the closest call of Tier B; the lower end is just
+  below zero, so it stays on. June -0.159%, interval below zero.
+- C2 (no-NM rematch) moves no governing row: its rows have no NM clock and are outside the declared reading set (no out-of-sample v9);
+  unreadable, stays on. C4 moves nothing in June (no extreme day). C11 in February: no data-link archive before 14 June 2025.
+- One code fix during the real run (commit 03c476e): `c1` read the `own_all_w100` weight through `network_member.candidate_weight`,
+  which refuses the candidate's extra `member` key; it now reads `member_weight` (1.00) as `tools/final_early_chain.py` does. The stand-in
+  never reaches that path. No value or rule changed.
+- The `read` step looked for five files absent on arcw6 (a December bundle and two selection records, optional probes); after uploading
+  them the readings were recomputed and are identical.

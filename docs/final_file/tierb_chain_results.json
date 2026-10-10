@@ -1,0 +1,1223 @@
+{
+  "created_at_utc": "2026-10-10T22:51:03.662646+00:00",
+  "declaration": "configs/febjun_tierb_readings_chain_v1.json",
+  "declaration_sha256": "2ad570e0f2a3a0705c48d05b3291142dc732b0f5cb07d09588869710c66cc2be",
+  "layers": {
+    "C1 own-points member": {
+      "input": {
+        "file": "runs/febjun_tierb/chain/root/final/vigorous-whistle_v9201.parquet",
+        "sha256": "6e9a6dc4ed2e52bd8ac13e7884f8d95f0f48386128ace9462489f71413525c40"
+      },
+      "months": {
+        "2025-02": {
+          "all_departures": {
+            "change_pct": 0.11131516461699853,
+            "hi_s": 0.32200380271189205,
+            "lo_s": -0.007475206825733881,
+            "rmse_in": 460.2062725089875,
+            "rmse_out": 460.7185518788087,
+            "rows": 143732,
+            "rows_moved": 126144,
+            "squared_change": 66603181.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": 0.7093961195032694,
+            "hi_s": 1.4268532064969717,
+            "lo_s": -0.023614117299239894,
+            "rmse_in": 182.7345803113938,
+            "rmse_out": 184.03089233311343,
+            "rows": 142622,
+            "rows_moved": 126144,
+            "squared_change": 66603181.0
+          },
+          "placeholder_rows": {
+            "change_pct": 0.0,
+            "hi_s": 0.0,
+            "lo_s": 0.0,
+            "rmse_in": 4809.763910315451,
+            "rmse_out": 4809.763910315451,
+            "rows": 1110,
+            "rows_moved": 0,
+            "squared_change": 0.0
+          }
+        },
+        "2025-06": {
+          "all_departures": {
+            "change_pct": -0.03149847391535898,
+            "hi_s": -0.00590590224678445,
+            "lo_s": -0.08767358933453095,
+            "rmse_in": 421.8848713157877,
+            "rmse_out": 421.75198401964343,
+            "rows": 183142,
+            "rows_moved": 159465,
+            "squared_change": 57384523.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.15933552527256367,
+            "hi_s": -0.035449078583365635,
+            "lo_s": -0.2884919849848208,
+            "rmse_in": 188.93319888945953,
+            "rmse_out": 188.63216118459476,
+            "rows": 180640,
+            "rows_moved": 159465,
+            "squared_change": 57384523.0
+          },
+          "placeholder_rows": {
+            "change_pct": 0.0,
+            "hi_s": 0.0,
+            "lo_s": 0.0,
+            "rmse_in": 3232.824366230508,
+            "rmse_out": 3232.824366230508,
+            "rows": 2502,
+            "rows_moved": 0,
+            "squared_change": 0.0
+          }
+        }
+      },
+      "output": {
+        "file": "runs/febjun_tierb/chain/work/steps/model_part/vigorous-whistle_v66.parquet",
+        "sha256": "4b5900fc734522bb3285b47c0fbedb418ec53944fd7318ae0c4ccc65e6fd61b8"
+      },
+      "switch_off": {
+        "2025-02": false,
+        "2025-06": false
+      }
+    },
+    "C10 own-motion v2": {
+      "input": {
+        "file": "runs/febjun_tierb/chain/work/steps/own/vigorous-whistle_v9210.parquet",
+        "sha256": "b4a1d7f1f7e9c988e6fab5eabd2b9eea692b52f3dca00341386d84bcf83eecc6"
+      },
+      "months": {
+        "2025-02": {
+          "all_departures": {
+            "change_pct": -0.014204602677725386,
+            "hi_s": -0.00020461507551667202,
+            "lo_s": -0.07284043134776236,
+            "rmse_in": 453.7635612607192,
+            "rmse_out": 453.69910594974584,
+            "rows": 143732,
+            "rows_moved": 810,
+            "squared_change": 6618348.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": 0.03382300795102822,
+            "hi_s": 0.0953322603995132,
+            "lo_s": -0.013973107492313841,
+            "rmse_in": 178.5121560367749,
+            "rmse_out": 178.57253421750477,
+            "rows": 142622,
+            "rows_moved": 768,
+            "squared_change": 3423070.0
+          },
+          "placeholder_rows": {
+            "change_pct": -0.022920921642566316,
+            "hi_s": -0.005754519953137806,
+            "lo_s": -0.16130438867547114,
+            "rmse_in": 4750.508637252711,
+            "rmse_out": 4749.419776890343,
+            "rows": 1110,
+            "rows_moved": 42,
+            "squared_change": 3195278.0
+          }
+        },
+        "2025-06": {
+          "all_departures": {
+            "change_pct": -0.014788625748840545,
+            "hi_s": -0.006457786310264679,
+            "lo_s": -0.03436986544880394,
+            "rmse_in": 420.24800527248624,
+            "rmse_out": 420.18585636776953,
+            "rows": 183142,
+            "rows_moved": 741,
+            "squared_change": 4565571.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.006071060925461058,
+            "hi_s": 0.01616049394050023,
+            "lo_s": -0.025508139427241616,
+            "rmse_in": 186.1725714243451,
+            "rmse_out": 186.16126877410744,
+            "rows": 180640,
+            "rows_moved": 646,
+            "squared_change": 2257182.0
+          },
+          "placeholder_rows": {
+            "change_pct": -0.01688129190792198,
+            "hi_s": -0.007611862998226368,
+            "lo_s": -0.053134056515895256,
+            "rmse_in": 3228.77931715639,
+            "rmse_out": 3228.234257494798,
+            "rows": 2502,
+            "rows_moved": 95,
+            "squared_change": 2308389.0
+          }
+        }
+      },
+      "output": {
+        "file": "runs/febjun_tierb/chain/work/steps/om2/vigorous-whistle_v9210.parquet",
+        "sha256": "80d86c3c85a9ed62b5cf886e1d93374543af85b02c11c9d31897e899b1e1abba"
+      },
+      "switch_off": {
+        "2025-02": false,
+        "2025-06": false
+      }
+    },
+    "C11 OUT pin": {
+      "input": {
+        "file": "runs/febjun_tierb/chain/work/steps/om2/vigorous-whistle_v9210.parquet",
+        "sha256": "80d86c3c85a9ed62b5cf886e1d93374543af85b02c11c9d31897e899b1e1abba"
+      },
+      "months": {
+        "2025-02": {
+          "all_departures": {
+            "change_pct": 0.0,
+            "hi_s": 0.0,
+            "lo_s": 0.0,
+            "rmse_in": 453.69910594974584,
+            "rmse_out": 453.69910594974584,
+            "rows": 143732,
+            "rows_moved": 0,
+            "squared_change": 0.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": 0.0,
+            "hi_s": 0.0,
+            "lo_s": 0.0,
+            "rmse_in": 178.57253421750477,
+            "rmse_out": 178.57253421750477,
+            "rows": 142622,
+            "rows_moved": 0,
+            "squared_change": 0.0,
+            "unreadable": "no data-link archive asset before 14 June 2025 (Tier A)"
+          },
+          "placeholder_rows": {
+            "change_pct": 0.0,
+            "hi_s": 0.0,
+            "lo_s": 0.0,
+            "rmse_in": 4749.419776890343,
+            "rmse_out": 4749.419776890343,
+            "rows": 1110,
+            "rows_moved": 0,
+            "squared_change": 0.0
+          }
+        },
+        "2025-06": {
+          "all_departures": {
+            "change_pct": -0.006395212304621811,
+            "hi_s": -0.0014071260311041003,
+            "lo_s": -0.013140702688521633,
+            "rmse_in": 420.18585636776953,
+            "rmse_out": 420.1589845901808,
+            "rows": 183142,
+            "rows_moved": 61,
+            "squared_change": 1881330.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.03303627325830227,
+            "hi_s": -0.006544010071337933,
+            "lo_s": -0.07316921571179136,
+            "rmse_in": 186.16126877410744,
+            "rmse_out": 186.0997680286541,
+            "rows": 180640,
+            "rows_moved": 61,
+            "squared_change": 1881330.0
+          },
+          "placeholder_rows": {
+            "change_pct": 0.0,
+            "hi_s": 0.0,
+            "lo_s": 0.0,
+            "rmse_in": 3228.234257494798,
+            "rmse_out": 3228.234257494798,
+            "rows": 2502,
+            "rows_moved": 0,
+            "squared_change": 0.0
+          }
+        }
+      },
+      "output": {
+        "file": "runs/febjun_tierb/chain/work/late/oooi/rank/dry_v70/vigorous-whistle_v70.parquet",
+        "sha256": "a5417f1be8611ae6055b1bd4da8b5542684ab6ec73c0bf204ed0460c5b984899"
+      },
+      "switch_off": {
+        "2025-02": false,
+        "2025-06": false
+      }
+    },
+    "C12 nbr_state": {
+      "input": {
+        "file": "runs/febjun_tierb/chain/work/late/oooi/rank/dry_v70/vigorous-whistle_v70.parquet",
+        "sha256": "a5417f1be8611ae6055b1bd4da8b5542684ab6ec73c0bf204ed0460c5b984899"
+      },
+      "months": {
+        "2025-02": {
+          "all_departures": {
+            "change_pct": -0.002346980840961521,
+            "hi_s": -0.00048031093937889234,
+            "lo_s": -0.011182345279643902,
+            "rmse_in": 453.69910594974584,
+            "rmse_out": 453.6884577186536,
+            "rows": 143732,
+            "rows_moved": 6371,
+            "squared_change": 933705.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.01582543073852527,
+            "hi_s": -0.007028431467365205,
+            "lo_s": -0.027099510066181387,
+            "rmse_in": 178.57253421750477,
+            "rmse_out": 178.54427434478416,
+            "rows": 142622,
+            "rows_moved": 5982,
+            "squared_change": 866402.0
+          },
+          "placeholder_rows": {
+            "change_pct": 0.00010105131238447029,
+            "hi_s": 0.0041592243352056545,
+            "lo_s": -0.003596652355534191,
+            "rmse_in": 4749.419776890343,
+            "rmse_out": 4749.424576241358,
+            "rows": 1110,
+            "rows_moved": 389,
+            "squared_change": 67303.0
+          }
+        },
+        "2025-06": {
+          "all_departures": {
+            "change_pct": -0.0035218589313879,
+            "hi_s": -0.0003177283224925501,
+            "lo_s": -0.011081193558911961,
+            "rmse_in": 420.1589845901808,
+            "rmse_out": 420.144187183456,
+            "rows": 183142,
+            "rows_moved": 8017,
+            "squared_change": 1552302.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.015908709883605265,
+            "hi_s": -0.00032063697693263316,
+            "lo_s": -0.03297899913139307,
+            "rmse_in": 186.0997680286541,
+            "rmse_out": 186.07016195646435,
+            "rows": 180640,
+            "rows_moved": 7412,
+            "squared_change": 1376144.0
+          },
+          "placeholder_rows": {
+            "change_pct": -0.0005500850722928163,
+            "hi_s": 0.0006035248373043016,
+            "lo_s": -0.0023054211527173685,
+            "rmse_in": 3228.234257494798,
+            "rmse_out": 3228.216499460049,
+            "rows": 2502,
+            "rows_moved": 605,
+            "squared_change": 176158.0
+          }
+        }
+      },
+      "output": {
+        "file": "runs/febjun_tierb/chain/work/late/nbr_state/rank/dry_v71/vigorous-whistle_v71.parquet",
+        "sha256": "d06e57133be9589847cd693e476246ec5c86ef74873c036988f28c9b522b3179"
+      },
+      "switch_off": {
+        "2025-02": false,
+        "2025-06": false
+      }
+    },
+    "C13 nbr_dark": {
+      "input": {
+        "file": "runs/febjun_tierb/chain/work/late/nbr_state/rank/dry_v71/vigorous-whistle_v71.parquet",
+        "sha256": "d06e57133be9589847cd693e476246ec5c86ef74873c036988f28c9b522b3179"
+      },
+      "months": {
+        "2025-02": {
+          "all_departures": {
+            "change_pct": -0.001285165650832809,
+            "hi_s": -3.27631103769211e-05,
+            "lo_s": -0.0063404465759353545,
+            "rmse_in": 453.6884577186536,
+            "rmse_out": 453.68262707043317,
+            "rows": 143732,
+            "rows_moved": 41916,
+            "squared_change": 949697.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.006989766666609665,
+            "hi_s": 0.00011177649875348801,
+            "lo_s": -0.014612905905852791,
+            "rmse_in": 178.54427434478416,
+            "rmse_out": 178.53179451661086,
+            "rows": 142622,
+            "rows_moved": 41841,
+            "squared_change": 946843.0
+          },
+          "placeholder_rows": {
+            "change_pct": -0.000249346237879422,
+            "hi_s": 0.00015209747860178688,
+            "lo_s": -0.0020861093815807696,
+            "rmse_in": 4749.424576241358,
+            "rmse_out": 4749.412733729857,
+            "rows": 1110,
+            "rows_moved": 75,
+            "squared_change": 2854.0
+          }
+        },
+        "2025-06": {
+          "all_departures": {
+            "change_pct": -0.0022767832589476455,
+            "hi_s": 0.00024493397801750105,
+            "lo_s": -0.0059004209017674,
+            "rmse_in": 420.144187183456,
+            "rmse_out": 420.13462141093873,
+            "rows": 183142,
+            "rows_moved": 40649,
+            "squared_change": 1485906.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.009068160919623036,
+            "hi_s": 0.0033379761746377126,
+            "lo_s": -0.023164226918633568,
+            "rmse_in": 186.07016195646435,
+            "rmse_out": 186.05328881475472,
+            "rows": 180640,
+            "rows_moved": 40435,
+            "squared_change": 1471877.0
+          },
+          "placeholder_rows": {
+            "change_pct": -0.0006478834158274438,
+            "hi_s": -0.00022322994999574022,
+            "lo_s": -0.0018331866810961106,
+            "rmse_in": 3228.216499460049,
+            "rmse_out": 3228.195584380722,
+            "rows": 2502,
+            "rows_moved": 214,
+            "squared_change": 14029.0
+          }
+        }
+      },
+      "output": {
+        "file": "runs/febjun_tierb/chain/work/late/nbr_state/rank/dry_v72/vigorous-whistle_v72.parquet",
+        "sha256": "3d5f4c7c5f369e9099a7f2c1fa4b1067dedf79eb827bf50b18d9bf4809f6cbca"
+      },
+      "switch_off": {
+        "2025-02": false,
+        "2025-06": false
+      }
+    },
+    "C14 second pass": {
+      "input": {
+        "file": "runs/febjun_tierb/chain/work/late/nbr_state/rank/dry_v72/vigorous-whistle_v72.parquet",
+        "sha256": "3d5f4c7c5f369e9099a7f2c1fa4b1067dedf79eb827bf50b18d9bf4809f6cbca"
+      },
+      "months": {
+        "2025-02": {
+          "all_departures": {
+            "change_pct": -0.02647546850216287,
+            "hi_s": -0.010053163671478465,
+            "lo_s": -0.10254943342650064,
+            "rmse_in": 453.68262707043317,
+            "rmse_out": 453.5625124694034,
+            "rows": 143732,
+            "rows_moved": 84834,
+            "squared_change": 4715899.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.14764275212821865,
+            "hi_s": -0.10351193848798736,
+            "lo_s": -0.20376169015840356,
+            "rmse_in": 178.53179451661086,
+            "rmse_out": 178.26820526176263,
+            "rows": 142622,
+            "rows_moved": 84282,
+            "squared_change": 4649300.0
+          },
+          "placeholder_rows": {
+            "change_pct": -0.004492353859519849,
+            "hi_s": -0.001361457932098631,
+            "lo_s": -0.028290405538473062,
+            "rmse_in": 4749.412733729857,
+            "rmse_out": 4749.199373303609,
+            "rows": 1110,
+            "rows_moved": 552,
+            "squared_change": 66599.0
+          }
+        },
+        "2025-06": {
+          "all_departures": {
+            "change_pct": -0.06490420392608609,
+            "hi_s": -0.03313361100182988,
+            "lo_s": -0.1492700617909712,
+            "rmse_in": 420.13462141093873,
+            "rmse_out": 419.86193637949407,
+            "rows": 183142,
+            "rows_moved": 112829,
+            "squared_change": 10478807.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.2900943177564841,
+            "hi_s": -0.21558949085449253,
+            "lo_s": -0.3654561476527385,
+            "rmse_in": 186.05328881475472,
+            "rmse_out": 185.51355879590406,
+            "rows": 180640,
+            "rows_moved": 111345,
+            "squared_change": 10258360.0
+          },
+          "placeholder_rows": {
+            "change_pct": -0.010974975051902813,
+            "hi_s": -0.005787389019383251,
+            "lo_s": -0.03227465787883188,
+            "rmse_in": 3228.195584380722,
+            "rmse_out": 3227.8412907207094,
+            "rows": 2502,
+            "rows_moved": 1484,
+            "squared_change": 220447.0
+          }
+        }
+      },
+      "output": {
+        "file": "runs/febjun_tierb/chain/work/late/stack_second/rank/dry_v72/vigorous-whistle_v72.parquet",
+        "sha256": "9c77597855730617ff929be4c01409c50ff7ac414ba4e57fd1b9ff1f8ac09d15"
+      },
+      "switch_off": {
+        "2025-02": false,
+        "2025-06": false
+      }
+    },
+    "C15 third pass": {
+      "input": {
+        "file": "runs/febjun_tierb/chain/work/late/stack_second/rank/dry_v72/vigorous-whistle_v72.parquet",
+        "sha256": "9c77597855730617ff929be4c01409c50ff7ac414ba4e57fd1b9ff1f8ac09d15"
+      },
+      "months": {
+        "2025-02": {
+          "all_departures": {
+            "change_pct": -0.01247172790662665,
+            "hi_s": -0.004682705542960187,
+            "lo_s": -0.048055541462114215,
+            "rmse_in": 453.5625124694034,
+            "rmse_out": 453.50594538696174,
+            "rows": 143732,
+            "rows_moved": 35900,
+            "squared_change": 2026360.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.050066472921816985,
+            "hi_s": -0.03659708363326382,
+            "lo_s": -0.06686945890086449,
+            "rmse_in": 178.26820526176263,
+            "rmse_out": 178.17895265904704,
+            "rows": 142622,
+            "rows_moved": 35472,
+            "squared_change": 1927077.0
+          },
+          "placeholder_rows": {
+            "change_pct": -0.005667149283361539,
+            "hi_s": -0.001370840625128934,
+            "lo_s": -0.036538491331452316,
+            "rmse_in": 4749.199373303609,
+            "rmse_out": 4748.930229085359,
+            "rows": 1110,
+            "rows_moved": 428,
+            "squared_change": 99283.0
+          }
+        },
+        "2025-06": {
+          "all_departures": {
+            "change_pct": -0.028567821897762524,
+            "hi_s": -0.014404666122795073,
+            "lo_s": -0.06706892425371397,
+            "rmse_in": 419.86193637949407,
+            "rmse_out": 419.74199096929266,
+            "rows": 183142,
+            "rows_moved": 49070,
+            "squared_change": 6082959.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.11213947676321778,
+            "hi_s": -0.07424281420558204,
+            "lo_s": -0.1512744914559036,
+            "rmse_in": 185.51355879590406,
+            "rmse_out": 185.3055248617455,
+            "rows": 180640,
+            "rows_moved": 48126,
+            "squared_change": 5876571.0
+          },
+          "placeholder_rows": {
+            "change_pct": -0.008647894093216646,
+            "hi_s": -0.004649615172200029,
+            "lo_s": -0.02519819347090113,
+            "rmse_in": 3227.8412907207094,
+            "rmse_out": 3227.562150424391,
+            "rows": 2502,
+            "rows_moved": 944,
+            "squared_change": 206388.0
+          }
+        }
+      },
+      "output": {
+        "file": "runs/febjun_tierb/chain/work/late/stack_third/rank/dry_v73/vigorous-whistle_v73.parquet",
+        "sha256": "6840f57be901aa08dd558ecf7872d4ccbe143dfbb6a785936683b7e93b6457d1"
+      },
+      "switch_off": {
+        "2025-02": false,
+        "2025-06": false
+      }
+    },
+    "C2 no-NM rematch": {
+      "input": {
+        "file": "runs/febjun_tierb/chain/work/steps/model_part/vigorous-whistle_v66.parquet",
+        "sha256": "4b5900fc734522bb3285b47c0fbedb418ec53944fd7318ae0c4ccc65e6fd61b8"
+      },
+      "months": {
+        "2025-02": {
+          "all_departures": {
+            "change_pct": -0.014341930363948041,
+            "hi_s": -0.004069814815793883,
+            "lo_s": -0.06492744517869797,
+            "rmse_in": 460.7185518788087,
+            "rmse_out": 460.65247594492445,
+            "rows": 143732,
+            "rows_moved": 35,
+            "squared_change": 2967605.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": 0.0,
+            "hi_s": 0.0,
+            "lo_s": 0.0,
+            "rmse_in": 184.03089233311343,
+            "rmse_out": 184.03089233311343,
+            "rows": 142622,
+            "rows_moved": 0,
+            "squared_change": 0.0,
+            "unreadable": "moves no row read"
+          },
+          "placeholder_rows": {
+            "change_pct": -0.01703993135084847,
+            "hi_s": -0.0045275884619180905,
+            "lo_s": -0.11677497831301148,
+            "rmse_in": 4809.763910315451,
+            "rmse_out": 4808.944329846995,
+            "rows": 1110,
+            "rows_moved": 35,
+            "squared_change": 2967605.0
+          }
+        },
+        "2025-06": {
+          "all_departures": {
+            "change_pct": -0.008631033375838815,
+            "hi_s": -0.004399224312345575,
+            "lo_s": -0.019362462145545434,
+            "rmse_in": 421.75198401964343,
+            "rmse_out": 421.71558246513945,
+            "rows": 183142,
+            "rows_moved": 97,
+            "squared_change": 2262472.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": 0.0,
+            "hi_s": 0.0,
+            "lo_s": 0.0,
+            "rmse_in": 188.63216118459476,
+            "rmse_out": 188.63216118459476,
+            "rows": 180640,
+            "rows_moved": 0,
+            "squared_change": 0.0,
+            "unreadable": "moves no row read"
+          },
+          "placeholder_rows": {
+            "change_pct": -0.010752714074879766,
+            "hi_s": -0.005163542951864832,
+            "lo_s": -0.03138441991758334,
+            "rmse_in": 3232.824366230508,
+            "rmse_out": 3232.4767498698643,
+            "rows": 2502,
+            "rows_moved": 97,
+            "squared_change": 2262472.0
+          }
+        }
+      },
+      "output": {
+        "file": "runs/febjun_tierb/chain/work/steps/rematch/base/vigorous-whistle_v55m_rematch.parquet",
+        "sha256": "21d4a63e37fb72d1ec8a7dd8777e78303d1f7c3f964cd067d61af8bc99072c2d"
+      },
+      "switch_off": {
+        "2025-02": false,
+        "2025-06": false
+      }
+    },
+    "C3 v48 reconciliation": {
+      "input": {
+        "file": "runs/febjun_tierb/chain/work/steps/rematch/base/vigorous-whistle_v55m_rematch.parquet",
+        "sha256": "21d4a63e37fb72d1ec8a7dd8777e78303d1f7c3f964cd067d61af8bc99072c2d"
+      },
+      "months": {
+        "2025-02": {
+          "all_departures": {
+            "change_pct": -0.2533579733459357,
+            "hi_s": -0.17443993874189045,
+            "lo_s": -0.6324027223313572,
+            "rmse_in": 460.65247594492445,
+            "rmse_out": 459.4853761677025,
+            "rows": 143732,
+            "rows_moved": 133684,
+            "squared_change": 51808251.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.712899833348335,
+            "hi_s": -0.24738467034397274,
+            "lo_s": -1.3040909036984887,
+            "rmse_in": 184.03089233311343,
+            "rmse_out": 182.7189364083612,
+            "rows": 142622,
+            "rows_moved": 132801,
+            "squared_change": 47513514.0
+          },
+          "placeholder_rows": {
+            "change_pct": -0.16712341888677207,
+            "hi_s": -0.10337658774815327,
+            "lo_s": -0.6661212154994081,
+            "rmse_in": 4808.944329846995,
+            "rmse_out": 4800.907457670593,
+            "rows": 1110,
+            "rows_moved": 883,
+            "squared_change": 4294737.0
+          }
+        },
+        "2025-06": {
+          "all_departures": {
+            "change_pct": -0.0888550174026892,
+            "hi_s": -0.045253368006961975,
+            "lo_s": -0.20096608300065155,
+            "rmse_in": 421.71558246513945,
+            "rmse_out": 421.3408670109502,
+            "rows": 183142,
+            "rows_moved": 174889,
+            "squared_change": 79628426.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.3526401731972051,
+            "hi_s": -0.19453003333885452,
+            "lo_s": -0.5088217883005788,
+            "rmse_in": 188.63216118459476,
+            "rmse_out": 187.96696840468778,
+            "rows": 180640,
+            "rows_moved": 172592,
+            "squared_change": 77577301.0
+          },
+          "placeholder_rows": {
+            "change_pct": -0.02410748180864397,
+            "hi_s": -0.0061446164236717005,
+            "lo_s": -0.08394424523287008,
+            "rmse_in": 3232.4767498698643,
+            "rmse_out": 3231.697481125421,
+            "rows": 2502,
+            "rows_moved": 2297,
+            "squared_change": 2051125.0
+          }
+        }
+      },
+      "output": {
+        "file": "runs/febjun_tierb/chain/work/steps/R/vigorous-whistle_v66.parquet",
+        "sha256": "cbe0db2dc55bc3af3ef1f06df8a66ba83cf167d2f3313d7675dd1ef265c78d22"
+      },
+      "switch_off": {
+        "2025-02": false,
+        "2025-06": false
+      }
+    },
+    "C4 extreme-day": {
+      "input": {
+        "file": "runs/febjun_tierb/chain/work/steps/R/vigorous-whistle_v66.parquet",
+        "sha256": "cbe0db2dc55bc3af3ef1f06df8a66ba83cf167d2f3313d7675dd1ef265c78d22"
+      },
+      "months": {
+        "2025-02": {
+          "all_departures": {
+            "change_pct": -0.11128100137430819,
+            "hi_s": -0.01438960019739068,
+            "lo_s": -0.2570498884102701,
+            "rmse_in": 459.4853761677025,
+            "rmse_out": 458.97405623993455,
+            "rows": 143732,
+            "rows_moved": 3004,
+            "squared_change": 51999636.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.46998762132535177,
+            "hi_s": -0.009556653227903177,
+            "lo_s": -1.1903180301854748,
+            "rmse_in": 182.7189364083612,
+            "rmse_out": 181.86018002542457,
+            "rows": 142622,
+            "rows_moved": 2955,
+            "squared_change": 50860736.0
+          },
+          "placeholder_rows": {
+            "change_pct": -0.04466200362431838,
+            "hi_s": 3.4058874521791705e-05,
+            "lo_s": -0.266760861590756,
+            "rmse_in": 4800.907457670593,
+            "rmse_out": 4798.763276207848,
+            "rows": 1110,
+            "rows_moved": 49,
+            "squared_change": 1138900.0
+          }
+        },
+        "2025-06": {
+          "all_departures": {
+            "change_pct": 0.0,
+            "hi_s": 0.0,
+            "lo_s": 0.0,
+            "rmse_in": 421.3408670109502,
+            "rmse_out": 421.3408670109502,
+            "rows": 183142,
+            "rows_moved": 0,
+            "squared_change": 0.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": 0.0,
+            "hi_s": 0.0,
+            "lo_s": 0.0,
+            "rmse_in": 187.96696840468778,
+            "rmse_out": 187.96696840468778,
+            "rows": 180640,
+            "rows_moved": 0,
+            "squared_change": 0.0,
+            "unreadable": "moves no row read"
+          },
+          "placeholder_rows": {
+            "change_pct": 0.0,
+            "hi_s": 0.0,
+            "lo_s": 0.0,
+            "rmse_in": 3231.697481125421,
+            "rmse_out": 3231.697481125421,
+            "rows": 2502,
+            "rows_moved": 0,
+            "squared_change": 0.0
+          }
+        }
+      },
+      "output": {
+        "file": "runs/febjun_tierb/chain/work/steps/X/vigorous-whistle_v66.parquet",
+        "sha256": "7e25e4ca8cac0a407ca8214b1b2fe3e6c6ea49c429f5e7b947fd393847b3134b"
+      },
+      "switch_off": {
+        "2025-02": false,
+        "2025-06": false
+      }
+    },
+    "C5 variance re-allocation": {
+      "input": {
+        "file": "runs/febjun_tierb/chain/work/steps/X/vigorous-whistle_v66.parquet",
+        "sha256": "7e25e4ca8cac0a407ca8214b1b2fe3e6c6ea49c429f5e7b947fd393847b3134b"
+      },
+      "months": {
+        "2025-02": {
+          "all_departures": {
+            "change_pct": -0.08680036787708234,
+            "hi_s": -0.041729789349811426,
+            "lo_s": -0.2843400159080675,
+            "rmse_in": 458.97405623993455,
+            "rmse_out": 458.5756650706579,
+            "rows": 143732,
+            "rows_moved": 105743,
+            "squared_change": 20234454.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.5940286829630992,
+            "hi_s": -0.1770959417853286,
+            "lo_s": -1.0853945783761003,
+            "rmse_in": 181.86018002542457,
+            "rmse_out": 180.77987839318521,
+            "rows": 142622,
+            "rows_moved": 105142,
+            "squared_change": 20087531.0
+          },
+          "placeholder_rows": {
+            "change_pct": 0.006520130730480744,
+            "hi_s": 0.033983911765052534,
+            "lo_s": 0.0028188244549576247,
+            "rmse_in": 4798.763276207848,
+            "rmse_out": 4799.076161846903,
+            "rows": 1110,
+            "rows_moved": 601,
+            "squared_change": 146923.0
+          }
+        },
+        "2025-06": {
+          "all_departures": {
+            "change_pct": -0.03481060349388443,
+            "hi_s": -0.016577143954553425,
+            "lo_s": -0.07658160490158245,
+            "rmse_in": 421.3408670109502,
+            "rmse_out": 421.19419571237734,
+            "rows": 183142,
+            "rows_moved": 128287,
+            "squared_change": 13366241.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.18784489363620205,
+            "hi_s": -0.10957081094575807,
+            "lo_s": -0.27798213153659324,
+            "rmse_in": 187.96696840468778,
+            "rmse_out": 187.6138820528168,
+            "rows": 180640,
+            "rows_moved": 126508,
+            "squared_change": 13193111.0
+          },
+          "placeholder_rows": {
+            "change_pct": 0.0025318961523135286,
+            "hi_s": 0.010204173818609264,
+            "lo_s": 0.0006405407349502346,
+            "rmse_in": 3231.697481125421,
+            "rmse_out": 3231.7793043496,
+            "rows": 2502,
+            "rows_moved": 1779,
+            "squared_change": 173130.0
+          }
+        }
+      },
+      "output": {
+        "file": "runs/febjun_tierb/chain/work/steps/Y/vigorous-whistle_v66.parquet",
+        "sha256": "89b8538f6b72dfae26d800b257a5a5f34fbe7b428738cdeb2c447bf4c7e7b0a7"
+      },
+      "switch_off": {
+        "2025-02": false,
+        "2025-06": false
+      }
+    },
+    "C6 guarded stacker": {
+      "input": {
+        "file": "runs/febjun_tierb/chain/work/steps/Y/vigorous-whistle_v66.parquet",
+        "sha256": "89b8538f6b72dfae26d800b257a5a5f34fbe7b428738cdeb2c447bf4c7e7b0a7"
+      },
+      "months": {
+        "2025-02": {
+          "all_departures": {
+            "change_pct": -0.07262435746634432,
+            "hi_s": -0.028002940360305213,
+            "lo_s": -0.2835443726234635,
+            "rmse_in": 458.5756650706579,
+            "rmse_out": 458.24262744040334,
+            "rows": 143732,
+            "rows_moved": 126618,
+            "squared_change": 29142773.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.4718883457546674,
+            "hi_s": -0.33168126030311473,
+            "lo_s": -0.6411393161178752,
+            "rmse_in": 180.77987839318521,
+            "rmse_out": 179.9267992155783,
+            "rows": 142622,
+            "rows_moved": 126618,
+            "squared_change": 29142773.0
+          },
+          "placeholder_rows": {
+            "change_pct": 0.0,
+            "hi_s": 0.0,
+            "lo_s": 0.0,
+            "rmse_in": 4799.076161846903,
+            "rmse_out": 4799.076161846903,
+            "rows": 1110,
+            "rows_moved": 0,
+            "squared_change": 0.0
+          }
+        },
+        "2025-06": {
+          "all_departures": {
+            "change_pct": -0.08003397900561149,
+            "hi_s": -0.03299726606471793,
+            "lo_s": -0.1858211575742849,
+            "rmse_in": 421.19419571237734,
+            "rmse_out": 420.85709723820804,
+            "rows": 183142,
+            "rows_moved": 158582,
+            "squared_change": 55689695.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.4096376400507862,
+            "hi_s": -0.21543532294618337,
+            "lo_s": -0.5873249478546522,
+            "rmse_in": 187.6138820528168,
+            "rmse_out": 186.84534497396797,
+            "rows": 180640,
+            "rows_moved": 158582,
+            "squared_change": 55689695.0
+          },
+          "placeholder_rows": {
+            "change_pct": 0.0,
+            "hi_s": 0.0,
+            "lo_s": 0.0,
+            "rmse_in": 3231.7793043496,
+            "rmse_out": 3231.7793043496,
+            "rows": 2502,
+            "rows_moved": 0,
+            "squared_change": 0.0
+          }
+        }
+      },
+      "output": {
+        "file": "runs/febjun_tierb/chain/work/steps/stack/vigorous-whistle_v9210.parquet",
+        "sha256": "d018426ce4912b959a297cf3e60a820c7db774e33d02564316119956d1974aff"
+      },
+      "switch_off": {
+        "2025-02": false,
+        "2025-06": false
+      }
+    },
+    "C7 intruder bound": {
+      "input": {
+        "file": "runs/febjun_tierb/chain/work/steps/stack/vigorous-whistle_v9210.parquet",
+        "sha256": "d018426ce4912b959a297cf3e60a820c7db774e33d02564316119956d1974aff"
+      },
+      "months": {
+        "2025-02": {
+          "all_departures": {
+            "change_pct": -0.9332899704685538,
+            "hi_s": -0.13756625376202697,
+            "lo_s": -2.9991245245253064,
+            "rmse_in": 458.24262744040334,
+            "rmse_out": 453.9658949580905,
+            "rows": 143732,
+            "rows_moved": 71,
+            "squared_change": 285755047.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.5175117625615178,
+            "hi_s": -0.0005272494226481317,
+            "lo_s": -1.1006856413568626,
+            "rmse_in": 179.9267992155783,
+            "rmse_out": 178.99565686563724,
+            "rows": 142622,
+            "rows_moved": 28,
+            "squared_change": 51555805.0
+          },
+          "placeholder_rows": {
+            "change_pct": -1.0085695406603867,
+            "hi_s": -0.14100797595134976,
+            "lo_s": -3.8598081284659678,
+            "rmse_in": 4799.076161846903,
+            "rmse_out": 4750.674141445422,
+            "rows": 1110,
+            "rows_moved": 43,
+            "squared_change": 234199242.0
+          }
+        },
+        "2025-06": {
+          "all_departures": {
+            "change_pct": -0.14477893184257074,
+            "hi_s": -0.06001002187541662,
+            "lo_s": -0.2846150395713837,
+            "rmse_in": 420.85709723820804,
+            "rmse_out": 420.2477848282429,
+            "rows": 183142,
+            "rows_moved": 28,
+            "squared_change": 55990957.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.3834918405463905,
+            "hi_s": -0.13838581217532045,
+            "lo_s": -0.6501638315921127,
+            "rmse_in": 186.84534497396797,
+            "rmse_out": 186.12880832155204,
+            "rows": 180640,
+            "rows_moved": 21,
+            "squared_change": 38021733.0
+          },
+          "placeholder_rows": {
+            "change_pct": -0.0872562394764298,
+            "hi_s": -0.0027866968953366308,
+            "lo_s": -0.25226122007043245,
+            "rmse_in": 3231.7793043496,
+            "rmse_out": 3228.959375260447,
+            "rows": 2502,
+            "rows_moved": 7,
+            "squared_change": 17969224.0
+          }
+        }
+      },
+      "output": {
+        "file": "runs/febjun_tierb/chain/work/steps/intruder/vigorous-whistle_v9210.parquet",
+        "sha256": "9904e9473399632b6bab233bfe4bbe7b608adf4517eeb113c882ba5b5a0c4e50"
+      },
+      "switch_off": {
+        "2025-02": false,
+        "2025-06": false
+      }
+    },
+    "C8 identity extension": {
+      "input": {
+        "file": "runs/febjun_tierb/chain/work/steps/intruder/vigorous-whistle_v9210.parquet",
+        "sha256": "9904e9473399632b6bab233bfe4bbe7b608adf4517eeb113c882ba5b5a0c4e50"
+      },
+      "months": {
+        "2025-02": {
+          "all_departures": {
+            "change_pct": -0.04130486815057122,
+            "hi_s": -0.00021247632403464963,
+            "lo_s": -0.28382927621163345,
+            "rmse_in": 453.9658949580905,
+            "rmse_out": 453.77838494372946,
+            "rows": 143732,
+            "rows_moved": 4,
+            "squared_change": 15604390.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.26805407532698444,
+            "hi_s": -0.0019976469963090323,
+            "lo_s": -0.8333997656434478,
+            "rmse_in": 178.99565686563724,
+            "rmse_out": 178.5158517127506,
+            "rows": 142622,
+            "rows_moved": 4,
+            "squared_change": 15604390.0
+          },
+          "placeholder_rows": {
+            "change_pct": 0.0,
+            "hi_s": 0.0,
+            "lo_s": 0.0,
+            "rmse_in": 4750.674141445422,
+            "rmse_out": 4750.674141445422,
+            "rows": 1110,
+            "rows_moved": 0,
+            "squared_change": 0.0
+          }
+        },
+        "2025-06": {
+          "all_departures": {
+            "change_pct": -0.004154848402504463,
+            "hi_s": 0.0,
+            "lo_s": -0.009436923198731517,
+            "rmse_in": 420.2477848282429,
+            "rmse_out": 420.2303241698684,
+            "rows": 183142,
+            "rows_moved": 2,
+            "squared_change": 2131304.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.021475856681363314,
+            "hi_s": 0.0,
+            "lo_s": -0.06480238438907965,
+            "rmse_in": 186.12880832155204,
+            "rmse_out": 186.08883556543418,
+            "rows": 180640,
+            "rows_moved": 2,
+            "squared_change": 2131304.0
+          },
+          "placeholder_rows": {
+            "change_pct": 0.0,
+            "hi_s": 0.0,
+            "lo_s": 0.0,
+            "rmse_in": 3228.959375260447,
+            "rmse_out": 3228.959375260447,
+            "rows": 2502,
+            "rows_moved": 0,
+            "squared_change": 0.0
+          }
+        }
+      },
+      "output": {
+        "file": "runs/febjun_tierb/chain/work/steps/identity/vigorous-whistle_v9210.parquet",
+        "sha256": "afed47cc3219cc4a314518c325570757915766a94697eddcd7052afb203b3b1b"
+      },
+      "switch_off": {
+        "2025-02": false,
+        "2025-06": false
+      }
+    },
+    "C9 own-motion v1": {
+      "input": {
+        "file": "runs/febjun_tierb/chain/work/steps/identity/vigorous-whistle_v9210.parquet",
+        "sha256": "afed47cc3219cc4a314518c325570757915766a94697eddcd7052afb203b3b1b"
+      },
+      "months": {
+        "2025-02": {
+          "all_departures": {
+            "change_pct": -0.0032667230309146866,
+            "hi_s": -0.0008605270164896429,
+            "lo_s": -0.01345702136704513,
+            "rmse_in": 453.77838494372946,
+            "rmse_out": 453.7635612607192,
+            "rows": 143732,
+            "rows_moved": 13,
+            "squared_change": 1176443.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": -0.002070222862682325,
+            "hi_s": 0.00033741600859615856,
+            "lo_s": -0.00730231315952623,
+            "rmse_in": 178.5158517127506,
+            "rmse_out": 178.5121560367749,
+            "rows": 142622,
+            "rows_moved": 6,
+            "squared_change": 395134.0
+          },
+          "placeholder_rows": {
+            "change_pct": -0.0034838043566631782,
+            "hi_s": -0.0007133985263688138,
+            "lo_s": -0.021681617560986022,
+            "rmse_in": 4750.674141445422,
+            "rmse_out": 4750.508637252711,
+            "rows": 1110,
+            "rows_moved": 7,
+            "squared_change": 781309.0
+          }
+        },
+        "2025-06": {
+          "all_departures": {
+            "change_pct": 0.004207478994455727,
+            "hi_s": 0.028629583038647932,
+            "lo_s": -0.009085982678379567,
+            "rmse_in": 420.2303241698684,
+            "rmse_out": 420.24800527248624,
+            "rows": 183142,
+            "rows_moved": 23,
+            "squared_change": 9058045.0
+          },
+          "governing_lane_m_rows": {
+            "change_pct": 0.044997787565548286,
+            "hi_s": 0.14780592379732224,
+            "lo_s": -0.01580943727108347,
+            "rmse_in": 186.08883556543418,
+            "rmse_out": 186.1725714243451,
+            "rows": 180640,
+            "rows_moved": 11,
+            "squared_change": 6115453.0
+          },
+          "placeholder_rows": {
+            "change_pct": -0.005576350865132973,
+            "hi_s": -0.001369880121935009,
+            "lo_s": -0.015741172331586728,
+            "rmse_in": 3228.959375260447,
+            "rmse_out": 3228.77931715639,
+            "rows": 2502,
+            "rows_moved": 12,
+            "squared_change": 2942592.0
+          }
+        }
+      },
+      "output": {
+        "file": "runs/febjun_tierb/chain/work/steps/own/vigorous-whistle_v9210.parquet",
+        "sha256": "b4a1d7f1f7e9c988e6fab5eabd2b9eea692b52f3dca00341386d84bcf83eecc6"
+      },
+      "switch_off": {
+        "2025-02": false,
+        "2025-06": false
+      }
+    }
+  },
+  "rows": {
+    "2025-02": {
+      "all": 143732,
+      "lane_m_read": 142622
+    },
+    "2025-06": {
+      "all": 183142,
+      "lane_m_read": 180640
+    }
+  },
+  "rule": "UNCHANGED (configs/febjun_check_v1.json): a layer is switched off on the final file's February (June) 2026 rows only if its February (June) 2025 complete-month RMSE change on the rows read is worse (> 0) AND its paired-day 95% interval lies entirely above zero; a layer that moves no read row, or that cannot be read (C11 in February: no data-link archive before 14 June 2025), stays on. No partial weights, no re-tuned thresholds, offsets, slopes or airport choices.",
+  "switched_off": {}
+}

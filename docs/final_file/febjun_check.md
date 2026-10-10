@@ -166,3 +166,13 @@ through; exact computations fixed in `configs/febjun_tierb_readings_model_v1.jso
 Tree half: 58 fits by `tools/launch_febjun_lomo.py` on arcw0 / 1 / 3 / 4 / 5 / 6 / 7 (about 11 h; outputs `runs/febjun_lomo/`). Network half:
 80 four-seed fits on L40S (`runs/febjun_nets/`, record `tierb_networks.md`). Model-part and chain readings: `tierb_model.md`, `tierb_chain.md`.
 If Tier B is not complete by 13 October 12:00 UTC, every unread layer stays on and candidate 1 stands.
+
+## Tier B result (10 October 2026, 22:51 UTC): nothing switched off; final candidate 1 stands
+
+Both Tier B lanes are read under the unchanged rule on the out-of-sample February / June 2025 base: the model part (R3, R5a/b, R6, R8,
+R10, R11, R12a/b, R13a/b/c; [`tierb_model.md`](tierb_model.md), `tierb_model_results.json`) and the chain (C1-C15;
+[`tierb_chain.md`](tierb_chain.md), `tierb_chain_results.json`). **No layer is worse with an interval wholly above zero in either month,
+so no layer is switched off on the final file's February / June 2026 rows: final candidate 1 (`30e116a9...`, [`final_candidate.md`](final_candidate.md))
+stays the final file**, unchanged. Closest calls (on, intervals include zero): C1 own-points member in February +0.709% [-0.024, +1.427] s;
+R12a v51m combination member in February +0.260% [-0.131, +0.665]%. Both lanes ran on arcw6 ([`tierb_vm.md`](tierb_vm.md)). Separately declared after Tier B: the six-month
+refit of the late learners (`configs/sixmonth_refit_v1.json`, [`../sixmonth/README.md`](../sixmonth/README.md)), its own rule.
