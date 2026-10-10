@@ -158,3 +158,11 @@ The user chose **Tier B, cheap version**: four seeds per network ensemble plus t
 fits on CPU, to start after the session's context compaction. The Tier B readings are declared under `configs/febjun_check_v1.json`'s rule
 before they are read; a layer switched off by the rule enters the final file only through the same chain and checks
 (`final_candidate.md`). Final candidate 1 (`30e116a9...`) stays the file to upload if Tier B switches nothing off.
+
+**Started 10 October, 09:32 UTC.** Umbrella declaration [`configs/febjun_tierb_v1.json`](../../configs/febjun_tierb_v1.json) (a315f22,
+a3a285d): the parent rule unchanged; every chain layer read in chain order on the Tier B base, each against the chain with that layer passed
+through; exact computations fixed in `configs/febjun_tierb_readings_model_v1.json` (v30-v55m) and `configs/febjun_tierb_readings_chain_v1.json`
+(own-points member and C2-C15), each committed before its readings and after reproducing stored January / July values with the same code path.
+Tree half: 58 fits by `tools/launch_febjun_lomo.py` on arcw0 / 1 / 3 / 4 / 5 / 6 / 7 (about 11 h; outputs `runs/febjun_lomo/`). Network half:
+80 four-seed fits on L40S (`runs/febjun_nets/`, record `tierb_networks.md`). Model-part and chain readings: `tierb_model.md`, `tierb_chain.md`.
+If Tier B is not complete by 13 October 12:00 UTC, every unread layer stays on and candidate 1 stands.
