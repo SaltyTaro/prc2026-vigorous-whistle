@@ -97,6 +97,30 @@ Otherwise it keeps the shipped learner.
 ## Status
 
 - [x] control C6 / C14 / C15 (exact)
-- [x] declaration committed (see git log of `configs/sixmonth_refit_v1.json`)
-- [ ] Tier B base complete
-- [ ] held fits (VM), readings
+- [x] declaration committed (4465d52)
+- [x] Tier B base complete
+- [x] held fits and readings, on arcw6, 22:55-23:28 UTC 10 October
+
+## Readings (`docs/sixmonth/results_v1.json`, SHA-256 `a152728f...`)
+
+Six held fits ran on arcw6, one after another, under strace: the C6 bags (30 fits per month), then C14 and C15 (2 candidates x 5 seeds
+per month). No input was missing. The population is lane M's rows read: February 142,622 and June 180,640. Each figure is the change of
+the five-month learner against the Tier B chain's four-month learner, at the layer's position, with its paired-day 95% interval.
+
+| layer | February 2025 | June 2025 | verdict |
+|---|---|---|---|
+| C6 guarded stacker | -0.0325% [-0.0735, +0.0041], 99,081 rows moved | -0.1016% [-0.1750, -0.0380], 125,149 | **not accepted** (February interval includes zero) |
+| C14 second pass | -0.0062% [-0.0187, +0.0046], 60,388 | -0.0144% [-0.0240, -0.0050], 80,376 | **not accepted** (February interval includes zero) |
+| C15 third pass | -0.0039% [-0.0070, -0.0013], 25,320 | -0.0073% [-0.0151, -0.0019], 35,751 | **ACCEPTED** |
+
+Supporting checks:
+- **C6:** no transfer failure (the five-month bags' per-airport RMS ratios stay within 0.5-2x wherever the four-month ones are; the
+  lowest is LIRF February, 0.52 against 0.71). Every row of the chain's step-6 file is the bag arithmetic.
+- **C14 / C15:** the six-month variants select the same candidates as the chain (`sp_hicov7`, `t3_ro_3`), and no airport falls
+  outside the transfer range.
+
+All three refits point the same way: lower RMSE in both months. Only the third pass clears the declared bar, and its gain is small. RMSE
+on the governing rows goes 178.179 -> 178.172 s in February and 185.306 -> 185.292 s in June (Tier B positions).
+
+**Final file:** C15 uses `t3_ro_3` fitted on all six months: the development rows plus both Tier B months' rows read. C6 and C14 keep
+the shipped learners. On the final file the third pass applies to every month's rows at EDDF / EHAM / LSZH, as shipped.
