@@ -210,3 +210,7 @@ file's own repair run left out, as no chain tool names them) and symlinked; the 
   switch flips seen at the model part). Monthly check: no February / June flag; the four flags equal v76's (January EDDF / EDDM / LSZH,
   LIRF July); after the published-delay layers the February / June gaps narrow (LEBL June 22 -> 5 s, LTFM February 86 -> 52 s).
   The late chain started at 08:51 UTC on the same VM.
+- **Late chain complete** (08:51-08:54 UTC on arcw0): every layer selected as on the ranking file. Candidate `30e116a9...`; record
+  and checks in [`final_candidate.md`](final_candidate.md). Work directories mirrored (`runs/final_blind/chain_9002.sha`, 132 files,
+  all equal); on arcw0 the 49 bind mounts were removed and the 1,484 links into `/mnt/scratch` deleted (no dangling link); all eight
+  VMs deallocated at about 09:05 UTC.

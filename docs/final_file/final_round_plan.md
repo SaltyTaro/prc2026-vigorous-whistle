@@ -81,3 +81,6 @@ The final file must come from the documented, frozen pipeline run on the new mon
   ETags unchanged, no final object in the bucket); its log was removed. Tests: `tests/test_submission.py` (17 passing).
 - **Data:** the 8 October 11:04 UTC `final_ranking.parquet` / `final_submitting.parquet` are definitive; the jitter is intended.
   Their live ETags, sizes and timestamps equal our download on 10 October, so nothing is re-downloaded.
+- **10 October: first complete final file built, not uploaded** (`final_candidate.md`, SHA-256 `30e116a9...`): runner, own member,
+  early and late chains on the final dataset, the user's three decisions applied; checks: upload rehearsal, January / July rows against
+  v76 (median 5 s), monthly plausibility (February / June clean), the February / June 2025 layer readings (nothing switched off).
