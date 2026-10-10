@@ -174,3 +174,18 @@ the recipe (v30) already: 32 LIRF `fixed`-scope rows (the long-interval populati
 previous arrival, itself jittered) and 17 rows elsewhere (ADS-B match / scope flips: 108 rows change scope); every recipe component
 moves together on them, an input flip rather than a component fault. v40's nine fill pins are off in the final file as decided
 (pinned rows: 9 in the ranking dry run, 0 here).
+
+**Monthly plausibility of the new months** (`tools/final_month_means.py`, label-free for 2026: our clipped (3,600 s) airport-month mean
+minus EUROCONTROL's published monthly taxi-out mean, against the same gap for the 2025 labels): on the final model part `v9001` every
+**February and June 2026** airport-month lies inside its airport's 2025 range (no flag). The four flags are January 2026 at EDDF / EDDM /
+LSZH (gaps 177 / 260 / 194 s against 2025 maxima 53 / 164 / 84 s; the snow month) and LIRF July 2026 (58 s against 11.6 s); the
+shipped v76 shows the same four (175 / 254 / 190 / 53 s), so they belong to the model's reading of those board months, not to the
+final-file pipeline. (The monthly figures as a correction were tested before: v47, published_means_v3; not reopened.)
+
+**Second attempt of the early chain on arcw0.** The local run (steps 0-5 completed, identical to arcw0 where both ran) was stopped by
+me at step 6 when the workstation's free memory fell below 1 GB: the user's other jobs (a YOLO training and two experiment runs) were
+running there. Only this project's four processes were stopped. Step 6 had failed anyway on the runner's recorded absolute repair path
+(fixed: `f3e8152`, fallback to `<runner>/repair/run`). arcw0 was started again, its local NVMe re-formatted, and every chain input it
+lacks uploaded there (1,221 files, 5.8 GB, all hash-checked; the 12.7 GB of case-study folders, development fold networks and the ranking
+file's own repair run left out, as no chain tool names them) and symlinked; the whole chain (export, early, late) then runs from
+`runs/final_blind/final_chain_9002.sh` on arcw0 (log `runs/final_blind/final_chain_9002.log`), with work directories on the NVMe.
