@@ -151,3 +151,10 @@ The flight-number memory carries to the next month but not across a one-month ga
 March gets worse (all ten airports, interval above zero). The analogue of "November + December 2025 → February 2026" is a one-month gap,
 so this screen gives **no support for a February 2026 declaration of key_memory**. The season passes cannot be screened without Tier B.
 Caveat as declared: rows12 is a weaker base than the chain.
+
+## Decision on Tier B (10 October 2026, about 09:25 UTC)
+
+The user chose **Tier B, cheap version**: four seeds per network ensemble plus the 58 tree LOMO
+fits on CPU, to start after the session's context compaction. The Tier B readings are declared under `configs/febjun_check_v1.json`'s rule
+before they are read; a layer switched off by the rule enters the final file only through the same chain and checks
+(`final_candidate.md`). Final candidate 1 (`30e116a9...`) stays the file to upload if Tier B switches nothing off.
