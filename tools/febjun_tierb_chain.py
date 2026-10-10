@@ -322,7 +322,11 @@ def cmd_c1(standin: bool) -> None:
     rec: dict = {"created_at_utc": utc_now(), "standin": standin}
     if not standin:
         import febjun_tierb_model as TM
-        w = network_member.candidate_weight(read_json(ROOT / OWN_DECL), OWN_CAND)
+        # read as tools/final_early_chain.py reads it: candidate_weight refuses the candidate's extra 'member' key
+        cand = read_json(ROOT / OWN_DECL)["candidates"][OWN_CAND]
+        if cand.get("member") != "own_all":
+            raise ValueError(f"{OWN_CAND}: unexpected member {cand.get('member')!r}")
+        w = float(cand["member_weight"])
         wm = network_member.candidate_weight(read_json(ROOT / "configs/adsb_ctx3_mask_dev_v1.json"), "w40")
         k = read_json(ROOT / TM.STRETCH)["candidates"]["two_sided_900"]["k_all_months"]
         gate_spec = read_json(ROOT / TM.GATE_DECL)["candidates"]["u600_m600"]
