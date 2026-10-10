@@ -1,0 +1,120 @@
+{
+ "experiment_id": "febjun_tierb_v1",
+ "declared_at_utc": "2026-10-10T09:50Z (see commit), after the 58 tree fits were launched (09:32 UTC; they compute no held-month score) and before any network fit, any table and any February / June 2025 reading of a Tier B base",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "parent": "configs/febjun_check_v1.json (the rule; its tier_b clause: 'Readings on a later Tier B out-of-sample base replace the rows12 readings for the same layer under the same rule'); survey and plan docs/final_file/febjun_check.md",
+ "purpose": "Give the final file's February 2026 / June 2026 rows a reading of every layer of the v76 chain, including the committee side of the model part (v30 recipe through v55m), the own-points member, the guarded stacker and the late passes, which the rows12 base cannot read. February / June 2025 are their analogues. Each reading decides, under the parent rule, whether the layer stays on for that month's rows of the final file.",
+ "rule": "UNCHANGED from configs/febjun_check_v1.json: a layer is switched off on the final file's February (June) 2026 rows only if its February (June) 2025 complete-month RMSE change on the Tier B base is worse (> 0) AND its paired-day 95% interval of the RMSE difference lies entirely above zero. Unreadable layers stay on. No partial weights, no re-tuned thresholds, offsets, slopes or airport choices; a switched-off layer passes its input through unchanged on that month's rows.",
+ "base": {
+  "principle": "Every component that the v76 chain consumes is out of sample for February (June) 2025: fitted without that month's labels, on the twelve-month refit footing (the other eleven 2025 months), as configs/lomo_dev_v1.json / configs/lomo_dev_networks_v1.json did for January / July.",
+  "trees": "the 29 leaves of ens_v20_bag_q_all / ens_v22_lirf_q, tools/run_adsb_learner_lomo.py --hold-out 2025-02 | 2025-06 (frozen recipe and rounds of each leaf's twelve-month refit; held-row reference = the training catalog's rows of the month), launched by tools/launch_febjun_lomo.py on arcw0 / 1 / 3 / 4 / 5 / 6 / 7; tables by build_lomo_tables' member rule (leaf_members + ensemble_prediction)",
+  "networks_cheap": {
+   "runner": "tools/run_adsb_ctx_lomo.py --fold lomo_2025-02 | lomo_2025-06 --device cuda (TF32), the shipped network configurations and variants; no held-month RMSE is written for these folds",
+   "seeds_per_ensemble": 4,
+   "ensembles": {
+    "ens_ctx_e24": {
+     "config": "configs/lomo_network_v1.json",
+     "variant": "ctx_e24",
+     "seeds": [
+      117,
+      118,
+      119,
+      120
+     ]
+    },
+    "ens_ctx_e24b": {
+     "config": "configs/lomo_network_v1.json",
+     "variant": "ctx_e24",
+     "seeds": [
+      133,
+      134,
+      135,
+      136
+     ]
+    },
+    "ens_ctx_e32": {
+     "config": "configs/lomo_network_v1.json",
+     "variant": "ctx_e32",
+     "seeds": [
+      401,
+      402,
+      403,
+      404
+     ]
+    },
+    "ens_ctx_lirf": {
+     "config": "configs/lomo_network_v1.json",
+     "variant": "ctx_lirf",
+     "seeds": [
+      301,
+      302,
+      303,
+      304
+     ]
+    },
+    "combo_dl32 / combo_m25dl32 (v51 member)": {
+     "config": "configs/adsb_ctx3_combo_network_v1.json",
+     "variants": [
+      "dl32",
+      "m25dl32"
+     ],
+     "seeds": [
+      601,
+      602,
+      603,
+      604
+     ]
+    },
+    "mask_m25_32 (v52 member)": {
+     "config": "configs/adsb_ctx3_mask_network_v1.json",
+     "variant": "m25_32",
+     "seeds": [
+      701,
+      702,
+      703,
+      704
+     ]
+    },
+    "lirf_lm25_32 (v53-v55 LIRF member)": {
+     "config": "configs/adsb_ctx3_lirf_mask_network_v1.json",
+     "variant": "lm25_32",
+     "seeds": [
+      801,
+      802,
+      803,
+      804
+     ]
+    },
+    "own-points member (v65 / v66)": {
+     "config": "configs/ctx_ownpoints_network_v1.json",
+     "variants": [
+      "dl32own",
+      "m25dl32own"
+     ],
+     "seeds": [
+      601,
+      602,
+      603,
+      604
+     ],
+     "extra_features": "data/external/adsblol/features_v19own"
+    }
+   },
+   "count": "40 fits per month, 80 in all, on up to four AWS g6e.2xlarge (one L40S each) via SkyPilot, two lanes per GPU",
+   "caveat": "the shipped ensembles average 16 (e24 / e24b: 16 each; own-points: 16 per variant) seeds; 4-seed means are noisier, so a Tier B reading carries extra seed noise (the user accepted this in choosing the cheap version)"
+  },
+  "v9_side": "out-of-sample v9 and residual stage for February / June 2025 as already used by rows12 (cross-fit v9, the twelve-month LOMO residual learners and the residual networks' held-month predictions); the exact tables are fixed in the readings declaration below",
+  "chain_side": "published-day inputs, ADS-B match tables, own-aircraft features, data-link messages and the frozen learners of the stacker and the late passes (fitted on the development months, which exclude February / June) applied to February / June 2025 rows, as the final file's chain applies them to a new file"
+ },
+ "readings": {
+  "what": "Every layer of the final file's chain that acts on February / June rows, read in chain order on the Tier B base: model part v30 (committee side and mix, R3) -> v31 repair (no 2025 analogue) -> v33 / v34 (R5) -> v35 (R6) -> v36 (R7) -> v37 / v38 (R8) -> v45 (R10) -> v46 (R11) -> v51m / v52m (R12) -> v53m / v54m / v55m (R13) -> own-points member (C1) -> no-NM rematch (C2) -> v48 reconciliation (C3) -> extreme-day (C4) -> variance re-allocation (C5) -> guarded stacker (C6) -> identity table / intruder bound / identity extension (C7 / C8) -> own-motion v1 / v2 (C9 / C10) -> OUT pin (C11) -> nbr_state (C12) -> nbr_dark (C13) -> second pass (C14) -> third pass (C15). The W25 layers act on January 2026 only.",
+  "reading_of_a_layer": "complete-month RMSE change on all February (June) 2025 departures of the base between the chain with the layer and the chain with the layer passed through at that position (every earlier layer on, as shipped); paired-day 95% interval of the RMSE difference by run_intruder_bound.interval, 2,000 replicates, one generator seeded 20261004 over the months in calendar order, as configs/febjun_check_v1.json",
+  "no_iteration": "Readings are computed once with every layer on; a switch-off is applied to the final file only and does not recompute later layers' readings.",
+  "replaces": "A Tier B reading replaces the rows12 / Tier A reading of the same layer (parent tier_b clause); layers that remain unreadable on the Tier B base keep their earlier status.",
+  "exact_computation": "fixed in configs/febjun_tierb_readings_v1.json, committed before any February / June 2025 reading on the Tier B base. Before that commit the construction must reproduce stored January / July 2025 development values from the January / July LOMO components (the same code path, month list as the only parameter); those reproductions are recorded with the declaration."
+ },
+ "deadline": "If the Tier B base or its readings are not complete by 13 October 2026 12:00 UTC, every unread layer stays on and final candidate 1 (SHA-256 30e116a9...) stands. A layer switched off by the rule enters the final file only through the same chain and checks (docs/final_file/final_candidate.md).",
+ "compute": "Azure arcw0-arcw7 (CPU; arcw0 / arcw1 outputs on the VM's local NVMe via bind mounts, mirrored before deallocation); AWS L40S via SkyPilot for the networks only; every VM deallocated and every GPU cluster torn down right after its hash-checked mirror.",
+ "automatic_submission": false
+}

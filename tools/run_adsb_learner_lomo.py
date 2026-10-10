@@ -9,6 +9,8 @@ held-month row is in the fit, and checks that the predicted rows are exactly the
 (2025-01 / 2025-07) or the December build (2025-12).
 
   --hold-out 2025-01 | 2025-07   the development months made ranking-like (eleven fitting months, as December's January-November refit)
+  --hold-out 2025-02 | 2025-06   Tier B of docs/final_file/febjun_check.md: the final file's February / June months' 2025 analogues; the
+                                 held-row reference is the training catalog's rows of that month (no fold predicts them)
   --hold-out 2025-12             reproduction check: the fit is then exactly the January-November refit population, so the model and its
                                  December predictions must equal the leaf's refit/ model and runs/december/learners/<leaf>.parquet
   --smoke N                      code-path test: N sampled rows per month (the held month included) and at most 20 rounds; writes only outside runs/
@@ -39,7 +41,8 @@ from run_adsb_learner import ADSB_NAMES, BUNDLE_NAMES, TRAINING_MONTHS, adsb_tab
 
 DECEMBER = "2025-12"
 DECEMBER_FILE = source_file(DECEMBER)
-HOLD_OUT = ["2025-01", "2025-07", DECEMBER]
+FEBJUN = ["2025-02", "2025-06"]  # Tier B of docs/final_file/febjun_check.md (10 October 2026): the final file's new months' 2025 analogues
+HOLD_OUT = ["2025-01", "2025-07", DECEMBER, *FEBJUN]
 
 
 def code_receipt() -> dict:
@@ -153,6 +156,9 @@ def main():
         raise ValueError(f"No row of {held_month} in the population.")
     if held_month == DECEMBER:
         reference = pd.read_parquet(ROOT / args.december / "features" / DECEMBER_FILE, columns=[ID])[ID].to_numpy()
+    elif held_month in FEBJUN:  # fitting months of both folds: no seasonal predictions; the reference is the training catalog's month
+        cat_train = catalog[catalog["source_file"].isin([source_file(m) for m in TRAINING_MONTHS])]
+        reference = cat_train.loc[cat_train[TIME].dt.strftime("%Y-%m").to_numpy() == held_month, ID].to_numpy()
     else:
         seasonal = pd.read_parquet(ROOT / args.source_run / "seasonal" / "predictions.parquet", columns=[ID])[ID]
         seasonal_month = catalog.set_index(ID)[TIME].reindex(seasonal).dt.strftime("%Y-%m").to_numpy()
@@ -218,7 +224,7 @@ def main():
               "exclude_population": exclude_population, "source_run": args.source_run.as_posix(),
               "source_fold_records_sha256": {f: sha256_file(ROOT / args.source_run / f / "run.json") for f in spec["folds"]}}
     record = {"created_at_utc": utc_now(), "fold": f"lomo_{held_month}", "stage": "leave_one_month_out", "held_month": held_month, "fit_months": fit_months,
-              "declaration": "configs/lomo_dev_v1.json", "smoke": args.smoke,
+              "declaration": "configs/febjun_tierb_v1.json" if held_month in FEBJUN else "configs/lomo_dev_v1.json", "smoke": args.smoke,
               "rounds": rounds, "rounds_rule": "median best iteration of the source learner's seasonal and forward folds (the twelve-month refit's rule)",
               "development_best_iterations": {f: rec["best_iteration"] for f, rec in spec["folds"].items()}, "population_rows": int(len(frame)), "fitted_rows": int(fit_keep.sum()),
               "fit_ids_sha256": identity_hash(pd.Series(frame.loc[fit_keep, ID].to_numpy())), "held_rows": int(held.sum()), "held_ids_sha256": identity_hash(pd.Series(held_ids)),

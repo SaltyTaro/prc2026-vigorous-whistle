@@ -1,7 +1,9 @@
 """Leave-one-month-out folds for the context networks (27 September 2026; configs/lomo_network_v1.json): tools/run_adsb_ctx3.py
 (copied unchanged, the GPU sprint's runner) plus two folds, `lomo_2025-01` and `lomo_2025-07`: fit on the twelve 2025 months (the refit12
 rows) WITHOUT the held month at the fixed epoch budget, then predict the held month's rows only (<output>/<fold>/predictions.parquet).
-No held-month label is read before prediction; no ranking, December or October file is written. The original description follows.
+No held-month label is read before prediction; no ranking, December or October file is written.
+Tier B of docs/final_file/febjun_check.md (10 October 2026, configs/febjun_tierb_v1.json) adds `lomo_2025-02` and `lomo_2025-06` (the final
+file's February / June analogues); for them the run record carries no held-month RMSE (readings are declared separately). The original description follows.
 
 Round-3 context network (src/prc2026_ctx3; GPU sprint) on the committee network's contract: fit, monitor and predict one
 (variant, seed, fold). tools/run_adsb_ctx2.py with three additions, each off unless the variant sets it:
@@ -46,6 +48,8 @@ from prc2026_timeline.features import CATEGORICAL_COLUMNS  # noqa: E402
 from run_adsb_learner import ADSB_NAMES, BUNDLE_NAMES, TRAINING_MONTHS, attach, source_file  # noqa: E402
 from run_adsb_nn import DECEMBER, DECEMBER_FILE, build_tables, keep_mask, resolve_variant, rmse  # noqa: E402
 
+TIERB_FOLDS = ["lomo_2025-02", "lomo_2025-06"]
+
 CODE_FILES = ["src/prc2026_ctx/__init__.py", "src/prc2026_ctx/tokens.py", "src/prc2026_ctx/model.py", "src/prc2026_ctx/train.py",
               "src/prc2026_ctx2/__init__.py", "src/prc2026_ctx2/tokens.py", "src/prc2026_ctx2/model.py", "src/prc2026_ctx2/train.py", "tools/run_adsb_ctx2.py",
               "src/prc2026_ctx3/__init__.py", "src/prc2026_ctx3/model.py", "src/prc2026_ctx3/train.py", "tools/run_adsb_ctx_lomo.py", "tools/run_adsb_ctx3.py",
@@ -64,7 +68,7 @@ def main():
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--variant", required=True)
     parser.add_argument("--seed", type=int, required=True)
-    parser.add_argument("--fold", required=True, choices=["design", "seasonal", "forward", "refit", "refit12", "lomo_2025-01", "lomo_2025-07"])
+    parser.add_argument("--fold", required=True, choices=["design", "seasonal", "forward", "refit", "refit12", "lomo_2025-01", "lomo_2025-07", *TIERB_FOLDS])
     parser.add_argument("--output", type=Path, required=True, help="learner directory; the fold is a subdirectory")
     parser.add_argument("--device", default="cuda")
     parser.add_argument("--matches-dir", type=Path, default=Path("data/external/adsblol/matches"))
@@ -294,7 +298,7 @@ def main():
             pd.DataFrame({ID: held_frame[ID].to_numpy(), "adsb_full": values}).to_parquet(out / f"predictions{suffix}.parquet", index=False, compression="zstd")
         values = by[""]
         record.update({"held_month": held_month, "held_rows": int(len(held_frame)), "held_ids_sha256": identity_hash(held_frame[ID]),
-                       "held_rmse": rmse(truths["held"], values),
+                       "held_rmse": None if args.fold in TIERB_FOLDS else rmse(truths["held"], values),  # Tier B: no reading before its declaration
                        "fitted_months": sorted({*TRAINING_MONTHS, DECEMBER} - {held_month})})
     if "december" in parts:
         by = predict_frame(parts["december"])
