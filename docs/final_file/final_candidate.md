@@ -46,7 +46,7 @@ fallback (f3e8152). Scientific settings and declarations unchanged.
 
 ## Upload (only at the user's word; one upload, never overwritten)
 
-    .venv\\Scripts\\python.exe -X utf8 -B tools/prc_submit.py upload-final --source runs/final_blind/final_candidate/chain_out_km.parquet --expected-sha256 30e116a9a0ae4bdf5f2150938272b571bb20b980ac18a7e3bb3f0c48374f381b
+    .venv\Scripts\python.exe -X utf8 -B tools/prc_submit.py upload-final --source runs/final_blind/final_candidate/chain_out_km.parquet --expected-sha256 30e116a9a0ae4bdf5f2150938272b571bb20b980ac18a7e3bb3f0c48374f381b
 
 Deadline 14 October 2026 10:00 UTC. A later candidate (a new layer, a changed decision) replaces this one only through the same chain
 and the same checks.
