@@ -189,3 +189,24 @@ running there. Only this project's four processes were stopped. Step 6 had faile
 lacks uploaded there (1,221 files, 5.8 GB, all hash-checked; the 12.7 GB of case-study folders, development fold networks and the ranking
 file's own repair run left out, as no chain tool names them) and symlinked; the whole chain (export, early, late) then runs from
 `runs/final_blind/final_chain_9002.sh` on arcw0 (log `runs/final_blind/final_chain_9002.log`), with work directories on the NVMe.
+
+**Further attempts on arcw0 (10 October), each stopped by a fail-fast check, nothing silently wrong:**
+- Attempt 2 (07:56 UTC): step 3 (`export_daily_totals.py`) hashes shipped files for its receipt (`runs/submissions/vigorous-whistle_v46.parquet`
+  and others). A static scan of every quoted `runs/...` / `data/...` path in `tools/` and `src/` found 129 files present here and absent on
+  arcw0; the 115 outside unrelated review folders were uploaded and linked (hash-checked).
+- Attempt 3 (08:05 UTC): steps 3-5 ran; step 6's `export_ctx_ownpoints.rel` resolves paths strictly under the repository, and the work
+  directory was a symlink to `/mnt/scratch`. Work directories and the 47 input directories made only of links are now **bind mounts** of
+  their NVMe copies (real paths under the repository); mixed directories keep per-file links.
+- Attempt 4 (08:05 UTC run): steps 0-6 complete; own_motion_v2's guard refused: the rebuilt v62 development proxy gave January 2025
+  321.017 s against the recorded 320.895 s (July 252.427 against 252.148). The 35 files the guard reads are identical on both machines and
+  the library versions are equal (pandas 3.0.0, numpy 2.4.2, pyarrow 23.0.1, LightGBM 4.7.0). Cause: the January-November 2025 **surface
+  days** (`data/external/adsblol/surface/surface_2025*.parquet`) were absent on arcw0, and the own-motion / identity triggers skip a missing
+  day silently. 640 files (3.0 GB) uploaded, hash-checked and linked. The rest of `data/external` absent on arcw0 belongs to closed
+  screens (OpenSky, X-Plane, OSM geometry, `adsblol/regime`, staging folders), read by no chain tool.
+- Attempt 5 started 08:33 UTC with a fresh output directory.
+- **Attempt 5: early chain complete** (08:33-08:51 UTC on arcw0, steps 0-10, every guard passed, so the missing surface days were the cause):
+  `runs/final_blind/early_9002/vigorous-whistle_v9002.parquet` SHA-256 `4c393769...` (copied here). Against the shipped v69 on the 344,841
+  January / July rows: median |difference| 5 s, p90 16 s, p99 45 s, 92 rows above 300 s (the nine unpinned fill rows and the LIRF / match
+  switch flips seen at the model part). Monthly check: no February / June flag; the four flags equal v76's (January EDDF / EDDM / LSZH,
+  LIRF July); after the published-delay layers the February / June gaps narrow (LEBL June 22 -> 5 s, LTFM February 86 -> 52 s).
+  The late chain started at 08:51 UTC on the same VM.
