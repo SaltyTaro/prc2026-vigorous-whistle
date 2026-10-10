@@ -1,0 +1,116 @@
+{
+ "experiment_id": "febjun_tierb_readings_model_v1",
+ "declared_at_utc": "2026-10-10T10:00Z (see commit), before any Tier B tree table, network mean or row table of February / June 2025 exists and before any February / June 2025 reading of a model-part layer",
+ "declared_by": "Tier B lane M; uploads stay the user's word",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "umbrella": "configs/febjun_tierb_v1.json (commits a315f22 / a3a285d): its readings.exact_computation names this file for the model part (v30 through v55m: R3, R5-R8, R10-R13)",
+ "rule": "UNCHANGED (configs/febjun_check_v1.json): a layer is switched off on the final file's February (June) 2026 rows only if its February (June) 2025 complete-month RMSE change on the rows read is worse (> 0) AND its paired-day 95% interval lies entirely above zero; a layer that moves no row (or cannot be built) is unreadable and stays on.",
+ "tool": "tools/febjun_tierb_model.py (subcommands trees, nets, rematch, rows, chain, read); record docs/final_file/tierb_model.md; results docs/final_file/tierb_model_results.json",
+ "construction": {
+  "layout": "the development row layout of runs/lomo_dev/rows.parquet (tools/run_lomo_rows.py), which every model-part round from v35 to v55 read, extended to February / June 2025",
+  "frame": "run_adsb_v24.month_table(load_frame(config, month, 'cross_fit'), adsb_features(month, matches_v11, runs/adsb_v24/features)): labels, day, airport, floor, matched (matches_v11 flag), lirf_m / lirf_u (run_adsb_v11.SCOPES), v9 = max(cross-fit v7, floor) from scratch/v24 (cross-fit fold B holds out February, June and October; fitted on the other nine 2025 months)",
+  "residual": "v26's rnet_w90 combination (0.05 adj2 + 0.05 cat + 0.9 rnet on matched non-LIRF rows) of run_adsb_rnn_dev.residual_columns: the twelve-month LOMO adj2 / cat (runs/adsb_v25/dev/predictions_<month>.parquet) and the 16 rnet seeds' held-month predictions (runs/adsb_rnn/rnb_s501-516/<month>/); the same provenance rows12 and docs/fair_dev/rows_shipped used",
+  "trees": "ens_v20_bag_q_all / ens_v22_lirf_q from the 29 Tier B LOMO leaves (runs/febjun_lomo/learners/<leaf>/lomo_<month>/predictions.parquet) with the member rule of tools/build_lomo_tables.py (leaf_members + ensemble_prediction)",
+  "networks": "4-seed means of the Tier B LOMO fits (runs/febjun_nets/nets/<variant>_s<seed>/lomo_<month>/): ens_ctx_e24 117-120, ens_ctx_e24b 133-136, ens_ctx_e32 401-404, ens_ctx_lirf 301-304; members combo_all = dl32 601-604 on rows with the learner-directory ADS-B match flag (runs/adsb_ctx2/inputs/adsb_features_arcw0, tools/build_combo_member.matched_flags), m25dl32 601-604 on the others; mask_unmatched = m25_32 701-704 on unmatched rows; lirf_mask = lm25_32 801-804 on every row; seed means by prc2026_final.network_member.seed_mean",
+  "assembly": "run_lomo_rows.assemble (base, committee, nets at v30's family weights, mix at share 0.75, lirf_tree, lirf_net = ens_ctx_lirf, v30, v33)",
+  "callsign_fix_input": "tools/adsb_rematch_nonm.py, unchanged, through prc2026_final.stack.rematch on the month's departures without an NM flight record at EDDF / EHAM (adsb.lol surface files; 1-10 June 2025 have none, as in every 2025 match table); scope by run_callsign_fix.scope_table's rule; queue segments by prc2026_final.stack.queue_segments on matches_v11 plus those rows; offsets run_callsign_fix.offsets / run_queue_trust.offsets_all (constants)",
+  "layers": "v30 = the rows' v30; v31 = v30 (the EOBT_1 detector's threshold is the 2025 maximum plus the 2025 span, so no 2025 month can be flagged); v33 = run_fair_weights.build at configs/fair_weights_v1.json's control; v34 = build with the LIRF unmatched v9 share 0; v35 / v38 / v45 = run_share_gate_reread.full_stack split at its boundaries (run_mix_gate.stack = v34 + u300 + callsign fix 50% + queue trust 0.75; two-sided stretch with the shipped k; LIRF gate u600_m600), checked equal to full_stack on every row; v40 = v38 (fill pins off); v46 = full_stack on the n85_nd1200 mix; v51m / v52m = full_stack on the mix of the network table with combo_all, then mask_unmatched, at 0.40 each (LIRF rows keep the table; tools/run_network_member.py's construction); v53m / v54m / v55m = prc2026_final.lirf_members.deltas (the runner's code) added on their routes and floored at -12"
+ },
+ "rows_read": {
+  "definition": "every February (June) 2025 departure of the cross-fit tables, i.e. every clock-present departure: February 142,622 of 143,731, June 180,640 of 183,142",
+  "not_read": "departures without an NM off-block clock and the LIRF fill population (February 1,109, June 2,502): no out-of-sample v9 exists for them in these months (the v6 fallback and the v9 mixture are fitted on January-November 2025); in-sample values would bias every committee-side reading. They are listed in runs/febjun_tierb/model/excluded_<month>.parquet; the final file treats its rows of that kind by the same chain, and no reading here speaks for them.",
+  "footing_differences_to_january_july": [
+   "v9: cross-fit fold B (nine fitting months) instead of the eleven-month LOMO v7 behind runs/lomo_dev/rows.parquet",
+   "networks and members: 4 seeds per ensemble instead of 16 (the user's cheap version); seed noise enters every reading",
+   "trees: the same eleven-month LOMO footing as January / July"
+  ]
+ },
+ "layers": [
+  {
+   "name": "R3",
+   "on": "v30",
+   "off": "off_r3",
+   "label": "v30 recipe, committee side and mix: v30 against the v9 side alone (off_r3 = max(v9 + residual on matched non-LIRF rows, floor))"
+  },
+  {
+   "name": "R5a",
+   "on": "v33",
+   "off": "v31",
+   "label": "v33 outer weights (LTFM 1.0 / matched 0.6 / unmatched 0.7)"
+  },
+  {
+   "name": "R5b",
+   "on": "v34",
+   "off": "v33",
+   "label": "v34 LIRF unmatched v9 share 0"
+  },
+  {
+   "name": "R6",
+   "on": "v35",
+   "off": "v34",
+   "label": "v35: u300 gate, callsign fix 50%, queue trust 0.75"
+  },
+  {
+   "name": "R8",
+   "on": "v38",
+   "off": "v35",
+   "label": "v38 two-sided tail stretch"
+  },
+  {
+   "name": "R10",
+   "on": "v45",
+   "off": "v40",
+   "label": "v45 LIRF disagreement gate (v40 = v38, fill pins off)"
+  },
+  {
+   "name": "R11",
+   "on": "v46",
+   "off": "v45",
+   "label": "v46 network share 0.85 + networks-far-below gate"
+  },
+  {
+   "name": "R12a",
+   "on": "v51m",
+   "off": "v46",
+   "label": "v51m combination member w40"
+  },
+  {
+   "name": "R12b",
+   "on": "v52m",
+   "off": "v51m",
+   "label": "v52m masked member w40"
+  },
+  {
+   "name": "R13a",
+   "on": "v53m",
+   "off": "v52m",
+   "label": "v53m masked LIRF member w55 (LIRF non-population unmatched rows)"
+  },
+  {
+   "name": "R13b",
+   "on": "v54m",
+   "off": "v53m",
+   "label": "v54m dark re-read w70_s750 (only in LIRF months with a non-population match share below 5%, read from the rows; it moves no row in a covered month)"
+  },
+  {
+   "name": "R13c",
+   "on": "v55m",
+   "off": "v54m",
+   "label": "v55m matched-row LIRF member mw40"
+  }
+ ],
+ "grouping_note": "The umbrella's labels R5 (v33 / v34), R12 (v51m / v52m) and R13 (v53m / v54m / v55m) each cover several shipped steps (separate uploads and declarations); each step is read and governed on its own. Not read: R4 (v31, no 2025 analogue: v31 = v30), R7 (v36's mu600 gate and peer lifts are not in the final chain: the runner's v38 = v35 + the two-sided stretch; v36 / v37 were never uploaded), R9 (fill pins, off in the final file). chain_<month>.parquet carries every column needed.",
+ "reading_of_a_layer": "On the rows read of each month: change = 100 x (RMSE(on) / RMSE(off) - 1); interval = run_intruder_bound.interval (paired days, 2,000 replicates); per layer one generator numpy.random.default_rng(20261004) drawn over the months in calendar order (February, then June), as tools/run_febjun_check.py; switch-off if change > 0 and the interval's lower end > 0. rows moved, both RMSEs and the squared change are reported.",
+ "reproduction_before_declaring": {
+  "note": "the same code path, month list as the only parameter, on the January / July 2025 LOMO components (labels of January / July only, all already used by shipped selections); checks under runs/febjun_tierb/model/checks/",
+  "trees": "tree tables rebuilt from runs/lomo_dev/learners equal runs/lomo_dev/ens/<table>/lomo/predictions.parquet: max |difference| 0.0 s, same finite pattern, both tables, both months",
+  "networks": "16-seed LOMO means give runs/lomo_dev/rows.parquet's nets and lirf_net exactly (0.0 s); routed combo_all / mask_unmatched from the per-variant fits equal the seed mean of the combination / masked rounds' stored per-seed member tables (0.0 s, same missing rows)",
+  "rows_frame_path": "the frame path (cross-fit frame, shipped-provenance residual, fold tables) equals runs/fair_dev/rows_shipped.parquet on every row of January (153,706) and July (190,713): labels, flags, v9, residual, base, mix, lirf tables 0.0 s; v30 / v33 at most 9.1e-13 s",
+  "rows_assembly": "the assembly on the LOMO components equals runs/lomo_dev/rows.parquet (base, mix, committee, nets, lirf_tree, lirf_net, v30, v33): 0.0 s",
+  "callsign_input": "the rematch through prc2026_final.stack.rematch on January 2025's 457 no-NM EDDF / EHAM departures equals the declared runs/adsb_rematch/out_arcw5.parquet rows (every column; taxi path 2.3e-13 m) and the same 38 scope rows; the runner's segment rule on the declared outputs equals run_queue_trust.segments (148,810 rows, in_scope and taxi identical)",
+  "chain": "split stack = full_stack exactly (0.0 s); complete-month RMSEs on runs/lomo_dev/rows.parquet with the stored 16-seed member tables equal the stored development values to 0.0 s: January v30 323.702511 / v33 323.457280 / v45 322.995993 / v46 322.858473 / v51m 322.645018 / v52m 322.588722, July v30 260.267308 / v33 259.584139 / v45 258.153737 / v46 257.718456 / v51m 257.535557 / v52m 257.413141 (docs/lomo_dev/rows_summary.json, docs/thinned_regime/reread_n85_nd1200.json, docs/adsb_ctx3_combo/results_v1.json, docs/adsb_ctx3_mask/results_v1.json); LIRF route RMSEs (labels below 20,000 s): v53m January 271.356775 / July 408.476341 (docs/adsb_ctx3_lirf_mask/results_v1.json w55), v54m January 271.207994 (docs/lirf_dark/results_v1.json w70_s750; January 2025 is a dark LIRF month: 0 of 11,254 non-population rows matched), v55m July 400.147129 (docs/lirf_combo/results_v1.json mw40)"
+ },
+ "disclosure": "No February / June 2025 value of any model-part layer on a Tier B base has been computed or read. The Tier A survey's R1 / R2 (residual stage components on rows12) are known and are not governed here. The February / June rematch outputs (label-free) were computed before this declaration. The rule's form was fixed by configs/febjun_check_v1.json before Tier B existed.",
+ "automatic_submission": false
+}
