@@ -130,3 +130,47 @@ Expected remaining wall time on a D16: repair ~15 min, rematch ~1 min, members ~
     # stack + final once the fill-pin decision is made (add --no-fill-pins for decision 2 of final_round_plan.md):
     .venv/bin/python -X utf8 -B tools/final_predict.py run --root $R --stages stack final --layers v55m --no-fill-pins --version N --threads 16
     # then lane_E.md 'For the final file' (key map, own member, early chain) and lane_L.md (late chain) on $R's outputs
+
+## Resumed on 10 October
+
+The final data were confirmed definitive, so the run resumed on arcw0
+(started 05:44 UTC; the root disk had 3.0 GB free).
+
+| step | where | s | result |
+|---|---|---:|---|
+| repair (boosters copied into `repair/run/residual/adj2` first) | arcw0 | 817 | LFPG 2026-06 / 2026-07 flagged as on 8 October, 13,034 departures edited |
+| rematch | arcw0 | 111 | |
+| members | arcw0 | 73 | 63 of 64 per-net files uploaded from arcw3's mirror (hash-checked); `dl32_s601` recomputed on arcw0 as the cross-VM check: **byte-identical** to arcw3's (`d612007d...`), and `ensembles.parquet` / `members.parquet` equal arcw3's (`927c8736...` / `e591ffaf...`) |
+| stack + final (`--layers v55m --no-fill-pins --version 9001`) | arcw0 | 18 | `R/final/vigorous-whistle_v9001.parquet` `cdb81e08...`: 670,790 rows, min -12, median 946 s, no null |
+| key map (`run_rematch_nonm.py --matches`) | arcw0 | | 3,707 no-NM rows at EDDF / EHAM / LSZH, 455 qualifying |
+| own member features / predict (32 nets, ~60 s each) / export-v19own | arcw0 | | 670,790 rows, 487,175 with an inbound |
+
+Inputs added for the chains: the five OPDI windows of February / June 2026 (`docs/opdi_stack/sources.json`), and the early / late
+chains' 2025 development artefacts that arcw0 lacked (595 + 67 files, 2.66 + 0.74 GB). Those artefacts sit on the VM's local NVMe
+(`/mnt/scratch/inputs`, formatted for this run, wiped at deallocation) and are symlinked at their repository paths; every file is
+hash-checked against this workstation. Work directories of the chains are on `/mnt/scratch` too, and are mirrored here before
+deallocation. One mistake on the way: a first upload went to the root disk and filled it (the size was under-counted: `xargs` split
+`du` into batches and only the last total was read); it was stopped at 178 MB free and exactly the files it had added were removed
+(557, all absent before), before the own-member job wrote its remaining files. The own-member job was not affected.
+
+**export-v19own** first refused the file: the runner's `adsb/v19.parquet` holds the final file's 670,790 departures in another order
+(22.8% of positions equal; the ranking file's happened to match the template). The runner joins v19 by ID (`runner.py:110`), so the
+model part is unaffected; the export now reorders after checking the ID sets are identical and unique (26906b5; a no-op on the
+ranking file). Monthly files: January 152,719 / February 144,158 / June 181,791 / July 192,122 rows.
+
+**Early chain on arcw0 stopped at step 2**: `run_rematch_nonm.py --ranking-base` reads `runs/rematch_nonm/matches_2025.parquet`, which
+the Lane V sync did not include. Step 1 had completed (model part `aad72fb7...`). The full set of directories the early-chain tools name
+holds 2,220 files (12.7 GB) absent on arcw0, most of them not read by the chain; rather than guessing the read set one failure at a time,
+**the early chain runs on this workstation**, where Lane E proved it end to end (the compute rule's exception: it cannot run remotely
+without that read set). arcw0's new runner outputs were mirrored here first (`runs/final_blind/mirror_20261010.sha`, 265 files, all
+hashes equal), its scratch outputs and logs copied to `runs/final_blind/arcw0_scratch_20261010/` (hash-checked), its 662 scratch
+symlinks removed (no dangling link left), and arcw0 deallocated (all eight workers deallocated at 07:03 UTC). Step 0 locally gives
+the same key map and no-NM matches as arcw0, byte for byte (`835e98d0...`, `80d4d713...`).
+
+**Sanity check of the model part against the shipped one** (`tools/final_vs_shipped.py`, label-free; final `v9001` against the shipped
+`runs/lirf_combo/export_dry/vigorous-whistle_v55.parquet` on the 344,841 January / July rows the two files share): median |difference|
+5 s, p90 15 s, p99 41 s; outside LIRF the median is 4.3 s, the size of the +-12 s take-off jitter. 49 rows move by more than 300 s at
+the recipe (v30) already: 32 LIRF `fixed`-scope rows (the long-interval population, whose mixture bands are anchored on the stand's
+previous arrival, itself jittered) and 17 rows elsewhere (ADS-B match / scope flips: 108 rows change scope); every recipe component
+moves together on them, an input flip rather than a component fault. v40's nine fill pins are off in the final file as decided
+(pinned rows: 9 in the ranking dry run, 0 here).
