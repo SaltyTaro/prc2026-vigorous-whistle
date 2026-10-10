@@ -40,12 +40,12 @@ February rows, so a 1 February departure's inbound turn is visible there; nothin
 | the same without January's arrivals in F | own-motion v2 Feb -0.0283%, intruder bound Feb -1.0793%: the reason for the context arrivals |
 | identity table rebuilt for F (relearned key map) vs shipped | 195,600 movements identified by both, 0 different aircraft |
 | month blocking | in each blocked run exactly one fit per layer spans all twelve months and loses the held month |
-| stand-in (rows12 `stack` in every component; first F), whole chain | runs end to end; every late layer selects what it selected on the ranking file; W25 layers pass F through |
+| stand-in (rows12 `stack` in every component), whole chain, first F and again on the current F (after the commit, `work_standin`) | runs end to end; every late layer selects what it selected on the ranking file; W25 layers pass F through |
 
 The only gap in the rows12 reproduction is the integer base (the stored readings used the float `stack`); interval ends differ because
 the stored runs drew their bootstrap from other generators.
 
 ## Timings (workstation, stand-in)
 
-Early chain 1,727 s (step 2 90 s, 3-5 209 s, 6 424 s, 7-8 53 s, 9 434 s, 10 518 s; each month-blocked step runs twice); late chain
+Early chain 1,399-1,727 s (step 2 90 s, 3-5 209 s, 6 424 s, 7-8 53 s, 9 434 s, 10 518 s; each month-blocked step runs twice); late chain
 about 160 s (fits of the second / third pass 62 s / 31 s locally).
