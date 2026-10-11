@@ -68,3 +68,16 @@ Every step ran under strace. The only paths it looked for and did not find were 
 - **Not uploaded.**
 
       .venv\Scripts\python.exe -X utf8 -B tools/prc_submit.py upload-final --source runs/final_blind/final_candidate2/chain_out_km.parquet --expected-sha256 f11ca28f7503a98cad9211facafe30d7f4185a589aefdb655372896d59e2669e
+
+## EUROCONTROL re-check (11 October 2026, 02:44 UTC)
+
+Before the upload, the published figures were downloaded again, in case EUROCONTROL had revised February or June 2026:
+
+| file | live copy | our copy (used by the file) |
+|---|---|---|
+| `All_Pre-Departure_Delay.xlsx` (feeds steps 3-6) | 57,854,598 bytes, Last-Modified 18 Sep 2026 08:57:11 GMT, SHA-256 `9ab45cc5...a1b218` | identical bytes |
+| `Taxi-Out_Additional_Time.xlsx` (plausibility check only) | 1,371,583 bytes, Last-Modified 18 Sep 2026 09:09:59 GMT, SHA-256 `82d119ed...a4adb8` | identical bytes |
+
+The extract the chain read (`data/external/eurocontrol_aiu/All_Pre-Departure_Delay.parquet`) still has SHA-256 `24434d40...0bad0`, as in
+`docs/final_file/v69_chain.md`. The data page (ansperformance.eu/data) lists the same 25 workbooks as the 29 September copy, with no new
+or post-operations pre-departure file. **No revision: no rebuild; candidate 2 stands.**
