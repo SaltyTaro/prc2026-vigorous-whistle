@@ -1,0 +1,32 @@
+{
+ "experiment_id": "sixmonth_devmonths_v1",
+ "declared_at_utc": "see commit (12 October 2026, before any fit of this reading)",
+ "official_scores_used": "none",
+ "audit_used": false,
+ "parent": "configs/sixmonth_override_v1.json (final candidate 4, 8fc8828d1f5338bda08972f16af61c0f5f288b5d50992c1750d4d768d89b0a42) and configs/sixmonth_refit_v1.json (readings docs/sixmonth/results_v1.json)",
+ "disclosure": "The February / June 2025 readings of the parent are known. No 2026 label exists; no official score is read; the board is not consulted.",
+ "question": "Candidate 4 replaces the shipped four-month C6 guarded stacker and C14 second pass with learners also fitted on Tier B's February / June 2025 rows. Those learners were read on February / June 2025 only; they also move January / July 2026 rows (squared change 1.28e7 / 1.47e7 against candidate 3), where no reading exists because the development months are inside both fits. Analogue: does adding the Tier B February / June 2025 rows to a learner's training improve a development month the learner did not see?",
+ "reading": {
+  "months": [
+   "2025-01",
+   "2025-07",
+   "2025-11",
+   "2025-12"
+  ],
+  "C6": "the step-6 stacker as tools/run_sixmonth.py fits it (stack_dev() development table = run_stack_weight.rank_inputs()'s development half; stack_fit_predict's loop: bags p2 / p3 / po x the ten seeds SEEDS10, frozen parameters, the early-stopping rows dom % 5 == 0 of the fitting rows). For month m: (a) fitted on the other three development months' non-fixed rows; (b) the same plus both Tier B months' rows exactly as tierb_stack_extra selects them (lane M's rows read, not fixed). Guards h2 / h3 / ho from the three-month fitting support as run_stack_weight.dev_month computes them, the same for (a) and (b). Value at the layer's position: run_stack_weight.rank_value at weight 0.65 with ten seeds (the final-file arithmetic), rounded to whole seconds; scored on month m's development rows.",
+  "C14": "the second pass candidate sp_hicov7 (as shipped and as selected on the final file) on the development table runs/febjun_tierb/chain/work/late/stack_second/dev_table.parquet, tools/run_sixmonth.pass_fit_predict unchanged. For month m: (a) fitted on the other three development months' rows; (b) the same plus both Tier B months' rows exactly as fit_final_pass selects them. Value: v71 + clip(0.5 x prediction, +-120 s), floor -12 s, rounded; no airport exclusion (development months). (a) is also compared with the stored out-of-month development predictions (preds_dev_stored.parquet) as a control.",
+  "statistic": "per layer and month: RMSE change of (b) against (a) in %, paired-day 95% bootstrap interval (tools/run_intruder_bound.interval, 2,000 resamples, seed 20261004), and the squared-error change dSSE = sum (y - b)^2 - sum (y - a)^2 over month m's rows."
+ },
+ "decision": {
+  "rule": "For each of January and July 2026, with m its development analogue (2025-01, 2025-07): if dSSE_C6(m) + dSSE_C14(m) > 0, the final file's rows of that 2026 month take final candidate 3's values (the shipped four-month learners); otherwise final candidate 4's. February / June 2026 rows always keep candidate 4 (their readings exist). November / December 2025 are supporting evidence only.",
+  "no_splice": "If neither month splices, candidate 4 stands unchanged and no candidate 5 is built.",
+  "splice": "runs/final_blind/final_candidate5/chain_out_cap.parquet = per-row month splice of candidates 4 and 3 (same ID order, verified). Both are complete chain outputs; every late layer selected the same option in both, so a month splice equals a month-routed learner up to the file-level transfer-guard statistics and neighbour windows that straddle 31 January / 1 February and 30 June / 1 July (disclosed, negligible)."
+ },
+ "checks_if_built": "670,790 rows in final_submitting.parquet order, int32; 0 of the 619 LIRF fill-population rows differ from candidates 3 / 4; guard rows 213142471 / 213142469 = 25,391 / 51,222; cap rows 213145579 / 213152353 = 111,666 / 88,392; tools/prc_submit.py upload-final --check-only passes. Nothing is uploaded by this work.",
+ "outputs": {
+  "tool": "tools/run_sixmonth_devmonths.py",
+  "fits": "runs/sixmonth/devmonths/",
+  "results": "docs/sixmonth/devmonths_results_v1.json",
+  "record": "docs/sixmonth/devmonths.md"
+ }
+}
