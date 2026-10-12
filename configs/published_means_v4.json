@@ -1,0 +1,28 @@
+{
+ "experiment_id": "published_means_v4",
+ "declared_at_utc": "see commit (12 October 2026, before any file is written with it)",
+ "declared_by": "Building is research; the single final upload stays the user's word.",
+ "audit_used": false,
+ "official_scores_used": "none",
+ "status": "DISCLOSED OVERRIDE. configs/published_means_v3.json's procedure (candidate pm_np) was NOT accepted by its primary rule on 2025 (January +0.0006%, one LEBL cell overshooting: shift -6.7 s against a true level error of -2.3 s; July -0.0013%, November -0.0015%, December -0.0050%). This file applies that procedure, unchanged, to the final file as a gamble with positive expected value; it is not an accepted result of v3's rule.",
+ "parent": "configs/published_means_v3.json (results docs/published_means/results_v3.json); procedure of configs/published_means_v2.json (v47)",
+ "external_data": {
+  "name": "EUROCONTROL Performance Review Unit, Taxi-Out Additional Time (airport, month)",
+  "sha256": "82d119ed3cfaf7a3c2f29b27ce942f0a36ea599b3af76e777e4eb354a7a4adb8",
+  "local_path": "data/external/eurocontrol_aiu/Taxi-Out_Additional_Time.xlsx (not in the repository)",
+  "terms_and_organiser_statement": "as recorded in configs/published_means_v2.json; the organisers confirmed on 10 October 2026 that EUROCONTROL's monthly taxi-out file stays allowed in the final phase"
+ },
+ "disclosure": "Exploration before this file (12 October, scratch script on final candidate 4, 8fc8828d...): the procedure selects EGLL February / June / July 2026 (shifts -2.2 / -8.1 / -8.4 s; EGLL sigma 0.6 s) and LIRF July 2026 (-16.3 s, sigma 4.7 s, non-population rows); no other cell is eligible; expected squared-error gain 7.6e6 s^2 if the estimates hold (about -0.026 s on the four-month RMSE), the same loss if every move is noise. Evidence for the cells: on 2025, EGLL's shifts tracked the true level error within 1.2 s in every development month under v2 and v3; LIRF July 2025 under v2: shift 19.2 s against a true 12.4 s. The label-free monthly check (tools/final_month_means.py) puts LIRF July 2026 at 44.1 s above the published mean on candidate 4 against a 2025 range of -2.1..11.6 s; v3's disclosure cross-checked LIRF July 2026 against the published daily delay totals (implied-delay gap 18.5 s per row against 4.2-13.4 s in 2025). The four new months were never scored by this procedure.",
+ "procedure": {
+  "base": "the final-file candidate chosen after configs/sixmonth_devmonths_v1.json's reading (candidate 4 or the month-spliced candidate 5); applied LAST, after the LIRF cap (the cap moves only fill-population rows, which this layer never moves)",
+  "cells": "every airport-month of the final file: ten airports x January, February, June, July 2026",
+  "mapping_bias_noise_gate_shift": "tools/run_published_means_v3.py, candidate pm_np, unchanged: mapping from the twelve 2025 months (LIRF without its fill population); method bias and noise from v72's development values over the four development months; eligible if u <= the 2025 maximum + 0.02, sigma <= 5 s and |level - bias| >= 3 sigma; shift = (level - bias) x max(0, 1 - sigma^2 / (level - bias)^2)",
+  "rows": "non-fixed rows with a value in (0, 7200] s of an eligible cell move by -shift, floor -12 s, rounded to the nearest integer into the base dtype; fixed rows never move and are left out of LIRF's means",
+  "tool": "tools/run_published_means_v4.py apply --base B --out O"
+ },
+ "checks": "670,790 rows in final_submitting order, int32; fixed rows and the cap's two rows unchanged; every row outside eligible cells byte-identical to the base; tools/prc_submit.py upload-final --check-only passes",
+ "outputs": {
+  "file": "runs/final_blind/final_candidate6/chain_out_pm.parquet (never under runs/submissions)",
+  "record": "docs/published_means/final_v4.md"
+ }
+}
