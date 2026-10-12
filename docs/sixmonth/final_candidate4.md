@@ -1,5 +1,9 @@
 # Final file candidate 4 (12 October 2026): built, checked, NOT uploaded
 
+> **January / July reading added the same day ([`devmonths.md`](devmonths.md), `configs/sixmonth_devmonths_v1.json`):** with the Tier B rows
+> added, C6 + C14 lower squared error on a held development month for January 2025 (-1.27e7 s²) and July 2025 (-1.60e7). The pre-set rule
+> keeps candidate 4's values in every month, so no month splice is made. December 2025 reads +9.4e5 (C6's LIRF part), November -4.3e6.
+
 Final candidate 3's chain (`docs/lirf_cap/README.md`, `b673791d...`), with the **six-month learners of the C6 guarded stacker and the C14
 second pass** as well as C15's. Declared as a **disclosed override** in [`configs/sixmonth_override_v1.json`](../../configs/sixmonth_override_v1.json)
 (def3367) before any candidate-4 value: `configs/sixmonth_refit_v1.json`'s rule did **not** accept C6 or C14, because February 2025's interval

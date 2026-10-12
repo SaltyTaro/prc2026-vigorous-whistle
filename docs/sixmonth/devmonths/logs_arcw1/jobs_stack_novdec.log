@@ -1,0 +1,69 @@
+2026-10-12T10:01:33Z start stack_novdec
+2026-10-12T10:09:44Z DONE stack 2025-11 a
+2026-10-12T10:11:15Z DONE stack 2025-12 a
+2026-10-12T10:11:51Z start stack_novdec
+2026-10-12T10:11:52Z FAILED stack 2025-12 a
+stack po 16 trees 684
+stack po 17 trees 553
+stack po 18 trees 614
+stack po 19 trees 730
+{
+ "created_at_utc": "2026-10-12T10:11:14.961470+00:00",
+ "declaration": "configs/sixmonth_devmonths_v1.json",
+ "layer": "stack",
+ "month": "2025-12",
+ "variant": "a",
+ "dev_fit_rows": 506277,
+ "extra_fit_rows": 0,
+ "held_rows": 165677,
+ "file": "runs/sixmonth/devmonths/stack_2025-12_a.parquet",
+ "sha256": "2adf1645a026e82c2af3f3c6d654d5e6069038daf625f5aaa3437dbf324bae03"
+}
+2026-10-12T10:11:15Z END stack_2025-12_a rc=0
+rc=0 enoent=1
+2026-10-12T10:11:51Z START stack_2025-12_a: .venv/bin/python -X utf8 -B tools/run_sixmonth_devmonths.py fit --layer stack --month 2025-12 --variant a
+Traceback (most recent call last):
+  File "/home/azureuser/prc-flight-2026/tools/run_sixmonth_devmonths.py", line 271, in <module>
+    main()
+  File "/home/azureuser/prc-flight-2026/tools/run_sixmonth_devmonths.py", line 262, in main
+    rec = fit(a.layer, a.month, a.variant)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/prc-flight-2026/tools/run_sixmonth_devmonths.py", line 105, in fit
+    raise ValueError(f"{path} exists; never overwrite.")
+ValueError: /home/azureuser/prc-flight-2026/runs/sixmonth/devmonths/stack_2025-12_a.parquet exists; never overwrite.
+2026-10-12T10:11:52Z END stack_2025-12_a rc=1
+rc=1 enoent=0
+2026-10-12T10:11:52Z FAILED stack 2025-11 a
+stack po 16 trees 395
+stack po 17 trees 578
+stack po 18 trees 494
+stack po 19 trees 525
+{
+ "created_at_utc": "2026-10-12T10:09:43.948181+00:00",
+ "declaration": "configs/sixmonth_devmonths_v1.json",
+ "layer": "stack",
+ "month": "2025-11",
+ "variant": "a",
+ "dev_fit_rows": 509590,
+ "extra_fit_rows": 0,
+ "held_rows": 162332,
+ "file": "runs/sixmonth/devmonths/stack_2025-11_a.parquet",
+ "sha256": "b3294c13571534a7b2c9fffc32872b332b89fec442f5e189797f0764de0a5c56"
+}
+2026-10-12T10:09:44Z END stack_2025-11_a rc=0
+rc=0 enoent=1
+2026-10-12T10:11:51Z START stack_2025-11_a: .venv/bin/python -X utf8 -B tools/run_sixmonth_devmonths.py fit --layer stack --month 2025-11 --variant a
+Traceback (most recent call last):
+  File "/home/azureuser/prc-flight-2026/tools/run_sixmonth_devmonths.py", line 271, in <module>
+    main()
+  File "/home/azureuser/prc-flight-2026/tools/run_sixmonth_devmonths.py", line 262, in main
+    rec = fit(a.layer, a.month, a.variant)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/prc-flight-2026/tools/run_sixmonth_devmonths.py", line 105, in fit
+    raise ValueError(f"{path} exists; never overwrite.")
+ValueError: /home/azureuser/prc-flight-2026/runs/sixmonth/devmonths/stack_2025-11_a.parquet exists; never overwrite.
+2026-10-12T10:11:52Z END stack_2025-11_a rc=1
+rc=1 enoent=0
+2026-10-12T10:13:16Z DONE stack 2025-11 b
+2026-10-12T10:14:05Z DONE stack 2025-12 b
+2026-10-12T10:14:05Z ALL_DONE

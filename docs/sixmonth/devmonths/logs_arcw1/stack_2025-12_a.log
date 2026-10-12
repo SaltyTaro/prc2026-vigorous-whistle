@@ -1,0 +1,57 @@
+2026-10-12T10:01:33Z START stack_2025-12_a: .venv/bin/python -X utf8 -B tools/run_sixmonth_devmonths.py fit --layer stack --month 2025-12 --variant a
+stack p2 20261003 trees 492
+stack p2 11 trees 367
+stack p2 12 trees 303
+stack p2 13 trees 313
+stack p2 14 trees 446
+stack p2 15 trees 375
+stack p2 16 trees 376
+stack p2 17 trees 324
+stack p2 18 trees 386
+stack p2 19 trees 499
+stack p3 20261003 trees 641
+stack p3 11 trees 753
+stack p3 12 trees 545
+stack p3 13 trees 693
+stack p3 14 trees 621
+stack p3 15 trees 642
+stack p3 16 trees 696
+stack p3 17 trees 485
+stack p3 18 trees 425
+stack p3 19 trees 623
+stack po 20261003 trees 537
+stack po 11 trees 754
+stack po 12 trees 746
+stack po 13 trees 775
+stack po 14 trees 612
+stack po 15 trees 641
+stack po 16 trees 684
+stack po 17 trees 553
+stack po 18 trees 614
+stack po 19 trees 730
+{
+ "created_at_utc": "2026-10-12T10:11:14.961470+00:00",
+ "declaration": "configs/sixmonth_devmonths_v1.json",
+ "layer": "stack",
+ "month": "2025-12",
+ "variant": "a",
+ "dev_fit_rows": 506277,
+ "extra_fit_rows": 0,
+ "held_rows": 165677,
+ "file": "runs/sixmonth/devmonths/stack_2025-12_a.parquet",
+ "sha256": "2adf1645a026e82c2af3f3c6d654d5e6069038daf625f5aaa3437dbf324bae03"
+}
+2026-10-12T10:11:15Z END stack_2025-12_a rc=0
+rc=0 enoent=1
+2026-10-12T10:11:51Z START stack_2025-12_a: .venv/bin/python -X utf8 -B tools/run_sixmonth_devmonths.py fit --layer stack --month 2025-12 --variant a
+Traceback (most recent call last):
+  File "/home/azureuser/prc-flight-2026/tools/run_sixmonth_devmonths.py", line 271, in <module>
+    main()
+  File "/home/azureuser/prc-flight-2026/tools/run_sixmonth_devmonths.py", line 262, in main
+    rec = fit(a.layer, a.month, a.variant)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/prc-flight-2026/tools/run_sixmonth_devmonths.py", line 105, in fit
+    raise ValueError(f"{path} exists; never overwrite.")
+ValueError: /home/azureuser/prc-flight-2026/runs/sixmonth/devmonths/stack_2025-12_a.parquet exists; never overwrite.
+2026-10-12T10:11:52Z END stack_2025-12_a rc=1
+rc=1 enoent=0

@@ -1,0 +1,36 @@
+2026-10-12T10:06:55Z START ss_2025-07_b: .venv/bin/python -X utf8 -B tools/run_sixmonth_devmonths.py fit --layer ss --month 2025-07 --variant b
+ss sp_hicov7 seed 7 done
+ss sp_hicov7 seed 11 done
+ss sp_hicov7 seed 12 done
+ss sp_hicov7 seed 13 done
+ss sp_hicov7 seed 14 done
+{
+ "created_at_utc": "2026-10-12T10:08:54.182240+00:00",
+ "declaration": "configs/sixmonth_devmonths_v1.json",
+ "layer": "ss",
+ "month": "2025-07",
+ "variant": "b",
+ "dev_fit_rows_offered": 481715,
+ "extra_rows_offered": 323246,
+ "held_rows": 190713,
+ "tables": {
+  "runs/febjun_tierb/chain/work/late/stack_second/dev_table.parquet": "344f9393cfa54dfd3ef65ff8a39aae6439bb4f8391a7a04304b6d25792630c06",
+  "runs/febjun_tierb/chain/work/late/stack_second/rank_table.parquet": "eab287ce20927c8c751f97369fa019be7d03c8f054f66d9a9fe81496abd0ec04"
+ },
+ "file": "runs/sixmonth/devmonths/ss_2025-07_b.parquet",
+ "sha256": "16dc4eee55a6c1cff02253599feeb5e051010eff163801fd506ce95ea1c61144"
+}
+2026-10-12T10:08:54Z END ss_2025-07_b rc=0
+rc=0 enoent=1
+2026-10-12T10:13:06Z START ss_2025-07_b: .venv/bin/python -X utf8 -B tools/run_sixmonth_devmonths.py fit --layer ss --month 2025-07 --variant b
+Traceback (most recent call last):
+  File "/home/azureuser/prc-flight-2026/tools/run_sixmonth_devmonths.py", line 271, in <module>
+    main()
+  File "/home/azureuser/prc-flight-2026/tools/run_sixmonth_devmonths.py", line 262, in main
+    rec = fit(a.layer, a.month, a.variant)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/azureuser/prc-flight-2026/tools/run_sixmonth_devmonths.py", line 105, in fit
+    raise ValueError(f"{path} exists; never overwrite.")
+ValueError: /home/azureuser/prc-flight-2026/runs/sixmonth/devmonths/ss_2025-07_b.parquet exists; never overwrite.
+2026-10-12T10:13:06Z END ss_2025-07_b rc=1
+rc=1 enoent=0

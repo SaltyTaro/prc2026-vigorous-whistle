@@ -1,0 +1,25 @@
+2026-10-12T10:12:38Z START ss_2025-12_a: .venv/bin/python -X utf8 -B tools/run_sixmonth_devmonths.py fit --layer ss --month 2025-12 --variant a
+ss sp_hicov7 seed 7 done
+2026-10-12T10:13:07Z START ss_2025-12_a: .venv/bin/python -X utf8 -B tools/run_sixmonth_devmonths.py fit --layer ss --month 2025-12 --variant a
+ss sp_hicov7 seed 11 done
+ss sp_hicov7 seed 12 done
+ss sp_hicov7 seed 13 done
+ss sp_hicov7 seed 14 done
+{
+ "created_at_utc": "2026-10-12T10:14:35.343741+00:00",
+ "declaration": "configs/sixmonth_devmonths_v1.json",
+ "layer": "ss",
+ "month": "2025-12",
+ "variant": "a",
+ "dev_fit_rows_offered": 506751,
+ "extra_rows_offered": 0,
+ "held_rows": 165677,
+ "tables": {
+  "runs/febjun_tierb/chain/work/late/stack_second/dev_table.parquet": "344f9393cfa54dfd3ef65ff8a39aae6439bb4f8391a7a04304b6d25792630c06",
+  "runs/febjun_tierb/chain/work/late/stack_second/rank_table.parquet": "eab287ce20927c8c751f97369fa019be7d03c8f054f66d9a9fe81496abd0ec04"
+ },
+ "file": "runs/sixmonth/devmonths/ss_2025-12_a.parquet",
+ "sha256": "a5877c2b22d87b02f726c78d8fdde743ec7b6be52e9cc3a0dc8b36fdfe4e178c"
+}
+2026-10-12T10:14:35Z END ss_2025-12_a rc=0
+rc=0 enoent=1
