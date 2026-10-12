@@ -1,0 +1,47 @@
+{
+  "bucket": "prc-2026-vigorous-whistle",
+  "created_at_utc": "2026-10-12T10:22:54.398907+00:00",
+  "endpoint": "https://s3.opensky-network.org",
+  "filename": "vigorous-whistle_final.parquet",
+  "limits": {
+    "bucket_bytes_after_upload": 113038564,
+    "bucket_bytes_before": 108954866,
+    "existing_submission_versions": 69,
+    "final_object_present": false
+  },
+  "organiser_inputs": {
+    "final_ranking.parquet": {
+      "etag": "8970d7057c0c72b5138020578f6bc861-6",
+      "size_bytes": 85853399
+    },
+    "final_submitting.parquet": {
+      "etag": "2c1f407296e217fd7d242c9d51ba27ad",
+      "size_bytes": 3003722
+    }
+  },
+  "sha256": "a7ac1f60c5ddd79ef6927887b50471b3160748c386ed8186d99095bee6b63a81",
+  "source": "runs/final_blind/final_candidate6/chain_out_pm.parquet",
+  "status": "checked_not_uploaded",
+  "validation": {
+    "columns": [
+      "MVT_ID_mvt",
+      "TAXITIME_SEC_mvt"
+    ],
+    "exact_template_order": true,
+    "filename": "vigorous-whistle_final.parquet",
+    "ids_sha256": "ff4c10b76deda7e0773e4f3d5220fd8b313a0debd8b85b06ea6d7b1be6ab9bfd",
+    "maximum_prediction_seconds": 111666,
+    "minimum_prediction_seconds": -12,
+    "negative_predictions": 71,
+    "rows": 670790,
+    "sha256": "a7ac1f60c5ddd79ef6927887b50471b3160748c386ed8186d99095bee6b63a81",
+    "size_bytes": 4083698,
+    "template_sha256": "b3445d80e29bf599a5583ca9675f63ddf57b51fdf1ca3f498facb38ea84f3924",
+    "types": {
+      "MVT_ID_mvt": "double",
+      "TAXITIME_SEC_mvt": "int32"
+    },
+    "validated_at_utc": "2026-10-12T10:22:53.117192+00:00",
+    "version": "final"
+  }
+}

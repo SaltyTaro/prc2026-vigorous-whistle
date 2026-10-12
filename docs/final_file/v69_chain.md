@@ -208,3 +208,11 @@ January 2026 rows at the nine airports other than EGLL, written as `runs/key_mem
 After step 18 (and the six-month third pass of `docs/sixmonth/final_candidate2.md`), **`tools/run_lirf_cap.py apply`** (declaration
 `configs/lirf_cap_v1.json`, [`docs/lirf_cap/README.md`](../lirf_cap/README.md)) caps LIRF fill-population rows at max(schedule interval,
 88,392 s); every other row byte-identical. On the ranking file it changes no row (v76 unchanged); on the final file it moves two July 2026 rows.
+
+## Final-file steps 20-21 (12 October 2026)
+
+- Step 20 (final candidate 4): the six-month C6 stacker and C14 second pass (disclosed override `configs/sixmonth_override_v1.json`;
+  January / July reading `configs/sixmonth_devmonths_v1.json` keeps them in every month), with the six-month C15 and the LIRF cap last
+  (`docs/sixmonth/final_candidate4.md`).
+- Step 21 (final candidate 6): the published-means layer `configs/published_means_v4.json` (v3's pm_np procedure on all four months,
+  disclosed override), applied last: `tools/run_published_means_v4.py apply` (`docs/published_means/final_v4.md`).
