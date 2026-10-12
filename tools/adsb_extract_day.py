@@ -90,9 +90,9 @@ def worker(batch: list[tuple[str, bytes]]) -> tuple[list[list], list[str]]:
     return rows, corrupt
 
 
-def release_assets(day: str) -> list[dict]:
+def release_assets(day: str, release: str = "prod-0") -> list[dict]:
     year = day[:4]
-    tag = f"v{day}-planes-readsb-prod-0"
+    tag = f"v{day}-planes-readsb-{release}"
     url = f"https://api.github.com/repos/adsblol/globe_history_{year}/releases/tags/{tag}"
     payload = subprocess.run(["curl", "-sL", "-H", "Accept: application/vnd.github+json", url], check=True, capture_output=True).stdout
     release = json.loads(payload)
@@ -140,15 +140,18 @@ def main():
     parser.add_argument("--output", type=Path, default=Path("data/external/adsblol/surface"))
     parser.add_argument("--workers", type=int, default=14)
     parser.add_argument("--batch", type=int, default=64)
+    parser.add_argument("--release", choices=["prod-0", "staging-0"], default="prod-0",
+                        help="archive variant; non-prod outputs get a _<release> suffix so they never overwrite prod files")
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
-    target = args.output / f"surface_{args.day.replace('.', '')}.parquet"
+    suffix = "" if args.release == "prod-0" else f"_{args.release}"
+    target = args.output / f"surface_{args.day.replace('.', '')}{suffix}.parquet"
     manifest_path = target.with_suffix(".json")
     if target.exists() and manifest_path.exists():
         print(f"{target} exists; skipping")
         return
     started = time.time()
-    assets = release_assets(args.day)
+    assets = release_assets(args.day, args.release)
     stream = HashingStream(assets)
     rows, corrupt, members, batch, pending = [], [], 0, [], []
 
@@ -179,7 +182,7 @@ def main():
     frame = frame.sort_values(["airport", "icao", "time"]).reset_index(drop=True)
     frame.to_parquet(target, index=False, compression="zstd")
     manifest = {"day": args.day, "created_at_utc": datetime.now(timezone.utc).isoformat(), "source": "adsb.lol globe_history (ODbL)",
-                "release": f"v{args.day}-planes-readsb-prod-0", "assets": assets, "part_sha256": stream.hashes, "trace_members": members, "corrupt_members": corrupt,
+                "release": f"v{args.day}-planes-readsb-{args.release}", "assets": assets, "part_sha256": stream.hashes, "trace_members": members, "corrupt_members": corrupt,
                 "rows": int(len(frame)), "aircraft": int(frame["icao"].nunique()) if len(frame) else 0,
                 "rows_by_airport": {k: int(v) for k, v in frame["airport"].value_counts().sort_index().items()} if len(frame) else {},
                 "ground_rows_by_airport": {k: int(v) for k, v in frame[frame["ground"]]["airport"].value_counts().sort_index().items()} if len(frame) else {},
