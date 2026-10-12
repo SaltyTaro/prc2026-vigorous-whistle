@@ -118,7 +118,7 @@ def stack_values(m: str, variant: str) -> pd.DataFrame:
     import run_stack_weight as SW
     P = pd.read_parquet(OUT / f"stack_{m}_{variant}.parquet")
     v, _, _ = SW.rank_value(P, X.STACK["weight"], X.STACK["k"])
-    return pd.DataFrame({ID: P[ID].to_numpy(), "airport": P["airport"].to_numpy(), "value": np.rint(v)})
+    return pd.DataFrame({ID: P[ID].to_numpy(), "airport": P["airport"].to_numpy(), "fixed": P["fx"].to_numpy(dtype=bool), "value": np.rint(v)})
 
 
 def ss_values(m: str, variant: str) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -134,7 +134,8 @@ def ss_values(m: str, variant: str) -> tuple[pd.DataFrame, pd.DataFrame]:
     mv = ~np.isnan(p)
     new = base.copy()
     new[mv] = np.maximum(base[mv] + np.clip(c["weight"] * p[mv], -SS.CAP, SS.CAP), SS.FLOOR)
-    return pd.DataFrame({ID: t[ID].to_numpy(), "airport": t["airport"].to_numpy(), "value": np.rint(new)}), t
+    return pd.DataFrame({ID: t[ID].to_numpy(), "airport": t["airport"].to_numpy(), "fixed": t["fixed"].to_numpy(dtype=bool),
+                         "value": np.rint(new)}), t
 
 
 def compare(lab: pd.DataFrame, a: pd.DataFrame, b: pd.DataFrame, rng) -> dict:
@@ -143,10 +144,20 @@ def compare(lab: pd.DataFrame, a: pd.DataFrame, b: pd.DataFrame, rng) -> dict:
     y, va, vb = s["label"].to_numpy(dtype=float), s["base"].to_numpy(dtype=float), s["value"].to_numpy(dtype=float)
     pct, lo, hi = R.interval(s, "base", vb, rng)
     da, db = (y - va) ** 2, (y - vb) ** 2
-    by = pd.DataFrame({"airport": s["airport"], "d": db - da}).groupby("airport")["d"].sum()
+    # reporting addendum: by airport, and LIRF's
+    # level shift on non-population (non-fixed) rows
+    g = pd.DataFrame({"airport": s["airport"], "a": da, "b": db, "ch": vb - va, "fixed": s["fixed"].to_numpy(dtype=bool)})
+    by = {}
+    for ap, r in g.groupby("airport"):
+        by[ap] = {"rows": int(len(r)), "dSSE": float(r["b"].sum() - r["a"].sum()),
+                  "change_pct": float(100 * (np.sqrt(r["b"].mean()) / np.sqrt(r["a"].mean()) - 1)),
+                  "mean_change_s": float(r["ch"].mean()), "squared_change": float((r["ch"] ** 2).sum())}
+    lnf = g[(g["airport"] == "LIRF") & ~g["fixed"]]
     return {"rows": int(len(s)), "rows_moved": int((va != vb).sum()), "rmse_a": float(np.sqrt(da.mean())), "rmse_b": float(np.sqrt(db.mean())),
             "change_pct": float(pct), "lo_pct": lo, "hi_pct": hi, "dSSE": float(db.sum() - da.sum()), "squared_change": float(((vb - va) ** 2).sum()),
-            "dSSE_by_airport": {k: float(v) for k, v in by.items()}}
+            "mean_change_s": float((vb - va).mean()), "by_airport": by,
+            "LIRF_nonpopulation": {"rows": int(len(lnf)), "mean_change_s": float(lnf["ch"].mean()) if len(lnf) else None,
+                                   "dSSE": float(lnf["b"].sum() - lnf["a"].sum())}}
 
 
 def read() -> None:
@@ -154,7 +165,9 @@ def read() -> None:
         raise ValueError(f"{DECLARATION} must be committed and unchanged before the reading.")
     if RESULTS.exists():
         raise ValueError(f"{RESULTS} exists; never overwrite.")
-    out ={"created_at_utc": utc_now(), "declaration": DECLARATION, "declaration_sha256": sha256_file(ROOT / DECLARATION),
+    out = {"created_at_utc": utc_now(), "declaration": DECLARATION, "declaration_sha256": sha256_file(ROOT / DECLARATION),
+           "reporting_addendum": "by-airport dSSE / % / mean change and LIRF'"
+                                 "after the declaration was committed and before any fit; reporting only, the decision rule is unchanged",
            "official_scores_used": "none", "code": {p: sha256_file(ROOT / p) for p in CODE}, "months": {}, "fits": {}}
     lab_stack = stack_labels()
     for m in MONTHS:
