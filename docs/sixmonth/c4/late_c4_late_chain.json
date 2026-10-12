@@ -1,0 +1,81 @@
+{
+ "raw": "data/raw/final_ranking.parquet",
+ "raw_sha256": "4b0692a792846079516a2749e034b0abda55df72c213eabdcda52a4d1f6bc69f",
+ "base": "runs/final_blind/early_c4/vigorous-whistle_v9002.parquet",
+ "base_sha256": "d5834fcbbd9293c06a4e36ccefe8b8d35f5cde11056e07eebee3e2c9dce6b068",
+ "recipe": "runs/final_blind/run_final4m/recipe/detail.parquet",
+ "recipe_sha256": "dbb7656354760eb9a3f54727bd2bc58833c31bb6d8c1f521ed4ae061057d9340",
+ "months": [
+  "2026-01",
+  "2026-02",
+  "2026-06",
+  "2026-07"
+ ],
+ "matches_dir": "runs/sixmonth/c4/matches_final",
+ "features_own_dir": "runs/final_blind/early_9002/features_v19own",
+ "messages": "runs/oooi_final/messages_unique.parquet",
+ "messages_merge": "files",
+ "stacker_rank": "runs/final_blind/early_c4/steps/stack/stacker_rank.parquet",
+ "outputs": {
+  "oooi": {
+   "file": "runs/final_blind/late_c4/oooi/rank/dry_v70/vigorous-whistle_v70.parquet",
+   "sha256": "bf19b5bdbeba1f6df31905c5f58c05f50d37d99eee354201c922ac41414ba2bf",
+   "base_sha256": "d5834fcbbd9293c06a4e36ccefe8b8d35f5cde11056e07eebee3e2c9dce6b068",
+   "note": "oooi_pin_v1 selected w50",
+   "selection_flag": null
+  },
+  "nbr_state": {
+   "file": "runs/final_blind/late_c4/nbr_state/rank/dry_v71/vigorous-whistle_v71.parquet",
+   "sha256": "783b64a9682b3eb02856c5db24b9419154a0cc92758f42502cd28bccc780f2ca",
+   "base_sha256": "bf19b5bdbeba1f6df31905c5f58c05f50d37d99eee354201c922ac41414ba2bf",
+   "note": "nbr_state_v1 selected w75",
+   "selection_flag": null
+  },
+  "nbr_dark": {
+   "file": "runs/final_blind/late_c4/nbr_state/rank/dry_v72/vigorous-whistle_v72.parquet",
+   "sha256": "d16e3e9b77b42f44a8dfd9a4712f669b944a6dd16805e0ea32fbddd63138064e",
+   "base_sha256": "783b64a9682b3eb02856c5db24b9419154a0cc92758f42502cd28bccc780f2ca",
+   "note": "nbr_dark_v1 accepted True",
+   "selection_flag": null
+  },
+  "ss": {
+   "file": "runs/final_blind/late_c4/stack_second/rank/dry_v72/vigorous-whistle_v72.parquet",
+   "sha256": "e1e990233836c7b06f5cd4c7909fb9c46eea884afbf8e415c8719ee6d4c9f7b8",
+   "base_sha256": "d16e3e9b77b42f44a8dfd9a4712f669b944a6dd16805e0ea32fbddd63138064e",
+   "note": "stack_second_v1 selected sp_hicov7",
+   "selection_flag": null
+  },
+  "st": {
+   "file": "runs/final_blind/late_c4/stack_third/rank/dry_v73/vigorous-whistle_v73.parquet",
+   "sha256": "d9a8928eb5728e6fd21f2994d56b5f5f35a034fc7566647dd0839d5f8c68aade",
+   "base_sha256": "e1e990233836c7b06f5cd4c7909fb9c46eea884afbf8e415c8719ee6d4c9f7b8",
+   "note": "stack_third_v1 selected t3_ro_3",
+   "selection_flag": null
+  },
+  "sp": {
+   "file": "runs/final_blind/late_c4/season_pass/rank/dry_v74/vigorous-whistle_v74.parquet",
+   "sha256": "3121c09715cf604e47bd618c3ed070011af965b6441903af0fbcb65c5dc78ade",
+   "base_sha256": "d9a8928eb5728e6fd21f2994d56b5f5f35a034fc7566647dd0839d5f8c68aade",
+   "note": "season_pass_v1 selected w25_e3",
+   "selection_flag": null
+  },
+  "sp2": {
+   "file": "runs/final_blind/late_c4/season_pass2/rank/dry_v75/vigorous-whistle_v75.parquet",
+   "sha256": "e21b71332fadf4f1a9f7db32c950da5963ac004638791c2b5e4b1c82d38c1b60",
+   "base_sha256": "3121c09715cf604e47bd618c3ed070011af965b6441903af0fbcb65c5dc78ade",
+   "note": "season_pass_v2 selected w25b_5",
+   "selection_flag": null
+  },
+  "km": {
+   "file": "runs/final_blind/late_c4/key_memory/rank/dry_v76/vigorous-whistle_v76.parquet",
+   "sha256": "ab25a196e74a325618eda095918b653aadedef3479267a83e06e46b2c56ab849",
+   "base_sha256": "e21b71332fadf4f1a9f7db32c950da5963ac004638791c2b5e4b1c82d38c1b60",
+   "note": "key_memory_v1 selected km_9",
+   "selection_flag": null
+  }
+ },
+ "messages_merge_counts": {
+  "new_rows": 460753,
+  "kept_after_file_and_key_dedupe": 451295
+ }
+}
