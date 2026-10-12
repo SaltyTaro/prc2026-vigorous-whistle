@@ -1,0 +1,34 @@
+{
+ "experiment_id": "sixmonth_varalloc_v1",
+ "declared_at_utc": "see commit (12 October 2026, before any fit of this reading)",
+ "declared_by": "Building is research; the single final upload stays the user's word.",
+ "official_scores_used": "none",
+ "audit_used": false,
+ "disclosure": "ADAPTIVE CHOICE. Written after final candidates 4 (8fc8828d...) and 6 (a7ac1f60...) exist and after the readings of the analogous six-month refits of the late learners (configs/sixmonth_refit_v1.json: C15 accepted, C6 / C14 not; configs/sixmonth_devmonths_v1.json: C6 + C14 better on held January / July 2025). The variance re-allocation layer (the early chain's step 5) was chosen as the next learner to refit because those refits read better; no reading of this layer's six-month refit exists before this file. The Tier B February / June 2025 rows come from a cheaper model part (4 seeds per network ensemble, docs/final_file/tierb_model.md) than the development months and the final file.",
+ "layer": "configs/scout_var_alloc_v1.json (tools/scout_var_alloc.py, src/prc2026_scout/var_alloc.py): two LightGBMs (log squared residual; P(late)) and the slope k, fitted on the four development months (runs/daily_totals/rows.parquet with v48 and the extreme-day layer month-blocked); settings, features, eligibility, cap 100 s and floor unchanged",
+ "procedure": {
+  "P(pool)": "models fitted on the pool's eligible rows; the out-of-month weights of each pool month from models fitted on the pool without that month; k = var_alloc.slope over the pool's eligible rows on those weights. P(the four development months) is the shipped layer; the tool checks that its k equals the shipped 0.24186632360173135 and that its values on the Tier B file equal the Tier B chain's step 5 (runs/febjun_tierb/chain/work/steps/Y) exactly; if not, nothing is read.",
+  "tier_b_rows": "the Tier B chain's file (runs/febjun_tierb/chain/input/febjun2025.parquet) at step 5's input: its step-2 base, v48 (steps/R) and the extreme-day layer (params from the four development months, reproducing steps/X), labels from the 2025 training files; lane M's rows read only (run_sixmonth.tierb_rows), eligible rows by var_alloc.eligible",
+  "tool": "tools/run_sixmonth_varalloc.py read"
+ },
+ "readings": {
+  "2025-02": "a = P(four development months) (the shipped layer, equal to the Tier B chain's step 5); b = P(four development months + June 2025); lane M's February rows",
+  "2025-06": "a = shipped; b = P(four development months + February 2025); lane M's June rows",
+  "2025-01": "a = P(July, November, December 2025); b = P(July, November, December 2025 + February + June 2025); every January development row",
+  "2025-07": "a = P(January, November, December 2025); b = P(the same + February + June 2025); every July development row",
+  "reported": "% RMSE change of b against a at the layer's position, paired-day 95% interval (2,000 resamples, seed 20261004), squared-error change dSSE (s^2), rows moved, squared change, and the same by airport"
+ },
+ "rule": "ACCEPT only if (1) the summed dSSE over the four held months (January, July, February, June 2025) is negative, (2) the February and June point estimates are both <= 0, and (3) no held month is worse than +0.005%.",
+ "if_accepted": {
+  "candidate_7": "final candidate 6's chain with step 5 = P(all six months: the four development months + February + June 2025) on the final file: steps 0-4 of runs/final_blind/early_9002 byte for byte; step 5 with the six-month models and k (the shipped export's arithmetic otherwise); step 6 with the six-month C6 bags (tools/run_sixmonth.py fit-final --kind stack --override configs/sixmonth_override_v1.json) predicted on the new step-6 inputs; steps 7-10; the late chain 11-18 as in docs/sixmonth/c4/run_c4.sh (six-month C14 --override and C15); tools/run_lirf_cap.py apply; tools/run_published_means_v4.py apply (its cells recomputed on the new base and recorded)",
+  "controls_first": "the same path with the shipped step 5 must reproduce runs/final_blind/early_9002's early output (4c3937691bc51b17e5c25379c88f419f7057c94138725ac9aac8f5f5bcde9f79) with the shipped step-6 preds, and candidate 6 (a7ac1f60c5ddd79ef6927887b50471b3160748c386ed8186d99095bee6b63a81) through the full chain, byte for byte; if a control fails, no candidate 7",
+  "checks": "670,790 rows in final_submitting order, int32; 0 of the 619 LIRF fill-population rows differ from candidate 6; guard rows 213142471 / 213142469 = 25,391 / 51,222; cap rows 213145579 / 213152353 = 111,666 / 88,392; tools/prc_submit.py upload-final --check-only passes",
+  "output": "runs/final_blind/final_candidate7/chain_out_pm.parquet (never under runs/submissions); record docs/sixmonth/final_candidate7.md"
+ },
+ "if_rejected": "no candidate 7; candidate 6 stays the recommendation",
+ "deadline": "candidate 7 built and checked by 13 October 2026 16:00 UTC, otherwise abandoned",
+ "outputs": {
+  "results": "docs/sixmonth/varalloc_results_v1.json",
+  "record": "docs/sixmonth/varalloc.md"
+ }
+}
