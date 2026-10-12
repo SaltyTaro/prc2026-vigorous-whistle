@@ -1,0 +1,29 @@
+{
+ "experiment_id": "lirf_cap_v1",
+ "declared_at_utc": "see commit (12 October 2026, after the readings below; post hoc, disclosed)",
+ "declared_by": "The user chose 'Build it' on 12 October 2026 (~09:00 UTC) after the finding, both caveats and the expected size were put to them. Building is research; the single final upload stays the user's word.",
+ "official_scores_used": "none. The cap uses only 2025 training labels and the supplied schedule interval.",
+ "status": "DECLARED after reading (see disclosure). One layer, applied last, after the full final-file chain.",
+ "finding": "A label-free check of final candidate 2's largest values (12 October): every prediction above 25,000 s is a LIRF fill-population row (LIRF departure without any NM clock and without an airport aircraft type; src/prc2026_lirf_mixture/features.population_rows), predicted at its schedule interval s = take-off - SCHED_TIME plus 0 to 12,000 s. The excess comes from the model part (runner v55m, unchanged through every later step): population rows with s > 43,200 s stay at v7, whose models learn label - s and, trained on 2025 one-day rows that all had s < 86,400 s (residual positive), extrapolate a positive residual to s > 86,400 s. On these rows the 2025 labels take two values only: the fill (label = s, the block time is the schedule time; 18 of 29 rows with s > 43,200 s) and the one-day record (label = 86,400 s + a taxi, 87,168-88,392 s; 11 rows). A prediction above max(s, the largest one-day label) is therefore above both values and is improved by the cap whichever is true.",
+ "disclosure": "NOT A CLEAN TEST. (1) Found by inspecting the final candidate's largest values; the 2025 out-of-sample reading below was computed before this file. (2) Both rows the cap moves in the final file are among v40's nine score-derived LIRF fill pins (configs/fill_pin_v2.json), which are off in the final file by the user's 8 October decision; the board file v76 carries those pins and the cap changes no row of it. The cap reads no official score and moves those rows to max(s, 88,392 s), not to the pin values; it moves no other pinned row (the other seven have s < 86,400 s and predictions between the two label values). (3) It breaks the final-week protocol rule that new layers leave LIRF population rows unchanged; the user approved this exception.",
+ "procedure": {
+  "population": "src/prc2026_lirf_mixture/features.population_rows(movements): PHASE_mvt == DEP, ADEP_mvt == LIRF, AOBT_3_flt, LOBT_flt and AIRCRAFT_TYPE_mvt missing",
+  "schedule_interval": "s = MVT_TIME_UTC_mvt - SCHED_TIME_UTC_mvt in seconds (rows without a schedule time are never moved)",
+  "one_day_ceiling": "U = the largest 2025 label among population rows in the one-day band (label >= 86,400 s and |label - s| > 60 s), over the twelve 2025 training files: 88,392 s (AMX071, 25 June 2025). The tool recomputes it and refuses to run if it differs.",
+  "value": "new = min(base, max(s, U)) on population rows; np.rint into the base file's dtype; every other row byte-identical",
+  "order": "last, after the whole chain (final-file step after key_memory and the six-month third pass)",
+  "no_floor": "No lower bound: labels below min(s, one-day value) are possible in principle (a genuine block time with a stale schedule, 611 such rows among 2025 population rows with s in 3,600-10,800 s), so only the upper side is a dominance bound."
+ },
+ "readings_before_declaration": {
+  "2025_out_of_sample": "runs/daily_totals/rows12.parquet 'stack' (cross-fit v9 + LOMO residual) on the 537 population rows with a real out-of-sample value (January 60, July 337, November 52, December 88; squared error 6.60e7 -> 6.19e5 s^2.",
+  "final_candidate_2": "no February or June row.",
+  "board_v76": "fires on 0 of 383 population rows."
+ },
+ "expected_size": "Squared-error gain on the final file at least 8.8e7 s^2 whichever label value is true (both fills: 8.05e7 + 7.9e6; one-day values: larger), about -0.3 s on the four-month RMSE and about -0.6 s on its January / July part.",
+ "acceptance": "Accepted by the dominance argument (a capped value is never further from either possible label than the base value), not by a score rule; the 2025 reading is supporting evidence only. Checks: the derivation reproduces U; the final candidate changes exactly the rows above; every other row byte-identical; the uploader's --check-only passes.",
+ "outputs": {
+  "tool": "tools/run_lirf_cap.py",
+  "results": "docs/lirf_cap/results_v1.json",
+  "final_candidate": "runs/final_blind/final_candidate3/chain_out_cap.parquet (never under runs/submissions)"
+ }
+}

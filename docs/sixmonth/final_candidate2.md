@@ -1,5 +1,9 @@
 # Final file candidate 2 (10-11 October 2026): built, checked, NOT uploaded
 
+> **Superseded by final candidate 3 (12 October 2026; [`../lirf_cap/README.md`](../lirf_cap/README.md)), SHA-256
+> `b673791dfdaf8e909175001387183946236075280c9b3457822b52157c9cebc8`, NOT uploaded:** candidate 2 + the LIRF fill-population dominance cap
+> (`configs/lirf_cap_v1.json`), two July 2026 rows. Candidate 2 stays the fallback.
+
 Candidate 1 (`docs/final_file/final_candidate.md`, `30e116a9...`) with one change. The third pass (`stack_third_v1` `t3_ro_3`) uses
 its six-month learner: fitted on the development table plus both Tier B months' rows read. Configs/sixmonth_refit_v1.json accepted
 that refit (`docs/sixmonth/results_v1.json`, 0a9ab7a: February -0.0039% [-0.0070, -0.0013], June -0.0073% [-0.0151, -0.0019]). The

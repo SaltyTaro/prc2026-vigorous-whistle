@@ -202,3 +202,9 @@ base = v74's development values + w25b_5's out-of-month bags), c = clip(0.25 n/(
 January 2026 rows at the nine airports other than EGLL, written as `runs/key_memory/rank/dry_v76/vigorous-whistle_v76.parquet`, which
 `docs/key_memory/build_v76.py` copied to `runs/submissions/vigorous-whistle_v76.parquet`. **v76 SHA-256
 `a2ff395db4fdf22be86e1001f5dd97c8f27adc7b836fd7b4902690a576f9725c`, 214.3353 official.**
+
+## Final-file step 19 (final candidate 3, 12 October 2026): LIRF fill-population dominance cap
+
+After step 18 (and the six-month third pass of `docs/sixmonth/final_candidate2.md`), **`tools/run_lirf_cap.py apply`** (declaration
+`configs/lirf_cap_v1.json`, [`docs/lirf_cap/README.md`](../lirf_cap/README.md)) caps LIRF fill-population rows at max(schedule interval,
+88,392 s); every other row byte-identical. On the ranking file it changes no row (v76 unchanged); on the final file it moves two July 2026 rows.
