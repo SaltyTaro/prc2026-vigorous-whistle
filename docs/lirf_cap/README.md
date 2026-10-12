@@ -51,3 +51,13 @@ Reproduce: `.venv\Scripts\python.exe -X utf8 -B tools/run_lirf_cap.py apply --ba
 Upload (only at the user's word; one upload, never overwritten):
 
     .venv\Scripts\python.exe -X utf8 -B tools/prc_submit.py upload-final --source runs/final_blind/final_candidate3/chain_out_cap.parquet --expected-sha256 b673791dfdaf8e909175001387183946236075280c9b3457822b52157c9cebc8
+
+## Per-layer movement audit of the final chain (12 October, label-free)
+
+For every step of the final chain (candidate 1's early / late work directories, candidate 2's late steps, candidate 3's cap), the share of rows
+moved, RMS and mean move by month. February / June 2026 behave like January / July 2026 in every step (for example the stacker moves
+89.6 / 91.2 / 91.4 / 90.5% of rows, RMS 17.0 / 13.6 / 14.3 / 15.5 s for January / February / June / July). January's larger model-part and
+reconciliation moves (RMS 34.5 / 34.4 s against 15-20 s) come from EHAM 2-7 January and LFPG 7 January 2026, the known disruption; on the board
+the same member step also moved January more (v65 -> v66 RMS 19.1 s in January, 7.8 s in July). The W25 layers move January only, as declared.
+No anomaly on the new months. The 2025 out-of-sample tail calibration (v74 development values, bins of the prediction above 1,800 s) shows no
+bias that repeats across January / July / November / December 2025: closed.
