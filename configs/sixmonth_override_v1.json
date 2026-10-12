@@ -1,0 +1,40 @@
+{
+ "experiment_id": "sixmonth_override_v1",
+ "declared_at_utc": "see commit (12 October 2026, before any candidate-4 file exists)",
+ "official_scores_used": "none",
+ "audit_used": false,
+ "parent": "configs/sixmonth_refit_v1.json (readings docs/sixmonth/results_v1.json, SHA-256 a152728f...)",
+ "status": "DISCLOSED OVERRIDE of the parent's declared rule. The parent's rule accepts a six-month learner only if February AND June 2025 improve with BOTH paired-day 95% intervals entirely below zero. C6 and C14 did NOT meet it (February intervals include zero). This file uses their six-month learners anyway, as a gamble with positive expected value; it is not an accepted result of the parent's rule.",
+ "override_layers": [
+  "C6 guarded stacker",
+  "C14 second pass"
+ ],
+ "readings": {
+  "C6 guarded stacker": {
+   "2025-02": "-0.0325% [-0.0735, +0.0041] s, 99,081 rows moved",
+   "2025-06": "-0.1016% [-0.1750, -0.0380] s, 125,149 rows moved",
+   "transfer": "no failure (lowest ratio LIRF February 0.52 vs 0.71)"
+  },
+  "C14 second pass": {
+   "2025-02": "-0.0062% [-0.0187, +0.0046] s, 60,388 rows",
+   "2025-06": "-0.0144% [-0.0240, -0.0050] s, 80,376 rows",
+   "selection": "sp_hicov7 as shipped"
+  },
+  "C15 third pass": "accepted by the parent's rule (already in candidates 2 and 3); unchanged here"
+ },
+ "why": "All three refits point the same way in both held months; the two overridden ones miss only on February's interval (upper ends +0.0041 s and +0.0046 s). The six-month learners have seen the seasonal analogues of the final file's February / June 2026 rows; the shipped four-month learners have not.",
+ "expected_size": "About -0.13 s on the final file's February / June part and about -0.06 s on the four-month score if the 2025 readings transfer and January / July rows are neutral (no reading exists for the six-month learners on January / July: the development months are inside both fits).",
+ "risk": "February's reading could be noise or slightly negative; the worst plausible case from the intervals is a few hundredths of a second.",
+ "base": "final candidate 3's chain (docs/lirf_cap/README.md, b673791d...): runner v55m -> early chain steps 0-10 (runs/final_blind/early_9002) -> late chain 11-18 with the six-month third pass (candidate 2) -> the LIRF fill-population dominance cap (configs/lirf_cap_v1.json) last.",
+ "procedure": {
+  "C6": "tools/run_sixmonth.py fit-final --kind stack --override configs/sixmonth_override_v1.json --target runs/final_blind/early_9002/steps/stack --out <preds>: the step-6 bags fitted on the four development months + both Tier B months' rows read (frozen features, parameters, seeds, early-stopping rule, guards' support); then the early chain's step 6 with --stack-preds <preds> and steps 7-10 unchanged (steps 0-5 are candidate 3's, byte for byte).",
+  "C14 / C15": "the full late chain 11-18 on the new early output, with tools/run_sixmonth.py fit-final --kind ss --override ... and fit-final --kind st in place of final_late_chain.py fit --stage ss|st; every layer's declared selection and transfer guard recomputed on the file as the chain does",
+  "cap": "tools/run_lirf_cap.py apply last"
+ },
+ "control": "before any candidate-4 value: the same resume path with the shipped C6 preds (runs/final_blind/early_9002/steps/stack/preds.parquet) must reproduce the early output 4c3937691bc51b17e5c25379c88f419f7057c94138725ac9aac8f5f5bcde9f79 byte for byte, and the late chain with the shipped C14 fit and the six-month C15 must reproduce candidate 2 f11ca28f7503a98cad9211facafe30d7f4185a589aefdb655372896d59e2669e byte for byte. If either fails, no candidate 4 is built.",
+ "fallback": "final candidate 3 (b673791d...) stays the fallback; candidate 4 replaces it only if its build and every check pass. Which one is uploaded is the user's decision; nothing is uploaded by this work.",
+ "outputs": {
+  "file": "runs/final_blind/final_candidate4/chain_out_cap.parquet (never under runs/submissions)",
+  "record": "docs/sixmonth/final_candidate4.md"
+ }
+}

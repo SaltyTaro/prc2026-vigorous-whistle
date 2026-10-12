@@ -13,6 +13,7 @@ months' rows added, everything else frozen (features, parameters, seeds, rounds,
   read [--work W]                       configs/sixmonth_refit_v1.json's readings (refuses unless it is committed and unchanged)
                                          -> docs/sixmonth/results_v1.json
   fit-final --kind K --table ...        (final file, later) the learner on all six months for a new file's tables
+  fit-final ... --override configs/sixmonth_override_v1.json   a layer the readings did not accept, named in that committed override (disclosed)
 
 No official score enters. Nothing is uploaded; nothing is written under runs/submissions. Heavy commands run on an Azure VM.
 """
@@ -35,6 +36,7 @@ from prc2026.artifacts import read_json, sha256_file, utc_now, write_json  # noq
 
 ID, TARGET, TIME = "MVT_ID_mvt", "TAXITIME_SEC_mvt", "MVT_TIME_UTC_mvt"
 DECLARATION = "configs/sixmonth_refit_v1.json"
+OVERRIDE = "configs/sixmonth_override_v1.json"   # disclosed override of DECLARATION's rule for named layers (fit-final --override)
 OUT = ROOT / "runs/sixmonth"
 DOCS = ROOT / "docs/sixmonth"
 TIERB_WORK = ROOT / "runs/febjun_tierb/chain/work"
@@ -377,6 +379,8 @@ def main() -> None:
     ap.add_argument("--work", default="runs/febjun_tierb/chain/work", help="the Tier B chain's work directory (training rows / readings)")
     ap.add_argument("--target", help="fit-final stack: a file's early-chain steps/stack directory; ss / st: its late work table directory")
     ap.add_argument("--out", help="fit-final stack: the preds file to write (for final_early_chain.py --stack-preds)")
+    ap.add_argument("--override", help=f"fit-final: a committed override declaration ({OVERRIDE}) naming this layer in 'override_layers'; "
+                                       "uses the six-month learner although the parent's rule did not accept it (disclosed gamble)")
     a = ap.parse_args()
     work = ROOT / a.work
     if a.action == "fit-final":
@@ -385,7 +389,9 @@ def main() -> None:
         acc = read_json(DOCS / "results_v1.json")["final_file"]
         layer = {"stack": "C6 guarded stacker", "ss": "C14 second pass", "st": "C15 third pass"}[a.kind]
         if acc[layer] != "six-month learner":
-            raise ValueError(f"{layer} was not accepted; the final file keeps the shipped learner.")
+            if a.override != OVERRIDE or not committed_unchanged(OVERRIDE) or layer not in read_json(ROOT / OVERRIDE)["override_layers"]:
+                raise ValueError(f"{layer} was not accepted; the final file keeps the shipped learner (unless --override {OVERRIDE} names it).")
+            print(f"OVERRIDE: {layer} was not accepted by {DECLARATION}; six-month learner used under {OVERRIDE}", flush=True)
         rec = fit_final_stack(ROOT / a.target, ROOT / a.out, work) if a.kind == "stack" else fit_final_pass(a.kind, ROOT / a.target, work)
         print(json.dumps({k: v for k, v in rec.items() if k not in ("trees", "code")}, indent=1))
         return
