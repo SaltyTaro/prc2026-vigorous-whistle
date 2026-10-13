@@ -65,6 +65,16 @@ against the previous one, without labels. Rows, order and dtype match the templa
 - **Times in the final file are jittered by up to ±12 s**, as the organisers intended. Predictions anchored on the take-off time carry
   that noise, and the file's January / July values therefore differ slightly from v76's.
 
-## Upload (the user's decision; one upload, never overwritten)
+## Upload (the user's decision; the last upload counts)
+
+A re-upload overwrites the previous final file. The organisers take the file in the bucket at
+the deadline. The first upload refuses to overwrite anything. A replacement must name the SHA-256 of the file it replaces.
 
     .venv\Scripts\python.exe -X utf8 -B tools/prc_submit.py upload-final --source runs/final_blind/final_candidate6/chain_out_pm.parquet --expected-sha256 a7ac1f60c5ddd79ef6927887b50471b3160748c386ed8186d99095bee6b63a81
+
+A later replacement:
+
+    .venv\Scripts\python.exe -X utf8 -B tools/prc_submit.py upload-final --source <new export> --expected-sha256 <new sha> --replace-sha256 <sha of the file in the bucket>
+
+Check-only run on 13 October 15:39 UTC: no final object in the bucket, organiser final files unchanged, candidate 6 passes
+(`runs/submissions/vigorous-whistle_final.check.json`).

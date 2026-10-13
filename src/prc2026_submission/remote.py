@@ -35,18 +35,25 @@ def check_upload_window(objects: list, name: str, size: int, now: datetime | Non
             "daily_count_policy": "UTC calendar day (user-directed override)" if calendar_day else "conservative rolling 24 hours while reset timezone is unspecified"}
 
 
-def check_final_upload(objects: list, size: int) -> dict:
-    """The final file is uploaded once: refuse an existing final object and the 1 GB bucket allowance."""
+def check_final_upload(objects: list, size: int, replacing: bool = False) -> dict:
+    """The final file: refuse an existing final object unless a replacement is named, and the 1 GB bucket allowance.
+
+    A re-upload overwrites the previous final file, so a replacement is allowed, but only
+    when asked for explicitly; the caller checks that the object in the bucket is the file it means to replace."""
     if size <= 0:
         raise ValueError("Empty upload.")
-    if any(item["Key"] == FINAL_NAME for item in objects):
-        raise ValueError(f"{FINAL_NAME} already exists in the team bucket; the final file is uploaded once and never overwritten.")
+    present = [item for item in objects if item["Key"] == FINAL_NAME]
+    if present and not replacing:
+        raise ValueError(f"{FINAL_NAME} already exists in the team bucket; name the file it replaces with --replace-sha256.")
+    if replacing and not present:
+        raise ValueError(f"--replace-sha256 was given but {FINAL_NAME} is not in the team bucket; nothing to replace.")
     occupied = sum(item["Size"] for item in objects)
-    if occupied + size > 1_000_000_000:
+    after = occupied - sum(item["Size"] for item in present) + size
+    if after > 1_000_000_000:
         raise ValueError("Upload would exceed the published 1 GB bucket allowance.")
     submissions = [item for item in objects if FILENAME.fullmatch(item["Key"])]
-    return {"final_object_present": False, "existing_submission_versions": len(submissions),
-            "bucket_bytes_before": occupied, "bucket_bytes_after_upload": occupied + size}
+    return {"final_object_present": bool(present), "existing_submission_versions": len(submissions),
+            "bucket_bytes_before": occupied, "bucket_bytes_after_upload": after}
 
 
 def list_team_objects(client) -> list:

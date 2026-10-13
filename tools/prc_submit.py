@@ -85,15 +85,32 @@ def upload(path: Path, expected_sha256: str, calendar_day: bool = False):
                       "rows": validation["rows"], "sha256": expected_sha256}, indent=2))
 
 
-def upload_final(source: Path, expected_sha256: str, check_only: bool = False):
-    """The final phase's single file: a byte copy of the reviewed final-chain export, uploaded once as FINAL_NAME."""
+def upload_final(source: Path, expected_sha256: str, check_only: bool = False, replace_sha256: str | None = None):
+    """The final phase's file: a byte copy of the reviewed final-chain export, uploaded as FINAL_NAME.
+
+    The organisers keep the last upload. A replacement must name the SHA-256 of
+    the file now in the bucket; the earlier local copy and its upload log are kept under names carrying that hash."""
     template = ROOT / "data/raw/final_submitting.parquet"
     if sha256_file(source) != expected_sha256:
         raise ValueError("Source hash differs from the reviewed final export.")
+    if replace_sha256 == expected_sha256:
+        raise ValueError("The replacement is the file already uploaded; nothing to do.")
     target = ROOT / "runs/submissions" / FINAL_NAME
+    upload_log = target.with_name(FINAL_NAME.replace(".parquet", ".upload.json"))
     if not check_only and target.exists() and sha256_file(target) != expected_sha256:
-        raise ValueError(f"{target.relative_to(ROOT)} already holds a different file; it is never replaced.")
+        if replace_sha256 is None or sha256_file(target) != replace_sha256:
+            raise ValueError(f"{target.relative_to(ROOT)} already holds a different file; name it with --replace-sha256 to replace it.")
     client = make_client()
+    replaced = None
+    if replace_sha256 is not None:
+        try:
+            head = client.head_object(Bucket=BUCKET, Key=FINAL_NAME)
+        except ClientError:
+            raise ValueError(f"--replace-sha256 was given but {FINAL_NAME} is not in the team bucket; nothing to replace.") from None
+        if head.get("Metadata", {}).get("sha256") != replace_sha256:
+            raise ValueError("The final file in the bucket is not the one named by --replace-sha256; nothing is replaced.")
+        replaced = {"sha256": replace_sha256, "etag": head["ETag"].strip('"'), "size_bytes": head["ContentLength"],
+                    "last_modified_utc": head["LastModified"].isoformat()}
     inputs = read_json(ROOT / "docs/competition/download_manifest.json")["objects"]
     organiser = {}
     for name in ["final_ranking.parquet", "final_submitting.parquet"]:
@@ -102,28 +119,40 @@ def upload_final(source: Path, expected_sha256: str, check_only: bool = False):
         if current["ETag"].strip('"') != recorded["etag"] or current["ContentLength"] != recorded["size_bytes"]:
             raise ValueError(f"Organiser {name} changed since our download; refresh and rebuild before the final upload.")
         organiser[name] = {"etag": recorded["etag"], "size_bytes": recorded["size_bytes"]}
-    if check_only:
-        # A rehearsal stages nothing under runs/submissions: the checks run on a temporary copy under the final name.
-        target = Path(tempfile.mkdtemp(prefix="prc_final_check_")) / FINAL_NAME
-    if not target.exists():
-        target.write_bytes(source.read_bytes())
-    validation = validate_final_submission(target, template)
+    # Every check runs on a temporary copy under the final name; runs/submissions changes only for a real upload.
+    staged = Path(tempfile.mkdtemp(prefix="prc_final_check_")) / FINAL_NAME
+    staged.write_bytes(source.read_bytes())
+    validation = validate_final_submission(staged, template)
     if validation["sha256"] != expected_sha256:
         raise ValueError("The staged final file differs from the reviewed export.")
-    limits = check_final_upload(list_team_objects(client), target.stat().st_size)
-    log_path = ROOT / "runs/submissions" / FINAL_NAME.replace(".parquet", ".check.json" if check_only else ".upload.json")
+    limits = check_final_upload(list_team_objects(client), staged.stat().st_size, replacing=replaced is not None)
+    log_path = upload_log.with_name(FINAL_NAME.replace(".parquet", ".check.json")) if check_only else upload_log
+    if not check_only:
+        if target.exists() and (earlier := sha256_file(target)) != expected_sha256:
+            # The earlier upload (checked above to be the file named by --replace-sha256) and its log are kept, renamed.
+            stem = f"{FINAL_NAME.removesuffix('.parquet')}.replaced_{utc_now().replace(':', '').replace('-', '')[:15]}_{earlier[:12]}"
+            target.rename(target.with_name(stem + ".parquet"))
+            if upload_log.exists():
+                upload_log.rename(upload_log.with_name(stem + ".upload.json"))
+        if not target.exists():
+            target.write_bytes(source.read_bytes())
+        if sha256_file(target) != expected_sha256:
+            raise ValueError("The staged final file differs from the reviewed export.")
     log = {"created_at_utc": utc_now(), "status": "checked_not_uploaded" if check_only else "upload_started",
            "endpoint": ENDPOINT, "bucket": BUCKET, "filename": FINAL_NAME, "sha256": expected_sha256,
            "source": source.relative_to(ROOT).as_posix() if source.is_relative_to(ROOT) else str(source),
-           "organiser_inputs": organiser, "validation": validation, "limits": limits}
+           "organiser_inputs": organiser, "validation": validation, "limits": limits, "replaces": replaced}
     write_json(log_path, log)
     if check_only:
-        print(json.dumps({"status": log["status"], "filename": FINAL_NAME, "rows": validation["rows"], "sha256": expected_sha256}, indent=2))
+        print(json.dumps({"status": log["status"], "filename": FINAL_NAME, "rows": validation["rows"], "sha256": expected_sha256,
+                          "replaces": replace_sha256}, indent=2))
         return
     payload = target.read_bytes()
+    # A first upload must not overwrite anything; a replacement overwrites only the file checked above.
+    condition = {} if replaced else {"IfNoneMatch": "*"}
     try:
         client.put_object(
-            Bucket=BUCKET, Key=FINAL_NAME, Body=payload, IfNoneMatch="*",
+            Bucket=BUCKET, Key=FINAL_NAME, Body=payload, **condition,
             ContentType="application/vnd.apache.parquet",
             ContentMD5=base64.b64encode(hashlib.md5(payload).digest()).decode("ascii"),
             Metadata={"sha256": expected_sha256},
@@ -195,10 +224,11 @@ def main():
     sending.add_argument("--file", type=Path, required=True)
     sending.add_argument("--expected-sha256", required=True)
     sending.add_argument("--calendar-day", action="store_true", help="Count the five-per-day allowance by UTC calendar day instead of a rolling 24 hours (user-directed)")
-    final = sub.add_parser("upload-final", help=f"the final phase's single file, uploaded once as {FINAL_NAME}")
+    final = sub.add_parser("upload-final", help=f"the final phase's file, uploaded as {FINAL_NAME} (the last upload counts)")
     final.add_argument("--source", type=Path, required=True, help="the reviewed final-chain export (validated against final_submitting.parquet)")
     final.add_argument("--expected-sha256", required=True)
     final.add_argument("--check-only", action="store_true", help="stage and run every check, upload nothing")
+    final.add_argument("--replace-sha256", help="overwrite the final file already in the bucket, which must carry this SHA-256")
     checking = sub.add_parser("status")
     checking.add_argument("--filename", required=True)
     checking.add_argument("--report-dir", type=Path,
@@ -208,7 +238,7 @@ def main():
         if args.command == "upload":
             upload(ROOT / args.file, args.expected_sha256, args.calendar_day)
         elif args.command == "upload-final":
-            upload_final((ROOT / args.source).resolve(), args.expected_sha256, args.check_only)
+            upload_final((ROOT / args.source).resolve(), args.expected_sha256, args.check_only, args.replace_sha256)
         else:
             status(args.filename, ROOT / args.report_dir if args.report_dir else None)
     except ClientError as exc:

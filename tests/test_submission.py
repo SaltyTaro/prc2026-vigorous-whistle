@@ -115,9 +115,22 @@ def test_final_upload_is_single_and_respects_the_bucket_allowance():
     objects = [{"Key": f"vigorous-whistle_v{i}.parquet", "Size": 100, "LastModified": now} for i in range(1, 6)]
     # Five ranked versions in the window do not block the unscored final file.
     assert check_final_upload(objects, 100)["existing_submission_versions"] == 5
-    with pytest.raises(ValueError, match="once"):
-        check_final_upload(objects + [{"Key": FINAL_NAME, "Size": 100, "LastModified": now}], 100)
+    present = objects + [{"Key": FINAL_NAME, "Size": 100, "LastModified": now}]
+    with pytest.raises(ValueError, match="--replace-sha256"):
+        check_final_upload(present, 100)
     with pytest.raises(ValueError, match="1 GB"):
         check_final_upload([{"Key": "big.json", "Size": 999_999_950, "LastModified": now}], 100)
     with pytest.raises(ValueError, match="Empty"):
         check_final_upload(objects, 0)
+
+
+def test_final_replacement_is_explicit_and_frees_the_old_size():
+    # A re-upload overwrites the previous final file: allowed only when asked for, never by default.
+    now = datetime.now(timezone.utc)
+    objects = [{"Key": "big.json", "Size": 999_999_800, "LastModified": now}, {"Key": FINAL_NAME, "Size": 150, "LastModified": now}]
+    report = check_final_upload(objects, 180, replacing=True)
+    assert report["final_object_present"] and report["bucket_bytes_after_upload"] == 999_999_980
+    with pytest.raises(ValueError, match="1 GB"):
+        check_final_upload(objects, 260, replacing=True)
+    with pytest.raises(ValueError, match="nothing to replace"):
+        check_final_upload(objects[:1], 100, replacing=True)
