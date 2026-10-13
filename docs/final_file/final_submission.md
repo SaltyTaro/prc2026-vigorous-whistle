@@ -67,6 +67,8 @@ against the previous one, without labels. Rows, order and dtype match the templa
 
 ## Upload (the user's decision; the last upload counts)
 
+**UPLOADED at the user's word ("upload it") at 16:02:28 UTC on 13 October 2026.** The read-back SHA-256 equals `a7ac1f60...`. The organisers' `vigorous-whistle_final.parquet_result.json` (16:02:41 UTC) reads `Succeeded`, `used_pairs` 670,790 against `final_submitting.parquet`. Record: [`final_upload.json`](final_upload.json).
+
 **Final verification before upload (13 October):** PASS, [`final_verification.md`](final_verification.md) (`tools/verify_final_file.py`).
 
 A re-upload overwrites the previous final file. The organisers take the file in the bucket at
