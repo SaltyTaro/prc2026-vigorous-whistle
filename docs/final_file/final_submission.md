@@ -67,6 +67,8 @@ against the previous one, without labels. Rows, order and dtype match the templa
 
 ## Upload (the user's decision; the last upload counts)
 
+**Final verification before upload (13 October):** PASS, [`final_verification.md`](final_verification.md) (`tools/verify_final_file.py`).
+
 A re-upload overwrites the previous final file. The organisers take the file in the bucket at
 the deadline. The first upload refuses to overwrite anything. A replacement must name the SHA-256 of the file it replaces.
 
