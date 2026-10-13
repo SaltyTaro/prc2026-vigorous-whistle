@@ -37,7 +37,9 @@ explanation:
 
 - The no-NM ADS-B rematch learns its
   flight-number → callsign map from the NM rows of the movement file. The match is a gate-traced track at a known stand: 126 points, 703 s from first motion
-  to take-off. This changes the own-points member (2,100 → 1,464 s) and the rematch (→ 1,084 s), and the later steps bring it to 964 s.
+  to take-off. Through the stages: model part 2,100 s, after the own-points member 1,464 s, after the rematch 1,084 s, final 964 s.
+  On the ranking file the member moved this row up instead (2,107 → 2,264 s). Whether the member's change also comes from the new
+  match was not traced.
   On January / July only three rows gain a match this way, all at EHAM, with a squared change of about 1.1e6. No row loses a match.
   The 343 rows matched on both files show observed taxi times equal to within 12 s, which is the jitter. This is the declared procedure
   applied to a larger file, not a fault.
