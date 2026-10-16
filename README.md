@@ -1,5 +1,51 @@
 # PRC Data Challenge 2026 — vigorous-whistle
 
+> **Added on 16 October 2026, after the submission deadline.** Apart from the LICENSE file (added on 16 October), this section
+> only points to documents committed before the deadline. No code, model or result changed with it. The progress log below dates from 15 September and is unchanged. Some of its
+> links refer to infrastructure files that are not part of this public copy.
+
+## At a glance
+
+- **Task:** taxi-out time in seconds for departures at ten European airports, ranked by RMSE.
+- **Final file:** `vigorous-whistle_final.parquet`, 670,790 departures (January, February, June and July 2026), SHA-256
+  `a7ac1f60c5ddd79ef6927887b50471b3160748c386ed8186d99095bee6b63a81`, uploaded on 13 October 2026. Every step from the supplied
+  file to the uploaded one, with its tool, declaration and hashes: [docs/final_file/final_submission.md](docs/final_file/final_submission.md).
+  Checks before upload: [docs/final_file/final_verification.md](docs/final_file/final_verification.md).
+- **Best ranked file:** `vigorous-whistle_v76.parquet`, **214.3353 s RMSE** on the 344,841 ranking departures (8 October 2026,
+  [record](docs/key_memory/official_result_v76.json)). The final file is the same chain run on the final months, with the
+  final-file steps listed in `final_submission.md`. On `ranking.parquet` the chain reproduces v76 byte for byte.
+- **The chain, in order:** the model part (features, tree and network members, residual stage, ADS-B rematch, stacking); the
+  own-aircraft member; the reconciliation with EUROCONTROL's published daily delay totals, with its extreme-day and variance
+  layers; a guarded stacker; stand-intruder, aircraft-identity and own-motion bounds from ADS-B traces; the data-link OUT pin; the
+  neighbour-state layers; second and third residual passes; the winter-season passes and flight-number memory (January only); the
+  LIRF cap; and the published monthly taxi-out level shift. The table in
+  [`final_submission.md`](docs/final_file/final_submission.md) gives each step's tool and declaration. The chain documents are
+  [v66_chain.md](docs/final_file/v66_chain.md) and [v69_chain.md](docs/final_file/v69_chain.md).
+- **Running it:** the runner and its stages are described in [runner.md](docs/final_file/runner.md), including the environment
+  and the files a run needs. The early and late chains are in [lane_E.md](docs/final_file/lane_E.md) and
+  [lane_L.md](docs/final_file/lane_L.md). The challenge data, the external downloads and the trained model files (several GB) are
+  not in this repository. The documents record the SHA-256 hashes of the inputs and of each stage's output.
+
+## Data sources and licences
+
+| source | used for | licence |
+|---|---|---|
+| challenge data | training, ranking and final files | supplied by the organisers under their terms; not redistributed here |
+| adsb.lol `globe_history` daily archives | surface ADS-B traces matched to departures | ODbL 1.0 |
+| adsb.lol Aircraft Data Links archive | airline OUT times at LFPG | CC0 1.0 |
+| Iowa Environmental Mesonet ASOS observations | surface weather | public domain |
+| OurAirports | runway coordinates and bearings | public domain |
+| OpenStreetMap | airport geometry (inputs of the LIRF networks) | ODbL 1.0, © OpenStreetMap contributors |
+| EUROCONTROL OPDI flight events | flight events at LSZH (stacker inputs) | open data with attribution |
+| EUROCONTROL published monthly taxi-out and daily pre-departure delay figures | reconciliation and level-shift layers | no open licence; the organisers confirmed on 10 October 2026 that they may be used |
+
+## Licence
+
+The source code is released under the GNU General Public License v3.0 ([LICENSE](LICENSE)). External data keeps its own
+licence (table above).
+
+## Progress log (15 September 2026, unchanged)
+
 Predict taxi-out time at ten European airports. The objective is a top-three
 finish. Cloud compute is **Azure only**. On 15 September the user authorized
 parallel experiments on all eight existing **arcw0–arcw7** workers. The
